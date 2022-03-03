@@ -1,35 +1,34 @@
 import 'dart:convert';
 
 import 'package:azlistview/azlistview.dart';
-import 'package:flustars/flustars.dart';
+import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
 
 import 'models.dart';
 
-class CityListPage extends StatefulWidget {
+typedef CityCallback = Function(String city);
+
+class CityListCustomHeaderPage extends StatefulWidget {
+   final CityCallback cityCallback;
+
+  const CityListCustomHeaderPage({Key? key, required this.cityCallback}) : super(key: key);
   @override
-  _CityListPageState createState() => _CityListPageState();
+  _CityListCustomHeaderPageState createState() =>
+      _CityListCustomHeaderPageState();
 }
 
-class _CityListPageState extends State<CityListPage> {
+class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
   List<CityModel> cityList = [];
-  final List<CityModel> _hotCityList = [];
+  double susItemHeight = 36;
+  String imgFavorite = Assets.icons.barToTop.path;
 
   @override
   void initState() {
     super.initState();
-    _hotCityList.add(CityModel(name: '北京市', tagIndex: '★'));
-    _hotCityList.add(CityModel(name: '广州市', tagIndex: '★'));
-    _hotCityList.add(CityModel(name: '成都市', tagIndex: '★'));
-    _hotCityList.add(CityModel(name: '深圳市', tagIndex: '★'));
-    _hotCityList.add(CityModel(name: '杭州市', tagIndex: '★'));
-    _hotCityList.add(CityModel(name: '武汉市', tagIndex: '★'));
-    cityList.addAll(_hotCityList);
-    SuspensionUtil.setShowSuspensionStatus(cityList);
-
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       loadData();
     });
   }
@@ -40,9 +39,9 @@ class _CityListPageState extends State<CityListPage> {
       cityList.clear();
       Map countyMap = json.decode(value);
       List list = countyMap['china'];
-      list.forEach((v) {
+      for (var v in list) {
         cityList.add(CityModel.fromJson(v));
-      });
+      }
       _handleList(cityList);
     });
   }
@@ -62,50 +61,71 @@ class _CityListPageState extends State<CityListPage> {
     // A-Z sort.
     SuspensionUtil.sortListBySuspensionTag(list);
 
-    // add hotCityList.
-    cityList.insertAll(0, _hotCityList);
-
     // show sus tag.
     SuspensionUtil.setShowSuspensionStatus(cityList);
+
+    // add header.
+    cityList.insert(
+        0,
+        CityModel(
+            name: 'header',
+            tagIndex: imgFavorite)); //index bar support local images.
 
     setState(() {});
   }
 
-  Widget header() {
+  Widget _buildHeader() {
+    List<CityModel> hotCityList = [];
+    hotCityList.addAll([
+      CityModel(name: "北京市"),
+      CityModel(name: "广州市"),
+      CityModel(name: "成都市"),
+      CityModel(name: "深圳市"),
+      CityModel(name: "杭州市"),
+      CityModel(name: "武汉市"),
+    ]);
+    hotCityList.insert(0, CityModel(name: "宁波市"));
+    return
+
+      Column(
+        children: [
+
+          GridView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: hotCityList.length,
+            //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //横轴元素个数
+                crossAxisCount: 4,
+                //纵轴间距
+                mainAxisSpacing: 6,
+                //横轴间距
+                crossAxisSpacing: 24,
+                //子组件宽高长度比例
+                childAspectRatio: 1),
+            itemBuilder: (BuildContext context, int index) {
+              //Widget Function(BuildContext context, int index)
+              return _getCityView(
+                  hotCityList[index].name,isLocation: index==0);
+            }),
+        ],
+      );
+  }
+
+
+  _getCityView(String name,{bool isLocation = false}){
     return Container(
-      color: Colors.white,
-      height: 44.0,
+      width: 56.w,
+      padding: EdgeInsets.symmetric(vertical:14.w ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(4.w),
+        border: Border.all(color: const Color(0xFFEEEEEE),width: 1.w),
+      ),
       child: Row(
-        children: <Widget>[
-          const Expanded(
-              child: TextField(
-                autofocus: false,
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(left: 10, right: 10),
-                    border: InputBorder.none,
-                    labelStyle: TextStyle(
-                        fontSize: 14, color: Color(0xFF333333)),
-                    hintText: '城市中文名或拼音',
-                    hintStyle: TextStyle(
-                        fontSize: 14, color: Color(0xFFCCCCCC))),
-              )),
-          Container(
-            width: 0.33,
-            height: 14.0,
-            color: Color(0xFFEFEFEF),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                "取消",
-                style: TextStyle(color: Color(0xFF999999), fontSize: 14),
-              ),
-            ),
-          )
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(name,style: Theme.of(context).textTheme.subtitle2,)
         ],
       ),
     );
@@ -113,97 +133,71 @@ class _CityListPageState extends State<CityListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-          child: Column(
-            children: [
-              header(),
-              Expanded(
-                child: Material(
-                  color: Color(0x80000000),
-                  child: Card(
-                    clipBehavior: Clip.hardEdge,
-                    margin: const EdgeInsets.only(left: 8, top: 8, right: 8),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(4.0),
-                          topRight: Radius.circular(4.0)),
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(left: 15.0),
-                          height: 50.0,
-                          child: Text("当前城市: 成都市"),
-                        ),
-                        Expanded(
-                          child: AzListView(
-                            data: cityList,
-                            itemCount: cityList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              CityModel model = cityList[index];
-                              return getListItem(context, model);
-                            },
-                            padding: EdgeInsets.zero,
-                            susItemBuilder: (BuildContext context, int index) {
-                              CityModel model = cityList[index];
-                              String tag = model.getSuspensionTag();
-                              return getSusItem(context, tag);
-                            },
-                            indexBarData: ['★', ...kIndexBarData],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+    return Column(
+      children: [
+        ListTile(
+            title: const Text("当前城市"),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const <Widget>[
+                Icon(
+                  Icons.place,
+                  size: 20.0,
+                ),
+                Text(" 成都市"),
+              ],
+            )),
+        const Divider(
+          height: .0,
+        ),
+        Expanded(
+          child: AzListView(
+            data: cityList,
+            itemCount: cityList.length,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 0) return _buildHeader();
+              CityModel model = cityList[index];
+              return Utils.getListItem(context, model,
+                  susHeight: susItemHeight);
+            },
+            susItemHeight: susItemHeight,
+            susItemBuilder: (BuildContext context, int index) {
+              CityModel model = cityList[index];
+              String tag = model.getSuspensionTag();
+              if (imgFavorite == tag) {
+                return Container();
+              }
+              return Utils.getSusItem(context, tag, susHeight: susItemHeight);
+            },
+            indexBarData: SuspensionUtil.getTagIndexList(cityList),
+            indexBarOptions: IndexBarOptions(
+
+              needRebuild: true,
+              color: Colors.transparent,
+              downColor: const Color(0xFFEEEEEE),
+
+              indexHintDecoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Assets.icons.barBubbleGray.path),
+                  fit: BoxFit.contain,
                 ),
               ),
-            ],
-          )),
+              selectTextStyle: const TextStyle(
+                  fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500),
+              selectItemDecoration:
+              const BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor),
+              indexHintAlignment: Alignment.centerRight,
+              indexHintChildAlignment: Alignment.center,
+              indexHintTextStyle: TextStyle(fontSize: 40.sp, color: Colors.black87),
+
+              indexHintOffset: const Offset(-10, 0),
+              indexHintWidth: 100.w,
+              indexHintHeight: 100.w,
+              localImages: [imgFavorite], //local images.
+            ),
+          ),
+        ),
+      ],
     );
   }
-
-  getListItem(BuildContext context, CityModel model,
-      {double susHeight = 40}) {
-    return ListTile(
-      title: Text(model.name),
-      onTap: () {
-        LogUtil.e("onItemClick : $model");
-        showSnackBar(context, 'onItemClick : ${model.name}');
-      },
-    );
-  }
-
-  showSnackBar(BuildContext context, String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(msg),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-}
-
-getSusItem(BuildContext context, String tag,
-    {double susHeight = 40}) {
-  if (tag == '★') {
-    tag = '★ 热门城市';
-  }
-  return Container(
-    height: susHeight,
-    width: MediaQuery.of(context).size.width,
-    padding: EdgeInsets.only(left: 16.0),
-    color: Color(0xFFF3F4F5),
-    alignment: Alignment.centerLeft,
-    child: Text(
-      '$tag',
-      softWrap: false,
-      style: TextStyle(
-        fontSize: 14.0,
-        color: Color(0xFF666666),
-      ),
-    ),
-  );
 }

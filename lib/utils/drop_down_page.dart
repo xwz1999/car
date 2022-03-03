@@ -181,20 +181,20 @@ class _DropDownPageState extends State<DropDownPage> {
         body: DropDownWidget(
           titles,
           listWidget,
-          height: 40.r,
-          bottomHeight: 400.r,
+          height: 40.w,
+          bottomHeight: 400.w,
           screenControl: screenControl,
-          headFontSize: 16.sp,
+          headFontSize: 28.sp,
           child: Container(
-            margin: EdgeInsets.only(top: 40.4.r),
+            margin: EdgeInsets.only(top: 40.w),
             child: ListView.builder(itemBuilder: (context, index) {
               return Container(
-                padding: EdgeInsets.all(15.r),
+                padding: EdgeInsets.all(15.w),
                 child: Text("item $index"),
                 decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
-                            color: const Color(0xffeeeeee), width: 0.4.r))),
+                            color: const Color(0xffeeeeee), width: 0.4.w))),
               );
             }),
           ),

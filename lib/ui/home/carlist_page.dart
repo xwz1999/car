@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:azlistview/azlistview.dart';
+import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,21 +8,26 @@ import 'package:lpinyin/lpinyin.dart';
 
 import 'models.dart';
 
-class CityListCustomHeaderPage extends StatefulWidget {
+typedef CityCallback = Function(String city);
+
+class CityListPage extends StatefulWidget {
+   final CityCallback cityCallback;
+
+  const CityListPage({Key? key, required this.cityCallback}) : super(key: key);
   @override
-  _CityListCustomHeaderPageState createState() =>
-      _CityListCustomHeaderPageState();
+  _CityListPageState createState() =>
+      _CityListPageState();
 }
 
-class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
+class _CityListPageState extends State<CityListPage> {
   List<CityModel> cityList = [];
   double susItemHeight = 36;
-  String imgFavorite = Utils.getImgPath('ic_favorite');
+  String imgFavorite = Assets.icons.barToTop.path;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       loadData();
     });
   }
@@ -33,9 +38,9 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
       cityList.clear();
       Map countyMap = json.decode(value);
       List list = countyMap['china'];
-      list.forEach((v) {
+      for (var v in list) {
         cityList.add(CityModel.fromJson(v));
-      });
+      }
       _handleList(cityList);
     });
   }
@@ -78,27 +83,49 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
       CityModel(name: "杭州市"),
       CityModel(name: "武汉市"),
     ]);
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        runAlignment: WrapAlignment.center,
-        spacing: 10.0,
-        children: hotCityList.map((e) {
-          return OutlinedButton(
-            style: ButtonStyle(
-                //side: BorderSide(color: Colors.grey[300], width: .5),
-                ),
-            child: Padding(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              child: Text(e.name),
-            ),
-            onPressed: () {
-              print("OnItemClick: $e");
-              Navigator.pop(context, e);
-            },
-          );
-        }).toList(),
+    hotCityList.insert(0, CityModel(name: "宁波市"));
+    return
+
+      Column(
+        children: [
+
+          GridView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: hotCityList.length,
+            //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //横轴元素个数
+                crossAxisCount: 4,
+                //纵轴间距
+                mainAxisSpacing: 6,
+                //横轴间距
+                crossAxisSpacing: 24,
+                //子组件宽高长度比例
+                childAspectRatio: 1),
+            itemBuilder: (BuildContext context, int index) {
+              //Widget Function(BuildContext context, int index)
+              return _getCityView(
+                  hotCityList[index].name,isLocation: index==0);
+            }),
+        ],
+      );
+  }
+
+
+  _getCityView(String name,{bool isLocation = false}){
+    return Container(
+      width: 56.w,
+      padding: EdgeInsets.symmetric(vertical:14.w ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(4.w),
+        border: Border.all(color: const Color(0xFFEEEEEE),width: 1.w),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(name,style: Theme.of(context).textTheme.subtitle2,)
+        ],
       ),
     );
   }
@@ -119,7 +146,7 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
                 Text(" 成都市"),
               ],
             )),
-        Divider(
+        const Divider(
           height: .0,
         ),
         Expanded(
@@ -143,9 +170,28 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
             },
             indexBarData: SuspensionUtil.getTagIndexList(cityList),
             indexBarOptions: IndexBarOptions(
+
               needRebuild: true,
               color: Colors.transparent,
-              downColor: Color(0xFFEEEEEE),
+              downColor: const Color(0xFFEEEEEE),
+
+              indexHintDecoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Assets.icons.barBubbleGray.path),
+                  fit: BoxFit.contain,
+                ),
+              ),
+              selectTextStyle: const TextStyle(
+                  fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500),
+              selectItemDecoration:
+              const BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor),
+              indexHintAlignment: Alignment.centerRight,
+              indexHintChildAlignment: Alignment.center,
+              indexHintTextStyle: TextStyle(fontSize: 40.sp, color: Colors.black87),
+
+              indexHintOffset: const Offset(-10, 0),
+              indexHintWidth: 100.w,
+              indexHintHeight: 100.w,
               localImages: [imgFavorite], //local images.
             ),
           ),

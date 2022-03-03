@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:ui';
 
+import 'package:cloud_car/base/base_style.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class _DropDownHeadWidgetState extends State<DropDownHeadWidget>
     Icon iconData;
     if (shAnimation.isCompleted) {
       headTextStyle =
-          TextStyle(fontSize: widget.headFontSize, color: Colors.blue);
+          TextStyle(fontSize: widget.headFontSize, color: kPrimaryColor);
       iconData = Icon(
 
         widget.iconData??Icons.arrow_drop_down_sharp,

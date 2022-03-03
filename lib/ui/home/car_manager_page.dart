@@ -93,7 +93,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
               //Widget Function(BuildContext context, int index)
               return GestureDetector(
                 onTap: (){
-                  Get.to(()=>const DropDownPage());
+                  Get.to(()=>const DirectSaleManagerPage());
                 },
                 child: const ManagerContainerItem(
                   text: '在售',
