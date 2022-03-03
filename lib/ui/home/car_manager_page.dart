@@ -1,9 +1,6 @@
-import 'package:cloud_car/base/base_style.dart';
-import 'package:cloud_car/utils/drop_down_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

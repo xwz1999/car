@@ -28,7 +28,6 @@ class CarItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.w),
         color: kForeGroundColor,
       ),
-
       padding: EdgeInsets.symmetric(vertical: 28.w, horizontal: 32.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

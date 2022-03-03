@@ -1,23 +1,15 @@
-import 'dart:ffi';
-import 'dart:ui';
 
-import 'package:cloud_car/base/base_style.dart';
-import 'package:flutter/animation.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// @description 作用:多级筛选item
-/// @date: 2021/10/14
-/// @author:卢融霜
 class DropDownHeadWidget extends StatefulWidget {
-  String title;
-  bool isForward;
-  Function onClick;
-  double headFontSize;
-  IconData? iconData;
+  final String title;
+  final bool isForward;
+  final Function onClick;
+  final double headFontSize;
+  final IconData? iconData;
 
-  DropDownHeadWidget(this.title, this.isForward, this.onClick,
+  const DropDownHeadWidget(this.title, this.isForward, this.onClick,
       {this.headFontSize = 12.0, this.iconData = Icons.arrow_drop_down_outlined, key})
       : super(key: key);
 

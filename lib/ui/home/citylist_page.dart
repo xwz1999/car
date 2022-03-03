@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:azlistview/azlistview.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/utils.dart';
@@ -11,16 +10,16 @@ import 'models.dart';
 
 typedef CityCallback = Function(String city);
 
-class CityListCustomHeaderPage extends StatefulWidget {
+class CityListPage extends StatefulWidget {
    final CityCallback cityCallback;
 
-  const CityListCustomHeaderPage({Key? key, required this.cityCallback}) : super(key: key);
+  const CityListPage({Key? key, required this.cityCallback}) : super(key: key);
   @override
-  _CityListCustomHeaderPageState createState() =>
-      _CityListCustomHeaderPageState();
+  _CityListPageState createState() =>
+      _CityListPageState();
 }
 
-class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
+class _CityListPageState extends State<CityListPage> {
   List<CityModel> cityList = [];
   double susItemHeight = 36;
   String imgFavorite = Assets.icons.barToTop.path;
@@ -91,6 +90,7 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
         children: [
 
           GridView.builder(
+            shrinkWrap: true,
             padding: EdgeInsets.zero,
             itemCount: hotCityList.length,
             //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget

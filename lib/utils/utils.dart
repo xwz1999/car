@@ -17,6 +17,7 @@ class Utils {
     );
   }
 
+  ///列表里的字母头
   static Widget getSusItem(BuildContext context, String tag,
       {double susHeight = 40}) {
     if (tag == '★') {

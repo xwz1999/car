@@ -2,6 +2,7 @@
 /// *****************************************************
 ///  FlutterGen
 /// *****************************************************
+
 import 'package:flutter/widgets.dart';
 
 class $AssetsDataGen {
@@ -14,6 +15,10 @@ class $AssetsIconsGen {
   const $AssetsIconsGen();
 
   AssetGenImage get back => const AssetGenImage('assets/icons/back.png');
+  AssetGenImage get barBubbleGray =>
+      const AssetGenImage('assets/icons/bar_bubble_gray.png');
+  AssetGenImage get barToTop =>
+      const AssetGenImage('assets/icons/bar_toTop.png');
   AssetGenImage get carAgent =>
       const AssetGenImage('assets/icons/car_agent.png');
   AssetGenImage get carMaintain =>
@@ -41,6 +46,10 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/customer_track.png');
   AssetGenImage get homeShare =>
       const AssetGenImage('assets/icons/home_share.png');
+  AssetGenImage get icFavorite1 =>
+      const AssetGenImage('assets/icons/ic_favorite1.png');
+  AssetGenImage get icLocation =>
+      const AssetGenImage('assets/icons/ic_location.png');
   AssetGenImage get mainMenu =>
       const AssetGenImage('assets/icons/main_menu.png');
   AssetGenImage get mainSearch =>

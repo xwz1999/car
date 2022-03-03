@@ -1,45 +1,40 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cloud_car/utils/headers.dart';
 
 import 'drop_down_head_widget.dart';
 
-/// @description 作用:多级筛选
-/// @date: 2021/10/14
-/// @author:卢融霜
+
 class DropDownWidget extends StatefulWidget {
   //标题集合
-  List<String> titles;
+  final List<String> titles;
 
   //展开视图集合
-  List<Widget> listWidget;
-
+  final List<Widget> listWidget;
   // 高度
-  double height;
+  final double height;
 
-  //子集
-  Widget child;
+ //子集
+  final Widget child;
 
-  ///筛选
-  String? screen;
+///筛选
+  final String? screen;
 
-  //筛选文字大小
-  double headFontSize;
+//筛选文字大小
+  final double headFontSize;
 
   // 筛选图标icons
-  IconData? iconData;
+  final IconData? iconData;
 
   //筛选高度 限制
   // BoxConstraints constraints;
-  double bottomHeight;
+  final double bottomHeight;
 
-  ScreenControl screenControl;
+  final ScreenControl screenControl;
 
-  DropDownWidget(this.titles, this.listWidget,
+  final void onTap;
+
+  const DropDownWidget(this.titles, this.listWidget,
       {required this.child,
         this.height = 42,
         required this.headFontSize,
@@ -47,7 +42,7 @@ class DropDownWidget extends StatefulWidget {
         required this.bottomHeight,
         required this.screenControl,
         this.screen,
-        Key? key})
+        Key? key, this.onTap})
       : super(key: key);
 
   @override
@@ -112,6 +107,9 @@ class _DropDownWidgetState extends State<DropDownWidget>
     widget.titles.toList().forEach((element) {
       rotateState.add(false);
     });
+    if (kDebugMode) {
+      print(widget.headFontSize);
+    }
   }
 
   @override
@@ -184,15 +182,20 @@ class _DropDownWidgetState extends State<DropDownWidget>
     if(widget.screen!=null){
       widgets.add(Expanded(
           flex: 1,
-          child: Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              height: double.infinity,
-              padding: EdgeInsets.only(left: 5.r, right: 5.r),
-              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('筛选', style: TextStyle(
-                    fontSize: widget.headFontSize, color: const Color(0xff333333))),
-              ]))));
+          child: GestureDetector(
+            onTap: (){
+              widget.onTap;
+            },
+            child: Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                height: double.infinity,
+                padding: EdgeInsets.only(left: 5.r, right: 5.r),
+                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text('筛选', style: TextStyle(
+                      fontSize: widget.headFontSize, color: const Color(0xff333333))),
+                ])),
+          )));
     }
     return widgets;
   }
@@ -228,7 +231,11 @@ class _DropDownWidgetState extends State<DropDownWidget>
       child: Container(
         width: double.infinity,
         //constraints: const BoxConstraints(maxHeight: double.infinity),
-        color: Colors.white,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(bottom:Radius.circular(16.w)),
+          color: Colors.white,
+        ),
+
         child: widget.listWidget[tabIndex],
       ),
     );

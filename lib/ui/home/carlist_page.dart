@@ -8,18 +8,18 @@ import 'package:lpinyin/lpinyin.dart';
 
 import 'models.dart';
 
-typedef CityCallback = Function(String city);
+typedef CarCallback = Function(String city);
 
-class CityListPage extends StatefulWidget {
-   final CityCallback cityCallback;
+class CarListPage extends StatefulWidget {
+   final CarCallback carCallback;
 
-  const CityListPage({Key? key, required this.cityCallback}) : super(key: key);
+  const CarListPage({Key? key, required this.carCallback}) : super(key: key);
   @override
-  _CityListPageState createState() =>
-      _CityListPageState();
+  _CarListPageState createState() =>
+      _CarListPageState();
 }
 
-class _CityListPageState extends State<CityListPage> {
+class _CarListPageState extends State<CarListPage> {
   List<CityModel> cityList = [];
   double susItemHeight = 36;
   String imgFavorite = Assets.icons.barToTop.path;
@@ -76,26 +76,26 @@ class _CityListPageState extends State<CityListPage> {
   Widget _buildHeader() {
     List<CityModel> hotCityList = [];
     hotCityList.addAll([
-      CityModel(name: "北京市"),
-      CityModel(name: "广州市"),
-      CityModel(name: "成都市"),
-      CityModel(name: "深圳市"),
-      CityModel(name: "杭州市"),
-      CityModel(name: "武汉市"),
+      CityModel(name: "奥迪"),
+      CityModel(name: "奔驰"),
+      CityModel(name: "宝马"),
+      CityModel(name: "雷克萨斯"),
+      CityModel(name: "沃尔沃"),
     ]);
-    hotCityList.insert(0, CityModel(name: "宁波市"));
+
     return
 
       Column(
         children: [
 
           GridView.builder(
+            shrinkWrap: true,
             padding: EdgeInsets.zero,
-            itemCount: hotCityList.length,
+            itemCount: 5,
             //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               //横轴元素个数
-                crossAxisCount: 4,
+                crossAxisCount: 5,
                 //纵轴间距
                 mainAxisSpacing: 6,
                 //横轴间距

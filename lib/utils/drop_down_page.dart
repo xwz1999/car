@@ -1,5 +1,4 @@
 
-import 'package:cloud_car/ui/home/citylist_custom_header_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'drop_down_widget.dart';
@@ -21,7 +20,7 @@ class _DropDownPageState extends State<DropDownPage> {
   @override
   void initState() {
     listWidget = [
-      CityListCustomHeaderPage(),
+      // CityListCustomHeaderPage(),
       // Row(
       //   children: [
       //     Expanded(
@@ -184,7 +183,7 @@ class _DropDownPageState extends State<DropDownPage> {
           height: 40.w,
           bottomHeight: 400.w,
           screenControl: screenControl,
-          headFontSize: 28.sp,
+          headFontSize: 48.sp,
           child: Container(
             margin: EdgeInsets.only(top: 40.w),
             child: ListView.builder(itemBuilder: (context, index) {

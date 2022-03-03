@@ -380,13 +380,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.9.0"
-  gzx_dropdown_menu:
-    dependency: "direct main"
-    description:
-      name: gzx_dropdown_menu
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.1.0"
   hive:
     dependency: "direct main"
     description:
@@ -513,6 +506,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.12.11"
+  material_color_utilities:
+    dependency: transitive
+    description:
+      name: material_color_utilities
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.3"
   meta:
     dependency: transitive
     description:
@@ -860,7 +860,7 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.4.3"
+    version: "0.4.8"
   time:
     dependency: transitive
     description:

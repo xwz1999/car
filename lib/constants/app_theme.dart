@@ -6,7 +6,6 @@ class AppTheme {
   static ThemeData get theme {
     return ThemeData(primarySwatch: Colors.blue).copyWith(
       primaryColor: const Color(0xFF027AFF),
-      accentColor: const Color(0xFF027AFF),
       textTheme: ThemeData.light().textTheme.copyWith(
             headline3: TextStyle(
               fontSize: 40.sp,
@@ -118,7 +117,7 @@ class AppTheme {
         ),
       ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      dividerColor: const Color(0xFFE8E8E8),
+      dividerColor: const Color(0xFFE8E8E8), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFF027AFF)),
     );
   }
 }
