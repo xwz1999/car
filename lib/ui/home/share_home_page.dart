@@ -1,4 +1,5 @@
 import 'package:cloud_car/ui/home/search_page.dart';
+import 'package:cloud_car/ui/home/share_car_page.dart';
 import 'package:cloud_car/ui/home/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -133,7 +134,7 @@ class _ShareHomePageState extends State<ShareHomePage>
   _customer(){
     return GestureDetector(
       onTap: () async{
-
+        Get.to(()=>ShareCarPage());
       },
       child: Container(
         width: 72.w,

@@ -1,26 +1,36 @@
-import 'package:json_annotation/json_annotation.dart';
-part 'CarItemModel.g.dart';
-
-
-@JsonSerializable()
 class CarItemModel {
-  final String name;
-  final String time;
-  final String distance;
-  final String standard;
-  final String url;
-  final String price;
+ String? name;
+  String? time;
+  String? distance;
+  String? standard;
+  String? url;
+  String? price;
 
+  CarItemModel(
+      {this.name,
+        this.time,
+        this.distance,
+        this.standard,
+        this.url,
+        this.price});
 
-    factory CarItemModel.fromJson(Map<String, dynamic> json) =>_$CarItemModelFromJson(json);
-    Map<String,dynamic> toJson()=> _$CarItemModelToJson(this);
+  CarItemModel.fromJson(Map<String, dynamic> json,) {
+    name = json['name'];
+    time = json['time'];
+    distance = json['distance'];
+    standard = json['standard'];
+    url = json['url'];
+    price = json['price'];
+  }
 
-  const CarItemModel({
-    required this.name,
-    required this.time,
-    required this.distance,
-    required this.standard,
-    required this.url,
-    required this.price,
-  });
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['time'] = this.time;
+    data['distance'] = this.distance;
+    data['standard'] = this.standard;
+    data['url'] = this.url;
+    data['price'] = this.price;
+    return data;
+  }
 }
