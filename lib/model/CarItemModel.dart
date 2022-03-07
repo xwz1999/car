@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'CarItemModel.g.dart';
 
+part 'CarItemModel.g.dart';
 
 @JsonSerializable()
 class CarItemModel {
@@ -11,9 +11,8 @@ class CarItemModel {
   final String url;
   final String price;
 
-
-    factory CarItemModel.fromJson(Map<String, dynamic> json) =>_$CarItemModelFromJson(json);
-    Map<String,dynamic> toJson()=> _$CarItemModelToJson(this);
+  factory CarItemModel.fromJson(Map<String, dynamic> json) =>
+      _$CarItemModelFromJson(json);
 
   const CarItemModel({
     required this.name,
