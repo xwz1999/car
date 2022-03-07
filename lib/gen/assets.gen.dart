@@ -3,80 +3,149 @@
 ///  FlutterGen
 /// *****************************************************
 
+// ignore_for_file: directives_ordering,unnecessary_import
+
 import 'package:flutter/widgets.dart';
 
 class $AssetsDataGen {
   const $AssetsDataGen();
 
+  /// File path: assets/data/china.json
   String get china => 'assets/data/china.json';
 }
 
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/back.png
   AssetGenImage get back => const AssetGenImage('assets/icons/back.png');
+
+  /// File path: assets/icons/bar_bubble_gray.png
   AssetGenImage get barBubbleGray =>
       const AssetGenImage('assets/icons/bar_bubble_gray.png');
+
+  /// File path: assets/icons/bar_toTop.png
   AssetGenImage get barToTop =>
       const AssetGenImage('assets/icons/bar_toTop.png');
+
+  /// File path: assets/icons/car_agent.png
   AssetGenImage get carAgent =>
       const AssetGenImage('assets/icons/car_agent.png');
+
+  /// File path: assets/icons/car_maintain.png
   AssetGenImage get carMaintain =>
       const AssetGenImage('assets/icons/car_maintain.png');
+
+  /// File path: assets/icons/car_manager.png
   AssetGenImage get carManager =>
       const AssetGenImage('assets/icons/car_manager.png');
+
+  /// File path: assets/icons/car_mortgage.png
   AssetGenImage get carMortgage =>
       const AssetGenImage('assets/icons/car_mortgage.png');
+
+  /// File path: assets/icons/car_push.png
   AssetGenImage get carPush => const AssetGenImage('assets/icons/car_push.png');
+
+  /// File path: assets/icons/car_recovery.png
   AssetGenImage get carRecovery =>
       const AssetGenImage('assets/icons/car_recovery.png');
+
+  /// File path: assets/icons/car_valuation.png
   AssetGenImage get carValuation =>
       const AssetGenImage('assets/icons/car_valuation.png');
+
+  /// File path: assets/icons/customer_care.png
   AssetGenImage get customerCare =>
       const AssetGenImage('assets/icons/customer_care.png');
+
+  /// File path: assets/icons/customer_invite.png
   AssetGenImage get customerInvite =>
       const AssetGenImage('assets/icons/customer_invite.png');
+
+  /// File path: assets/icons/customer_manager.png
   AssetGenImage get customerManager =>
       const AssetGenImage('assets/icons/customer_manager.png');
+
+  /// File path: assets/icons/customer_message.png
   AssetGenImage get customerMessage =>
       const AssetGenImage('assets/icons/customer_message.png');
+
+  /// File path: assets/icons/customer_pay.png
   AssetGenImage get customerPay =>
       const AssetGenImage('assets/icons/customer_pay.png');
+
+  /// File path: assets/icons/customer_track.png
   AssetGenImage get customerTrack =>
       const AssetGenImage('assets/icons/customer_track.png');
+
+  /// File path: assets/icons/home_share.png
   AssetGenImage get homeShare =>
       const AssetGenImage('assets/icons/home_share.png');
+
+  /// File path: assets/icons/ic_favorite1.png
   AssetGenImage get icFavorite1 =>
       const AssetGenImage('assets/icons/ic_favorite1.png');
+
+  /// File path: assets/icons/ic_location.png
   AssetGenImage get icLocation =>
       const AssetGenImage('assets/icons/ic_location.png');
+
+  /// File path: assets/icons/ic_share.png
   AssetGenImage get icShare => const AssetGenImage('assets/icons/ic_share.png');
+
+  /// File path: assets/icons/main_menu.png
   AssetGenImage get mainMenu =>
       const AssetGenImage('assets/icons/main_menu.png');
+
+  /// File path: assets/icons/main_search.png
   AssetGenImage get mainSearch =>
       const AssetGenImage('assets/icons/main_search.png');
+
+  /// File path: assets/icons/tab_car.png
   AssetGenImage get tabCar => const AssetGenImage('assets/icons/tab_car.png');
+
+  /// File path: assets/icons/tab_car_choose.png
   AssetGenImage get tabCarChoose =>
       const AssetGenImage('assets/icons/tab_car_choose.png');
+
+  /// File path: assets/icons/tab_home.png
   AssetGenImage get tabHome => const AssetGenImage('assets/icons/tab_home.png');
+
+  /// File path: assets/icons/tab_home_choose.png
   AssetGenImage get tabHomeChoose =>
       const AssetGenImage('assets/icons/tab_home_choose.png');
+
+  /// File path: assets/icons/tab_my.png
   AssetGenImage get tabMy => const AssetGenImage('assets/icons/tab_my.png');
+
+  /// File path: assets/icons/tab_my_choose.png
   AssetGenImage get tabMyChoose =>
       const AssetGenImage('assets/icons/tab_my_choose.png');
+
+  /// File path: assets/icons/tab_notice.png
   AssetGenImage get tabNotice =>
       const AssetGenImage('assets/icons/tab_notice.png');
+
+  /// File path: assets/icons/tab_notice_choose.png
   AssetGenImage get tabNoticeChoose =>
       const AssetGenImage('assets/icons/tab_notice_choose.png');
+
+  /// File path: assets/icons/warning.png
   AssetGenImage get warning => const AssetGenImage('assets/icons/warning.png');
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/banner_bg.png
   AssetGenImage get bannerBg =>
       const AssetGenImage('assets/images/banner_bg.png');
+
+  /// File path: assets/images/home_bg.png
   AssetGenImage get homeBg => const AssetGenImage('assets/images/home_bg.png');
+
+  /// File path: assets/images/login_bg.png
   AssetGenImage get loginBg =>
       const AssetGenImage('assets/images/login_bg.png');
 }

@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+=======
+import 'package:json_annotation/json_annotation.dart';
+
+part 'CarItemModel.g.dart';
+
+@JsonSerializable()
+>>>>>>> 544b95c5892a0e6efa89f18f0dc80d87d1dcd01f
 class CarItemModel {
  String? name;
   String? time;
@@ -6,6 +14,7 @@ class CarItemModel {
   String? url;
   String? price;
 
+<<<<<<< HEAD
   CarItemModel(
       {this.name,
         this.time,
@@ -34,3 +43,17 @@ class CarItemModel {
     return data;
   }
 }
+=======
+  factory CarItemModel.fromJson(Map<String, dynamic> json) =>
+      _$CarItemModelFromJson(json);
+
+  const CarItemModel({
+    required this.name,
+    required this.time,
+    required this.distance,
+    required this.standard,
+    required this.url,
+    required this.price,
+  });
+}
+>>>>>>> 544b95c5892a0e6efa89f18f0dc80d87d1dcd01f
