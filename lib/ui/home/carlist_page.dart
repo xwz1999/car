@@ -114,7 +114,7 @@ class _CarListPageState extends State<CarListPage> {
 
   _getCityView(String name,{bool isLocation = false}){
     return Container(
-      width: 56.w,
+      width: 54.w,
       padding: EdgeInsets.symmetric(vertical:14.w ),
       decoration: BoxDecoration(
         color: Colors.white,

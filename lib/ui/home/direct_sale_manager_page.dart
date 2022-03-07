@@ -1,10 +1,13 @@
+import 'package:cloud_car/ui/home/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
-import 'package:cloud_car/widget/cloud_back_button.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../widget/custom_drawer.dart';
 import '../../widget/screen_widget.dart';
+import '../../widget/sort_widget.dart';
 import 'carlist_page.dart';
 import 'citylist_page.dart';
 
@@ -82,10 +85,11 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
-          childAspectRatio: 144 / 56,
+
           callback: (String item) {
             print(item+'1231232');
           },
+          childAspectRatio: 144 / 56,
           mainAxisSpacing: 10.w,
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
@@ -135,19 +139,11 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        endDrawer: Container(
-          margin: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / 4, top: 0),
-          color: Colors.white,
-//        child: Container(color: Colors.red,child: Padding(
-//          padding: const EdgeInsets.all(8.0),
-//          child: TextField(),
-//        ),),
-          child: ListView(
-            children: const <Widget>[
-              TextField(),
-            ],
-          ),
+        endDrawer: CustomDrawer(
+          widthPercent: 0.86,
+          backgroundColor: Colors.white,
+          callback: (bool isOpened) {  },
+          child:_getSortList()
         ),
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
@@ -182,8 +178,18 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
             ),
           ),
           screen: '筛选',
-          onTap: _scaffoldKey.currentState?.openEndDrawer(),
+          onTap:(){
+            screenControl.screenHide();
+            _scaffoldKey.currentState?.openEndDrawer();
+            print('筛选');
+          },
         ));
+  }
+
+  _getSortList(){
+    return SortListPage(callback: (ChooseItem item) {
+      print(item.name+'123123');
+    },);
   }
 
   getTitle(String title) {

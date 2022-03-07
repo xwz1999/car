@@ -1,12 +1,16 @@
+import 'dart:typed_data';
+
+import 'package:cloud_car/ui/home/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
+import 'package:cloud_car/ui/home/share_home_page.dart';
 import 'package:cloud_car/ui/home/task_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
-
 import 'car_manager_page.dart';
 import 'home_title.dart';
 
@@ -194,7 +198,9 @@ class _HomePageState extends State<HomePage>
         HomeTitle(
           title: '快速分享',
           suffixTitle: '查看全部',
-          onTap: () {},
+          onTap: () {
+            Get.to(()=>const ShareHomePage());
+          },
         ),
         12.hb,
         Container(
@@ -231,7 +237,9 @@ class _HomePageState extends State<HomePage>
         HomeTitle(
           title: '海报',
           suffixTitle: '查看全部',
-          onTap: () {},
+          onTap: () {
+            Get.to(()=>PosterEditPage());
+          },
         ),
         12.hb,
         Container(
@@ -251,6 +259,8 @@ class _HomePageState extends State<HomePage>
                 child: Builder(
                   builder: (context) {
                     return _posterItem();
+                      
+                      
                   },
                 ),
               );
@@ -327,9 +337,10 @@ class _HomePageState extends State<HomePage>
       width: 240.w,
       height: 360.w,
 
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.w), color: Colors.lightBlue,),
-      //child: Image.asset(R.ASSETS_IMAGES_BANNER_BG_PNG,width: 240.w,height: 360.w,),
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.w), color: Colors.lightBlue,),
+        //child: Image.asset(R.ASSETS_IMAGES_BANNER_BG_PNG,width: 240.w,height: 360.w,),
+
     );
   }
   _getTextView(String text){

@@ -32,7 +32,7 @@ class DropDownWidget extends StatefulWidget {
 
   final ScreenControl screenControl;
 
-  final void onTap;
+  final VoidCallback? onTap;
 
   const DropDownWidget(this.titles, this.listWidget,
       {required this.child,
@@ -77,7 +77,7 @@ List<bool> rotateState = [];
 
 
 class _DropDownWidgetState extends State<DropDownWidget>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin{
   int tabIndex = 0;
   final ScreenControl _screenControl = ScreenControl();
   bool showBottom = false;
@@ -120,6 +120,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Stack(
       children: [
         Container(
@@ -183,9 +184,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
       widgets.add(Expanded(
           flex: 1,
           child: GestureDetector(
-            onTap: (){
-              widget.onTap;
-            },
+            onTap: widget.onTap!,
             child: Container(
                 alignment: Alignment.center,
                 width: double.infinity,
@@ -240,5 +239,9 @@ class _DropDownWidgetState extends State<DropDownWidget>
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 

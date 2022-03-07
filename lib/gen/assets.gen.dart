@@ -50,6 +50,7 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/ic_favorite1.png');
   AssetGenImage get icLocation =>
       const AssetGenImage('assets/icons/ic_location.png');
+  AssetGenImage get icShare => const AssetGenImage('assets/icons/ic_share.png');
   AssetGenImage get mainMenu =>
       const AssetGenImage('assets/icons/main_menu.png');
   AssetGenImage get mainSearch =>
