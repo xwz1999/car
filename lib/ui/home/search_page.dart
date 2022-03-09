@@ -1,15 +1,12 @@
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/hive_store.dart';
 import 'package:cloud_car/utils/text_utils.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-
-
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -19,11 +16,13 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<String> _searchHistory = [];///搜索记录列表
+  List<String> _searchHistory = [];
+
+  ///搜索记录列表
 
   List<dynamic>? data;
   late FocusNode _contentFocusNode;
-  // late EasyRefreshController _refreshController;
+  late EasyRefreshController _refreshController;
   late TextEditingController _editingController;
   String _searchText = "";
   @override
@@ -51,15 +50,12 @@ class _SearchPageState extends State<SearchPage> {
       appbar: _getAppbar(),
       extendBody: true,
       body: Column(
-        children: [
-          _hotListWidget()
-        ],
+        children: [_hotListWidget()],
       ),
     );
   }
 
-
-  _getAppbar(){
+  _getAppbar() {
     return Container(
       color: Colors.transparent,
       height: kToolbarHeight + MediaQuery.of(context).padding.top,
@@ -68,8 +64,9 @@ class _SearchPageState extends State<SearchPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-
-          const CloudBackButton(isSpecial: true,),
+          const CloudBackButton(
+            isSpecial: true,
+          ),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(36.w),
@@ -91,13 +88,10 @@ class _SearchPageState extends State<SearchPage> {
               },
               focusNode: _contentFocusNode,
               onChanged: (text) {
-
                 _searchText = text;
                 setState(() {});
               },
-              onTap: () {
-
-              },
+              onTap: () {},
               onSubmitted: (_submitted) async {
                 if (TextUtils.isEmpty(_searchText)) return;
 
@@ -117,7 +111,6 @@ class _SearchPageState extends State<SearchPage> {
               controller: _editingController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(left: 20.w),
-                
                 filled: true,
                 fillColor: Colors.white,
                 hintText: "请输入想要搜索的内容...",
@@ -125,26 +118,26 @@ class _SearchPageState extends State<SearchPage> {
                     color: Colors.grey.shade500,
                     fontSize: 14,
                     fontWeight: FontWeight.w300),
-
-                prefixIcon: const Icon(CupertinoIcons.search,size: 16,),
-                enabledBorder:   UnderlineInputBorder( //
+                prefixIcon: const Icon(
+                  CupertinoIcons.search,
+                  size: 16,
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  //
                   // 不是焦点的时候颜色
                   borderRadius: BorderRadius.circular(36.w),
                   borderSide: const BorderSide(
                     color: kForeGroundColor,
                   ),
                 ),
-                focusedBorder:   UnderlineInputBorder( // 焦点集中的时候颜色
+                focusedBorder: UnderlineInputBorder(
+                  // 焦点集中的时候颜色
                   borderRadius: BorderRadius.circular(36.w),
-                  borderSide: const BorderSide(
-                      color: kForeGroundColor
-                  ),
+                  borderSide: const BorderSide(color: kForeGroundColor),
                 ),
-
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(36.w),
-                  borderSide: const BorderSide(color: kForeGroundColor)
-                ),
+                    borderRadius: BorderRadius.circular(36.w),
+                    borderSide: const BorderSide(color: kForeGroundColor)),
               ),
             ),
           ),
@@ -159,9 +152,8 @@ class _SearchPageState extends State<SearchPage> {
               saveSearchListToSharedPreferences(_searchHistory);
 
               setState(() {});
-
             },
-            child:Text('搜索',
+            child: Text('搜索',
                 style: TextStyle(
                     color: BaseStyle.color111111,
                     fontWeight: FontWeight.bold,
@@ -173,9 +165,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-
   ///搜索记录
-
 
   ///保存搜索记录
   remember() {
@@ -196,7 +186,6 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {});
   }
 
-
   _hotListWidget() {
     List<Widget> choiceChipList = [];
     if (_searchHistory.isNotEmpty) {
@@ -208,7 +197,7 @@ class _SearchPageState extends State<SearchPage> {
             // disabledColor: Colors.blue,
             labelStyle: TextStyle(fontSize: 15 * 2.sp, color: Colors.black),
             labelPadding: const EdgeInsets.only(left: 16, right: 16),
-            shape:  RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4),
               //side: BorderSide(color: Colors.black, width: 0.5),
             ),
@@ -225,7 +214,7 @@ class _SearchPageState extends State<SearchPage> {
       }
     }
 
-    return  Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -237,10 +226,9 @@ class _SearchPageState extends State<SearchPage> {
                 Text(
                   '历史搜索',
                   style: TextStyle(
-                    color: BaseStyle.color333333,
-                    fontSize: BaseStyle.fontSize32,
-                    fontWeight: FontWeight.bold
-                  ),
+                      color: BaseStyle.color333333,
+                      fontSize: BaseStyle.fontSize32,
+                      fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
                 36.wb,
@@ -260,12 +248,9 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-
-
   ///获取搜索记录
   getSearchListFromSharedPreferences() async {
-    _searchHistory = HiveStore.appBox!.get("userSearhHistory") ??
-        [];
+    _searchHistory = HiveStore.appBox!.get("userSearhHistory") ?? [];
     if (_searchHistory.isEmpty) {
       _searchHistory = [];
     }
@@ -274,11 +259,6 @@ class _SearchPageState extends State<SearchPage> {
 
   ///保存搜索记录 通过用户id保存
   saveSearchListToSharedPreferences(List<String> value) async {
-
-    HiveStore.appBox!.put(
-        "userSearhHistory",
-        value);
+    HiveStore.appBox!.put("userSearhHistory", value);
   }
-
 }
-

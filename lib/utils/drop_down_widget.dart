@@ -1,9 +1,8 @@
+import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_car/utils/headers.dart';
 
 import 'drop_down_head_widget.dart';
-
 
 class DropDownWidget extends StatefulWidget {
   //标题集合
@@ -14,10 +13,10 @@ class DropDownWidget extends StatefulWidget {
   // 高度
   final double height;
 
- //子集
+  //子集
   final Widget child;
 
-///筛选
+  ///筛选
   final String? screen;
 
 //筛选文字大小
@@ -36,18 +35,20 @@ class DropDownWidget extends StatefulWidget {
 
   const DropDownWidget(this.titles, this.listWidget,
       {required this.child,
-        this.height = 42,
-        required this.headFontSize,
-        this.iconData,
-        required this.bottomHeight,
-        required this.screenControl,
-        this.screen,
-        Key? key, this.onTap})
+      this.height = 42,
+      required this.headFontSize,
+      this.iconData,
+      required this.bottomHeight,
+      required this.screenControl,
+      this.screen,
+      Key? key,
+      this.onTap})
       : super(key: key);
 
   @override
   _DropDownWidgetState createState() => _DropDownWidgetState();
 }
+
 class ScreenControl {
   //自动
   void autoDisplay() {
@@ -70,20 +71,17 @@ class ScreenControl {
     rotateState = rotateState.map((e) => false).toList();
   }
 }
+
 late AnimationController _controller;
 late Animation<double> curve;
 //按钮旋转状态
 List<bool> rotateState = [];
 
-
 class _DropDownWidgetState extends State<DropDownWidget>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin{
+    with SingleTickerProviderStateMixin {
   int tabIndex = 0;
   final ScreenControl _screenControl = ScreenControl();
   bool showBottom = false;
-
-
-
 
   @override
   void initState() {
@@ -107,9 +105,6 @@ class _DropDownWidgetState extends State<DropDownWidget>
     widget.titles.toList().forEach((element) {
       rotateState.add(false);
     });
-    if (kDebugMode) {
-      print(widget.headFontSize);
-    }
   }
 
   @override
@@ -120,16 +115,15 @@ class _DropDownWidgetState extends State<DropDownWidget>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Stack(
       children: [
         Container(
           alignment: Alignment.center,
           height: widget.height,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.w)),
-            color: Colors.white
-             ),
+              border: Border(
+                  bottom: BorderSide(
+                      color: const Color(0xffe4e7ed), width: 0.4.r))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: getScreenTitle(),
@@ -150,7 +144,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
             child: DropDownHeadWidget(
               widget.titles[i],
               getRoState(i),
-                  () {
+              () {
                 if (kDebugMode) {
                   print("click${rotateState.length}");
                 }
@@ -171,7 +165,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
                 });
               },
               headFontSize: widget.headFontSize,
-              iconData: widget.iconData??Icons.arrow_drop_down_outlined,
+              iconData: widget.iconData ?? Icons.arrow_drop_down_outlined,
             )));
       }
     } else {
@@ -180,21 +174,21 @@ class _DropDownWidgetState extends State<DropDownWidget>
         style: TextStyle(fontSize: 14.sp),
       ));
     }
-    if(widget.screen!=null){
+    if (widget.screen != null) {
       widgets.add(Expanded(
           flex: 1,
-          child: GestureDetector(
-            onTap: widget.onTap!,
-            child: Container(
-                alignment: Alignment.center,
-                width: double.infinity,
-                height: double.infinity,
-                padding: EdgeInsets.only(left: 5.r, right: 5.r),
-                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text('筛选', style: TextStyle(
-                      fontSize: widget.headFontSize, color: const Color(0xff333333))),
-                ])),
-          )));
+          child: Container(
+              alignment: Alignment.center,
+              width: double.infinity,
+              height: double.infinity,
+              padding: EdgeInsets.only(left: 5.r, right: 5.r),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text('筛选',
+                    style: TextStyle(
+                        fontSize: widget.headFontSize,
+                        color: const Color(0xff333333))),
+              ]))));
     }
     return widgets;
   }
@@ -230,8 +224,9 @@ class _DropDownWidgetState extends State<DropDownWidget>
       child: Container(
         width: double.infinity,
         //constraints: const BoxConstraints(maxHeight: double.infinity),
+        color: Colors.white,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(bottom:Radius.circular(16.w)),
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.w)),
           color: Colors.white,
         ),
 
@@ -244,4 +239,3 @@ class _DropDownWidgetState extends State<DropDownWidget>
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
-

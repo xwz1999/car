@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +9,9 @@ class DropDownHeadWidget extends StatefulWidget {
   final IconData? iconData;
 
   const DropDownHeadWidget(this.title, this.isForward, this.onClick,
-      {this.headFontSize = 12.0, this.iconData = Icons.arrow_drop_down_outlined, key})
+      {this.headFontSize = 12.0,
+      this.iconData = Icons.arrow_drop_down_outlined,
+      key})
       : super(key: key);
 
   @override
@@ -60,10 +61,9 @@ class _DropDownHeadWidgetState extends State<DropDownHeadWidget>
     Icon iconData;
     if (shAnimation.isCompleted) {
       headTextStyle =
-          TextStyle(fontSize: widget.headFontSize, color: kPrimaryColor);
+          TextStyle(fontSize: widget.headFontSize, color: Colors.blue);
       iconData = Icon(
-
-        widget.iconData??Icons.arrow_drop_down_sharp,
+        widget.iconData ?? Icons.arrow_drop_down_sharp,
         color: Colors.blue,
         size: 20.sp,
       );
@@ -72,7 +72,7 @@ class _DropDownHeadWidgetState extends State<DropDownHeadWidget>
       headTextStyle = TextStyle(
           fontSize: widget.headFontSize, color: const Color(0xff333333));
       iconData = Icon(
-        widget.iconData??Icons.arrow_drop_down_sharp,
+        widget.iconData ?? Icons.arrow_drop_down_sharp,
         size: 20.sp,
         color: const Color(0xff333333),
       );

@@ -1,5 +1,5 @@
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,48 +39,51 @@ class _TaskPageState extends State<TaskPage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            _isShow?  Container(
-              height: 72.w,
-              width: double.infinity,
-              color: const Color(0xFFFFEAE4),
-              child: Row(
-                children: [
-                  32.wb,
-                  GestureDetector(
-                    onTap: (){
-                      _isShow = !_isShow;
-                      setState(() {
-
-                      });
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      padding: EdgeInsets.symmetric(vertical: 15.w,horizontal: 20.w),
-                      child: Icon(
-                        CupertinoIcons.clear,
-                        size: 30.w,
-                        color: const Color(0xFFFF3B02),
-                      ),
-                    ),
-                  ),
-                  Image.asset(Assets.icons.warning.path,width: 35.w,height: 35.w,),
-                  5.wb,
-                  Text('点击开启消息通知，不再错过重要消息',
-                      style: TextStyle(
+            _isShow
+                ? Container(
+                    height: 72.w,
+                    width: double.infinity,
+                    color: const Color(0xFFFFEAE4),
+                    child: Row(
+                      children: [
+                        32.wb,
+                        GestureDetector(
+                          onTap: () {
+                            _isShow = !_isShow;
+                            setState(() {});
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15.w, horizontal: 20.w),
+                            child: Icon(
+                              CupertinoIcons.clear,
+                              size: 30.w,
+                              color: const Color(0xFFFF3B02),
+                            ),
+                          ),
+                        ),
+                        Image.asset(
+                          Assets.icons.warning.path,
+                          width: 35.w,
+                          height: 35.w,
+                        ),
+                        5.wb,
+                        Text('点击开启消息通知，不再错过重要消息',
+                            style: TextStyle(
+                              color: const Color(0xFFFF3B02),
+                              fontSize: BaseStyle.fontSize24,
+                            )),
+                        const Spacer(),
+                        Icon(
+                          CupertinoIcons.chevron_forward,
+                          size: 40.w,
                           color: const Color(0xFFFF3B02),
-                          fontSize: BaseStyle.fontSize24,
-                      )),
-                  const Spacer(),
-
-                  Icon(
-                    CupertinoIcons.chevron_forward,
-                    size: 40.w,
-                    color: const Color(0xFFFF3B02),
-                  ),
-                  32.wb,
-                ],
-              )
-            ):const SizedBox(),
+                        ),
+                        32.wb,
+                      ],
+                    ))
+                : const SizedBox(),
             // ListView.separated(
             //     shrinkWrap :true,
             //     //padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
@@ -125,7 +128,9 @@ class _TaskPageState extends State<TaskPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const CloudBackButton(isSpecial: true,),
+          const CloudBackButton(
+            isSpecial: true,
+          ),
           Text('任务中心',
               style: TextStyle(
                   color: BaseStyle.color111111,

@@ -2,7 +2,6 @@
 /// *****************************************************
 ///  FlutterGen
 /// *****************************************************
-
 import 'package:flutter/widgets.dart';
 
 class $AssetsDataGen {
@@ -78,6 +77,17 @@ class $AssetsIconsGen {
   AssetGenImage get tabNoticeChoose =>
       const AssetGenImage('assets/icons/tab_notice_choose.png');
   AssetGenImage get warning => const AssetGenImage('assets/icons/warning.png');
+  AssetGenImage get myorder =>
+      const AssetGenImage('assets/icons/usermyorder.png');
+  AssetGenImage get management =>
+      const AssetGenImage('assets/icons/userstaffmangement.png');
+  AssetGenImage get feedback =>
+      const AssetGenImage('assets/icons/userfeedback.png');
+  AssetGenImage get about => const AssetGenImage('assets/icons/userabout.png');
+  AssetGenImage get product =>
+      const AssetGenImage('asstets/icons/userproduct.png');
+  AssetGenImage get contract =>
+      const AssetGenImage('assets/icons/userview contract.png');
 }
 
 class $AssetsImagesGen {
@@ -90,6 +100,8 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/important_user.png');
   AssetGenImage get loginBg =>
       const AssetGenImage('assets/images/login_bg.png');
+  AssetGenImage get Banner =>
+      const AssetGenImage('assets/images/banner_user.png');
 }
 
 class Assets {

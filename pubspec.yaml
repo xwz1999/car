@@ -38,10 +38,12 @@ dependencies:
   #刷新组件
   flutter_easyrefresh: ^2.2.1
 
+  extended_image: ^3.0.0
+  #下拉框
+  gzx_dropdown_menu: ^3.1.0
   #各种扩展
   velocity_x: ^3.0.0
 
-  extended_image: ^3.0.0
 
   #列表选择器
   azlistview: ^2.0.0
@@ -52,6 +54,8 @@ dependencies:
   github_language_colors:
     git:
       url: git://github.com/Sky24n/github_language_colors.git
+  flutter_swiper: ^1.1.6
+  flutter_swiper_tv: ^1.1.6-nullsafety
 
 
 
@@ -68,10 +72,9 @@ dev_dependencies:
   json_serializable: ^6.1.3
   build_runner: ^2.0.2
   yaml: ^3.1.0
-  pub_semver: ^2.1.0
+  pub_semver: ^2.0.0
   flutter_gen_runner: ^4.1.3
   flutter_lints: ^1.0.0
-
 
 flutter:
 
