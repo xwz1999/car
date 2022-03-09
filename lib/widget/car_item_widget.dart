@@ -10,6 +10,7 @@ class CarItemWidget extends StatelessWidget {
   final String distance;
   final String standard;
   final String url;
+  final EdgeInsetsGeometry widgetPadding;
 
   const CarItemWidget({
     Key? key,
@@ -18,7 +19,7 @@ class CarItemWidget extends StatelessWidget {
     required this.time,
     required this.distance,
     required this.standard,
-    required this.url,
+    required this.url, required this.widgetPadding,
   }) : super(key: key);
 
   @override
@@ -28,6 +29,7 @@ class CarItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.w),
         color: kForeGroundColor,
       ),
+      padding: widgetPadding,
       alignment: Alignment.center,
       child: Row(
         mainAxisSize: MainAxisSize.min,

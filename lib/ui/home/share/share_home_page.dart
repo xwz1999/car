@@ -1,5 +1,5 @@
 import 'package:cloud_car/ui/home/search_page.dart';
-import 'package:cloud_car/ui/home/share_car_page.dart';
+import 'package:cloud_car/ui/home/share/share_car_page.dart';
 import 'package:cloud_car/ui/home/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -8,12 +8,12 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../widget/custom_drawer.dart';
-import '../../widget/custom_floating_action_button_location.dart';
-import '../../widget/screen_widget.dart';
-import '../../widget/sort_widget.dart';
-import 'carlist_page.dart';
-import 'citylist_page.dart';
+import '../../../widget/custom_drawer.dart';
+import '../../../widget/custom_floating_action_button_location.dart';
+import '../../../widget/screen_widget.dart';
+import '../../../widget/sort_widget.dart';
+import '../carlist_page.dart';
+import '../citylist_page.dart';
 
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
@@ -220,9 +220,10 @@ class _ShareHomePageState extends State<ShareHomePage>
       child: Container(
         margin: EdgeInsets.only(top: 80.r),
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 20.w),
           itemBuilder: (context, index) {
             return CarItemWidget(
+              widgetPadding: EdgeInsets.symmetric(vertical: 28.w,horizontal: 24.w),
               name: '奔驰CLE 插电混动 纯电动续航103km',
               time: '2019年5月',
               distance: '20.43万公里',
@@ -260,9 +261,10 @@ class _ShareHomePageState extends State<ShareHomePage>
       child: Container(
         margin: EdgeInsets.only(top: 80.r),
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 20.w),
           itemBuilder: (context, index) {
             return CarItemWidget(
+              widgetPadding: EdgeInsets.symmetric(vertical: 28.w,horizontal: 24.w),
               name: '奔驰CLE 插电混动 纯电动续航103km',
               time: '2019年5月',
               distance: '20.43万公里',
@@ -293,33 +295,6 @@ class _ShareHomePageState extends State<ShareHomePage>
     return Text(text);
   }
 
-  _tabItem(int index, String text) {
-    bool isChoose = index == _tabController.index;
-    return Tab(
-      child: Container(
-        alignment: Alignment.center,
-        width: 200.w,
-
-        // color: Colors.white,
-        color: Colors.transparent,
-        padding: EdgeInsets.only(left: 10.w, right: 10.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              text,
-              style: TextStyle(
-                  fontWeight: isChoose ? FontWeight.bold : FontWeight.normal,
-                  fontSize:  28.sp,
-                  color: _tabController.index == index
-                      ? BaseStyle.color111111
-                      : BaseStyle.color999999),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   _getSortList(){
     return SortListPage(callback: (ChooseItem item) {

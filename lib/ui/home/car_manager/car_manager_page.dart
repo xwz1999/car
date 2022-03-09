@@ -4,8 +4,9 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'assessment_page.dart';
 import 'direct_sale_manager_page.dart';
-import 'manager_container_item.dart';
+import '../manager_container_item.dart';
 
 class CarManagerPage extends StatefulWidget {
   const CarManagerPage({Key? key}) : super(key: key);
@@ -90,7 +91,12 @@ class _CarManagerPageState extends State<CarManagerPage> {
               //Widget Function(BuildContext context, int index)
               return GestureDetector(
                 onTap: (){
-                  Get.to(()=>const DirectSaleManagerPage());
+                  if(text=='评估车辆'){
+                    Get.to(()=>const AssessmentPage());
+                  }else{
+                    Get.to(()=>const DirectSaleManagerPage());
+                  }
+
                 },
                 child: const ManagerContainerItem(
                   text: '在售',

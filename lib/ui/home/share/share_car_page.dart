@@ -1,11 +1,14 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/CarItemModel.dart';
+import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../widget/button/colud_check_radio.dart';
-import '../../widget/car_item_widget.dart';
-import '../../widget/button/cloud_back_button.dart';
+import '../../../widget/button/colud_check_radio.dart';
+import '../../../widget/car_item_widget.dart';
+import '../../../widget/button/cloud_back_button.dart';
 
 typedef CarCallback = Function(String city);
 
@@ -81,9 +84,9 @@ class _ShareCarPageState extends State<ShareCarPage> {
        price: '27.43万',
      ),
    ];
+
    bool get _allSelect =>
        _selectIndex.length == models.length && _selectIndex.length != 0;
-
 
   @override
   void initState() {
@@ -93,6 +96,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: const CloudBackButton(
           isSpecial: true,
@@ -119,19 +123,21 @@ class _ShareCarPageState extends State<ShareCarPage> {
               height: 16.w,
             );
           },
-          itemCount: 6,
+          itemCount: models.length,
         ),
       ),
       bottomNavigationBar: Container(
         width: double.infinity,
         height: 100.w,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            20.wb,
+            50.wb,
             GestureDetector(
               onTap: () {
                 if (_allSelect) {
                   _selectIndex.clear();
+
                   _chooseModels.clear();
                 } else {
                   _selectIndex.clear();
@@ -143,7 +149,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
                 setState(() {});
               },
               child: Container(
-                width: 120.w,
+                width: 50.w,
                 height: 60.w,
                 color: Colors.transparent,
                 alignment: Alignment.center,
@@ -154,40 +160,84 @@ class _ShareCarPageState extends State<ShareCarPage> {
                       height: 44.w,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
+                          color: kPrimaryColor.withOpacity(_allSelect ? 1 : 0),
+
                           borderRadius: BorderRadius.circular(22.w),
-                          border: Border.all(color: Color(0xFFBBBBBB))),
+                        border: Border.all(
+                          color:(_allSelect ? kPrimaryColor : const Color(0xFF979797)),
+                          width: 2.w,
+                        ),),
                       child: AnimatedOpacity(
                         duration: Duration(milliseconds: 500),
                         opacity: _allSelect ? 1 : 0,
-                        child: Container(
-                          width: 24.w,
-                          height: 24.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.w),
-                            color: Color(0xFFE52E2E),
-                          ),
-                        ),
+                        child: Icon(
+                          CupertinoIcons.checkmark,
+                          color: Colors.white,
+                          size: 28.w,
+                        )
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+            10.wb,
+            Text('全选',
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: BaseStyle.fontSize28,
+                    fontWeight: FontWeight.bold)),
             8.wb,
             const Spacer(),
 
-            Container(
-              width: 320.w,
-              height: 72.w,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: <Color>[
-                    Color(0xFF0593FF),
-                    Color(0xFF027AFF),
-                  ],
+            GestureDetector(
+              onTap: (){
+                if(_selectIndex.length<=0){
+                  BotToast.showText(text: '请先选择车辆');
+                }else if(_selectIndex.length==1){
+                  showModalBottomSheet(
+
+                      context: context,
+                      isDismissible: true,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+                      builder: (BuildContext context) {
+                        return  const ShareCarDetailPage(isMore: false,);
+                      });
+                }else{
+                  showModalBottomSheet(
+
+                      context: context,
+                      isDismissible: true,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+                      builder: (BuildContext context) {
+                        return  const ShareCarDetailPage(isMore: true,);
+                      });
+                }
+
+              },
+              child: Container(
+                alignment: Alignment.center,
+                width: 320.w,
+                height: 72.w,
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.w),
+                  gradient: const LinearGradient(
+                    colors: <Color>[
+                      Color(0xFF0593FF),
+                      Color(0xFF027AFF),
+                    ],
+                  ),
                 ),
+                child:        Text('确认分享',
+                    style: TextStyle(
+                        color: kForeGroundColor,
+                        fontSize: BaseStyle.fontSize28,
+                        fontWeight: FontWeight.bold)),
               ),
-            )
+            ),
+            30.wb,
           ],
         ),
       ),
@@ -213,7 +263,10 @@ class _ShareCarPageState extends State<ShareCarPage> {
               } else {
                 _selectIndex.add(index);
                 _chooseModels.add(model);
+
               }
+              print(models.length);
+              print(_selectIndex.length);
               setState(() {});
             },
             child: Container(
@@ -242,6 +295,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
           ),
           Expanded(
             child: CarItemWidget(
+              widgetPadding: EdgeInsets.zero,
               name: '奔驰CLE 插电混动 纯电动续航103km',
               time: '2019年5月',
               distance: '20.43万公里',

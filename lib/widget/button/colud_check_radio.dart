@@ -36,7 +36,7 @@ class _BeeCheckRadioState extends State<BeeCheckRadio> {
           color: widget.backColor != null
               ?   kForeGroundColor
               : (_selected ? kPrimaryColor : const Color(0xFF979797)),
-          width: 3.w,
+          width: 2.w,
         ),
         borderRadius: BorderRadius.circular(20.w),
       ),

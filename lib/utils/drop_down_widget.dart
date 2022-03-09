@@ -127,9 +127,9 @@ class _DropDownWidgetState extends State<DropDownWidget>
           alignment: Alignment.center,
           height: widget.height,
           decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-                      color: const Color(0xffe4e7ed), width: 0.4.r))),
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.w)),
+            color: Colors.white
+             ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: getScreenTitle(),
