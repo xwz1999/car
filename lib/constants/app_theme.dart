@@ -6,6 +6,7 @@ class AppTheme {
   static ThemeData get theme {
     return ThemeData(primarySwatch: Colors.blue).copyWith(
       primaryColor: const Color(0xFF027AFF),
+      accentColor: const Color(0xFF027AFF),
       textTheme: ThemeData.light().textTheme.copyWith(
             headline3: TextStyle(
               fontSize: 40.sp,
@@ -14,44 +15,44 @@ class AppTheme {
             ),
             subtitle1: TextStyle(
               fontSize: 32.sp,
-              color:const Color(0xFF333333),
+              color: const Color(0xFF333333),
             ),
             subtitle2: TextStyle(
               fontSize: 28.sp,
-              color:const Color(0xFF333333),
+              color: const Color(0xFF333333),
             ),
             bodyText1: TextStyle(
               fontSize: 24.sp,
-              color:const Color(0xFF333333),
+              color: const Color(0xFF333333),
             ),
           ),
-      floatingActionButtonTheme:const FloatingActionButtonThemeData().copyWith(
+      floatingActionButtonTheme: const FloatingActionButtonThemeData().copyWith(
         backgroundColor: const Color(0xFFFFD000),
       ),
       appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: true,
-        iconTheme:const IconThemeData(
+        iconTheme: const IconThemeData(
           color: Color(0xFF333333),
         ),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         toolbarTextStyle: TextTheme(
           headline6: TextStyle(
-            color:const Color(0xFF333333),
+            color: const Color(0xFF333333),
             fontSize: 36.sp,
             fontWeight: FontWeight.bold,
           ),
         ).bodyText2,
         titleTextStyle: TextTheme(
           headline6: TextStyle(
-            color:const Color(0xFF333333),
+            color: const Color(0xFF333333),
             fontSize: 36.sp,
             fontWeight: FontWeight.bold,
           ),
         ).headline6,
       ),
       tabBarTheme: TabBarTheme(
-        labelColor:const Color(0xFF333333),
+        labelColor: const Color(0xFF333333),
         labelStyle: TextStyle(
           fontSize: 28.sp,
           fontWeight: FontWeight.w600,
@@ -61,7 +62,7 @@ class AppTheme {
         ),
         indicatorSize: TabBarIndicatorSize.label,
       ),
-      bottomNavigationBarTheme:const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         selectedItemColor: Color(0xFF333333),
         selectedLabelStyle: TextStyle(
           fontWeight: FontWeight.bold,
@@ -71,7 +72,8 @@ class AppTheme {
       ),
       radioTheme: RadioThemeData(
         fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
-          if (states.contains(MaterialState.selected)) return const Color(0xFFFFD000);
+          if (states.contains(MaterialState.selected))
+            return const Color(0xFFFFD000);
           return null;
         }),
       ),
@@ -117,7 +119,9 @@ class AppTheme {
         ),
       ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      dividerColor: const Color(0xFFE8E8E8), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFF027AFF)),
+      dividerColor: const Color(0xFFE8E8E8),
+      colorScheme:
+          ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFF027AFF)),
     );
   }
 }

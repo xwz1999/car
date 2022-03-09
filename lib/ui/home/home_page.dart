@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:cloud_car/ui/home/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
@@ -12,6 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
+
 import 'car_manager/car_manager_page.dart';
 import 'home_title.dart';
 
@@ -41,8 +40,7 @@ class _HomePageState extends State<HomePage>
     _kingCoinList.add(KingCoin(name: '车辆发布', url: Assets.icons.carPush.path));
     _kingCoinList
         .add(KingCoin(name: '车辆按揭', url: Assets.icons.carMortgage.path));
-    _kingCoinList
-        .add(KingCoin(name: '车辆代理', url:Assets.icons.carAgent.path));
+    _kingCoinList.add(KingCoin(name: '车辆代理', url: Assets.icons.carAgent.path));
     _kingCoinList
         .add(KingCoin(name: '维护查询', url: Assets.icons.carMaintain.path));
     _kingCoinList
@@ -58,7 +56,6 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
     return CloudScaffold(
       bodyColor: bgColor,
       systemStyle: const SystemUiOverlayStyle(
@@ -94,7 +91,7 @@ class _HomePageState extends State<HomePage>
             const Spacer(),
             GestureDetector(
               onTap: () {
-                Get.to(()=>const SearchPage());
+                Get.to(() => const SearchPage());
               },
               child: Image.asset(Assets.icons.mainSearch.path,
                   height: 48.w, width: 48.w),
@@ -102,8 +99,7 @@ class _HomePageState extends State<HomePage>
             24.wb,
             GestureDetector(
               onTap: () {
-                Get.to(()=>const TaskPage());
-
+                Get.to(() => const TaskPage());
               },
               child: Image.asset(Assets.icons.mainMenu.path,
                   height: 48.w, width: 48.w),
@@ -156,13 +152,13 @@ class _HomePageState extends State<HomePage>
 
   _kingCoinItem(String name, String url) {
     return GestureDetector(
-      onTap: (){
-        switch(name){
+      onTap: () {
+        switch (name) {
           case '车辆管理':
-            Get.to(()=>const CarManagerPage());
+            Get.to(() => const CarManagerPage());
             break;
           case '客户管理':
-            Get.to(()=>const UserManagerPage());
+            Get.to(() => const UserManagerPage());
             break;
         }
       },
@@ -203,7 +199,7 @@ class _HomePageState extends State<HomePage>
           title: '快速分享',
           suffixTitle: '查看全部',
           onTap: () {
-            Get.to(()=>const ShareHomePage());
+            Get.to(() => const ShareHomePage());
           },
         ),
         12.hb,
@@ -242,7 +238,7 @@ class _HomePageState extends State<HomePage>
           title: '海报',
           suffixTitle: '查看全部',
           onTap: () {
-            Get.to(()=>PosterEditPage());
+            Get.to(() => PosterEditPage());
           },
         ),
         12.hb,
@@ -263,8 +259,6 @@ class _HomePageState extends State<HomePage>
                 child: Builder(
                   builder: (context) {
                     return _posterItem();
-                      
-                      
                   },
                 ),
               );
@@ -281,13 +275,14 @@ class _HomePageState extends State<HomePage>
       width: 240.w,
       height: 338.w,
       clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.w),color: Colors.white),
-
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.w), color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 240.w,height: 180.w,
+            width: 240.w,
+            height: 180.w,
             color: Colors.lightBlue,
           ),
           // Image.asset(
@@ -319,44 +314,49 @@ class _HomePageState extends State<HomePage>
                   children: [
                     Text(
                       '27.4万',
-                      style: TextStyle(color:const Color(0xFFFF3E02),fontSize: 32.sp ),
+                      style: TextStyle(
+                          color: const Color(0xFFFF3E02), fontSize: 32.sp),
                     ),
                     const Spacer(),
-                    Image.asset(Assets.icons.homeShare.path,width: 28.w,height: 28.w,),
+                    Image.asset(
+                      Assets.icons.homeShare.path,
+                      width: 28.w,
+                      height: 28.w,
+                    ),
                     20.wb,
                   ],
                 )
               ],
             ),
           )
-
-
         ],
       ),
     );
   }
 
-  _posterItem(){
+  _posterItem() {
     return Container(
       width: 240.w,
       height: 360.w,
 
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.w), color: Colors.lightBlue,),
-        //child: Image.asset(R.ASSETS_IMAGES_BANNER_BG_PNG,width: 240.w,height: 360.w,),
-
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.w),
+        color: Colors.lightBlue,
+      ),
+      //child: Image.asset(R.ASSETS_IMAGES_BANNER_BG_PNG,width: 240.w,height: 360.w,),
     );
   }
-  _getTextView(String text){
+
+  _getTextView(String text) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F2F4),
-        borderRadius: BorderRadius.all(Radius.circular(2.w))
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 4.w,vertical: 8.w),
+          color: const Color(0xFFF1F2F4),
+          borderRadius: BorderRadius.all(Radius.circular(2.w))),
+      padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 8.w),
       child: Text(
-          text,
-        style: TextStyle(color:const Color(0xFF4F5A74),fontSize: 18.sp ),
+        text,
+        style: TextStyle(color: const Color(0xFF4F5A74), fontSize: 18.sp),
       ),
     );
   }

@@ -1,11 +1,11 @@
-
-import 'package:flutter/material.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:flutter/material.dart';
+
+import '../ui/home/citylist_custom_header_page.dart';
 import 'drop_down_widget.dart';
 
-
 class DropDownPage extends StatefulWidget {
-  const DropDownPage({ Key? key}) : super(key: key);
+  const DropDownPage({Key? key}) : super(key: key);
 
   @override
   _DropDownPageState createState() => _DropDownPageState();
@@ -20,7 +20,7 @@ class _DropDownPageState extends State<DropDownPage> {
   @override
   void initState() {
     listWidget = [
-      // CityListCustomHeaderPage(),
+      CityListCustomHeaderPage(),
       // Row(
       //   children: [
       //     Expanded(
@@ -88,7 +88,7 @@ class _DropDownPageState extends State<DropDownPage> {
               children: [
                 Text("检索内容",
                     style:
-                    TextStyle(fontSize: 14.r, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 14.r, fontWeight: FontWeight.bold)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -131,7 +131,7 @@ class _DropDownPageState extends State<DropDownPage> {
               children: [
                 Text("匹配方式",
                     style:
-                    TextStyle(fontSize: 14.r, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 14.r, fontWeight: FontWeight.bold)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -176,24 +176,26 @@ class _DropDownPageState extends State<DropDownPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:const Text('筛选组件') ,),
+        appBar: AppBar(
+          title: const Text('筛选组件'),
+        ),
         body: DropDownWidget(
           titles,
           listWidget,
-          height: 40.w,
-          bottomHeight: 400.w,
+          height: 40.r,
+          bottomHeight: 400.r,
           screenControl: screenControl,
-          headFontSize: 48.sp,
+          headFontSize: 16.sp,
           child: Container(
-            margin: EdgeInsets.only(top: 40.w),
+            margin: EdgeInsets.only(top: 40.4.r),
             child: ListView.builder(itemBuilder: (context, index) {
               return Container(
-                padding: EdgeInsets.all(15.w),
+                padding: EdgeInsets.all(15.r),
                 child: Text("item $index"),
                 decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
-                            color: const Color(0xffeeeeee), width: 0.4.w))),
+                            color: const Color(0xffeeeeee), width: 0.4.r))),
               );
             }),
           ),

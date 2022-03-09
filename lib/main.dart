@@ -12,14 +12,14 @@ import 'constants/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
-  if(Platform.isAndroid){
+  if (Platform.isAndroid) {
     SystemUiOverlayStyle style = const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+
         ///这是设置状态栏的图标和字体的颜色
         ///Brightness.light  一般都是显示为白色
         ///Brightness.dark 一般都是显示为黑色
-        statusBarIconBrightness: Brightness.dark
-    );
+        statusBarIconBrightness: Brightness.dark);
     SystemChrome.setSystemUIOverlayStyle(style);
   }
 }
