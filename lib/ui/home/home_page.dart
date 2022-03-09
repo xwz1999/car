@@ -1,13 +1,17 @@
+import 'package:cloud_car/ui/home/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
+import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/task_page.dart';
+import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 
-import 'car_manager_page.dart';
+import 'car_manager/car_manager_page.dart';
 import 'home_title.dart';
 
 class HomePage extends StatefulWidget {
@@ -153,6 +157,9 @@ class _HomePageState extends State<HomePage>
           case '车辆管理':
             Get.to(() => const CarManagerPage());
             break;
+          case '客户管理':
+            Get.to(() => const UserManagerPage());
+            break;
         }
       },
       child: Container(
@@ -191,7 +198,9 @@ class _HomePageState extends State<HomePage>
         HomeTitle(
           title: '快速分享',
           suffixTitle: '查看全部',
-          onTap: () {},
+          onTap: () {
+            Get.to(() => const ShareHomePage());
+          },
         ),
         12.hb,
         Container(
@@ -228,7 +237,9 @@ class _HomePageState extends State<HomePage>
         HomeTitle(
           title: '海报',
           suffixTitle: '查看全部',
-          onTap: () {},
+          onTap: () {
+            Get.to(() => PosterEditPage());
+          },
         ),
         12.hb,
         Container(

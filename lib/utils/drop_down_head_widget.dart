@@ -1,23 +1,17 @@
-
-import 'dart:ui';
-
-import 'package:flutter/animation.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// @description 作用:多级筛选item
-/// @date: 2021/10/14
-/// @author:卢融霜
 class DropDownHeadWidget extends StatefulWidget {
-  String title;
-  bool isForward;
-  Function onClick;
-  double headFontSize;
-  IconData? iconData;
+  final String title;
+  final bool isForward;
+  final Function onClick;
+  final double headFontSize;
+  final IconData? iconData;
 
-  DropDownHeadWidget(this.title, this.isForward, this.onClick,
-      {this.headFontSize = 12.0, this.iconData = Icons.arrow_drop_down_outlined, key})
+  const DropDownHeadWidget(this.title, this.isForward, this.onClick,
+      {this.headFontSize = 12.0,
+      this.iconData = Icons.arrow_drop_down_outlined,
+      key})
       : super(key: key);
 
   @override
@@ -69,8 +63,7 @@ class _DropDownHeadWidgetState extends State<DropDownHeadWidget>
       headTextStyle =
           TextStyle(fontSize: widget.headFontSize, color: Colors.blue);
       iconData = Icon(
-
-        widget.iconData??Icons.arrow_drop_down_sharp,
+        widget.iconData ?? Icons.arrow_drop_down_sharp,
         color: Colors.blue,
         size: 20.sp,
       );
@@ -79,7 +72,7 @@ class _DropDownHeadWidgetState extends State<DropDownHeadWidget>
       headTextStyle = TextStyle(
           fontSize: widget.headFontSize, color: const Color(0xff333333));
       iconData = Icon(
-        widget.iconData??Icons.arrow_drop_down_sharp,
+        widget.iconData ?? Icons.arrow_drop_down_sharp,
         size: 20.sp,
         color: const Color(0xff333333),
       );

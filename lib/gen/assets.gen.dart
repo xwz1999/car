@@ -14,6 +14,10 @@ class $AssetsIconsGen {
   const $AssetsIconsGen();
 
   AssetGenImage get back => const AssetGenImage('assets/icons/back.png');
+  AssetGenImage get barBubbleGray =>
+      const AssetGenImage('assets/icons/bar_bubble_gray.png');
+  AssetGenImage get barToTop =>
+      const AssetGenImage('assets/icons/bar_toTop.png');
   AssetGenImage get carAgent =>
       const AssetGenImage('assets/icons/car_agent.png');
   AssetGenImage get carMaintain =>
@@ -41,6 +45,20 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/customer_track.png');
   AssetGenImage get homeShare =>
       const AssetGenImage('assets/icons/home_share.png');
+  AssetGenImage get icFavorite1 =>
+      const AssetGenImage('assets/icons/ic_favorite1.png');
+  AssetGenImage get icLocation =>
+      const AssetGenImage('assets/icons/ic_location.png');
+  AssetGenImage get icShare => const AssetGenImage('assets/icons/ic_share.png');
+  AssetGenImage get icShareDowload =>
+      const AssetGenImage('assets/icons/ic_share_dowload.png');
+  AssetGenImage get icShareLink =>
+      const AssetGenImage('assets/icons/ic_share_link.png');
+  AssetGenImage get icShareWx =>
+      const AssetGenImage('assets/icons/ic_share_wx.png');
+  AssetGenImage get icShareWxCircle =>
+      const AssetGenImage('assets/icons/ic_share_wx_circle.png');
+  AssetGenImage get icUser => const AssetGenImage('assets/icons/ic_user.png');
   AssetGenImage get mainMenu =>
       const AssetGenImage('assets/icons/main_menu.png');
   AssetGenImage get mainSearch =>
@@ -78,6 +96,8 @@ class $AssetsImagesGen {
   AssetGenImage get bannerBg =>
       const AssetGenImage('assets/images/banner_bg.png');
   AssetGenImage get homeBg => const AssetGenImage('assets/images/home_bg.png');
+  AssetGenImage get importantUser =>
+      const AssetGenImage('assets/images/important_user.png');
   AssetGenImage get loginBg =>
       const AssetGenImage('assets/images/login_bg.png');
   AssetGenImage get Banner =>

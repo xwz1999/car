@@ -10,6 +10,7 @@ class CarItemWidget extends StatelessWidget {
   final String distance;
   final String standard;
   final String url;
+  final EdgeInsetsGeometry widgetPadding;
 
   const CarItemWidget({
     Key? key,
@@ -19,6 +20,7 @@ class CarItemWidget extends StatelessWidget {
     required this.distance,
     required this.standard,
     required this.url,
+    required this.widgetPadding,
   }) : super(key: key);
 
   @override
@@ -28,9 +30,10 @@ class CarItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.w),
         color: kForeGroundColor,
       ),
-
-      padding: EdgeInsets.symmetric(vertical: 28.w, horizontal: 32.w),
+      padding: widgetPadding,
+      alignment: Alignment.center,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -63,7 +66,6 @@ class CarItemWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     color: BaseStyle.color111111,
                     fontSize: BaseStyle.fontSize28,
-
                   ),
                 ),
                 16.hb,
@@ -80,7 +82,6 @@ class CarItemWidget extends StatelessWidget {
                 Text(
                   price,
                   style: TextStyle(
-
                     color: const Color(0xFFFF3B02),
                     fontSize: BaseStyle.fontSize36,
                   ),

@@ -1,14 +1,11 @@
 import 'dart:ui';
-import 'package:cloud_car/ui/home/home_page.dart';
-import 'package:cloud_car/ui/home/home_title.dart';
+
 import 'package:cloud_car/utils/headers.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/get_core.dart';
-import 'package:hive/hive.dart';
-import '../home/car_manager_page.dart';
+
 import 'car_rejected_detail.dart';
 
 class examinationPage extends StatefulWidget {

@@ -1,17 +1,12 @@
 import 'dart:ui';
 
 import 'package:cloud_car/ui/notice/notice_examination.dart';
-import 'package:cloud_car/ui/user/user_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 
 import 'notice_fashionable.dart';
-import 'notice_fashionable1.dart';
 
 class NoticePage extends StatefulWidget {
   const NoticePage({Key? key}) : super(key: key);

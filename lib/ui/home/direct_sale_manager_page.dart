@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/base/base_style.dart';
 import 'package:cloud_car/gen/assets.gen.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -99,13 +98,13 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                       )),
                       Expanded(
                           child: GestureDetector(
-                            onTap: () {
-                              _showCity();
-                            },
-                            child: getTitle(
-                              '品牌',
-                            ),
-                          )),
+                        onTap: () {
+                          _showCity();
+                        },
+                        child: getTitle(
+                          '品牌',
+                        ),
+                      )),
                       Container(
                         alignment: Alignment.center,
                         //padding: EdgeInsets.only(top: 20.w),
@@ -176,13 +175,13 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                       ),
                       Expanded(
                           child: GestureDetector(
-                            onTap: () {
-                              _showDrawn();
-                            },
-                            child: getTitle(
-                              '筛选',
-                            ),
-                          )),
+                        onTap: () {
+                          _showDrawn();
+                        },
+                        child: getTitle(
+                          '筛选',
+                        ),
+                      )),
                     ],
                   ),
                 ),
@@ -194,13 +193,14 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                       padding:
                           EdgeInsets.only(top: 10.w, left: 24.w, right: 24.w),
                       itemBuilder: (context, index) {
-                        return  CarItemWidget(
+                        return CarItemWidget(
                           price: '27.43万',
                           url: Assets.icons.customerCare.path,
                           distance: '20.43万公里',
                           standard: '国六',
                           name: '奥迪Q3 2020款 35 TFSI 进取型SUV',
                           time: '2020年10月',
+                          widgetPadding: EdgeInsets.zero,
                         );
                       },
                       separatorBuilder: (_, __) {
@@ -274,7 +274,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   }
 
   void _showCity() {
-    if( _dropdownMenuController.isShow){
+    if (_dropdownMenuController.isShow) {
       _dropdownMenuController.hide();
     }
     showModalBottomSheet<void>(
@@ -294,10 +294,9 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   }
 
   void _showDrawn() {
-    if( _dropdownMenuController.isShow){
+    if (_dropdownMenuController.isShow) {
       _dropdownMenuController.hide();
     }
-
 
     _scaffoldKey.currentState!.openEndDrawer();
   }

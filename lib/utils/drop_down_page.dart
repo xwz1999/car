@@ -1,12 +1,11 @@
-
-import 'package:cloud_car/ui/home/citylist_custom_header_page.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:flutter/material.dart';
+
+import '../ui/home/citylist_custom_header_page.dart';
 import 'drop_down_widget.dart';
 
-
 class DropDownPage extends StatefulWidget {
-  const DropDownPage({ Key? key}) : super(key: key);
+  const DropDownPage({Key? key}) : super(key: key);
 
   @override
   _DropDownPageState createState() => _DropDownPageState();
@@ -89,7 +88,7 @@ class _DropDownPageState extends State<DropDownPage> {
               children: [
                 Text("检索内容",
                     style:
-                    TextStyle(fontSize: 14.r, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 14.r, fontWeight: FontWeight.bold)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -132,7 +131,7 @@ class _DropDownPageState extends State<DropDownPage> {
               children: [
                 Text("匹配方式",
                     style:
-                    TextStyle(fontSize: 14.r, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 14.r, fontWeight: FontWeight.bold)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -177,7 +176,9 @@ class _DropDownPageState extends State<DropDownPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:const Text('筛选组件') ,),
+        appBar: AppBar(
+          title: const Text('筛选组件'),
+        ),
         body: DropDownWidget(
           titles,
           listWidget,

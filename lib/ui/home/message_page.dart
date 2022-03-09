@@ -27,9 +27,11 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const CloudBackButton(isSpecial: true,),
+        leading: const CloudBackButton(
+          isSpecial: true,
+        ),
         backgroundColor: kForeGroundColor,
-        title:Text('客户消息',
+        title: Text('客户消息',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
@@ -40,9 +42,8 @@ class _MessagePageState extends State<MessagePage> {
       extendBody: true,
       body: Column(
         children: [
-
           ListView.separated(
-              shrinkWrap :true,
+              shrinkWrap: true,
               //padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
               padding: EdgeInsets.only(top: 10.w),
               itemBuilder: (context, index) {
@@ -50,21 +51,25 @@ class _MessagePageState extends State<MessagePage> {
                   child: MessageItemWidget(
                     time: '01-09 12;22',
                     url: Assets.icons.customerCare.path,
-                    tip: '你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱',
+                    tip:
+                        '你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱',
                     num: 101,
                     title: '李小里',
                     type: TaskType.message,
-
                   ),
                 );
               },
               separatorBuilder: (_, __) {
-                return Divider(indent:32.w ,endIndent: 32.w,height: 1.w,color: BaseStyle.coloreeeeee,);
+                return Divider(
+                  indent: 32.w,
+                  endIndent: 32.w,
+                  height: 1.w,
+                  color: BaseStyle.coloreeeeee,
+                );
               },
               itemCount: 6),
         ],
       ),
     );
   }
-
 }

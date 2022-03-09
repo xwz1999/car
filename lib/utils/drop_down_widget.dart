@@ -1,58 +1,54 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'drop_down_head_widget.dart';
 
-/// @description 作用:多级筛选
-/// @date: 2021/10/14
-/// @author:卢融霜
 class DropDownWidget extends StatefulWidget {
   //标题集合
-  List<String> titles;
+  final List<String> titles;
 
   //展开视图集合
-  List<Widget> listWidget;
-
+  final List<Widget> listWidget;
   // 高度
-  double height;
+  final double height;
 
   //子集
-  Widget child;
+  final Widget child;
 
   ///筛选
-  String? screen;
+  final String? screen;
 
-  //筛选文字大小
-  double headFontSize;
+//筛选文字大小
+  final double headFontSize;
 
   // 筛选图标icons
-  IconData? iconData;
+  final IconData? iconData;
 
   //筛选高度 限制
   // BoxConstraints constraints;
-  double bottomHeight;
+  final double bottomHeight;
 
-  ScreenControl screenControl;
+  final ScreenControl screenControl;
 
-  DropDownWidget(this.titles, this.listWidget,
+  final VoidCallback? onTap;
+
+  const DropDownWidget(this.titles, this.listWidget,
       {required this.child,
-        this.height = 42,
-        required this.headFontSize,
-        this.iconData,
-        required this.bottomHeight,
-        required this.screenControl,
-        this.screen,
-        Key? key})
+      this.height = 42,
+      required this.headFontSize,
+      this.iconData,
+      required this.bottomHeight,
+      required this.screenControl,
+      this.screen,
+      Key? key,
+      this.onTap})
       : super(key: key);
 
   @override
   _DropDownWidgetState createState() => _DropDownWidgetState();
 }
+
 class ScreenControl {
   //自动
   void autoDisplay() {
@@ -75,20 +71,17 @@ class ScreenControl {
     rotateState = rotateState.map((e) => false).toList();
   }
 }
+
 late AnimationController _controller;
 late Animation<double> curve;
 //按钮旋转状态
 List<bool> rotateState = [];
-
 
 class _DropDownWidgetState extends State<DropDownWidget>
     with SingleTickerProviderStateMixin {
   int tabIndex = 0;
   final ScreenControl _screenControl = ScreenControl();
   bool showBottom = false;
-
-
-
 
   @override
   void initState() {
@@ -151,7 +144,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
             child: DropDownHeadWidget(
               widget.titles[i],
               getRoState(i),
-                  () {
+              () {
                 if (kDebugMode) {
                   print("click${rotateState.length}");
                 }
@@ -172,7 +165,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
                 });
               },
               headFontSize: widget.headFontSize,
-              iconData: widget.iconData??Icons.arrow_drop_down_outlined,
+              iconData: widget.iconData ?? Icons.arrow_drop_down_outlined,
             )));
       }
     } else {
@@ -181,7 +174,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
         style: TextStyle(fontSize: 14.sp),
       ));
     }
-    if(widget.screen!=null){
+    if (widget.screen != null) {
       widgets.add(Expanded(
           flex: 1,
           child: Container(
@@ -189,9 +182,12 @@ class _DropDownWidgetState extends State<DropDownWidget>
               width: double.infinity,
               height: double.infinity,
               padding: EdgeInsets.only(left: 5.r, right: 5.r),
-              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('筛选', style: TextStyle(
-                    fontSize: widget.headFontSize, color: const Color(0xff333333))),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text('筛选',
+                    style: TextStyle(
+                        fontSize: widget.headFontSize,
+                        color: const Color(0xff333333))),
               ]))));
     }
     return widgets;
@@ -229,9 +225,17 @@ class _DropDownWidgetState extends State<DropDownWidget>
         width: double.infinity,
         //constraints: const BoxConstraints(maxHeight: double.infinity),
         color: Colors.white,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.w)),
+          color: Colors.white,
+        ),
+
         child: widget.listWidget[tabIndex],
       ),
     );
   }
-}
 
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+}

@@ -31,9 +31,11 @@ class _CustomerPageState extends State<CustomerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const CloudBackButton(isSpecial: true,),
+        leading: const CloudBackButton(
+          isSpecial: true,
+        ),
         backgroundColor: kForeGroundColor,
-        title:Text('客户付款',
+        title: Text('客户付款',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
@@ -43,17 +45,18 @@ class _CustomerPageState extends State<CustomerPage> {
       backgroundColor: const Color(0xFFF6F6F6),
       extendBody: true,
       body: ListView.separated(
-          shrinkWrap :true,
-          padding: EdgeInsets.only( left: 32.w,right: 32.w,top: 16.w),
+          shrinkWrap: true,
+          padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 16.w),
           // padding: EdgeInsets.only(top: 10.w),
           itemBuilder: (context, index) {
             return const CustomerItem();
           },
           separatorBuilder: (_, __) {
-            return SizedBox(height: 16.w,);
+            return SizedBox(
+              height: 16.w,
+            );
           },
           itemCount: 6),
     );
   }
-
 }
