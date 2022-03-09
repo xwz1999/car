@@ -1,5 +1,6 @@
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/sort_list_page.dart';
+import 'package:cloud_car/ui/home/user_manager/user_info_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
@@ -166,80 +167,85 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
   }
 
   _getItem(bool isImport) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.w), color: kForeGroundColor),
-      child: Stack(
-        children: [
-          isImport?Positioned(
-            child: Image.asset(
-              Assets.images.importantUser.path,
-              width: 130.w,
-              fit: BoxFit.fitWidth,
-            ),
-            right: 0,
-            top: 0,
-          ):const SizedBox(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              20.hb,
-              Row(
-                children: [
-                  36.wb,
-                  Image.asset(Assets.icons.icUser.path,width: 32.w,height: 32.w,),
-                  5.wb,
-                  Text(
-                    '李四',
-                    style: TextStyle(
-                        fontSize: 32.sp,
-                        color: BaseStyle.color333333,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const Spacer(),
-                  isImport?const SizedBox():GestureDetector(
-                    onTap: (){
-
-                    },
-                    child: Text(
-                      '设为重要',
+    return GestureDetector(
+      onTap: (){
+        Get.to(()=>UserInfoPage());
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.w), color: kForeGroundColor),
+        child: Stack(
+          children: [
+            isImport?Positioned(
+              child: Image.asset(
+                Assets.images.importantUser.path,
+                width: 130.w,
+                fit: BoxFit.fitWidth,
+              ),
+              right: 0,
+              top: 0,
+            ):const SizedBox(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                20.hb,
+                Row(
+                  children: [
+                    36.wb,
+                    Image.asset(Assets.icons.icUser.path,width: 32.w,height: 32.w,),
+                    5.wb,
+                    Text(
+                      '李四',
                       style: TextStyle(
-                          fontSize: 24.sp,
-                          color: BaseStyle.color999999,
+                          fontSize: 32.sp,
+                          color: BaseStyle.color333333,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const Spacer(),
+                    isImport?const SizedBox():GestureDetector(
+                      onTap: (){
+
+                      },
+                      child: Text(
+                        '设为重要',
+                        style: TextStyle(
+                            fontSize: 24.sp,
+                            color: BaseStyle.color999999,
+                        ),
                       ),
                     ),
-                  ),
-                  24.wb,
-                ],
-              ),
-              10.hb,
-              const Divider(height: 2,color: BaseStyle.colorf6f6f6,),
-              Row(
-                children: [
-                  36.wb,
-                  Column(
-                    children: [
-                      16.hb,
-                      _getText('车架号', 'GDL26173890989890'),
-                      16.hb,
-                      _getText('车架号', 'GDL26173890989890'),
-                      16.hb,
-                      _getText('车架号1', 'GDL26173890989890'),
-                      16.hb,
-                      _getText('车架号', 'GDL26173890989890'),
-                      16.hb,
-                      _getText('车架号', 'GDL26173890989890'),
-                      16.hb,
-                      _getText('车架号', 'GDL26173890989890', isRed: true),
-                      20.hb,
-                    ],
-                  )
-                ],
-              )
+                    24.wb,
+                  ],
+                ),
+                10.hb,
+                const Divider(height: 2,color: BaseStyle.colorf6f6f6,),
+                Row(
+                  children: [
+                    36.wb,
+                    Column(
+                      children: [
+                        16.hb,
+                        _getText('车架号', 'GDL26173890989890'),
+                        16.hb,
+                        _getText('车架号', 'GDL26173890989890'),
+                        16.hb,
+                        _getText('车架号1', 'GDL26173890989890'),
+                        16.hb,
+                        _getText('车架号', 'GDL26173890989890'),
+                        16.hb,
+                        _getText('车架号', 'GDL26173890989890'),
+                        16.hb,
+                        _getText('车架号', 'GDL26173890989890', isRed: true),
+                        20.hb,
+                      ],
+                    )
+                  ],
+                )
 
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
