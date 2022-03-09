@@ -20,7 +20,7 @@ class CardetailPage extends StatefulWidget {
 }
 
 class _CardetailPageState extends State<CardetailPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   List<dynamic>? data;
   List imgliat = [
@@ -53,12 +53,19 @@ class _CardetailPageState extends State<CardetailPage>
   //late TabController _controller;
   // ignore: non_constant_identifier_names
   late EasyRefreshController _refreshController;
-
+  final detaillist = [
+    {
+      'tltie': '基本信息',
+      'number': 'LGJ83476524683243',
+      'type': '二手车(中规)',
+      'models': '奥迪A3 2020款 Sportback 35 TFSI 进取 运动型',
+    }
+  ];
   @override
   void initState() {
     //   // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
     // _controller = TabController(length: tablist.length, vsync: this);
     // addListener(() {
     //   switch (_controller.index) {
@@ -80,14 +87,14 @@ class _CardetailPageState extends State<CardetailPage>
 
   @override
   void dispose() {
-    _refreshController.dispose();
+    //_refreshController.dispose();
     _tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    //super.build(context);
     return Scaffold(
         appBar: AppBar(
           actions: [
@@ -98,41 +105,62 @@ class _CardetailPageState extends State<CardetailPage>
         ),
         extendBody: true,
         extendBodyBehindAppBar: true,
-        body: Stack(
-          children: [
-            Align(
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white),
-              ),
+        body: Stack(children: [
+          Align(
+            child: Container(
+              decoration: BoxDecoration(color: Colors.white),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 178.w, horizontal: 32.w),
-              child: _cardetali(),
-            ),
-            //200.hb,
-            Container(
-              //width: double.infinity,
-              //height: 226.w,
-              padding: EdgeInsets.only(
-                  bottom: 700.w, top: 480.w, left: 32.w, right: 32.w),
-              child: _bannerstyle(),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 1000.w, left: 32.w),
-              child: _cardetalibottom(),
-            ),
-            Container(
-                padding: EdgeInsets.only(top: 1150.w, left: 32.w),
-                child: //_tabbar()
-                    Text('11111'))
-            // Padding(
-            //     padding:
-            //         EdgeInsets.symmetric(vertical: 178.w, horizontal: 32.w)),
-            // _cardetali(),
-            // 12.hb,
-            // _bannerstyle()
-          ],
-        ));
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 178.w, horizontal: 32.w),
+            child: _cardetali(),
+          ),
+          //200.hb,
+          Container(
+            //width: double.infinity,
+            //height: 226.w,
+            padding: EdgeInsets.only(
+                bottom: 700.w, top: 480.w, left: 32.w, right: 32.w),
+            child: _bannerstyle(),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 1000.w, left: 32.w),
+            child: _cardetalibottom(),
+          ),
+          Container(
+              padding: EdgeInsets.only(top: 1150.w, left: 32.w),
+              child: Column(
+                children: [
+                  TabBar(
+                    onTap: ((value) {}),
+                    isScrollable: true,
+                    labelPadding:
+                        EdgeInsets.symmetric(vertical: 10.w, horizontal: 40.w),
+                    controller: _tabController,
+                    indicatorWeight: 4,
+                    labelColor: Color.fromRGBO(51, 51, 51, 1),
+                    //indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w),
+                    tabs: [
+                      _tab(0, '详情'),
+                      _tab(1, '车辆轨迹'),
+                      _tab(2, '意向客户'),
+                      _tab(3, '订单')
+                    ],
+                  ),
+                  SizedBox(
+                      height: 240.w,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          Text('111111'),
+                          Text('22222'),
+                          Text('33333'),
+                          Text('4444444'),
+                        ],
+                      ))
+                ],
+              ))
+        ]));
   }
 
   @override
@@ -466,7 +494,7 @@ _cardetalibottom() {
           // ],
         ),
       ),
-
+      Column()
       //底部导航栏
       // Row(
       //   children: [
@@ -496,52 +524,89 @@ _cardetalibottom() {
   );
 }
 
-//标签栏
-_tabbar() {
-  return Container(
-      child: Column(
+//标签内容
+_detalitext(item) {
+  return Column(
     children: [
-      TabBar(
-        tabs: [
-          Tab(
-            text: '详情',
-          ),
-          Tab(
-            text: '车辆轨迹',
-          ),
-          Tab(
-            text: '意向客户',
-          ),
-          Tab(
-            text: '订单',
-          ),
-        ],
-        //controller: ,
-      ),
-      Row(
-        children: [
-          TabBarView(
-            //controller: TabController(length: 4, vsync: this),
+      Container(
+        decoration: BoxDecoration(color: Colors.white),
+        child: Column(children: [
+          Row(
             children: [
-              Center(
-                child: Text('111111'),
-              ),
-              Center(
-                child: Text('222222'),
-              ),
-              Center(
-                child: Text('333333'),
-              ),
-              Center(
-                child: Text('444444'),
+              Padding(padding: EdgeInsets.only(left: 32.w, top: 16.w)),
+              Text(
+                item['title'],
+                style: TextStyle(
+                    fontSize: 32.sp, color: Color.fromRGBO(51, 51, 51, 1)),
               ),
             ],
-            //controller: TabController,
+          ),
+          Container(
+            width: double.infinity,
+            height: 260.w,
+            padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      '车架号',
+                      style: TextStyle(
+                          fontSize: 28.sp,
+                          color: Color.fromRGBO(102, 102, 102, 1)),
+                    ),
+                    48.wb,
+                    Text(
+                      item['number'],
+                      style: TextStyle(
+                          fontSize: 28.sp,
+                          color: Color.fromRGBO(51, 51, 51, 1)),
+                    )
+                  ],
+                ),
+                28.hb,
+                Row(
+                  children: [
+                    Text(
+                      '车辆类型',
+                      style: TextStyle(
+                          fontSize: 28.sp,
+                          color: Color.fromRGBO(102, 102, 102, 1)),
+                    ),
+                    48.wb,
+                    Text(
+                      item['type'],
+                      style: TextStyle(
+                          fontSize: 28.sp,
+                          color: Color.fromRGBO(51, 51, 51, 1)),
+                    )
+                  ],
+                ),
+                28.hb,
+                Row(
+                  children: [
+                    Text(
+                      '品牌车型',
+                      style: TextStyle(
+                          fontSize: 28.sp,
+                          color: Color.fromRGBO(102, 102, 102, 1)),
+                    ),
+                    48.wb,
+                    Text(
+                      item['models'],
+                      style: TextStyle(
+                          fontSize: 28.sp,
+                          color: Color.fromRGBO(51, 51, 51, 1)),
+                    )
+                  ],
+                ),
+              ],
+            ),
           )
-        ],
+        ]),
       )
     ],
-  ));
+  );
 }
 
 // unselectedLabelColor: Color.fromRGBO(51, 51, 51, 1), //未选中时的字体颜色样式优先级最高
@@ -555,6 +620,10 @@ _tabbar() {
 // //用于设定选中状态下的展示样式 indicator: BoxDecoration(),
 class Button {
   Button(Null Function() param0);
+}
+
+_tab(int index, String text) {
+  return Text(text);
 }
 
 void column() {}

@@ -61,7 +61,6 @@ class _Fashionable1PageState extends State<Fashionable1Page>
             child: _fashionablecard(),
           ),
           _fashionablecard2(),
-
         ],
       ),
       // Text('',
@@ -314,14 +313,14 @@ class _Fashionable1PageState extends State<Fashionable1Page>
     );
   }
 
-//判断
-  _judge() {
-    if (yd == 2) {
-      _read();
-    } else {
-      _noread();
-    }
-  }
+// //判断
+//   _judge() {
+//     if (yd == 2) {
+//       _read();
+//     } else {
+//       _noread();
+//     }
+//   }
 
   @override
   bool get wantKeepAlive => true;
