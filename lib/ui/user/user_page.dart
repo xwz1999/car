@@ -34,16 +34,16 @@ class _UserPageState extends State<UserPage>
   void initState() {
     super.initState();
     _KingCoinUserlist.add(
-        KingCoin(name: '我的订单', url: Assets.icons.myorder.path));
+        KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
     _KingCoinUserlist.add(
-        KingCoin(name: '员工管理', url: Assets.icons.management.path));
+        KingCoin(name: '员工管理', url: Assets.icons.userstaffmangement.path));
     _KingCoinUserlist.add(
-        KingCoin(name: '查看合同', url: Assets.icons.contract.path));
+        KingCoin(name: '查看合同', url: Assets.icons.userviewContract.path));
     _KingCoinUserlist.add(
-        KingCoin(name: '产品手册', url: Assets.icons.feedback.path));
+        KingCoin(name: '产品手册', url: Assets.icons.userproduct.path));
     _KingCoinUserlist.add(
-        KingCoin(name: '意见反馈', url: Assets.icons.feedback.path));
-    _KingCoinUserlist.add(KingCoin(name: '关于云云', url: Assets.icons.about.path));
+        KingCoin(name: '意见反馈', url: Assets.icons.userfeedback.path));
+    _KingCoinUserlist.add(KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
   }
 
   @override
@@ -125,7 +125,7 @@ class _UserPageState extends State<UserPage>
       //padding: EdgeInsets.only(left: 20, right: 20),
       child: Stack(
         children: [
-          Align(child: Image.asset(Assets.images.Banner.path)),
+          Align(child: Image.asset(Assets.images.bannerUser.path)),
           Positioned(
             child: _getbannerfont(),
           ),

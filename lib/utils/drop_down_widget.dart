@@ -224,7 +224,6 @@ class _DropDownWidgetState extends State<DropDownWidget>
       child: Container(
         width: double.infinity,
         //constraints: const BoxConstraints(maxHeight: double.infinity),
-        color: Colors.white,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.w)),
           color: Colors.white,

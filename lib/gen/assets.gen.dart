@@ -2,6 +2,7 @@
 /// *****************************************************
 ///  FlutterGen
 /// *****************************************************
+
 import 'package:flutter/widgets.dart';
 
 class $AssetsDataGen {
@@ -31,6 +32,7 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/car_recovery.png');
   AssetGenImage get carValuation =>
       const AssetGenImage('assets/icons/car_valuation.png');
+  AssetGenImage get care => const AssetGenImage('assets/icons/care.png');
   AssetGenImage get customerCare =>
       const AssetGenImage('assets/icons/customer_care.png');
   AssetGenImage get customerInvite =>
@@ -43,12 +45,21 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/customer_pay.png');
   AssetGenImage get customerTrack =>
       const AssetGenImage('assets/icons/customer_track.png');
+  AssetGenImage get examination =>
+      const AssetGenImage('assets/icons/examination.png');
+  AssetGenImage get fashionable =>
+      const AssetGenImage('assets/icons/fashionable.png');
   AssetGenImage get homeShare =>
       const AssetGenImage('assets/icons/home_share.png');
+  AssetGenImage get icContract =>
+      const AssetGenImage('assets/icons/ic_contract.png');
   AssetGenImage get icFavorite1 =>
       const AssetGenImage('assets/icons/ic_favorite1.png');
+  AssetGenImage get icInvite =>
+      const AssetGenImage('assets/icons/ic_invite.png');
   AssetGenImage get icLocation =>
       const AssetGenImage('assets/icons/ic_location.png');
+  AssetGenImage get icPhone => const AssetGenImage('assets/icons/ic_phone.png');
   AssetGenImage get icShare => const AssetGenImage('assets/icons/ic_share.png');
   AssetGenImage get icShareDowload =>
       const AssetGenImage('assets/icons/ic_share_dowload.png');
@@ -59,10 +70,16 @@ class $AssetsIconsGen {
   AssetGenImage get icShareWxCircle =>
       const AssetGenImage('assets/icons/ic_share_wx_circle.png');
   AssetGenImage get icUser => const AssetGenImage('assets/icons/ic_user.png');
+  AssetGenImage get icWx => const AssetGenImage('assets/icons/ic_wx.png');
+  AssetGenImage get invitation =>
+      const AssetGenImage('assets/icons/invitation.png');
   AssetGenImage get mainMenu =>
       const AssetGenImage('assets/icons/main_menu.png');
   AssetGenImage get mainSearch =>
       const AssetGenImage('assets/icons/main_search.png');
+  AssetGenImage get message => const AssetGenImage('assets/icons/message.png');
+  AssetGenImage get payment => const AssetGenImage('assets/icons/payment.png');
+  AssetGenImage get system => const AssetGenImage('assets/icons/system.png');
   AssetGenImage get tabCar => const AssetGenImage('assets/icons/tab_car.png');
   AssetGenImage get tabCarChoose =>
       const AssetGenImage('assets/icons/tab_car_choose.png');
@@ -76,32 +93,40 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/tab_notice.png');
   AssetGenImage get tabNoticeChoose =>
       const AssetGenImage('assets/icons/tab_notice_choose.png');
-  AssetGenImage get warning => const AssetGenImage('assets/icons/warning.png');
-  AssetGenImage get myorder =>
-      const AssetGenImage('assets/icons/usermyorder.png');
-  AssetGenImage get management =>
-      const AssetGenImage('assets/icons/userstaffmangement.png');
-  AssetGenImage get feedback =>
+  AssetGenImage get tracking =>
+      const AssetGenImage('assets/icons/tracking.png');
+  AssetGenImage get userabout =>
+      const AssetGenImage('assets/icons/userabout.png');
+  AssetGenImage get userbackground =>
+      const AssetGenImage('assets/icons/userbackground.png');
+  AssetGenImage get userfeedback =>
       const AssetGenImage('assets/icons/userfeedback.png');
-  AssetGenImage get about => const AssetGenImage('assets/icons/userabout.png');
-  AssetGenImage get product =>
-      const AssetGenImage('asstets/icons/userproduct.png');
-  AssetGenImage get contract =>
+  AssetGenImage get usermyorder =>
+      const AssetGenImage('assets/icons/usermyorder.png');
+  AssetGenImage get userproduct =>
+      const AssetGenImage('assets/icons/userproduct.png');
+  AssetGenImage get userstaffmangement =>
+      const AssetGenImage('assets/icons/userstaffmangement.png');
+  AssetGenImage get userviewContract =>
       const AssetGenImage('assets/icons/userview contract.png');
+  AssetGenImage get warning => const AssetGenImage('assets/icons/warning.png');
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  AssetGenImage get background =>
+      const AssetGenImage('assets/images/background.png');
   AssetGenImage get bannerBg =>
       const AssetGenImage('assets/images/banner_bg.png');
+  AssetGenImage get bannerUser =>
+      const AssetGenImage('assets/images/banner_user.png');
+  AssetGenImage get bubble => const AssetGenImage('assets/images/bubble.png');
   AssetGenImage get homeBg => const AssetGenImage('assets/images/home_bg.png');
   AssetGenImage get importantUser =>
       const AssetGenImage('assets/images/important_user.png');
   AssetGenImage get loginBg =>
       const AssetGenImage('assets/images/login_bg.png');
-  AssetGenImage get Banner =>
-      const AssetGenImage('assets/images/banner_user.png');
 }
 
 class Assets {
