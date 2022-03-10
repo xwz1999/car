@@ -137,7 +137,6 @@ class _ShareCarPageState extends State<ShareCarPage> {
               onTap: () {
                 if (_allSelect) {
                   _selectIndex.clear();
-
                   _chooseModels.clear();
                 } else {
                   _selectIndex.clear();
