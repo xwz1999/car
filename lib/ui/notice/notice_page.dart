@@ -1,10 +1,8 @@
-import 'dart:ui';
 
 import 'package:cloud_car/ui/notice/notice_examination.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:get/get.dart';
 
 import 'notice_fashionable.dart';
 
@@ -109,7 +107,7 @@ class _NoticePageState extends State<NoticePage>
           child: ListView.builder(
               itemCount: 8,
               itemBuilder: (ctx, index) {
-                return this._noticelist(this.noticelist[index]);
+                return _noticelist(noticelist[index]);
               }),
         ));
   }
@@ -129,7 +127,7 @@ class _NoticePageState extends State<NoticePage>
         }
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             border: Border(
                 bottom: BorderSide(
                     width: 0.5, color: Color.fromRGBO(238, 238, 238, 1)))),

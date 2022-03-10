@@ -1,4 +1,5 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
@@ -11,171 +12,89 @@ class CardetailPage extends StatefulWidget {
 }
 
 class _CardetailPageState extends State<CardetailPage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
-  List imgliat = [
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-  ];
-  // final List<Tab> tablist = <Tab>[
-  //   Tab(
-  //     text: '详情',
-  //   ),
-  //   Tab(
-  //     text: '车辆轨迹',
-  //   ),
-  //   Tab(
-  //     text: '意向客户',
-  //   ),
-  //   Tab(
-  //     text: '订单',
-  //   ),
-  // ];
-  //List tablist = ['详情', '车辆轨迹', '意向客户', '订单'];
-  //late TabController _controller;
-  // ignore: non_constant_identifier_names
+  late TabController _tabController;
   late EasyRefreshController _refreshController;
-  final detaillist = [
-    {
-      'tltie': '基本信息',
-      'number': 'LGJ83476524683243',
-      'type': '二手车(中规)',
-      'models': '奥迪A3 2020款 Sportback 35 TFSI 进取 运动型',
-    }
-  ];
+
   @override
   void initState() {
-    //   // TODO: implement initState
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
-    // _controller = TabController(length: tablist.length, vsync: this);
-    // addListener(() {
-    //   switch (_controller.index) {
-    //     case 0:
-    //       print(1);
-    //       break;
-    //     case 1:
-    //       print(2);
-    //       break;
-    //     case 2:
-    //       print(3);
-    //       break;
-    //     case 3:
-    //       print(4);
-    //       break;
-    //   }
-    // });
   }
 
   @override
   void dispose() {
-    //_refreshController.dispose();
-    _tabController.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    //super.build(context);
+    super.build(context);
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.star_border)),
-            IconButton(onPressed: () {}, icon: Icon(Icons.share)),
+      appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.star_border)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
+        ],
+        backgroundColor: Colors.white,
+      ),
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+        child: Column(
+          children: [
+            182.hb,
+            _title(),
+            14.hb,
+            _label(),
+            14.hb,
+            _information(),
+            14.hb,
+            _shuffling(),
+            32.hb,
+            _informations(),
+            48.hb,
+            _tabdetail(),
+            14.hb,
+            _bottonbar(),
           ],
-          backgroundColor: Colors.white,
         ),
-        extendBody: true,
-        extendBodyBehindAppBar: true,
-        body: Stack(children: [
-          Align(
-            child: Container(
-              decoration: BoxDecoration(color: Colors.white),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 178.w, horizontal: 32.w),
-            child: _cardetali(),
-          ),
-          //200.hb,
-          Container(
-            //width: double.infinity,
-            //height: 226.w,
-            padding: EdgeInsets.only(
-                bottom: 700.w, top: 480.w, left: 32.w, right: 32.w),
-            child: _bannerstyle(),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 1000.w, left: 32.w),
-            child: _cardetalibottom(),
-          ),
-          Container(
-              padding: EdgeInsets.only(top: 1150.w, left: 32.w),
-              child: Column(
-                children: [
-                  TabBar(
-                    onTap: ((value) {}),
-                    isScrollable: true,
-                    labelPadding:
-                        EdgeInsets.symmetric(vertical: 10.w, horizontal: 40.w),
-                    controller: _tabController,
-                    indicatorWeight: 4,
-                    labelColor: Color.fromRGBO(51, 51, 51, 1),
-                    //indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w),
-                    tabs: [
-                      _tab(0, '详情'),
-                      _tab(1, '车辆轨迹'),
-                      _tab(2, '意向客户'),
-                      _tab(3, '订单')
-                    ],
-                  ),
-                  SizedBox(
-                      height: 240.w,
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          Text('111111'),
-                          Text('22222'),
-                          Text('33333'),
-                          Text('4444444'),
-                        ],
-                      ))
-                ],
-              ))
-        ]));
+      ),
+    );
   }
 
-  @override
-  bool get wantKeepAlive => true;
-}
+  //标题
+  _title() {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 96.w,
+          child: Flexible(
+              child: Text(
+            '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 40.sp,
+                color: const Color.fromRGBO(17, 17, 17, 1)),
+          )),
+        ),
+      ],
+    );
+  }
 
-void addListener(Null Function() param0) {}
-
-//
-_cardetali() {
-  return Column(
-    children: [
-      Flexible(
-          child: Text(
-        '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 40.sp,
-            color: Color.fromRGBO(17, 17, 17, 1)),
-      )),
-      Padding(padding: EdgeInsets.only(top: 32.w)),
-      Column(
-        children: [
-          Row(
+  //标签
+  _label() {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 41.w,
+          child: Row(
             children: [
               _norelease('未发布'),
               16.wb,
@@ -185,108 +104,553 @@ _cardetali() {
               16.wb,
               _textview('国六'),
             ],
-          )
-        ],
-      ),
-      Padding(padding: EdgeInsets.symmetric(vertical: 14.w)),
-      Row(
-        children: [
-          Text(
-            '车辆信息未填写完整',
-            style: TextStyle(
-                color: Color.fromRGBO(230, 34, 34, 1),
-                fontWeight: FontWeight.bold),
           ),
-        ],
-      ),
-      // Container(child: _bannerstyle())
-      //Padding(padding: EdgeInsets.symmetric(vertical: 14.w)),
-      //s_bannerstyle(),
-    ],
-  );
-}
+        ),
+      ],
+    );
+  }
 
+  //提示信息
+  _information() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            SizedBox(
+              child: Text(
+                '车辆信息未填写完整',
+                style: TextStyle(
+                    color: Color.fromRGBO(230, 34, 34, 1),
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  //轮播
+  _shuffling() {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 456.w,
+          child: _bannerstyle(),
+        )
+      ],
+    );
+  }
+
+  //信息栏
+  _informations() {
+    return Column(
+      children: [
+        SizedBox(
+            width: double.infinity,
+            height: 116.w,
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.w),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 4, color: Color.fromRGBO(2, 122, 255, 0.11))
+                  ]),
+              padding: EdgeInsets.only(top: 24.w, left: 24.w),
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        '9.08-11.68万',
+                        style: TextStyle(
+                            fontSize: 28.sp,
+                            color: const Color.fromRGBO(51, 51, 51, 1),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Row(
+                        children: [
+                          // Icon(
+                          //   Icons.timer,
+                          //   size: 20,
+                          // ),
+                          Text(
+                            '参考行情',
+                            style: TextStyle(
+                                color: const Color.fromRGBO(153, 153, 153, 1),
+                                fontSize: 24.sp),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  27.wb,
+                  SizedBox(
+                    width: 1.w,
+                    height: 40.w,
+                    child: DecoratedBox(
+                        decoration: BoxDecoration(color: Colors.grey)),
+                  ),
+                  27.wb,
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '张斯斯',
+                            style: TextStyle(
+                                fontSize: 28.sp,
+                                color: const Color.fromRGBO(51, 51, 51, 1),
+                                fontWeight: FontWeight.bold),
+                          ),
+                          8.wb,
+                          Text.rich(TextSpan(
+                              text: '立即联系',
+                              style: TextStyle(
+                                  color: Colors.blue, fontSize: 20.sp),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = (() {
+                                  print('object');
+                                })))
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          // Icon(
+                          //   Icons.timer,
+                          //   size: 20,
+                          // ),
+                          Text(
+                            '车务',
+                            style: TextStyle(
+                                color: const Color.fromRGBO(153, 153, 153, 1),
+                                fontSize: 24.sp),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  27.wb,
+                  SizedBox(
+                    width: 1.w,
+                    height: 40.w,
+                    child: DecoratedBox(
+                        decoration: BoxDecoration(color: Colors.grey)),
+                  ),
+                  27.wb,
+                  Column(
+                    children: [
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 68.w)),
+                      Text(
+                        '893627',
+                        style: TextStyle(
+                            fontSize: 28.sp,
+                            color: const Color.fromRGBO(51, 51, 51, 1),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Row(
+                        children: [
+                          // Icon(
+                          //   Icons.timer,
+                          //   size: 20,
+                          // ),
+                          Text(
+                            '车辆编号',
+                            style: TextStyle(
+                                color: const Color.fromRGBO(153, 153, 153, 1),
+                                fontSize: 24.sp),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+
+            // Row(children: [
+            //   Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
+
+            // ]),
+            )
+      ],
+    );
+  }
+
+  //栏
+  _tabdetail() {
+    return Column(
+      children: [
+        SizedBox(
+            width: double.infinity,
+            height: 365.w,
+            child: Column(
+              children: [
+                TabBar(
+                  onTap: ((value) {}),
+                  isScrollable: true,
+                  labelPadding:
+                      EdgeInsets.symmetric(vertical: 10.w, horizontal: 40.w),
+                  controller: _tabController,
+                  indicatorWeight: 4,
+                  labelColor: const Color.fromRGBO(2, 122, 255, 1), //选中时的颜色
+                  unselectedLabelColor:
+                      const Color.fromRGBO(51, 51, 51, 1), //未选中颜色
+                  indicatorColor: Colors.white, //下划线颜色
+                  //indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w),
+                  tabs: [
+                    _tab(0, '详情'),
+                    _tab(1, '车辆轨迹'),
+                    _tab(2, '意向客户'),
+                    _tab(3, '订单')
+                  ],
+                ),
+                SizedBox(
+                    height: 288.w,
+                    width: double.infinity,
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              decoration:
+                                  const BoxDecoration(color: Colors.white),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 32.w, top: 16.w)),
+                                      Text(
+                                        '基本信息',
+                                        //item['title'],
+                                        style: TextStyle(
+                                            fontSize: 28.sp,
+                                            color: const Color.fromRGBO(
+                                                51, 51, 51, 1),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 250.w,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 32.w, vertical: 32.w),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '车架号',
+                                              style: TextStyle(
+                                                  fontSize: 28.sp,
+                                                  color: const Color.fromRGBO(
+                                                      102, 102, 102, 1)),
+                                            ),
+                                            48.wb,
+                                            Text(
+                                              'LGJ83476524683243',
+                                              // detaillist[0]
+                                              //     ['number']!, //??不确定的添加条件   ！确定
+                                              style: TextStyle(
+                                                  fontSize: 28.sp,
+                                                  color: const Color.fromRGBO(
+                                                      51, 51, 51, 1)),
+                                            )
+                                          ],
+                                        ),
+                                        14.hb,
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '车辆类型',
+                                              style: TextStyle(
+                                                  fontSize: 28.sp,
+                                                  color: const Color.fromRGBO(
+                                                      102, 102, 102, 1)),
+                                            ),
+                                            24.wb,
+                                            Text(
+                                              '二手车(中规)',
+                                              // detaillist[0]['type']!,
+                                              style: TextStyle(
+                                                  fontSize: 28.sp,
+                                                  color: const Color.fromRGBO(
+                                                      51, 51, 51, 1)),
+                                            )
+                                          ],
+                                        ),
+                                        14.hb,
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '品牌车型',
+                                              style: TextStyle(
+                                                  fontSize: 28.sp,
+                                                  color: const Color.fromRGBO(
+                                                      102, 102, 102, 1)),
+                                            ),
+                                            24.wb,
+                                            Flexible(
+                                                child: Text(
+                                              '奥迪A3 2020款 Sportback 35 TFSI 进取 运动型',
+                                              // detaillist[0]['models']!,
+                                              style: TextStyle(
+                                                  fontSize: 28.sp,
+                                                  color: const Color.fromRGBO(
+                                                      51, 51, 51, 1)),
+                                            )),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        const Text('22222'),
+                        const Text('33333'),
+                        const Text('4444444'),
+                      ],
+                    ))
+              ],
+            )),
+      ],
+    );
+  }
+
+  //底部
+  _bottonbar() {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 118.w,
+          child: TabBar(
+            onTap: ((value) {}),
+            isScrollable: true,
+            labelPadding: EdgeInsets.symmetric(
+              vertical: 10.w,
+            ),
+            controller: _tabController,
+            indicatorWeight: 4,
+            labelColor: const Color.fromRGBO(2, 122, 255, 1), //选中时的颜色
+            unselectedLabelColor: const Color.fromRGBO(51, 51, 51, 1), //未选中颜色
+            indicatorColor: Colors.white, //下划线颜色
+            //indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w),
+            tabs: [
+              Tab(
+                child: MaterialButton(
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.crop_3_2,
+                        color: Color.fromRGBO(2, 122, 255, 1),
+                      ),
+                      Text(
+                        '重新编辑',
+                        style: TextStyle(fontSize: 24.sp),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    showDialog<Null>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SimpleDialog(
+                          title: const Text(''),
+                          children: <Widget>[
+                            SimpleDialogOption(
+                              child: const Text('这是重新编辑'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ).then((val) {
+                      print(val);
+                    });
+                  },
+                ),
+              ),
+              Tab(
+                child: MaterialButton(
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.crop_3_2,
+                        color: Color.fromRGBO(153, 153, 153, 1),
+                      ),
+                      Text('调价', style: TextStyle(fontSize: 24.sp)),
+                    ],
+                  ),
+                  onPressed: () {
+                    showDialog<Null>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SimpleDialog(
+                          title: const Text(''),
+                          children: <Widget>[
+                            SimpleDialogOption(
+                              child: const Text('这是调价'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ).then((val) {
+                      print(val);
+                    });
+                  },
+                ),
+              ),
+              Tab(
+                child: MaterialButton(
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.crop_3_2,
+                        color: Color.fromRGBO(153, 153, 153, 1),
+                      ),
+                      Text('出售', style: TextStyle(fontSize: 24.sp)),
+                    ],
+                  ),
+                  onPressed: () {
+                    showDialog<Null>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SimpleDialog(
+                          title: const Text(''),
+                          children: <Widget>[
+                            SimpleDialogOption(
+                              child: const Text('这是出售'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ).then((val) {
+                      print(val);
+                    });
+                  },
+                ),
+              ),
+              Tab(
+                child: MaterialButton(
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.crop_3_2,
+                        color: Color.fromRGBO(153, 153, 153, 1),
+                      ),
+                      Text('下架/退库', style: TextStyle(fontSize: 24.sp)),
+                    ],
+                  ),
+                  onPressed: () {
+                    showDialog<Null>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SimpleDialog(
+                          title: const Text(''),
+                          children: <Widget>[
+                            SimpleDialogOption(
+                              child: const Text('这是下架/退库'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ).then((val) {
+                      print(val);
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+//部分
 //未发布
-_norelease(String text) {
-  return Container(
-    decoration: BoxDecoration(
-        color: Color.fromRGBO(230, 34, 34, 0.08),
-        borderRadius: BorderRadius.all(
-          Radius.circular(2.w),
-        )),
-    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.w),
-    child: Text(
-      text,
-      style: TextStyle(
-        color: Color.fromRGBO(230, 34, 34, 1),
+  _norelease(String text) {
+    return Container(
+      decoration: BoxDecoration(
+          color: const Color.fromRGBO(230, 34, 34, 0.08),
+          borderRadius: BorderRadius.all(
+            Radius.circular(4.w),
+          )),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
+      child: Text(
+        text,
+        style: TextStyle(
+            color: const Color.fromRGBO(230, 34, 34, 1), fontSize: 24.sp),
       ),
-    ),
-  );
-}
+    );
+  }
 
 //文本
-_textview(String text) {
-  return Container(
-    decoration: BoxDecoration(
-        color: Color.fromRGBO(79, 90, 116, 0.08),
-        borderRadius: BorderRadius.all(
-          Radius.circular(2.w),
-        )),
-    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.w),
-    child: Text(
-      text,
-      style: TextStyle(
-        color: Color.fromRGBO(79, 90, 116, 1),
+  _textview(String text) {
+    return Container(
+      decoration: BoxDecoration(
+          color: const Color.fromRGBO(79, 90, 116, 0.08),
+          borderRadius: BorderRadius.all(
+            Radius.circular(4.w),
+          )),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: const Color.fromRGBO(79, 90, 116, 1),
+          fontSize: 24.sp,
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-// //轮播
-// _getswiper() {
-//   return Swiper(
-//     itemCount: 3,
-//     itemBuilder: (context,  index) {
-//       return Image.network(
-//         ,
-//         fit: BoxFit.fill,
-//       );
-//     },
-//     //触发时是否停止播放
-//     autoplayDisableOnInteraction: true,
-//     //默认分页按钮
-//     pagination: SwiperPagination(builder: DotSwiperPaginationBuilder(size: 0)),
-//   );
-// }
 //分页指示器
-_bulidpagination() {
-  return SwiperPagination(
-      //指示器显示的位置
-      alignment: Alignment.bottomCenter, //位置在底部
-      //距离调整
-      margin: const EdgeInsets.fromLTRB(0, 0, 0, 5), //坐上右下
-      //指示器构建
-      builder: DotSwiperPaginationBuilder(
-        //点之间的间距
-        space: 2,
-        //没选中时的大小
-        size: 6,
-        //选中时的大小
-        activeSize: 12,
-        //没选中时的颜色
-        color: Colors.black,
-        //选中时的颜色
-        activeColor: Colors.white,
-      ));
-}
+  _bulidpagination() {
+    return const SwiperPagination(
+        //指示器显示的位置
+        alignment: Alignment.bottomCenter, //位置在底部
+        //距离调整
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 5), //坐上右下
+        //指示器构建
+        builder: DotSwiperPaginationBuilder(
+          //点之间的间距
+          space: 2,
+          //没选中时的大小
+          size: 6,
+          //选中时的大小
+          activeSize: 12,
+          //没选中时的颜色
+          color: Colors.black,
+          //选中时的颜色
+          activeColor: Colors.white,
+        ));
+  }
 
 //图片样式
-_bannerstyle() {
-  return Container(
-    //width: double.infinity,
-    //height: 226.w,
-    //条目个数
-    child: Swiper(
+  _bannerstyle() {
+    return Swiper(
       itemCount: 6,
       //横向
       scrollDirection: Axis.horizontal,
@@ -310,311 +674,14 @@ _bannerstyle() {
       autoplayDisableOnInteraction: true,
       //无限轮播
       loop: true,
-    ),
-  );
-}
+    );
+  }
 
 //
-_cardetalibottom() {
-  return Column(
-    children: [
-      //Padding(padding: EdgeInsets.symmetric(horizontal: .w)),
-      Container(
-        width: 686.w,
-        height: 116.w,
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
-        margin: EdgeInsets.symmetric(vertical: 8.w),
-        decoration: BoxDecoration(
-          color: Colors.white, // 底色
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 2, //阴影范围
-                spreadRadius: 1, //阴影浓度
-                color: Color.fromRGBO(2, 122, 255, 0.11), //阴影颜色
-                offset: Offset(0, 4) //阴影相偏移量
-                ),
-          ],
-          borderRadius: BorderRadius.circular(5),
-        ),
-        // decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        //   BoxShadow(
-        //     color: Color.fromRGBO(2, 122, 255, 0.11),
-        //     offset: Offset(0, 4),
-        //     //blurRadius: 4.0,
-        //   )
-        // ]),
-        child: Row(
-          children: [
-            Container(
-              width: 200.w,
-              height: 116.w,
-              padding: EdgeInsets.only(right: 18.w),
-              child: Column(
-                children: [
-                  Text(
-                    '9.08-11.68万',
-                    style: TextStyle(
-                        fontSize: 28.sp,
-                        color: Color.fromRGBO(51, 51, 51, 1),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Row(
-                    children: [
-                      // Icon(
-                      //   Icons.timer,
-                      //   size: 20,
-                      // ),
-                      Text(
-                        '参考行情',
-                        style: TextStyle(
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            fontSize: 24.sp),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 200.w,
-              height: 116.w,
-              padding: EdgeInsets.only(right: 32.w),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        '张斯斯',
-                        style: TextStyle(
-                            fontSize: 28.sp,
-                            color: Color.fromRGBO(51, 51, 51, 1),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        width: 80.w,
-                        height: 20.w,
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          child: Text('立即联系'),
-                          style: ButtonStyle(
-                              textStyle: MaterialStateProperty.all(
-                                TextStyle(fontSize: 10.sp),
-                              ),
-                              foregroundColor: MaterialStateProperty.all(
-                                  Color.fromRGBO(2, 122, 255, 1))),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      // Icon(
-                      //   Icons.timer,
-                      //   size: 20,
-                      // ),
-                      Text(
-                        '车务',
-                        style: TextStyle(
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            fontSize: 24.sp),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 200.w,
-              height: 116.w,
-              //padding: EdgeInsets.only(right: 18.w),
-              child: Column(
-                children: [
-                  Text(
-                    '893627',
-                    style: TextStyle(
-                        fontSize: 28.sp,
-                        color: Color.fromRGBO(51, 51, 51, 1),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Row(
-                    children: [
-                      // Icon(
-                      //   Icons.timer,
-                      //   size: 20,
-                      // ),
-                      Text(
-                        '车辆编码',
-                        style: TextStyle(
-                            color: Color.fromRGBO(153, 153, 153, 1),
-                            fontSize: 24.sp),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+  _tab(int index, String text) {
+    return Text(text);
+  }
 
-          // children: [
-          //   Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
-          //   Column(
-          //     children: [
-          //       Text(
-          //         '9.08-11.68万',
-          //         style: TextStyle(
-          //             fontSize: 28.sp,
-          //             color: Color.fromRGBO(51, 51, 51, 1),
-          //             fontWeight: FontWeight.bold),
-          //       ),
-          //       Row(
-          //         children: [
-          //           Icon(
-          //             Icons.timer,
-          //             size: 20,
-          //           ),
-          //           Text(
-          //             '参考行情',
-          //             style: TextStyle(
-          //                 color: Color.fromRGBO(153, 153, 153, 1),
-          //                 fontSize: 24.sp),
-          //           )
-          //         ],
-          //       ),
-          //     ],
-          //   )
-          // ],
-        ),
-      ),
-      Column()
-      //底部导航栏
-      // Row(
-      //   children: [
-      //     BottomAppBar(
-      //       child: TabBar(tabs: [
-      //         Tab(
-      //           icon: Icon(Icons.crop_din),
-      //           text: '重新编辑',
-      //         ),
-      //         Tab(
-      //           icon: Icon(Icons.crop_din),
-      //           text: '调价',
-      //         ),
-      //         Tab(
-      //           icon: Icon(Icons.crop_din),
-      //           text: '出售',
-      //         ),
-      //         Tab(
-      //           icon: Icon(Icons.crop_din),
-      //           text: '下架/退库',
-      //         ),
-      //       ]),
-      //     )
-      //   ],
-      // )
-    ],
-  );
+  @override
+  bool get wantKeepAlive => true;
 }
-
-//标签内容
-_detalitext(item) {
-  return Column(
-    children: [
-      Container(
-        decoration: BoxDecoration(color: Colors.white),
-        child: Column(children: [
-          Row(
-            children: [
-              Padding(padding: EdgeInsets.only(left: 32.w, top: 16.w)),
-              Text(
-                item['title'],
-                style: TextStyle(
-                    fontSize: 32.sp, color: Color.fromRGBO(51, 51, 51, 1)),
-              ),
-            ],
-          ),
-          Container(
-            width: double.infinity,
-            height: 260.w,
-            padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      '车架号',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: Color.fromRGBO(102, 102, 102, 1)),
-                    ),
-                    48.wb,
-                    Text(
-                      item['number'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: Color.fromRGBO(51, 51, 51, 1)),
-                    )
-                  ],
-                ),
-                28.hb,
-                Row(
-                  children: [
-                    Text(
-                      '车辆类型',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: Color.fromRGBO(102, 102, 102, 1)),
-                    ),
-                    48.wb,
-                    Text(
-                      item['type'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: Color.fromRGBO(51, 51, 51, 1)),
-                    )
-                  ],
-                ),
-                28.hb,
-                Row(
-                  children: [
-                    Text(
-                      '品牌车型',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: Color.fromRGBO(102, 102, 102, 1)),
-                    ),
-                    48.wb,
-                    Text(
-                      item['models'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: Color.fromRGBO(51, 51, 51, 1)),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          )
-        ]),
-      )
-    ],
-  );
-}
-
-// unselectedLabelColor: Color.fromRGBO(51, 51, 51, 1), //未选中时的字体颜色样式优先级最高
-// unselectedLabelStyle: TextStyle(fontSize: 14.sp), //未选中字体的大小
-// labelColor: Color.fromRGBO(2, 122, 255, 1), //选中时的字体颜色
-// labelStyle: TextStyle(fontSize: 14.sp),
-// isScrollable: true, //允许左右滑动
-// //选中下划线的颜色 indicatorColor: Colors.red,
-// //选中下划线的长度，长度与文本内容一样 indicatorSize: TabBarIndicatorSize.label,
-// //选中下划线的高度，值越大高度越高默认2.0 indicatorWeight: 6.0,
-// //用于设定选中状态下的展示样式 indicator: BoxDecoration(),
-class Button {
-  Button(Null Function() param0);
-}
-
-_tab(int index, String text) {
-  return Text(text);
-}
-
-void column() {}

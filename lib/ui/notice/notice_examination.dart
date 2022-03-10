@@ -1,10 +1,7 @@
-import 'dart:ui';
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
 
 import 'car_rejected_detail.dart';
 
@@ -50,7 +47,7 @@ class _examinationPageState extends State<examinationPage>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('审批提醒'),
+        title: const Text('审批提醒'),
         backgroundColor: Colors.white,
       ),
       extendBody: true,
@@ -81,8 +78,8 @@ class _examinationPageState extends State<examinationPage>
       children: [
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
-          color: Color.fromRGBO(6, 180, 77, 0.1),
-          child: Text(
+          color: const Color.fromRGBO(6, 180, 77, 0.1),
+          child: const Text(
             "通过",
             style: TextStyle(color: Color.fromRGBO(6, 180, 77, 1)),
           ),
@@ -96,8 +93,8 @@ class _examinationPageState extends State<examinationPage>
       children: [
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
-          color: Color.fromRGBO(230, 34, 34, 0.1),
-          child: Text(
+          color: const Color.fromRGBO(230, 34, 34, 0.1),
+          child: const Text(
             "驳回",
             style: TextStyle(color: Color.fromRGBO(230, 34, 34, 1)),
           ),
@@ -117,7 +114,7 @@ class _examinationPageState extends State<examinationPage>
         }
       },
       child: Container(
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Column(children: [
           Row(
             children: [
@@ -125,7 +122,7 @@ class _examinationPageState extends State<examinationPage>
               Text(
                 item['title'],
                 style: TextStyle(
-                    fontSize: 32.sp, color: Color.fromRGBO(51, 51, 51, 1)),
+                    fontSize: 32.sp, color: const Color.fromRGBO(51, 51, 51, 1)),
               ),
               Container(
                   padding: EdgeInsets.only(left: 243.w, top: 20.w),
@@ -152,14 +149,14 @@ class _examinationPageState extends State<examinationPage>
                       '车辆名称',
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(102, 102, 102, 1)),
+                          color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
                     Text(
                       item['name'],
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(51, 51, 51, 1)),
+                          color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
                 ),
@@ -170,14 +167,14 @@ class _examinationPageState extends State<examinationPage>
                       '审核时间',
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(102, 102, 102, 1)),
+                          color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
                     Text(
                       item['time'],
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(51, 51, 51, 1)),
+                          color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
                 ),
@@ -188,14 +185,14 @@ class _examinationPageState extends State<examinationPage>
                       '驳回原因',
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(102, 102, 102, 1)),
+                          color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
                     Text(
                       item['text'],
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(51, 51, 51, 1)),
+                          color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
                 ),
@@ -212,7 +209,7 @@ class _examinationPageState extends State<examinationPage>
     return Card(
       //onTap: () {},
       child: Container(
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Column(children: [
           Row(
             children: [
@@ -220,7 +217,7 @@ class _examinationPageState extends State<examinationPage>
               Text(
                 item['title'],
                 style: TextStyle(
-                    fontSize: 32.sp, color: Color.fromRGBO(51, 51, 51, 1)),
+                    fontSize: 32.sp, color: const Color.fromRGBO(51, 51, 51, 1)),
               ),
               Container(
                   padding: EdgeInsets.only(left: 243.w, top: 20.w),
@@ -247,14 +244,14 @@ class _examinationPageState extends State<examinationPage>
                       '车辆名称',
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(102, 102, 102, 1)),
+                          color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
                     Text(
                       item['name'],
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(51, 51, 51, 1)),
+                          color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
                 ),
@@ -265,14 +262,14 @@ class _examinationPageState extends State<examinationPage>
                       '审核时间',
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(102, 102, 102, 1)),
+                          color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
                     Text(
                       item['time'],
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color: Color.fromRGBO(51, 51, 51, 1)),
+                          color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
                 ),
