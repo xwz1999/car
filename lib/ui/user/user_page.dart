@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/get_core.dart';
 
 import '../home/car_manager/car_manager_page.dart';
+import '../notice/car_system_informs.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -43,7 +44,8 @@ class _UserPageState extends State<UserPage>
         KingCoin(name: '产品手册', url: Assets.icons.userproduct.path));
     _KingCoinUserlist.add(
         KingCoin(name: '意见反馈', url: Assets.icons.userfeedback.path));
-    _KingCoinUserlist.add(KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
+    _KingCoinUserlist.add(
+        KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
   }
 
   @override
@@ -448,6 +450,9 @@ class _UserPageState extends State<UserPage>
         switch (name) {
           case '我的订单':
             Get.to(() => const CarManagerPage());
+            break;
+          case '关于云云':
+            Get.to(() => const systemPage());
             break;
         }
       },

@@ -154,9 +154,10 @@ class _CardetailPageState extends State<CardetailPage>
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.w),
                   color: Colors.white,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
-                        blurRadius: 4, color: Color.fromRGBO(2, 122, 255, 0.11))
+                        offset: Offset(0.0, 4.0),
+                        color: Color.fromRGBO(2, 122, 255, 0.11))
                   ]),
               padding: EdgeInsets.only(top: 24.w, left: 24.w),
               child: Row(
