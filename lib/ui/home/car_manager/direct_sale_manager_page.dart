@@ -161,7 +161,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           children: [
             ChooseWidget(callBack: (name) { setState(() {
 
-            }); }, items: const ['在售','已订阅','已售','退库','待审核','已驳回',],),
+            }); }, items: const ['在售','已预定','已售','退库','待审核','已驳回',],),
             Divider(height: 1.w,color: BaseStyle.colordddddd,),
             Expanded(
               child: DropDownWidget(

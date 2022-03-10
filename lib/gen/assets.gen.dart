@@ -127,6 +127,7 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/important_user.png');
   AssetGenImage get loginBg =>
       const AssetGenImage('assets/images/login_bg.png');
+  AssetGenImage get noData => const AssetGenImage('assets/images/no_data.png');
 }
 
 class Assets {
