@@ -1,4 +1,8 @@
+import 'package:cloud_car/ui/home/search_page.dart';
+import 'package:cloud_car/ui/home/task_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -32,35 +36,63 @@ class _CardetailPageState extends State<CardetailPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.star_border)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
-        ],
-        backgroundColor: Colors.white,
+    return CloudScaffold(
+      path: Assets.images.noticeBg.path,
+      appbar: Container(
+        color: Colors.transparent,
+        height: kToolbarHeight + MediaQuery.of(context).padding.top,
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        child: Row(
+          children: [
+            32.wb,
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Image.asset('assets/icons/back.png',
+                  height: 48.w, width: 48.w),
+            ),
+            522.wb,
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const SearchPage());
+              },
+              child: Image.asset('assets/icons/ic_favorite1.png',
+                  height: 48.w, width: 48.w),
+            ),
+            24.wb,
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const SearchPage());
+              },
+              child: Image.asset('assets/icons/ic_share.png',
+                  color: Colors.black, height: 48.w, width: 48.w),
+            ),
+            16.wb,
+          ],
+        ),
       ),
       extendBody: true,
-      extendBodyBehindAppBar: true,
+      //extendBodyBehindAppBar: true,
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
         child: Column(
           children: [
-            182.hb,
-            _Title(),
+            _title(),
             14.hb,
-            _Label(),
+            _label(),
             14.hb,
-            _Information(),
+            _information(),
             14.hb,
-            _Shuffling(),
+            _shuffling(),
             32.hb,
-            _Informations(),
+            _informations(),
             48.hb,
-            _TabDetail(),
+            _tabDetail(),
             14.hb,
-            _Bottonbar(),
+            _bottonBar(),
           ],
         ),
       ),
@@ -68,7 +100,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //标题
-  _Title() {
+  _title() {
     return Column(
       children: [
         SizedBox(
@@ -88,7 +120,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //标签
-  _Label() {
+  _label() {
     return Column(
       children: [
         SizedBox(
@@ -96,13 +128,13 @@ class _CardetailPageState extends State<CardetailPage>
           height: 41.w,
           child: Row(
             children: [
-              _NoRelease('未发布'),
+              _noRelease('未发布'),
               16.wb,
-              _Textview('2020年10月'),
+              _textview('2020年10月'),
               16.wb,
-              _Textview('20.43万公里'),
+              _textview('20.43万公里'),
               16.wb,
-              _Textview('国六'),
+              _textview('国六'),
             ],
           ),
         ),
@@ -111,11 +143,11 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //提示信息
-  _Information() {
+  _information() {
     return Column(
       children: [
         Row(
-          children: [
+          children: const [
             SizedBox(
               child: Text(
                 '车辆信息未填写完整',
@@ -131,20 +163,20 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //轮播
-  _Shuffling() {
+  _shuffling() {
     return Column(
       children: [
         SizedBox(
           width: double.infinity,
           height: 456.w,
-          child: _BannerStyle(),
+          child: _bannerStyle(),
         )
       ],
     );
   }
 
   //信息栏
-  _Informations() {
+  _informations() {
     return Column(
       children: [
         SizedBox(
@@ -196,7 +228,7 @@ class _CardetailPageState extends State<CardetailPage>
                   SizedBox(
                     width: 1.w,
                     height: 40.w,
-                    child: DecoratedBox(
+                    child: const DecoratedBox(
                         decoration: BoxDecoration(color: Colors.grey)),
                   ),
                   27.wb,
@@ -218,7 +250,7 @@ class _CardetailPageState extends State<CardetailPage>
                                   color: Colors.blue, fontSize: 20.sp),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = (() {
-                                  print('object');
+                                  ('object');
                                 })))
                         ],
                       ),
@@ -247,7 +279,7 @@ class _CardetailPageState extends State<CardetailPage>
                   SizedBox(
                     width: 1.w,
                     height: 40.w,
-                    child: DecoratedBox(
+                    child: const DecoratedBox(
                         decoration: BoxDecoration(color: Colors.grey)),
                   ),
                   27.wb,
@@ -296,7 +328,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //栏
-  _TabDetail() {
+  _tabDetail() {
     return Column(
       children: [
         SizedBox(
@@ -317,10 +349,10 @@ class _CardetailPageState extends State<CardetailPage>
                   indicatorColor: Colors.white, //下划线颜色
                   //indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w),
                   tabs: [
-                    _Tab(0, '详情'),
-                    _Tab(1, '车辆轨迹'),
-                    _Tab(2, '意向客户'),
-                    _Tab(3, '订单')
+                    _tab(0, '详情'),
+                    _tab(1, '车辆轨迹'),
+                    _tab(2, '意向客户'),
+                    _tab(3, '订单')
                   ],
                 ),
                 SizedBox(
@@ -444,7 +476,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //底部
-  _Bottonbar() {
+  _bottonBar() {
     return Column(
       children: [
         SizedBox(
@@ -484,7 +516,7 @@ class _CardetailPageState extends State<CardetailPage>
                     ],
                   ),
                   onPressed: () {
-                    showDialog<Null>(
+                    showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return SimpleDialog(
@@ -500,7 +532,7 @@ class _CardetailPageState extends State<CardetailPage>
                         );
                       },
                     ).then((val) {
-                      print(val);
+                      (val);
                     });
                   },
                 ),
@@ -522,7 +554,7 @@ class _CardetailPageState extends State<CardetailPage>
                     ],
                   ),
                   onPressed: () {
-                    showDialog<Null>(
+                    showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return SimpleDialog(
@@ -576,7 +608,7 @@ class _CardetailPageState extends State<CardetailPage>
                         );
                       },
                     ).then((val) {
-                      print(val);
+                      (val);
                     });
                   },
                 ),
@@ -598,7 +630,7 @@ class _CardetailPageState extends State<CardetailPage>
                     ],
                   ),
                   onPressed: () {
-                    showDialog<Null>(
+                    showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return SimpleDialog(
@@ -614,7 +646,7 @@ class _CardetailPageState extends State<CardetailPage>
                         );
                       },
                     ).then((val) {
-                      print(val);
+                      (val);
                     });
                   },
                 ),
@@ -628,7 +660,7 @@ class _CardetailPageState extends State<CardetailPage>
 
 //部分
 //未发布
-  _NoRelease(String text) {
+  _noRelease(String text) {
     return Container(
       decoration: BoxDecoration(
           color: const Color.fromRGBO(230, 34, 34, 0.08),
@@ -645,7 +677,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //文本
-  _Textview(String text) {
+  _textview(String text) {
     return Container(
       decoration: BoxDecoration(
           color: const Color.fromRGBO(79, 90, 116, 0.08),
@@ -664,7 +696,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //分页指示器
-  _BulidPagination() {
+  _bulidPagination() {
     return const SwiperPagination(
         //指示器显示的位置
         alignment: Alignment.bottomCenter, //位置在底部
@@ -690,7 +722,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //图片样式
-  _BannerStyle() {
+  _bannerStyle() {
     return Swiper(
       itemCount: 6,
       //横向
@@ -709,7 +741,7 @@ class _CardetailPageState extends State<CardetailPage>
       //自动翻页
       autoplay: true,
       //分页指示
-      pagination: _BulidPagination(),
+      pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
         print('点击' + index.toString());
@@ -723,7 +755,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //
-  _Tab(int index, String text) {
+  _tab(int index, String text) {
     return Text(text);
   }
 

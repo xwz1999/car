@@ -1,6 +1,8 @@
 import 'package:cloud_car/ui/notice/notice_examination.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../user/user_page.dart';
@@ -16,7 +18,7 @@ class NoticePage extends StatefulWidget {
 class _NoticePageState extends State<NoticePage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
-  final int noreadnum = 0;
+
   //final _num = number > 99 ? "99+" : number;
   List noticelist = [
     {
@@ -78,8 +80,6 @@ class _NoticePageState extends State<NoticePage>
   ];
   late EasyRefreshController _refreshController;
 
-  var name;
-
   @override
   void initState() {
     super.initState();
@@ -96,15 +96,23 @@ class _NoticePageState extends State<NoticePage>
     super.build(context);
     // padding:
     // EdgeInsets.symmetric(vertical: 32.w);
-    return Scaffold(
+    return CloudScaffold(
+        path: Assets.images.homeBg.path,
+        systemStyle: const SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.dark,
+        ),
+        // appbar: Container(
+        //   color: Colors.transparent,
+        //   height: kToolbarHeight + MediaQuery.of(context).padding.top,
+        //   alignment: Alignment.centerLeft,
+        //   padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        // ),
         extendBody: true,
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-            //backgroundColor: Colors.white,
-            ),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+        // extendBodyBehindAppBar: true,
+        body: Expanded(
+          //padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: ListView.builder(
+              padding: EdgeInsets.only(top: 128.w),
               itemCount: 8,
               itemBuilder: (ctx, index) {
                 return _noticelist(noticelist[index]);

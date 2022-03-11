@@ -1,4 +1,5 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -32,8 +33,16 @@ class _systemPageState extends State<systemPage>
     super.build(context);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('系统通知'),
-          backgroundColor: Colors.white,
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          backgroundColor: kForeGroundColor,
+          title: Text('系统通知',
+              style: TextStyle(
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize36,
+                  fontWeight: FontWeight.bold)),
+          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         extendBody: true,
         extendBodyBehindAppBar: true,
@@ -64,7 +73,8 @@ class _systemPageState extends State<systemPage>
               child: Text(
                 '01-12 12:44',
                 style: TextStyle(
-                    fontSize: 24.sp, color: const Color.fromRGBO(153, 153, 153, 1)),
+                    fontSize: 24.sp,
+                    color: const Color.fromRGBO(153, 153, 153, 1)),
               ),
             )),
       ],

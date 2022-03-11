@@ -1,5 +1,5 @@
-
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -47,8 +47,16 @@ class _examinationPageState extends State<examinationPage>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('审批提醒'),
-        backgroundColor: Colors.white,
+        leading: const CloudBackButton(
+          isSpecial: true,
+        ),
+        backgroundColor: kForeGroundColor,
+        title: Text('审核提醒',
+            style: TextStyle(
+                color: BaseStyle.color111111,
+                fontSize: BaseStyle.fontSize36,
+                fontWeight: FontWeight.bold)),
+        //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -122,7 +130,8 @@ class _examinationPageState extends State<examinationPage>
               Text(
                 item['title'],
                 style: TextStyle(
-                    fontSize: 32.sp, color: const Color.fromRGBO(51, 51, 51, 1)),
+                    fontSize: 32.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
               ),
               Container(
                   padding: EdgeInsets.only(left: 243.w, top: 20.w),
@@ -217,7 +226,8 @@ class _examinationPageState extends State<examinationPage>
               Text(
                 item['title'],
                 style: TextStyle(
-                    fontSize: 32.sp, color: const Color.fromRGBO(51, 51, 51, 1)),
+                    fontSize: 32.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
               ),
               Container(
                   padding: EdgeInsets.only(left: 243.w, top: 20.w),

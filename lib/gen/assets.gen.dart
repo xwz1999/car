@@ -123,6 +123,9 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/banner_user.png');
   AssetGenImage get bubble => const AssetGenImage('assets/images/bubble.png');
   AssetGenImage get homeBg => const AssetGenImage('assets/images/home_bg.png');
+  AssetGenImage get userBg => const AssetGenImage('assets/images/user_bg.png');
+  AssetGenImage get noticeBg =>
+      const AssetGenImage('assets/images/notice_bg.png');
   AssetGenImage get importantUser =>
       const AssetGenImage('assets/images/important_user.png');
   AssetGenImage get loginBg =>
