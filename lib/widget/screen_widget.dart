@@ -31,7 +31,7 @@ class ScreenWidget extends StatefulWidget {
 }
 
 class _ScreenWidgetState extends State<ScreenWidget> {
-  late String _chooseItem = '';
+  late final String _chooseItem = '';
 
   @override
   void initState() {

@@ -1,3 +1,5 @@
+import 'package:cloud_car/ui/home/carlist_page.dart';
+import 'package:cloud_car/ui/home/citylist_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_car_page.dart';
 import 'package:cloud_car/ui/home/sort_list_page.dart';
@@ -5,15 +7,13 @@ import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/custom_drawer.dart';
+import 'package:cloud_car/widget/custom_floating_action_button_location.dart';
+import 'package:cloud_car/widget/screen_widget.dart';
+import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../../widget/custom_drawer.dart';
-import '../../../widget/custom_floating_action_button_location.dart';
-import '../../../widget/screen_widget.dart';
-import '../../../widget/sort_widget.dart';
-import '../carlist_page.dart';
-import '../citylist_page.dart';
+
 
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
@@ -96,7 +96,9 @@ class _ShareHomePageState extends State<ShareHomePage>
         child: ScreenWidget(
 
           callback: (String item) {
-            print(item+'1231232');
+            if (kDebugMode) {
+              print(item+'1231232');
+            }
           },
           childAspectRatio: 144 / 56,
           mainAxisSpacing: 10.w,
@@ -134,7 +136,7 @@ class _ShareHomePageState extends State<ShareHomePage>
   _customer(){
     return GestureDetector(
       onTap: () async{
-        Get.to(()=>ShareCarPage());
+        Get.to(()=>const ShareCarPage());
       },
       child: Container(
         width: 72.w,
@@ -245,7 +247,9 @@ class _ShareHomePageState extends State<ShareHomePage>
       onTap:(){
         screenControlMy.screenHide();
         _scaffoldKey.currentState?.openEndDrawer();
-        print('筛选');
+        if (kDebugMode) {
+          print('筛选');
+        }
       },
     );
   }
@@ -286,7 +290,9 @@ class _ShareHomePageState extends State<ShareHomePage>
       onTap:(){
         screenControlAll.screenHide();
         _scaffoldKey.currentState?.openEndDrawer();
-        print('筛选');
+        if (kDebugMode) {
+          print('筛选');
+        }
       },
     );
   }
@@ -298,7 +304,9 @@ class _ShareHomePageState extends State<ShareHomePage>
 
   _getSortList(){
     return SortListPage(callback: (ChooseItem item) {
-      print(item.name+'123123');
+      if (kDebugMode) {
+        print(item.name+'123123');
+      }
     },);
   }
 

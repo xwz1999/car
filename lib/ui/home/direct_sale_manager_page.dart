@@ -1,10 +1,8 @@
-import 'package:cloud_car/base/base_style.dart';
-import 'package:cloud_car/gen/assets.gen.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:gzx_dropdown_menu/gzx_dropdown_menu.dart';
 
@@ -70,12 +68,12 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 //          child: TextField(),
 //        ),),
           child: ListView(
-            children: <Widget>[
+            children: const <Widget>[
               TextField(),
             ],
           ),
         ),
-        backgroundColor: Color(0xFFF6F6F6),
+        backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
         body: Stack(
           key: _stackKey,
@@ -234,7 +232,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                       width: double.infinity,
                     )),
                 GZXDropdownMenuBuilder(
-                    dropDownHeight: 700.w, dropDownWidget: SizedBox()),
+                    dropDownHeight: 700.w, dropDownWidget: const SizedBox()),
               ],
             ),
           ],
@@ -287,9 +285,9 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           ),
         ),
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
               height: MediaQuery.of(context).size.height - 220.w,
-              child: CityListCustomHeaderPage());
+              child: const CityListCustomHeaderPage());
         });
   }
 

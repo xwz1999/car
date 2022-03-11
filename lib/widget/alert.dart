@@ -107,7 +107,7 @@ class NormalTextDialog extends Dialog {
       color: _Styles.lineColor,
     ));
 
-    children.add(Container(
+    children.add(SizedBox(
         height: 40.w,
         child: Row(
           children: _buildItems(),
@@ -234,7 +234,7 @@ class NormalContentDialog extends Dialog {
       color: _Styles.lineColor,
     ));
 
-    children.add(Container(
+    children.add(SizedBox(
 
         height: 80.w,
         child: Row(
@@ -270,7 +270,7 @@ class NormalContentDialog extends Dialog {
           color: Colors.transparent,
           padding: EdgeInsets.symmetric(vertical: 8.0 * 2.w),
           child: Text(
-            title,style: this.type != NormalTextDialogType.remind
+            title,style: type != NormalTextDialogType.remind
               ? _Styles.normalTextStyle
               : _Styles.remindTextStyle,
           ),

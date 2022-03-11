@@ -1,6 +1,5 @@
-import 'package:bot_toast/bot_toast.dart';
+
 import 'package:cloud_car/utils/headers.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 typedef ItemCallback = Function(ChooseItem item,int index);
@@ -72,7 +71,7 @@ class SortWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: item.isChoose?const Color(0x1A027AFF):const Color(0xFFF6F6F6),
           borderRadius: BorderRadius.circular(4.w),
-          border: !item.isChoose?Border.all(color: Colors.transparent,width: 1.w):Border.all(color: Color(0xFF027AFF),width: 1.w)
+          border: !item.isChoose?Border.all(color: Colors.transparent,width: 1.w):Border.all(color: const Color(0xFF027AFF),width: 1.w)
         ),
         child: Text(
           item.name,style: TextStyle(

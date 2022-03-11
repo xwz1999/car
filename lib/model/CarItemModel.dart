@@ -1,3 +1,4 @@
+
 class CarItemModel {
  String? name;
   String? time;
@@ -24,13 +25,13 @@ class CarItemModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['time'] = this.time;
-    data['distance'] = this.distance;
-    data['standard'] = this.standard;
-    data['url'] = this.url;
-    data['price'] = this.price;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['time'] = time;
+    data['distance'] = distance;
+    data['standard'] = standard;
+    data['url'] = url;
+    data['price'] = price;
     return data;
   }
 }

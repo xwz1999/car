@@ -2,7 +2,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'assessment_page.dart';
 import 'direct_sale_manager_page.dart';

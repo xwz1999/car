@@ -23,8 +23,8 @@ class ShareCarPage extends StatefulWidget {
 
 class _ShareCarPageState extends State<ShareCarPage> {
   //选中的item
-   List<int> _selectIndex = [];
-   List<CarItemModel> _chooseModels = [];
+   final List<int> _selectIndex = [];
+   final List<CarItemModel> _chooseModels = [];
 
    List<CarItemModel> models = [
      CarItemModel(
@@ -86,7 +86,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
    ];
 
    bool get _allSelect =>
-       _selectIndex.length == models.length && _selectIndex.length != 0;
+       _selectIndex.length == models.length && _selectIndex.isNotEmpty;
 
   @override
   void initState() {
@@ -126,7 +126,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
           itemCount: models.length,
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         width: double.infinity,
         height: 100.w,
         child: Row(
@@ -167,7 +167,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
                           width: 2.w,
                         ),),
                       child: AnimatedOpacity(
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         opacity: _allSelect ? 1 : 0,
                         child: Icon(
                           CupertinoIcons.checkmark,
@@ -191,7 +191,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
 
             GestureDetector(
               onTap: (){
-                if(_selectIndex.length<=0){
+                if(_selectIndex.isEmpty){
                   BotToast.showText(text: '请先选择车辆');
                 }else if(_selectIndex.length==1){
                   showModalBottomSheet(
@@ -264,8 +264,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
                 _chooseModels.add(model);
 
               }
-              print(models.length);
-              print(_selectIndex.length);
+
               setState(() {});
             },
             child: Container(
