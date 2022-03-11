@@ -38,10 +38,11 @@ class _CardetailPageState extends State<CardetailPage>
     super.build(context);
     return CloudScaffold(
       path: Assets.images.noticeBg.path,
+      bodyColor: carColor,
       appbar: Container(
         color: Colors.transparent,
         height: kToolbarHeight + MediaQuery.of(context).padding.top,
-        alignment: Alignment.centerLeft,
+        //alignment: Alignment.centerLeft,
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: Row(
           children: [
@@ -76,26 +77,39 @@ class _CardetailPageState extends State<CardetailPage>
       extendBody: true,
       //extendBodyBehindAppBar: true,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-        child: Column(
-          children: [
-            _title(),
-            14.hb,
-            _label(),
-            14.hb,
-            _information(),
-            14.hb,
-            _shuffling(),
-            32.hb,
-            _informations(),
-            48.hb,
-            _tabDetail(),
-            14.hb,
-            _bottonBar(),
-          ],
-        ),
-      ),
+          // padding: EdgeInsets.symmetric(
+          //   horizontal: 32.w,
+          //),
+          child: Column(
+        children: [
+          Container(
+              padding: EdgeInsets.symmetric(horizontal: 32.w),
+              child: Column(
+                children: [
+                  _title(),
+                  14.hb,
+                  _label(),
+                  14.hb,
+                  _information(),
+                  14.hb,
+                  _shuffling(),
+                  32.hb,
+                  _informations(),
+                  48.hb,
+                ],
+              )
+              // Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+
+              ),
+          Column(
+            children: [
+              _tabDetail(),
+              14.hb,
+              _bottonBar(),
+            ],
+          ),
+        ],
+      )),
     );
   }
 
@@ -189,7 +203,12 @@ class _CardetailPageState extends State<CardetailPage>
                   boxShadow: const [
                     BoxShadow(
                         offset: Offset(0.0, 4.0),
-                        color: Color.fromRGBO(2, 122, 255, 0.11))
+                        blurRadius: 14.0,
+                        spreadRadius: 0.0,
+                        color: Color.fromRGBO(2, 122, 255, 0.11)),
+                    // BoxShadow(
+                    //     offset: Offset(0.0, 0.0),
+                    //     color: Color.fromRGBO(2, 122, 255, 0.11))
                   ]),
               padding: EdgeInsets.only(top: 24.w, left: 24.w),
               child: Row(
@@ -332,8 +351,9 @@ class _CardetailPageState extends State<CardetailPage>
     return Column(
       children: [
         SizedBox(
-            width: double.infinity,
-            height: 365.w,
+            width: 750.w,
+            height: 385.w,
+            //color: Colors.white,
             child: Column(
               children: [
                 TabBar(
@@ -354,6 +374,11 @@ class _CardetailPageState extends State<CardetailPage>
                     _tab(2, '意向客户'),
                     _tab(3, '订单')
                   ],
+                ),
+                const Divider(
+                  height: 10.0,
+                  indent: 0.0,
+                  color: Colors.black,
                 ),
                 SizedBox(
                     height: 288.w,
@@ -471,190 +496,93 @@ class _CardetailPageState extends State<CardetailPage>
                     ))
               ],
             )),
+        Divider(
+          height: 10.0,
+          indent: 0.0,
+          color: Colors.black,
+        ),
       ],
     );
   }
 
   //底部
   _bottonBar() {
-    return Column(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          height: 118.w,
-          child: TabBar(
-            onTap: ((value) {}),
-            isScrollable: true,
-            labelPadding: EdgeInsets.symmetric(
-              vertical: 10.w,
+    return Container(
+      width: 750.w,
+      height: 98.w,
+      margin: EdgeInsets.symmetric(horizontal: 24.w),
+      child: Row(
+        children: [
+          Container(
+            width: 170.w,
+            height: 98.w,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 56.w,
+                  height: 56.w,
+                  child: Image.asset('assets/icons/editor.png'),
+                ),
+                Text(
+                  '重新编辑',
+                  style: TextStyle(fontSize: 24.sp),
+                ),
+              ],
             ),
-            controller: _tabController,
-            indicatorWeight: 4,
-            labelColor: const Color.fromRGBO(2, 122, 255, 1), //选中时的颜色
-            unselectedLabelColor: const Color.fromRGBO(51, 51, 51, 1), //未选中颜色
-            indicatorColor: Colors.white, //下划线颜色
-            //indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w),
-            tabs: [
-              Tab(
-                child: MaterialButton(
-                  child: Column(
-                    children: [
-                      //Image(image: ),
-                      SizedBox(
-                        width: 56.w,
-                        height: 56.w,
-                        child: Image.asset('assets/icons/editor.png'),
-                      ),
-                      // const Icon(
-                      //   Icons.crop_3_2,
-                      //   color: Color.fromRGBO(2, 122, 255, 1),
-                      // ),
-                      Text(
-                        '重新编辑',
-                        style: TextStyle(fontSize: 24.sp),
-                      ),
-                    ],
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: const Text(''),
-                          children: <Widget>[
-                            SimpleDialogOption(
-                              child: const Text('这是重新编辑'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((val) {
-                      (val);
-                    });
-                  },
-                ),
-              ),
-              Tab(
-                child: MaterialButton(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 56.w,
-                        height: 56.w,
-                        child: Image.asset('assets/icons/no_transmission.png'),
-                      ),
-                      // const Icon(
-                      //   Icons.crop_3_2,
-                      //   color: Color.fromRGBO(153, 153, 153, 1),
-                      // ),
-                      Text('调价', style: TextStyle(fontSize: 24.sp)),
-                    ],
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: const Text(''),
-                          children: <Widget>[
-                            SimpleDialogOption(
-                              child: const Text('这是调价'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((val) {
-                      print(val);
-                    });
-                  },
-                ),
-              ),
-              Tab(
-                child: MaterialButton(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 56.w,
-                        height: 56.w,
-                        child: Image.asset('assets/icons/no_upload.png'),
-                      ),
-                      // const Icon(
-                      //   Icons.crop_3_2,
-                      //   color: Color.fromRGBO(153, 153, 153, 1),
-                      // ),
-                      Text('出售', style: TextStyle(fontSize: 24.sp)),
-                    ],
-                  ),
-                  onPressed: () {
-                    showDialog<Null>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: const Text(''),
-                          children: <Widget>[
-                            SimpleDialogOption(
-                              child: const Text('这是出售'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((val) {
-                      (val);
-                    });
-                  },
-                ),
-              ),
-              Tab(
-                child: MaterialButton(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 56.w,
-                        height: 56.w,
-                        child: Image.asset('assets/icons/no_download.png'),
-                      ),
-                      // const Icon(
-                      //   Icons.crop_3_2,
-                      //   color: Color.fromRGBO(153, 153, 153, 1),
-                      // ),
-                      Text('下架/退库', style: TextStyle(fontSize: 24.sp)),
-                    ],
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: const Text(''),
-                          children: <Widget>[
-                            SimpleDialogOption(
-                              child: const Text('这是下架/退库'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((val) {
-                      (val);
-                    });
-                  },
-                ),
-              ),
-            ],
           ),
-        )
-      ],
+          Container(
+            width: 170.w,
+            height: 98.w,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 56.w,
+                  height: 56.w,
+                  child: Image.asset('assets/icons/no_transmission.png'),
+                ),
+                Text(
+                  '调价',
+                  style: TextStyle(fontSize: 24.sp),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 170.w,
+            height: 98.w,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 56.w,
+                  height: 56.w,
+                  child: Image.asset('assets/icons/no_upload.png'),
+                ),
+                Text(
+                  '出售',
+                  style: TextStyle(fontSize: 24.sp),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 170.w,
+            height: 98.w,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 56.w,
+                  height: 56.w,
+                  child: Image.asset('assets/icons/no_download.png'),
+                ),
+                Text(
+                  '下架/退库',
+                  style: TextStyle(fontSize: 24.sp),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

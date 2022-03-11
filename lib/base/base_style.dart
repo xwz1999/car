@@ -12,7 +12,7 @@ const kDangerColor = Color(0xFFFF3B30);
 const kDarkSubColor = Color(0xFF979797);
 const kBalckSubColor = Color(0xFF000000);
 const bgColor = Color(0xFFF8F9FB);
-
+const carColor=Color(0xFFFFFFFF);
 class BaseStyle {
   ///字体类
   static final double fontSize14 = 14.sp;
