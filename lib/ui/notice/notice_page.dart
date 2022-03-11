@@ -103,7 +103,7 @@ class _NoticePageState extends State<NoticePage>
             //backgroundColor: Colors.white,
             ),
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: ListView.builder(
               itemCount: 8,
               itemBuilder: (ctx, index) {
@@ -114,74 +114,59 @@ class _NoticePageState extends State<NoticePage>
 
 //
   _noticelist(item) {
-    return InkWell(
-      onTap: () {
-        switch (item['name']) {
-          case '分账确认提示':
-            Get.to(() => const FashionablePage());
-            //print("1111111");
-            break;
-          case '审批提醒':
-            Get.to(() => const examinationPage());
-            break;
-          case '系统通知':
-            Get.to(() => const UserPage());
-            break;
-        }
-      },
-      child: Container(
-        decoration: const BoxDecoration(
-            border: Border(
-                bottom: BorderSide(
-                    width: 0.5, color: Color.fromRGBO(238, 238, 238, 1)))),
-        child: ListTile(
-          leading: Container(
-            width: 88.w,
-            height: 88.w,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                image: DecorationImage(
-                    image: ExactAssetImage(item['src']), fit: BoxFit.cover)),
-            // child: Container(
-            //   width: 32.w,
-            //   height: 32.w,
-            //   decoration:
-            //       BoxDecoration(borderRadius: BorderRadius.circular(16)),
-            //   color: Colors.red,
-            // ),
-            //   child: if (item['noreadnum']==0) {
-            //   print(''),
-            //  } else if(item['noreadnum']>0 || item['noreadnum']<99){
-            //    print(item['noreadnum']),
-            //  }else{
-            //   print('99+'),
-            //  },
-          ),
-          title: Text(item["name"]),
-          subtitle: Text(
-            item['msg'],
-            overflow: TextOverflow.ellipsis,
-          ),
-          trailing: Text(item['time']),
+    return ListTile(
+        onTap: () {
+          switch (item['name']) {
+            case '分账确认提示':
+              Get.to(() => const FashionablePage());
+              //print("1111111");
+              break;
+            case '审批提醒':
+              Get.to(() => const examinationPage());
+              break;
+            case '系统通知':
+              Get.to(() => const UserPage());
+              break;
+          }
+        },
+        //头像
+        leading: Container(
+          width: 88.w,
+          height: 88.w,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              image: DecorationImage(
+                  image: ExactAssetImage(item['src']), fit: BoxFit.cover)),
         ),
-      ),
-    );
-    // return ListTile(
-    //   leading: Container(
-    //     width: 88.w,
-    //     height: 88.w,
-    //     decoration: BoxDecoration(
-    //         borderRadius: BorderRadius.circular(40),
-    //         image: DecorationImage(
-    //             image: ExactAssetImage(item['src']), fit: BoxFit.cover)),
-    //   ),
-    //   title: Text(item["name"]),
-    //   subtitle: Text(
-    //     item['msg'],
-    //     overflow: TextOverflow.ellipsis,
-    //   ),
-    //   trailing: Text(item['time']),
-    // );
+        //绘制消息主体
+        title: Row(children: [
+          Expanded(flex: 1, child: Text(item['name'])),
+          Text(
+            item['time'],
+            style: TextStyle(
+                fontSize: 20.sp, color: Color.fromRGBO(170, 170, 170, 1)),
+          )
+        ]),
+        //子标题
+        subtitle: Padding(
+          padding: EdgeInsets.only(top: 5),
+          child: Row(children: [
+            Expanded(
+                child: Text(
+              item['msg'],
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: 24.sp, color: Color.fromRGBO(170, 170, 170, 1)),
+            )),
+            Container(
+              width: 34.w,
+              height: 34.w,
+              decoration: BoxDecoration(
+                  color: Colors.red, borderRadius: BorderRadius.circular(16.w)),
+              //child: Text(item[noreadnum]!),
+            )
+          ]),
+        ));
   }
 
 //已读未读数量

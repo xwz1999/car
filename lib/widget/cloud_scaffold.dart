@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/constants/app_theme.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
@@ -19,29 +18,25 @@ class CloudScaffold extends StatelessWidget {
 
   const CloudScaffold({
     Key? key,
-
     this.body,
     this.appbar,
     this.bodyColor = const Color(0xFFF9F9F9),
     this.bottomNavi,
-
     this.fab,
-
     this.systemStyle = SystemStyle.initial,
-    this.extendBody = false,  this.path,
+    this.extendBody = false,
+    this.path,
   }) : super(key: key);
 
   const CloudScaffold.white({
     Key? key,
-
     this.body,
-
     this.bottomNavi,
-
     this.fab,
-
     this.systemStyle = SystemStyle.initial,
-    this.extendBody = false, this.appbar, this.path,
+    this.extendBody = false,
+    this.appbar,
+    this.path,
   })  : bodyColor = Colors.white,
         super(key: key);
 
@@ -56,15 +51,19 @@ class CloudScaffold extends StatelessWidget {
         extendBody: extendBody,
         body: Stack(
           children: [
-            Positioned(child: Image.asset(path!=null?(path!):Assets.images.homeBg.path,width: double.infinity,fit: BoxFit.fitWidth,)),
+            Positioned(
+                child: Image.asset(
+              path != null ? (path!) : Assets.images.homeBg.path,
+              width: double.infinity,
+              fit: BoxFit.fitWidth,
+            )),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                appbar??const SizedBox(),
-                body??const SizedBox(),
+                appbar ?? const SizedBox(),
+                body ?? const SizedBox(),
               ],
             )
-
           ],
         ),
         bottomNavigationBar: bottomNavi,
@@ -72,6 +71,4 @@ class CloudScaffold extends StatelessWidget {
       ),
     );
   }
-
-
 }

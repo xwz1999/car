@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:cloud_car/ui/home/home_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/get_core.dart';
@@ -57,15 +59,22 @@ class _UserPageState extends State<UserPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      appBar: AppBar(),
+    return CloudScaffold(
+      path: Assets.images.homeBg.path,
+      bodyColor: bgColor,
+      systemStyle: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      appbar: Row(children: const [
+        Icon(Icons.abc),
+      ]),
       extendBody: true,
-      extendBodyBehindAppBar: true,
+      //extendBodyBehindAppBar: true,
       body: Container(
           padding: EdgeInsets.symmetric(
             horizontal: 32.w,
           ),
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.blueGrey[50],
           ),
           child: ListView(
@@ -104,7 +113,7 @@ class _UserPageState extends State<UserPage>
               _share(),
               12.hb,
               Row(
-                children: [
+                children: const [
                   Padding(padding: EdgeInsets.only(left: 154, top: 164)),
                   Text("云云问车1.0",
                       style: TextStyle(fontSize: 12, color: Colors.black12)),
@@ -141,7 +150,7 @@ class _UserPageState extends State<UserPage>
                 Align(
                   child: Image.asset("assets/images/bubble.png"),
                 ),
-                Positioned(
+                const Positioned(
                     left: 7,
                     top: 13,
                     child: Text(
@@ -181,7 +190,7 @@ class _UserPageState extends State<UserPage>
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              Text(
+              const Text(
                 "开通即享5项权益",
                 style: TextStyle(
                   fontSize: 12,
@@ -196,7 +205,7 @@ class _UserPageState extends State<UserPage>
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30.w), color: Colors.white),
             padding: EdgeInsets.only(left: 6, top: 5),
-            child: Text(
+            child: const Text(
               "立即开通",
               style: TextStyle(
                   color: Colors.blue,
@@ -212,7 +221,7 @@ class _UserPageState extends State<UserPage>
 //头像信息
   _shareuser() {
     return Container(
-        width: double.infinity,
+        //width: double.infinity,
         //height: 163,
         // margin: EdgeInsets.only(
         //   left: 20,
@@ -245,25 +254,25 @@ class _UserPageState extends State<UserPage>
                           )),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 8)),
+                  const Padding(padding: EdgeInsets.only(left: 8)),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "张三",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      Padding(padding: EdgeInsets.only(top: 5)),
+                      const Padding(padding: EdgeInsets.only(top: 5)),
                       Row(
                         children: [
                           Container(
                             width: 18,
                             height: 8,
-                            color: Color.fromARGB(255, 245, 205, 146),
+                            color: const Color.fromARGB(255, 245, 205, 146),
                             padding: const EdgeInsets.only(
                                 top: 1, left: 4, right: 4),
-                            child: Text(
+                            child: const Text(
                               "销售",
                               style: TextStyle(
                                   fontSize: 5,
@@ -271,14 +280,14 @@ class _UserPageState extends State<UserPage>
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                          Padding(padding: EdgeInsets.only(left: 5)),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
                           Container(
                             width: 30,
                             height: 8,
-                            color: Color.fromARGB(255, 164, 229, 245),
+                            color: const Color.fromARGB(255, 164, 229, 245),
                             padding: const EdgeInsets.only(
                                 top: 1, left: 4, right: 4),
-                            child: Text(
+                            child: const Text(
                               "云云问车",
                               style: TextStyle(
                                   fontSize: 5,
@@ -302,7 +311,7 @@ class _UserPageState extends State<UserPage>
                   ),
                   Padding(padding: EdgeInsets.only(right: 245.w)),
                   RawChip(
-                    label: Icon(Icons.keyboard_arrow_right),
+                    label: const Icon(Icons.keyboard_arrow_right),
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(1)),
@@ -312,9 +321,9 @@ class _UserPageState extends State<UserPage>
             ],
           ),
           Column(children: [
-            Padding(padding: EdgeInsets.only(top: 25, left: 50)),
+            const Padding(padding: EdgeInsets.only(top: 25, left: 50)),
             Row(children: [
-              Padding(
+              const Padding(
                   padding: EdgeInsets.only(
                 top: 10,
                 right: 15,
@@ -323,14 +332,14 @@ class _UserPageState extends State<UserPage>
               Column(
                 children: [
                   Text(
-                    '${assessment}',
-                    style: TextStyle(
+                    '$assessment',
+                    style: const TextStyle(
                         fontSize: 20,
                         color: Colors.black,
                         letterSpacing: 1,
                         fontFamily: 'Bebas'),
                   ),
-                  RawChip(
+                  const RawChip(
                     label: Text(
                       '评估',
                       style: TextStyle(fontSize: 10, color: Colors.black45),
@@ -339,7 +348,7 @@ class _UserPageState extends State<UserPage>
                   )
                 ],
               ),
-              Padding(
+              const Padding(
                   padding: EdgeInsets.only(
                 top: 10,
                 right: 15,
@@ -348,14 +357,14 @@ class _UserPageState extends State<UserPage>
               Column(
                 children: [
                   Text(
-                    '${wallet}',
-                    style: TextStyle(
+                    '$wallet',
+                    style: const TextStyle(
                         fontSize: 20,
                         color: Colors.black,
                         letterSpacing: 1,
                         fontFamily: 'Bebas'),
                   ),
-                  RawChip(
+                  const RawChip(
                     label: Text(
                       '钱包',
                       style: TextStyle(fontSize: 10, color: Colors.black45),
@@ -364,7 +373,7 @@ class _UserPageState extends State<UserPage>
                   )
                 ],
               ),
-              Padding(
+              const Padding(
                   padding: EdgeInsets.only(
                 top: 10,
                 right: 10,
@@ -373,14 +382,14 @@ class _UserPageState extends State<UserPage>
               Column(
                 children: [
                   Text(
-                    '${itation}',
-                    style: TextStyle(
+                    '$itation',
+                    style: const TextStyle(
                         fontSize: 20,
                         color: Colors.black,
                         letterSpacing: 1,
                         fontFamily: 'Bebas'),
                   ),
-                  RawChip(
+                  const RawChip(
                     label: Text(
                       '邀请',
                       style: TextStyle(fontSize: 10, color: Colors.black45),
@@ -410,7 +419,7 @@ class _UserPageState extends State<UserPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Padding(padding: EdgeInsets.only(left: 32.w, top: 48.w, right: 510.w)),
-          Text(
+          const Text(
             '其他功能',
             style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),

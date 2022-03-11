@@ -55,7 +55,7 @@ class _FashionablePageState extends State<FashionablePage>
           child: ListView.builder(
             itemCount: 2,
             itemBuilder: (ctx, index) {
-              return this._fashionablecard(this.fashionablelist[index]);
+              return _fashionablecard(fashionablelist[index]);
             },
           ),
         ));

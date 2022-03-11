@@ -48,19 +48,19 @@ class _CardetailPageState extends State<CardetailPage>
         child: Column(
           children: [
             182.hb,
-            _title(),
+            _Title(),
             14.hb,
-            _label(),
+            _Label(),
             14.hb,
-            _information(),
+            _Information(),
             14.hb,
-            _shuffling(),
+            _Shuffling(),
             32.hb,
-            _informations(),
+            _Informations(),
             48.hb,
-            _tabdetail(),
+            _TabDetail(),
             14.hb,
-            _bottonbar(),
+            _Bottonbar(),
           ],
         ),
       ),
@@ -68,7 +68,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //标题
-  _title() {
+  _Title() {
     return Column(
       children: [
         SizedBox(
@@ -88,7 +88,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //标签
-  _label() {
+  _Label() {
     return Column(
       children: [
         SizedBox(
@@ -96,13 +96,13 @@ class _CardetailPageState extends State<CardetailPage>
           height: 41.w,
           child: Row(
             children: [
-              _norelease('未发布'),
+              _NoRelease('未发布'),
               16.wb,
-              _textview('2020年10月'),
+              _Textview('2020年10月'),
               16.wb,
-              _textview('20.43万公里'),
+              _Textview('20.43万公里'),
               16.wb,
-              _textview('国六'),
+              _Textview('国六'),
             ],
           ),
         ),
@@ -111,7 +111,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //提示信息
-  _information() {
+  _Information() {
     return Column(
       children: [
         Row(
@@ -131,20 +131,20 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //轮播
-  _shuffling() {
+  _Shuffling() {
     return Column(
       children: [
         SizedBox(
           width: double.infinity,
           height: 456.w,
-          child: _bannerstyle(),
+          child: _BannerStyle(),
         )
       ],
     );
   }
 
   //信息栏
-  _informations() {
+  _Informations() {
     return Column(
       children: [
         SizedBox(
@@ -173,6 +173,11 @@ class _CardetailPageState extends State<CardetailPage>
                       ),
                       Row(
                         children: [
+                          SizedBox(
+                            width: 28.w,
+                            height: 28.w,
+                            child: Image.asset('assets/icons/detail_file.png'),
+                          ),
                           // Icon(
                           //   Icons.timer,
                           //   size: 20,
@@ -219,6 +224,11 @@ class _CardetailPageState extends State<CardetailPage>
                       ),
                       Row(
                         children: [
+                          SizedBox(
+                            width: 28.w,
+                            height: 28.w,
+                            child: Image.asset('assets/icons/detail_file.png'),
+                          ),
                           // Icon(
                           //   Icons.timer,
                           //   size: 20,
@@ -253,6 +263,11 @@ class _CardetailPageState extends State<CardetailPage>
                       ),
                       Row(
                         children: [
+                          SizedBox(
+                            width: 28.w,
+                            height: 28.w,
+                            child: Image.asset('assets/icons/detail_file.png'),
+                          ),
                           // Icon(
                           //   Icons.timer,
                           //   size: 20,
@@ -281,7 +296,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //栏
-  _tabdetail() {
+  _TabDetail() {
     return Column(
       children: [
         SizedBox(
@@ -302,10 +317,10 @@ class _CardetailPageState extends State<CardetailPage>
                   indicatorColor: Colors.white, //下划线颜色
                   //indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w),
                   tabs: [
-                    _tab(0, '详情'),
-                    _tab(1, '车辆轨迹'),
-                    _tab(2, '意向客户'),
-                    _tab(3, '订单')
+                    _Tab(0, '详情'),
+                    _Tab(1, '车辆轨迹'),
+                    _Tab(2, '意向客户'),
+                    _Tab(3, '订单')
                   ],
                 ),
                 SizedBox(
@@ -429,7 +444,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //底部
-  _bottonbar() {
+  _Bottonbar() {
     return Column(
       children: [
         SizedBox(
@@ -452,10 +467,16 @@ class _CardetailPageState extends State<CardetailPage>
                 child: MaterialButton(
                   child: Column(
                     children: [
-                      const Icon(
-                        Icons.crop_3_2,
-                        color: Color.fromRGBO(2, 122, 255, 1),
+                      //Image(image: ),
+                      SizedBox(
+                        width: 56.w,
+                        height: 56.w,
+                        child: Image.asset('assets/icons/editor.png'),
                       ),
+                      // const Icon(
+                      //   Icons.crop_3_2,
+                      //   color: Color.fromRGBO(2, 122, 255, 1),
+                      // ),
                       Text(
                         '重新编辑',
                         style: TextStyle(fontSize: 24.sp),
@@ -488,10 +509,15 @@ class _CardetailPageState extends State<CardetailPage>
                 child: MaterialButton(
                   child: Column(
                     children: [
-                      const Icon(
-                        Icons.crop_3_2,
-                        color: Color.fromRGBO(153, 153, 153, 1),
+                      SizedBox(
+                        width: 56.w,
+                        height: 56.w,
+                        child: Image.asset('assets/icons/no_transmission.png'),
                       ),
+                      // const Icon(
+                      //   Icons.crop_3_2,
+                      //   color: Color.fromRGBO(153, 153, 153, 1),
+                      // ),
                       Text('调价', style: TextStyle(fontSize: 24.sp)),
                     ],
                   ),
@@ -521,10 +547,15 @@ class _CardetailPageState extends State<CardetailPage>
                 child: MaterialButton(
                   child: Column(
                     children: [
-                      const Icon(
-                        Icons.crop_3_2,
-                        color: Color.fromRGBO(153, 153, 153, 1),
+                      SizedBox(
+                        width: 56.w,
+                        height: 56.w,
+                        child: Image.asset('assets/icons/no_upload.png'),
                       ),
+                      // const Icon(
+                      //   Icons.crop_3_2,
+                      //   color: Color.fromRGBO(153, 153, 153, 1),
+                      // ),
                       Text('出售', style: TextStyle(fontSize: 24.sp)),
                     ],
                   ),
@@ -554,10 +585,15 @@ class _CardetailPageState extends State<CardetailPage>
                 child: MaterialButton(
                   child: Column(
                     children: [
-                      const Icon(
-                        Icons.crop_3_2,
-                        color: Color.fromRGBO(153, 153, 153, 1),
+                      SizedBox(
+                        width: 56.w,
+                        height: 56.w,
+                        child: Image.asset('assets/icons/no_download.png'),
                       ),
+                      // const Icon(
+                      //   Icons.crop_3_2,
+                      //   color: Color.fromRGBO(153, 153, 153, 1),
+                      // ),
                       Text('下架/退库', style: TextStyle(fontSize: 24.sp)),
                     ],
                   ),
@@ -592,7 +628,7 @@ class _CardetailPageState extends State<CardetailPage>
 
 //部分
 //未发布
-  _norelease(String text) {
+  _NoRelease(String text) {
     return Container(
       decoration: BoxDecoration(
           color: const Color.fromRGBO(230, 34, 34, 0.08),
@@ -609,7 +645,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //文本
-  _textview(String text) {
+  _Textview(String text) {
     return Container(
       decoration: BoxDecoration(
           color: const Color.fromRGBO(79, 90, 116, 0.08),
@@ -628,44 +664,52 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //分页指示器
-  _bulidpagination() {
+  _BulidPagination() {
     return const SwiperPagination(
         //指示器显示的位置
         alignment: Alignment.bottomCenter, //位置在底部
         //距离调整
         margin: EdgeInsets.fromLTRB(0, 0, 0, 5), //坐上右下
         //指示器构建
-        builder: DotSwiperPaginationBuilder(
-          //点之间的间距
-          space: 2,
-          //没选中时的大小
-          size: 6,
-          //选中时的大小
-          activeSize: 12,
-          //没选中时的颜色
-          color: Colors.black,
-          //选中时的颜色
-          activeColor: Colors.white,
-        ));
+        builder:
+            FractionPaginationBuilder(color: Colors.white, activeFontSize: 15)
+
+        // builder: DotSwiperPaginationBuilder(
+        //   //点之间的间距
+        //   space: 2,
+        //   //没选中时的大小
+        //   size: 6,
+        //   //选中时的大小
+        //   activeSize: 12,
+        //   //没选中时的颜色
+        //   color: Colors.black,
+        //   //选中时的颜色
+        //   activeColor: Colors.white,
+        // )
+        );
   }
 
 //图片样式
-  _bannerstyle() {
+  _BannerStyle() {
     return Swiper(
       itemCount: 6,
       //横向
       scrollDirection: Axis.horizontal,
       //布局构建
       itemBuilder: (context, index) {
-        return Image.network(
-          'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
+        // return Image.network(
+        //   'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
+        //   fit: BoxFit.fill,
+        // );
+        return Image.asset(
+          'assets/images/car_banner.png',
           fit: BoxFit.fill,
         );
       },
       //自动翻页
       autoplay: true,
       //分页指示
-      pagination: _bulidpagination(),
+      pagination: _BulidPagination(),
       //点击事件
       onTap: (index) {
         print('点击' + index.toString());
@@ -679,7 +723,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //
-  _tab(int index, String text) {
+  _Tab(int index, String text) {
     return Text(text);
   }
 

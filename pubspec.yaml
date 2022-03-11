@@ -56,6 +56,7 @@ dependencies:
       url: git://github.com/Sky24n/github_language_colors.git
   flutter_swiper: ^1.1.6
   flutter_swiper_tv: ^1.1.6-nullsafety
+  badges: ^2.0.2
 
 
 
