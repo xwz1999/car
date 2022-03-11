@@ -378,7 +378,7 @@ class _CardetailPageState extends State<CardetailPage>
                 const Divider(
                   height: 10.0,
                   indent: 0.0,
-                  color: Colors.black,
+                  color: Color.fromRGBO(221, 221, 221, 1),
                 ),
                 SizedBox(
                     height: 288.w,
@@ -496,10 +496,10 @@ class _CardetailPageState extends State<CardetailPage>
                     ))
               ],
             )),
-        Divider(
+        const Divider(
           height: 10.0,
           indent: 0.0,
-          color: Colors.black,
+          color: Color.fromRGBO(221, 221, 221, 1),
         ),
       ],
     );

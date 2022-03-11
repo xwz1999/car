@@ -1,7 +1,8 @@
-
 import 'package:cloud_car/ui/home/home_page.dart';
+import 'package:cloud_car/ui/user/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -325,14 +326,26 @@ class _UserPageState extends State<UserPage>
               )),
               Column(
                 children: [
-                  Text(
-                    '$assessment',
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        letterSpacing: 1,
-                        fontFamily: 'Bebas'),
-                  ),
+                  Text.rich(TextSpan(
+                      text: '$assessment',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 28.sp,
+                          letterSpacing: 1,
+                          fontFamily: 'Bebas'),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = (() {
+                          Get.to(() => const AssessmentNumPage());
+                        }))),
+
+                  // Text(
+                  //   '$assessment',
+                  //   style: const TextStyle(
+                  //       fontSize: 20,
+                  //       color: Colors.black,
+                  //       letterSpacing: 1,
+                  //       fontFamily: 'Bebas'),
+                  // ),
                   const RawChip(
                     label: Text(
                       '评估',
