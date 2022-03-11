@@ -6,10 +6,8 @@ import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:get/get.dart';
 
 import 'car_manager/car_manager_page.dart';
 import 'home_title.dart';
@@ -57,6 +55,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     super.build(context);
     return CloudScaffold(
+      path: Assets.images.homeBg.path,
       bodyColor: bgColor,
       systemStyle: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
@@ -238,7 +237,7 @@ class _HomePageState extends State<HomePage>
           title: '海报',
           suffixTitle: '查看全部',
           onTap: () {
-            Get.to(() => PosterEditPage());
+            Get.to(() => const PosterEditPage());
           },
         ),
         12.hb,

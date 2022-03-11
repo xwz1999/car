@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CloudScaffold extends StatelessWidget {
+  ///沉浸式带背景的APPBar
+  ///path未背景图的path
   final Widget? body;
   final Widget? appbar;
   final Color bodyColor;
   final Widget? bottomNavi;
   final FloatingActionButton? fab;
   final bool extendBody;
+  final String? path;
 
   final SystemUiOverlayStyle systemStyle;
 
@@ -25,7 +28,7 @@ class CloudScaffold extends StatelessWidget {
     this.fab,
 
     this.systemStyle = SystemStyle.initial,
-    this.extendBody = false,
+    this.extendBody = false,  this.path,
   }) : super(key: key);
 
   const CloudScaffold.white({
@@ -38,7 +41,7 @@ class CloudScaffold extends StatelessWidget {
     this.fab,
 
     this.systemStyle = SystemStyle.initial,
-    this.extendBody = false, this.appbar,
+    this.extendBody = false, this.appbar, this.path,
   })  : bodyColor = Colors.white,
         super(key: key);
 
@@ -53,7 +56,7 @@ class CloudScaffold extends StatelessWidget {
         extendBody: extendBody,
         body: Stack(
           children: [
-            Positioned(child: Image.asset(Assets.images.homeBg.path,width: double.infinity,fit: BoxFit.fitWidth,)),
+            Positioned(child: Image.asset(path!=null?(path!):Assets.images.homeBg.path,width: double.infinity,fit: BoxFit.fitWidth,)),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

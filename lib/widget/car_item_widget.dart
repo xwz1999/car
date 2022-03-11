@@ -95,7 +95,9 @@ class CarItemWidget extends StatelessWidget {
   }
 
   _getTextView(String text) {
-    return Container(
+    return
+      text.isNotEmpty?
+      Container(
       decoration: BoxDecoration(
           color: const Color(0xFFF1F2F4),
           borderRadius: BorderRadius.all(Radius.circular(2.w))),
@@ -108,6 +110,6 @@ class CarItemWidget extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
       ),
-    );
+    ):const SizedBox();
   }
 }
