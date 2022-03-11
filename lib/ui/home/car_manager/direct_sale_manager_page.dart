@@ -8,6 +8,7 @@ import 'package:cloud_car/widget/choose_widget.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class DirectSaleManagerPage extends StatefulWidget {
@@ -93,10 +94,10 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           ],
           backgroundColor: kForeGroundColor,
 
-          title: Container(
+          title: SizedBox(
             width: 200.w,
             child: PopupMenuButton(
-                offset: Offset(20, 25),
+                offset: const Offset(20, 25),
                 color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +106,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 34.sp,
-                          color: Color(0xFF333333),
+                          color: const Color(0xFF333333),
                         )),
                     Icon(
                       Icons.arrow_drop_down,
@@ -127,7 +128,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 24.sp,
-                                color: Color(0xFF333333),
+                                color: const Color(0xFF333333),
                               ))),
                       PopupMenuItem(
                           value: "收购车辆",
@@ -135,7 +136,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 24.sp,
-                                color: Color(0xFF333333),
+                                color: const Color(0xFF333333),
                               ))),
                       PopupMenuItem(
                           value: "评估车辆",
@@ -143,7 +144,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 24.sp,
-                                color: Color(0xFF333333),
+                                color: const Color(0xFF333333),
                               ))),
                     ]),
           ),
@@ -200,7 +201,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                 onTap:(){
                   screenControl.screenHide();
                   _scaffoldKey.currentState?.openEndDrawer();
-                  print('筛选');
+
                 },
               ),
             )
@@ -212,7 +213,9 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
   _getSortList(){
     return SortListPage(callback: (ChooseItem item) {
-      print(item.name+'123123');
+      if (kDebugMode) {
+        print(item.name+'123123');
+      }
     },);
   }
 

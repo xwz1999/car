@@ -84,7 +84,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
               //Widget Function(BuildContext context, int index)
               return GestureDetector(
                 onTap: (){
-                    Get.to(()=>UserManagerDetailPage());
+                    Get.to(()=>const UserManagerDetailPage());
 
                 },
                 child: const ManagerContainerItem(

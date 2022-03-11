@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:azlistview/azlistview.dart';
 import 'package:cloud_car/utils/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
@@ -9,6 +10,8 @@ import 'package:lpinyin/lpinyin.dart';
 import 'models.dart';
 
 class CityListCustomHeaderPage extends StatefulWidget {
+  const CityListCustomHeaderPage({Key? key}) : super(key: key);
+
   @override
   _CityListCustomHeaderPageState createState() =>
       _CityListCustomHeaderPageState();
@@ -22,7 +25,7 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       loadData();
     });
   }
@@ -33,9 +36,9 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
       cityList.clear();
       Map countyMap = json.decode(value);
       List list = countyMap['china'];
-      list.forEach((v) {
+      for (var v in list) {
         cityList.add(CityModel.fromJson(v));
-      });
+      }
       _handleList(cityList);
     });
   }
@@ -86,15 +89,17 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
         spacing: 10.0,
         children: hotCityList.map((e) {
           return OutlinedButton(
-            style: ButtonStyle(
+            style: const ButtonStyle(
                 //side: BorderSide(color: Colors.grey[300], width: .5),
                 ),
             child: Padding(
-              padding: EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: Text(e.name),
             ),
             onPressed: () {
-              print("OnItemClick: $e");
+              if (kDebugMode) {
+                print("OnItemClick: $e");
+              }
               Navigator.pop(context, e);
             },
           );
@@ -119,7 +124,7 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
                 Text(" 成都市"),
               ],
             )),
-        Divider(
+        const Divider(
           height: .0,
         ),
         Expanded(
@@ -145,7 +150,7 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
             indexBarOptions: IndexBarOptions(
               needRebuild: true,
               color: Colors.transparent,
-              downColor: Color(0xFFEEEEEE),
+              downColor: const Color(0xFFEEEEEE),
               localImages: [imgFavorite], //local images.
             ),
           ),

@@ -6,7 +6,6 @@ class AppTheme {
   static ThemeData get theme {
     return ThemeData(primarySwatch: Colors.blue).copyWith(
       primaryColor: const Color(0xFF027AFF),
-      accentColor: const Color(0xFF027AFF),
       textTheme: ThemeData.light().textTheme.copyWith(
             headline3: TextStyle(
               fontSize: 40.sp,
@@ -72,8 +71,9 @@ class AppTheme {
       ),
       radioTheme: RadioThemeData(
         fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
-          if (states.contains(MaterialState.selected))
+          if (states.contains(MaterialState.selected)) {
             return const Color(0xFFFFD000);
+          }
           return null;
         }),
       ),
@@ -119,9 +119,7 @@ class AppTheme {
         ),
       ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      dividerColor: const Color(0xFFE8E8E8),
-      colorScheme:
-          ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFF027AFF)),
+      dividerColor: const Color(0xFFE8E8E8), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFF027AFF)).copyWith(secondary: const Color(0xFF027AFF)),
     );
   }
 }

@@ -17,7 +17,6 @@ class _UserInfoPageState extends State<UserInfoPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  late String _selfText = '';
 
   @override
   void initState() {

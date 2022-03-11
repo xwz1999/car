@@ -93,7 +93,7 @@ class _PreferredPageState extends State<PreferredPage>
       extendBody: true,
       body: Expanded(
         child: ListView(
-          children: [
+          children: const [
 
           ],
         ),

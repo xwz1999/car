@@ -2,12 +2,13 @@ import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/car_item_widget.dart';
+
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/choose_widget.dart';
+
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AssessmentPage extends StatefulWidget {
@@ -142,7 +143,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
                 onTap: () {
                   screenControl.screenHide();
                   _scaffoldKey.currentState?.openEndDrawer();
-                  print('筛选');
+
                 },
               ),
             )
@@ -154,7 +155,9 @@ class _AssessmentPageState extends State<AssessmentPage> {
 
   _getSortList() {
     return SortListPage(callback: (ChooseItem item) {
-      print(item.name + '123123');
+      if (kDebugMode) {
+        print(item.name + '123123');
+      }
     },);
   }
 

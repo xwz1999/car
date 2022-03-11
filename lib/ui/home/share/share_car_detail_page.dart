@@ -187,7 +187,7 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                   color: kForeGroundColor,
                   borderRadius: BorderRadius.all(Radius.circular(16.w))),
               child: Column(
-                children: [],
+                children: const [],
               ),
             ),
           ),
