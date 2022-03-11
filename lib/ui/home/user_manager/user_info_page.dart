@@ -1,8 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/car_item_widget.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
@@ -170,7 +168,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                 controller: _tabController,
                 children: [
                   ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
@@ -190,7 +188,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                     itemCount: 5,
                   ),
                   ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics:const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
@@ -209,7 +207,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                     itemCount: 5,
                   ),
                   ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics:const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
@@ -265,7 +263,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                               ),
                             ]),
                       ),
-                      items: ['取消'],
+                      items: const ['取消'],
                       listener: (index) {
                         Alert.dismiss(context);
                       },
