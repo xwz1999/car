@@ -49,7 +49,7 @@ class _ScreenWidgetState extends State<ScreenWidget> {
       shrinkWrap: true,
       children: [
         Padding(
-          padding:  EdgeInsets.only(left: 32.w,right: 32.w,top: 24.w),
+          padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 24.w),
           child: SortWidget(
             crossAxisSpacing: widget.mainAxisSpacing,
             itemList: widget.itemList,

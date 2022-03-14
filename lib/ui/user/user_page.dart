@@ -330,7 +330,7 @@ class _UserPageState extends State<UserPage>
                       text: '$assessment',
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 28.sp,
+                          fontSize: 20.sp,
                           letterSpacing: 1,
                           fontFamily: 'Bebas'),
                       recognizer: TapGestureRecognizer()
