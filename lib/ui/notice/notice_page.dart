@@ -130,7 +130,7 @@ class _NoticePageState extends State<NoticePage>
               //print("1111111");
               break;
             case '审批提醒':
-              Get.to(() => const examinationPage());
+              Get.to(() => const ExaminationPage());
               break;
             case '系统通知':
               Get.to(() => const UserPage());
@@ -164,7 +164,8 @@ class _NoticePageState extends State<NoticePage>
               item['msg'],
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  fontSize: 24.sp, color: const Color.fromRGBO(170, 170, 170, 1)),
+                  fontSize: 24.sp,
+                  color: const Color.fromRGBO(170, 170, 170, 1)),
             )),
             //小红点组件
             Badge(

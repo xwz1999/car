@@ -1,5 +1,7 @@
 import 'package:cloud_car/ui/notice/notice_fashionable.dart';
+import 'package:cloud_car/ui/user/pay_num_changes.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:cloud_car/widget/recharge_widget.dart';
@@ -41,38 +43,38 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
   @override
   Widget build(BuildContext context) {
     //super.build(context);
-    return CloudScaffold(
-        bodyColor: bgColor,
-        appbar: Container(
-          color: Colors.transparent,
-          height: kToolbarHeight + MediaQuery.of(context).padding.top,
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          child: Row(children: [
-            32.wb,
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: Image.asset('assets/icons/back.png',
-                  height: 48.w, width: 48.w),
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(246, 246, 246, 1),
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          actions: [
+            Column(
+              children: [
+                SizedBox(
+                  height: 45.w,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => const PayChangesPage());
+                  },
+                  child: Text(
+                    '次数变更',
+                    style: TextStyle(color: Colors.blue, fontSize: 28.sp),
+                  ),
+                ),
+              ],
             ),
-            188.wb,
-            Text(
-              '评估次数充值',
+            30.wb,
+          ],
+          title: Text('评估次数充值',
               style: TextStyle(
-                  fontSize: 36.sp, color: const Color.fromRGBO(17, 17, 17, 1)),
-            ),
-            122.wb,
-            Text.rich(TextSpan(
-                text: '次数记录',
-                style: TextStyle(color: Colors.blue, fontSize: 28.sp),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = (() {
-                    Get.to(() => const AssessmentPage());
-                  })))
-          ]),
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize36,
+                  fontWeight: FontWeight.bold)),
         ),
-        extendBody: true,
+        //extendBody: true,
         //extendBodyBehindAppBar: true,
         body: Stack(
           children: [
@@ -190,6 +192,68 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                 itemList: _piceList,
               ),
             )
+            // SizedBox(
+            //   height: 600.w,
+            //   // width: ,
+            //   child: GridView.count(
+            //     crossAxisCount: 3,
+            //     mainAxisSpacing: 32.w,
+            //     crossAxisSpacing: 20.w,
+            //     padding: EdgeInsets.symmetric(horizontal: 32.w),
+            //     childAspectRatio: 1 / 0.5,
+            //     children: [
+            //       Container(
+            //         decoration: BoxDecoration(
+            //             color: const Color.fromRGBO(2, 122, 255, 0.1),
+            //             border: Border.all(
+            //                 color: const Color.fromRGBO(2, 122, 255, 1),
+            //                 width: 1.w)),
+            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
+            //         child: Column(
+            //           children: const [Flexible(child: Text('充值10次 ¥10.00'))],
+            //         ),
+            //       ),
+            //       Container(
+            //         width: 108.w,
+            //         height: 48.w,
+            //         color: const Color.fromRGBO(246, 246, 246, 1),
+            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
+            //         child: Column(
+            //           children: const [Flexible(child: Text('充值20次 ¥20.00'))],
+            //         ),
+            //       ),
+            //       Container(
+            //         color: const Color.fromRGBO(246, 246, 246, 1),
+            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
+            //         child: Column(
+            //           children: const [Flexible(child: Text('充值30次 ¥30.00'))],
+            //         ),
+            //       ),
+            //       Container(
+            //         color: const Color.fromRGBO(246, 246, 246, 1),
+            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
+            //         child: Column(
+            //           children: const [Flexible(child: Text('充值50次 ¥50.00'))],
+            //         ),
+            //       ),
+            //       Container(
+            //         color: const Color.fromRGBO(246, 246, 246, 1),
+            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
+            //         child: Column(
+            //           children: const [Flexible(child: Text('充值100次 ¥100.00'))],
+            //         ),
+            //       ),
+            //       Container(
+            //         color: const Color.fromRGBO(246, 246, 246, 1),
+            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
+            //         child: Column(
+            //           children: const [Flexible(child: Text('自定义 充值次数'))],
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // ElevatedButton(onPressed: () {}, child: const Text('data'))
           ],
         ));
   }

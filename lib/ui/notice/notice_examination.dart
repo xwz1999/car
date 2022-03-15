@@ -5,14 +5,14 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import 'car_rejected_detail.dart';
 
-class examinationPage extends StatefulWidget {
-  const examinationPage({Key? key}) : super(key: key);
+class ExaminationPage extends StatefulWidget {
+  const ExaminationPage({Key? key}) : super(key: key);
 
   @override
-  _examinationPageState createState() => _examinationPageState();
+  _ExaminationPageState createState() => _ExaminationPageState();
 }
 
-class _examinationPageState extends State<examinationPage>
+class _ExaminationPageState extends State<ExaminationPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
