@@ -328,10 +328,11 @@ class _UserPageState extends State<UserPage>
                   Text.rich(TextSpan(
                       text: '$assessment',
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20.sp,
-                          letterSpacing: 1,
-                          fontFamily: 'Bebas'),
+                        color: Colors.black,
+                        fontSize: 32.sp,
+                        letterSpacing: 1,
+                        fontFamily: 'Bebas',
+                      ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = (() {
 
