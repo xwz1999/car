@@ -45,6 +45,11 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/customer_pay.png');
   AssetGenImage get customerTrack =>
       const AssetGenImage('assets/icons/customer_track.png');
+  AssetGenImage get detailFile =>
+      const AssetGenImage('assets/icons/detail_file.png');
+  AssetGenImage get download =>
+      const AssetGenImage('assets/icons/download.png');
+  AssetGenImage get editor => const AssetGenImage('assets/icons/editor.png');
   AssetGenImage get examination =>
       const AssetGenImage('assets/icons/examination.png');
   AssetGenImage get fashionable =>
@@ -78,6 +83,14 @@ class $AssetsIconsGen {
   AssetGenImage get mainSearch =>
       const AssetGenImage('assets/icons/main_search.png');
   AssetGenImage get message => const AssetGenImage('assets/icons/message.png');
+  AssetGenImage get noDownload =>
+      const AssetGenImage('assets/icons/no_download.png');
+  AssetGenImage get noEditor =>
+      const AssetGenImage('assets/icons/no_editor.png');
+  AssetGenImage get noTransmission =>
+      const AssetGenImage('assets/icons/no_transmission.png');
+  AssetGenImage get noUpload =>
+      const AssetGenImage('assets/icons/no_upload.png');
   AssetGenImage get payment => const AssetGenImage('assets/icons/payment.png');
   AssetGenImage get system => const AssetGenImage('assets/icons/system.png');
   AssetGenImage get tabCar => const AssetGenImage('assets/icons/tab_car.png');
@@ -95,6 +108,9 @@ class $AssetsIconsGen {
       const AssetGenImage('assets/icons/tab_notice_choose.png');
   AssetGenImage get tracking =>
       const AssetGenImage('assets/icons/tracking.png');
+  AssetGenImage get transmission =>
+      const AssetGenImage('assets/icons/transmission.png');
+  AssetGenImage get upload => const AssetGenImage('assets/icons/upload.png');
   AssetGenImage get userabout =>
       const AssetGenImage('assets/icons/userabout.png');
   AssetGenImage get userbackground =>
@@ -123,7 +139,10 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/banner_bg.png');
   AssetGenImage get bannerUser =>
       const AssetGenImage('assets/images/banner_user.png');
+  AssetGenImage get bbgg => const AssetGenImage('assets/images/bbgg.png');
   AssetGenImage get bubble => const AssetGenImage('assets/images/bubble.png');
+  AssetGenImage get carBanner =>
+      const AssetGenImage('assets/images/car_banner.png');
   AssetGenImage get homeBg => const AssetGenImage('assets/images/home_bg.png');
   AssetGenImage get userBg => const AssetGenImage('assets/images/user_bg.png');
   AssetGenImage get noticeBg =>
@@ -133,6 +152,8 @@ class $AssetsImagesGen {
   AssetGenImage get loginBg =>
       const AssetGenImage('assets/images/login_bg.png');
   AssetGenImage get noData => const AssetGenImage('assets/images/no_data.png');
+  AssetGenImage get systemUpdate =>
+      const AssetGenImage('assets/images/system_update.png');
 }
 
 class Assets {

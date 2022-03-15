@@ -121,9 +121,9 @@ class _DropDownWidgetState extends State<DropDownWidget>
           alignment: Alignment.center,
           height: widget.height,
           decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-                      color: const Color(0xffe4e7ed), width: 0.4.r))),
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.w)),
+              color: Colors.white
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: getScreenTitle(),
@@ -177,18 +177,21 @@ class _DropDownWidgetState extends State<DropDownWidget>
     if (widget.screen != null) {
       widgets.add(Expanded(
           flex: 1,
-          child: Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              height: double.infinity,
-              padding: EdgeInsets.only(left: 5.r, right: 5.r),
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('筛选',
-                    style: TextStyle(
-                        fontSize: widget.headFontSize,
-                        color: const Color(0xff333333))),
-              ]))));
+          child: GestureDetector(
+            onTap: widget.onTap!,
+            child: Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                height: double.infinity,
+                padding: EdgeInsets.only(left: 5.r, right: 5.r),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text('筛选',
+                      style: TextStyle(
+                          fontSize: widget.headFontSize,
+                          color: const Color(0xff333333))),
+                ])),
+          )));
     }
     return widgets;
   }
