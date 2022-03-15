@@ -94,33 +94,33 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
   _getPayList(item) {
     return Column(
       children: [
-        ListTile(
-          leading: Image.asset(item['src']),
-          title: Text(item['title']),
-          trailing: Radio(
-            value: item['checked'],
-            groupValue: item['checked'],
-            activeColor: Colors.blue,
-            onChanged: (value) {
-              setState(() {
-                item['checked'] = value;
-                // for (var i = 0; i < payList.length; i++) {
-                //   payList[i]['checked'] = false;
-                // }
-                // item['checked'] = true;
-              });
-            },
-          ),
-          // trailing: item['checked'] ? const Icon(Icons.check) : const Text(''),
-          // onTap: () {
-          //   setState(() {
-          //     for (var i = 0; i < payList.length; i++) {
-          //       payList[i]['checked'] = false;
-          //     }
-          //     item['checked'] = true;
-          //   });
-          // },
-        ),
+        // ListTile(
+        //   leading: Image.asset(item['src']),
+        //   title: Text(item['title']),
+        //   trailing: Radio(
+        //     value: item['checked'],
+        //     groupValue: item['checked'],
+        //     activeColor: Colors.blue,
+        //     onChanged: (value) {
+        //       setState(() {
+        //         item['checked'] = value;
+        //         // for (var i = 0; i < payList.length; i++) {
+        //         //   payList[i]['checked'] = false;
+        //         // }
+        //         // item['checked'] = true;
+        //       });
+        //     },
+        //   ),
+        //   // trailing: item['checked'] ? const Icon(Icons.check) : const Text(''),
+        //   // onTap: () {
+        //   //   setState(() {
+        //   //     for (var i = 0; i < payList.length; i++) {
+        //   //       payList[i]['checked'] = false;
+        //   //     }
+        //   //     item['checked'] = true;
+        //   //   });
+        //   // },
+        // ),
         const Divider()
       ],
     );
