@@ -1,4 +1,5 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -45,8 +46,16 @@ class _FashionablePageState extends State<FashionablePage>
     super.build(context);
     return Scaffold(
         appBar: AppBar(
-          title:const Text('分账确认'),
-          backgroundColor: Colors.white,
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          backgroundColor: kForeGroundColor,
+          title: Text('分账确认',
+              style: TextStyle(
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize36,
+                  fontWeight: FontWeight.bold)),
+          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         extendBody: true,
         extendBodyBehindAppBar: true,
@@ -83,7 +92,7 @@ class _FashionablePageState extends State<FashionablePage>
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
           color: Color.fromRGBO(153, 153, 153, 0.1),
-          child:const Text(
+          child: const Text(
             "未读",
             style: TextStyle(color: Color.fromRGBO(153, 153, 153, 1)),
           ),
@@ -96,7 +105,7 @@ class _FashionablePageState extends State<FashionablePage>
     return Card(
       //onTap: () {},
       child: Container(
-        decoration:const BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Column(children: [
           Row(
             children: [
@@ -104,7 +113,8 @@ class _FashionablePageState extends State<FashionablePage>
               Text(
                 item['title'],
                 style: TextStyle(
-                    fontSize: 32.sp, color:const Color.fromRGBO(51, 51, 51, 1)),
+                    fontSize: 32.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
               ),
               Container(
                   padding: EdgeInsets.only(left: 243.w, top: 20.w),
@@ -131,14 +141,14 @@ class _FashionablePageState extends State<FashionablePage>
                       '分账内容',
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color:const Color.fromRGBO(102, 102, 102, 1)),
+                          color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
                     Text(
                       item['content'],
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color:const Color.fromRGBO(51, 51, 51, 1)),
+                          color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
                 ),
@@ -149,14 +159,14 @@ class _FashionablePageState extends State<FashionablePage>
                       '操作人',
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color:const Color.fromRGBO(102, 102, 102, 1)),
+                          color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
                     Text(
                       item['name'],
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color:const Color.fromRGBO(51, 51, 51, 1)),
+                          color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
                 ),
@@ -167,14 +177,14 @@ class _FashionablePageState extends State<FashionablePage>
                       '出资金额/分账金额',
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color:const Color.fromRGBO(102, 102, 102, 1)),
+                          color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
                     Text(
                       item['money'],
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color:const Color.fromRGBO(51, 51, 51, 1)),
+                          color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
                 ),
@@ -185,14 +195,14 @@ class _FashionablePageState extends State<FashionablePage>
                       '操作时间',
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color:const Color.fromRGBO(102, 102, 102, 1)),
+                          color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
                     Text(
                       item['time'],
                       style: TextStyle(
                           fontSize: 28.sp,
-                          color:const Color.fromRGBO(51, 51, 51, 1)),
+                          color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
                 ),

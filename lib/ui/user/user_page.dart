@@ -1,15 +1,14 @@
-import 'dart:ui';
-
 import 'package:cloud_car/ui/home/home_page.dart';
+import 'package:cloud_car/ui/user/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
 
 import '../home/car_manager/car_manager_page.dart';
+import '../home/task_page.dart';
 import '../notice/car_system_informs.dart';
 
 class UserPage extends StatefulWidget {
@@ -27,7 +26,7 @@ class _UserPageState extends State<UserPage>
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
 
-  late final List<KingCoin> _KingCoinUserlist = [];
+  late final _KingCoinUserlist = [];
   final int assessment = 1;
   final int wallet = 10210;
   final int itation = 12;
@@ -60,68 +59,63 @@ class _UserPageState extends State<UserPage>
   Widget build(BuildContext context) {
     super.build(context);
     return CloudScaffold(
-      path: Assets.images.homeBg.path,
+      path: Assets.images.userBg.path,
       bodyColor: bgColor,
       systemStyle: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
       ),
-      appbar: Row(children: const [
-        Icon(Icons.abc),
-      ]),
+      appbar: Container(
+        height: kToolbarHeight + MediaQuery.of(context).padding.top,
+        //height: 334.w,
+        alignment: Alignment.centerRight,
+        child: Row(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(
+              left: 670.w,
+            )),
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const TaskPage());
+              },
+              child: Image.asset('assets/icons/user_set_up.png',
+                  height: 48.w, width: 48.w),
+            ),
+          ],
+        ),
+      ),
       extendBody: true,
       //extendBodyBehindAppBar: true,
-      body: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 32.w,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.blueGrey[50],
-          ),
+      body: Expanded(
+          // padding: EdgeInsets.symmetric(
+          //   horizontal: 32.w,
+          // ),
+          // decoration: new BoxDecoration(
+          //   color: Colors.blueGrey[50],
+          // ),
           child: ListView(
-            shrinkWrap: true,
+        padding: EdgeInsets.symmetric(horizontal: 32.w),
+        children: [
+          //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+          Container(
+            padding: EdgeInsets.only(top: 65.w),
+            child: _shareUser(),
+            height: 408.w,
+          ),
+          32.hb,
+          _getBanner(),
+          24.hb,
+          _share(),
+          164.hb,
+          Row(
             children: [
-              // Stack(
-              //   children: [
-              //     //导航背景图
-              //     Align(
-              //         child: Image.asset(
-              //       "assets/images/background.png",
-              //       width: double.infinity,
-              //       height: 245,
-              //       fit: BoxFit.cover,
-              //     )),
-              //     //头部icon
-              //     Positioned(
-              //       child: Icon(
-              //         Icons.settings,
-              //         color: Colors.black,
-              //         size: 30,
-              //       ),
-              //       left: 330,
-              //     ),
-              //   ],
-              // ),
-              //         Positioned(
-              //           top: 70,
-              //           right: 1,
-              //           left: 1,
-              //           child:
-              //         ),
-              _shareuser(),
-              32.hb,
-              _getbanner(),
-              24.hb,
-              _share(),
-              12.hb,
-              Row(
-                children: const [
-                  Padding(padding: EdgeInsets.only(left: 154, top: 164)),
-                  Text("云云问车1.0",
-                      style: TextStyle(fontSize: 12, color: Colors.black12)),
-                ],
-              )
+              Padding(padding: EdgeInsets.only(left: 258.w)),
+              const Text("云云问车1.0",
+                  style: TextStyle(fontSize: 12, color: Colors.black12)),
             ],
-          )),
+          )
+        ],
+      )),
       // body: Text(
       //   '',
       //   style: Theme.of(context).textTheme.bodyText1,
@@ -130,8 +124,8 @@ class _UserPageState extends State<UserPage>
   }
 
 //banner
-  _getbanner() {
-    return Container(
+  _getBanner() {
+    return SizedBox(
       width: double.infinity,
       height: 160.w,
       //padding: EdgeInsets.only(left: 20, right: 20),
@@ -139,7 +133,7 @@ class _UserPageState extends State<UserPage>
         children: [
           Align(child: Image.asset(Assets.images.bannerUser.path)),
           Positioned(
-            child: _getbannerfont(),
+            child: _getBannerFont(),
           ),
           Positioned(
             width: 90.w,
@@ -169,12 +163,12 @@ class _UserPageState extends State<UserPage>
   }
 
 //banner内部文字
-  _getbannerfont() {
+  _getBannerFont() {
     return Container(
       // decoration: BoxDecoration(
       //     borderRadius: BorderRadius.circular(10), color: Colors.red),
       // child: Image.asset(Assets.images.Banner.path),
-      margin: EdgeInsets.only(top: 25, right: 20, left: 20),
+      margin: const EdgeInsets.only(top: 25, right: 20, left: 20),
       child: Row(
         children: [
           //Image.asset(Assets.images.Banner.path),
@@ -205,7 +199,7 @@ class _UserPageState extends State<UserPage>
             height: 28,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30.w), color: Colors.white),
-            padding: EdgeInsets.only(left: 6, top: 5),
+            padding: const EdgeInsets.only(left: 6, top: 5),
             child: const Text(
               "立即开通",
               style: TextStyle(
@@ -220,7 +214,7 @@ class _UserPageState extends State<UserPage>
   }
 
 //头像信息
-  _shareuser() {
+  _shareUser() {
     return Container(
         //width: double.infinity,
         //height: 163,
@@ -332,14 +326,26 @@ class _UserPageState extends State<UserPage>
               )),
               Column(
                 children: [
-                  Text(
-                    '$assessment',
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        letterSpacing: 1,
-                        fontFamily: 'Bebas'),
-                  ),
+                  Text.rich(TextSpan(
+                      text: '$assessment',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.sp,
+                          letterSpacing: 1,
+                          fontFamily: 'Bebas'),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = (() {
+                          Get.to(() => const AssessmentNumPage());
+                        }))),
+
+                  // Text(
+                  //   '$assessment',
+                  //   style: const TextStyle(
+                  //       fontSize: 20,
+                  //       color: Colors.black,
+                  //       letterSpacing: 1,
+                  //       fontFamily: 'Bebas'),
+                  // ),
                   const RawChip(
                     label: Text(
                       '评估',
@@ -408,7 +414,7 @@ class _UserPageState extends State<UserPage>
   _share() {
     return Container(
       width: double.infinity,
-      //height: 460.h,
+      height: 460.w,
       //margin: EdgeInsets.only(left: 20, right: 20, top: 10),
       padding: EdgeInsets.all(32.w),
       decoration: BoxDecoration(
@@ -420,11 +426,16 @@ class _UserPageState extends State<UserPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Padding(padding: EdgeInsets.only(left: 32.w, top: 48.w, right: 510.w)),
-          const Text(
-            '其他功能',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          Row(
+            children: [
+              Padding(padding: EdgeInsets.only(top: 48.w, left: 32.w)),
+              const Text(
+                '其他功能',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
-          _getkingcoin(),
+          _getKingCoin(),
         ],
       ),
       //child: _getkingcoin(),
@@ -432,7 +443,7 @@ class _UserPageState extends State<UserPage>
   }
 
 //icon间距样式
-  _getkingcoin() {
+  _getKingCoin() {
     return GridView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: true,

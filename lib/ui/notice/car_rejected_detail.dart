@@ -1,4 +1,8 @@
+import 'package:cloud_car/ui/home/search_page.dart';
+import 'package:cloud_car/ui/home/task_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -32,43 +36,85 @@ class _CardetailPageState extends State<CardetailPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.star_border)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
-        ],
-        backgroundColor: Colors.white,
-      ),
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-        child: Column(
+    return CloudScaffold(
+      path: Assets.images.noticeBg.path,
+      bodyColor: carColor,
+      appbar: Container(
+        color: Colors.transparent,
+        height: kToolbarHeight + MediaQuery.of(context).padding.top,
+        //alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        child: Row(
           children: [
-            182.hb,
-            _Title(),
-            14.hb,
-            _Label(),
-            14.hb,
-            _Information(),
-            14.hb,
-            _Shuffling(),
-            32.hb,
-            _Informations(),
-            48.hb,
-            _TabDetail(),
-            14.hb,
-            _Bottonbar(),
+            32.wb,
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Image.asset('assets/icons/back.png',
+                  height: 48.w, width: 48.w),
+            ),
+            522.wb,
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const SearchPage());
+              },
+              child: Image.asset('assets/icons/ic_favorite1.png',
+                  height: 48.w, width: 48.w),
+            ),
+            24.wb,
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const SearchPage());
+              },
+              child: Image.asset('assets/icons/ic_share.png',
+                  color: Colors.black, height: 48.w, width: 48.w),
+            ),
+            16.wb,
           ],
         ),
       ),
+      extendBody: true,
+      //extendBodyBehindAppBar: true,
+      body: Container(
+          // padding: EdgeInsets.symmetric(
+          //   horizontal: 32.w,
+          //),
+          child: Column(
+        children: [
+          Container(
+              padding: EdgeInsets.symmetric(horizontal: 32.w),
+              child: Column(
+                children: [
+                  _title(),
+                  14.hb,
+                  _label(),
+                  14.hb,
+                  _information(),
+                  14.hb,
+                  _shuffling(),
+                  32.hb,
+                  _informations(),
+                  48.hb,
+                ],
+              )
+              // Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+
+              ),
+          Column(
+            children: [
+              _tabDetail(),
+              14.hb,
+              _bottonBar(),
+            ],
+          ),
+        ],
+      )),
     );
   }
 
   //标题
-  _Title() {
+  _title() {
     return Column(
       children: [
         SizedBox(
@@ -88,7 +134,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //标签
-  _Label() {
+  _label() {
     return Column(
       children: [
         SizedBox(
@@ -96,13 +142,13 @@ class _CardetailPageState extends State<CardetailPage>
           height: 41.w,
           child: Row(
             children: [
-              _NoRelease('未发布'),
+              _noRelease('未发布'),
               16.wb,
-              _Textview('2020年10月'),
+              _textview('2020年10月'),
               16.wb,
-              _Textview('20.43万公里'),
+              _textview('20.43万公里'),
               16.wb,
-              _Textview('国六'),
+              _textview('国六'),
             ],
           ),
         ),
@@ -111,11 +157,11 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //提示信息
-  _Information() {
+  _information() {
     return Column(
       children: [
         Row(
-          children: [
+          children: const [
             SizedBox(
               child: Text(
                 '车辆信息未填写完整',
@@ -131,20 +177,20 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //轮播
-  _Shuffling() {
+  _shuffling() {
     return Column(
       children: [
         SizedBox(
           width: double.infinity,
           height: 456.w,
-          child: _BannerStyle(),
+          child: _bannerStyle(),
         )
       ],
     );
   }
 
   //信息栏
-  _Informations() {
+  _informations() {
     return Column(
       children: [
         SizedBox(
@@ -157,7 +203,12 @@ class _CardetailPageState extends State<CardetailPage>
                   boxShadow: const [
                     BoxShadow(
                         offset: Offset(0.0, 4.0),
-                        color: Color.fromRGBO(2, 122, 255, 0.11))
+                        blurRadius: 14.0,
+                        spreadRadius: 0.0,
+                        color: Color.fromRGBO(2, 122, 255, 0.11)),
+                    // BoxShadow(
+                    //     offset: Offset(0.0, 0.0),
+                    //     color: Color.fromRGBO(2, 122, 255, 0.11))
                   ]),
               padding: EdgeInsets.only(top: 24.w, left: 24.w),
               child: Row(
@@ -196,7 +247,7 @@ class _CardetailPageState extends State<CardetailPage>
                   SizedBox(
                     width: 1.w,
                     height: 40.w,
-                    child: DecoratedBox(
+                    child: const DecoratedBox(
                         decoration: BoxDecoration(color: Colors.grey)),
                   ),
                   27.wb,
@@ -218,7 +269,7 @@ class _CardetailPageState extends State<CardetailPage>
                                   color: Colors.blue, fontSize: 20.sp),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = (() {
-                                  print('object');
+                                  ('object');
                                 })))
                         ],
                       ),
@@ -247,7 +298,7 @@ class _CardetailPageState extends State<CardetailPage>
                   SizedBox(
                     width: 1.w,
                     height: 40.w,
-                    child: DecoratedBox(
+                    child: const DecoratedBox(
                         decoration: BoxDecoration(color: Colors.grey)),
                   ),
                   27.wb,
@@ -296,12 +347,13 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
   //栏
-  _TabDetail() {
+  _tabDetail() {
     return Column(
       children: [
         SizedBox(
-            width: double.infinity,
-            height: 365.w,
+            width: 750.w,
+            height: 385.w,
+            //color: Colors.white,
             child: Column(
               children: [
                 TabBar(
@@ -317,11 +369,16 @@ class _CardetailPageState extends State<CardetailPage>
                   indicatorColor: Colors.white, //下划线颜色
                   //indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w),
                   tabs: [
-                    _Tab(0, '详情'),
-                    _Tab(1, '车辆轨迹'),
-                    _Tab(2, '意向客户'),
-                    _Tab(3, '订单')
+                    _tab(0, '详情'),
+                    _tab(1, '车辆轨迹'),
+                    _tab(2, '意向客户'),
+                    _tab(3, '订单')
                   ],
+                ),
+                const Divider(
+                  height: 10.0,
+                  indent: 0.0,
+                  color: Color.fromRGBO(221, 221, 221, 1),
                 ),
                 SizedBox(
                     height: 288.w,
@@ -439,196 +496,99 @@ class _CardetailPageState extends State<CardetailPage>
                     ))
               ],
             )),
+        const Divider(
+          height: 10.0,
+          indent: 0.0,
+          color: Color.fromRGBO(221, 221, 221, 1),
+        ),
       ],
     );
   }
 
   //底部
-  _Bottonbar() {
-    return Column(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          height: 118.w,
-          child: TabBar(
-            onTap: ((value) {}),
-            isScrollable: true,
-            labelPadding: EdgeInsets.symmetric(
-              vertical: 10.w,
+  _bottonBar() {
+    return Container(
+      width: 750.w,
+      height: 98.w,
+      margin: EdgeInsets.symmetric(horizontal: 24.w),
+      child: Row(
+        children: [
+          Container(
+            width: 170.w,
+            height: 98.w,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 56.w,
+                  height: 56.w,
+                  child: Image.asset('assets/icons/editor.png'),
+                ),
+                Text(
+                  '重新编辑',
+                  style: TextStyle(fontSize: 24.sp),
+                ),
+              ],
             ),
-            controller: _tabController,
-            indicatorWeight: 4,
-            labelColor: const Color.fromRGBO(2, 122, 255, 1), //选中时的颜色
-            unselectedLabelColor: const Color.fromRGBO(51, 51, 51, 1), //未选中颜色
-            indicatorColor: Colors.white, //下划线颜色
-            //indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w),
-            tabs: [
-              Tab(
-                child: MaterialButton(
-                  child: Column(
-                    children: [
-                      //Image(image: ),
-                      SizedBox(
-                        width: 56.w,
-                        height: 56.w,
-                        child: Image.asset('assets/icons/editor.png'),
-                      ),
-                      // const Icon(
-                      //   Icons.crop_3_2,
-                      //   color: Color.fromRGBO(2, 122, 255, 1),
-                      // ),
-                      Text(
-                        '重新编辑',
-                        style: TextStyle(fontSize: 24.sp),
-                      ),
-                    ],
-                  ),
-                  onPressed: () {
-                    showDialog<Null>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: const Text(''),
-                          children: <Widget>[
-                            SimpleDialogOption(
-                              child: const Text('这是重新编辑'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((val) {
-                      print(val);
-                    });
-                  },
-                ),
-              ),
-              Tab(
-                child: MaterialButton(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 56.w,
-                        height: 56.w,
-                        child: Image.asset('assets/icons/no_transmission.png'),
-                      ),
-                      // const Icon(
-                      //   Icons.crop_3_2,
-                      //   color: Color.fromRGBO(153, 153, 153, 1),
-                      // ),
-                      Text('调价', style: TextStyle(fontSize: 24.sp)),
-                    ],
-                  ),
-                  onPressed: () {
-                    showDialog<Null>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: const Text(''),
-                          children: <Widget>[
-                            SimpleDialogOption(
-                              child: const Text('这是调价'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((val) {
-                      print(val);
-                    });
-                  },
-                ),
-              ),
-              Tab(
-                child: MaterialButton(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 56.w,
-                        height: 56.w,
-                        child: Image.asset('assets/icons/no_upload.png'),
-                      ),
-                      // const Icon(
-                      //   Icons.crop_3_2,
-                      //   color: Color.fromRGBO(153, 153, 153, 1),
-                      // ),
-                      Text('出售', style: TextStyle(fontSize: 24.sp)),
-                    ],
-                  ),
-                  onPressed: () {
-                    showDialog<Null>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: const Text(''),
-                          children: <Widget>[
-                            SimpleDialogOption(
-                              child: const Text('这是出售'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((val) {
-                      print(val);
-                    });
-                  },
-                ),
-              ),
-              Tab(
-                child: MaterialButton(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 56.w,
-                        height: 56.w,
-                        child: Image.asset('assets/icons/no_download.png'),
-                      ),
-                      // const Icon(
-                      //   Icons.crop_3_2,
-                      //   color: Color.fromRGBO(153, 153, 153, 1),
-                      // ),
-                      Text('下架/退库', style: TextStyle(fontSize: 24.sp)),
-                    ],
-                  ),
-                  onPressed: () {
-                    showDialog<Null>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: const Text(''),
-                          children: <Widget>[
-                            SimpleDialogOption(
-                              child: const Text('这是下架/退库'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((val) {
-                      print(val);
-                    });
-                  },
-                ),
-              ),
-            ],
           ),
-        )
-      ],
+          Container(
+            width: 170.w,
+            height: 98.w,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 56.w,
+                  height: 56.w,
+                  child: Image.asset('assets/icons/no_transmission.png'),
+                ),
+                Text(
+                  '调价',
+                  style: TextStyle(fontSize: 24.sp),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 170.w,
+            height: 98.w,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 56.w,
+                  height: 56.w,
+                  child: Image.asset('assets/icons/no_upload.png'),
+                ),
+                Text(
+                  '出售',
+                  style: TextStyle(fontSize: 24.sp),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 170.w,
+            height: 98.w,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 56.w,
+                  height: 56.w,
+                  child: Image.asset('assets/icons/no_download.png'),
+                ),
+                Text(
+                  '下架/退库',
+                  style: TextStyle(fontSize: 24.sp),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
 //部分
 //未发布
-  _NoRelease(String text) {
+  _noRelease(String text) {
     return Container(
       decoration: BoxDecoration(
           color: const Color.fromRGBO(230, 34, 34, 0.08),
@@ -645,7 +605,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //文本
-  _Textview(String text) {
+  _textview(String text) {
     return Container(
       decoration: BoxDecoration(
           color: const Color.fromRGBO(79, 90, 116, 0.08),
@@ -664,7 +624,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //分页指示器
-  _BulidPagination() {
+  _bulidPagination() {
     return const SwiperPagination(
         //指示器显示的位置
         alignment: Alignment.bottomCenter, //位置在底部
@@ -690,7 +650,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //图片样式
-  _BannerStyle() {
+  _bannerStyle() {
     return Swiper(
       itemCount: 6,
       //横向
@@ -709,7 +669,7 @@ class _CardetailPageState extends State<CardetailPage>
       //自动翻页
       autoplay: true,
       //分页指示
-      pagination: _BulidPagination(),
+      pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
         print('点击' + index.toString());
@@ -723,7 +683,7 @@ class _CardetailPageState extends State<CardetailPage>
   }
 
 //
-  _Tab(int index, String text) {
+  _tab(int index, String text) {
     return Text(text);
   }
 

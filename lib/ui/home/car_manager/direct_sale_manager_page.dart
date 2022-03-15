@@ -31,14 +31,15 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   List<ChooseItem> _sortList = [];
   String title = '直卖车辆';
 
   @override
   void initState() {
     super.initState();
-    _dropDownHeaderItemStrings = ['排序', ];
+    _dropDownHeaderItemStrings = [
+      '排序',
+    ];
 
     _sortList = [
       ChooseItem(name: '最近创建'),
@@ -85,7 +86,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           actions: [
             GestureDetector(
               onTap: () {
-                Get.to(()=>const SearchPage());
+                Get.to(() => const SearchPage());
               },
               child: Image.asset(Assets.icons.mainSearch.path,
                   height: 48.w, width: 48.w),
@@ -93,7 +94,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
             20.wb,
           ],
           backgroundColor: kForeGroundColor,
-
           title: SizedBox(
             width: 200.w,
             child: PopupMenuButton(
@@ -148,38 +148,51 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                               ))),
                     ]),
           ),
-
         ),
         endDrawer: CustomDrawer(
-          widthPercent: 0.86,
-          backgroundColor: Colors.white,
-          callback: (bool isOpened) {  },
-          child:_getSortList()
-        ),
+            widthPercent: 0.86,
+            backgroundColor: Colors.white,
+            callback: (bool isOpened) {},
+            child: _getSortList()),
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
         body: Column(
           children: [
-            ChooseWidget(callBack: (name) { setState(() {
-
-            }); }, items: const ['在售','已预定','已售','退库','待审核','已驳回',],),
-            Divider(height: 1.w,color: BaseStyle.colordddddd,),
+            ChooseWidget(
+              callBack: (name) {
+                setState(() {});
+              },
+              items: const [
+                '在售',
+                '已预定',
+                '已售',
+                '退库',
+                '待审核',
+                '已驳回',
+              ],
+            ),
+            Divider(
+              height: 1.w,
+              color: BaseStyle.colordddddd,
+            ),
             Expanded(
               child: DropDownWidget(
                 _dropDownHeaderItemStrings,
                 listWidget,
                 height: 76.w,
-                bottomHeight: 400.w,
+                bottomHeight: 24.w,
                 screenControl: screenControl,
                 headFontSize: 28.sp,
                 child: Container(
                   margin: EdgeInsets.only(top: 80.w),
                   child: ListView.separated(
                     shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 20.w),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
                     itemBuilder: (context, index) {
                       return CarItemWidget(
-                        widgetPadding:  EdgeInsets.symmetric(horizontal: 24.w,vertical: 20.w),
+                        widgetPadding: EdgeInsets.symmetric(
+                            horizontal: 24.w, vertical: 20.w),
                         name: '奔驰CLE 插电混动 纯电动续航103km',
                         time: '2019年5月',
                         distance: '20.43万公里',
@@ -198,25 +211,24 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                   ),
                 ),
                 screen: '筛选',
-                onTap:(){
+                onTap: () {
                   screenControl.screenHide();
                   _scaffoldKey.currentState?.openEndDrawer();
-
                 },
               ),
             )
           ],
-        )
-
-    );
+        ));
   }
 
-  _getSortList(){
-    return SortListPage(callback: (ChooseItem item) {
-      if (kDebugMode) {
-        print(item.name+'123123');
-      }
-    },);
+  _getSortList() {
+    return SortListPage(
+      callback: (ChooseItem item) {
+        if (kDebugMode) {
+          print(item.name + '123123');
+        }
+      },
+    );
   }
 
   getTitle(String title) {
