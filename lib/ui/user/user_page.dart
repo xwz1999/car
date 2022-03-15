@@ -324,37 +324,33 @@ class _UserPageState extends State<UserPage>
                 right: 15,
                 left: 20,
               )),
-              Column(
-                children: [
-                  Text.rich(TextSpan(
-                      text: '$assessment',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 32.sp,
-                        letterSpacing: 1,
-                        fontFamily: 'Bebas',
+              GestureDetector(
+                onTap: (() {
+                  Get.to(() => const AssessmentNumPage());
+                }),
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Text(
+                        '$assessment',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 32.sp,
+                          letterSpacing: 1,
+                          fontFamily: 'Bebas',
+                        ),
                       ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = (() {
-                          Get.to(() => const AssessmentNumPage());
-                        }))),
-
-                  // Text(
-                  //   '$assessment',
-                  //   style: const TextStyle(
-                  //       fontSize: 20,
-                  //       color: Colors.black,
-                  //       letterSpacing: 1,
-                  //       fontFamily: 'Bebas'),
-                  // ),
-                  const RawChip(
-                    label: Text(
-                      '评估',
-                      style: TextStyle(fontSize: 10, color: Colors.black45),
-                    ),
-                    backgroundColor: Colors.white,
-                  )
-                ],
+                      const RawChip(
+                        label: Text(
+                          '评估',
+                          style: TextStyle(fontSize: 10, color: Colors.black45),
+                        ),
+                        backgroundColor: Colors.white,
+                      )
+                    ],
+                  ),
+                ),
               ),
               const Padding(
                   padding: EdgeInsets.only(

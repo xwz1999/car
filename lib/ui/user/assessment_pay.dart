@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_car/ui/notice/notice_fashionable.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -63,31 +65,85 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
-        body: Column(
-          children: [
-            _getPay()
-            //Text('data')
-            // _getPay(),
-            // ElevatedButton(
-            //     //style: Colors.blue,
-            //     onPressed: () {},
-            //     child: const Text("立即支付")),
-          ],
+        body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 32.w),
+          child: Column(
+            children: [
+              //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+              // Text('data')
+              _getPice(),
+              56.hb,
+              _getPay(),
+              868.hb,
+              Container(
+                width: double.infinity,
+                height: 72.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(8.w)),
+                child: SizedBox(
+                    child: GestureDetector(
+                  onTap: () {
+                    const Text('data');
+                  },
+                  child: Text(
+                    '确认支付',
+                    style: TextStyle(color: Colors.white, fontSize: 28.sp),
+                  ),
+                )),
+              )
+            ],
+          ),
         ));
+  }
+
+//充值金额
+  _getPice() {
+    return Container(
+      padding: EdgeInsets.only(top: 74.w, left: 248.w),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          SizedBox(
+            child: Text(
+              '¥',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 48.sp,
+                  fontFamily: '苹方-简 中粗体'),
+            ),
+          ),
+          14.wb,
+          SizedBox(
+            child: Text(
+              '20.00',
+              style: TextStyle(
+                  fontSize: 64.sp,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Bebas'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
 //支付
   _getPay() {
-    return Container(
-      height: 400.w,
-      padding: const EdgeInsets.all(20),
-      child: ListView.builder(
-          itemCount: 2, //payList.length,
-          itemBuilder: (context, index) {
-            return _getPayList(payList[index]);
-            //  return
-          }),
-    );
+    return SizedBox(
+        height: 324.w,
+        //padding: EdgeInsets.only(top: 168.w),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
+          child: ListView.builder(
+              itemCount: 2, //payList.length,
+              itemBuilder: (context, index) {
+                return _getPayList(payList[index]);
+                //  return
+              }),
+        ));
   }
 
 //支付判断
@@ -98,8 +154,11 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
           leading: Image.asset(item['src']),
           title: Text(item['title']),
           trailing: Radio(
-            value: item['checked'],
+            //单选框的值
+            value: 1, //item['checked'],
+            //当前单选框的值
             groupValue: item['checked'],
+            //单选框的颜色
             activeColor: Colors.blue,
             onChanged: (value) {
               setState(() {
