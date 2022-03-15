@@ -110,6 +110,8 @@ class $AssetsIconsGen {
   AssetGenImage get userviewContract =>
       const AssetGenImage('assets/icons/userview contract.png');
   AssetGenImage get warning => const AssetGenImage('assets/icons/warning.png');
+  AssetGenImage get wxPay => const AssetGenImage('assets/icons/wx_pay.png');
+  AssetGenImage get zfbPay => const AssetGenImage('assets/icons/zfb_pay.png');
 }
 
 class $AssetsImagesGen {
