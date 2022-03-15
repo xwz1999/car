@@ -14,8 +14,7 @@ class systemPage extends StatefulWidget {
 class _systemPageState extends State<systemPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
-
-  late EasyRefreshController _refreshController;
+  
 
   @override
   void initState() {
@@ -24,7 +23,6 @@ class _systemPageState extends State<systemPage>
 
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 

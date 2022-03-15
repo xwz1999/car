@@ -1,5 +1,4 @@
 import 'package:cloud_car/ui/home/home_page.dart';
-import 'package:cloud_car/ui/user/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/gestures.dart';
@@ -335,7 +334,7 @@ class _UserPageState extends State<UserPage>
                           fontFamily: 'Bebas'),
                       recognizer: TapGestureRecognizer()
                         ..onTap = (() {
-                          Get.to(() => const AssessmentNumPage());
+
                         }))),
 
                   // Text(
