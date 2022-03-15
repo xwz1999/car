@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:cloud_car/ui/notice/notice_fashionable.dart';
+import 'package:cloud_car/ui/user/pay_results.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -40,33 +42,23 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
   @override
   Widget build(BuildContext context) {
     //super.build(context);
-    return CloudScaffold(
-        bodyColor: bgColor,
-        appbar: Container(
-          color: Colors.transparent,
-          height: kToolbarHeight + MediaQuery.of(context).padding.top,
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          child: Row(children: [
-            32.wb,
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: Image.asset('assets/icons/back.png',
-                  height: 48.w, width: 48.w),
-            ),
-            188.wb,
-            Text(
-              '评估次数充值',
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(246, 246, 246, 1),
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          title: Text('评估次数充值',
               style: TextStyle(
-                  fontSize: 36.sp, color: const Color.fromRGBO(17, 17, 17, 1)),
-            ),
-          ]),
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize36,
+                  fontWeight: FontWeight.bold)),
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w),
+          color: Color.fromRGBO(246, 246, 246, 1),
           child: Column(
             children: [
               //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
@@ -85,7 +77,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
                 child: SizedBox(
                     child: GestureDetector(
                   onTap: () {
-                    const Text('data');
+                    Get.to(() => const PayResultsPage());
                   },
                   child: Text(
                     '确认支付',
