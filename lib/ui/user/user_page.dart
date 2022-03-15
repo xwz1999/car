@@ -78,6 +78,7 @@ class _UserPageState extends State<UserPage>
             color: Colors.blueGrey[50],
           ),
           child: ListView(
+            shrinkWrap: true,
             children: [
               // Stack(
               //   children: [

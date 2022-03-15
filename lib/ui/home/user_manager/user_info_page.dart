@@ -1,3 +1,5 @@
+import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
+import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -160,72 +162,71 @@ class _UserInfoPageState extends State<UserInfoPage>
                   )),
             ];
           },
-          body: Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 120.w),
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          index == 0
-                              ? Container(
-                                  width: double.infinity,
-                                  height: 40.w,
-                                  color: Colors.white,
-                                )
-                              : const SizedBox(),
-                          _getListItem(index, index < 2),
-                        ],
-                      );
-                    },
-                    itemCount: 5,
-                  ),
-                  ListView.builder(
-                    physics:const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          index == 0
-                              ? Container(
-                                  width: double.infinity,
-                                  height: 40.w,
-                                  color: Colors.white,
-                                )
-                              : const SizedBox(),
-                          _getListItem(index, index < 2),
-                        ],
-                      );
-                    },
-                    itemCount: 5,
-                  ),
-                  ListView.builder(
-                    physics:const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          index == 0
-                              ? Container(
-                                  width: double.infinity,
-                                  height: 40.w,
-                                  color: Colors.white,
-                                )
-                              : const SizedBox(),
-                          _getListItem(index, index < 2),
-                        ],
-                      );
-                    },
-                    itemCount: 7,
-                  ),
-                ],
-              ),
+          body: Padding(
+            padding: EdgeInsets.only(bottom: 120.w),
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        index == 0
+                            ? Container(
+                                width: double.infinity,
+                                height: 40.w,
+                                color: Colors.white,
+                              )
+                            : const SizedBox(),
+                        _getListItem(index, index < 2),
+                      ],
+                    );
+                  },
+                  itemCount: 5,
+                ),
+                ListView.builder(
+                  physics:const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        index == 0
+                            ? Container(
+                                width: double.infinity,
+                                height: 40.w,
+                                color: Colors.white,
+                              )
+                            : const SizedBox(),
+                        _getListItem(index, index < 2),
+                      ],
+                    );
+                  },
+                  itemCount: 5,
+                ),
+                ListView.builder(
+                  physics:const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        index == 0
+                            ? Container(
+                                width: double.infinity,
+                                height: 40.w,
+                                color: Colors.white,
+                              )
+                            : const SizedBox(),
+                        _getListItem(index, index < 2),
+                      ],
+                    );
+                  },
+                  itemCount: 7,
+                ),
+              ],
             ),
           ),
         ),
@@ -275,10 +276,15 @@ class _UserInfoPageState extends State<UserInfoPage>
               })),
               Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
-                  child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {})),
+                  child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
+                    Get.to(()=>const InviteDetailPage());
+                  })),
               Expanded(
                   child:
-                      _getBottom(Assets.icons.icContract.path, '发起合同', () {})),
+                      _getBottom(Assets.icons.icContract.path, '发起合同', () {
+                        Get.to(()=>const InitiateContractPage());
+
+                      })),
             ],
           ),
         ));

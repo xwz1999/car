@@ -110,7 +110,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
               controller: _editingController,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 20.w),
+                contentPadding: EdgeInsets.only(left: 20.w,top: 5.w),
                 filled: true,
                 fillColor: Colors.white,
                 hintText: "请输入想要搜索的内容...",

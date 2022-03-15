@@ -1,6 +1,7 @@
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/sort_list_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_info_page.dart';
+import 'package:cloud_car/ui/home/user_manager/user_sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -113,7 +114,8 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                 '浏览客户',
                 '意向客户',
                 '邀请注册',
-                '成交客户',
+                '购车客户',
+                '寄卖客户'
               ],
             ),
             Divider(
@@ -161,7 +163,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
   }
 
   _getSortList() {
-    return SortListPage(
+    return UserSortListPage(
       callback: (ChooseItem item) {
         if (kDebugMode) {
           print(item.name + '123123');
