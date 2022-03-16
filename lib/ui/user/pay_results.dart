@@ -37,11 +37,10 @@ class _PayResultsPageState extends State<PayResultsPage>
           leading: const CloudBackButton(
             isSpecial: true,
           ),
-          title: Text('评估次数充值',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
+          title: Text(
+            '评估次数充值',
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
@@ -82,7 +81,7 @@ class _PayResultsPageState extends State<PayResultsPage>
     return SizedBox(
       child: Text(
         '评估次数充值成功',
-        style: TextStyle(fontSize: 32.sp, color: Colors.black),
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }
@@ -104,7 +103,10 @@ class _PayResultsPageState extends State<PayResultsPage>
         },
         child: Text(
           '返回我的',
-          style: TextStyle(color: Colors.white, fontSize: 28.sp),
+          style: Theme.of(context)
+              .textTheme
+              .subtitle2
+              ?.copyWith(color: Color(0xFFFFFFFF)),
         ),
       )),
     );

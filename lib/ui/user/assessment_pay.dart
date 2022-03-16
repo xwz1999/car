@@ -48,11 +48,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
           leading: const CloudBackButton(
             isSpecial: true,
           ),
-          title: Text('评估次数充值',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
+          title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
@@ -81,7 +77,10 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
                   },
                   child: Text(
                     '确认支付',
-                    style: TextStyle(color: Colors.white, fontSize: 28.sp),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        ?.copyWith(color: Color(0xffffffff)),
                   ),
                 )),
               )
@@ -100,20 +99,20 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
           SizedBox(
             child: Text(
               '¥',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 48.sp,
-                  fontFamily: '苹方-简 中粗体'),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(fontSize: 40.sp),
             ),
           ),
           14.wb,
           SizedBox(
             child: Text(
               '20.00',
-              style: TextStyle(
-                  fontSize: 64.sp,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Bebas'),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(fontSize: 64.sp),
             ),
           ),
         ],

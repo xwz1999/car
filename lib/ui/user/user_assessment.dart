@@ -61,18 +61,17 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                   },
                   child: Text(
                     '次数变更',
-                    style: TextStyle(color: Colors.blue, fontSize: 28.sp),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        ?.copyWith(color: Color(0xFF027AFF)),
                   ),
                 ),
               ],
             ),
             30.wb,
           ],
-          title: Text('评估次数充值',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
+          title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
         ),
         //extendBody: true,
         //extendBodyBehindAppBar: true,
@@ -110,34 +109,32 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                 children: [
                   Text(
                     "剩余评估次数",
-                    style: TextStyle(color: Colors.white, fontSize: 32.sp),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(color: Color(0xFFFFFFFF)),
                   ),
                   24.wb,
                   Text(
                     '49',
-                    style: TextStyle(
-                        color: const Color.fromRGBO(2, 122, 255, 1),
-                        fontSize: 48.sp),
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                        fontSize: 42.sp,
+                        color: Color(0xFF027AFF),
+                        fontWeight: FontWeight.bold),
                   )
                 ],
               ),
               Row(
                 children: [
-                  Text(
-                    '精准估值',
-                    style: TextStyle(
-                      color: const Color.fromRGBO(255, 255, 255, 0.7),
-                      fontSize: 20.sp,
-                    ),
-                  ),
+                  Text('精准估值',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 20.sp,
+                          color: Color.fromRGBO(255, 255, 255, 0.7))),
                   16.wb,
-                  Text(
-                    '守护您的车辆交易',
-                    style: TextStyle(
-                      color: const Color.fromRGBO(255, 255, 255, 0.7),
-                      fontSize: 20.sp,
-                    ),
-                  ),
+                  Text('守护您的车辆交易',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 20.sp,
+                          color: Color.fromRGBO(255, 255, 255, 0.7))),
                 ],
               )
             ],
@@ -164,7 +161,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
               padding: EdgeInsets.only(top: 42.w, right: 576.w),
               child: Text(
                 '展示价格',
-                style: TextStyle(fontSize: 28.sp, color: Colors.black),
+                style: Theme.of(context).textTheme.subtitle2,
               ),
             ), // Padding(padding: EdgeInsets.only(left: 32.w,)),
             //         Text(

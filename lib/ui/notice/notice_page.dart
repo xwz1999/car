@@ -151,8 +151,10 @@ class _NoticePageState extends State<NoticePage>
           Expanded(flex: 1, child: Text(item['name'])),
           Text(
             item['time'],
-            style: TextStyle(
-                fontSize: 20.sp, color: const Color.fromRGBO(170, 170, 170, 1)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(fontSize: 20.sp, color: Color(0xFFAAAAAA)),
           )
         ]),
         //子标题
@@ -163,9 +165,10 @@ class _NoticePageState extends State<NoticePage>
                 child: Text(
               item['msg'],
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 24.sp,
-                  color: const Color.fromRGBO(170, 170, 170, 1)),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  ?.copyWith(fontSize: 20.sp, color: Color(0xFFAAAAAA)),
             )),
             //小红点组件
             Badge(
@@ -185,9 +188,6 @@ class _NoticePageState extends State<NoticePage>
           ]),
         ));
   }
-
-//已读未读数量
-  _readnum(item) {}
 
   @override
   bool get wantKeepAlive => true;
