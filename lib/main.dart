@@ -49,9 +49,7 @@ class MyApp extends StatelessWidget {
           home: const LoginPage(),
           supportedLocales: const [Locale('zh')],
           locale: const Locale('zh'),
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-          ],
+          localizationsDelegates: GlobalMaterialLocalizations.delegates,
           //builder: BotToastInit(),
           builder: (context, child) {
             return MediaQuery(
