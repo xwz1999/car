@@ -1,3 +1,4 @@
+import 'package:cloud_car/ui/user/Partnership_contract.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -263,7 +264,9 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                           )),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => const PartnershipContractPage());
+                      },
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.w),
@@ -271,6 +274,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                           // margin: EdgeInsets.only(top: 18.w, right: 18.w),
                           padding: EdgeInsets.only(right: 8.w, top: 4.w),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Padding(
                                   padding:
@@ -464,8 +468,8 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                 '合伙人有效期至2022—11-18',
                 style: Theme.of(context)
                     .textTheme
-                    ?.bodyText1
-                    ?.copyWith(color: Color.fromRGBO(255, 255, 255, 0.8)),
+                    .bodyText1
+                    ?.copyWith(color: const Color.fromRGBO(255, 255, 255, 0.8)),
               ),
             ),
             Container(

@@ -1,7 +1,10 @@
 import 'package:cloud_car/ui/user/partner_renewal.dart';
+import 'package:cloud_car/ui/user/user_recommended.dart';
+import 'package:cloud_car/ui/user/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -20,7 +23,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
   // List listWidget = [];
 
   late EasyRefreshController _refreshController;
-
+  late bool certification;
   @override
   @override
   void dispose() {
@@ -85,15 +88,33 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
           children: [
             Padding(padding: EdgeInsets.only(left: 80.w)),
             Radio(
-                value: 1,
-                groupValue: 0,
-                onChanged: (Value) {
-                  setState(() {
-                    OnTap() {
-                      ('qqqqqqq');
-                    }
-                  });
-                }),
+              value: true,
+              onChanged: (Value) {
+                setState(() {
+                  Alert.show(
+                      context,
+                      NormalContentDialog(
+                        type: NormalTextDialogType.delete,
+                        title: '确认提示',
+                        content: const Text('是否确认屏幕下方屏幕协议'),
+                        items: const ['取消'],
+                        deleteItem: '确认',
+                        //监听器
+                        listener: (index) {
+                          Alert.dismiss(context);
+                          Value = false;
+                          (Value);
+                        },
+                        deleteListener: () {
+                          Alert.dismiss(context);
+                          Value = true;
+                          (Value);
+                        },
+                      ));
+                });
+              },
+              groupValue: Value,
+            ),
             // RichText(
             //   text: TextSpan(
             //       text: '我已阅读并了解',
@@ -112,15 +133,16 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
-                      ?.copyWith(color: Color(0xFFAAAAAA)),
+                      ?.copyWith(color: const Color(0xFFAAAAAA)),
                 ),
                 GestureDetector(
+                  onTap: (() {}),
                   child: Text(
                     '《付款服务协议》',
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1
-                        ?.copyWith(color: Color(0xFF027AFF)),
+                        ?.copyWith(color: const Color(0xFF027AFF)),
                   ),
                 )
               ],
@@ -137,14 +159,14 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
           child: SizedBox(
               child: GestureDetector(
             onTap: () {
-              // Get.to(() => const PayResultsPage());
+              Get.to(() => const PartnerRenewalPage());
             },
             child: Text(
               '确认协议并续费¥1500.00',
               style: Theme.of(context)
                   .textTheme
                   .subtitle2
-                  ?.copyWith(color: Color(0xffffffff)),
+                  ?.copyWith(color: const Color(0xffffffff)),
             ),
           )),
         )
@@ -217,7 +239,8 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
@@ -231,6 +254,9 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                           )),
                     ),
                     GestureDetector(
+                      onTap: () {
+                        Get.to(() => const RecommendedPage());
+                      },
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.w),
@@ -258,7 +284,8 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
@@ -272,7 +299,9 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                           )),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => const WalletCertificationPage());
+                      },
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.w),
@@ -300,7 +329,8 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
@@ -341,7 +371,8 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
@@ -382,7 +413,8 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
@@ -473,7 +505,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                 '还未成为云云问车合伙人',
                 style: Theme.of(context)
                     .textTheme
-                    ?.bodyText1
+                    .bodyText1
                     ?.copyWith(color: Color.fromRGBO(255, 255, 255, 0.8)),
               ),
             ),
