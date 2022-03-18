@@ -119,7 +119,10 @@ class AppTheme {
         ),
       ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      dividerColor: const Color(0xFFE8E8E8), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFF027AFF)).copyWith(secondary: const Color(0xFF027AFF)),
+      dividerColor: const Color(0xFFE8E8E8),
+      colorScheme: ColorScheme.fromSwatch()
+          .copyWith(secondary: const Color(0xFF027AFF))
+          .copyWith(secondary: const Color(0xFF027AFF)),
     );
   }
 }
