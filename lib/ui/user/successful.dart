@@ -1,19 +1,20 @@
 import 'dart:ui';
 
+import 'package:cloud_car/ui/user/contract_pay.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-class PayResultsPage extends StatefulWidget {
-  const PayResultsPage({Key? key}) : super(key: key);
+class SuccessfulPage extends StatefulWidget {
+  const SuccessfulPage({Key? key}) : super(key: key);
 
   @override
-  _PayResultsPageState createState() => _PayResultsPageState();
+  _SuccessfulPageState createState() => _SuccessfulPageState();
 }
 
-class _PayResultsPageState extends State<PayResultsPage>
+class _SuccessfulPageState extends State<SuccessfulPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
@@ -38,7 +39,7 @@ class _PayResultsPageState extends State<PayResultsPage>
             isSpecial: true,
           ),
           title: Text(
-            '评估次数充值',
+            '编辑车辆',
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -80,7 +81,7 @@ class _PayResultsPageState extends State<PayResultsPage>
   _getText() {
     return SizedBox(
       child: Text(
-        '评估次数充值成功',
+        '合同签订成功',
         style: Theme.of(context).textTheme.subtitle1,
       ),
     );
@@ -99,10 +100,10 @@ class _PayResultsPageState extends State<PayResultsPage>
       child: SizedBox(
           child: GestureDetector(
         onTap: () {
-          const Text('data');
+          Get.to(() => const ContractPayPage());
         },
         child: Text(
-          '返回我的',
+          '前往支付',
           style: Theme.of(context)
               .textTheme
               .subtitle2

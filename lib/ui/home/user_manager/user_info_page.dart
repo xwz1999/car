@@ -19,7 +19,6 @@ class _UserInfoPageState extends State<UserInfoPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-
   @override
   void initState() {
     _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
@@ -189,7 +188,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                   itemCount: 5,
                 ),
                 ListView.builder(
-                  physics:const NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
@@ -208,7 +207,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                   itemCount: 5,
                 ),
                 ListView.builder(
-                  physics:const NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
@@ -277,14 +276,12 @@ class _UserInfoPageState extends State<UserInfoPage>
               Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
                   child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
-                    Get.to(()=>const InviteDetailPage());
-                  })),
+                Get.to(() => const InviteDetailPage());
+              })),
               Expanded(
-                  child:
-                      _getBottom(Assets.icons.icContract.path, '发起合同', () {
-                        Get.to(()=>const InitiateContractPage());
-
-                      })),
+                  child: _getBottom(Assets.icons.icContract.path, '发起合同', () {
+                Get.to(() => const InitiateContractPage());
+              })),
             ],
           ),
         ));

@@ -51,11 +51,7 @@ class _ExaminationPageState extends State<ExaminationPage>
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('审核提醒',
-            style: TextStyle(
-                color: BaseStyle.color111111,
-                fontSize: BaseStyle.fontSize36,
-                fontWeight: FontWeight.bold)),
+        title: Text('审批提醒', style: Theme.of(context).textTheme.headline6),
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       extendBody: true,
@@ -86,10 +82,14 @@ class _ExaminationPageState extends State<ExaminationPage>
       children: [
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
+          margin: EdgeInsets.only(left: 150.w),
           color: const Color.fromRGBO(6, 180, 77, 0.1),
-          child: const Text(
+          child: Text(
             "通过",
-            style: TextStyle(color: Color.fromRGBO(6, 180, 77, 1)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(color: Color(0xFF06B44D)),
           ),
         )
       ],
@@ -101,10 +101,14 @@ class _ExaminationPageState extends State<ExaminationPage>
       children: [
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
+          margin: EdgeInsets.only(left: 150.w),
           color: const Color.fromRGBO(230, 34, 34, 0.1),
-          child: const Text(
+          child: Text(
             "驳回",
-            style: TextStyle(color: Color.fromRGBO(230, 34, 34, 1)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(color: Color(0xFFE62222)),
           ),
         )
       ],

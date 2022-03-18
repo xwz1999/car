@@ -41,11 +41,7 @@ class _PayChangesPageState extends State<PayChangesPage>
           leading: const CloudBackButton(
             isSpecial: true,
           ),
-          title: Text('次数变更',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
+          title: Text('次数变更', style: Theme.of(context).textTheme.headline6),
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
@@ -80,7 +76,7 @@ class _PayChangesPageState extends State<PayChangesPage>
 
         title: Text(
           '2022年12月',
-          style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.subtitle1,
         ),
 
         //leading: Icon(Icons.list),
@@ -89,9 +85,7 @@ class _PayChangesPageState extends State<PayChangesPage>
             //minVerticalPadding: ,
             title: Text(
               '评估车辆1次',
-              style: TextStyle(
-                fontSize: 28.sp,
-              ),
+              style: Theme.of(context).textTheme.subtitle2,
             ),
             subtitle: Text(
               '12月1日 16:34:09',
@@ -105,117 +99,99 @@ class _PayChangesPageState extends State<PayChangesPage>
             ),
           ),
           ListTile(
-            title: Text('评估车辆1次',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                )),
-            subtitle: Text(
-              '12月1日 16:34:09',
-              style: TextStyle(
-                  fontSize: 24.sp,
-                  color: const Color.fromRGBO(153, 153, 153, 1)),
+            title: Text(
+              '评估车辆1次',
+              style: Theme.of(context).textTheme.subtitle2,
             ),
-            trailing: Text('-1',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold)),
+            subtitle: Text('12月1日 16:34:09',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(color: Color(0xFF999999))),
+            trailing: Text('-1', style: Theme.of(context).textTheme.subtitle2),
           ),
           ListTile(
-            title: Text('评估车辆1次',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                )),
-            subtitle: Text(
-              '12月1日 16:34:09',
-              style: TextStyle(
-                  fontSize: 24.sp,
-                  color: const Color.fromRGBO(153, 153, 153, 1)),
+            title: Text(
+              '评估车辆1次',
+              style: Theme.of(context).textTheme.subtitle2,
             ),
-            trailing: Text('-1',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold)),
+            subtitle: Text('12月1日 16:34:09',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(color: Color(0xFF999999))),
+            trailing: Text('-1', style: Theme.of(context).textTheme.subtitle2),
           ),
           ListTile(
-            title: Text('充值次数',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                )),
+            title: Text(
+              '充值次数',
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
             subtitle: Column(
               //左对齐
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '扣款银行卡: 工商银行，尾号0909 扣款金额：¥20.00',
-                  style: TextStyle(
-                    fontSize: 24.sp,
-                    color: const Color.fromRGBO(153, 153, 153, 1),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
+                Text('扣款银行卡: 工商银行，尾号0909 扣款金额：¥20.00',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Color(0xFF999999),
+                          overflow: TextOverflow.ellipsis,
+                        )),
                 8.hb,
-                Text(
-                  '12月1日 16:34:09',
-                  style: TextStyle(
-                      fontSize: 24.sp,
-                      color: const Color.fromRGBO(153, 153, 153, 1)),
-                ),
+                Text('12月1日 16:34:09',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Color(0xFF999999),
+                        )),
               ],
             ),
-            trailing: Text('+20',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold)),
+            trailing: Text('+20', style: Theme.of(context).textTheme.subtitle2),
           ),
           ListTile(
-            title: Text('充值次数',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                )),
+            title: Text(
+              '充值次数',
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
             subtitle: Column(
               //左对齐
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '支付宝付款：¥20.0',
-                  style: TextStyle(
-                      fontSize: 24.sp,
-                      color: const Color.fromRGBO(153, 153, 153, 1),
-                      overflow: TextOverflow.ellipsis),
-                ),
+                Text('支付宝付款：¥20.0',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Color(0xFF999999),
+                          overflow: TextOverflow.ellipsis,
+                        )),
                 8.hb,
-                Text(
-                  '12月1日 16:34:09',
-                  style: TextStyle(
-                      fontSize: 24.sp,
-                      color: const Color.fromRGBO(153, 153, 153, 1),
-                      overflow: TextOverflow.ellipsis),
-                ),
+                Text('12月1日 16:34:09',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Color(0xFF999999),
+                          overflow: TextOverflow.ellipsis,
+                        )),
               ],
             ),
-            trailing: Text('+20',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold)),
+            trailing: Text('+20', style: Theme.of(context).textTheme.subtitle2),
           ),
           ListTile(
-            title: Text('充值次数',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                )),
+            title: Text(
+              '充值次数',
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
             subtitle: Column(
               //左对齐
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '微信付款：¥20.00',
-                  style: TextStyle(
-                      fontSize: 24.sp,
-                      color: const Color.fromRGBO(153, 153, 153, 1)),
-                ),
+                Text('微信付款：¥20.00',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Color(0xFF999999),
+                          overflow: TextOverflow.ellipsis,
+                        )),
                 8.hb,
-                Text(
-                  '12月1日 16:34:09',
-                  style: TextStyle(
-                      fontSize: 24.sp,
-                      color: const Color.fromRGBO(153, 153, 153, 1)),
-                ),
+                Text('12月1日 16:34:09',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Color(0xFF999999),
+                          overflow: TextOverflow.ellipsis,
+                        )),
               ],
             ),
-            trailing: Text('+20',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold)),
+            trailing: Text('+20', style: Theme.of(context).textTheme.subtitle2),
           ),
         ],
       ),

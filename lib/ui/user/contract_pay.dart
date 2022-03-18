@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../home/car_manager/assessment_page.dart';
 
-class AssessmentPayPage extends StatefulWidget {
-  const AssessmentPayPage({Key? key}) : super(key: key);
+class ContractPayPage extends StatefulWidget {
+  const ContractPayPage({Key? key}) : super(key: key);
 
   @override
-  _AssessmentPayPageState createState() => _AssessmentPayPageState();
+  _ContractPayPageState createState() => _ContractPayPageState();
 }
 
-class _AssessmentPayPageState extends State<AssessmentPayPage>
+class _ContractPayPageState extends State<ContractPayPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
@@ -48,7 +48,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
           leading: const CloudBackButton(
             isSpecial: true,
           ),
-          title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
+          title: Text('合伙人中心', style: Theme.of(context).textTheme.headline6),
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
@@ -108,7 +108,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
           14.wb,
           SizedBox(
             child: Text(
-              '20.00',
+              '1500.00',
               style: Theme.of(context)
                   .textTheme
                   .headline6
