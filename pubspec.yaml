@@ -61,6 +61,9 @@ dependencies:
   badges: ^2.0.2
   #手写
   signature: ^5.0.0
+  # 上传图片
+  
+  flutter_picker: ^1.0.11
 
 
 

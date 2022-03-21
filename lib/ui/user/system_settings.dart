@@ -1,3 +1,4 @@
+import 'package:cloud_car/ui/user/enterprise_information.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -110,7 +111,7 @@ class _InatallPageState extends State<InatallPage> {
       onTap: () {
         switch (item['title']) {
           case '企业信息':
-            //Get.to(() => const FashionablePage());
+            Get.to(() => const EnterpriseInformationPage());
             //print("1111111");
             break;
           case '审批提醒':
