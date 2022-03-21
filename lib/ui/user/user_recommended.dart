@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/task_page.dart';
+import 'package:cloud_car/ui/user/share_detail_customer.dart';
+import 'package:cloud_car/ui/user/share_detail_partner.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -610,6 +612,9 @@ class _RecommendedPageState extends State<RecommendedPage>
                 ),
                 16.hb,
                 GestureDetector(
+                  onTap: () {
+                    Get.to(() => ShareDetailCustomerPage());
+                  },
                   child: Text(
                     "立即邀请>>>",
                     style: Theme.of(context)
@@ -617,7 +622,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                         .bodyText1
                         ?.copyWith(color: Color.fromRGBO(255, 129, 41, 0.8)),
                   ),
-                )
+                ),
               ],
             ))
       ],
@@ -646,6 +651,9 @@ class _RecommendedPageState extends State<RecommendedPage>
                 ),
                 16.hb,
                 GestureDetector(
+                  onTap: () {
+                    Get.to(() => ShareDetailPartnerPage());
+                  },
                   child: Text(
                     "立即邀请>>>",
                     style: Theme.of(context)
@@ -653,7 +661,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                         .bodyText1
                         ?.copyWith(color: Color.fromRGBO(60, 149, 246, 0.8)),
                   ),
-                )
+                ),
               ],
             ))
       ],

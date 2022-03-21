@@ -305,6 +305,13 @@ class $AssetsImagesGen {
   AssetGenImage get invitePartners =>
       const AssetGenImage('assets/images/Invite_partners.png');
 
+  /// File path: assets/images/Qr_code.png
+  AssetGenImage get qrCode => const AssetGenImage('assets/images/Qr_code.png');
+
+  /// File path: assets/images/Share_details_bg.jpg
+  AssetGenImage get shareDetailsBg =>
+      const AssetGenImage('assets/images/Share_details_bg.jpg');
+
   /// File path: assets/images/Share_first_figure.png
   AssetGenImage get shareFirstFigure =>
       const AssetGenImage('assets/images/Share_first_figure.png');
@@ -330,6 +337,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/car_banner.png
   AssetGenImage get carBanner =>
       const AssetGenImage('assets/images/car_banner.png');
+
+  /// File path: assets/images/download.png
+  AssetGenImage get download =>
+      const AssetGenImage('assets/images/download.png');
 
   /// File path: assets/images/driving_license.png
   AssetGenImage get drivingLicense =>

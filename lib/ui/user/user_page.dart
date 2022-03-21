@@ -1,5 +1,6 @@
 import 'package:cloud_car/ui/home/home_page.dart';
 import 'package:cloud_car/ui/user/partner_center.dart';
+import 'package:cloud_car/ui/user/system_settings.dart';
 import 'package:cloud_car/ui/user/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -77,9 +78,9 @@ class _UserPageState extends State<UserPage>
             )),
             GestureDetector(
               onTap: () {
-                Get.to(() => const TaskPage());
+                Get.to(() => const InatallPage());
               },
-              child: Image.asset('assets/icons/user_set_up.png',
+              child: Image.asset(Assets.icons.userSetUp.path,
                   height: 48.w, width: 48.w),
             ),
           ],
