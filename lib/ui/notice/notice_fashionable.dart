@@ -78,7 +78,7 @@ class _FashionablePageState extends State<FashionablePage>
             style: Theme.of(context)
                 .textTheme
                 .bodyText1
-                ?.copyWith(color: Color(0xFF999999)),
+                ?.copyWith(color: const Color(0xFF999999)),
           ),
         )
       ],
@@ -91,13 +91,13 @@ class _FashionablePageState extends State<FashionablePage>
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
           margin: EdgeInsets.only(left: 50.w),
-          color: Color.fromRGBO(2, 122, 255, 0.1),
+          color: const Color.fromRGBO(2, 122, 255, 0.1),
           child: Text(
             "未读",
             style: Theme.of(context)
                 .textTheme
                 .bodyText1
-                ?.copyWith(color: Color(0xFF027AFF)),
+                ?.copyWith(color: const Color(0xFF027AFF)),
           ),
         )
       ],
@@ -143,7 +143,7 @@ class _FashionablePageState extends State<FashionablePage>
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2
-                          ?.copyWith(color: Color(0xFF666666)),
+                          ?.copyWith(color: const Color(0xFF666666)),
                     ),
                     48.wb,
                     Text(
@@ -160,7 +160,7 @@ class _FashionablePageState extends State<FashionablePage>
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2
-                          ?.copyWith(color: Color(0xFF666666)),
+                          ?.copyWith(color: const Color(0xFF666666)),
                     ),
                     48.wb,
                     Text(
@@ -177,7 +177,7 @@ class _FashionablePageState extends State<FashionablePage>
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2
-                          ?.copyWith(color: Color(0xFF666666)),
+                          ?.copyWith(color: const Color(0xFF666666)),
                     ),
                     48.wb,
                     Text(
@@ -194,7 +194,7 @@ class _FashionablePageState extends State<FashionablePage>
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2
-                          ?.copyWith(color: Color(0xFF666666)),
+                          ?.copyWith(color: const Color(0xFF666666)),
                     ),
                     48.wb,
                     Text(

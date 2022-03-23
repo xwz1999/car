@@ -1,14 +1,8 @@
-import 'dart:math';
-
-import 'package:cloud_car/ui/notice/notice_fashionable.dart';
-import 'package:cloud_car/ui/user/pay_results.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import '../home/car_manager/assessment_page.dart';
 
 class PayChangesPage extends StatefulWidget {
   const PayChangesPage({Key? key}) : super(key: key);
@@ -107,7 +101,7 @@ class _PayChangesPageState extends State<PayChangesPage>
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
-                    ?.copyWith(color: Color(0xFF999999))),
+                    ?.copyWith(color: const Color(0xFF999999))),
             trailing: Text('-1', style: Theme.of(context).textTheme.subtitle2),
           ),
           ListTile(
@@ -119,7 +113,7 @@ class _PayChangesPageState extends State<PayChangesPage>
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
-                    ?.copyWith(color: Color(0xFF999999))),
+                    ?.copyWith(color: const Color(0xFF999999))),
             trailing: Text('-1', style: Theme.of(context).textTheme.subtitle2),
           ),
           ListTile(
@@ -133,13 +127,13 @@ class _PayChangesPageState extends State<PayChangesPage>
               children: [
                 Text('扣款银行卡: 工商银行，尾号0909 扣款金额：¥20.00',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Color(0xFF999999),
+                          color: const Color(0xFF999999),
                           overflow: TextOverflow.ellipsis,
                         )),
                 8.hb,
                 Text('12月1日 16:34:09',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Color(0xFF999999),
+                          color: const Color(0xFF999999),
                         )),
               ],
             ),
@@ -156,13 +150,13 @@ class _PayChangesPageState extends State<PayChangesPage>
               children: [
                 Text('支付宝付款：¥20.0',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Color(0xFF999999),
+                          color: const Color(0xFF999999),
                           overflow: TextOverflow.ellipsis,
                         )),
                 8.hb,
                 Text('12月1日 16:34:09',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Color(0xFF999999),
+                          color: const Color(0xFF999999),
                           overflow: TextOverflow.ellipsis,
                         )),
               ],
@@ -180,13 +174,13 @@ class _PayChangesPageState extends State<PayChangesPage>
               children: [
                 Text('微信付款：¥20.00',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Color(0xFF999999),
+                          color: const Color(0xFF999999),
                           overflow: TextOverflow.ellipsis,
                         )),
                 8.hb,
                 Text('12月1日 16:34:09',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Color(0xFF999999),
+                          color: const Color(0xFF999999),
                           overflow: TextOverflow.ellipsis,
                         )),
               ],

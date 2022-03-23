@@ -1,14 +1,12 @@
-import 'package:cloud_car/ui/notice/notice_fashionable.dart';
 import 'package:cloud_car/ui/user/pay_num_changes.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
+
 import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:cloud_car/widget/recharge_widget.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import '../home/car_manager/assessment_page.dart';
 
 class AssessmentNumPage extends StatefulWidget {
   const AssessmentNumPage({Key? key}) : super(key: key);
@@ -45,7 +43,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
     //super.build(context);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(246, 246, 246, 1),
+          backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
           leading: const CloudBackButton(
             isSpecial: true,
           ),
@@ -64,7 +62,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2
-                        ?.copyWith(color: Color(0xFF027AFF)),
+                        ?.copyWith(color: const Color(0xFF027AFF)),
                   ),
                 ),
               ],
@@ -112,14 +110,14 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
-                        ?.copyWith(color: Color(0xFFFFFFFF)),
+                        ?.copyWith(color: const Color(0xFFFFFFFF)),
                   ),
                   24.wb,
                   Text(
                     '49',
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         fontSize: 42.sp,
-                        color: Color(0xFF027AFF),
+                        color: const Color(0xFF027AFF),
                         fontWeight: FontWeight.bold),
                   )
                 ],
@@ -129,12 +127,12 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                   Text('精准估值',
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           fontSize: 20.sp,
-                          color: Color.fromRGBO(255, 255, 255, 0.7))),
+                          color: const Color.fromRGBO(255, 255, 255, 0.7))),
                   16.wb,
                   Text('守护您的车辆交易',
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           fontSize: 20.sp,
-                          color: Color.fromRGBO(255, 255, 255, 0.7))),
+                          color: const Color.fromRGBO(255, 255, 255, 0.7))),
                 ],
               )
             ],

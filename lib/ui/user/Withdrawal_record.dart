@@ -1,7 +1,8 @@
+// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WithdrawalRecordPage extends StatefulWidget {
   const WithdrawalRecordPage({Key? key}) : super(key: key);
@@ -67,7 +68,7 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
         onTap: (() {
           RenderBox renderBox = _globalKey.currentContext.findRenderObject();
           Rect box = renderBox.localToGlobal(Offset.zero) & renderBox.size;
-          print(box);
+          (box);
           Navigator.push(
               context, _DropDownMenuRoute(position: box, menuHeight: 300));
         }),
@@ -106,19 +107,16 @@ class _DropDownMenuRouteLayout extends SingleChildLayoutDelegate {
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
-    // TODO: implement getConstraintsForChild
     return BoxConstraints.loose(Size(position.right - position.left, 300));
   }
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    // TODO: implement getPositionForChild
     return Offset(0, position.bottom);
   }
 
   @override
   bool shouldRelayout(SingleChildLayoutDelegate oldDelegate) {
-    // TODO: implement shouldRelayout
     return true;
   }
 }
@@ -130,21 +128,17 @@ class _DropDownMenuRoute extends PopupRoute {
   _DropDownMenuRoute({required this.position, required this.menuHeight});
 
   @override
-  // TODO: implement barrierColor
   Color? get barrierColor => null;
 
   @override
-  // TODO: implement barrierDismissible
   bool get barrierDismissible => true;
 
   @override
-  // TODO: implement barrierLabel
   String? get barrierLabel => null;
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
-    // TODO: implement buildPage
     return CustomSingleChildLayout(
       delegate:
           _DropDownMenuRouteLayout(position: position, menuHeight: menuHeight),
@@ -158,7 +152,6 @@ class _DropDownMenuRoute extends PopupRoute {
   }
 
   @override
-  // TODO: implement transitionDuration
   Duration get transitionDuration => const Duration(milliseconds: 300);
 }
 

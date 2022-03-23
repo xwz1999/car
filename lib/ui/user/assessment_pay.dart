@@ -1,14 +1,8 @@
-import 'dart:math';
-
-import 'package:cloud_car/ui/notice/notice_fashionable.dart';
 import 'package:cloud_car/ui/user/pay_results.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import '../home/car_manager/assessment_page.dart';
 
 class AssessmentPayPage extends StatefulWidget {
   const AssessmentPayPage({Key? key}) : super(key: key);
@@ -40,11 +34,12 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     //super.build(context);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(246, 246, 246, 1),
+          backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
           leading: const CloudBackButton(
             isSpecial: true,
           ),
@@ -54,7 +49,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
         //extendBodyBehindAppBar: true,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w),
-          color: Color.fromRGBO(246, 246, 246, 1),
+          color: const Color.fromRGBO(246, 246, 246, 1),
           child: Column(
             children: [
               //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
@@ -80,7 +75,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2
-                        ?.copyWith(color: Color(0xffffffff)),
+                        ?.copyWith(color: const Color(0xffffffff)),
                   ),
                 )),
               )

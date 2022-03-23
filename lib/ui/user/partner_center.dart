@@ -4,8 +4,7 @@ import 'package:cloud_car/ui/user/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/button/colud_check_radio.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -380,7 +379,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                 width: 48.w,
                                 height: 48.w,
                                 child:
-                                    Image.asset('assets/icons/my_contract.png'),
+                                    Image.asset(Assets.icons.myContract.path),
                               )
                             ],
                           )),
@@ -421,7 +420,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                               SizedBox(
                                 width: 48.w,
                                 height: 48.w,
-                                child: Image.asset('assets/icons/my_order.png'),
+                                child: Image.asset(Assets.icons.myOrder.path),
                               )
                             ],
                           )),
@@ -443,7 +442,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
       //padding: EdgeInsets.symmetric(horizontal: 32.w),
       height: 328.w,
       child: Stack(children: [
-        Image.asset('assets/images/partner_center_bg.png'),
+        Image.asset(Assets.images.partnerCenterBg.path),
         Positioned(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -481,14 +480,14 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                           style: Theme.of(context)
                               .textTheme
                               .headline6
-                              ?.copyWith(color: Color(0xffffffff)),
+                              ?.copyWith(color: const Color(0xffffffff)),
                         ),
                         Text(
                           '189****3627',
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
-                              ?.copyWith(color: Color(0xffffffff)),
+                              ?.copyWith(color: const Color(0xffffffff)),
                         )
                       ],
                     ),
@@ -506,7 +505,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
-                    ?.copyWith(color: Color.fromRGBO(255, 255, 255, 0.8)),
+                    ?.copyWith(color: const Color.fromRGBO(255, 255, 255, 0.8)),
               ),
             ),
             Container(
@@ -526,7 +525,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2
-                          ?.copyWith(color: Color(0xFF027AFF))),
+                          ?.copyWith(color: const Color(0xFF027AFF))),
                 ),
               ),
             ),
@@ -545,7 +544,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
           width: 112.w,
           height: 46.w,
           child: Image.asset(
-            "assets/images/bubble.png",
+            Assets.images.bubble.path,
             fit: BoxFit.fill,
           ),
         ),
@@ -557,7 +556,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
               style: Theme.of(context)
                   .textTheme
                   .bodyText1
-                  ?.copyWith(color: Color(0xffffffff)),
+                  ?.copyWith(color: const Color(0xffffffff)),
             )),
       ],
     );

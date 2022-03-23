@@ -1,18 +1,12 @@
-import 'dart:ui';
-
-import 'package:cloud_car/ui/notice/notice_fashionable.dart';
 import 'package:cloud_car/ui/user/Withdrawal_record.dart';
-import 'package:cloud_car/ui/user/pay_num_changes.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
+
 import 'package:cloud_car/widget/putup_widget.dart';
-import 'package:cloud_car/widget/recharge_widget.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import '../home/car_manager/assessment_page.dart';
 
 class WalletCertificationPage extends StatefulWidget {
   const WalletCertificationPage({Key? key}) : super(key: key);
@@ -27,6 +21,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage>
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
+  // ignore: unused_field
   final List<ChooseItem> _piceList = [
     ChooseItem(name: '充值10次', pice: '¥10.00'),
     ChooseItem(name: '充值20次', pice: '¥20.00'),
@@ -46,6 +41,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage>
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     //super.build(context);
     return Scaffold(
@@ -69,7 +65,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage>
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2
-                        ?.copyWith(color: Color(0xFF027AFF)),
+                        ?.copyWith(color: const Color(0xFF027AFF)),
                   ),
                 ),
               ],
@@ -116,17 +112,17 @@ class _WalletCertificationPageState extends State<WalletCertificationPage>
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
-                        ?.copyWith(color: Color(0xFFFE8029)),
+                        ?.copyWith(color: const Color(0xFFFE8029)),
                   ),
                   10.wb,
                   Text('¥',
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          color: Color(0xFFFE8029),
+                          color: const Color(0xFFFE8029),
                           fontWeight: FontWeight.bold)),
                   10.wb,
                   Text('100,000.00',
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          color: Color(0xFFFE8029),
+                          color: const Color(0xFFFE8029),
                           fontWeight: FontWeight.bold,
                           fontSize: 40.sp)),
                 ],
@@ -200,7 +196,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage>
               style: Theme.of(context)
                   .textTheme
                   .bodyText1
-                  ?.copyWith(color: Color(0xFF999999))),
+                  ?.copyWith(color: const Color(0xFF999999))),
           trailing: Text('+¥100,000.00',
               style: Theme.of(context).textTheme.subtitle2),
         ),
@@ -213,7 +209,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage>
               style: Theme.of(context)
                   .textTheme
                   .bodyText1
-                  ?.copyWith(color: Color(0xFF999999))),
+                  ?.copyWith(color: const Color(0xFF999999))),
           trailing:
               Text('+¥15,000.00', style: Theme.of(context).textTheme.subtitle2),
         ),

@@ -89,7 +89,7 @@ class _ExaminationPageState extends State<ExaminationPage>
             style: Theme.of(context)
                 .textTheme
                 .bodyText1
-                ?.copyWith(color: Color(0xFF06B44D)),
+                ?.copyWith(color: const Color(0xFF06B44D)),
           ),
         )
       ],
@@ -108,7 +108,7 @@ class _ExaminationPageState extends State<ExaminationPage>
             style: Theme.of(context)
                 .textTheme
                 .bodyText1
-                ?.copyWith(color: Color(0xFFE62222)),
+                ?.copyWith(color: const Color(0xFFE62222)),
           ),
         )
       ],

@@ -1,7 +1,7 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,7 +39,7 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
         body: Expanded(
           child: ListView(
             children: [
-              40.hb,
+              20.hb,
               _title('基本信息'),
               24.hb,
               _information(),
@@ -63,10 +63,8 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
       padding: EdgeInsets.only(left: 32.w),
       child: Text(
         title,
-        style: Theme.of(context)
-            .textTheme
-            .subtitle1
-            ?.copyWith(color: Color(0xFF110000), fontWeight: FontWeight.bold),
+        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+            color: const Color(0xFF110000), fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -93,7 +91,7 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
                   '身份证照',
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
                         fontSize: 28.sp,
-                        color: Color(0xFF999999),
+                        color: const Color(0xFF999999),
                       ),
                 ),
                 24.hb,
@@ -188,7 +186,7 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
           width: 150.w,
           child: Text(
             title,
-            style: TextStyle(fontSize: 28.sp, color: Color(0xFF999999)),
+            style: TextStyle(fontSize: 28.sp, color: const Color(0xFF999999)),
           ),
         ),
         20.wb,
@@ -215,7 +213,7 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
             style: Theme.of(context)
                 .textTheme
                 .subtitle2
-                ?.copyWith(color: Color(0xFF999999)),
+                ?.copyWith(color: const Color(0xFF999999)),
           ),
         ),
         Container(

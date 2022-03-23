@@ -4,13 +4,13 @@ import 'package:cloud_car/ui/user/system_settings.dart';
 import 'package:cloud_car/ui/user/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../home/car_manager/car_manager_page.dart';
-import '../home/task_page.dart';
+
 import '../notice/car_system_informs.dart';
 
 class UserPage extends StatefulWidget {
@@ -28,6 +28,7 @@ class _UserPageState extends State<UserPage>
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
 
+  // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
   final int assessment = 1;
   final int wallet = 10210;
@@ -110,7 +111,7 @@ class _UserPageState extends State<UserPage>
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
-                      ?.copyWith(color: Color(0xFFCCCCCC))),
+                      ?.copyWith(color: const Color(0xFFCCCCCC))),
             ],
           )
         ],
@@ -157,7 +158,7 @@ class _UserPageState extends State<UserPage>
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
-                          ?.copyWith(color: Color(0xFFFFFFFF)),
+                          ?.copyWith(color: const Color(0xFFFFFFFF)),
                     )),
               ],
             ),
@@ -188,7 +189,7 @@ class _UserPageState extends State<UserPage>
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1
-                      ?.copyWith(color: Color(0xFFFFFFFF)),
+                      ?.copyWith(color: const Color(0xFFFFFFFF)),
                   // style: TextStyle(
                   //     fontSize: 32.sp,
                   //     color: Colors.white,
@@ -197,10 +198,8 @@ class _UserPageState extends State<UserPage>
               ),
               16.wb,
               Text("开通即享5项权益",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: Color.fromRGBO(255, 255, 255, 0.8))
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      color: const Color.fromRGBO(255, 255, 255, 0.8))
                   // TextStyle(
                   //   fontSize: 24.sp,
                   //   color: Colors.white60,
@@ -223,7 +222,7 @@ class _UserPageState extends State<UserPage>
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
-                      ?.copyWith(color: Color(0xFF027AFF))
+                      ?.copyWith(color: const Color(0xFF027AFF))
                   // TextStyle(
                   //     color: Colors.blue,
                   //     fontSize: 13,
@@ -291,7 +290,7 @@ class _UserPageState extends State<UserPage>
                             color: const Color.fromARGB(255, 245, 205, 146),
                             padding: const EdgeInsets.only(
                                 top: 1, left: 4, right: 4),
-                            child: Text(
+                            child: const Text(
                               "销售",
                               style: // Theme.of(context).textTheme.bodyText3,
                                   TextStyle(
@@ -307,7 +306,7 @@ class _UserPageState extends State<UserPage>
                             color: const Color.fromARGB(255, 164, 229, 245),
                             padding: const EdgeInsets.only(
                                 top: 1, left: 4, right: 4),
-                            child: Text(
+                            child: const Text(
                               "云云问车",
                               style: //Theme.of(context).textTheme.bodyText4
                                   TextStyle(
@@ -364,7 +363,7 @@ class _UserPageState extends State<UserPage>
                           //   color: Colors.black,
                           //   fontSize: 32.sp,
                           //   letterSpacing: 1,
-                          //   fontFamily: 'Bebas',
+                          //   fontFamily:
                           // ),
                           ),
                       RawChip(
@@ -373,7 +372,7 @@ class _UserPageState extends State<UserPage>
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1
-                              ?.copyWith(color: Color(0xFF999999)),
+                              ?.copyWith(color: const Color(0xFF999999)),
                           //TextStyle(fontSize: 10, color: Colors.black45),
                         ),
                         backgroundColor: Colors.white,
@@ -397,7 +396,7 @@ class _UserPageState extends State<UserPage>
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
-                          ?.copyWith(color: Color(0xFF999999)),
+                          ?.copyWith(color: const Color(0xFF999999)),
                     ),
                     backgroundColor: Colors.white,
                   )
@@ -419,7 +418,7 @@ class _UserPageState extends State<UserPage>
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
-                          ?.copyWith(color: Color(0xFF999999)),
+                          ?.copyWith(color: const Color(0xFF999999)),
                     ),
                     backgroundColor: Colors.white,
                   )
@@ -461,7 +460,6 @@ class _UserPageState extends State<UserPage>
           _getKingCoin(),
         ],
       ),
-      //child: _getkingcoin(),
     );
   }
 

@@ -279,17 +279,17 @@ class _PartnershipContractPageState extends State<PartnershipContractPage>
 
 //测试
 
-  _aa() {
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(100),
-      decoration: const BoxDecoration(color: Colors.red),
-      child: Text(
-        'data',
-        style: TextStyle(fontSize: 100.sp),
-      ),
-    );
-  }
+  // _aa() {
+  //   return Container(
+  //     alignment: Alignment.center,
+  //     padding: const EdgeInsets.all(100),
+  //     decoration: const BoxDecoration(color: Colors.red),
+  //     child: Text(
+  //       'data',
+  //       style: TextStyle(fontSize: 100.sp),
+  //     ),
+  //   );
+  // }
 
   @override
   bool get wantKeepAlive => true;

@@ -1,7 +1,7 @@
 import 'package:cloud_car/ui/home/search_page.dart';
-import 'package:cloud_car/ui/home/task_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/cloud_back_button.dart';
+
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,7 @@ class _CardetailPageState extends State<CardetailPage>
               onTap: () {
                 Get.back();
               },
-              child: Image.asset('assets/icons/back.png',
+              child: Image.asset(Assets.icons.back.path,
                   height: 48.w, width: 48.w),
             ),
             522.wb,
@@ -59,7 +59,7 @@ class _CardetailPageState extends State<CardetailPage>
               onTap: () {
                 Get.to(() => const SearchPage());
               },
-              child: Image.asset('assets/icons/ic_favorite1.png',
+              child: Image.asset(Assets.icons.icFavorite1.path,
                   height: 48.w, width: 48.w),
             ),
             24.wb,
@@ -67,7 +67,7 @@ class _CardetailPageState extends State<CardetailPage>
               onTap: () {
                 Get.to(() => const SearchPage());
               },
-              child: Image.asset('assets/icons/ic_share.png',
+              child: Image.asset(Assets.icons.icShare.path,
                   color: Colors.black, height: 48.w, width: 48.w),
             ),
             16.wb,
@@ -76,11 +76,7 @@ class _CardetailPageState extends State<CardetailPage>
       ),
       extendBody: true,
       //extendBodyBehindAppBar: true,
-      body: Container(
-          // padding: EdgeInsets.symmetric(
-          //   horizontal: 32.w,
-          //),
-          child: Column(
+      body: Column(
         children: [
           Container(
               padding: EdgeInsets.symmetric(horizontal: 32.w),
@@ -109,7 +105,7 @@ class _CardetailPageState extends State<CardetailPage>
             ],
           ),
         ],
-      )),
+      ),
     );
   }
 
@@ -126,7 +122,7 @@ class _CardetailPageState extends State<CardetailPage>
             style: Theme.of(context)
                 .textTheme
                 .headline6
-                ?.copyWith(color: Color(0xFF111111), fontSize: 40.sp),
+                ?.copyWith(color: const Color(0xFF111111), fontSize: 40.sp),
           )),
         ),
       ],
@@ -166,7 +162,8 @@ class _CardetailPageState extends State<CardetailPage>
               child: Text(
                 '车辆信息未填写完整',
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: Color(0xFFE62222), fontWeight: FontWeight.bold),
+                    color: const Color(0xFFE62222),
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -235,7 +232,7 @@ class _CardetailPageState extends State<CardetailPage>
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
-                                ?.copyWith(color: Color(0xFF999999)),
+                                ?.copyWith(color: const Color(0xFF999999)),
                           )
                         ],
                       ),
@@ -265,7 +262,7 @@ class _CardetailPageState extends State<CardetailPage>
                                   .textTheme
                                   .bodyText1
                                   ?.copyWith(
-                                      color: Color(0xFF027AFF),
+                                      color: const Color(0xFF027AFF),
                                       fontSize: 20.sp),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = (() {
@@ -289,7 +286,7 @@ class _CardetailPageState extends State<CardetailPage>
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
-                                ?.copyWith(color: Color(0xFF999999)),
+                                ?.copyWith(color: const Color(0xFF999999)),
                           )
                         ],
                       ),
@@ -327,7 +324,7 @@ class _CardetailPageState extends State<CardetailPage>
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
-                                ?.copyWith(color: Color(0xFF999999)),
+                                ?.copyWith(color: const Color(0xFF999999)),
                           )
                         ],
                       ),
@@ -423,7 +420,8 @@ class _CardetailPageState extends State<CardetailPage>
                                                   .textTheme
                                                   .subtitle2
                                                   ?.copyWith(
-                                                      color: Color(0xFF999999)),
+                                                      color: const Color(
+                                                          0xFF999999)),
                                             ),
                                             48.wb,
                                             Text(
@@ -445,7 +443,8 @@ class _CardetailPageState extends State<CardetailPage>
                                                   .textTheme
                                                   .subtitle2
                                                   ?.copyWith(
-                                                      color: Color(0xFF999999)),
+                                                      color: const Color(
+                                                          0xFF999999)),
                                             ),
                                             24.wb,
                                             Text(
@@ -466,7 +465,8 @@ class _CardetailPageState extends State<CardetailPage>
                                                   .textTheme
                                                   .subtitle2
                                                   ?.copyWith(
-                                                      color: Color(0xFF999999)),
+                                                      color: const Color(
+                                                          0xFF999999)),
                                             ),
                                             24.wb,
                                             Flexible(
@@ -510,7 +510,7 @@ class _CardetailPageState extends State<CardetailPage>
       margin: EdgeInsets.symmetric(horizontal: 24.w),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 170.w,
             height: 98.w,
             child: Column(
@@ -518,7 +518,7 @@ class _CardetailPageState extends State<CardetailPage>
                 SizedBox(
                   width: 56.w,
                   height: 56.w,
-                  child: Image.asset('assets/icons/editor.png'),
+                  child: Image.asset(Assets.icons.editor.path),
                 ),
                 Text(
                   '重新编辑',
@@ -527,7 +527,7 @@ class _CardetailPageState extends State<CardetailPage>
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 170.w,
             height: 98.w,
             child: Column(
@@ -535,7 +535,7 @@ class _CardetailPageState extends State<CardetailPage>
                 SizedBox(
                   width: 56.w,
                   height: 56.w,
-                  child: Image.asset('assets/icons/no_transmission.png'),
+                  child: Image.asset(Assets.icons.noTransmission.path),
                 ),
                 Text(
                   '调价',
@@ -544,7 +544,7 @@ class _CardetailPageState extends State<CardetailPage>
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 170.w,
             height: 98.w,
             child: Column(
@@ -552,7 +552,7 @@ class _CardetailPageState extends State<CardetailPage>
                 SizedBox(
                   width: 56.w,
                   height: 56.w,
-                  child: Image.asset('assets/icons/no_upload.png'),
+                  child: Image.asset(Assets.icons.noUpload.path),
                 ),
                 Text(
                   '出售',
@@ -561,7 +561,7 @@ class _CardetailPageState extends State<CardetailPage>
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 170.w,
             height: 98.w,
             child: Column(
@@ -569,7 +569,7 @@ class _CardetailPageState extends State<CardetailPage>
                 SizedBox(
                   width: 56.w,
                   height: 56.w,
-                  child: Image.asset('assets/icons/no_download.png'),
+                  child: Image.asset(Assets.icons.download.path),
                 ),
                 Text(
                   '下架/退库',
@@ -598,7 +598,7 @@ class _CardetailPageState extends State<CardetailPage>
         style: Theme.of(context)
             .textTheme
             .bodyText1
-            ?.copyWith(color: Color(0xFFE62222)),
+            ?.copyWith(color: const Color(0xFFE62222)),
       ),
     );
   }
@@ -616,7 +616,7 @@ class _CardetailPageState extends State<CardetailPage>
           style: Theme.of(context)
               .textTheme
               .bodyText1
-              ?.copyWith(color: Color(0xFF4F5A74))),
+              ?.copyWith(color: const Color(0xFF4F5A74))),
     );
   }
 
@@ -669,7 +669,7 @@ class _CardetailPageState extends State<CardetailPage>
       pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
-        print('点击' + index.toString());
+        ('点击' + index.toString());
       },
       //布局方法
       //用户进行操作时停止自动翻页

@@ -1,8 +1,6 @@
-import 'dart:ui';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -106,7 +104,7 @@ class _PayResultsPageState extends State<PayResultsPage>
           style: Theme.of(context)
               .textTheme
               .subtitle2
-              ?.copyWith(color: Color(0xFFFFFFFF)),
+              ?.copyWith(color: const Color(0xFFFFFFFF)),
         ),
       )),
     );

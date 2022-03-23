@@ -1,8 +1,8 @@
+// ignore_for_file: camel_case_types
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class systemPage extends StatefulWidget {
   const systemPage({Key? key}) : super(key: key);
@@ -67,7 +67,7 @@ class _systemPageState extends State<systemPage>
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
-                    ?.copyWith(color: Color(0xFF999999)),
+                    ?.copyWith(color: const Color(0xFF999999)),
               ),
             )),
       ],
@@ -85,7 +85,7 @@ class _systemPageState extends State<systemPage>
               alignment: const Alignment(-0.6, 1),
               children: [
                 Align(
-                  child: Image.asset('assets/images/system_update.png'),
+                  child: Image.asset(Assets.images.systemUpdate.path),
                 ),
                 Positioned(
                     child: Column(
@@ -95,14 +95,12 @@ class _systemPageState extends State<systemPage>
                       '系统升级',
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           fontSize: 40.sp,
-                          color: Color.fromRGBO(255, 255, 255, 0.8)),
+                          color: const Color.fromRGBO(255, 255, 255, 0.8)),
                     ),
                     Text(
                       'V1.0.1',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          ?.copyWith(fontSize: 48.sp, color: Color(0xffffffff)),
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                          fontSize: 48.sp, color: const Color(0xffffffff)),
                     ),
                   ],
                 ))

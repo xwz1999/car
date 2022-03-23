@@ -1,7 +1,7 @@
 import 'package:cloud_car/ui/user/Partnership_contract.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -80,11 +80,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                 value: 1,
                 groupValue: 0,
                 onChanged: (Value) {
-                  setState(() {
-                    OnTap() {
-                      ('qqqqqqq');
-                    }
-                  });
+                  setState(() {});
                 }),
             // RichText(
             //   text: TextSpan(
@@ -104,7 +100,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
-                      ?.copyWith(color: Color(0xFFAAAAAA)),
+                      ?.copyWith(color: const Color(0xFFAAAAAA)),
                 ),
                 GestureDetector(
                   child: Text(
@@ -112,7 +108,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1
-                        ?.copyWith(color: Color(0xFF027AFF)),
+                        ?.copyWith(color: const Color(0xFF027AFF)),
                   ),
                 )
               ],
@@ -136,7 +132,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
               style: Theme.of(context)
                   .textTheme
                   .subtitle2
-                  ?.copyWith(color: Color(0xffffffff)),
+                  ?.copyWith(color: const Color(0xffffffff)),
             ),
           )),
         )
@@ -209,7 +205,8 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
@@ -217,7 +214,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                                 width: 48.w,
                                 height: 48.w,
                                 child: Image.asset(
-                                    'assets/icons/Customer_management.png'),
+                                    Assets.icons.customerManagement.path),
                               )
                             ],
                           )),
@@ -250,7 +247,8 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
@@ -258,7 +256,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                                 width: 48.w,
                                 height: 48.w,
                                 child: Image.asset(
-                                    'assets/icons/recommended_code.png'),
+                                    Assets.icons.recommendedCode.path),
                               )
                             ],
                           )),
@@ -295,15 +293,15 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
                               SizedBox(
                                 width: 48.w,
                                 height: 48.w,
-                                child:
-                                    Image.asset('assets/icons/my_wallet.png'),
+                                child: Image.asset(Assets.icons.myWallet.path),
                               )
                             ],
                           )),
@@ -336,7 +334,8 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
@@ -344,7 +343,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                                 width: 48.w,
                                 height: 48.w,
                                 child:
-                                    Image.asset('assets/icons/my_contract.png'),
+                                    Image.asset(Assets.icons.myContract.path),
                               )
                             ],
                           )),
@@ -377,14 +376,15 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
-                                          ?.copyWith(color: Color(0xFF999999)))
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)))
                                 ],
                               ),
                               22.wb,
                               SizedBox(
                                 width: 48.w,
                                 height: 48.w,
-                                child: Image.asset('assets/icons/my_order.png'),
+                                child: Image.asset(Assets.icons.myOrder.path),
                               )
                             ],
                           )),
@@ -444,14 +444,14 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                           style: Theme.of(context)
                               .textTheme
                               .headline6
-                              ?.copyWith(color: Color(0xffffffff)),
+                              ?.copyWith(color: const Color(0xffffffff)),
                         ),
                         Text(
                           '189****3627',
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
-                              ?.copyWith(color: Color(0xffffffff)),
+                              ?.copyWith(color: const Color(0xffffffff)),
                         )
                       ],
                     ),
@@ -489,7 +489,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2
-                          ?.copyWith(color: Color(0xFF027AFF))),
+                          ?.copyWith(color: const Color(0xFF027AFF))),
                 ),
               ),
             ),

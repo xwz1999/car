@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
@@ -286,12 +284,12 @@ class _ShareDetailPartnerPageState extends State<ShareDetailPartnerPage>
   }
 
 //
-  _getGraphics() {
-    return const CustomPaint(
-      //painter: a(),
-      size: Size(500, 400),
-    );
-  }
+  // _getGraphics() {
+  //   return const CustomPaint(
+  //     //painter: a(),
+  //     size: Size(500, 400),
+  //   );
+  // }
 
   @override
   bool get wantKeepAlive => true;

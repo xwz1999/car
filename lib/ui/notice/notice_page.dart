@@ -154,7 +154,7 @@ class _NoticePageState extends State<NoticePage>
             style: Theme.of(context)
                 .textTheme
                 .bodyText1
-                ?.copyWith(fontSize: 20.sp, color: Color(0xFFAAAAAA)),
+                ?.copyWith(fontSize: 20.sp, color: const Color(0xFFAAAAAA)),
           )
         ]),
         //子标题
@@ -168,7 +168,7 @@ class _NoticePageState extends State<NoticePage>
               style: Theme.of(context)
                   .textTheme
                   .bodyText1
-                  ?.copyWith(fontSize: 20.sp, color: Color(0xFFAAAAAA)),
+                  ?.copyWith(fontSize: 20.sp, color: const Color(0xFFAAAAAA)),
             )),
             //小红点组件
             Badge(

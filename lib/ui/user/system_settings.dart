@@ -1,8 +1,10 @@
+import 'package:cloud_car/ui/user/Bank_card.dart';
 import 'package:cloud_car/ui/user/enterprise_information.dart';
+import 'package:cloud_car/ui/user/real_name.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,13 +57,13 @@ class _InatallPageState extends State<InatallPage> {
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
-                          ?.copyWith(color: Color(0xFFAAAAAA))),
+                          ?.copyWith(color: const Color(0xFFAAAAAA))),
                   TextSpan(
                       text: '注销账号',
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
-                          ?.copyWith(color: Color(0xFF027AFF)))
+                          ?.copyWith(color: const Color(0xFF027AFF)))
                 ]))
               ],
             )
@@ -81,7 +83,7 @@ class _InatallPageState extends State<InatallPage> {
             style: Theme.of(context)
                 .textTheme
                 .subtitle2
-                ?.copyWith(color: Color(0xFF027AFF)),
+                ?.copyWith(color: const Color(0xFF027AFF)),
           )),
     );
   }
@@ -97,7 +99,7 @@ class _InatallPageState extends State<InatallPage> {
         itemBuilder: (context, index) {
           return _getList(list[index]);
         },
-        separatorBuilder: (context, index) => Divider(
+        separatorBuilder: (context, index) => const Divider(
           height: 1.0,
           color: Color(0xFFEEEEEE),
         ),
@@ -114,11 +116,11 @@ class _InatallPageState extends State<InatallPage> {
             Get.to(() => const EnterpriseInformationPage());
             //print("1111111");
             break;
-          case '审批提醒':
-            //Get.to(() => const ExaminationPage());
+          case '认证身份':
+            Get.to(() => const RealNamePage());
             break;
-          case '系统通知':
-            //Get.to(() => const UserPage());
+          case '我的银行卡':
+            Get.to(() => const BankCardPage());
             break;
         }
       },
@@ -126,7 +128,7 @@ class _InatallPageState extends State<InatallPage> {
       //绘制消息主体
       title: Text(item['title'], style: Theme.of(context).textTheme.subtitle2),
 
-      trailing: Icon(Icons.keyboard_arrow_right),
+      trailing: const Icon(Icons.keyboard_arrow_right),
       //contentPadding: ,
     );
   }

@@ -1,17 +1,8 @@
-import 'dart:ui';
-
-import 'package:cloud_car/ui/home/search_page.dart';
-import 'package:cloud_car/ui/home/task_page.dart';
 import 'package:cloud_car/ui/user/share_detail_customer.dart';
 import 'package:cloud_car/ui/user/share_detail_partner.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:extended_image/extended_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
 class RecommendedPage extends StatefulWidget {
   const RecommendedPage({Key? key}) : super(key: key);
@@ -89,7 +80,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                           style: Theme.of(context)
                               .textTheme
                               .headline6
-                              ?.copyWith(color: Color(0xffffffff)),
+                              ?.copyWith(color: const Color(0xffffffff)),
                         ),
                       ],
                     )),
@@ -159,7 +150,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                         style: Theme.of(context)
                             .textTheme
                             .subtitle2
-                            ?.copyWith(color: Color(0xFF999999)),
+                            ?.copyWith(color: const Color(0xFF999999)),
                       ),
                       16.hb,
                       GestureDetector(
@@ -345,7 +336,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                         style: Theme.of(context)
                             .textTheme
                             .subtitle2
-                            ?.copyWith(color: Color(0xFF999999)),
+                            ?.copyWith(color: const Color(0xFF999999)),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -592,8 +583,8 @@ class _RecommendedPageState extends State<RecommendedPage>
             height: 158.w,
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
-                  color: Color(0x40D14A16),
-                  offset: Offset(0.0, 2.0),
+                  color: const Color(0x40D14A16),
+                  offset: const Offset(0.0, 2.0),
                   blurRadius: 14.w,
                   spreadRadius: 2.w)
             ]),
@@ -608,19 +599,17 @@ class _RecommendedPageState extends State<RecommendedPage>
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1
-                      ?.copyWith(color: Color(0xFFFF8129)),
+                      ?.copyWith(color: const Color(0xFFFF8129)),
                 ),
                 16.hb,
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => ShareDetailCustomerPage());
+                    Get.to(() => const ShareDetailCustomerPage());
                   },
                   child: Text(
                     "立即邀请>>>",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(color: Color.fromRGBO(255, 129, 41, 0.8)),
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: const Color.fromRGBO(255, 129, 41, 0.8)),
                   ),
                 ),
               ],
@@ -647,19 +636,17 @@ class _RecommendedPageState extends State<RecommendedPage>
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1
-                      ?.copyWith(color: Color(0xFF3C95F6)),
+                      ?.copyWith(color: const Color(0xFF3C95F6)),
                 ),
                 16.hb,
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => ShareDetailPartnerPage());
+                    Get.to(() => const ShareDetailPartnerPage());
                   },
                   child: Text(
                     "立即邀请>>>",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(color: Color.fromRGBO(60, 149, 246, 0.8)),
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: const Color.fromRGBO(60, 149, 246, 0.8)),
                   ),
                 ),
               ],
@@ -667,11 +654,6 @@ class _RecommendedPageState extends State<RecommendedPage>
       ],
     );
   }
-
-//邀请人内容
-// _getcontent(){
-//   return
-// }
 
   @override
   bool get wantKeepAlive => true;

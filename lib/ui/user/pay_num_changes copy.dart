@@ -1,14 +1,8 @@
-import 'dart:math';
-
-import 'package:cloud_car/ui/notice/notice_fashionable.dart';
-import 'package:cloud_car/ui/user/pay_results.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import '../home/car_manager/assessment_page.dart';
 
 class PayChangesPage extends StatefulWidget {
   const PayChangesPage({Key? key}) : super(key: key);

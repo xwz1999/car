@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/assessment_pay.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
@@ -33,8 +32,6 @@ class RechargeWidget extends StatefulWidget {
 }
 
 class _RechargeWidgetState extends State<RechargeWidget> {
-  late final String _chooseItem = '';
-
   @override
   void initState() {
     super.initState();
