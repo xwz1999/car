@@ -12,8 +12,7 @@ class ContractPayPage extends StatefulWidget {
   _ContractPayPageState createState() => _ContractPayPageState();
 }
 
-class _ContractPayPageState extends State<ContractPayPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _ContractPayPageState extends State<ContractPayPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
@@ -25,12 +24,12 @@ class _ContractPayPageState extends State<ContractPayPage>
     },
     {'title': '支付宝支付', 'checked': 2, 'src': "assets/icons/zfb_pay.png"}
   ];
-  late EasyRefreshController _refreshController;
+  //late EasyRefreshController _refreshController;
 
   @override
   @override
   void dispose() {
-    _refreshController.dispose();
+    //_refreshController.dispose();
     super.dispose();
   }
 

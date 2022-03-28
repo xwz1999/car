@@ -1,11 +1,9 @@
 // ignore_for_file: unused_element
-
+//  银行卡添加 35
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:dotted_border/dotted_border.dart';
-
 import 'package:flutter/material.dart';
 
 class AddCardPage extends StatefulWidget {
@@ -173,7 +171,7 @@ class _AddCardPageState extends State<AddCardPage> {
                   strokeWidth: 4.w,
                   color: const Color(0xFFDDDDDD),
                   radius: Radius.circular(8.w),
-                  child: Container(
+                  child: SizedBox(
                     width: 200.w,
                     height: 150.w,
 

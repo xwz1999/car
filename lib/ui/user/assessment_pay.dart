@@ -1,8 +1,13 @@
+//评估次数充值 62
+
 import 'package:cloud_car/ui/user/pay_results.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../../widget/button/colud_check_radio.dart';
 
 class AssessmentPayPage extends StatefulWidget {
   const AssessmentPayPage({Key? key}) : super(key: key);
@@ -11,25 +16,25 @@ class AssessmentPayPage extends StatefulWidget {
   _AssessmentPayPageState createState() => _AssessmentPayPageState();
 }
 
-class _AssessmentPayPageState extends State<AssessmentPayPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _AssessmentPayPageState extends State<AssessmentPayPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
+  List<int> _selectIndex1 = [];
+  //List<int> _selectIndex2 = [];
+  //List payList = ['微信支付', '支付宝支付'];
   List payList = [
-    {
-      'title': '微信支付',
-      'checked': 1,
-      'src': "assets/icons/wx_pay.png",
-    },
-    {'title': '支付宝支付', 'checked': 2, 'src': "assets/icons/zfb_pay.png"}
+    {'微信支付', Assets.icons.wxPay.path},
+    {'支付宝支付', Assets.icons.zfbPay.path}
   ];
-  late EasyRefreshController _refreshController;
+  //List payList2 = ['支付宝支付'];
+
+  // late EasyRefreshController _refreshController;
 
   @override
   @override
   void dispose() {
-    _refreshController.dispose();
+    // _refreshController.dispose();
     super.dispose();
   }
 
@@ -56,8 +61,27 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
               // Text('data')
               _getPice(),
               56.hb,
-              _getPay(),
-              868.hb,
+              // Container(
+              //   height: 500.w,
+              //   decoration: BoxDecoration(
+              //       color: Colors.white,
+              //       borderRadius: BorderRadius.circular(16.w)),
+              //   child: Column(
+              //     children: [
+              //       SizedBox(
+              //         //height: 100.w,
+              //         child: getChooseList(
+              //             (String choices) => null, payList, _selectIndex1),
+              //       ),
+              //       // SizedBox(
+              //       //   height: 100.w,
+              //       //   child: getChooseList(
+              //       //       (String choices) => null, payList2, _selectIndex2),
+              //       // ),
+              //     ],
+              //   ),
+              // ),
+              // 500.hb,
               Container(
                 width: double.infinity,
                 height: 72.w,
@@ -83,6 +107,8 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
           ),
         ));
   }
+
+//
 
 //充值金额
   _getPice() {
@@ -117,66 +143,124 @@ class _AssessmentPayPageState extends State<AssessmentPayPage>
 
 //支付
   _getPay() {
-    return SizedBox(
-        height: 324.w,
-        //padding: EdgeInsets.only(top: 168.w),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
-          child: ListView.builder(
-              itemCount: 2, //payList.length,
-              itemBuilder: (context, index) {
-                return _getPayList(payList[index]);
-                //  return
-              }),
-        ));
-  }
-
-//支付判断
-  _getPayList(item) {
-    return Column(
-      children: [
-        ListTile(
-          leading: Image.asset(item['src']),
-          title: Text(item['title']),
-          trailing: Radio(
-            //单选框的值
-            value: 1, //item['checked'],
-            //当前单选框的值
-            groupValue: item['checked'],
-            //单选框的颜色
-            activeColor: Colors.blue,
-            onChanged: (value) {
-              setState(() {
-                item['checked'] = value;
-                // for (var i = 0; i < payList.length; i++) {
-                //   payList[i]['checked'] = false;
-                // }
-                // item['checked'] = true;
-              });
-            },
+    return Container(
+      height: 500.w,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 100.w,
+            child:
+                getChooseList((String choices) => null, payList, _selectIndex1),
           ),
-          // trailing: item['checked'] ? const Icon(Icons.check) : const Text(''),
-          // onTap: () {
-          //   setState(() {
-          //     for (var i = 0; i < payList.length; i++) {
-          //       payList[i]['checked'] = false;
-          //     }
-          //     item['checked'] = true;
-          //   });
-          // },
-        ),
-        const Divider()
+          // SizedBox(
+          //   height: 100.w,
+          //   child: getChooseList(
+          //       (String choices) => null, payList2, _selectIndex2),
+          // ),
+        ],
+      ),
+    );
+  }
+//支付判断
+
+  getChooseList(Function(String) callBack, List models, List<int> choices) {
+    return ListView(
+      scrollDirection: Axis.vertical,
+      padding: EdgeInsets.only(top: 30.w),
+      shrinkWrap: true,
+      children: [
+        ...models
+            .mapIndexed((currentValue, index) => GestureDetector(
+                  onTap: () {
+                    if (choices.contains(index)) {
+                      choices.remove(index);
+                    } else {
+                      choices.clear();
+                      choices.add(index);
+                    }
+                    setState(() {});
+                  },
+                  child: Container(
+                      width: 686.w,
+                      height: 100.w,
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            child: Image.asset(models[index]),
+                          ),
+                          20.wb,
+                          SizedBox(
+                            width: 200.w,
+                            child: Text(
+                              currentValue,
+                              style: TextStyle(
+                                  color: BaseStyle.color333333,
+                                  fontSize: BaseStyle.fontSize28),
+                            ),
+                          ),
+                          200.wb,
+                          BeeCheckRadio(
+                            value: index,
+                            groupValue: choices,
+                          ),
+                        ],
+                      )),
+                ))
+            .toList(),
       ],
     );
   }
+  // _getPayList(item) {
+  //   return Column(
+  //     children: [
+  //       ListTile(
+  //         leading: Image.asset(item['icon']),
+  //         title: Text(item['title']),
+  //         trailing: Radio(
+  //           //单选框的值
+  //           value: payList, //item['checked'],
+  //           //当前单选框的值
+  //           groupValue: grouoId,
+  //           //单选框的颜色
+  //           activeColor: Colors.blue,
+  //           onChanged: (value) {
+  //             setState(() {
+  //               item['checked'] = value;
+  //               // for (var i = 0; i < payList.length; i++) {
+  //               //   payList[i]['checked'] = false;
+  //               // }
+  //               // item['checked'] = true;
+  //             });
+  //           },
+  //         ),
+  //         // trailing: item['checked'] ? const Icon(Icons.check) : const Text(''),
+  //         // onTap: () {
+  //         //   setState(() {
+  //         //     for (var i = 0; i < payList.length; i++) {
+  //         //       payList[i]['checked'] = false;
+  //         //     }
+  //         //     item['checked'] = true;
+  //         //   });
+  //         // },
+  //       ),
+  //       const Divider()
+  //     ],
+  //   );
+  // }
+
+//单选框
 
   @override
   bool get wantKeepAlive => true;
 }
 
+
+// 
 // class Button {
 //   Button(Null Function() param0);
 // }
 
-void column() {}
+// void column() {}

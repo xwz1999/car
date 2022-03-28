@@ -1,5 +1,7 @@
 import 'package:cloud_car/ui/home/home_page.dart';
+import 'package:cloud_car/ui/user/basic_information.dart';
 import 'package:cloud_car/ui/user/partner_center.dart';
+import 'package:cloud_car/ui/user/staff_management.dart';
 import 'package:cloud_car/ui/user/system_settings.dart';
 import 'package:cloud_car/ui/user/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -259,16 +261,22 @@ class _UserPageState extends State<UserPage>
               Row(
                 children: [
                   32.wb,
-                  SizedBox(
-                    //头像
-                    width: 100.w, height: 100.w,
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(60.w)),
-                          child: Container(
-                            color: Colors.blue,
-                          )),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => BasicInformationPage());
+                    },
+                    child: SizedBox(
+                      //头像
+                      width: 100.w, height: 100.w,
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(60.w)),
+                            child: Container(
+                              color: Colors.blue,
+                            )),
+                      ),
                     ),
                   ),
                   const Padding(padding: EdgeInsets.only(left: 8)),
@@ -495,6 +503,9 @@ class _UserPageState extends State<UserPage>
             break;
           case '关于云云':
             Get.to(() => const systemPage());
+            break;
+          case '员工管理':
+            Get.to(() => const StaffManagement());
             break;
         }
       },

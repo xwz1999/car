@@ -44,6 +44,10 @@ class $AssetsIconsGen {
   AssetGenImage get barToTop =>
       const AssetGenImage('assets/icons/bar_toTop.png');
 
+  /// File path: assets/icons/cancellation_account.png
+  AssetGenImage get cancellationAccount =>
+      const AssetGenImage('assets/icons/cancellation_account.png');
+
   /// File path: assets/icons/car_agent.png
   AssetGenImage get carAgent =>
       const AssetGenImage('assets/icons/car_agent.png');
@@ -326,6 +330,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/warning.png
   AssetGenImage get warning => const AssetGenImage('assets/icons/warning.png');
 
+  /// File path: assets/icons/warning1.png
+  AssetGenImage get warning1 =>
+      const AssetGenImage('assets/icons/warning1.png');
+
   /// File path: assets/icons/wx_pay.png
   AssetGenImage get wxPay => const AssetGenImage('assets/icons/wx_pay.png');
 
@@ -456,6 +464,9 @@ class $AssetsImagesGen {
   AssetGenImage get partnerCenterBg =>
       const AssetGenImage('assets/images/partner_center_bg.png');
 
+  /// File path: assets/images/photo.png
+  AssetGenImage get photo => const AssetGenImage('assets/images/photo.png');
+
   /// File path: assets/images/real_name_badge.png
   AssetGenImage get realNameBadge =>
       const AssetGenImage('assets/images/real_name_badge.png');
@@ -467,6 +478,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/shanghaibankbg.png
   AssetGenImage get shanghaibankbg =>
       const AssetGenImage('assets/images/shanghaibankbg.png');
+
+  /// File path: assets/images/shooting.png
+  AssetGenImage get shooting =>
+      const AssetGenImage('assets/images/shooting.png');
 
   /// File path: assets/images/system_update.png
   AssetGenImage get systemUpdate =>

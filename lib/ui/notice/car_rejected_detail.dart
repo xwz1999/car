@@ -38,7 +38,7 @@ class _CardetailPageState extends State<CardetailPage>
     super.build(context);
     return CloudScaffold(
       path: Assets.images.noticeBg.path,
-      bodyColor: carColor,
+      bodyColor: kForeGroundColor,
       appbar: Container(
         color: Colors.transparent,
         height: kToolbarHeight + MediaQuery.of(context).padding.top,

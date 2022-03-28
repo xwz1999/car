@@ -11,8 +11,7 @@ class PayResultsPage extends StatefulWidget {
   _PayResultsPageState createState() => _PayResultsPageState();
 }
 
-class _PayResultsPageState extends State<PayResultsPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _PayResultsPageState extends State<PayResultsPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
@@ -67,7 +66,7 @@ class _PayResultsPageState extends State<PayResultsPage>
         width: 200.w,
         height: 200.w,
         child: Image.asset(
-          'assets/icons/successful.png',
+          Assets.icons.successful.path,
           fit: BoxFit.fill,
         ),
       ),

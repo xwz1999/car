@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +12,6 @@ const kDangerColor = Color(0xFFFF3B30);
 const kDarkSubColor = Color(0xFF979797);
 const kBalckSubColor = Color(0xFF000000);
 const bgColor = Color(0xFFF8F9FB);
-const carColor = Color(0xFFFFFFFF);
 const BodyColor = Color(0xFFF6F6F6);
 
 class BaseStyle {

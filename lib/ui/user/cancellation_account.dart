@@ -1,28 +1,26 @@
-import 'package:cloud_car/ui/user/contract_pay.dart';
+import 'package:cloud_car/ui/login/login_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-class SuccessfulPage extends StatefulWidget {
-  const SuccessfulPage({Key? key}) : super(key: key);
+class CancellationAccountPage extends StatefulWidget {
+  const CancellationAccountPage({Key? key}) : super(key: key);
 
   @override
-  _SuccessfulPageState createState() => _SuccessfulPageState();
+  _CancellationAccountPageState createState() =>
+      _CancellationAccountPageState();
 }
 
-class _SuccessfulPageState extends State<SuccessfulPage> {
+class _CancellationAccountPageState extends State<CancellationAccountPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
 
-  late EasyRefreshController _refreshController;
-
   @override
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
@@ -36,7 +34,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
             isSpecial: true,
           ),
           title: Text(
-            '编辑车辆',
+            '注销账号',
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -50,8 +48,19 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
               _getSuccessful(),
               32.hb,
               _getText(),
-              72.hb,
+              698.hb,
               _getButtom(),
+              24.hb,
+              Padding(
+                padding: EdgeInsets.only(right: 50.w),
+                child: Text(
+                  '若您仍选择注销，则视为放弃上述内容',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: const Color(0xFFAAAAAA)),
+                ),
+              )
             ],
           ),
         ));
@@ -67,7 +76,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
         width: 200.w,
         height: 200.w,
         child: Image.asset(
-          Assets.icons.successful.path,
+          Assets.icons.cancellationAccount.path,
           fit: BoxFit.fill,
         ),
       ),
@@ -76,10 +85,33 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
 
 //文字
   _getText() {
-    return SizedBox(
-      child: Text(
-        '合同签订成功',
-        style: Theme.of(context).textTheme.subtitle1,
+    return Padding(
+      padding: EdgeInsets.only(left: 0.w),
+      child: Column(
+        children: [
+          Text(
+            '是否确定注销该账号',
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1
+                ?.copyWith(fontSize: 40.sp),
+          ),
+          32.hb,
+          Text.rich(
+            TextSpan(children: [
+              TextSpan(
+                  text: '当前账号:',
+                  style: TextStyle(
+                      fontSize: BaseStyle.fontSize28,
+                      color: BaseStyle.color333333)),
+              TextSpan(
+                  text: '张三',
+                  style: TextStyle(
+                      fontSize: BaseStyle.fontSize28,
+                      color: BaseStyle.color333333))
+            ]),
+          )
+        ],
       ),
     );
   }
@@ -88,7 +120,8 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
   _getButtom() {
     return Container(
       //padding: EdgeInsets.symmetric(horizontal: 76.w),
-      width: 600.w,
+
+      width: 686.w,
       height: 72.w,
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -97,10 +130,10 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
       child: SizedBox(
           child: GestureDetector(
         onTap: () {
-          Get.to(() => const ContractPayPage());
+          Get.to(() => const LoginPage());
         },
         child: Text(
-          '前往支付',
+          '注销',
           style: Theme.of(context)
               .textTheme
               .subtitle2

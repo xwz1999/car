@@ -16,8 +16,7 @@ class WalletCertificationPage extends StatefulWidget {
       _WalletCertificationPageState();
 }
 
-class _WalletCertificationPageState extends State<WalletCertificationPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _WalletCertificationPageState extends State<WalletCertificationPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];

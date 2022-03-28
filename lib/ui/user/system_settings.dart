@@ -1,9 +1,11 @@
 import 'package:cloud_car/ui/user/Bank_card.dart';
+import 'package:cloud_car/ui/user/cancellation.dart';
 import 'package:cloud_car/ui/user/enterprise_information.dart';
 import 'package:cloud_car/ui/user/real_name.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,6 +61,10 @@ class _InatallPageState extends State<InatallPage> {
                           .bodyText1
                           ?.copyWith(color: const Color(0xFFAAAAAA))),
                   TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = (() {
+                          Get.to(() => const CancellationPage());
+                        }),
                       text: '注销账号',
                       style: Theme.of(context)
                           .textTheme
