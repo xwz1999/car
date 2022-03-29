@@ -1,6 +1,6 @@
 // ignore_for_file: unused_element
 
-import 'package:cloud_car/ui/user/add_bank_card.dart';
+import 'package:cloud_car/ui/user/user_install/add_bank_card.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/utils.dart';
 import 'package:cloud_car/widget/alert.dart';

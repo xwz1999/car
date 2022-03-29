@@ -36,7 +36,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
             isSpecial: true,
           ),
           title: Text(
-            '编辑车辆',
+            '合同签订',
             style: Theme.of(context).textTheme.headline6,
           ),
         ),

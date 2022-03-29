@@ -1,4 +1,4 @@
-import 'package:cloud_car/ui/user/Withdrawal_record.dart';
+import 'package:cloud_car/ui/user/user_wallet/Withdrawal_record.dart';
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -7,6 +7,8 @@ import 'package:cloud_car/widget/putup_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+
+import '../../../widget/alert.dart';
 
 class WalletCertificationPage extends StatefulWidget {
   const WalletCertificationPage({Key? key}) : super(key: key);
@@ -80,7 +82,56 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
           height: 1624.w,
           color: const Color(0xFFF6F6F6),
           child: Column(
-            children: [_getWalletPice(), 16.hb, _balance()],
+            children: [
+              _getWalletPice(),
+              16.hb,
+              _balance(),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    Alert.show(
+                        context,
+                        NormalContentDialog(
+                          type: NormalTextDialogType.delete,
+                          title: '解绑提示',
+                          content: const Text('为保障您钱包功能的使用，请先完成实名认证。'),
+                          items: const ['取消'],
+                          deleteItem: '去认证',
+                          //监听器
+                          listener: (index) {
+                            Alert.dismiss(context);
+                            //Value = false;
+                            //(Value);
+                          },
+                          deleteListener: () {
+                            Alert.dismiss(context);
+                            //Value = true;
+                            //(Value);
+                          },
+                        ));
+                  });
+                },
+                child: Container(
+                  width: 686.w,
+                  height: 72.w,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 312.w, vertical: 11.w),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.w),
+                      gradient: const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
+                  child: Text(
+                    '提现',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        ?.copyWith(color: const Color(0xffffffff)),
+                  ),
+                ),
+              )
+            ],
           ),
         ));
   }

@@ -1,13 +1,13 @@
 //评估次数充值 62
 
-import 'package:cloud_car/ui/user/pay_results.dart';
+import 'package:cloud_car/ui/user/user_assessment/pay_results.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../widget/button/colud_check_radio.dart';
+import '../../../widget/button/colud_check_radio.dart';
 
 class AssessmentPayPage extends StatefulWidget {
   const AssessmentPayPage({Key? key}) : super(key: key);

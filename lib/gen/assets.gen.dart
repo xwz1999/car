@@ -356,6 +356,10 @@ class $AssetsImagesGen {
   AssetGenImage get industrialCommercialbankbg =>
       const AssetGenImage('assets/images/Industrial_commercialbankbg.png');
 
+  /// File path: assets/images/Invite_code_bg.png
+  AssetGenImage get inviteCodeBg =>
+      const AssetGenImage('assets/images/Invite_code_bg.png');
+
   /// File path: assets/images/Invite_customers.png
   AssetGenImage get inviteCustomers =>
       const AssetGenImage('assets/images/Invite_customers.png');
@@ -456,6 +460,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/no_data.png
   AssetGenImage get noData => const AssetGenImage('assets/images/no_data.png');
 
+  /// File path: assets/images/nosigned_bg.png
+  AssetGenImage get nosignedBg =>
+      const AssetGenImage('assets/images/nosigned_bg.png');
+
   /// File path: assets/images/notice_bg.png
   AssetGenImage get noticeBg =>
       const AssetGenImage('assets/images/notice_bg.png');
@@ -482,6 +490,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/shooting.png
   AssetGenImage get shooting =>
       const AssetGenImage('assets/images/shooting.png');
+
+  /// File path: assets/images/signed_bg.png
+  AssetGenImage get signedBg =>
+      const AssetGenImage('assets/images/signed_bg.png');
 
   /// File path: assets/images/system_update.png
   AssetGenImage get systemUpdate =>

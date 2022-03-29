@@ -1,6 +1,6 @@
-import 'package:cloud_car/ui/user/partner_renewal.dart';
-import 'package:cloud_car/ui/user/user_recommended.dart';
-import 'package:cloud_car/ui/user/wallet_certification.dart';
+import 'package:cloud_car/ui/user/user_partner_center/partner_renewal.dart';
+import 'package:cloud_car/ui/user/user_recommended/user_recommended.dart';
+import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -247,7 +247,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                 width: 48.w,
                                 height: 48.w,
                                 child: Image.asset(
-                                    'assets/icons/Customer_management.png'),
+                                    Assets.icons.customerManagement.path),
                               )
                             ],
                           )),
@@ -292,7 +292,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                 width: 48.w,
                                 height: 48.w,
                                 child: Image.asset(
-                                    'assets/icons/recommended_code.png'),
+                                    Assets.icons.recommendedCode.path),
                               )
                             ],
                           )),
@@ -336,8 +336,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                               SizedBox(
                                 width: 48.w,
                                 height: 48.w,
-                                child:
-                                    Image.asset('assets/icons/my_wallet.png'),
+                                child: Image.asset(Assets.icons.myWallet.path),
                               )
                             ],
                           )),

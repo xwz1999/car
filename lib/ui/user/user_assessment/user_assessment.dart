@@ -1,4 +1,4 @@
-import 'package:cloud_car/ui/user/pay_num_changes.dart';
+import 'package:cloud_car/ui/user/user_assessment/pay_num_changes.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
@@ -95,7 +95,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
           height: 174.w,
           //padding: EdgeInsets.symmetric(horizontal: 32.w),
           child: Image.asset(
-            'assets/images/assessment_bg.png',
+            Assets.images.assessmentBg.path,
             fit: BoxFit.fill,
           ),
         ),

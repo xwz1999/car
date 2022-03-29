@@ -1,9 +1,9 @@
 import 'package:cloud_car/ui/home/home_page.dart';
-import 'package:cloud_car/ui/user/basic_information.dart';
-import 'package:cloud_car/ui/user/partner_center.dart';
-import 'package:cloud_car/ui/user/staff_management.dart';
-import 'package:cloud_car/ui/user/system_settings.dart';
-import 'package:cloud_car/ui/user/user_assessment.dart';
+import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
+import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
+import 'package:cloud_car/ui/user/user_management/staff_management.dart';
+import 'package:cloud_car/ui/user/user_install/system_settings.dart';
+import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 

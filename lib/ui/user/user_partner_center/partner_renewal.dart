@@ -1,4 +1,4 @@
-import 'package:cloud_car/ui/user/Partnership_contract.dart';
+import 'package:cloud_car/ui/user/user_partner_center/Partnership_contract.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
@@ -262,9 +262,6 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                           )),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Get.to(() => const PartnershipContractPage());
-                      },
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.w),
@@ -307,6 +304,9 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                           )),
                     ),
                     GestureDetector(
+                      onTap: () {
+                        Get.to(() => const PartnershipContractPage());
+                      },
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.w),
@@ -406,7 +406,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
       //padding: EdgeInsets.symmetric(horizontal: 32.w),
       height: 328.w,
       child: Stack(children: [
-        Image.asset('assets/images/partner_center_bg.png'),
+        Image.asset(Assets.images.partnerCenterBg.path),
         Positioned(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

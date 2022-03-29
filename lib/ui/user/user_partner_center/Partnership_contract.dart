@@ -1,4 +1,4 @@
-import 'package:cloud_car/ui/user/successful.dart';
+import 'package:cloud_car/ui/user/user_partner_center/successful.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -200,7 +200,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage>
                                             width: 24.5.w,
                                             height: 24.5.w,
                                             child: Image.asset(
-                                              'assets/icons/ic_favorite1.png',
+                                              Assets.icons.icFavorite1.path,
                                               fit: BoxFit.fill,
                                               color: const Color(0xFF979797),
                                             ),

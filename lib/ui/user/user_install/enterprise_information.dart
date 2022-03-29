@@ -28,12 +28,21 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CloudScaffold(
-        systemStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
+    return Scaffold(
+        appBar: AppBar(
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          backgroundColor: kForeGroundColor,
+          title: Text('系统设置',
+              style: TextStyle(
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize36,
+                  fontWeight: FontWeight.bold)),
+
+          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        bodyColor: BodyColor,
-        appbar: _getAppbar(),
+        backgroundColor: BodyColor,
         extendBody: true,
         //body: ,
         body: Expanded(

@@ -1,8 +1,8 @@
-import 'package:cloud_car/ui/user/enterprise.dart';
+import 'package:cloud_car/ui/user/user_basic_information/enterprise.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../widget/button/cloud_back_button.dart';
+import '../../../widget/button/cloud_back_button.dart';
 
 class BasicInformationPage extends StatefulWidget {
   BasicInformationPage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
-import 'package:cloud_car/ui/user/Bank_card.dart';
-import 'package:cloud_car/ui/user/cancellation.dart';
-import 'package:cloud_car/ui/user/enterprise_information.dart';
-import 'package:cloud_car/ui/user/real_name.dart';
+import 'package:cloud_car/ui/user/user_install/Bank_card.dart';
+import 'package:cloud_car/ui/user/user_install/cancellation.dart';
+import 'package:cloud_car/ui/user/user_install/enterprise_information.dart';
+import 'package:cloud_car/ui/user/user_install/real_name.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -36,12 +36,21 @@ class _InatallPageState extends State<InatallPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CloudScaffold(
-        systemStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
+    return Scaffold(
+        appBar: AppBar(
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          backgroundColor: kForeGroundColor,
+          title: Text('系统设置',
+              style: TextStyle(
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize36,
+                  fontWeight: FontWeight.bold)),
+
+          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        bodyColor: BodyColor,
-        appbar: _getAppbar(),
+        backgroundColor: BodyColor,
         extendBody: true,
         body: Column(
           children: [
@@ -140,28 +149,5 @@ class _InatallPageState extends State<InatallPage> {
   }
 
 //
-  _getAppbar() {
-    return Container(
-      color: Colors.white,
-      height: kToolbarHeight + MediaQuery.of(context).padding.top,
-      alignment: Alignment.center,
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const CloudBackButton(
-            isSpecial: true,
-          ),
-          Text('系统设置',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
-          SizedBox(
-            width: 110.w,
-          ),
-        ],
-      ),
-    );
-  }
+
 }

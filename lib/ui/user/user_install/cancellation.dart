@@ -1,7 +1,7 @@
 // ignore_for_file: unused_element
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/user/validation.dart';
+import 'package:cloud_car/ui/user/user_install/validation.dart';
 import 'package:cloud_car/utils/headers.dart';
 
 import 'package:cloud_car/widget/cloud_back_button.dart';

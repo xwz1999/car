@@ -1,5 +1,5 @@
-import 'package:cloud_car/ui/user/cancellation_account.dart';
-import 'package:cloud_car/ui/user/validation.dart';
+import 'package:cloud_car/ui/user/user_install/cancellation_account.dart';
+import 'package:cloud_car/ui/user/user_install/validation.dart';
 import 'package:cloud_car/utils/headers.dart';
 
 import 'package:cloud_car/widget/cloud_back_button.dart';

@@ -1,8 +1,10 @@
+import 'package:cloud_car/ui/user/user_management/add_employee.dart';
+import 'package:cloud_car/ui/user/user_management/add_stores.dart';
+import 'package:cloud_car/ui/user/user_management/permissions.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../widget/button/cloud_back_button.dart';
+import '../../../widget/button/cloud_back_button.dart';
 
 class StaffManagement extends StatefulWidget {
   const StaffManagement({Key? key}) : super(key: key);
@@ -29,6 +31,9 @@ class _StaffManagementState extends State<StaffManagement> {
           Row(
             children: [
               GestureDetector(
+                onTap: () {
+                  Get.to(() => Permissions());
+                },
                 child: Text(
                   '权限',
                   style: Theme.of(context)
@@ -45,7 +50,7 @@ class _StaffManagementState extends State<StaffManagement> {
       ),
       backgroundColor: kForeGroundColor,
       body: Column(
-        children: [8.hb, _search(), 10.hb, _getList()],
+        children: [8.hb, _search(), 10.hb, _getList(), _getButtom(), 34.hb],
       ),
     );
   }
@@ -122,35 +127,103 @@ _search() {
 }
 
 _getList() {
-  return SizedBox(
+  return Expanded(
     child: ListView(
       children: [
         ExpansionTile(
-          backgroundColor: const Color.fromRGBO(2, 122, 255, 0.1),
+          backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
+          //leading: Icon(Icons.),
+          collapsedBackgroundColor: const Color(0xFF333333).withOpacity(0.1),
           title: Row(
             children: [
-              Text('data',
+              Text('门店1',
                   style: TextStyle(
                       fontSize: BaseStyle.fontSize32,
                       color: const Color(0xFF027AFF))),
               24.wb,
-              Text('data',
+              Text('6',
                   style: TextStyle(
                       fontSize: BaseStyle.fontSize28,
                       color: const Color.fromRGBO(2, 122, 255, 0.8)))
             ],
           ),
           children: [
-            ListTile(
-              title: Row(
-                children: [
-                  _getText(
-                      '销售员', Assets.icons.icUser.path, '哈贝元', '17403612025', 1),
-                ],
+            Container(
+              color: const Color(0xFFFFFFFF),
+              child: ListTile(
+                title: Column(
+                  children: [
+                    _getText('销售员', Assets.icons.icUser.path, '哈蓓元',
+                        '17403612025', 1),
+                    36.hb,
+                    _getText('销售员', Assets.icons.icUser.path, '多梁',
+                        '19552514283', 0),
+                    36.hb,
+                    _getText('评估师/车务', Assets.icons.icUser.path, '邵秋毅',
+                        '15330162683', 0),
+                    36.hb,
+                    _getText('销售/车务', Assets.icons.icUser.path, '迟欣',
+                        '18983673960', 0),
+                    36.hb,
+                    _getText('销售/车务', Assets.icons.cancellationAccount.path,
+                        '柏娣波', '18358319827', 0),
+                    36.hb,
+                    _getText('店长', Assets.icons.cancellationAccount.path, '章筠叶',
+                        '14574150898', 0),
+                    36.hb,
+                  ],
+                ),
               ),
             )
           ],
-        )
+        ),
+        ExpansionTile(
+          backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
+          //leading: Icon(Icons.),
+          collapsedBackgroundColor: const Color(0xFF333333).withOpacity(0.1),
+          title: Row(
+            children: [
+              Text('门店1',
+                  style: TextStyle(
+                      fontSize: BaseStyle.fontSize32,
+                      color: const Color(0xFF027AFF))),
+              24.wb,
+              Text('6',
+                  style: TextStyle(
+                      fontSize: BaseStyle.fontSize28,
+                      color: const Color.fromRGBO(2, 122, 255, 0.8)))
+            ],
+          ),
+          children: [
+            Container(
+              color: const Color(0xFFFFFFFF),
+              child: ListTile(
+                title: Column(
+                  children: [
+                    _getText('销售员', Assets.icons.icUser.path, '哈蓓元',
+                        '17403612025', 1),
+                    36.hb,
+                    _getText('销售员', Assets.icons.icUser.path, '多梁',
+                        '19552514283', 0),
+                    36.hb,
+                    _getText('评估师/车务', Assets.icons.icUser.path, '邵秋毅',
+                        '15330162683', 0),
+                    36.hb,
+                    _getText('销售/车务', Assets.icons.icUser.path, '迟欣',
+                        '18983673960', 0),
+                    36.hb,
+                    _getText('销售/车务', Assets.icons.cancellationAccount.path,
+                        '柏娣波', '18358319827', 0),
+                    36.hb,
+                    _getText('店长', Assets.icons.cancellationAccount.path, '章筠叶',
+                        '14574150898', 0),
+                    36.hb,
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ],
     ),
   );
@@ -186,7 +259,7 @@ _getText(String position, String icon, String name, String phone, int judge) {
             fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
       ),
       24.wb,
-      SizedBox(child: judge == 1 ? getBox() : '')
+      SizedBox(child: judge == 1 ? getBox() : a())
     ],
   );
 }
@@ -195,12 +268,55 @@ getBox() {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
     decoration: BoxDecoration(
-        color: const Color(0xFFFF3B02).withOpacity(0.8),
+        color: const Color(0xFFFF3B02).withOpacity(0.08),
         borderRadius: BorderRadius.circular(4.w)),
     child: Text(
       '待审核',
       style: TextStyle(
           fontSize: BaseStyle.fontSize20, color: const Color(0xFFFF3B02)),
     ),
+  );
+}
+
+a() {}
+
+_getButtom() {
+  return Row(
+    children: [
+      Padding(padding: EdgeInsets.only(left: 32.w)),
+      GestureDetector(
+        onTap: () {
+          Get.to(() => AddStores());
+        },
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 102.w, vertical: 22.w),
+            decoration: BoxDecoration(
+                border: Border.all(width: 2.w, color: const Color(0xFF027AFF)),
+                borderRadius: BorderRadius.circular(8.w)),
+            child: Text(
+              '新建门店',
+              style: TextStyle(
+                  color: const Color(0xFF027AFF),
+                  fontSize: BaseStyle.fontSize28),
+            )),
+      ),
+      46.wb,
+      GestureDetector(
+        onTap: () {
+          Get.to(() => AddEmployee());
+        },
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 102.w, vertical: 22.w),
+            decoration: BoxDecoration(
+                color: const Color(0xFF027AFF),
+                borderRadius: BorderRadius.circular(8.w)),
+            child: Text(
+              '新建员工',
+              style: TextStyle(
+                  color: const Color(0xFFFFFFFF),
+                  fontSize: BaseStyle.fontSize28),
+            )),
+      )
+    ],
   );
 }
