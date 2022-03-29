@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
@@ -74,10 +76,11 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                 Positioned(left: 72.w, top: 280.w, child: _getbody()),
                 Positioned(
                     left: 70.w,
-                    top: 1102.w,
+                    top: 1246.w,
                     child: Row(
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('扫码识别'),
                             Text(
@@ -86,12 +89,32 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                             )
                           ],
                         ),
+                        200.wb,
                         Padding(
                           padding: EdgeInsets.only(right: 32.w),
-                          child: Image.asset(Assets.images.qrCode.path),
+                          child: SizedBox(
+                            width: 128.w,
+                            height: 128.w,
+                            child: Image.asset(Assets.images.qrCode.path),
+                          ),
                         )
                       ],
-                    ))
+                    )),
+                Positioned(
+                    top: 1488.w,
+                    right: 32.w,
+                    child: Container(
+                      width: 72.w,
+                      height: 72.w,
+                      padding: EdgeInsets.all(20.w),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF000000).withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(36.w)),
+                      child: Image.asset(
+                        Assets.images.download.path,
+                        fit: BoxFit.fill,
+                      ),
+                    )),
               ],
             )));
   }

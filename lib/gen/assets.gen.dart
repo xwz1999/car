@@ -33,6 +33,9 @@ class $AssetsIconsGen {
   AssetGenImage get societeGeneralebankhead =>
       const AssetGenImage('assets/icons/Societe_generalebankhead.png');
 
+  /// File path: assets/icons/advice.png
+  AssetGenImage get advice => const AssetGenImage('assets/icons/advice.png');
+
   /// File path: assets/icons/back.png
   AssetGenImage get back => const AssetGenImage('assets/icons/back.png');
 
@@ -132,6 +135,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/fashionable.png
   AssetGenImage get fashionable =>
       const AssetGenImage('assets/icons/fashionable.png');
+
+  /// File path: assets/icons/feedback.png
+  AssetGenImage get feedback =>
+      const AssetGenImage('assets/icons/feedback.png');
 
   /// File path: assets/icons/home_share.png
   AssetGenImage get homeShare =>
