@@ -23,7 +23,7 @@ class _CreateOrderState extends State<CreateOrder> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,10 +32,14 @@ class _CreateOrderState extends State<CreateOrder> {
             padding: EdgeInsets.only(left: 32.w),
             child: Text(
               '怎么创建订单',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize28,
-                  fontWeight: FontWeight.bold),
+              style:
+              Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  ?.copyWith(
+                color:   const Color(0xFF111111),
+                  fontWeight: FontWeight.bold
+              ),
             ),
           ),
           24.hb,

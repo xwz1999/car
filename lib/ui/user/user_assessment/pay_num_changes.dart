@@ -1,6 +1,5 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -29,7 +28,7 @@ class _PayChangesPageState extends State<PayChangesPage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    //super.build(context);
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

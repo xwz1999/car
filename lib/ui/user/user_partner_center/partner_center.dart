@@ -4,7 +4,6 @@ import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -33,7 +32,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    //super.build(context);
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
@@ -89,7 +88,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
             Padding(padding: EdgeInsets.only(left: 80.w)),
             Radio(
               value: true,
-              onChanged: (Value) {
+              onChanged: (value) {
                 setState(() {
                   Alert.show(
                       context,
@@ -102,13 +101,13 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                         //监听器
                         listener: (index) {
                           Alert.dismiss(context);
-                          Value = false;
-                          (Value);
+                          value = false;
+                          (value);
                         },
                         deleteListener: () {
                           Alert.dismiss(context);
-                          Value = true;
-                          (Value);
+                          value = true;
+                          (value);
                         },
                       ));
                 });

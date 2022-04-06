@@ -1,5 +1,4 @@
 import 'package:bot_toast/bot_toast.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +20,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: non_constant_identifier_names
-    late bool BL = widget.bl;
+    late bool bL = widget.bl;
     return Scaffold(
         appBar: AppBar(
           leading: const CloudBackButton(
@@ -37,7 +35,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
 
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: BodyColor,
+        backgroundColor: bodyColor,
         body: ListView(
           children: [
             16.hb,
@@ -45,7 +43,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 height: 120.w,
                 color: Colors.white,
-                child: const Text('')
+                child:const Text('')
                 // TimeLinesWidget(
                 //   index: 1,
                 //   items: [
@@ -184,7 +182,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
               ),
             ),
             32.hb,
-            !BL
+            !bL
                 ? Container(
                     width: double.infinity,
                     color: kForeGroundColor,
@@ -192,7 +190,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
                         top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
                     child: GestureDetector(
                       onTap: () {
-                        //Get.to(() => const ());
+                        //Get.to(() => const RentaicarOrderData());
                         BotToast.showText(text: '确认成功');
                       },
                       child: Container(
@@ -209,7 +207,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
                                 fontSize: BaseStyle.fontSize28),
                           )),
                     ))
-                : const SizedBox()
+                :const SizedBox()
           ],
         ));
   }

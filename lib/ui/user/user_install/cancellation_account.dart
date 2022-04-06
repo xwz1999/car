@@ -1,7 +1,6 @@
 import 'package:cloud_car/ui/login/login_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 
 class CancellationAccountPage extends StatefulWidget {
@@ -142,7 +141,6 @@ class _CancellationAccountPageState extends State<CancellationAccountPage> {
     );
   }
 
-  bool get wantKeepAlive => true;
 }
 
 class Button {

@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/model/configuration_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/ConfigurationModel.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/button/colud_check_radio.dart';
@@ -59,7 +59,7 @@ class _AccessConfigurationState extends State<AccessConfiguration> {
                   itemBuilder: (context, index) {
                     return _getItem(index, moddels[index]);
                   },
-                  separatorBuilder: (BuildContext context, int index) {
+                  separatorBuilder: (BuildContext context, int inedx) {
                     return Container(
                         //   color: const Color(0xFFF6F6F6),
                         //   height: 16.w,

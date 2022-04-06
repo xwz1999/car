@@ -44,7 +44,7 @@ class _AddEmployeeState extends State<AddEmployee> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           40.hb,
@@ -194,7 +194,7 @@ class _AddEmployeeState extends State<AddEmployee> {
           32.hb,
           GestureDetector(
             onTap: (() {
-              Get.to(() => const StructurePage());
+              Get.to(() =>const StructurePage());
             }),
             child: Row(children: [
               SizedBox(

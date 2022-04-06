@@ -1,7 +1,7 @@
-import 'package:cloud_car/ui/user/user_partner_center/Partnership_contract.dart';
+
+import 'package:cloud_car/ui/user/user_partner_center/partner_shop_contract.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -30,7 +30,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    //super.build(context);
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
@@ -80,7 +80,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
             Radio(
                 value: 1,
                 groupValue: 0,
-                onChanged: (Value) {
+                onChanged: (value) {
                   setState(() {});
                 }),
             // RichText(
@@ -306,7 +306,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const PartnershipContractPage());
+                        Get.to(() => const PartnerShopContractPage());
                       },
                       child: Container(
                           decoration: BoxDecoration(

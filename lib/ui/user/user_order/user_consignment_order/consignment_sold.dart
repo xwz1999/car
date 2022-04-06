@@ -28,7 +28,7 @@ class _ConsignmentSoldState extends State<ConsignmentSold> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: ListView(children: [
         16.hb,
         Container(
@@ -205,7 +205,7 @@ class _ConsignmentSoldState extends State<ConsignmentSold> {
 
               //Get.to(() => const ConsignmentSuccessfully());
             },
-            child: const Text('支付成功'))
+            child:const Text('支付成功'))
       ]),
     );
   }

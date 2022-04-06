@@ -3,7 +3,6 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_page.dart';
-
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_audit.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_rejected.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_release.dart';
@@ -12,7 +11,6 @@ import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_sold.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:flutter/material.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
@@ -31,8 +29,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
   //List<ChooseItem> _sortList = [];
   late String title = '寄卖订单';
   ScreenControl screenControl = ScreenControl();
-  // ignore: non_constant_identifier_names
-  List CarList = [
+  List carList = [
     {
       'judge': false,
       'judgename': '待签订',
@@ -99,6 +96,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
   ];
   @override
   void initState() {
+
     super.initState();
     // _sortList = [
     //   ChooseItem(name: '售车订单'),
@@ -214,7 +212,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
         ),
       ),
       extendBody: true,
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           CarWidget(
@@ -235,9 +233,9 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
           Expanded(
             child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return getCar(CarList[index]);
+                  return getCar(carList[index]);
                 },
-                itemCount: CarList.length),
+                itemCount: carList.length),
           ),
         ],
       ),
@@ -501,7 +499,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
     if (judgename == '交易取消') {
       return const Color(0xFF666666);
     } else if (judgename == '审核中' || judgename == '已驳回') {
-      return const Color(0xFFFF3B02);
+      return const  Color(0xFFFF3B02);
     } else {
       return const Color(0xFF027AFF);
     }

@@ -5,7 +5,6 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/balance_payment.dart'
 import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/detection.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/first_pay.dart';
-
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
@@ -16,7 +15,6 @@ import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/car_widget.dart';
-
 import 'package:flutter/material.dart';
 
 class SalesOrders extends StatefulWidget {
@@ -32,7 +30,7 @@ class _SalesOrdersState extends State<SalesOrders> {
   //List<ChooseItem> _sortList = [];
   late String title = '售车订单';
   ScreenControl screenControl = ScreenControl();
-  List CarList = [
+  List carList = [
     {
       'judge': false,
       'judgename': '待预定',
@@ -261,7 +259,7 @@ class _SalesOrdersState extends State<SalesOrders> {
         ),
       ),
       extendBody: true,
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           SizedBox(
@@ -288,9 +286,9 @@ class _SalesOrdersState extends State<SalesOrders> {
           Expanded(
             child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return getCar(CarList[index]);
+                  return getCar(carList[index]);
                 },
-                itemCount: CarList.length),
+                itemCount: carList.length),
           ),
         ],
       ),

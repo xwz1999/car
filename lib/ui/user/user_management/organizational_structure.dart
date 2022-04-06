@@ -11,8 +11,7 @@ class StructurePage extends StatefulWidget {
 }
 
 class _StructurePageState extends State<StructurePage> {
-  // ignore: non_constant_identifier_names
-  late List<Widget> CatWidget;
+
   //  for (var i = 0; i < 5; i++)
   //               {
   //                 CatWidget.add(ListTile(

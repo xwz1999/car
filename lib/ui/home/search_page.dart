@@ -6,7 +6,7 @@ import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
+
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class _SearchPageState extends State<SearchPage> {
 
   List<dynamic>? data;
   late FocusNode _contentFocusNode;
-  late EasyRefreshController _refreshController;
+  // late EasyRefreshController _refreshController;
   late TextEditingController _editingController;
   String _searchText = "";
   @override

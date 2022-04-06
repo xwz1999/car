@@ -27,7 +27,7 @@ class _AddStoresState extends State<AddStores> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           16.hb,

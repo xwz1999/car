@@ -34,7 +34,7 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
 
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: BodyColor,
+        backgroundColor: bodyColor,
         body: ListView(
           children: [
             16.hb,
@@ -325,6 +325,26 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
           ?.copyWith(fontWeight: FontWeight.bold),
     );
   }
+
+  // _getPicture2(String title) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         title,
+  //         style: Theme.of(context).textTheme.subtitle2,
+  //       ),
+  //       24.hb,
+  //       GestureDetector(
+  //         child: Container(
+  //           color: Colors.red,
+  //           width: 200.w,
+  //           height: 150.w,
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 
   _getText(String title, String text) {
     return Row(

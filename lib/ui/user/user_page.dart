@@ -1,17 +1,16 @@
 import 'package:cloud_car/ui/home/home_page.dart';
 import 'package:cloud_car/ui/user/product_manuals.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
+import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
+import 'package:cloud_car/ui/user/user_install/system_settings.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
+import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
-import 'package:cloud_car/ui/user/user_management/staff_management.dart';
-import 'package:cloud_car/ui/user/user_install/system_settings.dart';
-import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -264,7 +263,7 @@ class _UserPageState extends State<UserPage>
                   32.wb,
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => const BasicInformationPage());
+                      Get.to(() =>const BasicInformationPage());
                     },
                     child: SizedBox(
                       //头像

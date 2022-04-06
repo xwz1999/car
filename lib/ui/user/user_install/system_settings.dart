@@ -4,9 +4,7 @@ import 'package:cloud_car/ui/user/user_install/enterprise_information.dart';
 import 'package:cloud_car/ui/user/user_install/real_name.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
-
 import 'package:flutter/gestures.dart';
-
 import 'package:flutter/material.dart';
 
 class InatallPage extends StatefulWidget {
@@ -49,7 +47,7 @@ class _InatallPageState extends State<InatallPage> {
 
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: BodyColor,
+        backgroundColor: bodyColor,
         extendBody: true,
         body: Column(
           children: [

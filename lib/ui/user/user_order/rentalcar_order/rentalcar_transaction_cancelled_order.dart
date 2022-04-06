@@ -34,7 +34,7 @@ class _CancelOrderState extends State<CancelOrder> {
 
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: BodyColor,
+        backgroundColor: bodyColor,
         body: ListView(
           children: [
             16.hb,

@@ -39,7 +39,7 @@ class _RealNamePageState extends State<RealNamePage> {
                   fontWeight: FontWeight.bold)),
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: BodyColor, //内容颜色
+        backgroundColor: bodyColor, //内容颜色
         extendBody: true,
         body: Column(
           children: [16.hb, _real(), 72.hb, _getSubmit(), 36.hb, _getBottom()],

@@ -30,7 +30,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           Padding(padding: EdgeInsets.symmetric(vertical: 16.w)),

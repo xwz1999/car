@@ -27,7 +27,7 @@ class _ConsignmentTransactionState extends State<ConsignmentTransaction> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: ListView(children: [
         16.hb,
         Container(

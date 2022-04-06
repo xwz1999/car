@@ -28,7 +28,7 @@ class _TimeLinesWidgetState extends State<TimeLinesWidget> {
   @override
   Widget build(BuildContext context) {
     late int length = widget.items.length;
-    late int number = widget.number;
+
     List<String> items = widget.items;
 
     return Timeline.tileBuilder(

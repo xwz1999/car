@@ -1,14 +1,13 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/model/CarItemModel.dart';
+import 'package:cloud_car/model/car_item_model.dart';
 import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 
+import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/button/colud_check_radio.dart';
 import '../../../widget/car_item_widget.dart';
-import '../../../widget/button/cloud_back_button.dart';
 
 typedef CarCallback = Function(String city);
 

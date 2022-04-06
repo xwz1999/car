@@ -1,7 +1,5 @@
 import 'package:cloud_car/ui/home/search_page.dart';
-
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

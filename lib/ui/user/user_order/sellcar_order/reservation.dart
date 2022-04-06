@@ -41,7 +41,7 @@ class _ReservationState extends State<Reservation> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

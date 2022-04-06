@@ -1,10 +1,7 @@
 import 'package:cloud_car/ui/user/user_wallet/Withdrawal_record.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:cloud_car/widget/putup_widget.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -23,7 +20,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
   // ignore: non_constant_identifier_names
   // List listWidget = [];
   // ignore: unused_field
-  final List<ChooseItem> _piceList = [
+  final List<ChooseItem> _priceList = [
     ChooseItem(name: '充值10次', pice: '¥10.00'),
     ChooseItem(name: '充值20次', pice: '¥20.00'),
     ChooseItem(name: '充值30次', pice: '¥30.00'),
@@ -59,7 +56,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => const WithdrawalRecordPage());
+                    Get.to(() =>  const WithdrawalRecordPage());
                   },
                   child: Text(
                     '提现记录',
@@ -267,7 +264,6 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
     );
   }
 
-  bool get wantKeepAlive => true;
 }
 
 // class Button {

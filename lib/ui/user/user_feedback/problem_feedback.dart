@@ -28,7 +28,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -4,6 +4,7 @@ import 'package:cloud_car/ui/user/user_management/permissions.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../widget/button/cloud_back_button.dart';
 
 class StaffManagement extends StatefulWidget {
@@ -32,7 +33,7 @@ class _StaffManagementState extends State<StaffManagement> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const Permissions());
+                  Get.to(() =>const Permissions());
                 },
                 child: Text(
                   '权限',
@@ -64,7 +65,7 @@ _search() {
       Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(36.w),
-            border: Border.all(width: 2.w, color: const Color(0xFFE7E7E7))),
+            border: Border.all(width: 2.w, color:const Color(0xFFE7E7E7))),
         width: 606.w,
         height: 72.w,
         child: TextField(
@@ -286,7 +287,7 @@ _getButtom() {
       Padding(padding: EdgeInsets.only(left: 32.w)),
       GestureDetector(
         onTap: () {
-          Get.to(() => const AddStores());
+          Get.to(() =>const AddStores());
         },
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 102.w, vertical: 22.w),
@@ -303,7 +304,7 @@ _getButtom() {
       46.wb,
       GestureDetector(
         onTap: () {
-          Get.to(() => const AddEmployee());
+          Get.to(() =>const AddEmployee());
         },
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 102.w, vertical: 22.w),

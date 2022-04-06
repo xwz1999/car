@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:cloud_car/ui/notice/car_system_informs.dart';
 import 'package:cloud_car/ui/notice/notice_examination.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -5,7 +6,6 @@ import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:badges/badges.dart';
 
 import 'notice_fashionable.dart';
 

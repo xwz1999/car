@@ -28,7 +28,7 @@ class _AboutPageState extends State<AboutPage> {
 
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: BodyColor,
+        backgroundColor: bodyColor,
         extendBody: true,
         body: Container(
             height: 350.w,
@@ -106,10 +106,10 @@ class _AboutPageState extends State<AboutPage> {
   //           break;
   //       }
   //     },
-
+  //
   //     //绘制消息主体
   //     title: Text(item['title'], style: Theme.of(context).textTheme.subtitle2),
-
+  //
   //     trailing: const Icon(Icons.keyboard_arrow_right),
   //     //contentPadding: ,
   //   );

@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:signature/signature.dart';
 
-class PartnershipContractPage extends StatefulWidget {
-  const PartnershipContractPage({Key? key}) : super(key: key);
+class PartnerShopContractPage extends StatefulWidget {
+  const PartnerShopContractPage({Key? key}) : super(key: key);
 
   @override
-  _PartnershipContractPageState createState() =>
-      _PartnershipContractPageState();
+  _PartnerShopContractPageState createState() =>
+      _PartnerShopContractPageState();
 }
 
-class _PartnershipContractPageState extends State<PartnershipContractPage>
+class _PartnerShopContractPageState extends State<PartnerShopContractPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
@@ -36,7 +36,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    //super.build(context);
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

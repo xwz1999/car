@@ -28,7 +28,7 @@ class _ProductManualsState extends State<ProductManuals> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           Container(
