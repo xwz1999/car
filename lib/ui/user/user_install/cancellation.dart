@@ -1,6 +1,5 @@
 // ignore_for_file: unused_element
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_install/validation.dart';
 import 'package:cloud_car/utils/headers.dart';
 
@@ -45,7 +44,7 @@ class _CancellationPageState extends State<CancellationPage> {
         ),
         backgroundColor: kForeGroundColor, //内容颜色
         extendBody: true,
-        body: Container(
+        body: SizedBox(
           width: 750.w,
           child: Column(
             children: [
@@ -103,8 +102,7 @@ class _CancellationPageState extends State<CancellationPage> {
 
 //
   _getBody() {
-    return Container(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -141,7 +139,7 @@ class _CancellationPageState extends State<CancellationPage> {
           ),
         )
       ],
-    ));
+    );
   }
 
 //

@@ -16,8 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../home/car_manager/car_manager_page.dart';
-
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
 // int assessment=0,//评估
@@ -266,7 +264,7 @@ class _UserPageState extends State<UserPage>
                   32.wb,
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => BasicInformationPage());
+                      Get.to(() => const BasicInformationPage());
                     },
                     child: SizedBox(
                       //头像

@@ -15,7 +15,6 @@ class Recommendations extends StatefulWidget {
 }
 
 class _RecommendationsState extends State<Recommendations> {
-  @override
   final List<int> _selectIndex = [];
   final List<ConfigurationModel> _chooseModels = []; //
   List<ConfigurationModel> moddels = [
@@ -24,6 +23,7 @@ class _RecommendationsState extends State<Recommendations> {
     ConfigurationModel(title: '销售/车务', subtitle: '可以录入车辆信息、编辑车辆，并进行客户跟进、销售下单'),
     ConfigurationModel(title: '店长', subtitle: '能够管理店内的客户、车辆、订单'),
   ];
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -69,7 +69,7 @@ class _RecommendationsState extends State<Recommendations> {
                         itemBuilder: (context, index) {
                           return _getItem(index, moddels[index]);
                         },
-                        separatorBuilder: (BuildContext context, int inedx) {
+                        separatorBuilder: (BuildContext context, int index) {
                           return Container(
                               //   color: const Color(0xFFF6F6F6),
                               //   height: 16.w,
@@ -98,7 +98,7 @@ class _RecommendationsState extends State<Recommendations> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     // padding:
                     //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),

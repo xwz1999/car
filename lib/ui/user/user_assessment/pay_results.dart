@@ -109,7 +109,6 @@ class _PayResultsPageState extends State<PayResultsPage> {
     );
   }
 
-  @override
   bool get wantKeepAlive => true;
 }
 

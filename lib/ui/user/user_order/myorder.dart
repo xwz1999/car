@@ -72,48 +72,4 @@ class _MyOrderPageState extends State<MyOrderPage> {
           }),
     );
   }
-
-  _getItem(String text) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: Text(text,
-              style: TextStyle(
-                  color: BaseStyle.color333333,
-                  fontSize: BaseStyle.fontSize32,
-                  fontWeight: FontWeight.bold)),
-        ),
-        24.hb,
-        GridView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.only(left: 32.w, right: 32.w),
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 5,
-            //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                //横轴元素个数
-                crossAxisCount: 3,
-                //纵轴间距
-                mainAxisSpacing: 10,
-                //横轴间距
-                crossAxisSpacing: 15,
-                //子组件宽高长度比例
-                childAspectRatio: 200 / 176),
-            itemBuilder: (BuildContext context, int index) {
-              //Widget Function(BuildContext context, int index)
-              return GestureDetector(
-                onTap: () {
-                  Get.to(() => const SalesOrders());
-                },
-                child: const ManagerContainerItem(
-                  text: '浏览客户',
-                  num: '12',
-                ),
-              );
-            }),
-      ],
-    );
-  }
 }

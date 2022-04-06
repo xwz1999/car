@@ -1,11 +1,9 @@
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_alsocar_order.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_order.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_transaction_cancelled_order.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
+
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_page.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
@@ -28,6 +26,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   //List<ChooseItem> _sortList = [];
   late String title = '租车订单';
   ScreenControl screenControl = ScreenControl();
+  // ignore: non_constant_identifier_names
   List CarList = [
     {
       'judge': false,
@@ -65,7 +64,6 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // _sortList = [
     //   ChooseItem(name: '售车订单'),

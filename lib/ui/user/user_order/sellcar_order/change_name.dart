@@ -44,7 +44,7 @@ class _ChangeNameState extends State<ChangeName> {
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 height: 120.w,
                 color: Colors.white,
-                child: Text('')
+                child: const Text('')
                 // TimeLinesWidget(
                 //   index: 1,
                 //   items: [
@@ -410,37 +410,6 @@ class _ChangeNameState extends State<ChangeName> {
         //       children: [Chip(label: Text(time)), Chip(label: Text(distance))],
         //     ))
       ],
-    );
-  }
-
-  _getCar(String title, String text) {
-    return SizedBox(
-      width: 144.w,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: BaseStyle.fontSize24, color: BaseStyle.color333333),
-          ),
-          24.hb,
-          Text.rich(TextSpan(children: [
-            TextSpan(
-                text: '¥',
-                style: TextStyle(
-                    fontSize: BaseStyle.fontSize20,
-                    color: BaseStyle.color333333,
-                    fontWeight: FontWeight.bold)),
-            TextSpan(
-                text: text,
-                style: TextStyle(
-                    fontSize: BaseStyle.fontSize24,
-                    color: BaseStyle.color333333,
-                    fontWeight: FontWeight.bold))
-          ]))
-        ],
-      ),
     );
   }
 }

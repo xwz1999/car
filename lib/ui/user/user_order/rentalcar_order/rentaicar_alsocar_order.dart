@@ -1,5 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_order_data.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +21,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: non_constant_identifier_names
     late bool BL = widget.bl;
     return Scaffold(
         appBar: AppBar(
@@ -44,7 +45,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 height: 120.w,
                 color: Colors.white,
-                child: Text('')
+                child: const Text('')
                 // TimeLinesWidget(
                 //   index: 1,
                 //   items: [
@@ -191,7 +192,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
                         top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
                     child: GestureDetector(
                       onTap: () {
-                        //Get.to(() => const RentaicarOrderData());
+                        //Get.to(() => const ());
                         BotToast.showText(text: '确认成功');
                       },
                       child: Container(
@@ -208,7 +209,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
                                 fontSize: BaseStyle.fontSize28),
                           )),
                     ))
-                : SizedBox()
+                : const SizedBox()
           ],
         ));
   }

@@ -267,7 +267,6 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
     );
   }
 
-  @override
   bool get wantKeepAlive => true;
 }
 

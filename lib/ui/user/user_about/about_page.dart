@@ -90,28 +90,28 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   //列表
-  _getList(item) {
-    return ListTile(
-      onTap: () {
-        switch (item['title']) {
-          case '用户协议':
-            // Get.to(() => const EnterpriseInformationPage());
-            //print("1111111");
-            break;
-          case '隐私政策':
-            // Get.to(() => const RealNamePage());
-            break;
-          case '版本号':
-            //Get.to(() => const BankCardPage());
-            break;
-        }
-      },
+  // _getList(item) {
+  //   return ListTile(
+  //     onTap: () {
+  //       switch (item['title']) {
+  //         case '用户协议':
+  //           // Get.to(() => const EnterpriseInformationPage());
+  //           //print("1111111");
+  //           break;
+  //         case '隐私政策':
+  //           // Get.to(() => const RealNamePage());
+  //           break;
+  //         case '版本号':
+  //           //Get.to(() => const BankCardPage());
+  //           break;
+  //       }
+  //     },
 
-      //绘制消息主体
-      title: Text(item['title'], style: Theme.of(context).textTheme.subtitle2),
+  //     //绘制消息主体
+  //     title: Text(item['title'], style: Theme.of(context).textTheme.subtitle2),
 
-      trailing: const Icon(Icons.keyboard_arrow_right),
-      //contentPadding: ,
-    );
-  }
+  //     trailing: const Icon(Icons.keyboard_arrow_right),
+  //     //contentPadding: ,
+  //   );
+  // }
 }

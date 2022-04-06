@@ -1,4 +1,3 @@
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_sold_successfully.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/headers.dart';
@@ -35,7 +34,7 @@ class _ConsignmentTransactionState extends State<ConsignmentTransaction> {
             margin: EdgeInsets.symmetric(horizontal: 32.w),
             height: 120.w,
             color: Colors.white,
-            child: Text('')),
+            child: const Text('')),
         16.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),

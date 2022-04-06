@@ -26,6 +26,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
   //List<ChooseItem> _sortList = [];
   late String title = '叫车订单';
   ScreenControl screenControl = ScreenControl();
+  // ignore: non_constant_identifier_names
   List CarList = [
     {
       'judge': false,
@@ -74,7 +75,6 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // _sortList = [
     //   ChooseItem(name: '售车订单'),

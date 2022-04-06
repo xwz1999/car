@@ -1,5 +1,5 @@
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/alert.dart';
+
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -17,7 +17,6 @@ class InviteDetailPage extends StatefulWidget {
 }
 
 class _InviteDetailPageState extends State<InviteDetailPage> {
-
   late TextEditingController _editingController1;
   late TextEditingController _editingController2;
   late TextEditingController _editingController3;
@@ -60,26 +59,79 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                 fontWeight: FontWeight.bold)),
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-        backgroundColor: const Color(0xFFF6F6F6),
-        extendBody: true,
-        body: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top:8.w ),
-              padding: EdgeInsets.symmetric(horizontal: 32.w),
-              color: kForeGroundColor,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
+      backgroundColor: const Color(0xFFF6F6F6),
+      extendBody: true,
+      body: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 8.w),
+            padding: EdgeInsets.symmetric(horizontal: 32.w),
+            color: kForeGroundColor,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 32.w),
+                      width: 120.w,
+                      child: Text('邀约人',
+                          style: TextStyle(
+                            color: BaseStyle.color999999,
+                            fontSize: BaseStyle.fontSize28,
+                          )),
+                    ),
+                    50.wb,
+                    Expanded(
+                      child: TextField(
+                        enabled: false,
+                        keyboardType: TextInputType.text,
+                        onEditingComplete: () {
+                          setState(() {});
+                          // _refreshController.callRefresh();
+                        },
+                        onChanged: (text) {
+                          setState(() {});
+                        },
+                        style: TextStyle(
+                          color: BaseStyle.color333333,
+                          fontSize: BaseStyle.fontSize28,
+                        ),
+                        controller: _editingController1,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(left: 0.w),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: "请选择",
+                          hintStyle: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => ChooseCarPage(
+                          callback: (String city) {
+                            _editingController2.text = city;
+                            setState(() {});
+                          },
+                        ));
+                  },
+                  child: Row(
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(vertical: 32.w),
                         width: 120.w,
-                        child: Text('邀约人',
+                        child: Text('预定车辆',
                             style: TextStyle(
-                                color: BaseStyle.color999999,
-                                fontSize: BaseStyle.fontSize28,)),
+                              color: BaseStyle.color999999,
+                              fontSize: BaseStyle.fontSize28,
+                            )),
                       ),
                       50.wb,
                       Expanded(
@@ -91,13 +143,13 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                             // _refreshController.callRefresh();
                           },
                           onChanged: (text) {
-
                             setState(() {});
                           },
                           style: TextStyle(
                             color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28,),
-                          controller: _editingController1,
+                            fontSize: BaseStyle.fontSize28,
+                          ),
+                          controller: _editingController2,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(left: 0.w),
                             filled: true,
@@ -111,142 +163,46 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5.w),
+                        child: Icon(
+                          CupertinoIcons.chevron_forward,
+                          size: 40.w,
+                          color: BaseStyle.color666666,
+                        ),
+                      )
                     ],
                   ),
-
-                  GestureDetector(
-                    onTap: (){
-                      Get.to(()=> ChooseCarPage(callback: (String city) {
-                        _editingController2.text = city;
-                        setState(() {
-
-                        });
-                      },));
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 32.w),
-                          width: 120.w,
-                          child: Text('预定车辆',
-                              style: TextStyle(
-                                color: BaseStyle.color999999,
-                                fontSize: BaseStyle.fontSize28,)),
-                        ),
-                        50.wb,
-                        Expanded(
-                          child: TextField(
-                            enabled: false,
-                            keyboardType: TextInputType.text,
-                            onEditingComplete: () {
-                              setState(() {});
-                              // _refreshController.callRefresh();
-                            },
-                            onChanged: (text) {
-
-                              setState(() {});
-                            },
-                            style: TextStyle(
-                              color: BaseStyle.color333333,
-                              fontSize: BaseStyle.fontSize28,),
-                            controller: _editingController2,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(left: 0.w),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: "请选择",
-                              hintStyle: TextStyle(
-                                  color: Colors.grey.shade500,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w300),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding:  EdgeInsets.only(top: 5.w),
-                          child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.color666666,),
-                        )
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 32.w),
-                          width: 120.w,
-                          child: Text('到店时间',
-                              style: TextStyle(
-                                color: BaseStyle.color999999,
-                                fontSize: BaseStyle.fontSize28,)),
-                        ),
-                        50.wb,
-                        Expanded(
-                          child: TextField(
-                            enabled: false,
-                            keyboardType: TextInputType.text,
-                            onEditingComplete: () {
-                              setState(() {});
-                              // _refreshController.callRefresh();
-                            },
-                            onChanged: (text) {
-
-                              setState(() {});
-                            },
-                            style: TextStyle(
-                              color: BaseStyle.color333333,
-                              fontSize: BaseStyle.fontSize28,),
-                            controller: _editingController3,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(left: 0.w),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: "请选择",
-                              hintStyle: TextStyle(
-                                  color: Colors.grey.shade500,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w300),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding:  EdgeInsets.only(top: 5.w),
-                          child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.color666666,),
-                        )
-                      ],
-                    ),
-                  ),
-
-
-                  Row(
+                ),
+                GestureDetector(
+                  child: Row(
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(vertical: 32.w),
                         width: 120.w,
-                        child: Text('店面地址',
+                        child: Text('到店时间',
                             style: TextStyle(
                               color: BaseStyle.color999999,
-                              fontSize: BaseStyle.fontSize28,)),
+                              fontSize: BaseStyle.fontSize28,
+                            )),
                       ),
                       50.wb,
                       Expanded(
                         child: TextField(
-
+                          enabled: false,
                           keyboardType: TextInputType.text,
                           onEditingComplete: () {
                             setState(() {});
                             // _refreshController.callRefresh();
                           },
                           onChanged: (text) {
-
                             setState(() {});
                           },
                           style: TextStyle(
                             color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28,),
-                          controller: _editingController4,
+                            fontSize: BaseStyle.fontSize28,
+                          ),
+                          controller: _editingController3,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(left: 0.w),
                             filled: true,
@@ -260,96 +216,139 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5.w),
+                        child: Icon(
+                          CupertinoIcons.chevron_forward,
+                          size: 40.w,
+                          color: BaseStyle.color666666,
+                        ),
+                      )
                     ],
                   ),
-
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 32.w),
-                        width: 120.w,
-                        child: Text('邀约备注',
-                            style: TextStyle(
-                              color: BaseStyle.color999999,
-                              fontSize: BaseStyle.fontSize28,)),
-                      ),
-                      24.hb,
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.w),
-                          border: Border.all(color: BaseStyle.colordddddd,width: 2.w)
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 16.w,horizontal: 20.w),
-                        height: 200.w,
-                        child: TextField(
-                          maxLines: 50,
-                          keyboardType: TextInputType.text,
-                          onEditingComplete: () {
-                            setState(() {});
-                            // _refreshController.callRefresh();
-                          },
-                          onChanged: (text) {
-
-                            setState(() {});
-                          },
-
+                ),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 32.w),
+                      width: 120.w,
+                      child: Text('店面地址',
                           style: TextStyle(
-                            color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28,),
-                          controller: _editingController5,
-                          decoration: InputDecoration(
-
-                            contentPadding: EdgeInsets.zero,
-                            filled: true,
-                            isDense: true,
-                            fillColor: Colors.white,
-                            hintText: "请选择",
-                            hintStyle: TextStyle(
-                                color: Colors.grey.shade500,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w300),
-                            border: InputBorder.none,
-                          ),
+                            color: BaseStyle.color999999,
+                            fontSize: BaseStyle.fontSize28,
+                          )),
+                    ),
+                    50.wb,
+                    Expanded(
+                      child: TextField(
+                        keyboardType: TextInputType.text,
+                        onEditingComplete: () {
+                          setState(() {});
+                          // _refreshController.callRefresh();
+                        },
+                        onChanged: (text) {
+                          setState(() {});
+                        },
+                        style: TextStyle(
+                          color: BaseStyle.color333333,
+                          fontSize: BaseStyle.fontSize28,
+                        ),
+                        controller: _editingController4,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(left: 0.w),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: "请选择",
+                          hintStyle: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300),
+                          border: InputBorder.none,
                         ),
                       ),
-                      32.hb,
-                    ],
-                  ),
-
-
-                ],
-              ),
-            ),
-            72.hb,
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 32.w),
-              padding: EdgeInsets.symmetric(vertical: 16.w),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: <Color>[
-                    Color(0xFF0593FF),
-                    Color(0xFF027AFF),
+                    ),
                   ],
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              ),
-              child: Text(
-                '确  定',
-                style: TextStyle(
-                    color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
-              ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 32.w),
+                      width: 120.w,
+                      child: Text('邀约备注',
+                          style: TextStyle(
+                            color: BaseStyle.color999999,
+                            fontSize: BaseStyle.fontSize28,
+                          )),
+                    ),
+                    24.hb,
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.w),
+                          border: Border.all(
+                              color: BaseStyle.colordddddd, width: 2.w)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 16.w, horizontal: 20.w),
+                      height: 200.w,
+                      child: TextField(
+                        maxLines: 50,
+                        keyboardType: TextInputType.text,
+                        onEditingComplete: () {
+                          setState(() {});
+                          // _refreshController.callRefresh();
+                        },
+                        onChanged: (text) {
+                          setState(() {});
+                        },
+                        style: TextStyle(
+                          color: BaseStyle.color333333,
+                          fontSize: BaseStyle.fontSize28,
+                        ),
+                        controller: _editingController5,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          filled: true,
+                          isDense: true,
+                          fillColor: Colors.white,
+                          hintText: "请选择",
+                          hintStyle: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    32.hb,
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          72.hb,
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 32.w),
+            padding: EdgeInsets.symmetric(vertical: 16.w),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: <Color>[
+                  Color(0xFF0593FF),
+                  Color(0xFF027AFF),
+                ],
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(8.w)),
+            ),
+            child: Text(
+              '确  定',
+              style: TextStyle(
+                  color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
+            ),
+          ),
+        ],
+      ),
     );
-
   }
-
-
-
 }

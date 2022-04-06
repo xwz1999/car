@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
@@ -82,7 +80,7 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('扫码识别'),
+                            const Text('扫码识别'),
                             Text(
                               '即可成为云云问车客户',
                               style: Theme.of(context).textTheme.subtitle2,
@@ -120,61 +118,6 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
   }
 
 //底部
-  _getBottom() {
-    return Row(
-      children: [
-        Padding(padding: EdgeInsets.only(left: 40.w)),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                //getBox(),
-                2.wb,
-                //getBox(),
-                2.wb,
-                //getBox(),
-                2.wb,
-                //getBox()
-              ],
-            ),
-            Container(
-              width: 560.w,
-              height: 4.w,
-              decoration: const BoxDecoration(color: Colors.black
-                  // gradient: LinearGradient(
-                  //     begin: Alignment.center,
-                  //     end: Alignment.center,
-                  //     colors: [Color(0xFF86B5FF), Color(0x00FFFFFF)]),
-                  ),
-            )
-          ],
-        ),
-        46.wb,
-        GestureDetector(
-          child: Stack(
-            children: [
-              Container(
-                width: 72.w,
-                height: 72.w,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(36.w),
-                    color: const Color.fromRGBO(0, 0, 0, 0.5)),
-              ),
-              Positioned(
-                  left: 20.w,
-                  top: 20.w,
-                  child: SizedBox(
-                    width: 32.w,
-                    height: 32.w,
-                    child: Image.asset(Assets.images.download.path),
-                  ))
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 
 //
   _getbody() {
@@ -209,9 +152,10 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
               child: Text(
                 '即刻成为',
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: kForeGroundColor,
-                    fontSize: 56.sp,
-                    fontFamily: 'YouSheBiaoTiHei'),
+                      color: kForeGroundColor,
+                      fontSize: 56.sp,
+                      //fontFamily: 'YouSheBiaoTiHei'
+                    ),
               )),
           Positioned(
               top: 226.w,
@@ -229,67 +173,6 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
   }
 
 //内容
-  _getBody1() {
-    return Container(
-      margin: EdgeInsets.only(left: 40.w, right: 40.w),
-      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 40.w),
-      decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(16.w)),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                '云云问车客户邀请码',
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    fontSize: 40.sp,
-                    color: const Color(0xFF1986FF),
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          24.hb,
-          Divider(
-            height: 10.w,
-          ),
-          24.hb,
-          32.hb,
-          Divider(
-            height: 10.w,
-          ),
-          62.hb,
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '扫码识别',
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                        fontSize: 40.sp, fontWeight: FontWeight.bold),
-                  ),
-                  22.hb,
-                  Text(
-                    '即刻成为云云问车客户',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  )
-                ],
-              ),
-              150.wb,
-              SizedBox(
-                width: 128.w,
-                height: 128.w,
-                child: Image.asset(
-                  Assets.images.qrCode.path,
-                  fit: BoxFit.fill,
-                ),
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
 
 // //头部
 //   _getHeard() {

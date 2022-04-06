@@ -14,7 +14,6 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
 
@@ -23,7 +22,7 @@ class ShareHomePage extends StatefulWidget {
 }
 
 class _ShareHomePageState extends State<ShareHomePage>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin{
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late List<String> _dropDownHeaderItemStrings;
 
   List<dynamic>? data;
@@ -94,10 +93,9 @@ class _ShareHomePageState extends State<ShareHomePage>
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
-
           callback: (String item) {
             if (kDebugMode) {
-              print(item+'1231232');
+              print(item + '1231232');
             }
           },
           childAspectRatio: 144 / 56,
@@ -133,10 +131,10 @@ class _ShareHomePageState extends State<ShareHomePage>
     super.dispose();
   }
 
-  _customer(){
+  _customer() {
     return GestureDetector(
-      onTap: () async{
-        Get.to(()=>const ShareCarPage());
+      onTap: () async {
+        Get.to(() => const ShareCarPage());
       },
       child: Container(
         width: 72.w,
@@ -146,7 +144,9 @@ class _ShareHomePageState extends State<ShareHomePage>
           borderRadius: BorderRadius.all(Radius.circular(36.w)),
         ),
         padding: EdgeInsets.all(16.w),
-        child: Image.asset(Assets.icons.icShare.path,),
+        child: Image.asset(
+          Assets.icons.icShare.path,
+        ),
       ),
     );
   }
@@ -156,35 +156,37 @@ class _ShareHomePageState extends State<ShareHomePage>
     super.build(context);
     return Scaffold(
         floatingActionButton: _customer(),
-        floatingActionButtonLocation:CustomFloatingActionButtonLocation(FloatingActionButtonLocation.endDocked, 4, -240.w),
+        floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+            FloatingActionButtonLocation.endDocked, 4, -240.w),
         key: _scaffoldKey,
         appBar: AppBar(
           leading: const CloudBackButton(
             isSpecial: true,
           ),
           backgroundColor: kForeGroundColor,
-          title:TabBar(
+          title: TabBar(
               onTap: (index) {
-
                 setState(() {});
               },
               isScrollable: true,
-              labelPadding: EdgeInsets.symmetric(vertical: 10.w,horizontal: 40.w),
+              labelPadding:
+                  EdgeInsets.symmetric(vertical: 10.w, horizontal: 40.w),
               controller: _tabController,
               indicatorWeight: 3,
               labelColor: BaseStyle.color111111,
               unselectedLabelColor: BaseStyle.color999999,
-              indicatorPadding: EdgeInsets.symmetric(horizontal: 30.w,vertical: 0.w),
+              indicatorPadding:
+                  EdgeInsets.symmetric(horizontal: 30.w, vertical: 0.w),
               indicatorSize: TabBarIndicatorSize.label,
               labelStyle: TextStyle(
                 color: Colors.white.withOpacity(0.85),
               ),
               indicatorColor: kPrimaryColor,
-              tabs: [_tab(0, '我的车辆'),_tab(1, '全部车辆')]),
+              tabs: [_tab(0, '我的车辆'), _tab(1, '全部车辆')]),
           actions: [
             GestureDetector(
               onTap: () {
-                Get.to(()=>const SearchPage());
+                Get.to(() => const SearchPage());
               },
               child: Image.asset(Assets.icons.mainSearch.path,
                   height: 48.w, width: 48.w),
@@ -196,22 +198,17 @@ class _ShareHomePageState extends State<ShareHomePage>
         endDrawer: CustomDrawer(
             widthPercent: 0.86,
             backgroundColor: Colors.white,
-            callback: (bool isOpened) {  },
-            child:_getSortList()
-        ),
+            callback: (bool isOpened) {},
+            child: _getSortList()),
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
         body: TabBarView(
           controller: _tabController,
-          children: [
-            _myCar(),
-            _allCar()
-          ],
+          children: [_myCar(), _allCar()],
         ));
   }
 
-
-  _myCar(){
+  _myCar() {
     return DropDownWidget(
       _dropDownHeaderItemStrings,
       listWidget,
@@ -222,10 +219,11 @@ class _ShareHomePageState extends State<ShareHomePage>
       child: Container(
         margin: EdgeInsets.only(top: 80.r),
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
           itemBuilder: (context, index) {
             return CarItemWidget(
-              widgetPadding: EdgeInsets.symmetric(vertical: 28.w,horizontal: 24.w),
+              widgetPadding:
+                  EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
               name: '奔驰CLE 插电混动 纯电动续航103km',
               time: '2019年5月',
               distance: '20.43万公里',
@@ -244,7 +242,7 @@ class _ShareHomePageState extends State<ShareHomePage>
         ),
       ),
       screen: '筛选',
-      onTap:(){
+      onTap: () {
         screenControlMy.screenHide();
         _scaffoldKey.currentState?.openEndDrawer();
         if (kDebugMode) {
@@ -254,7 +252,7 @@ class _ShareHomePageState extends State<ShareHomePage>
     );
   }
 
-  _allCar(){
+  _allCar() {
     return DropDownWidget(
       _dropDownHeaderItemStrings,
       listWidget,
@@ -265,10 +263,11 @@ class _ShareHomePageState extends State<ShareHomePage>
       child: Container(
         margin: EdgeInsets.only(top: 80.r),
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
           itemBuilder: (context, index) {
             return CarItemWidget(
-              widgetPadding: EdgeInsets.symmetric(vertical: 28.w,horizontal: 24.w),
+              widgetPadding:
+                  EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
               name: '奔驰CLE 插电混动 纯电动续航103km',
               time: '2019年5月',
               distance: '20.43万公里',
@@ -287,7 +286,7 @@ class _ShareHomePageState extends State<ShareHomePage>
         ),
       ),
       screen: '筛选',
-      onTap:(){
+      onTap: () {
         screenControlAll.screenHide();
         _scaffoldKey.currentState?.openEndDrawer();
         if (kDebugMode) {
@@ -297,17 +296,18 @@ class _ShareHomePageState extends State<ShareHomePage>
     );
   }
 
-  _tab(int index, String text){
+  _tab(int index, String text) {
     return Text(text);
   }
 
-
-  _getSortList(){
-    return SortListPage(callback: (ChooseItem item) {
-      if (kDebugMode) {
-        print(item.name+'123123');
-      }
-    },);
+  _getSortList() {
+    return SortListPage(
+      callback: (ChooseItem item) {
+        if (kDebugMode) {
+          print(item.name + '123123');
+        }
+      },
+    );
   }
 
   getTitle(String title) {

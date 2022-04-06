@@ -71,7 +71,7 @@ class _FirstPayState extends State<FirstPay> {
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 height: 120.w,
                 color: Colors.white,
-                child: Text('')
+                child: const Text('')
                 // TimeLinesWidget(
                 //   index: 1,
                 //   items: [
@@ -303,7 +303,7 @@ class _FirstPayState extends State<FirstPay> {
                       ],
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ],
         )
 

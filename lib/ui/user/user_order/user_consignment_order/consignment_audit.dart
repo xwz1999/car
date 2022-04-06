@@ -34,7 +34,7 @@ class _ConsignmentAuditState extends State<ConsignmentAudit> {
             margin: EdgeInsets.symmetric(horizontal: 32.w),
             height: 120.w,
             color: Colors.white,
-            child: Text('')),
+            child: const Text('')),
         16.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),

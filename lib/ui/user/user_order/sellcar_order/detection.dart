@@ -1,4 +1,4 @@
-
+import 'package:cloud_car/ui/user/user_order/sellcar_order/detection_data.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +44,7 @@ class _DetectionState extends State<Detection> {
               margin: EdgeInsets.symmetric(horizontal: 32.w),
               height: 120.w,
               color: Colors.white,
-              child: Text('')
+              child: const Text('')
               // TimeLinesWidget(
               //   index: 1,
               //   items: [
@@ -246,7 +246,7 @@ class _DetectionState extends State<Detection> {
                   top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
               child: GestureDetector(
                 onTap: () {
-                  //Get.to(() => const DetectionData());
+                  Get.to(() => const DetectionData());
                 },
                 child: Padding(
                   padding: EdgeInsets.only(left: 0.w),

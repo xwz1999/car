@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
@@ -32,6 +31,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
   //List<ChooseItem> _sortList = [];
   late String title = '寄卖订单';
   ScreenControl screenControl = ScreenControl();
+  // ignore: non_constant_identifier_names
   List CarList = [
     {
       'judge': false,
@@ -99,7 +99,6 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // _sortList = [
     //   ChooseItem(name: '售车订单'),
@@ -500,11 +499,11 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
 
   Color getColor(String judgename) {
     if (judgename == '交易取消') {
-      return Color(0xFF666666);
+      return const Color(0xFF666666);
     } else if (judgename == '审核中' || judgename == '已驳回') {
-      return Color(0xFFFF3B02);
+      return const Color(0xFFFF3B02);
     } else {
-      return Color(0xFF027AFF);
+      return const Color(0xFF027AFF);
     }
   }
 

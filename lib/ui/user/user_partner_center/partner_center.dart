@@ -31,6 +31,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     //super.build(context);
     return Scaffold(

@@ -35,7 +35,6 @@ class _CarWidgetState extends State<CarWidget> {
                   onTap: () {
                     _isChoose = index;
                     widget.callBack(e);
-                    print(widget.items[index]);
                   },
                   child: Container(
                       width: 160.w,

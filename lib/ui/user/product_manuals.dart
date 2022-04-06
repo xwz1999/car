@@ -52,7 +52,7 @@ class _ProductManualsState extends State<ProductManuals> {
         Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(36.w),
-              border: Border.all(width: 2.w, color: Color(0xFFE7E7E7))),
+              border: Border.all(width: 2.w, color: const Color(0xFFE7E7E7))),
           width: 606.w,
           height: 72.w,
           child: TextField(

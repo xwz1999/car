@@ -110,7 +110,6 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
     );
   }
 
-  @override
   bool get wantKeepAlive => true;
 }
 

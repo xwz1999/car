@@ -1,5 +1,5 @@
 import 'package:cloud_car/ui/user/user_recommended/share_detail_customer.dart';
-import 'package:cloud_car/ui/user/user_recommended/share_detail_partner.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';

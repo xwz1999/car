@@ -1,4 +1,3 @@
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_sold_successfully.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/headers.dart';
@@ -12,8 +11,8 @@ class ConsignmentSold extends StatefulWidget {
 }
 
 class _ConsignmentSoldState extends State<ConsignmentSold> {
-  @override
   late bool bl = false;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +35,7 @@ class _ConsignmentSoldState extends State<ConsignmentSold> {
             margin: EdgeInsets.symmetric(horizontal: 32.w),
             height: 120.w,
             color: Colors.white,
-            child: Text('')),
+            child: const Text('')),
         16.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -199,14 +198,14 @@ class _ConsignmentSoldState extends State<ConsignmentSold> {
                   ],
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         ElevatedButton(
             onPressed: () {
               bl = true;
-              print(bl);
+
               //Get.to(() => const ConsignmentSuccessfully());
             },
-            child: Text('支付成功'))
+            child: const Text('支付成功'))
       ]),
     );
   }

@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_install/no_withdrawal.dart';
 import 'package:cloud_car/utils/headers.dart';
 
@@ -30,7 +29,6 @@ class _ValidationPageState extends State<ValidationPage> {
   late TextEditingController _smsCodeController;
   late FocusNode _phoneFocusNode;
   late FocusNode _smsCodeFocusNode;
-  bool _loginEnable = false;
   bool _cantSelected = false;
   @override
   void initState() {
@@ -158,10 +156,8 @@ class _ValidationPageState extends State<ValidationPage> {
                       setState(() {
                         if (phone.length >= 11) {
                           _getCodeEnable = true;
-                          _loginEnable = _verifyLoginEnable();
                         } else {
                           _getCodeEnable = false;
-                          _loginEnable = false;
                         }
                       });
                     },
@@ -233,9 +229,7 @@ class _ValidationPageState extends State<ValidationPage> {
                 Expanded(
                   child: TextField(
                     onChanged: (String phone) {
-                      setState(() {
-                        _loginEnable = _verifyLoginEnable();
-                      });
+                      setState(() {});
                     },
                     controller: _smsCodeController,
                     focusNode: _smsCodeFocusNode,

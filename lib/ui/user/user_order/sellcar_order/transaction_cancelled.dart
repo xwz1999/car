@@ -42,7 +42,7 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 height: 120.w,
                 color: Colors.white,
-                child: Text('')
+                child: const Text('')
                 // TimeLinesWidget(
                 //   index: 1,
                 //   items: [
@@ -323,26 +323,6 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
           .textTheme
           .subtitle2
           ?.copyWith(fontWeight: FontWeight.bold),
-    );
-  }
-
-  _getPicture2(String title) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-        24.hb,
-        GestureDetector(
-          child: Container(
-            color: Colors.red,
-            width: 200.w,
-            height: 150.w,
-          ),
-        )
-      ],
     );
   }
 

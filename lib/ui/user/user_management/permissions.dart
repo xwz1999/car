@@ -4,7 +4,7 @@ import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class Permissions extends StatefulWidget {
-  Permissions({Key? key}) : super(key: key);
+  const Permissions({Key? key}) : super(key: key);
 
   @override
   State<Permissions> createState() => _PermissionsState();

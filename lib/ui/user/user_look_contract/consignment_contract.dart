@@ -21,6 +21,8 @@ class _ConsignmentContractState extends State<ConsignmentContract>
     super.initState();
   }
 
+  @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(

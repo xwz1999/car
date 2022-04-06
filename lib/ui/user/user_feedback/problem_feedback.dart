@@ -51,7 +51,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     // padding:
                     //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
