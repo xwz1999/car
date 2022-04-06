@@ -3,7 +3,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class ThatcarUnpaid extends StatefulWidget {
-  ThatcarUnpaid({Key? key}) : super(key: key);
+  const ThatcarUnpaid({Key? key}) : super(key: key);
 
   @override
   State<ThatcarUnpaid> createState() => _ThatcarUnpaidState();
@@ -26,16 +26,14 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: ListView(
-        children: [],
+        children: const [],
       ),
     );
   }
 
   getCarInformation() {
-    return Container(
-      child: Text("data"),
-    );
+    return const Text("data");
   }
 }

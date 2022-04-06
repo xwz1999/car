@@ -1,8 +1,8 @@
+import 'package:cloud_car/model/configuration_model.dart';
 import 'package:cloud_car/ui/user/user_feedback/vehicles_release.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/ConfigurationModel.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/button/colud_check_radio.dart';
@@ -15,7 +15,6 @@ class Recommendations extends StatefulWidget {
 }
 
 class _RecommendationsState extends State<Recommendations> {
-  @override
   final List<int> _selectIndex = [];
   final List<ConfigurationModel> _chooseModels = []; //
   List<ConfigurationModel> moddels = [
@@ -24,6 +23,7 @@ class _RecommendationsState extends State<Recommendations> {
     ConfigurationModel(title: '销售/车务', subtitle: '可以录入车辆信息、编辑车辆，并进行客户跟进、销售下单'),
     ConfigurationModel(title: '店长', subtitle: '能够管理店内的客户、车辆、订单'),
   ];
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +39,7 @@ class _RecommendationsState extends State<Recommendations> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,7 +98,7 @@ class _RecommendationsState extends State<Recommendations> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     // padding:
                     //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),

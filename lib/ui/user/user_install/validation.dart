@@ -2,12 +2,10 @@
 
 import 'dart:async';
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_install/no_withdrawal.dart';
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:cloud_car/widget/cloud_back_button.dart';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -162,6 +160,9 @@ class _ValidationPageState extends State<ValidationPage> {
                         } else {
                           _getCodeEnable = false;
                           _loginEnable = false;
+                        }
+                        if (kDebugMode) {
+                          print(_loginEnable);
                         }
                       });
                     },

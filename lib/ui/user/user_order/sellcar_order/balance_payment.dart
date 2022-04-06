@@ -64,7 +64,7 @@ class _BalancePaymentState extends State<BalancePayment> {
 
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: BodyColor,
+        backgroundColor: bodyColor,
         body: ListView(
           children: [
             16.hb,
@@ -72,7 +72,7 @@ class _BalancePaymentState extends State<BalancePayment> {
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 height: 120.w,
                 color: Colors.white,
-                child: Text('')
+                child:const Text('')
                 // TimeLinesWidget(
                 //   index: 1,
                 //   items: [
@@ -331,7 +331,7 @@ class _BalancePaymentState extends State<BalancePayment> {
                       ],
                     ),
                   )
-                : SizedBox(),
+                :const SizedBox(),
           ],
         )
 

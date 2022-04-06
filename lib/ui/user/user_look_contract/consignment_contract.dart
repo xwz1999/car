@@ -21,7 +21,9 @@ class _ConsignmentContractState extends State<ConsignmentContract>
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 88.w,
@@ -53,7 +55,7 @@ class _ConsignmentContractState extends State<ConsignmentContract>
             ),
           ],
         ),
-        backgroundColor: BodyColor,
+        backgroundColor: bodyColor,
         //extendBody: true,
         extendBodyBehindAppBar: true,
         body: TabBarView(

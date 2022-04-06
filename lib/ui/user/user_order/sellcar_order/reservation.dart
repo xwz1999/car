@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/timelines_widget.dart';
@@ -43,7 +41,7 @@ class _ReservationState extends State<Reservation> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -54,7 +52,7 @@ class _ReservationState extends State<Reservation> {
               color: Colors.white,
               child: TimeLinesWidget(
                 index: 1,
-                items: [
+                items: const [
                   '预定',
                   '检测',
                   '首付',

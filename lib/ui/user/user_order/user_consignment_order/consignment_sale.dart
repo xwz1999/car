@@ -27,14 +27,14 @@ class _ConsignmentSaleState extends State<ConsignmentSale> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: ListView(children: [
         16.hb,
         Container(
             margin: EdgeInsets.symmetric(horizontal: 32.w),
             height: 120.w,
             color: Colors.white,
-            child: Text('')),
+            child:const Text('')),
         16.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),

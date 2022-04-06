@@ -12,7 +12,7 @@ const kDangerColor = Color(0xFFFF3B30);
 const kDarkSubColor = Color(0xFF979797);
 const kBalckSubColor = Color(0xFF000000);
 const bgColor = Color(0xFFF8F9FB);
-const BodyColor = Color(0xFFF6F6F6);
+const bodyColor = Color(0xFFF6F6F6);
 
 class BaseStyle {
   ///字体类

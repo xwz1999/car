@@ -1,10 +1,10 @@
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:flutter/material.dart';
+
 import '../../../widget/button/cloud_back_button.dart';
 
 class EnterprisePage extends StatefulWidget {
-  EnterprisePage({Key? key}) : super(key: key);
+  const EnterprisePage({Key? key}) : super(key: key);
 
   @override
   State<EnterprisePage> createState() => _EnterprisePageState();

@@ -1,9 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class EnterpriseInformationPage extends StatefulWidget {
   const EnterpriseInformationPage({Key? key}) : super(key: key);
@@ -42,7 +39,7 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
 
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: BodyColor,
+        backgroundColor: bodyColor,
         extendBody: true,
         //body: ,
         body: Expanded(
@@ -235,29 +232,29 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
     );
   }
 
-//头部
-  _getAppbar() {
-    return Container(
-      color: Colors.white,
-      height: kToolbarHeight + MediaQuery.of(context).padding.top,
-      alignment: Alignment.center,
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const CloudBackButton(
-            isSpecial: true,
-          ),
-          Text('企业信息',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
-          SizedBox(
-            width: 110.w,
-          ),
-        ],
-      ),
-    );
-  }
+// //头部
+//   _getAppbar() {
+//     return Container(
+//       color: Colors.white,
+//       height: kToolbarHeight + MediaQuery.of(context).padding.top,
+//       alignment: Alignment.center,
+//       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           const CloudBackButton(
+//             isSpecial: true,
+//           ),
+//           Text('企业信息',
+//               style: TextStyle(
+//                   color: BaseStyle.color111111,
+//                   fontSize: BaseStyle.fontSize36,
+//                   fontWeight: FontWeight.bold)),
+//           SizedBox(
+//             width: 110.w,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
 }

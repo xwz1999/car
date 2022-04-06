@@ -1,7 +1,6 @@
 import 'package:cloud_car/ui/user/contract_pay.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -110,8 +109,6 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
 }
 
 class Button {

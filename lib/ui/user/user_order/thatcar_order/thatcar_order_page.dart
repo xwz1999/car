@@ -2,15 +2,12 @@ import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_alsocar_o
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_order.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_transaction_cancelled_order.dart';
-
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
-
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/car_widget.dart';
-
 import 'package:flutter/material.dart';
 
 class ThatcarOrderPage extends StatefulWidget {
@@ -26,7 +23,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
   //List<ChooseItem> _sortList = [];
   late String title = '叫车订单';
   ScreenControl screenControl = ScreenControl();
-  List CarList = [
+  List carList = [
     {
       'judge': false,
       'judgename': '待支付',
@@ -201,7 +198,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
         ),
       ),
       extendBody: true,
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           SizedBox(
@@ -223,9 +220,9 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
           Expanded(
             child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return getCar(CarList[index]);
+                  return getCar(carList[index]);
                 },
-                itemCount: CarList.length),
+                itemCount: carList.length),
           ),
         ],
       ),

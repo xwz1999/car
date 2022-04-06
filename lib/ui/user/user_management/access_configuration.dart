@@ -1,8 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/model/configuration_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/CarItemModel.dart';
-import '../../../model/ConfigurationModel.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/button/colud_check_radio.dart';
@@ -21,7 +20,6 @@ class AccessConfiguration extends StatefulWidget {
 }
 
 class _AccessConfigurationState extends State<AccessConfiguration> {
-  @override
   //选中的item
   final List<int> _selectIndex = [];
   final List<ConfigurationModel> _chooseModels = []; //
@@ -37,6 +35,7 @@ class _AccessConfigurationState extends State<AccessConfiguration> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(

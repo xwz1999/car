@@ -4,14 +4,14 @@ import '../../../utils/headers.dart';
 import '../../../widget/cloud_back_button.dart';
 
 class StructurePage extends StatefulWidget {
-  StructurePage({Key? key}) : super(key: key);
+  const StructurePage({Key? key}) : super(key: key);
 
   @override
   State<StructurePage> createState() => _StructurePageState();
 }
 
 class _StructurePageState extends State<StructurePage> {
-  late List<Widget> CatWidget;
+
   //  for (var i = 0; i < 5; i++)
   //               {
   //                 CatWidget.add(ListTile(

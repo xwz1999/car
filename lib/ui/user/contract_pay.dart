@@ -1,9 +1,7 @@
 import 'package:cloud_car/ui/user/user_assessment/pay_results.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class ContractPayPage extends StatefulWidget {
   const ContractPayPage({Key? key}) : super(key: key);
@@ -169,13 +167,7 @@ class _ContractPayPageState extends State<ContractPayPage> {
       ],
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
-// class Button {
-//   Button(Null Function() param0);
-// }
 
 void column() {}

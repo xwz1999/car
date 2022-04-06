@@ -2,10 +2,11 @@ import 'package:cloud_car/ui/user/user_basic_information/enterprise.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../widget/button/cloud_back_button.dart';
 
 class BasicInformationPage extends StatefulWidget {
-  BasicInformationPage({Key? key}) : super(key: key);
+  const BasicInformationPage({Key? key}) : super(key: key);
 
   @override
   State<BasicInformationPage> createState() => _BasicInformationPageState();
@@ -255,7 +256,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                             width: 1.w,
-                                            color: Color(0xFFE7E7E7)),
+                                            color: const Color(0xFFE7E7E7)),
                                         borderRadius:
                                             BorderRadius.circular(2.w)),
                                     child: TextField(
@@ -328,7 +329,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                       style: Theme.of(context)
                                           .textTheme
                                           .subtitle2
-                                          ?.copyWith(color: Color(0xFF027AFF)),
+                                          ?.copyWith(color:const Color(0xFF027AFF)),
                                     ),
                                   ),
                                 ),
@@ -384,7 +385,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
             ),
             ListTile(
               onTap: () {
-                Get.to(() => EnterprisePage());
+                Get.to(() => const EnterprisePage());
               },
               title: Text('企业信息', style: Theme.of(context).textTheme.bodyText1),
               trailing: SizedBox(
@@ -399,48 +400,52 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
       ),
     );
   }
+  getSex() {
+    late int sexId = 1;
+
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+
+            setState(() {
+              sexId = 1;
+            });
+
+          },
+          child: Column(
+            children: [
+              Text(sexId == 1 ? '√ 男' : '男',
+                  style: TextStyle(
+                      color: sexId == 1
+                          ? const Color(0xFF027AFF)
+                          : const Color(0xFF330000),
+                      fontSize: BaseStyle.fontSize28))
+            ],
+          ),
+        ),
+        16.hb,
+        GestureDetector(
+          onTap: () {
+
+            setState(() {
+              sexId = 2;
+            });
+          },
+          child: Column(
+            children: [
+              Text(sexId == 2 ? '√ 女' : '女',
+                  style: TextStyle(
+                      color: sexId == 2
+                          ? const Color(0xFF027AFF)
+                          : const Color(0xFF330000),
+                      fontSize: BaseStyle.fontSize28))
+            ],
+          ),
+        )
+      ],
+    );
+  }
 }
 
-getSex() {
-  late int sexId = 1;
 
-  return Column(
-    children: [
-      GestureDetector(
-        onTap: () {
-          setState() {
-            sexId = 1;
-          }
-        },
-        child: Column(
-          children: [
-            Text(sexId == 1 ? '√ 男' : '男',
-                style: TextStyle(
-                    color: sexId == 1
-                        ? const Color(0xFF027AFF)
-                        : const Color(0xFF330000),
-                    fontSize: BaseStyle.fontSize28))
-          ],
-        ),
-      ),
-      16.hb,
-      GestureDetector(
-        onTap: () {
-          setState() {
-            sexId = 2;
-          }
-        },
-        child: Column(
-          children: [
-            Text(sexId == 2 ? '√ 女' : '女',
-                style: TextStyle(
-                    color: sexId == 2
-                        ? const Color(0xFF027AFF)
-                        : const Color(0xFF330000),
-                    fontSize: BaseStyle.fontSize28))
-          ],
-        ),
-      )
-    ],
-  );
-}

@@ -1,18 +1,13 @@
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_alsocar_order.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_order.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_transaction_cancelled_order.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
-
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_page.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/car_widget.dart';
-
 import 'package:flutter/material.dart';
 
 class RentalcarOrderPage extends StatefulWidget {
@@ -28,7 +23,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   //List<ChooseItem> _sortList = [];
   late String title = '租车订单';
   ScreenControl screenControl = ScreenControl();
-  List CarList = [
+  List carList = [
     {
       'judge': false,
       'judgename': '进行中',
@@ -192,7 +187,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
         ),
       ),
       extendBody: true,
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           SizedBox(
@@ -214,9 +209,9 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
           Expanded(
             child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return getCar(CarList[index]);
+                  return getCar(carList[index]);
                 },
-                itemCount: CarList.length),
+                itemCount: carList.length),
           ),
         ],
       ),

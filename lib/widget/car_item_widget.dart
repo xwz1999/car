@@ -62,11 +62,12 @@ class CarItemWidget extends StatelessWidget {
                 Text(
                   name,
                   maxLines: 2,
-                  style: TextStyle(
+                  style:
+                  Theme.of(context).textTheme.subtitle2?.copyWith(
                     overflow: TextOverflow.ellipsis,
-                    color: BaseStyle.color111111,
-                    fontSize: BaseStyle.fontSize28,
-                  ),
+                    color: const Color(0xFF111111),
+                  )
+
                 ),
                 16.hb,
                 Row(

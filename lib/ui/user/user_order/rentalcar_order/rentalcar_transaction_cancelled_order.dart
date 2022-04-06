@@ -1,4 +1,3 @@
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_order_data.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,7 @@ class _CancelOrderState extends State<CancelOrder> {
 
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: BodyColor,
+        backgroundColor: bodyColor,
         body: ListView(
           children: [
             16.hb,
@@ -43,7 +42,7 @@ class _CancelOrderState extends State<CancelOrder> {
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 height: 120.w,
                 color: Colors.white,
-                child: Text('')
+                child: const Text('')
                 // TimeLinesWidget(
                 //   index: 1,
                 //   items: [

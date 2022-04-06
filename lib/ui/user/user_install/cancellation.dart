@@ -1,11 +1,8 @@
 // ignore_for_file: unused_element
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_install/validation.dart';
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:cloud_car/widget/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 
 class CancellationPage extends StatefulWidget {
@@ -45,7 +42,7 @@ class _CancellationPageState extends State<CancellationPage> {
         ),
         backgroundColor: kForeGroundColor, //内容颜色
         extendBody: true,
-        body: Container(
+        body: SizedBox(
           width: 750.w,
           child: Column(
             children: [
@@ -103,45 +100,44 @@ class _CancellationPageState extends State<CancellationPage> {
 
 //
   _getBody() {
-    return Container(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '账号被注销后，如下信息将被清空且无法找回',
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-        32.hb,
-        SizedBox(
-          width: 300.w,
-          height: 328.w,
-          // child: Text(
-          // '',
-          // style: Theme.of(context)
-          //     .textTheme
-          //     .subtitle2
-          //     ?.copyWith(color: const Color(0xff666666)),
-          // ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //Padding(padding: EdgeInsets.symmetric(vertical: 20.w)),
-              _getText('1、账号内公司相关信息'),
-              20.hb,
-              _getText('2、发布车辆信息'),
-              20.hb,
-              _getText('3、邀请客户信息'),
-              20.hb,
-              _getText('4、成交合同数据 '),
-              20.hb,
-              _getText('5、钱包余额'),
-              20.hb,
-              _getText('6、绑定银行卡信息')
-            ],
-          ),
-        )
+    Text(
+      '账号被注销后，如下信息将被清空且无法找回',
+      style: Theme.of(context).textTheme.subtitle2,
+    ),
+    32.hb,
+    SizedBox(
+      width: 300.w,
+      height: 328.w,
+      // child: Text(
+      // '',
+      // style: Theme.of(context)
+      //     .textTheme
+      //     .subtitle2
+      //     ?.copyWith(color: const Color(0xff666666)),
+      // ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //Padding(padding: EdgeInsets.symmetric(vertical: 20.w)),
+          _getText('1、账号内公司相关信息'),
+          20.hb,
+          _getText('2、发布车辆信息'),
+          20.hb,
+          _getText('3、邀请客户信息'),
+          20.hb,
+          _getText('4、成交合同数据 '),
+          20.hb,
+          _getText('5、钱包余额'),
+          20.hb,
+          _getText('6、绑定银行卡信息')
+        ],
+      ),
+    )
       ],
-    ));
+    );
   }
 
 //
