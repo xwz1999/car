@@ -26,6 +26,7 @@ class _PayChangesPageState extends State<PayChangesPage>
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
