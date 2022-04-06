@@ -12,6 +12,12 @@ class AppTheme {
               color: const Color(0xFF333333),
               fontWeight: FontWeight.bold,
             ),
+            headline4: TextStyle(
+              fontSize: 36.sp,
+              color: const Color(0xFF111111),
+              fontWeight: FontWeight.bold,
+            ),
+
             subtitle1: TextStyle(
               fontSize: 32.sp,
               color: const Color(0xFF333333),
