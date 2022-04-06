@@ -50,11 +50,7 @@ class _FashionablePageState extends State<FashionablePage>
             isSpecial: true,
           ),
           backgroundColor: kForeGroundColor,
-          title: Text('分账确认',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
+          title: Text('分账确认', style: Theme.of(context).textTheme.headline6),
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         extendBody: true,
@@ -76,10 +72,13 @@ class _FashionablePageState extends State<FashionablePage>
       children: [
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
-          color: const Color.fromRGBO(2, 122, 255, 0.1),
-          child: const Text(
+          color: const Color.fromRGBO(153, 153, 153, 0.1),
+          child: Text(
             "已读",
-            style: TextStyle(color: Color.fromRGBO(2, 122, 255, 1)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(color: const Color(0xFF999999)),
           ),
         )
       ],
@@ -91,10 +90,14 @@ class _FashionablePageState extends State<FashionablePage>
       children: [
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
-          color: Color.fromRGBO(153, 153, 153, 0.1),
-          child: const Text(
+          margin: EdgeInsets.only(left: 50.w),
+          color: const Color.fromRGBO(2, 122, 255, 0.1),
+          child: Text(
             "未读",
-            style: TextStyle(color: Color.fromRGBO(153, 153, 153, 1)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(color: const Color(0xFF027AFF)),
           ),
         )
       ],
@@ -112,14 +115,12 @@ class _FashionablePageState extends State<FashionablePage>
               Padding(padding: EdgeInsets.only(left: 32.w, top: 16.w)),
               Text(
                 item['title'],
-                style: TextStyle(
-                    fontSize: 32.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
+                style: Theme.of(context).textTheme.subtitle1,
               ),
               Container(
                   padding: EdgeInsets.only(left: 243.w, top: 20.w),
                   //child: item['conditions'] == 0 ? print('0') : print('1');
-                  child: item['conditions'] == '0' ? _read() : _noread()
+                  child: item['conditions'] == '0' ? _noread() : _read()
                   // if(item['conditions']=='0') {
                   //   _read();
                   // } else {
@@ -139,16 +140,15 @@ class _FashionablePageState extends State<FashionablePage>
                   children: [
                     Text(
                       '分账内容',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(102, 102, 102, 1)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(color: const Color(0xFF666666)),
                     ),
                     48.wb,
                     Text(
                       item['content'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(51, 51, 51, 1)),
+                      style: Theme.of(context).textTheme.subtitle2,
                     )
                   ],
                 ),
@@ -157,16 +157,15 @@ class _FashionablePageState extends State<FashionablePage>
                   children: [
                     Text(
                       '操作人',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(102, 102, 102, 1)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(color: const Color(0xFF666666)),
                     ),
                     48.wb,
                     Text(
                       item['name'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(51, 51, 51, 1)),
+                      style: Theme.of(context).textTheme.subtitle2,
                     )
                   ],
                 ),
@@ -175,16 +174,15 @@ class _FashionablePageState extends State<FashionablePage>
                   children: [
                     Text(
                       '出资金额/分账金额',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(102, 102, 102, 1)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(color: const Color(0xFF666666)),
                     ),
                     48.wb,
                     Text(
                       item['money'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(51, 51, 51, 1)),
+                      style: Theme.of(context).textTheme.subtitle2,
                     )
                   ],
                 ),
@@ -193,16 +191,15 @@ class _FashionablePageState extends State<FashionablePage>
                   children: [
                     Text(
                       '操作时间',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(102, 102, 102, 1)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(color: const Color(0xFF666666)),
                     ),
                     48.wb,
                     Text(
                       item['time'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(51, 51, 51, 1)),
+                      style: Theme.of(context).textTheme.subtitle2,
                     )
                   ],
                 ),

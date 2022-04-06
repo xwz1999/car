@@ -1,14 +1,12 @@
-import 'package:cloud_car/ui/notice/notice_fashionable.dart';
-import 'package:cloud_car/ui/user/pay_num_changes.dart';
+import 'package:cloud_car/ui/user/user_assessment/pay_num_changes.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
+
 import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:cloud_car/widget/recharge_widget.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import '../home/car_manager/assessment_page.dart';
 
 class AssessmentNumPage extends StatefulWidget {
   const AssessmentNumPage({Key? key}) : super(key: key);
@@ -45,7 +43,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
     //super.build(context);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(246, 246, 246, 1),
+          backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
           leading: const CloudBackButton(
             isSpecial: true,
           ),
@@ -61,18 +59,17 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                   },
                   child: Text(
                     '次数变更',
-                    style: TextStyle(color: Colors.blue, fontSize: 28.sp),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        ?.copyWith(color: const Color(0xFF027AFF)),
                   ),
                 ),
               ],
             ),
             30.wb,
           ],
-          title: Text('评估次数充值',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
+          title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
         ),
         //extendBody: true,
         //extendBodyBehindAppBar: true,
@@ -98,7 +95,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
           height: 174.w,
           //padding: EdgeInsets.symmetric(horizontal: 32.w),
           child: Image.asset(
-            'assets/images/assessment_bg.png',
+            Assets.images.assessmentBg.path,
             fit: BoxFit.fill,
           ),
         ),
@@ -110,34 +107,32 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                 children: [
                   Text(
                     "剩余评估次数",
-                    style: TextStyle(color: Colors.white, fontSize: 32.sp),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(color: kForeGroundColor),
                   ),
                   24.wb,
                   Text(
                     '49',
-                    style: TextStyle(
-                        color: const Color.fromRGBO(2, 122, 255, 1),
-                        fontSize: 48.sp),
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                        fontSize: 42.sp,
+                        color: const Color(0xFF027AFF),
+                        fontWeight: FontWeight.bold),
                   )
                 ],
               ),
               Row(
                 children: [
-                  Text(
-                    '精准估值',
-                    style: TextStyle(
-                      color: const Color.fromRGBO(255, 255, 255, 0.7),
-                      fontSize: 20.sp,
-                    ),
-                  ),
+                  Text('精准估值',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 20.sp,
+                          color: const Color.fromRGBO(255, 255, 255, 0.7))),
                   16.wb,
-                  Text(
-                    '守护您的车辆交易',
-                    style: TextStyle(
-                      color: const Color.fromRGBO(255, 255, 255, 0.7),
-                      fontSize: 20.sp,
-                    ),
-                  ),
+                  Text('守护您的车辆交易',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 20.sp,
+                          color: const Color.fromRGBO(255, 255, 255, 0.7))),
                 ],
               )
             ],
@@ -164,7 +159,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
               padding: EdgeInsets.only(top: 42.w, right: 576.w),
               child: Text(
                 '展示价格',
-                style: TextStyle(fontSize: 28.sp, color: Colors.black),
+                style: Theme.of(context).textTheme.subtitle2,
               ),
             ), // Padding(padding: EdgeInsets.only(left: 32.w,)),
             //         Text(

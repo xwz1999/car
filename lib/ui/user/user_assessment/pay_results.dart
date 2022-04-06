@@ -1,8 +1,6 @@
-import 'dart:ui';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -13,8 +11,7 @@ class PayResultsPage extends StatefulWidget {
   _PayResultsPageState createState() => _PayResultsPageState();
 }
 
-class _PayResultsPageState extends State<PayResultsPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _PayResultsPageState extends State<PayResultsPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
@@ -37,11 +34,10 @@ class _PayResultsPageState extends State<PayResultsPage>
           leading: const CloudBackButton(
             isSpecial: true,
           ),
-          title: Text('评估次数充值',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
+          title: Text(
+            '评估次数充值',
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
@@ -70,7 +66,7 @@ class _PayResultsPageState extends State<PayResultsPage>
         width: 200.w,
         height: 200.w,
         child: Image.asset(
-          'assets/icons/successful.png',
+          Assets.icons.successful.path,
           fit: BoxFit.fill,
         ),
       ),
@@ -82,7 +78,7 @@ class _PayResultsPageState extends State<PayResultsPage>
     return SizedBox(
       child: Text(
         '评估次数充值成功',
-        style: TextStyle(fontSize: 32.sp, color: Colors.black),
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }
@@ -104,7 +100,10 @@ class _PayResultsPageState extends State<PayResultsPage>
         },
         child: Text(
           '返回我的',
-          style: TextStyle(color: Colors.white, fontSize: 28.sp),
+          style: Theme.of(context)
+              .textTheme
+              .subtitle2
+              ?.copyWith(color: kForeGroundColor),
         ),
       )),
     );

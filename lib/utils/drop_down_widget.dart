@@ -121,9 +121,9 @@ class _DropDownWidgetState extends State<DropDownWidget>
           alignment: Alignment.center,
           height: widget.height,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.w)),
-              color: Colors.white
-          ),
+              borderRadius:
+                  BorderRadius.vertical(bottom: Radius.circular(16.w)),
+              color: Colors.white),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: getScreenTitle(),
@@ -236,5 +236,4 @@ class _DropDownWidgetState extends State<DropDownWidget>
       ),
     );
   }
-
 }

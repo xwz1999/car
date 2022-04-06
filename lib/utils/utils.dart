@@ -1,7 +1,10 @@
-
+//
 import 'package:cloud_car/ui/home/models.dart';
+import 'package:cloud_car/utils/headers.dart';
+//
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Utils {
   static String getImgPath(String name, {String format = 'png'}) {
@@ -123,6 +126,50 @@ class Utils {
         LogUtil.e("onItemClick : $model");
         Utils.showSnackBar(context, 'onItemClick : ${model.name}');
       },
+    );
+  }
+
+//3月23日
+  static getPayCardStr(String code) {
+    final int length = code.length;
+    final int replaceLength = length - 4;
+    final String replacement =
+        List<String>.generate((replaceLength / 4).ceil(), (int _) => '.... ')
+            .join('');
+    return code.replaceRange(0, replaceLength, replacement);
+  }
+
+  static getDot() {
+    return Row(
+      children: [
+        Container(
+          width: 10.w,
+          height: 10.w,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(5.w)),
+        ),
+        8.wb,
+        Container(
+          width: 10.w,
+          height: 10.w,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(5.w)),
+        ),
+        8.wb,
+        Container(
+          width: 10.w,
+          height: 10.w,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(5.w)),
+        ),
+        8.wb,
+        Container(
+          width: 10.w,
+          height: 10.w,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(5.w)),
+        ),
+      ],
     );
   }
 }

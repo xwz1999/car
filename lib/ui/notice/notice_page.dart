@@ -1,3 +1,4 @@
+import 'package:cloud_car/ui/notice/car_system_informs.dart';
 import 'package:cloud_car/ui/notice/notice_examination.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -133,7 +134,7 @@ class _NoticePageState extends State<NoticePage>
               Get.to(() => const ExaminationPage());
               break;
             case '系统通知':
-              Get.to(() => const UserPage());
+              Get.to(() => const systemPage());
               break;
           }
         },
@@ -151,8 +152,10 @@ class _NoticePageState extends State<NoticePage>
           Expanded(flex: 1, child: Text(item['name'])),
           Text(
             item['time'],
-            style: TextStyle(
-                fontSize: 20.sp, color: const Color.fromRGBO(170, 170, 170, 1)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(fontSize: 20.sp, color: const Color(0xFFAAAAAA)),
           )
         ]),
         //子标题
@@ -163,9 +166,10 @@ class _NoticePageState extends State<NoticePage>
                 child: Text(
               item['msg'],
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 24.sp,
-                  color: const Color.fromRGBO(170, 170, 170, 1)),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  ?.copyWith(fontSize: 20.sp, color: const Color(0xFFAAAAAA)),
             )),
             //小红点组件
             Badge(
@@ -185,9 +189,6 @@ class _NoticePageState extends State<NoticePage>
           ]),
         ));
   }
-
-//已读未读数量
-  _readnum(item) {}
 
   @override
   bool get wantKeepAlive => true;

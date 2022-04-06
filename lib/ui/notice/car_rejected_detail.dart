@@ -1,7 +1,7 @@
 import 'package:cloud_car/ui/home/search_page.dart';
-import 'package:cloud_car/ui/home/task_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/cloud_back_button.dart';
+
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class _CardetailPageState extends State<CardetailPage>
     super.build(context);
     return CloudScaffold(
       path: Assets.images.noticeBg.path,
-      bodyColor: carColor,
+      bodyColor: kForeGroundColor,
       appbar: Container(
         color: Colors.transparent,
         height: kToolbarHeight + MediaQuery.of(context).padding.top,
@@ -51,7 +51,7 @@ class _CardetailPageState extends State<CardetailPage>
               onTap: () {
                 Get.back();
               },
-              child: Image.asset('assets/icons/back.png',
+              child: Image.asset(Assets.icons.back.path,
                   height: 48.w, width: 48.w),
             ),
             522.wb,
@@ -59,7 +59,7 @@ class _CardetailPageState extends State<CardetailPage>
               onTap: () {
                 Get.to(() => const SearchPage());
               },
-              child: Image.asset('assets/icons/ic_favorite1.png',
+              child: Image.asset(Assets.icons.icFavorite1.path,
                   height: 48.w, width: 48.w),
             ),
             24.wb,
@@ -67,7 +67,7 @@ class _CardetailPageState extends State<CardetailPage>
               onTap: () {
                 Get.to(() => const SearchPage());
               },
-              child: Image.asset('assets/icons/ic_share.png',
+              child: Image.asset(Assets.icons.icShare.path,
                   color: Colors.black, height: 48.w, width: 48.w),
             ),
             16.wb,
@@ -76,11 +76,7 @@ class _CardetailPageState extends State<CardetailPage>
       ),
       extendBody: true,
       //extendBodyBehindAppBar: true,
-      body: Container(
-          // padding: EdgeInsets.symmetric(
-          //   horizontal: 32.w,
-          //),
-          child: Column(
+      body: Column(
         children: [
           Container(
               padding: EdgeInsets.symmetric(horizontal: 32.w),
@@ -109,7 +105,7 @@ class _CardetailPageState extends State<CardetailPage>
             ],
           ),
         ],
-      )),
+      ),
     );
   }
 
@@ -123,10 +119,10 @@ class _CardetailPageState extends State<CardetailPage>
           child: Flexible(
               child: Text(
             '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 40.sp,
-                color: const Color.fromRGBO(17, 17, 17, 1)),
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                ?.copyWith(color: const Color(0xFF111111), fontSize: 40.sp),
           )),
         ),
       ],
@@ -161,12 +157,12 @@ class _CardetailPageState extends State<CardetailPage>
     return Column(
       children: [
         Row(
-          children: const [
+          children: [
             SizedBox(
               child: Text(
                 '车辆信息未填写完整',
-                style: TextStyle(
-                    color: Color.fromRGBO(230, 34, 34, 1),
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    color: const Color(0xFFE62222),
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -214,13 +210,11 @@ class _CardetailPageState extends State<CardetailPage>
               child: Row(
                 children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         '9.08-11.68万',
-                        style: TextStyle(
-                            fontSize: 28.sp,
-                            color: const Color.fromRGBO(51, 51, 51, 1),
-                            fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.subtitle2,
                       ),
                       Row(
                         children: [
@@ -235,9 +229,10 @@ class _CardetailPageState extends State<CardetailPage>
                           // ),
                           Text(
                             '参考行情',
-                            style: TextStyle(
-                                color: const Color.fromRGBO(153, 153, 153, 1),
-                                fontSize: 24.sp),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: const Color(0xFF999999)),
                           )
                         ],
                       ),
@@ -252,21 +247,23 @@ class _CardetailPageState extends State<CardetailPage>
                   ),
                   27.wb,
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Text(
                             '张斯斯',
-                            style: TextStyle(
-                                fontSize: 28.sp,
-                                color: const Color.fromRGBO(51, 51, 51, 1),
-                                fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.subtitle2,
                           ),
                           8.wb,
                           Text.rich(TextSpan(
                               text: '立即联系',
-                              style: TextStyle(
-                                  color: Colors.blue, fontSize: 20.sp),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                      color: const Color(0xFF027AFF),
+                                      fontSize: 20.sp),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = (() {
                                   ('object');
@@ -286,9 +283,10 @@ class _CardetailPageState extends State<CardetailPage>
                           // ),
                           Text(
                             '车务',
-                            style: TextStyle(
-                                color: const Color.fromRGBO(153, 153, 153, 1),
-                                fontSize: 24.sp),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: const Color(0xFF999999)),
                           )
                         ],
                       ),
@@ -303,14 +301,12 @@ class _CardetailPageState extends State<CardetailPage>
                   ),
                   27.wb,
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.symmetric(horizontal: 68.w)),
                       Text(
                         '893627',
-                        style: TextStyle(
-                            fontSize: 28.sp,
-                            color: const Color.fromRGBO(51, 51, 51, 1),
-                            fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.subtitle2,
                       ),
                       Row(
                         children: [
@@ -325,9 +321,10 @@ class _CardetailPageState extends State<CardetailPage>
                           // ),
                           Text(
                             '车辆编号',
-                            style: TextStyle(
-                                color: const Color.fromRGBO(153, 153, 153, 1),
-                                fontSize: 24.sp),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: const Color(0xFF999999)),
                           )
                         ],
                       ),
@@ -363,7 +360,7 @@ class _CardetailPageState extends State<CardetailPage>
                       EdgeInsets.symmetric(vertical: 10.w, horizontal: 40.w),
                   controller: _tabController,
                   indicatorWeight: 4,
-                  labelColor: const Color.fromRGBO(2, 122, 255, 1), //选中时的颜色
+                  labelColor: const Color(0xFF027AFF), //选中时的颜色
                   unselectedLabelColor:
                       const Color.fromRGBO(51, 51, 51, 1), //未选中颜色
                   indicatorColor: Colors.white, //下划线颜色
@@ -402,11 +399,9 @@ class _CardetailPageState extends State<CardetailPage>
                                       Text(
                                         '基本信息',
                                         //item['title'],
-                                        style: TextStyle(
-                                            fontSize: 28.sp,
-                                            color: const Color.fromRGBO(
-                                                51, 51, 51, 1),
-                                            fontWeight: FontWeight.bold),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2,
                                       ),
                                     ],
                                   ),
@@ -421,20 +416,21 @@ class _CardetailPageState extends State<CardetailPage>
                                           children: [
                                             Text(
                                               '车架号',
-                                              style: TextStyle(
-                                                  fontSize: 28.sp,
-                                                  color: const Color.fromRGBO(
-                                                      102, 102, 102, 1)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2
+                                                  ?.copyWith(
+                                                      color: const Color(
+                                                          0xFF999999)),
                                             ),
                                             48.wb,
                                             Text(
                                               'LGJ83476524683243',
                                               // detaillist[0]
                                               //     ['number']!, //??不确定的添加条件   ！确定
-                                              style: TextStyle(
-                                                  fontSize: 28.sp,
-                                                  color: const Color.fromRGBO(
-                                                      51, 51, 51, 1)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2,
                                             )
                                           ],
                                         ),
@@ -443,19 +439,20 @@ class _CardetailPageState extends State<CardetailPage>
                                           children: [
                                             Text(
                                               '车辆类型',
-                                              style: TextStyle(
-                                                  fontSize: 28.sp,
-                                                  color: const Color.fromRGBO(
-                                                      102, 102, 102, 1)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2
+                                                  ?.copyWith(
+                                                      color: const Color(
+                                                          0xFF999999)),
                                             ),
                                             24.wb,
                                             Text(
                                               '二手车(中规)',
                                               // detaillist[0]['type']!,
-                                              style: TextStyle(
-                                                  fontSize: 28.sp,
-                                                  color: const Color.fromRGBO(
-                                                      51, 51, 51, 1)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2,
                                             )
                                           ],
                                         ),
@@ -464,21 +461,21 @@ class _CardetailPageState extends State<CardetailPage>
                                           children: [
                                             Text(
                                               '品牌车型',
-                                              style: TextStyle(
-                                                  fontSize: 28.sp,
-                                                  color: const Color.fromRGBO(
-                                                      102, 102, 102, 1)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2
+                                                  ?.copyWith(
+                                                      color: const Color(
+                                                          0xFF999999)),
                                             ),
                                             24.wb,
                                             Flexible(
                                                 child: Text(
-                                              '奥迪A3 2020款 Sportback 35 TFSI 进取 运动型',
-                                              // detaillist[0]['models']!,
-                                              style: TextStyle(
-                                                  fontSize: 28.sp,
-                                                  color: const Color.fromRGBO(
-                                                      51, 51, 51, 1)),
-                                            )),
+                                                    '奥迪A3 2020款 Sportback 35 TFSI 进取 运动型',
+                                                    // detaillist[0]['models']!,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .subtitle2)),
                                           ],
                                         ),
                                       ],
@@ -513,7 +510,7 @@ class _CardetailPageState extends State<CardetailPage>
       margin: EdgeInsets.symmetric(horizontal: 24.w),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 170.w,
             height: 98.w,
             child: Column(
@@ -521,16 +518,16 @@ class _CardetailPageState extends State<CardetailPage>
                 SizedBox(
                   width: 56.w,
                   height: 56.w,
-                  child: Image.asset('assets/icons/editor.png'),
+                  child: Image.asset(Assets.icons.editor.path),
                 ),
                 Text(
                   '重新编辑',
-                  style: TextStyle(fontSize: 24.sp),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 170.w,
             height: 98.w,
             child: Column(
@@ -538,7 +535,7 @@ class _CardetailPageState extends State<CardetailPage>
                 SizedBox(
                   width: 56.w,
                   height: 56.w,
-                  child: Image.asset('assets/icons/no_transmission.png'),
+                  child: Image.asset(Assets.icons.noTransmission.path),
                 ),
                 Text(
                   '调价',
@@ -547,7 +544,7 @@ class _CardetailPageState extends State<CardetailPage>
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 170.w,
             height: 98.w,
             child: Column(
@@ -555,7 +552,7 @@ class _CardetailPageState extends State<CardetailPage>
                 SizedBox(
                   width: 56.w,
                   height: 56.w,
-                  child: Image.asset('assets/icons/no_upload.png'),
+                  child: Image.asset(Assets.icons.noUpload.path),
                 ),
                 Text(
                   '出售',
@@ -564,7 +561,7 @@ class _CardetailPageState extends State<CardetailPage>
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 170.w,
             height: 98.w,
             child: Column(
@@ -572,7 +569,7 @@ class _CardetailPageState extends State<CardetailPage>
                 SizedBox(
                   width: 56.w,
                   height: 56.w,
-                  child: Image.asset('assets/icons/no_download.png'),
+                  child: Image.asset(Assets.icons.download.path),
                 ),
                 Text(
                   '下架/退库',
@@ -598,8 +595,10 @@ class _CardetailPageState extends State<CardetailPage>
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
       child: Text(
         text,
-        style: TextStyle(
-            color: const Color.fromRGBO(230, 34, 34, 1), fontSize: 24.sp),
+        style: Theme.of(context)
+            .textTheme
+            .bodyText1
+            ?.copyWith(color: const Color(0xFFE62222)),
       ),
     );
   }
@@ -613,13 +612,11 @@ class _CardetailPageState extends State<CardetailPage>
             Radius.circular(4.w),
           )),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: const Color.fromRGBO(79, 90, 116, 1),
-          fontSize: 24.sp,
-        ),
-      ),
+      child: Text(text,
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1
+              ?.copyWith(color: const Color(0xFF4F5A74))),
     );
   }
 
@@ -672,7 +669,7 @@ class _CardetailPageState extends State<CardetailPage>
       pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
-        print('点击' + index.toString());
+        ('点击' + index.toString());
       },
       //布局方法
       //用户进行操作时停止自动翻页

@@ -1,8 +1,8 @@
+// ignore_for_file: camel_case_types
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class systemPage extends StatefulWidget {
   const systemPage({Key? key}) : super(key: key);
@@ -14,7 +14,6 @@ class systemPage extends StatefulWidget {
 class _systemPageState extends State<systemPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
-  
 
   @override
   void initState() {
@@ -35,11 +34,7 @@ class _systemPageState extends State<systemPage>
             isSpecial: true,
           ),
           backgroundColor: kForeGroundColor,
-          title: Text('系统通知',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
+          title: Text('系统通知', style: Theme.of(context).textTheme.headline6),
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         extendBody: true,
@@ -51,7 +46,6 @@ class _systemPageState extends State<systemPage>
               _time(),
               32.hb,
               _picture(),
-              10.hb,
               _content(),
             ],
           ),
@@ -70,9 +64,10 @@ class _systemPageState extends State<systemPage>
               padding: EdgeInsets.only(left: 284.w),
               child: Text(
                 '01-12 12:44',
-                style: TextStyle(
-                    fontSize: 24.sp,
-                    color: const Color.fromRGBO(153, 153, 153, 1)),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(color: const Color(0xFF999999)),
               ),
             )),
       ],
@@ -90,7 +85,7 @@ class _systemPageState extends State<systemPage>
               alignment: const Alignment(-0.6, 1),
               children: [
                 Align(
-                  child: Image.asset('assets/images/system_update.png'),
+                  child: Image.asset(Assets.images.systemUpdate.path),
                 ),
                 Positioned(
                     child: Column(
@@ -98,13 +93,14 @@ class _systemPageState extends State<systemPage>
                     Padding(padding: EdgeInsets.symmetric(vertical: 35.w)),
                     Text(
                       '系统升级',
-                      style: TextStyle(
-                          color: const Color.fromRGBO(255, 255, 255, 0.8),
-                          fontSize: 40.sp),
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                          fontSize: 40.sp,
+                          color: const Color.fromRGBO(255, 255, 255, 0.8)),
                     ),
                     Text(
                       'V1.0.1',
-                      style: TextStyle(color: Colors.white, fontSize: 48.sp),
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                          fontSize: 48.sp, color: const Color(0xffffffff)),
                     ),
                   ],
                 ))
@@ -136,8 +132,10 @@ class _systemPageState extends State<systemPage>
                     children: [
                       Text(
                         '更新内容',
-                        style: TextStyle(
-                            fontSize: 32.sp, fontWeight: FontWeight.bold),
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         width: 12.w,
@@ -153,7 +151,7 @@ class _systemPageState extends State<systemPage>
                   Flexible(
                       child: Text(
                     '本次更新优化用户沟通体验细节，修复无法发送车辆链接bug。',
-                    style: TextStyle(fontSize: 28.sp),
+                    style: Theme.of(context).textTheme.subtitle2,
                   ))
                 ],
               ),
