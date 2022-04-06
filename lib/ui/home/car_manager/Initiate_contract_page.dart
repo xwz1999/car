@@ -65,10 +65,15 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
         ),
         backgroundColor: kForeGroundColor,
         title: Text('发起合同',
-            style: TextStyle(
-                color: BaseStyle.color111111,
-                fontSize: BaseStyle.fontSize36,
-                fontWeight: FontWeight.bold)),
+            style: Theme.of(context).textTheme.headline4?.copyWith(
+
+            ),
+            // TextStyle(
+            //
+            //     color: BaseStyle.color111111,
+            //     fontSize: BaseStyle.fontSize36,
+            //     fontWeight: FontWeight.bold)
+        ),
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: const Color(0xFFF6F6F6),

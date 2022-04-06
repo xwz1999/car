@@ -51,6 +51,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                   expandedHeight: 740.w,
                   leadingWidth: 0,
                   titleSpacing: 0,
+
                   title: Container(
                     color: Colors.white,
                     width: double.infinity,
