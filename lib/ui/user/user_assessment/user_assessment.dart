@@ -110,7 +110,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
-                        ?.copyWith(color: const Color(0xFFFFFFFF)),
+                        ?.copyWith(color: kForeGroundColor),
                   ),
                   24.wb,
                   Text(

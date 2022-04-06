@@ -43,7 +43,7 @@ class _CancellationPageState extends State<CancellationPage> {
                   fontWeight: FontWeight.bold)),
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: Color(0xffffffff), //内容颜色
+        backgroundColor: kForeGroundColor, //内容颜色
         extendBody: true,
         body: Container(
           width: 750.w,
@@ -182,7 +182,7 @@ class _CancellationPageState extends State<CancellationPage> {
             style: Theme.of(context)
                 .textTheme
                 .subtitle2
-                ?.copyWith(color: const Color(0xffffffff)),
+                ?.copyWith(color: kForeGroundColor),
           ),
         ),
       ),

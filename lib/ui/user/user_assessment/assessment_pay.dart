@@ -99,7 +99,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2
-                        ?.copyWith(color: const Color(0xffffffff)),
+                        ?.copyWith(color: kForeGroundColor),
                   ),
                 )),
               )

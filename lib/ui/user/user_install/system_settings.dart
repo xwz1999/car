@@ -4,11 +4,10 @@ import 'package:cloud_car/ui/user/user_install/enterprise_information.dart';
 import 'package:cloud_car/ui/user/user_install/real_name.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
+
 import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class InatallPage extends StatefulWidget {
   const InatallPage({Key? key}) : super(key: key);

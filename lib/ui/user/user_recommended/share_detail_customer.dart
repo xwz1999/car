@@ -52,7 +52,7 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFF66A2FF), Color(0xffffffff)])),
+                    colors: [Color(0xFF66A2FF), kForeGroundColor])),
             child: Stack(
               children: [
                 Align(
@@ -209,7 +209,7 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
               child: Text(
                 '即刻成为',
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: const Color(0xffffffff),
+                    color: kForeGroundColor,
                     fontSize: 56.sp,
                     fontFamily: 'YouSheBiaoTiHei'),
               )),
@@ -221,7 +221,7 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
-                    ?.copyWith(color: const Color(0xffffffff), fontSize: 72.sp),
+                    ?.copyWith(color: kForeGroundColor, fontSize: 72.sp),
               ))
         ],
       ),

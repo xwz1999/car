@@ -49,7 +49,7 @@ class _RecommendationsState extends State<Recommendations> {
             child: Text(
               '请选择建议类型',
               style: TextStyle(
-                  color: const Color(0xFF111111),
+                  color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize28,
                   fontWeight: FontWeight.bold),
             ),
@@ -57,7 +57,7 @@ class _RecommendationsState extends State<Recommendations> {
           24.hb,
           Container(
               height: 400.w,
-              color: const Color(0xFFFFFFFF),
+              color: kForeGroundColor,
               padding: EdgeInsets.symmetric(
                 horizontal: 32.w,
               ),
@@ -85,7 +85,7 @@ class _RecommendationsState extends State<Recommendations> {
             child: Text(
               '问题和意见',
               style: TextStyle(
-                  color: const Color(0xFF111111),
+                  color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize28,
                   fontWeight: FontWeight.bold),
             ),
@@ -93,7 +93,7 @@ class _RecommendationsState extends State<Recommendations> {
           24.hb,
           Container(
               height: 336.w,
-              color: const Color(0xFFFFFFFF),
+              color: kForeGroundColor,
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

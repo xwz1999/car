@@ -1,8 +1,10 @@
 import 'package:cloud_car/ui/home/home_page.dart';
 import 'package:cloud_car/ui/user/product_manuals.dart';
+import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
+import 'package:cloud_car/ui/user/user_order/myorder.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_install/system_settings.dart';
@@ -15,8 +17,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../home/car_manager/car_manager_page.dart';
-
-import '../notice/car_system_informs.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -163,7 +163,7 @@ class _UserPageState extends State<UserPage>
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
-                          ?.copyWith(color: const Color(0xFFFFFFFF)),
+                          ?.copyWith(color: kForeGroundColor),
                     )),
               ],
             ),
@@ -194,7 +194,7 @@ class _UserPageState extends State<UserPage>
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1
-                      ?.copyWith(color: const Color(0xFFFFFFFF)),
+                      ?.copyWith(color: kForeGroundColor),
                   // style: TextStyle(
                   //     fontSize: 32.sp,
                   //     color: Colors.white,
@@ -502,10 +502,10 @@ class _UserPageState extends State<UserPage>
       onTap: () {
         switch (name) {
           case '我的订单':
-            Get.to(() => const CarManagerPage());
+            Get.to(() => const MyOrderPage());
             break;
           case '关于云云':
-            Get.to(() => const systemPage());
+            Get.to(() => const AboutPage());
             break;
           case '员工管理':
             Get.to(() => const StaffManagement());

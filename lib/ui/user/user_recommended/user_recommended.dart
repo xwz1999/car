@@ -81,7 +81,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                           style: Theme.of(context)
                               .textTheme
                               .headline6
-                              ?.copyWith(color: const Color(0xffffffff)),
+                              ?.copyWith(color: kForeGroundColor),
                         ),
                       ],
                     )),

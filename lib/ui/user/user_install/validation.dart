@@ -66,7 +66,7 @@ class _ValidationPageState extends State<ValidationPage> {
                   fontWeight: FontWeight.bold)),
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: Color(0xffffffff), //内容颜色
+        backgroundColor: kForeGroundColor, //内容颜色
         extendBody: true,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w),
@@ -349,7 +349,7 @@ class _ValidationPageState extends State<ValidationPage> {
             style: Theme.of(context)
                 .textTheme
                 .subtitle2
-                ?.copyWith(color: const Color(0xffffffff)),
+                ?.copyWith(color: kForeGroundColor),
           ),
         ),
       ),

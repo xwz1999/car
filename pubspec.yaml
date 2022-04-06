@@ -71,6 +71,8 @@ dependencies:
   # 虚线框
   dotted_border: ^2.0.0+2
   dash_painter: ^1.0.2
+  # 时间轴
+  timelines: ^0.1.0
 
 dev_dependencies:
   flutter_test:

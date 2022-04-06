@@ -47,7 +47,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
     //super.build(context);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFFFFFFFF),
+          backgroundColor: kForeGroundColor,
           leading: const CloudBackButton(
             isSpecial: true,
           ),
@@ -127,7 +127,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2
-                        ?.copyWith(color: const Color(0xffffffff)),
+                        ?.copyWith(color: kForeGroundColor),
                   ),
                 ),
               )
@@ -186,7 +186,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
   _balance() {
     return ExpansionTile(
       initiallyExpanded: true,
-      backgroundColor: const Color(0xffffffff),
+      backgroundColor: kForeGroundColor,
       title: Text(
         '余额明细',
         style: Theme.of(context)

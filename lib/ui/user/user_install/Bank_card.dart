@@ -50,7 +50,7 @@ class _BankCardPageState extends State<BankCardPage> {
                   fontWeight: FontWeight.bold)),
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: const Color(0xffffffff), //内容颜色
+        backgroundColor: kForeGroundColor, //内容颜色
         extendBody: true,
         body: SizedBox(
           child: ListView(

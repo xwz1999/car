@@ -33,7 +33,7 @@ class _CreateOrderState extends State<CreateOrder> {
             child: Text(
               '怎么创建订单',
               style: TextStyle(
-                  color: const Color(0xFF111111),
+                  color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize28,
                   fontWeight: FontWeight.bold),
             ),
@@ -41,7 +41,7 @@ class _CreateOrderState extends State<CreateOrder> {
           24.hb,
           Container(
               height: 520.w,
-              color: const Color(0xFFFFFFFF),
+              color: kForeGroundColor,
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +161,7 @@ class _CreateOrderState extends State<CreateOrder> {
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
-                      ?.copyWith(color: const Color(0xffffffff)),
+                      ?.copyWith(color: kForeGroundColor),
                 ),
               ),
             ),

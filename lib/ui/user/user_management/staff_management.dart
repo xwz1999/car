@@ -149,7 +149,7 @@ _getList() {
           ),
           children: [
             Container(
-              color: const Color(0xFFFFFFFF),
+              color: kForeGroundColor,
               child: ListTile(
                 title: Column(
                   children: [
@@ -196,7 +196,7 @@ _getList() {
           ),
           children: [
             Container(
-              color: const Color(0xFFFFFFFF),
+              color: kForeGroundColor,
               child: ListTile(
                 title: Column(
                   children: [
@@ -313,8 +313,7 @@ _getButtom() {
             child: Text(
               '新建员工',
               style: TextStyle(
-                  color: const Color(0xFFFFFFFF),
-                  fontSize: BaseStyle.fontSize28),
+                  color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
             )),
       )
     ],

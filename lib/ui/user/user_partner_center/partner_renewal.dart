@@ -132,7 +132,7 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
               style: Theme.of(context)
                   .textTheme
                   .subtitle2
-                  ?.copyWith(color: const Color(0xffffffff)),
+                  ?.copyWith(color: kForeGroundColor),
             ),
           )),
         )
@@ -444,14 +444,14 @@ class _PartnerRenewalPageState extends State<PartnerRenewalPage>
                           style: Theme.of(context)
                               .textTheme
                               .headline6
-                              ?.copyWith(color: const Color(0xffffffff)),
+                              ?.copyWith(color: kForeGroundColor),
                         ),
                         Text(
                           '189****3627',
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
-                              ?.copyWith(color: const Color(0xffffffff)),
+                              ?.copyWith(color: kForeGroundColor),
                         )
                       ],
                     ),

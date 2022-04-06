@@ -121,6 +121,9 @@ class $AssetsIconsGen {
   AssetGenImage get detailFile =>
       const AssetGenImage('assets/icons/detail_file.png');
 
+  /// File path: assets/icons/down.png
+  AssetGenImage get down => const AssetGenImage('assets/icons/down.png');
+
   /// File path: assets/icons/download.png
   AssetGenImage get download =>
       const AssetGenImage('assets/icons/download.png');
@@ -298,6 +301,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/transmission.png
   AssetGenImage get transmission =>
       const AssetGenImage('assets/icons/transmission.png');
+
+  /// File path: assets/icons/up.png
+  AssetGenImage get up => const AssetGenImage('assets/icons/up.png');
 
   /// File path: assets/icons/upload.png
   AssetGenImage get upload => const AssetGenImage('assets/icons/upload.png');

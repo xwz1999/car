@@ -104,7 +104,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
           style: Theme.of(context)
               .textTheme
               .subtitle2
-              ?.copyWith(color: const Color(0xFFFFFFFF)),
+              ?.copyWith(color: kForeGroundColor),
         ),
       )),
     );

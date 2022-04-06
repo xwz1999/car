@@ -37,7 +37,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
           Container(
             height: 224.w,
             padding: EdgeInsets.symmetric(horizontal: 32.w),
-            color: const Color(0xFFFFFFFF),
+            color: kForeGroundColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -111,7 +111,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
           ),
           16.hb,
           Container(
-            color: const Color(0xFFFFFFFF),
+            color: kForeGroundColor,
             width: 750.w,
             child:
                 //padding: EdgeInsets.symmetric(horizontal: 32.w),
