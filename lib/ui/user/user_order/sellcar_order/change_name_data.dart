@@ -32,7 +32,7 @@ class _ChangeNameDataState extends State<ChangeNameData> {
           margin: EdgeInsets.symmetric(horizontal: 32.w),
           child: ListView(
             children: [
-              getText('检测报告'),
+              getText('登记证书'),
               //48.hb,
               getText('行驶证'),
               //48.hb,

@@ -1,10 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
-
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/balance_payment.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/detection.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/first_pay.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
@@ -263,25 +258,23 @@ class _SalesOrdersState extends State<SalesOrders> {
       body: Column(
         children: [
           SizedBox(
-            height: 88.w,
-            child: Expanded(
-                child: CarWidget(
-              items: const [
-                '全部',
-                '待预定',
-                '已预定',
-                '待检测',
-                '支付首付',
-                '待过户',
-                '支付尾款',
-                '交易完成',
-                '交易取消'
-              ],
-              callBack: (name) {
-                setState(() {});
-              },
-            )),
-          ),
+              height: 88.w,
+              child: CarWidget(
+                items: const [
+                  '全部',
+                  '待预定',
+                  '已预定',
+                  '待检测',
+                  '支付首付',
+                  '待过户',
+                  '支付尾款',
+                  '交易完成',
+                  '交易取消'
+                ],
+                callBack: (name) {
+                  setState(() {});
+                },
+              )),
           16.hb,
           Expanded(
             child: ListView.builder(
@@ -303,43 +296,58 @@ class _SalesOrdersState extends State<SalesOrders> {
           switch (item['judgename']) {
             case '待预定':
               Get.to(() => const Reservation(
+                    stat: '待预定',
                     judge: false,
                   ));
               break;
             case '已预定':
               Get.to(() => const Reservation(
+                    stat: '待预定',
                     judge: true,
                   ));
               break;
             case '待检测':
-              Get.to(() => const Detection());
+              Get.to(() => const Reservation(
+                    stat: '待检测',
+                    judge: true,
+                  ));
               break;
             case '支付首付':
               switch (item['picename']) {
                 case '需付首付':
-                  Get.to(() => const FirstPay(
+                  Get.to(() => const Reservation(
+                        stat: '支付首付',
                         judge: false,
                       ));
                   break;
                 case '已付首付':
-                  Get.to(() => const FirstPay(
+                  Get.to(() => const Reservation(
+                        stat: '支付首付',
                         judge: true,
                       ));
                   break;
               }
+
               break;
             case '待过户':
-              Get.to(() => const ChangeName());
+              Get.to(() => const Reservation(
+                    stat: '待过户',
+                    judge: true,
+                  ));
               break;
             case '支付尾款':
               switch (item['picename']) {
                 case '需付尾款':
-                  Get.to(() => const BalancePayment(
+                  Get.to(() => const Reservation(
+                        stat: '支付尾款',
                         judge: false,
                       ));
                   break;
                 case '已付尾款':
-                  Get.to(() => const MakeDeal());
+                  Get.to(() => const Reservation(
+                        stat: '支付尾款',
+                        judge: true,
+                      ));
                   break;
               }
               break;

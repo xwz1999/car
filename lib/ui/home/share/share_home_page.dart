@@ -343,6 +343,5 @@ class _ShareHomePageState extends State<ShareHomePage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

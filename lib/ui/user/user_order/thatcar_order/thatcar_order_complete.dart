@@ -2,15 +2,15 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-class ThatcarUnpaid extends StatefulWidget {
+class ThatcarComplete extends StatefulWidget {
   final String stat;
-  const ThatcarUnpaid({Key? key, required this.stat}) : super(key: key);
+  const ThatcarComplete({Key? key, required this.stat}) : super(key: key);
 
   @override
-  State<ThatcarUnpaid> createState() => _ThatcarUnpaidState();
+  State<ThatcarComplete> createState() => _ThatcarCompleteState();
 }
 
-class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
+class _ThatcarCompleteState extends State<ThatcarComplete> {
   late String stat = widget.stat;
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               getTitle('订单信息'),
-              32.hb,
+              32.wb,
               _getText('客户姓名', '李四'),
               16.hb,
               _getText('联系方式', '18998785432'),
@@ -48,16 +48,42 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
               _getText('上门时间', '2022-01-04 12:00'),
             ],
           )),
-          stat == '待支付'
+          getCarBox(Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              getTitle('支付信息'),
+              32.wb,
+              _getText('支付方式', '支付宝'),
+              16.hb,
+              _getText('支付时间', '2022-01-04 12:00'),
+            ],
+          )),
+          getCarBox(Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              getTitle('车辆信息上门'),
+              32.wb,
+              _getText('上门人员', '张斯斯'),
+              16.hb,
+              _getText('上门时间', '2022-01-04 12:00'),
+            ],
+          )),
+          stat == '已完成'
               ? const SizedBox()
               : getCarBox(Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getTitle('支付信息'),
+                    getTitle('退款信息'),
                     32.wb,
-                    _getText('支付方式', '支付宝'),
+                    _getText('退回方式', '支付宝'),
                     16.hb,
-                    _getText('支付时间', '2022-01-04 12:00'),
+                    _getText('退回时间', '2022-01-04 12:00'),
+                    16.hb,
+                    _getText('申请时间', '2022-01-04 12:00'),
+                    16.hb,
+                    _getText('退款理由', '车辆实际情况与描述不相符'),
+                    16.hb,
+                    _getPicture('照片凭证', Assets.images.carBanner.path),
                   ],
                 ))
         ],
@@ -85,13 +111,13 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
               decoration: BoxDecoration(
-                color: const Color(0xFFFE8029).withOpacity(0.08),
+                color: const Color(0xFF027AFF).withOpacity(0.08),
               ),
               child: Text(
                 stat,
                 style: TextStyle(
                     fontSize: BaseStyle.fontSize24,
-                    color: const Color(0xFFFE8029)),
+                    color: const Color(0xFF027AFF)),
               ),
             )
           ],
@@ -123,7 +149,7 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
                 32.hb,
                 getChip('过户0次', '2020年10月', '20.43万公里'),
               ],
-            )
+            ),
           ],
         ),
         24.hb,
@@ -139,14 +165,14 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: stat == '已取消'
+              color: stat == '已退款'
                   ? const Color(0xFF4F5A74).withOpacity(0.08)
                   : const Color(0xFF027AFF).withOpacity(0.08)),
           child: Text(
             num,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize20,
-                color: stat == '已取消'
+                color: stat == '已退款'
                     ? const Color(0xFF4F5A74)
                     : const Color(0xFF027AFF)),
           ),
@@ -184,7 +210,6 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
       //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
       //leading: Icon(Icons.),
       collapsedBackgroundColor: kForeGroundColor,
-
       title: Row(
         children: [
           getTitle('订单总额'),
@@ -293,6 +318,30 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
             ),
           ),
         ),
+      ],
+    );
+  }
+
+  _getPicture(String title, String url) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+        24.hb,
+        GestureDetector(
+          child: Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.w)),
+            width: 200.w,
+            height: 150.w,
+            child: Image.asset(
+              url,
+              fit: BoxFit.fill,
+            ),
+          ),
+        )
       ],
     );
   }

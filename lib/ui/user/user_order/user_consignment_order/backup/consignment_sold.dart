@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../../utils/headers.dart';
-import '../../../../widget/button/cloud_back_button.dart';
+import '../../../../../utils/headers.dart';
+import '../../../../../widget/button/cloud_back_button.dart';
 
-class ConsignmentSale extends StatefulWidget {
-  const ConsignmentSale({Key? key}) : super(key: key);
+class ConsignmentSold extends StatefulWidget {
+  const ConsignmentSold({Key? key}) : super(key: key);
 
   @override
-  State<ConsignmentSale> createState() => _ConsignmentSaleState();
+  State<ConsignmentSold> createState() => _ConsignmentSoldState();
 }
 
-class _ConsignmentSaleState extends State<ConsignmentSale> {
+class _ConsignmentSoldState extends State<ConsignmentSold> {
+  late bool bl = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +35,7 @@ class _ConsignmentSaleState extends State<ConsignmentSale> {
             margin: EdgeInsets.symmetric(horizontal: 32.w),
             height: 120.w,
             color: Colors.white,
-            child:const Text('')),
+            child: const Text('')),
         16.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -129,6 +130,82 @@ class _ConsignmentSaleState extends State<ConsignmentSale> {
             ],
           ),
         ),
+        16.hb,
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 32.w),
+          padding: EdgeInsets.all(28.w),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 0.w),
+                child: getTitle('出售信息'),
+              ),
+              36.hb,
+              _getText('出售信息', '李四'),
+              36.hb,
+              _getText('手机号', '18935263526'),
+              36.hb,
+              _getText('出售价格', '¥300,000.00'),
+              36.hb,
+              _getText('出售时间', '2021-12-30 12:00:00'),
+            ],
+          ),
+        ),
+        16.hb,
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 32.w),
+          padding: EdgeInsets.all(28.w),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 0.w),
+                child: getTitle('到款信息'),
+              ),
+              36.hb,
+              _getText('到款金额', '¥300,000.00'),
+              36.hb,
+              _getText('到款时间', '2021-12-30 12:00:00'),
+            ],
+          ),
+        ),
+        16.hb,
+        bl
+            ? Container(
+                margin: EdgeInsets.symmetric(horizontal: 32.w),
+                padding: EdgeInsets.all(28.w),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.w)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 0.w),
+                      child: getTitle('到款信息'),
+                    ),
+                    36.hb,
+                    _getText('到款金额', '¥300,000.00'),
+                    36.hb,
+                    _getText('到款时间', '2021-12-30 12:00:00'),
+                    36.hb,
+                    _getPicture('到款凭证', Assets.images.carBanner.path),
+                  ],
+                ),
+              )
+            : const SizedBox(),
+        ElevatedButton(
+            onPressed: () {
+              bl = true;
+
+              //Get.to(() => const ConsignmentSuccessfully());
+            },
+            child: const Text('支付成功'))
       ]),
     );
   }
@@ -146,19 +223,16 @@ class _ConsignmentSaleState extends State<ConsignmentSale> {
           ),
         ),
         32.wb,
-        Padding(
-            padding: EdgeInsets.only(left: 0.w),
-            child: SizedBox(
-              width: 478.w,
-              child: Flexible(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                      color: BaseStyle.color333333,
-                      fontSize: BaseStyle.fontSize28),
-                ),
-              ),
-            ))
+        Flexible(
+          child: SizedBox(
+            width: 478.w,
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -223,4 +297,43 @@ class _ConsignmentSaleState extends State<ConsignmentSale> {
       ],
     );
   }
+
+  _getPicture(String title, String url) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+        24.hb,
+        GestureDetector(
+          child: SizedBox(
+            width: 200.w,
+            height: 150.w,
+            child: Image.asset(url),
+          ),
+        )
+      ],
+    );
+  }
+  // _getPicture(String title, String url) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         title,
+  //         style: Theme.of(context).textTheme.subtitle2,
+  //       ),
+  //       24.hb,
+  //       GestureDetector(
+  //         child: SizedBox(
+  //           width: 200.w,
+  //           height: 150.w,
+  //           child: Image.asset(url),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 }

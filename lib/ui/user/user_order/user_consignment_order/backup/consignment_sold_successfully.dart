@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../../utils/headers.dart';
-import '../../../../widget/button/cloud_back_button.dart';
+import '../../../../../utils/headers.dart';
+import '../../../../../widget/button/cloud_back_button.dart';
 
-class ConsignmentTransaction extends StatefulWidget {
-  const ConsignmentTransaction({Key? key}) : super(key: key);
+class ConsignmentSuccessfully extends StatefulWidget {
+  const ConsignmentSuccessfully({Key? key}) : super(key: key);
 
   @override
-  State<ConsignmentTransaction> createState() => _ConsignmentTransactionState();
+  State<ConsignmentSuccessfully> createState() =>
+      _ConsignmentSuccessfullyState();
 }
 
-class _ConsignmentTransactionState extends State<ConsignmentTransaction> {
+class _ConsignmentSuccessfullyState extends State<ConsignmentSuccessfully> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +47,7 @@ class _ConsignmentTransactionState extends State<ConsignmentTransaction> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('客户信息'),
+                child: getTitle("客户信息"),
               ),
               36.hb,
               _getText('客户姓名', '莉丝'),
@@ -140,12 +141,38 @@ class _ConsignmentTransactionState extends State<ConsignmentTransaction> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('交易取消信息'),
+                child: getTitle('出售信息'),
               ),
               36.hb,
-              _getText('取消人员', '云云问车平台'),
+              _getText('出售信息', '李四'),
               36.hb,
-              _getText('取消时间', '2021-12-30 12:00:00'),
+              _getText('手机号', '18935263526'),
+              36.hb,
+              _getText('出售价格', '¥300,000.00'),
+              36.hb,
+              _getText('出售时间', '2021-12-30 12:00:00'),
+            ],
+          ),
+        ),
+        16.hb,
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 32.w),
+          padding: EdgeInsets.all(28.w),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 0.w),
+                child: getTitle('到款信息'),
+              ),
+              36.hb,
+              _getText('到款金额', '¥300,000.00'),
+              36.hb,
+              _getText('到款时间', '2021-12-30 12:00:00'),
+              36.hb,
+              _getPicture('到款凭证', Assets.images.carBanner.path),
             ],
           ),
         ),
@@ -183,13 +210,6 @@ class _ConsignmentTransactionState extends State<ConsignmentTransaction> {
     );
   }
 
-  getTitle(String title) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.subtitle2,
-    );
-  }
-
   getText(String time, String distance) {
     return Row(
       children: [
@@ -215,6 +235,56 @@ class _ConsignmentTransactionState extends State<ConsignmentTransaction> {
             distance,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
+          ),
+        )
+        // Padding(padding: EdgeInsets.symmetric(horizontal: 24.w)),
+        // Chip(
+        //   label: Text(num),
+        //   labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
+        //   backgroundColor: const Color(0xFF027AFF).withOpacity(0.08),
+        //   labelStyle: TextStyle(
+        //       fontSize: BaseStyle.fontSize20, color: const Color(0xFF027AFF)),
+        //   shape:
+        //       BeveledRectangleBorder(borderRadius: BorderRadius.circular(4.w)),
+        // ),
+        // ChipTheme(
+        //     data: ChipThemeData(
+        //       backgroundColor: const Color(0xFF4F5A74).withOpacity(0.08),
+        //       labelStyle: TextStyle(
+        //           fontSize: BaseStyle.fontSize20,
+        //           color: const Color(0xFF4F5A74)),
+        //       shape: BeveledRectangleBorder(
+        //           borderRadius: BorderRadius.circular(4.w)),
+        //       labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
+        //     ),
+        //     child: Wrap(
+        //       children: [Chip(label: Text(time)), Chip(label: Text(distance))],
+        //     ))
+      ],
+    );
+  }
+
+  getTitle(String title) {
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.subtitle2,
+    );
+  }
+
+  _getPicture(String title, String url) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+        24.hb,
+        GestureDetector(
+          child: SizedBox(
+            width: 200.w,
+            height: 150.w,
+            child: Image.asset(url),
           ),
         )
       ],

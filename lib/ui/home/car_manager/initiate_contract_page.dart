@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
@@ -110,8 +112,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                                   .subtitle2
                                   ?.copyWith(
                                     color: const Color(0xFF999999),
-                                  )
-                          ),
+                                  )),
                         ],
                       ),
                     ),
@@ -126,10 +127,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                         onChanged: (text) {
                           setState(() {});
                         },
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            ,
+                        style: Theme.of(context).textTheme.subtitle2,
                         controller: _editingController1,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: 0.w),
@@ -147,10 +145,10 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 32.w),
                       child: Text('万元',
-                          style:   Theme.of(context).textTheme.subtitle2?.copyWith(
-                            color: const Color(0xFF999999),
-                          )
-                      ),
+                          style:
+                              Theme.of(context).textTheme.subtitle2?.copyWith(
+                                    color: const Color(0xFF999999),
+                                  )),
                     ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -162,11 +160,10 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                       width: 120.w,
                       child: Text('定金',
                           style:
-                          Theme.of(context).textTheme.subtitle2?.copyWith(
-                            overflow: TextOverflow.ellipsis,
-                            color: const Color(0xFF999999),
-                          )
-                      ),
+                              Theme.of(context).textTheme.subtitle2?.copyWith(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: const Color(0xFF999999),
+                                  )),
                     ),
                     50.wb,
                     Expanded(
@@ -179,10 +176,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                         onChanged: (text) {
                           setState(() {});
                         },
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            ,
+                        style: Theme.of(context).textTheme.subtitle2,
                         controller: _editingController1,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: 0.w),
@@ -200,10 +194,10 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 32.w),
                       child: Text('元',
-                          style:   Theme.of(context).textTheme.subtitle2?.copyWith(
-                            color: const Color(0xFF999999),
-                          )
-                      ),
+                          style:
+                              Theme.of(context).textTheme.subtitle2?.copyWith(
+                                    color: const Color(0xFF999999),
+                                  )),
                     ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -228,10 +222,12 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                             height: 50.w,
                           ),
                           Text('付款方式',
-                              style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                color: const Color(0xFF999999),
-                              )
-                          ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(
+                                    color: const Color(0xFF999999),
+                                  )),
                         ],
                       ),
                     ),
@@ -263,9 +259,12 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                             height: 50.w,
                           ),
                           Text('过户方式',
-                              style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                color: const Color(0xFF999999),
-                              )),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(
+                                    color: const Color(0xFF999999),
+                                  )),
                         ],
                       ),
                     ),
@@ -296,10 +295,12 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                             padding: EdgeInsets.only(top: 18.w),
                             height: 50.w,
                           ),
-                          Text('销售类型',
-                              style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                          color: const Color(0xFF999999),
-                          ),
+                          Text(
+                            '销售类型',
+                            style:
+                                Theme.of(context).textTheme.subtitle2?.copyWith(
+                                      color: const Color(0xFF999999),
+                                    ),
                           )
                         ],
                       ),
@@ -332,10 +333,12 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                             height: 50.w,
                           ),
                           Text('销售',
-                              style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                color: const Color(0xFF999999),
-                              )
-                          ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(
+                                    color: const Color(0xFF999999),
+                                  )),
                         ],
                       ),
                     ),
@@ -350,10 +353,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                         onChanged: (text) {
                           setState(() {});
                         },
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            ,
+                        style: Theme.of(context).textTheme.subtitle2,
                         controller: _editingController1,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: 0.w),
@@ -386,9 +386,10 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                         padding: EdgeInsets.symmetric(vertical: 32.w),
                         width: 150.w,
                         child: Text('全款到期日',
-                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                              color: const Color(0xFF999999),
-                            )),
+                            style:
+                                Theme.of(context).textTheme.subtitle2?.copyWith(
+                                      color: const Color(0xFF999999),
+                                    )),
                       ),
                       20.wb,
                       Expanded(
@@ -402,10 +403,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                           onChanged: (text) {
                             setState(() {});
                           },
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle2
-                            ,
+                          style: Theme.of(context).textTheme.subtitle2,
                           controller: _editingController2,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(left: 0.w),
@@ -480,10 +478,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                         16.wb,
                         Text(
                           currentValue,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle2
-                             ,
+                          style: Theme.of(context).textTheme.subtitle2,
                         ),
                       ],
                     ),

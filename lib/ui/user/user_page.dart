@@ -25,16 +25,13 @@ class UserPage extends StatefulWidget {
   _UserPageState createState() => _UserPageState();
 }
 
-class _UserPageState extends State<UserPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _UserPageState extends State<UserPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
 
   // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
-  final int assessment = 1;
-  final int wallet = 10210;
-  final int itation = 12;
+
   late EasyRefreshController _refreshController;
 
   @override
@@ -62,7 +59,6 @@ class _UserPageState extends State<UserPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return CloudScaffold(
       path: Assets.images.userBg.path,
       bodyColor: bgColor,
@@ -70,9 +66,10 @@ class _UserPageState extends State<UserPage>
         statusBarIconBrightness: Brightness.dark,
       ),
       appbar: Container(
-        height: kToolbarHeight + MediaQuery.of(context).padding.top,
+        //height: kToolbarHeight + MediaQuery.of(context).padding.top,
         //height: 334.w,
         alignment: Alignment.centerRight,
+        margin: EdgeInsets.only(top: 78.w, bottom: 78.w),
         child: Row(
           children: [
             Padding(
@@ -90,17 +87,13 @@ class _UserPageState extends State<UserPage>
         ),
       ),
       extendBody: true,
-      //extendBodyBehindAppBar: true,
+      // extendBodyBehindAppBar: true,
       body: Expanded(
           child: ListView(
         padding: EdgeInsets.symmetric(horizontal: 32.w),
         children: [
           //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-          Container(
-            padding: EdgeInsets.only(top: 65.w),
-            child: _shareUser(),
-            height: 408.w,
-          ),
+          _shareUser(),
           32.hb,
           _getBanner(),
           24.hb,
@@ -122,6 +115,62 @@ class _UserPageState extends State<UserPage>
       //   '',
       //   style: Theme.of(context).textTheme.bodyText1,
       // ),
+    );
+  }
+
+  getCiap(String title) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.w),
+          color: title == '销售'
+              ? const Color(0xFFFF3B02).withOpacity(0.08)
+              : const Color(0xFF027AFF).withOpacity(0.08)),
+      child: Text(
+        title,
+        style: TextStyle(
+            color: title == '销售'
+                ? const Color(0xFFFF3B02)
+                : const Color(0xFF027AFF),
+            fontSize: BaseStyle.fontSize20),
+      ),
+    );
+  }
+
+  getText(String num, String title) {
+    return GestureDetector(
+      onTap: () {
+        switch (title) {
+          case '评估':
+            Get.to(() => const AssessmentNumPage());
+            break;
+          case '钱包':
+            Get.to(() => const AssessmentNumPage());
+            break;
+          case '邀请':
+            Get.to(() => const AssessmentNumPage());
+            break;
+        }
+      },
+      child: SizedBox(
+        width: 160.w,
+        height: 88.w,
+        child: Column(
+          children: [
+            Text(
+              num,
+              style: TextStyle(
+                  color: BaseStyle.color111111, fontSize: BaseStyle.fontSize40),
+            ),
+            8.hb,
+            Text(
+              title,
+              style: TextStyle(
+                  color: BaseStyle.color999999, fontSize: BaseStyle.fontSize24),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -148,7 +197,7 @@ class _UserPageState extends State<UserPage>
                   width: 112.w,
                   height: 46.w,
                   child: Image.asset(
-                    "assets/images/bubble.png",
+                    Assets.images.bubble.path,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -240,199 +289,62 @@ class _UserPageState extends State<UserPage>
 //头像信息
   _shareUser() {
     return Container(
-        //width: double.infinity,
-        //height: 163,
-        // margin: EdgeInsets.only(
-        //   left: 20,
-        //   right: 20,
-        // ),
-        //上下留白symmetric
-        //padding: EdgeInsets.only(left: 10, top: 16),
         padding: EdgeInsets.all(32.w),
         decoration: BoxDecoration(
           color: Colors.white, //底色
-          borderRadius: BorderRadius.circular(10), //圆角弧度
+          borderRadius: BorderRadius.circular(16), //圆角弧度
         ),
         child: Column(children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  32.wb,
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() =>const BasicInformationPage());
-                    },
-                    child: SizedBox(
-                      //头像
-                      width: 100.w, height: 100.w,
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(60.w)),
-                            child: Container(
-                              color: Colors.blue,
-                            )),
-                      ),
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(left: 8)),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "张三",
-                        style: Theme.of(context).textTheme.headline3,
-                        // style: TextStyle(
-                        //     fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      const Padding(padding: EdgeInsets.only(top: 5)),
-                      Row(
-                        children: [
-                          Container(
-                            width: 18,
-                            height: 8,
-                            color: const Color.fromARGB(255, 245, 205, 146),
-                            padding: const EdgeInsets.only(
-                                top: 1, left: 4, right: 4),
-                            child: const Text(
-                              "销售",
-                              style: // Theme.of(context).textTheme.bodyText3,
-                                  TextStyle(
-                                      fontSize: 5,
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const Padding(padding: EdgeInsets.only(left: 5)),
-                          Container(
-                            width: 30,
-                            height: 8,
-                            color: const Color.fromARGB(255, 164, 229, 245),
-                            padding: const EdgeInsets.only(
-                                top: 1, left: 4, right: 4),
-                            child: const Text(
-                              "云云问车",
-                              style: //Theme.of(context).textTheme.bodyText4
-                                  TextStyle(
-                                      fontSize: 5,
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          // RawChip(
-                          //   label: Text(
-                          //     "销售",
-                          //     style: TextStyle(fontSize: 5, color: Colors.orange),
-                          //   ),
-                          //   backgroundColor: Colors.orange[50],
-                          //   shape: RoundedRectangleBorder(
-                          //       borderRadius: BorderRadius.circular(2)),
-
-                          // )
-                        ],
-                      )
-                    ],
-                  ),
-                  Padding(padding: EdgeInsets.only(right: 245.w)),
-                  RawChip(
-                    label: const Icon(Icons.keyboard_arrow_right),
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(1)),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Column(children: [
-            const Padding(padding: EdgeInsets.only(top: 25, left: 50)),
-            Row(children: [
-              const Padding(
-                  padding: EdgeInsets.only(
-                top: 10,
-                right: 15,
-                left: 20,
-              )),
               GestureDetector(
-                onTap: (() {
-                  Get.to(() => const AssessmentNumPage());
-                }),
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Text('$assessment',
-                          style: Theme.of(context).textTheme.headline3
-                          // TextStyle(
-                          //   color: Colors.black,
-                          //   fontSize: 32.sp,
-                          //   letterSpacing: 1,
-                          //   fontFamily:
-                          // ),
-                          ),
-                      RawChip(
-                        label: Text(
-                          '评估',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              ?.copyWith(color: const Color(0xFF999999)),
-                          //TextStyle(fontSize: 10, color: Colors.black45),
-                        ),
-                        backgroundColor: Colors.white,
-                      )
-                    ],
+                onTap: () {
+                  Get.to(() => const BasicInformationPage());
+                },
+                child: SizedBox(
+                  //头像
+                  width: 120.w, height: 120.w,
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(60.w)),
+                        child: Container(
+                          color: Colors.blue,
+                        )),
                   ),
                 ),
               ),
-              const Padding(
-                  padding: EdgeInsets.only(
-                top: 10,
-                right: 15,
-                left: 20,
-              )),
+              32.wb,
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('$wallet', style: Theme.of(context).textTheme.headline3),
-                  RawChip(
-                    label: Text(
-                      '钱包',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(color: const Color(0xFF999999)),
-                    ),
-                    backgroundColor: Colors.white,
+                  Text(
+                    "张三",
+                    style: Theme.of(context).textTheme.headline3,
+                    // style: TextStyle(
+                    //     fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 5)),
+                  Row(
+                    children: [getCiap('销售'), 16.wb, getCiap('云云问车')],
                   )
                 ],
               ),
-              const Padding(
-                  padding: EdgeInsets.only(
-                top: 10,
-                right: 10,
-                left: 30,
-              )),
-              Column(
-                children: [
-                  Text('$itation',
-                      style: Theme.of(context).textTheme.headline3),
-                  RawChip(
-                    label: Text(
-                      '邀请',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(color: const Color(0xFF999999)),
-                    ),
-                    backgroundColor: Colors.white,
-                  )
-                ],
-              ),
-            ]),
+              255.wb,
+              SizedBox(
+                width: 40.w,
+                height: 40.w,
+                child: const Icon(Icons.keyboard_arrow_right),
+              )
+            ],
+          ),
+          48.hb,
+          Row(children: [
+            getText('1', '评估'),
+            70.wb,
+            getText('10210', '钱包'),
+            70.wb,
+            getText('12', '邀请'),
           ]),
         ]));
   }
@@ -535,12 +447,7 @@ class _UserPageState extends State<UserPage>
     );
   }
 
-  @override
   bool get wantKeepAlive => true;
-}
-
-class Button {
-  Button(Null Function() param0);
 }
 
 void column() {}

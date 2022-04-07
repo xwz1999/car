@@ -83,121 +83,48 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
             16.hb,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 32.w),
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(8.w)),
+              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 28.w),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.w),
+                  color: kForeGroundColor),
               child: GestureDetector(
                 onTap: () {
-                  // Get.to(() => const Reservation());
+                  //Get.to(() => const Reservation(judge: null,));
                 },
-                child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 32.w),
-                    decoration: BoxDecoration(
-                        color: kForeGroundColor,
-                        borderRadius: BorderRadius.circular(16.w)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 32.w),
-                          child: getTitle('车辆信息'),
-                        ),
-                        24.hb,
-                        Row(
-                          children: [
-                            32.wb,
-                            Container(
-                              color: Colors.blue,
-                              width: 196.w,
-                              height: 150.w,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      getTitle('车辆信息'),
+                      24.hb,
+                      Row(
+                        children: [
+                          SizedBox(
+                            child: Image.asset(
+                              Assets.images.carBanner.path,
+                              fit: BoxFit.fill,
                             ),
-                            20.wb,
-                            SizedBox(
-                              width: 406.w,
-                              child: Column(
-                                children: [
-                                  Text('奥迪Q3 2020款 35 TFSI 进取型SUV',
-                                      style: TextStyle(
-                                          fontSize: BaseStyle.fontSize28,
-                                          color: BaseStyle.color111111)),
-                                  26.hb,
-                                  getCaip('过户0次', '2020年10月', '20.43万公里')
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        40.hb,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SizedBox(
-                              child: Text(
-                                '车辆总价',
-                                style: TextStyle(
-                                    fontSize: BaseStyle.fontSize28,
-                                    color: BaseStyle.color999999),
-                              ),
+                            width: 196.w,
+                            height: 150.w,
+                          ),
+                          20.wb,
+                          SizedBox(
+                            width: 406.w,
+                            child: Column(
+                              children: [
+                                Text('奥迪Q3 2020款 35 TFSI 进取型SUV',
+                                    style: TextStyle(
+                                        fontSize: BaseStyle.fontSize28,
+                                        color: BaseStyle.color111111)),
+                                26.hb,
+                                getCaip('过户0次', '2020年10月', '20.43万公里')
+                              ],
                             ),
-                            312.wb,
-                            SizedBox(
-                              child: Text.rich(TextSpan(children: [
-                                TextSpan(
-                                    text: '¥',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        ?.copyWith(
-                                            fontWeight: FontWeight.bold)),
-                                TextSpan(
-                                    text: '300,000.00',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2
-                                        ?.copyWith(
-                                            fontWeight: FontWeight.bold)),
-                              ])),
-                            ),
-                            16.wb,
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 15.w),
-                              child: SizedBox(
-                                  width: 32.w,
-                                  height: 32.w,
-                                  child: const Icon(
-                                    Icons.keyboard_arrow_down,
-                                  )),
-                            ),
-                            16.wb,
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            32.wb,
-                            _getCar('车辆定金', '10,000.00'),
-                            46.wb,
-                            Container(
-                                width: 2.w,
-                                height: 72.w,
-                                decoration: BoxDecoration(
-                                  color: BaseStyle.coloreeeeee,
-                                  border: Border.all(width: 1.w),
-                                )),
-                            46.wb,
-                            _getCar('车辆定金', '10,000.00'),
-                            46.wb,
-                            Container(
-                                width: 2.w,
-                                height: 72.w,
-                                decoration: BoxDecoration(
-                                  color: BaseStyle.coloreeeeee,
-                                  border: Border.all(width: 1.w),
-                                )),
-                            46.wb,
-                            _getCar('车辆定金', '10,000.00'),
-                          ],
-                        )
-                      ],
-                    )),
+                          )
+                        ],
+                      ),
+                      40.hb,
+                      getList(),
+                    ]),
               ),
             ),
             16.hb,
@@ -357,14 +284,16 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
           ),
         ),
         32.wb,
-        Padding(
-          padding: EdgeInsets.only(left: 0.w),
-          child: Text(
-            text,
-            style: TextStyle(
-                color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+        Flexible(
+          child: SizedBox(
+            width: 478.w,
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+            ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -435,6 +364,59 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
     );
   }
 
+  //车辆信息下拉
+  getList() {
+    return ExpansionTile(
+      //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
+      //leading: Icon(Icons.),
+      collapsedBackgroundColor: kForeGroundColor,
+
+      title: Row(
+        children: [
+          getTitle('车辆总价'),
+          185.wb,
+          SizedBox(
+            child: Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: '¥',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(fontWeight: FontWeight.bold)),
+              TextSpan(
+                  text: '300,000.00',
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle2
+                      ?.copyWith(fontWeight: FontWeight.bold)),
+            ])),
+          ),
+        ],
+      ),
+      children: [
+        Container(
+            color: kForeGroundColor,
+            child: Row(
+              children: [
+                32.wb,
+                _getCar('车辆定金', '10,000.00'),
+                46.wb,
+                Container(
+                  width: 1.w,
+                  height: 72.w,
+                  color: BaseStyle.coloreeeeee,
+                ),
+                46.wb,
+                _getCar('车辆首付', '10,000.00'),
+                46.wb,
+                _getCar('车辆尾款', '150,000.00'),
+              ],
+            ))
+      ],
+    );
+  }
+
+//车辆信息底部文字样式
   _getCar(String title, String text) {
     return SizedBox(
       width: 144.w,
@@ -444,7 +426,7 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
           Text(
             title,
             style: TextStyle(
-                fontSize: BaseStyle.fontSize24, color: BaseStyle.color333333),
+                fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
           24.hb,
           Text.rich(TextSpan(children: [

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:timelines/timelines.dart';
@@ -28,7 +30,7 @@ class _TimeLinesWidgetState extends State<TimeLinesWidget> {
   @override
   Widget build(BuildContext context) {
     late int length = widget.items.length;
-
+    late int number = widget.number;
     List<String> items = widget.items;
 
     return Timeline.tileBuilder(

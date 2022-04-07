@@ -1,17 +1,16 @@
-import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-class BalancePayment extends StatefulWidget {
-  final bool judge;
-  const BalancePayment({Key? key, required this.judge}) : super(key: key);
+class MakeDeal extends StatefulWidget {
+  const MakeDeal({Key? key}) : super(key: key);
 
   @override
-  State<BalancePayment> createState() => _BalancePaymentState();
+  State<MakeDeal> createState() => _MakeDealState();
 }
 
-class _BalancePaymentState extends State<BalancePayment> {
+class _MakeDealState extends State<MakeDeal> {
   List<String> items = [
     '预定',
     '检测',
@@ -20,34 +19,6 @@ class _BalancePaymentState extends State<BalancePayment> {
     '尾款',
     '完成',
   ];
-
-  List<Widget> getFunction = [
-    Row(
-      children: [
-        SizedBox(
-          child: Text(
-            '尾款支付',
-            style: TextStyle(
-                color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
-          ),
-        ),
-        32.wb,
-        Padding(
-          padding: EdgeInsets.only(left: 0.w),
-          child: Text(
-            '¥190,000.00（审核中）',
-            style: TextStyle(
-                color: const Color(0xFF027AFF), fontSize: BaseStyle.fontSize28),
-          ),
-        ),
-      ],
-    ),
-  ];
-
-  late bool bl = widget.judge;
-
-  late bool bl1 = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +43,7 @@ class _BalancePaymentState extends State<BalancePayment> {
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 height: 120.w,
                 color: Colors.white,
-                child:const Text('')
+                child: const Text('')
                 // TimeLinesWidget(
                 //   index: 1,
                 //   items: [
@@ -113,11 +84,12 @@ class _BalancePaymentState extends State<BalancePayment> {
             16.hb,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 32.w),
+              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 28.w),
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(8.w)),
               child: GestureDetector(
                 onTap: () {
-                  //Get.to(() => const Detection());
+                  // Get.to(() => const Reservation());
                 },
                 child: Container(
                     padding: EdgeInsets.symmetric(vertical: 32.w),
@@ -149,7 +121,7 @@ class _BalancePaymentState extends State<BalancePayment> {
                                       style: TextStyle(
                                           fontSize: BaseStyle.fontSize28,
                                           color: BaseStyle.color111111)),
-                                  32.hb,
+                                  26.hb,
                                   getCaip('过户0次', '2020年10月', '20.43万公里')
                                 ],
                               ),
@@ -161,7 +133,12 @@ class _BalancePaymentState extends State<BalancePayment> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             SizedBox(
-                              child: getTitle('车辆信息'),
+                              child: Text(
+                                '车辆总价',
+                                style: TextStyle(
+                                    fontSize: BaseStyle.fontSize28,
+                                    color: BaseStyle.color999999),
+                              ),
                             ),
                             312.wb,
                             SizedBox(
@@ -188,7 +165,9 @@ class _BalancePaymentState extends State<BalancePayment> {
                               child: SizedBox(
                                   width: 32.w,
                                   height: 32.w,
-                                  child: Image.asset(Assets.icons.up.path)),
+                                  child: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                  )),
                             ),
                             16.wb,
                           ],
@@ -245,7 +224,40 @@ class _BalancePaymentState extends State<BalancePayment> {
               ),
             ),
             16.hb,
-            getPay(),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 32.w),
+              padding: EdgeInsets.all(28.w),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.w)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 0.w),
+                    child: getTitle('支付信息'),
+                  ),
+                  16.hb,
+                  _getText('定金支付', '¥10,000.00'),
+                  16.hb,
+                  _getText('支付方式', '支付宝'),
+                  16.hb,
+                  _getText('支付时间', '2022-12-30 15:23:48'),
+                  56.hb,
+                  _getText('首付支付', '¥100,000.00'),
+                  16.hb,
+                  _getPicture2('支付凭证'),
+                  16.hb,
+                  _getText('支付时间', '2022-12-30 15:23:48'),
+                  56.hb,
+                  _getText('尾款支付', '¥190,000.00'),
+                  16.hb,
+                  _getText('支付形式', '按揭支付'),
+                  16.hb,
+                  _getText('支付时间', '2022-12-30 15:23:48'),
+                ],
+              ),
+            ),
             16.hb,
             Container(
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 28.w),
@@ -253,24 +265,7 @@ class _BalancePaymentState extends State<BalancePayment> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8.w)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '车辆检测报告',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  24.hb,
-                  Container(
-                    color: Colors.red,
-                    width: 200.w,
-                    height: 150.w,
-                  )
-                ],
-              ),
+              child: _getPicture('车辆检测报告'),
             ),
             16.hb,
             Container(
@@ -282,13 +277,7 @@ class _BalancePaymentState extends State<BalancePayment> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '车辆检测报告',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
+                    getTitle('车辆检测报告'),
                     _getPicture2('登记证书'),
                     32.hb,
                     _getPicture2('行驶证'),
@@ -299,39 +288,32 @@ class _BalancePaymentState extends State<BalancePayment> {
                     32.hb,
                   ],
                 )),
-            !bl ? 32.hb : 16.hb,
-            !bl
-                ? Container(
-                    width: double.infinity,
-                    color: kForeGroundColor,
-                    padding:
-                        EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          child: Text(
-                            '等待支付尾款',
-                            style: Theme.of(context).textTheme.subtitle2,
-                          ),
-                        ),
-                        24.wb,
-                        Text.rich(TextSpan(children: [
-                          TextSpan(
-                              text: '¥',
-                              style: TextStyle(
-                                  fontSize: BaseStyle.fontSize28,
-                                  color: const Color(0xFFFF3B02))),
-                          TextSpan(
-                              text: '190,000.00',
-                              style: TextStyle(
-                                  fontSize: BaseStyle.fontSize32,
-                                  color: const Color(0xFFFF3B02)))
-                        ]))
-                      ],
-                    ),
-                  )
-                :const SizedBox(),
+            36.hb,
+            Container(
+                width: double.infinity,
+                color: kForeGroundColor,
+                padding: EdgeInsets.only(
+                    top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => const MakeDealData());
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 0.w),
+                    child: Container(
+                        padding: EdgeInsets.only(
+                            left: 32.w, top: 16.w, bottom: 16.w),
+                        decoration: BoxDecoration(
+                            color: const Color(0xFF027AFF),
+                            borderRadius: BorderRadius.circular(8.w)),
+                        child: Text(
+                          '成交订单',
+                          style: TextStyle(
+                              color: kForeGroundColor,
+                              fontSize: BaseStyle.fontSize28),
+                        )),
+                  ),
+                ))
           ],
         )
 
@@ -350,157 +332,27 @@ class _BalancePaymentState extends State<BalancePayment> {
         );
   }
 
-  get() {}
-  getPay() {
-    return !bl
-        ? Container(
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            padding: EdgeInsets.all(28.w),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('支付信息'),
-                ),
-                16.hb,
-                _getText('定金支付', '¥10,000.00'),
-                16.hb,
-                _getText('支付方式', '支付宝'),
-                16.hb,
-                _getText('支付时间', '2022-12-30 15:23:48'),
-                32.hb,
-                _getText('首付支付', '¥100,000.00'),
-                16.hb,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '支付凭证',
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                    24.hb,
-                    Container(
-                      color: Colors.red,
-                      width: 200.w,
-                      height: 150.w,
-                    )
-                  ],
-                ),
-                16.hb,
-                _getText('支付时间', '2022-12-30 15:23:48'),
-              ],
-            ),
-          )
-        : Container(
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            padding: EdgeInsets.all(28.w),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('支付信息'),
-                ),
-                16.hb,
-                _getText('定金支付', '¥10,000.00'),
-                16.hb,
-                _getText('支付方式', '支付宝'),
-                16.hb,
-                _getText('支付时间', '2022-12-30 15:23:48'),
-                32.hb,
-                _getText('首付支付', '¥100,000.00'),
-                16.hb,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '支付凭证',
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                    24.hb,
-                    Container(
-                      color: Colors.red,
-                      width: 200.w,
-                      height: 150.w,
-                    )
-                  ],
-                ),
-                16.hb,
-                _getText('支付时间', '2022-12-30 15:23:48'),
-                32.hb,
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      bl1
-                          ? Get.to(() => const MakeDeal())
-                          : getFunction.fillRange(
-                              0,
-                              1,
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        child: Text(
-                                          '首付支付',
-                                          style: TextStyle(
-                                              color: BaseStyle.color333333,
-                                              fontSize: BaseStyle.fontSize28),
-                                        ),
-                                      ),
-                                      32.wb,
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 0.w),
-                                        child: Text(
-                                          '¥190,000.00（审核驳回）',
-                                          style: TextStyle(
-                                              color: const Color(0xFFE62222),
-                                              fontSize: BaseStyle.fontSize28),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  16.hb,
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        child: Text(
-                                          '驳回理由',
-                                          style: TextStyle(
-                                              color: BaseStyle.color333333,
-                                              fontSize: BaseStyle.fontSize28),
-                                        ),
-                                      ),
-                                      32.wb,
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 0.w),
-                                        child: Text(
-                                          '未收到银行汇款款项',
-                                          style: TextStyle(
-                                              color: const Color(0xFFE62222),
-                                              fontSize: BaseStyle.fontSize28),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ));
-                    });
-                  },
-                  child: getFunction[0],
-                ),
-                16.hb,
-                _getText('支付方式', '按揭支付'),
-                16.hb,
-                _getText('支付时间', '2022-12-30 15:23:48'),
-              ],
-            ),
-          );
+  _getPicture(String title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context)
+              .textTheme
+              .subtitle2
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        24.hb,
+        GestureDetector(
+          child: Container(
+            color: Colors.red,
+            width: 200.w,
+            height: 150.w,
+          ),
+        )
+      ],
+    );
   }
 
   _getPicture2(String title) {
@@ -520,16 +372,6 @@ class _BalancePaymentState extends State<BalancePayment> {
           ),
         )
       ],
-    );
-  }
-
-  getTitle(String title) {
-    return Text(
-      title,
-      style: Theme.of(context)
-          .textTheme
-          .subtitle2
-          ?.copyWith(fontWeight: FontWeight.bold),
     );
   }
 
@@ -553,6 +395,16 @@ class _BalancePaymentState extends State<BalancePayment> {
           ),
         )
       ],
+    );
+  }
+
+  getTitle(String title) {
+    return Text(
+      title,
+      style: Theme.of(context)
+          .textTheme
+          .subtitle2
+          ?.copyWith(fontWeight: FontWeight.bold),
     );
   }
 
@@ -631,7 +483,7 @@ class _BalancePaymentState extends State<BalancePayment> {
           Text(
             title,
             style: TextStyle(
-                fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
+                fontSize: BaseStyle.fontSize24, color: BaseStyle.color333333),
           ),
           24.hb,
           Text.rich(TextSpan(children: [

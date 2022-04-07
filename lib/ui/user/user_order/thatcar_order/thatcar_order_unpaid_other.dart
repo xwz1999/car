@@ -1,68 +1,108 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-class ThatcarUnpaid extends StatefulWidget {
+class UnpaidOther extends StatefulWidget {
   final String stat;
-  const ThatcarUnpaid({Key? key, required this.stat}) : super(key: key);
+  const UnpaidOther({Key? key, required this.stat}) : super(key: key);
 
   @override
-  State<ThatcarUnpaid> createState() => _ThatcarUnpaidState();
+  State<UnpaidOther> createState() => _UnpaidOtherState();
 }
 
-class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
+class _UnpaidOtherState extends State<UnpaidOther> {
   late String stat = widget.stat;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
-        ),
-        backgroundColor: kForeGroundColor,
-        title: Text('叫车订单',
-            style: TextStyle(
-                color: BaseStyle.color111111,
-                fontSize: BaseStyle.fontSize36,
-                fontWeight: FontWeight.bold)),
+        appBar: AppBar(
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          backgroundColor: kForeGroundColor,
+          title: Text('叫车订单',
+              style: TextStyle(
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize36,
+                  fontWeight: FontWeight.bold)),
 
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
-      ),
-      backgroundColor: bodyColor,
-      body: ListView(
-        children: [
-          _getCarInformation(),
-          getCarBox(Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getTitle('订单信息'),
-              32.hb,
-              _getText('客户姓名', '李四'),
-              16.hb,
-              _getText('联系方式', '18998785432'),
-              16.hb,
-              _getText('绑定销售', '张三三'),
-              16.hb,
-              _getText('上门地址', '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
-              16.hb,
-              _getText('上门时间', '2022-01-04 12:00'),
-            ],
-          )),
-          stat == '待支付'
-              ? const SizedBox()
-              : getCarBox(Column(
+          //leading:  Container(width: 10.w, child: const CloudBackButton()),
+        ),
+        backgroundColor: bodyColor,
+        body: Stack(
+          children: [
+            ListView(
+              children: [
+                _getCarInformation(),
+                getCarBox(Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getTitle('支付信息'),
+                    getTitle('订单信息'),
                     32.wb,
-                    _getText('支付方式', '支付宝'),
+                    _getText('客户姓名', '**'),
                     16.hb,
-                    _getText('支付时间', '2022-01-04 12:00'),
+                    _getText('联系方式', '189****5432'),
+                    16.hb,
+                    _getText1('绑定销售', '张三三'),
+                    16.hb,
+                    _getText('上门地址', '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
+                    16.hb,
+                    _getText('上门时间', '2022-01-04 12:00'),
                   ],
-                ))
-        ],
-      ),
-    );
+                )),
+                stat == '待支付'
+                    ? const SizedBox()
+                    : getCarBox(Column(
+                        children: [
+                          getTitle('支付信息'),
+                          32.wb,
+                          _getText('支付方式', '支付宝'),
+                          16.hb,
+                          _getText('支付时间', '2022-01-04 12:00'),
+                          16.hb,
+                          _getText1('绑定销售', '张三三'),
+                          16.hb,
+                          _getText('上门地址', '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
+                          16.hb,
+                          _getText('上门时间', '2022-01-04 12:00'),
+                        ],
+                      )),
+              ],
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                  width: double.infinity,
+                  color: kForeGroundColor,
+                  padding: EdgeInsets.only(
+                      top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+                  child: GestureDetector(
+                    onTap: () {
+                      BotToast.showText(text: '订单完成');
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 0.w),
+                      child: Container(
+                          padding: EdgeInsets.only(
+                              left: 32.w, top: 16.w, bottom: 16.w),
+                          decoration: BoxDecoration(
+                              color: const Color(0xFF027AFF),
+                              borderRadius: BorderRadius.circular(8.w)),
+                          child: Text(
+                            '车已上门',
+                            style: TextStyle(
+                                color: kForeGroundColor,
+                                fontSize: BaseStyle.fontSize28),
+                          )),
+                    ),
+                  )),
+            )
+          ],
+        ));
   }
 
   getCarBox(Widget widget) {
@@ -85,7 +125,7 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
               decoration: BoxDecoration(
-                color: const Color(0xFFFE8029).withOpacity(0.08),
+                color: const Color(0xFFFE8029).withOpacity(0.01),
               ),
               child: Text(
                 stat,
@@ -184,7 +224,6 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
       //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
       //leading: Icon(Icons.),
       collapsedBackgroundColor: kForeGroundColor,
-
       title: Row(
         children: [
           getTitle('订单总额'),
@@ -293,6 +332,87 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
             ),
           ),
         ),
+      ],
+    );
+  }
+
+  _getText1(String title, String text) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 120.w,
+          child: Text(
+            title,
+            style: TextStyle(
+                color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+          ),
+        ),
+        32.wb,
+        Flexible(
+          child: SizedBox(
+            width: 90.w,
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+            ),
+          ),
+        ),
+        18.wb,
+        GestureDetector(
+          onTap: () {
+            Alert.show(
+                context,
+                NormalContentDialog(
+                  type: NormalTextDialogType.delete,
+                  title: '',
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 238.w,
+                        height: 174.w,
+                        child: Image.asset(
+                          Assets.images.immediately.path,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      48.hb,
+                      Text(
+                        '183-****-1289',
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2
+                            ?.copyWith(fontSize: BaseStyle.fontSize40),
+                      ),
+                      16.hb,
+                      Text(
+                        '使用虚拟号联系绑定销售',
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
+                    ],
+                  ),
+                  items: const ['取消'],
+                  deleteItem: '立即联系',
+                  //监听器
+                  listener: (index) {
+                    Alert.dismiss(context);
+                    //Value = false;
+                    //(Value);
+                  },
+                  deleteListener: () {
+                    Alert.dismiss(context);
+                    //Value = true;
+                    //(Value);
+                  },
+                ));
+          },
+          child: Text(
+            '立即联系',
+            style: TextStyle(
+                color: const Color(0xFF027AFF), fontSize: BaseStyle.fontSize20),
+          ),
+        )
       ],
     );
   }

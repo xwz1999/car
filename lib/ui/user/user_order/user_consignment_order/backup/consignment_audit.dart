@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../../utils/headers.dart';
-import '../../../../widget/button/cloud_back_button.dart';
+import '../../../../../utils/headers.dart';
+import '../../../../../widget/button/cloud_back_button.dart';
 
-class ConsignmentSuccessfully extends StatefulWidget {
-  const ConsignmentSuccessfully({Key? key}) : super(key: key);
+class ConsignmentAudit extends StatefulWidget {
+  const ConsignmentAudit({Key? key}) : super(key: key);
 
   @override
-  State<ConsignmentSuccessfully> createState() =>
-      _ConsignmentSuccessfullyState();
+  State<ConsignmentAudit> createState() => _ConsignmentAuditState();
 }
 
-class _ConsignmentSuccessfullyState extends State<ConsignmentSuccessfully> {
+class _ConsignmentAuditState extends State<ConsignmentAudit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +34,7 @@ class _ConsignmentSuccessfullyState extends State<ConsignmentSuccessfully> {
             margin: EdgeInsets.symmetric(horizontal: 32.w),
             height: 120.w,
             color: Colors.white,
-            child:const Text('')),
+            child: const Text('')),
         16.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -45,10 +44,7 @@ class _ConsignmentSuccessfullyState extends State<ConsignmentSuccessfully> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: getTitle("客户信息"),
-              ),
+              getTitle('客户信息'),
               36.hb,
               _getText('客户姓名', '莉丝'),
               36.hb,
@@ -69,12 +65,7 @@ class _ConsignmentSuccessfullyState extends State<ConsignmentSuccessfully> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: Text(
-                  '车辆信息',
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-              ),
+                  padding: EdgeInsets.only(left: 0.w), child: getTitle('车辆信息')),
               24.hb,
               Row(
                 children: [
@@ -116,10 +107,7 @@ class _ConsignmentSuccessfullyState extends State<ConsignmentSuccessfully> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('合同信息'),
-              ),
+              getTitle('合同信息'),
               36.hb,
               _getText('合同编号', '9876524612'),
               36.hb,
@@ -132,48 +120,11 @@ class _ConsignmentSuccessfullyState extends State<ConsignmentSuccessfully> {
         ),
         16.hb,
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.w),
-          padding: EdgeInsets.all(28.w),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('出售信息'),
-              ),
-              36.hb,
-              _getText('出售信息', '李四'),
-              36.hb,
-              _getText('手机号', '18935263526'),
-              36.hb,
-              _getText('出售价格', '¥300,000.00'),
-              36.hb,
-              _getText('出售时间', '2021-12-30 12:00:00'),
-            ],
-          ),
-        ),
-        16.hb,
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.w),
-          padding: EdgeInsets.all(28.w),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('到款信息'),
-              ),
-              36.hb,
-              _getText('到款金额', '¥300,000.00'),
-              36.hb,
-              _getText('到款时间', '2021-12-30 12:00:00'),
-              36.hb,
-              _getPicture('到款凭证', Assets.images.carBanner.path),
-            ],
+          padding: EdgeInsets.symmetric(horizontal: 32.w),
+          child: Text(
+            '注：您已提交车辆信息，平台将对车辆信息进行审核，通过后将为您发布上架！',
+            style: TextStyle(
+                fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
         ),
       ]),
@@ -193,19 +144,16 @@ class _ConsignmentSuccessfullyState extends State<ConsignmentSuccessfully> {
           ),
         ),
         32.wb,
-        Padding(
-            padding: EdgeInsets.only(left: 0.w),
-            child: SizedBox(
-              width: 478.w,
-              child: Flexible(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                      color: BaseStyle.color333333,
-                      fontSize: BaseStyle.fontSize28),
-                ),
-              ),
-            ))
+        Flexible(
+          child: SizedBox(
+            width: 478.w,
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -268,26 +216,6 @@ class _ConsignmentSuccessfullyState extends State<ConsignmentSuccessfully> {
     return Text(
       title,
       style: Theme.of(context).textTheme.subtitle2,
-    );
-  }
-
-  _getPicture(String title, String url) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-        24.hb,
-        GestureDetector(
-          child: SizedBox(
-            width: 200.w,
-            height: 150.w,
-            child: Image.asset(url),
-          ),
-        )
-      ],
     );
   }
 }

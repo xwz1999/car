@@ -1,4 +1,4 @@
-
+// ignore_for_file: file_names
 
 import 'package:cloud_car/ui/user/user_install/add_bank_card.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -50,7 +50,7 @@ class _BankCardPageState extends State<BankCardPage> {
                   fontWeight: FontWeight.bold)),
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: kForeGroundColor, //内容颜色
+        backgroundColor: const Color(0xffffffff), //内容颜色
         extendBody: true,
         body: SizedBox(
           child: ListView(
@@ -285,39 +285,6 @@ class _BankCardPageState extends State<BankCardPage> {
   }
 
 //静态圆点
-//   _getDot() {
-//     return Row(
-//       children: [
-//         Container(
-//           width: 10.w,
-//           height: 10.w,
-//           decoration: BoxDecoration(
-//               color: Colors.white, borderRadius: BorderRadius.circular(5.w)),
-//         ),
-//         8.wb,
-//         Container(
-//           width: 10.w,
-//           height: 10.w,
-//           decoration: BoxDecoration(
-//               color: Colors.white, borderRadius: BorderRadius.circular(5.w)),
-//         ),
-//         8.wb,
-//         Container(
-//           width: 10.w,
-//           height: 10.w,
-//           decoration: BoxDecoration(
-//               color: Colors.white, borderRadius: BorderRadius.circular(5.w)),
-//         ),
-//         8.wb,
-//         Container(
-//           width: 10.w,
-//           height: 10.w,
-//           decoration: BoxDecoration(
-//               color: Colors.white, borderRadius: BorderRadius.circular(5.w)),
-//         ),
-//       ],
-//     );
-//   }
 }
 
 // ignore: camel_case_types

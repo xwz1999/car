@@ -1,8 +1,10 @@
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_alsocar_order.dart';
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_order.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_transaction_cancelled_order.dart';
+
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
+import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete.dart';
+import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete_other.dart';
+import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid.dart';
+import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid_other.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -69,9 +71,11 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
       'buttomname': '',
     },
   ];
+
+  late bool bl = false;
+
   @override
   void initState() {
-
     super.initState();
     // _sortList = [
     //   ChooseItem(name: '售车订单'),
@@ -203,8 +207,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
         children: [
           SizedBox(
             height: 88.w,
-            child: Expanded(
-                child: CarWidget(
+            child: CarWidget(
               items: const [
                 '全部',
                 '待支付',
@@ -214,7 +217,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
               callBack: (name) {
                 setState(() {});
               },
-            )),
+            ),
           ),
           16.hb,
           Expanded(
@@ -236,18 +239,40 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
           onTap: () {
             switch (item['judgename']) {
               case '待支付':
-                Get.to(() => const RentalcarOrder());
+                Get.to(() => bl
+                    ? const ThatcarUnpaid(
+                        stat: '待支付',
+                      )
+                    : const UnpaidOther(
+                        stat: '待支付',
+                      ));
                 break;
               case '待交车':
-                Get.to(() => const RentalcarOrder());
+                Get.to(() => bl
+                    ? const ThatcarUnpaid(
+                        stat: '待交车',
+                      )
+                    : const UnpaidOther(
+                        stat: '待交车',
+                      ));
                 break;
               case '已完成':
-                Get.to(() => const AlsocarOrder(
-                      bl: true,
-                    ));
+                Get.to(() => bl
+                    ? const ThatcarComplete(
+                        stat: '已完成',
+                      )
+                    : const Complete0ther(
+                        stat: '已完成',
+                      ));
                 break;
               case '已退款':
-                Get.to(() => const CancelOrder());
+                Get.to(() => bl
+                    ? const ThatcarComplete(
+                        stat: '已退款',
+                      )
+                    : const Complete0ther(
+                        stat: '已退款',
+                      ));
                 break;
             }
           },

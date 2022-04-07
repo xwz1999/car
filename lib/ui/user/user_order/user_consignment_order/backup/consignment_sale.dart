@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../../utils/headers.dart';
-import '../../../../widget/button/cloud_back_button.dart';
+import '../../../../../utils/headers.dart';
+import '../../../../../widget/button/cloud_back_button.dart';
 
-class ConsignmentAudit extends StatefulWidget {
-  const ConsignmentAudit({Key? key}) : super(key: key);
+class ConsignmentSale extends StatefulWidget {
+  const ConsignmentSale({Key? key}) : super(key: key);
 
   @override
-  State<ConsignmentAudit> createState() => _ConsignmentAuditState();
+  State<ConsignmentSale> createState() => _ConsignmentSaleState();
 }
 
-class _ConsignmentAuditState extends State<ConsignmentAudit> {
+class _ConsignmentSaleState extends State<ConsignmentSale> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +34,7 @@ class _ConsignmentAuditState extends State<ConsignmentAudit> {
             margin: EdgeInsets.symmetric(horizontal: 32.w),
             height: 120.w,
             color: Colors.white,
-            child:  const Text('')),
+            child: const Text('')),
         16.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -44,7 +44,10 @@ class _ConsignmentAuditState extends State<ConsignmentAudit> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              getTitle('客户信息'),
+              Padding(
+                padding: EdgeInsets.only(left: 0.w),
+                child: getTitle('客户信息'),
+              ),
               36.hb,
               _getText('客户姓名', '莉丝'),
               36.hb,
@@ -65,7 +68,12 @@ class _ConsignmentAuditState extends State<ConsignmentAudit> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
-                  padding: EdgeInsets.only(left: 0.w), child: getTitle('车辆信息')),
+                padding: EdgeInsets.only(left: 0.w),
+                child: Text(
+                  '车辆信息',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+              ),
               24.hb,
               Row(
                 children: [
@@ -121,17 +129,6 @@ class _ConsignmentAuditState extends State<ConsignmentAudit> {
             ],
           ),
         ),
-        16.hb,
-        Container(
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            child: Flexible(
-              child: Text(
-                '注：您已提交车辆信息，平台将对车辆信息进行审核，通过后将为您发布上架！',
-                style: TextStyle(
-                    fontSize: BaseStyle.fontSize24,
-                    color: BaseStyle.color999999),
-              ),
-            )),
       ]),
     );
   }
@@ -149,20 +146,24 @@ class _ConsignmentAuditState extends State<ConsignmentAudit> {
           ),
         ),
         32.wb,
-        Padding(
-            padding: EdgeInsets.only(left: 0.w),
-            child: SizedBox(
-              width: 478.w,
-              child: Flexible(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                      color: BaseStyle.color333333,
-                      fontSize: BaseStyle.fontSize28),
-                ),
-              ),
-            ))
+        Flexible(
+          child: SizedBox(
+            width: 478.w,
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+            ),
+          ),
+        ),
       ],
+    );
+  }
+
+  getTitle(String title) {
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.subtitle2,
     );
   }
 
@@ -217,13 +218,6 @@ class _ConsignmentAuditState extends State<ConsignmentAudit> {
         //       children: [Chip(label: Text(time)), Chip(label: Text(distance))],
         //     ))
       ],
-    );
-  }
-
-  getTitle(String title) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.subtitle2,
     );
   }
 }

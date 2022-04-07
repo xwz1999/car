@@ -1,4 +1,4 @@
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_audit.dart';
+import 'package:cloud_car/ui/user/user_order/user_consignment_order/backup/consignment_audit.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/headers.dart';
@@ -35,7 +35,7 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
             margin: EdgeInsets.symmetric(horizontal: 32.w),
             height: 120.w,
             color: Colors.white,
-            child:const Text('')),
+            child: const Text('')),
         16.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -195,21 +195,16 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
           ),
         ),
         32.wb,
-        Padding(
-            padding: EdgeInsets.only(left: 0.w),
-            child: SizedBox(
-              width: 478.w,
-              child: Flexible(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                      color: title == '驳回理由'
-                          ? const Color(0xFFE62222)
-                          : const Color(0xFF333333),
-                      fontSize: BaseStyle.fontSize28),
-                ),
-              ),
-            ))
+        Flexible(
+          child: SizedBox(
+            width: 478.w,
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+            ),
+          ),
+        ),
       ],
     );
   }

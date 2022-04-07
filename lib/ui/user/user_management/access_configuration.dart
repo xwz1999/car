@@ -59,7 +59,7 @@ class _AccessConfigurationState extends State<AccessConfiguration> {
                   itemBuilder: (context, index) {
                     return _getItem(index, moddels[index]);
                   },
-                  separatorBuilder: (BuildContext context, int inedx) {
+                  separatorBuilder: (BuildContext context, int index) {
                     return Container(
                         //   color: const Color(0xFFF6F6F6),
                         //   height: 16.w,

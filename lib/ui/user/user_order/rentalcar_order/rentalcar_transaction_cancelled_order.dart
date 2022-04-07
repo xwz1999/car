@@ -257,16 +257,16 @@ class _CancelOrderState extends State<CancelOrder> {
           ),
         ),
         32.wb,
-        SizedBox(
-          width: 478.w,
-          child: Flexible(
+        Flexible(
+          child: SizedBox(
+            width: 478.w,
             child: Text(
               text,
               style: TextStyle(
                   color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
             ),
           ),
-        )
+        ),
       ],
     );
   }

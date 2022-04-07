@@ -1,18 +1,12 @@
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_page.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_audit.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_rejected.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_release.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_sale.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_signed.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_sold.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/car_widget.dart';
 
@@ -96,7 +90,6 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
   ];
   @override
   void initState() {
-
     super.initState();
     // _sortList = [
     //   ChooseItem(name: '售车订单'),
@@ -249,25 +242,37 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
         onTap: () {
           switch (item['judgename']) {
             case '待签订':
-              Get.to(() => const ConsignmentSigned());
+              Get.to(() => const ConsignmentSigned(
+                    stat: '待签订',
+                  ));
               break;
             case '待发布':
-              Get.to(() => const ConsignmentRelease());
+              Get.to(() => const ConsignmentSigned(
+                    stat: '待发布',
+                  ));
               break;
             case '审核中':
-              Get.to(() => const ConsignmentAudit());
+              Get.to(() => const ConsignmentSigned(
+                    stat: '审核中',
+                  ));
               break;
             case '已驳回':
               Get.to(() => const ConsignmentRejected());
               break;
             case '在售':
-              Get.to(() => const ConsignmentSale());
+              Get.to(() => const ConsignmentSigned(
+                    stat: '在售',
+                  ));
               break;
             case '已售':
-              Get.to(() => const ConsignmentSold());
+              Get.to(() => const ConsignmentSigned(
+                    stat: '已售',
+                  ));
               break;
             case '交易取消':
-              Get.to(() => const TransactionCancelled());
+              Get.to(() => const ConsignmentSigned(
+                    stat: '交易取消',
+                  ));
               break;
           }
         },
@@ -499,7 +504,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
     if (judgename == '交易取消') {
       return const Color(0xFF666666);
     } else if (judgename == '审核中' || judgename == '已驳回') {
-      return const  Color(0xFFFF3B02);
+      return const Color(0xFFFF3B02);
     } else {
       return const Color(0xFF027AFF);
     }

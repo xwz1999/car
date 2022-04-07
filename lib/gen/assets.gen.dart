@@ -2,6 +2,9 @@
 /// *****************************************************
 ///  FlutterGen
 /// *****************************************************
+
+// ignore_for_file: directives_ordering,unnecessary_import
+
 import 'package:flutter/widgets.dart';
 
 class $AssetsDataGen {
@@ -446,6 +449,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/home_bg.png
   AssetGenImage get homeBg => const AssetGenImage('assets/images/home_bg.png');
+
+  /// File path: assets/images/immediately.png
+  AssetGenImage get immediately =>
+      const AssetGenImage('assets/images/immediately.png');
 
   /// File path: assets/images/important_client.png
   AssetGenImage get importantClient =>

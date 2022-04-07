@@ -60,7 +60,6 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   ];
   @override
   void initState() {
-
     super.initState();
     // _sortList = [
     //   ChooseItem(name: '售车订单'),
@@ -192,8 +191,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
         children: [
           SizedBox(
             height: 88.w,
-            child: Expanded(
-                child: CarWidget(
+            child: CarWidget(
               items: const [
                 '全部',
                 '进行中',
@@ -203,7 +201,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
               callBack: (name) {
                 setState(() {});
               },
-            )),
+            ),
           ),
           16.hb,
           Expanded(

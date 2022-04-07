@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_car/model/configuration_model.dart';
 import 'package:cloud_car/ui/user/user_feedback/vehicles_release.dart';
 import 'package:dotted_border/dotted_border.dart';

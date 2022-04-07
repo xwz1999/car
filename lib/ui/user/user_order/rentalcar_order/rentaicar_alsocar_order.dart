@@ -36,178 +36,185 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: ListView(
+        body: Stack(
           children: [
-            16.hb,
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 32.w),
-                height: 120.w,
-                color: Colors.white,
-                child:const Text('')
-                // TimeLinesWidget(
-                //   index: 1,
-                //   items: [
-                //     '预定',
-                //     '检测',
-                //     '首付',
-                //     '过户',
-                //     '尾款',
-                //     '完成',
-                //   ],
-                //   number: 1,
-                // )
-                ),
-            16.hb,
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 32.w),
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(8.w)),
-              child: GestureDetector(
-                onTap: () {
-                  //Get.to(() => const Detection());
-                },
-                child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 32.w),
-                    decoration: BoxDecoration(
-                        color: kForeGroundColor,
-                        borderRadius: BorderRadius.circular(16.w)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 32.w),
-                          child: getTitle('车辆信息'),
-                        ),
-                        24.hb,
-                        Row(
+            ListView(
+              children: [
+                16.hb,
+                Container(
+                    margin: EdgeInsets.symmetric(horizontal: 32.w),
+                    height: 120.w,
+                    color: Colors.white,
+                    child: const Text('')
+                    // TimeLinesWidget(
+                    //   index: 1,
+                    //   items: [
+                    //     '预定',
+                    //     '检测',
+                    //     '首付',
+                    //     '过户',
+                    //     '尾款',
+                    //     '完成',
+                    //   ],
+                    //   number: 1,
+                    // )
+                    ),
+                16.hb,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 32.w),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(8.w)),
+                  child: GestureDetector(
+                    onTap: () {
+                      //Get.to(() => const Detection());
+                    },
+                    child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 32.w),
+                        decoration: BoxDecoration(
+                            color: kForeGroundColor,
+                            borderRadius: BorderRadius.circular(16.w)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            32.wb,
-                            Container(
-                              color: Colors.blue,
-                              width: 196.w,
-                              height: 150.w,
+                            Padding(
+                              padding: EdgeInsets.only(left: 32.w),
+                              child: getTitle('车辆信息'),
                             ),
-                            20.wb,
-                            SizedBox(
-                              width: 406.w,
-                              child: Column(
-                                children: [
-                                  Text('奥迪Q3 2020款 35 TFSI 进取型SUV',
-                                      style: TextStyle(
-                                          fontSize: BaseStyle.fontSize28,
-                                          color: BaseStyle.color111111)),
-                                  32.hb,
-                                  getCaip('自动2.0T', '国VI', '五座')
-                                ],
-                              ),
-                            )
+                            24.hb,
+                            Row(
+                              children: [
+                                32.wb,
+                                Container(
+                                  color: Colors.blue,
+                                  width: 196.w,
+                                  height: 150.w,
+                                ),
+                                20.wb,
+                                SizedBox(
+                                  width: 406.w,
+                                  child: Column(
+                                    children: [
+                                      Text('奥迪Q3 2020款 35 TFSI 进取型SUV',
+                                          style: TextStyle(
+                                              fontSize: BaseStyle.fontSize28,
+                                              color: BaseStyle.color111111)),
+                                      32.hb,
+                                      getCaip('自动2.0T', '国VI', '五座')
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            40.hb,
+                            getList(),
                           ],
-                        ),
-                        40.hb,
-                        getList(),
-                      ],
-                    )),
-              ),
-            ),
-            16.hb,
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 32.w),
-              padding: EdgeInsets.all(28.w),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.w)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('订单信息'),
+                        )),
                   ),
-                  16.hb,
-                  _getText('客户姓名', '莉丝'),
-                  16.hb,
-                  _getText('联系方式', '18912345432'),
-                  16.hb,
-                  _getText('取车地址', '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
-                  16.hb,
-                  _getText('租赁时间', '01-04 12:00 至 01-05 12:00'),
-                  16.hb,
-                  _getText('还车地址', '与取车地址相同'),
-                  16.hb,
-                ],
-              ),
-            ),
-            16.hb,
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 32.w),
-              padding: EdgeInsets.all(28.w),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.w)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('支付信息'),
+                ),
+                16.hb,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 32.w),
+                  padding: EdgeInsets.all(28.w),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.w)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.w),
+                        child: getTitle('订单信息'),
+                      ),
+                      16.hb,
+                      _getText('客户姓名', '莉丝'),
+                      16.hb,
+                      _getText('联系方式', '18912345432'),
+                      16.hb,
+                      _getText('取车地址', '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
+                      16.hb,
+                      _getText('租赁时间', '01-04 12:00 至 01-05 12:00'),
+                      16.hb,
+                      _getText('还车地址', '与取车地址相同'),
+                      16.hb,
+                    ],
                   ),
-                  16.hb,
-                  _getText('支付方式', '支付宝'),
-                  16.hb,
-                  _getText('支付时间', '2022-01-03 11:00')
-                ],
-              ),
-            ),
-            16.hb,
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 32.w),
-              padding: EdgeInsets.all(28.w),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.w)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('交车凭证'),
+                ),
+                16.hb,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 32.w),
+                  padding: EdgeInsets.all(28.w),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.w)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.w),
+                        child: getTitle('支付信息'),
+                      ),
+                      16.hb,
+                      _getText('支付方式', '支付宝'),
+                      16.hb,
+                      _getText('支付时间', '2022-01-03 11:00')
+                    ],
                   ),
-                  16.hb,
-                  getPicture('押金支付凭证', Assets.images.carBanner.path),
-                  16.hb,
-                  getPicture('人车合影', Assets.images.carBanner.path),
-                  16.hb,
-                  _getText('上传时间', '2022-01-03 11:00')
-                ],
-              ),
+                ),
+                16.hb,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 32.w),
+                  padding: EdgeInsets.all(28.w),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.w)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.w),
+                        child: getTitle('交车凭证'),
+                      ),
+                      16.hb,
+                      getPicture('押金支付凭证', Assets.images.carBanner.path),
+                      16.hb,
+                      getPicture('人车合影', Assets.images.carBanner.path),
+                      16.hb,
+                      _getText('上传时间', '2022-01-03 11:00')
+                    ],
+                  ),
+                ),
+              ],
             ),
-            32.hb,
-            !bL
-                ? Container(
-                    width: double.infinity,
-                    color: kForeGroundColor,
-                    padding: EdgeInsets.only(
-                        top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
-                    child: GestureDetector(
-                      onTap: () {
-                        //Get.to(() => const RentaicarOrderData());
-                        BotToast.showText(text: '确认成功');
-                      },
-                      child: Container(
-                          width: 168.w,
-                          height: 68.w,
-                          padding: EdgeInsets.only(left: 38.w, top: 14.w),
-                          decoration: BoxDecoration(
-                              color: const Color(0xFF027AFF),
-                              borderRadius: BorderRadius.circular(8.w)),
-                          child: Text(
-                            '确认还车',
-                            style: TextStyle(
-                                color: kForeGroundColor,
-                                fontSize: BaseStyle.fontSize28),
-                          )),
-                    ))
-                :const SizedBox()
+            Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: !bL
+                    ? Container(
+                        width: double.infinity,
+                        color: kForeGroundColor,
+                        padding: EdgeInsets.only(
+                            top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
+                        child: GestureDetector(
+                          onTap: () {
+                            //Get.to(() => const RentaicarOrderData());
+                            BotToast.showText(text: '确认成功');
+                          },
+                          child: Container(
+                              width: 168.w,
+                              height: 68.w,
+                              padding: EdgeInsets.only(left: 38.w, top: 14.w),
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFF027AFF),
+                                  borderRadius: BorderRadius.circular(8.w)),
+                              child: Text(
+                                '确认还车',
+                                style: TextStyle(
+                                    color: kForeGroundColor,
+                                    fontSize: BaseStyle.fontSize28),
+                              )),
+                        ))
+                    : const SizedBox())
           ],
         ));
   }
@@ -311,16 +318,16 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
           ),
         ),
         32.wb,
-        SizedBox(
-          width: 478.w,
-          child: Flexible(
+        Flexible(
+          child: SizedBox(
+            width: 478.w,
             child: Text(
               text,
               style: TextStyle(
                   color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
             ),
           ),
-        )
+        ),
       ],
     );
   }
