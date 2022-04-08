@@ -29,60 +29,74 @@ class _EnterprisePageState extends State<EnterprisePage> {
       backgroundColor: const Color(0xFFF6F6F6),
       extendBody: true,
       body: Container(
-        color: Colors.white,
-        height: 600.w,
+        color: bodyColor,
+
         margin: EdgeInsets.only(top: 16.w),
-        child: ListView(
-          children: ListTile.divideTiles(context: context, tiles: [
-            ListTile(
-              title: Text(
-                '企业',
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              trailing: Text(
-                '云云问车',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    ?.copyWith(color: BaseStyle.color999999),
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text(
-                '门店',
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              trailing: Text('门店1',
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            shrinkWrap: true,
+            children: ListTile.divideTiles(context: context, tiles: [
+              ListTile(
+                title: Text(
+                  '企业',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                trailing: Text(
+                  '云云问车',
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
-                      ?.copyWith(color: BaseStyle.color999999)),
-              onTap: () {},
-            ),
-            ListTile(
-              onTap: () {},
-              title: Text(
-                '部门',
-                style: Theme.of(context).textTheme.bodyText1,
+                      ?.copyWith(color: BaseStyle.color999999),
+                ),
+                onTap: () {},
               ),
-              trailing: Text('销售部',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(color: BaseStyle.color999999)),
-            ),
-            ListTile(
-              title: Text('门店地址', style: Theme.of(context).textTheme.bodyText1),
-              subtitle: Text(
-                '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    ?.copyWith(color: BaseStyle.color999999),
+              ListTile(
+                title: Text(
+                  '门店',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                trailing: Text('门店1',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        ?.copyWith(color: BaseStyle.color999999)),
+                onTap: () {},
               ),
-            ),
-          ]).toList(),
+              ListTile(
+                onTap: () {},
+                title: Text(
+                  '部门',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                trailing: Text('销售部',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        ?.copyWith(color: BaseStyle.color999999)),
+              ),
+              Padding(
+                padding:  EdgeInsets.only(left: 32.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    24.hb,
+                    Text('门店地址', style: Theme.of(context).textTheme.bodyText1),
+                    24.hb,
+                    Text(
+                      '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(color: BaseStyle.color999999),
+                    ),
+                    24.hb,
+                  ],
+                ),
+              )
+
+            ]).toList(),
+          ),
         ),
       ),
     );

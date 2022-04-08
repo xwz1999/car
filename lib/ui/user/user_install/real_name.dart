@@ -51,140 +51,143 @@ class _RealNamePageState extends State<RealNamePage> {
 //实名认证
   _real() {
     return Container(
-      width: 750.w,
-      height: 450.w,
+
       color: Colors.white,
       padding: EdgeInsets.only(top: 16.w),
-      child: Row(children: [
-        36.wb,
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _getText('姓名', '请填写您的真实姓名'),
-            64.hb,
-            _getText('身份证号', '请填写身份证号'),
-            64.hb,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  child: Text(
-                    '身份证照',
-                    style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                          color: const Color(0xFF999999),
-                        ),
+      child:  Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          12.hb,
+          _getText('姓名', '请填写您的真实姓名'),
+          64.hb,
+          _getText('身份证号', '请填写身份证号'),
+          64.hb,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              32.wb,
+              SizedBox(
+                child: Text(
+                  '身份证照',
+                  style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                    color: const Color(0xFF999999),
                   ),
                 ),
-                32.wb,
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 200.w,
-                      height: 150.w,
-                      child: GestureDetector(
-                          onTap: () {
-                            //Get.to(() => ImagePickerWidget());
-                          },
-                          child: Stack(
-                            children: [
-                              SizedBox(
+              ),
+              40.wb,
+              Row(
+                children: [
+                  SizedBox(
+                    width: 200.w,
+                    height: 150.w,
+                    child: GestureDetector(
+                        onTap: () {
+                          //Get.to(() => ImagePickerWidget());
+                        },
+                        child: Stack(
+                          children: [
+                            SizedBox(
+                              child: Image.asset(
+                                Assets.images.realNameHead.path,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Positioned(
+                              left: 65.w,
+                              top: 40.w,
+                              child: Container(
+                                padding: EdgeInsets.all(20.w),
+                                width: 72.w,
+                                height: 72.w,
+                                decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(0, 0, 0, 0.5),
+                                    borderRadius:
+                                    BorderRadius.circular(36.w)),
                                 child: Image.asset(
-                                  Assets.images.realNameHead.path,
+                                  Assets.images.camera.path,
                                   fit: BoxFit.fill,
                                 ),
                               ),
-                              Positioned(
-                                left: 52.w,
-                                top: 40.w,
-                                child: Container(
-                                  padding: EdgeInsets.all(20.w),
-                                  width: 72.w,
-                                  height: 72.w,
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromRGBO(0, 0, 0, 0.5),
-                                      borderRadius:
-                                          BorderRadius.circular(36.w)),
-                                  child: Image.asset(
-                                    Assets.images.camera.path,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              )
-                            ],
-                          )),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       Get.to(() => const FaceRecognitionPage());
-                      //     },
-                      //     child:
+                            )
+                          ],
+                        )),
+                    // GestureDetector(
+                    //     onTap: () {
+                    //       Get.to(() => const FaceRecognitionPage());
+                    //     },
+                    //     child:
 
-                      //     ),
-                    ),
-                    24.wb,
-                    SizedBox(
-                      width: 200.w,
-                      height: 150.w,
-                      child: GestureDetector(
-                          onTap: () {
-                            //Get.to(() => ImagePickerWidget());
-                          },
-                          child: Stack(
-                            children: [
-                              SizedBox(
+                    //     ),
+                  ),
+                  24.wb,
+                  SizedBox(
+                    width: 200.w,
+                    height: 150.w,
+                    child: GestureDetector(
+                        onTap: () {
+                          //Get.to(() => ImagePickerWidget());
+                        },
+                        child: Stack(
+                          children: [
+                            SizedBox(
+                              child: Image.asset(
+                                Assets.images.realNameBadge.path,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Positioned(
+                              left: 65.w,
+                              top: 40.w,
+                              child: Container(
+                                padding: EdgeInsets.all(20.w),
+                                width: 72.w,
+                                height: 72.w,
+                                decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(0, 0, 0, 0.5),
+                                    borderRadius:
+                                    BorderRadius.circular(36.w)),
                                 child: Image.asset(
-                                  Assets.images.realNameBadge.path,
+                                  Assets.images.camera.path,
                                   fit: BoxFit.fill,
                                 ),
                               ),
-                              Positioned(
-                                left: 52.w,
-                                top: 40.w,
-                                child: Container(
-                                  padding: EdgeInsets.all(20.w),
-                                  width: 72.w,
-                                  height: 72.w,
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromRGBO(0, 0, 0, 0.5),
-                                      borderRadius:
-                                          BorderRadius.circular(36.w)),
-                                  child: Image.asset(
-                                    Assets.images.camera.path,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              )
-                            ],
-                          )),
-                    )
-                  ],
-                )
-              ],
-            )
-          ],
-        ),
-      ]),
+                            )
+                          ],
+                        )),
+                  )
+                ],
+              ),
+              32.wb,
+            ],
+          ),
+          32.hb,
+        ],
+      ),
     );
   }
 
 //提交按钮
   _getSubmit() {
     return GestureDetector(
-      child: Container(
-        width: 686.w,
-        height: 72.w,
-        padding: EdgeInsets.symmetric(horizontal: 312.w, vertical: 11.w),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.w),
-            gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-        child: Text(
-          '提交',
-          style: Theme.of(context)
-              .textTheme
-              .subtitle2
-              ?.copyWith(color: kForeGroundColor),
+      child: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 32.w),
+        child: Container(
+          height: 72.w,
+          width: double.infinity,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.w),
+              gradient: const LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
+          child: Text(
+            '提交',
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2
+                ?.copyWith(color: kForeGroundColor),
+          ),
         ),
       ),
     );
@@ -232,34 +235,38 @@ class _RealNamePageState extends State<RealNamePage> {
   }
 
   _getText(String title, String text) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 150.w,
-          child: Text(
-            '身份证号',
-            style: Theme.of(context)
-                .textTheme
-                .subtitle2
-                ?.copyWith(color: const Color(0xFF999999)),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 32.w),
+      color: Colors.white,
+      height: 50.w,
+      child: Row(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            width: 150.w,
+            child: Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  ?.copyWith(color: const Color(0xFF999999)),
+            ),
           ),
-        ),
-        SizedBox(
-          width: 300.w,
-          height: 35.w,
-          child: TextField(
-            decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(bottom: 23.w), //文字与边框的距离
-                border: InputBorder.none, //去掉下划线
-                hintText: '请填写身份证号',
-                hintStyle: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    ?.copyWith(color: const Color(0xFFCCCCCC))),
-            // onChanged: ,
-          ),
-        )
-      ],
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(bottom: 21.w), //文字与边框的距离
+                  border: InputBorder.none, //去掉下划线
+                  hintText: text,
+                  hintStyle: Theme.of(context)
+                      .textTheme
+                      .subtitle2
+                      ?.copyWith(color: const Color(0xFFCCCCCC))),
+              // onChanged: ,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

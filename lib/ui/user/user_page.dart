@@ -78,7 +78,7 @@ class _UserPageState extends State<UserPage> {
             )),
             GestureDetector(
               onTap: () {
-                Get.to(() => const InatallPage());
+                Get.to(() => const SystemSettingPage());
               },
               child: Image.asset(Assets.icons.userSetUp.path,
                   height: 48.w, width: 48.w),
@@ -89,28 +89,36 @@ class _UserPageState extends State<UserPage> {
       extendBody: true,
       // extendBodyBehindAppBar: true,
       body: Expanded(
-          child: ListView(
+          child: Column(
+            children: [
+              ListView(
+                shrinkWrap: true,
         padding: EdgeInsets.symmetric(horizontal: 32.w),
         children: [
-          //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-          _shareUser(),
-          32.hb,
-          _getBanner(),
-          24.hb,
-          _share(),
-          164.hb,
-          Row(
-            children: [
-              Padding(padding: EdgeInsets.only(left: 258.w)),
-              Text("云云问车1.0",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: const Color(0xFFCCCCCC))),
-            ],
-          )
+              //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+              _shareUser(),
+              32.hb,
+              _getBanner(),
+              24.hb,
+              _share(),
+
+
         ],
-      )),
+      ),
+              const Spacer(),
+              Row(
+                children: [
+                  Padding(padding: EdgeInsets.only(left: 258.w)),
+                  Text("云云问车 1.0",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: const Color(0xFFCCCCCC))),
+                ],
+              ),
+              64.hb,
+            ],
+          )),
       // body: Text(
       //   '',
       //   style: Theme.of(context).textTheme.bodyText1,
@@ -154,19 +162,19 @@ class _UserPageState extends State<UserPage> {
       },
       child: SizedBox(
         width: 160.w,
-        height: 88.w,
+
         child: Column(
           children: [
             Text(
               num,
               style: TextStyle(
-                  color: BaseStyle.color111111, fontSize: BaseStyle.fontSize40),
+                  color: BaseStyle.color111111, fontSize: BaseStyle.fontSize40,fontWeight: FontWeight.bold),
             ),
             8.hb,
             Text(
               title,
               style: TextStyle(
-                  color: BaseStyle.color999999, fontSize: BaseStyle.fontSize24),
+                  color: BaseStyle.color999999, fontSize: BaseStyle.fontSize24,fontWeight: FontWeight.bold),
             )
           ],
         ),
@@ -193,24 +201,28 @@ class _UserPageState extends State<UserPage> {
             top: 16.w,
             child: Stack(
               children: [
-                SizedBox(
+
+                Container(
                   width: 112.w,
                   height: 46.w,
-                  child: Image.asset(
-                    Assets.images.bubble.path,
-                    fit: BoxFit.fill,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(Assets.images.bubble.path,),
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                Positioned(
-                    left: 6.w,
-                    top: 4.w,
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding:  EdgeInsets.only(bottom: 8.w),
                     child: Text(
                       "首月6折",
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
                           ?.copyWith(color: kForeGroundColor),
-                    )),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -250,7 +262,7 @@ class _UserPageState extends State<UserPage> {
               16.wb,
               Text("开通即享5项权益",
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      color: const Color.fromRGBO(255, 255, 255, 0.8))
+                      color: Colors.white.withOpacity(0.8))
                   // TextStyle(
                   //   fontSize: 24.sp,
                   //   color: Colors.white60,
@@ -263,17 +275,15 @@ class _UserPageState extends State<UserPage> {
               Get.to(() => const PartnerCenterPage());
             },
             child: Container(
-              width: 65,
-              height: 28,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.w),
                   color: Colors.white),
-              padding: const EdgeInsets.only(left: 6, top: 5),
+              padding:  EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
               child: Text("立即开通",
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
-                      ?.copyWith(color: const Color(0xFF027AFF))
+                      ?.copyWith(color: const Color(0xFF027AFF),fontWeight: FontWeight.bold)
                   // TextStyle(
                   //     color: Colors.blue,
                   //     fontSize: 13,
@@ -292,51 +302,54 @@ class _UserPageState extends State<UserPage> {
         padding: EdgeInsets.all(32.w),
         decoration: BoxDecoration(
           color: Colors.white, //底色
-          borderRadius: BorderRadius.circular(16), //圆角弧度
+          borderRadius: BorderRadius.circular(16.w), //圆角弧度
         ),
         child: Column(children: [
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => const BasicInformationPage());
-                },
-                child: SizedBox(
-                  //头像
-                  width: 120.w, height: 120.w,
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(60.w)),
-                        child: Container(
-                          color: Colors.blue,
-                        )),
-                  ),
-                ),
-              ),
-              32.wb,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          GestureDetector(
+            onTap: () {
+              Get.to(() => const BasicInformationPage());
+            },
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
                 children: [
-                  Text(
-                    "张三",
-                    style: Theme.of(context).textTheme.headline3,
-                    // style: TextStyle(
-                    //     fontSize: 20, fontWeight: FontWeight.bold),
+                  SizedBox(
+                    //头像
+                    width: 120.w, height: 120.w,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(60.w)),
+                          child: Container(
+                            color: Colors.blue,
+                          )),
+                    ),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 5)),
-                  Row(
-                    children: [getCiap('销售'), 16.wb, getCiap('云云问车')],
+                  32.wb,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "张三",
+                        style: Theme.of(context).textTheme.headline3,
+                        // style: TextStyle(
+                        //     fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 5)),
+                      Row(
+                        children: [getCiap('销售'), 16.wb, getCiap('云云问车')],
+                      )
+                    ],
+                  ),
+                  255.wb,
+                  SizedBox(
+                    width: 40.w,
+                    height: 40.w,
+                    child: const Icon(Icons.keyboard_arrow_right),
                   )
                 ],
               ),
-              255.wb,
-              SizedBox(
-                width: 40.w,
-                height: 40.w,
-                child: const Icon(Icons.keyboard_arrow_right),
-              )
-            ],
+            ),
           ),
           48.hb,
           Row(children: [
@@ -354,8 +367,7 @@ class _UserPageState extends State<UserPage> {
     return Container(
       width: double.infinity,
       height: 460.w,
-      //margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-      padding: EdgeInsets.all(32.w),
+      padding: EdgeInsets.only(left: 32.w, top: 40.w,),
       decoration: BoxDecoration(
         color: Colors.white, //底色
         borderRadius: BorderRadius.circular(10), //圆角弧度
@@ -367,16 +379,17 @@ class _UserPageState extends State<UserPage> {
           // Padding(padding: EdgeInsets.only(left: 32.w, top: 48.w, right: 510.w)),
           Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 48.w, left: 32.w)),
+
               Text(
                 '其他功能',
                 style: Theme.of(context)
                     .textTheme
                     .headline6
-                    ?.copyWith(fontSize: 36.sp),
+                    ?.copyWith(fontSize: 36.sp,fontWeight: FontWeight.bold),
               ),
             ],
           ),
+          20.hb,
           _getKingCoin(),
         ],
       ),
@@ -388,6 +401,7 @@ class _UserPageState extends State<UserPage> {
     return GridView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
+      physics:const NeverScrollableScrollPhysics(),
       itemCount: _KingCoinUserlist.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         //横轴元素个数
