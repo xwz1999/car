@@ -657,7 +657,7 @@ class _CardetailPageState extends State<CardetailPage>
         //   fit: BoxFit.fill,
         // );
         return Image.asset(
-          'assets/images/car_banner.png',
+          Assets.images.carBanner.path,
           fit: BoxFit.fill,
         );
       },

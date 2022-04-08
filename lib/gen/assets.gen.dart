@@ -36,6 +36,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/advice.png
   AssetGenImage get advice => const AssetGenImage('assets/icons/advice.png');
 
+  /// File path: assets/icons/already_collected.png
+  AssetGenImage get alreadyCollected =>
+      const AssetGenImage('assets/icons/already_collected.png');
+
   /// File path: assets/icons/back.png
   AssetGenImage get back => const AssetGenImage('assets/icons/back.png');
 
@@ -55,6 +59,14 @@ class $AssetsIconsGen {
   AssetGenImage get carAgent =>
       const AssetGenImage('assets/icons/car_agent.png');
 
+  /// File path: assets/icons/car_certification.png
+  AssetGenImage get carCertification =>
+      const AssetGenImage('assets/icons/car_certification.png');
+
+  /// File path: assets/icons/car_direct.png
+  AssetGenImage get carDirect =>
+      const AssetGenImage('assets/icons/car_direct.png');
+
   /// File path: assets/icons/car_maintain.png
   AssetGenImage get carMaintain =>
       const AssetGenImage('assets/icons/car_maintain.png');
@@ -67,12 +79,20 @@ class $AssetsIconsGen {
   AssetGenImage get carMortgage =>
       const AssetGenImage('assets/icons/car_mortgage.png');
 
+  /// File path: assets/icons/car_options.png
+  AssetGenImage get carOptions =>
+      const AssetGenImage('assets/icons/car_options.png');
+
   /// File path: assets/icons/car_push.png
   AssetGenImage get carPush => const AssetGenImage('assets/icons/car_push.png');
 
   /// File path: assets/icons/car_recovery.png
   AssetGenImage get carRecovery =>
       const AssetGenImage('assets/icons/car_recovery.png');
+
+  /// File path: assets/icons/car_shelves.png
+  AssetGenImage get carShelves =>
+      const AssetGenImage('assets/icons/car_shelves.png');
 
   /// File path: assets/icons/car_valuation.png
   AssetGenImage get carValuation =>
@@ -88,6 +108,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/citicbank head.png
   AssetGenImage get citicbankHead =>
       const AssetGenImage('assets/icons/citicbank head.png');
+
+  /// File path: assets/icons/collection.png
+  AssetGenImage get collection =>
+      const AssetGenImage('assets/icons/collection.png');
 
   /// File path: assets/icons/construction_head.png
   AssetGenImage get constructionHead =>
@@ -232,6 +256,10 @@ class $AssetsIconsGen {
   AssetGenImage get noEditor =>
       const AssetGenImage('assets/icons/no_editor.png');
 
+  /// File path: assets/icons/no_selected.png
+  AssetGenImage get noSelected =>
+      const AssetGenImage('assets/icons/no_selected.png');
+
   /// File path: assets/icons/no_transmission.png
   AssetGenImage get noTransmission =>
       const AssetGenImage('assets/icons/no_transmission.png');
@@ -239,6 +267,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/no_upload.png
   AssetGenImage get noUpload =>
       const AssetGenImage('assets/icons/no_upload.png');
+
+  /// File path: assets/icons/not_collect.png
+  AssetGenImage get notCollect =>
+      const AssetGenImage('assets/icons/not_collect.png');
 
   /// File path: assets/icons/payment.png
   AssetGenImage get payment => const AssetGenImage('assets/icons/payment.png');
@@ -249,6 +281,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/scan.png
   AssetGenImage get scan => const AssetGenImage('assets/icons/scan.png');
+
+  /// File path: assets/icons/selected.png
+  AssetGenImage get selected =>
+      const AssetGenImage('assets/icons/selected.png');
 
   /// File path: assets/icons/shanghaibankhead.png
   AssetGenImage get shanghaibankhead =>

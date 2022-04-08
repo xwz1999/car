@@ -199,6 +199,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                         standard: '国六',
                         url: Assets.images.homeBg.path,
                         price: '27.43万',
+
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
