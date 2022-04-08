@@ -1,5 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
+<<<<<<< HEAD
+=======
+import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart';
+>>>>>>> f648973433173dd51e769260edaf4d9e6f990114
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
