@@ -7,14 +7,14 @@ import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class InatallPage extends StatefulWidget {
-  const InatallPage({Key? key}) : super(key: key);
+class SystemSettingPage extends StatefulWidget {
+  const SystemSettingPage({Key? key}) : super(key: key);
 
   @override
-  _InatallPageState createState() => _InatallPageState();
+  _SystemSettingPageState createState() => _SystemSettingPageState();
 }
 
-class _InatallPageState extends State<InatallPage> {
+class _SystemSettingPageState extends State<SystemSettingPage> {
   List<dynamic>? data;
   List list = [
     {'title': '企业信息'},
@@ -54,7 +54,7 @@ class _InatallPageState extends State<InatallPage> {
             16.hb,
             _getView(),
             24.hb,
-            _getbottom(),
+            _getBottom(),
             24.hb,
             Row(
               children: [
@@ -84,11 +84,11 @@ class _InatallPageState extends State<InatallPage> {
   }
 
 //按钮
-  _getbottom() {
+  _getBottom() {
     return GestureDetector(
       child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 312.w, vertical: 32.w),
-          height: 96.w,
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 28.w),
           color: Colors.white,
           child: Text(
             '退出登录',
@@ -103,10 +103,11 @@ class _InatallPageState extends State<InatallPage> {
   ///
   _getView() {
     return Container(
-      height: 390.w,
+
       color: Colors.white,
       child: ListView.separated(
-        padding: EdgeInsets.only(top: 16.w),
+        shrinkWrap: true,
+
         itemCount: 3,
         itemBuilder: (context, index) {
           return _getList(list[index]);
@@ -121,12 +122,11 @@ class _InatallPageState extends State<InatallPage> {
 
 //列表
   _getList(item) {
-    return ListTile(
+    return GestureDetector(
       onTap: () {
         switch (item['title']) {
           case '企业信息':
             Get.to(() => const EnterpriseInformationPage());
-            //print("1111111");
             break;
           case '认证身份':
             Get.to(() => const RealNamePage());
@@ -136,12 +136,21 @@ class _InatallPageState extends State<InatallPage> {
             break;
         }
       },
-
-      //绘制消息主体
-      title: Text(item['title'], style: Theme.of(context).textTheme.subtitle2),
-
-      trailing: const Icon(Icons.keyboard_arrow_right),
-      //contentPadding: ,
+      child: Container(
+        height: 92.w,
+        color: Colors.transparent,
+        alignment: Alignment.center,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            32.wb,
+            Text(item['title'], style: Theme.of(context).textTheme.subtitle2),
+            const Spacer(),
+            const Icon(Icons.keyboard_arrow_right),
+            32.wb,
+          ],
+        )
+      ),
     );
   }
 

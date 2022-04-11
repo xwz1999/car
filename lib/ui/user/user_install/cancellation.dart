@@ -110,7 +110,7 @@ class _CancellationPageState extends State<CancellationPage> {
     32.hb,
     SizedBox(
       width: 300.w,
-      height: 328.w,
+
       // child: Text(
       // '',
       // style: Theme.of(context)
@@ -161,25 +161,23 @@ class _CancellationPageState extends State<CancellationPage> {
         Get.to(() => const ValidationPage());
       },
       child: Container(
-        width: 686.w,
+
         height: 72.w,
-        padding: EdgeInsets.only(left: 218.w, top: 22.w),
+        width: double.infinity,
+        alignment: Alignment.center,
+        margin: EdgeInsets.symmetric(horizontal: 32.w),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.w),
             gradient: const LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-        child: SizedBox(
-          width: 252.w,
-          height: 28.w,
-          child: Text(
-            '我了解风险，下一步',
-            style: Theme.of(context)
-                .textTheme
-                .subtitle2
-                ?.copyWith(color: kForeGroundColor),
-          ),
+        child: Text(
+          '我了解风险，下一步',
+          style: Theme.of(context)
+              .textTheme
+              .subtitle2
+              ?.copyWith(color: kForeGroundColor),
         ),
       ),
     );
