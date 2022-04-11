@@ -185,159 +185,161 @@ class _CardetailPageState extends State<CardetailPage>
 
   //信息栏
   _informations() {
-    return Column(
-      children: [
-        SizedBox(
-            width: double.infinity,
-            height: 116.w,
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.w),
-                  color: Colors.white,
-                  boxShadow: const [
-                    BoxShadow(
-                        offset: Offset(0.0, 4.0),
-                        blurRadius: 14.0,
-                        spreadRadius: 0.0,
-                        color: Color.fromRGBO(2, 122, 255, 0.11)),
-                    // BoxShadow(
-                    //     offset: Offset(0.0, 0.0),
-                    //     color: Color.fromRGBO(2, 122, 255, 0.11))
-                  ]),
-              padding: EdgeInsets.only(top: 24.w, left: 24.w),
-              child: Row(
+    return SizedBox(
+      width: 686.w,
+      height: 116.w,
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.w),
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(
+                  offset: Offset(0.0, 4.0),
+                  blurRadius: 14.0,
+                  spreadRadius: 0.0,
+                  color: Color.fromRGBO(2, 122, 255, 0.11)),
+              // BoxShadow(
+              //     offset: Offset(0.0, 0.0),
+              //     color: Color.fromRGBO(2, 122, 255, 0.11))
+            ]),
+        child: Row(
+          children: [
+            Container(
+              width: 100.w,
+              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 22.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Text(
+                    '9.09—11.68万',
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                  Row(
                     children: [
+                      SizedBox(
+                        width: 28.w,
+                        height: 28.w,
+                        child: Image.asset(Assets.icons.systemEstimate.path),
+                      ),
+                      // Icon(
+                      //   Icons.timer,
+                      //   size: 20,
+                      // ),
                       Text(
-                        '9.08-11.68万',
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 28.w,
-                            height: 28.w,
-                            child: Image.asset('assets/icons/detail_file.png'),
-                          ),
-                          // Icon(
-                          //   Icons.timer,
-                          //   size: 20,
-                          // ),
-                          Text(
-                            '参考行情',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.copyWith(color: const Color(0xFF999999)),
-                          )
-                        ],
-                      ),
+                        '参考行情',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            ?.copyWith(color: const Color(0xFF999999)),
+                      )
                     ],
                   ),
-                  27.wb,
-                  SizedBox(
-                    width: 1.w,
-                    height: 40.w,
-                    child: const DecoratedBox(
-                        decoration: BoxDecoration(color: Colors.grey)),
-                  ),
-                  27.wb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                ],
+              ),
+            ),
+            13.wb,
+            SizedBox(
+              width: 1.w,
+              height: 40.w,
+              child: const DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.grey)),
+            ),
+            13.wb,
+            Container(
+              width: 100.w,
+              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 22.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            '张斯斯',
-                            style: Theme.of(context).textTheme.subtitle2,
-                          ),
-                          8.wb,
-                          Text.rich(TextSpan(
-                              text: '立即联系',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(
-                                      color: const Color(0xFF027AFF),
-                                      fontSize: 20.sp),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = (() {
-                                  ('object');
-                                })))
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 28.w,
-                            height: 28.w,
-                            child: Image.asset('assets/icons/detail_file.png'),
-                          ),
-                          // Icon(
-                          //   Icons.timer,
-                          //   size: 20,
-                          // ),
-                          Text(
-                            '车务',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.copyWith(color: const Color(0xFF999999)),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  27.wb,
-                  SizedBox(
-                    width: 1.w,
-                    height: 40.w,
-                    child: const DecoratedBox(
-                        decoration: BoxDecoration(color: Colors.grey)),
-                  ),
-                  27.wb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 68.w)),
                       Text(
-                        '893627',
+                        '张斯斯',
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 28.w,
-                            height: 28.w,
-                            child: Image.asset('assets/icons/detail_file.png'),
-                          ),
-                          // Icon(
-                          //   Icons.timer,
-                          //   size: 20,
-                          // ),
-                          Text(
-                            '车辆编号',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.copyWith(color: const Color(0xFF999999)),
-                          )
-                        ],
+                      8.wb,
+                      Text.rich(TextSpan(
+                          text: '立即联系',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              ?.copyWith(
+                                  color: const Color(0xFF027AFF),
+                                  fontSize: 20.sp),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = (() {
+                              ('object');
+                            })))
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 28.w,
+                        height: 28.w,
+                        child: Image.asset(Assets.icons.traffic.path),
                       ),
+                      // Icon(
+                      //   Icons.timer,
+                      //   size: 20,
+                      // ),
+                      Text(
+                        '车务',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            ?.copyWith(color: const Color(0xFF999999)),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            13.wb,
+            SizedBox(
+              width: 1.w,
+              height: 40.w,
+              child: const DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.grey)),
+            ),
+            13.wb,
+            Container(
+              width: 100.w,
+              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 22.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 68.w)),
+                  Text(
+                    '893627',
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 28.w,
+                        height: 28.w,
+                        child: Image.asset(Assets.icons.carNumber.path),
+                      ),
+                      // Icon(
+                      //   Icons.timer,
+                      //   size: 20,
+                      // ),
+                      Text(
+                        '车辆编号',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            ?.copyWith(color: const Color(0xFF999999)),
+                      )
                     ],
                   ),
                 ],
               ),
             )
-
-            // Row(children: [
-            //   Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
-
-            // ]),
-            )
-      ],
+          ],
+        ),
+      ),
     );
   }
 
