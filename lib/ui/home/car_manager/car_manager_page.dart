@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../manager_container_item.dart';
 import 'assessment_page.dart';
-import 'direct_sale_manager_page.dart';
+import 'direct_sale/direct_sale_manager_page.dart';
 
 class CarManagerPage extends StatefulWidget {
   const CarManagerPage({Key? key}) : super(key: key);
