@@ -24,7 +24,6 @@ class ShareHomePage extends StatefulWidget {
 class _ShareHomePageState extends State<ShareHomePage>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late List<String> _dropDownHeaderItemStrings;
-
   List<dynamic>? data;
   List<Widget> listWidget = [];
   ScreenControl screenControlMy = ScreenControl();
