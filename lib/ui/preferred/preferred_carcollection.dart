@@ -1,7 +1,9 @@
 import 'package:cloud_car/ui/home/carlist_page.dart';
 import 'package:cloud_car/ui/home/citylist_page.dart';
-import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/preferred/preferred_car_detail.dart';
+
+//import 'package:cloud_car/ui/preferred/preferred_car_detail.dart';
+import 'package:cloud_car/ui/preferred/preferred_sharecar.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -178,7 +180,7 @@ class _CarCollectionState extends State<CarCollection> {
             children: [
               GestureDetector(
                   onTap: () {
-                    Get.to(() => const SearchPage());
+                    Get.to(() => const ShareCar());
                   },
                   child: Text(
                     '编辑',
@@ -241,7 +243,7 @@ class _CarCollectionState extends State<CarCollection> {
   get(item) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const CardetailPage());
+        Get.to(() => const CarDetailPage());
       },
       child: Container(
         decoration: BoxDecoration(

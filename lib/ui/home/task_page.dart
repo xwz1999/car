@@ -1,6 +1,9 @@
+//import 'package:cloud_car/ui/home/customer_page.dart';
+import 'package:cloud_car/ui/home/customer_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:cloud_car/widget/message_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -84,35 +87,38 @@ class _TaskPageState extends State<TaskPage> {
                       ],
                     ))
                 : const SizedBox(),
-            // ListView.separated(
-            //     shrinkWrap :true,
-            //     //padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
-            //     physics: const NeverScrollableScrollPhysics(),
-            //     padding: EdgeInsets.only(top: 10.w),
-            //     itemBuilder: (context, index) {
-            //
-            //       return GestureDetector(
-            //         onTap: (){
-            //           ///Get.to(()=>const MessagePage());
-            //           Get.to(()=>const CustomerPage());
-            //         },
-            //         child: GestureDetector(
-            //           child: const MessageItemWidget(
-            //             time: '01-09 12;22',
-            //             url: R.ASSETS_ICONS_CUSTOMER_CARE_PNG,
-            //             tip: '您的购车客户保险将于7天后到期',
-            //             num: 11,
-            //             title: '客户关怀提醒',
-            //             type: TaskType.message,
-            //
-            //           ),
-            //         ),
-            //       );
-            //     },
-            //     separatorBuilder: (_, __) {
-            //       return Divider(indent:32.w ,endIndent: 32.w,height: 1.w,color: BaseStyle.coloreeeeee,);
-            //     },
-            //     itemCount: 20),
+            ListView.separated(
+                shrinkWrap: true,
+                //padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.only(top: 10.w),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      //Get.to(() => const MessagePage());
+                      Get.to(() => const CustomerPage());
+                    },
+                    child: GestureDetector(
+                      child: const MessageItemWidget(
+                        time: '01-09 12;22',
+                        url: 'assets/images/care.png',
+                        tip: '您的购车客户保险将于7天后到期',
+                        num: 11,
+                        title: '客户关怀提醒',
+                        type: TaskType.message,
+                      ),
+                    ),
+                  );
+                },
+                separatorBuilder: (_, __) {
+                  return Divider(
+                    indent: 32.w,
+                    endIndent: 32.w,
+                    height: 1.w,
+                    color: BaseStyle.coloreeeeee,
+                  );
+                },
+                itemCount: 20),
           ],
         ),
       ),

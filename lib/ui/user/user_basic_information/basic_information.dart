@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_car/ui/user/user_basic_information/enterprise.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
@@ -368,7 +370,6 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                                     BaseStyle.fontSize28)),
                                       ),
                                     ),
-
                                     GestureDetector(
                                       onTap: () {
                                         print(0000000);
@@ -457,5 +458,4 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
       ),
     );
   }
-
 }

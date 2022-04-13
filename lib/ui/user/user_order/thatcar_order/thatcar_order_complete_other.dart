@@ -44,7 +44,7 @@ class _Complete0therState extends State<Complete0ther> {
               16.hb,
               _getText('联系方式', '189****5432'),
               16.hb,
-              _getText1('绑定销售', '张三三'),
+              _getText1('绑定销售'),
               16.hb,
               _getText('上门地址', '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
               16.hb,
@@ -161,7 +161,9 @@ class _Complete0therState extends State<Complete0ther> {
     ));
   }
 
-  _getText1(String title, String text) {
+  _getText1(
+    String title,
+  ) {
     return Row(
       children: [
         SizedBox(
@@ -173,17 +175,6 @@ class _Complete0therState extends State<Complete0ther> {
           ),
         ),
         32.wb,
-        Flexible(
-          child: SizedBox(
-            width: 90.w,
-            child: Text(
-              text,
-              style: TextStyle(
-                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
-            ),
-          ),
-        ),
-        18.wb,
         GestureDetector(
           onTap: () {
             setState(() {
@@ -237,7 +228,7 @@ class _Complete0therState extends State<Complete0ther> {
           child: Text(
             '立即联系',
             style: TextStyle(
-                color: const Color(0xFF027AFF), fontSize: BaseStyle.fontSize20),
+                color: const Color(0xFF027AFF), fontSize: BaseStyle.fontSize28),
           ),
         )
       ],

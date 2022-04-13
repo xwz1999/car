@@ -67,6 +67,10 @@ class $AssetsIconsGen {
   AssetGenImage get carCertification =>
       const AssetGenImage('assets/icons/car_certification.png');
 
+  /// File path: assets/icons/car_color.png
+  AssetGenImage get carColor =>
+      const AssetGenImage('assets/icons/car_color.png');
+
   /// File path: assets/icons/car_detail.png
   AssetGenImage get carDetail =>
       const AssetGenImage('assets/icons/car_detail.png');
@@ -179,6 +183,9 @@ class $AssetsIconsGen {
   AssetGenImage get feedback =>
       const AssetGenImage('assets/icons/feedback.png');
 
+  /// File path: assets/icons/file.png
+  AssetGenImage get file => const AssetGenImage('assets/icons/file.png');
+
   /// File path: assets/icons/home_share.png
   AssetGenImage get homeShare =>
       const AssetGenImage('assets/icons/home_share.png');
@@ -233,6 +240,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/invitation.png
   AssetGenImage get invitation =>
       const AssetGenImage('assets/icons/invitation.png');
+
+  /// File path: assets/icons/keyboard.png
+  AssetGenImage get keyboard =>
+      const AssetGenImage('assets/icons/keyboard.png');
 
   /// File path: assets/icons/main_menu.png
   AssetGenImage get mainMenu =>
@@ -359,6 +370,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/upload.png
   AssetGenImage get upload => const AssetGenImage('assets/icons/upload.png');
 
+  /// File path: assets/icons/user_invitation.png
+  AssetGenImage get userInvitation =>
+      const AssetGenImage('assets/icons/user_invitation.png');
+
   /// File path: assets/icons/user_set_up.png
   AssetGenImage get userSetUp =>
       const AssetGenImage('assets/icons/user_set_up.png');
@@ -390,6 +405,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/userview contract.png
   AssetGenImage get userviewContract =>
       const AssetGenImage('assets/icons/userview contract.png');
+
+  /// File path: assets/icons/voice.png
+  AssetGenImage get voice => const AssetGenImage('assets/icons/voice.png');
 
   /// File path: assets/icons/warning.png
   AssetGenImage get warning => const AssetGenImage('assets/icons/warning.png');

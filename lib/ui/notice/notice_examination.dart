@@ -219,79 +219,75 @@ class _ExaminationPageState extends State<ExaminationPage>
 
 //修改审核
   _modify(item) {
-    return Card(
-      //onTap: () {},
-      child: Container(
-        decoration: const BoxDecoration(color: Colors.white),
-        child: Column(children: [
-          Row(
-            children: [
-              Padding(padding: EdgeInsets.only(left: 32.w, top: 16.w)),
-              Text(
-                item['title'],
-                style: TextStyle(
-                    fontSize: 32.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
-              ),
-              Container(
-                  padding: EdgeInsets.only(left: 243.w, top: 20.w),
-                  //child: item['conditions'] == 0 ? print('0') : print('1');
-                  child: item['conditions'] == '0' ? _pass() : _rejected()
-                  // if(item['conditions']=='0') {
-                  //   _read();
-                  // } else {
-                  //   _noread();
-                  // }
+    return Container(
+      decoration: const BoxDecoration(color: Colors.white),
+      child: Column(children: [
+        Row(
+          children: [
+            Padding(padding: EdgeInsets.only(left: 32.w, top: 16.w)),
+            Text(
+              item['title'],
+              style: TextStyle(
+                  fontSize: 32.sp, color: const Color.fromRGBO(51, 51, 51, 1)),
+            ),
+            Container(
+                padding: EdgeInsets.only(left: 243.w, top: 20.w),
+                //child: item['conditions'] == 0 ? print('0') : print('1');
+                child: item['conditions'] == '0' ? _pass() : _rejected()
+                // if(item['conditions']=='0') {
+                //   _read();
+                // } else {
+                //   _noread();
+                // }
 
+                )
+          ],
+        ),
+        Container(
+          width: double.infinity,
+          height: 200.w,
+          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    '车辆名称',
+                    style: TextStyle(
+                        fontSize: 28.sp,
+                        color: const Color.fromRGBO(102, 102, 102, 1)),
+                  ),
+                  48.wb,
+                  Text(
+                    item['name'],
+                    style: TextStyle(
+                        fontSize: 28.sp,
+                        color: const Color.fromRGBO(51, 51, 51, 1)),
                   )
+                ],
+              ),
+              28.hb,
+              Row(
+                children: [
+                  Text(
+                    '审核时间',
+                    style: TextStyle(
+                        fontSize: 28.sp,
+                        color: const Color.fromRGBO(102, 102, 102, 1)),
+                  ),
+                  48.wb,
+                  Text(
+                    item['time'],
+                    style: TextStyle(
+                        fontSize: 28.sp,
+                        color: const Color.fromRGBO(51, 51, 51, 1)),
+                  )
+                ],
+              ),
             ],
           ),
-          Container(
-            width: double.infinity,
-            height: 200.w,
-            padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      '车辆名称',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(102, 102, 102, 1)),
-                    ),
-                    48.wb,
-                    Text(
-                      item['name'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(51, 51, 51, 1)),
-                    )
-                  ],
-                ),
-                28.hb,
-                Row(
-                  children: [
-                    Text(
-                      '审核时间',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(102, 102, 102, 1)),
-                    ),
-                    48.wb,
-                    Text(
-                      item['time'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(51, 51, 51, 1)),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          )
-        ]),
-      ),
+        )
+      ]),
     );
   }
 

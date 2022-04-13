@@ -3,10 +3,9 @@
 import 'package:cloud_car/ui/home/carlist_page.dart';
 import 'package:cloud_car/ui/home/citylist_page.dart';
 import 'package:cloud_car/ui/preferred/preferred_allcar.dart';
-import 'package:cloud_car/ui/preferred/preferred_sharecar.dart';
+import 'package:cloud_car/ui/preferred/preferred_carcollection.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
@@ -270,7 +269,7 @@ class _PreferredPageState extends State<PreferredPage>
                 GestureDetector(
                   onTap: () {
                     // setState(() {});
-                    Get.to(() => const ShareCar());
+                    Get.to(() => const CarCollection());
                   },
                   child: SizedBox(
                       width: 48.w,

@@ -1,5 +1,4 @@
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
-
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete_other.dart';
@@ -71,8 +70,6 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
       'buttomname': '',
     },
   ];
-
-  late bool bl = false;
 
   @override
   void initState() {
@@ -233,13 +230,14 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
   }
 
   getCar(item) {
+    late bool bl = true;
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
         child: GestureDetector(
           onTap: () {
             switch (item['judgename']) {
               case '待支付':
-                Get.to(() => bl
+                Get.to(() => bl == true
                     ? const ThatcarUnpaid(
                         stat: '待支付',
                       )

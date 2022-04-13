@@ -1,19 +1,18 @@
-import 'package:cloud_car/ui/home/search_page.dart';
+// ignore_for_file: file_names
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:flutter/gestures.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
-class CardetailPage extends StatefulWidget {
-  const CardetailPage({Key? key}) : super(key: key);
+class CarDetailPage extends StatefulWidget {
+  const CarDetailPage({Key? key}) : super(key: key);
 
   @override
-  _CardetailPageState createState() => _CardetailPageState();
+  _CarDetailPageState createState() => _CarDetailPageState();
 }
 
-class _CardetailPageState extends State<CardetailPage>
+class _CarDetailPageState extends State<CarDetailPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
   late EasyRefreshController _refreshController;
@@ -33,86 +32,156 @@ class _CardetailPageState extends State<CardetailPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return CloudScaffold(
-      path: Assets.images.noticeBg.path,
-      bodyColor: kForeGroundColor,
-      appbar: Container(
-        color: Colors.transparent,
-        height: kToolbarHeight + MediaQuery.of(context).padding.top,
-        //alignment: Alignment.centerLeft,
-        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        child: Row(
-          children: [
-            32.wb,
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: Image.asset(Assets.icons.back.path,
-                  height: 48.w, width: 48.w),
-            ),
-            446.wb,
-            GestureDetector(
-              onTap: () {
-                Get.to(() => const SearchPage());
-              },
-              child: Image.asset(Assets.icons.carDetail.path,
-                  height: 48.w, width: 48.w),
-            ),
-            24.wb,
-            GestureDetector(
-              onTap: () {
-                Get.to(() => const SearchPage());
-              },
-              child: Image.asset(Assets.icons.collection.path,
-                  height: 48.w, width: 48.w),
-            ),
-            24.wb,
-            GestureDetector(
-              onTap: () {
-                Get.to(() => const SearchPage());
-              },
-              child: Image.asset(Assets.icons.icShare.path,
-                  color: Colors.black, height: 48.w, width: 48.w),
-            ),
-            16.wb,
-          ],
-        ),
-      ),
-      extendBody: true,
-      //extendBodyBehindAppBar: true,
-      body: Column(
-        children: [
-          Container(
-              padding: EdgeInsets.symmetric(horizontal: 32.w),
-              child: Column(
-                children: [
-                  _title(),
-                  14.hb,
-                  _label(),
-                  14.hb,
-                  _information(),
-                  14.hb,
-                  _shuffling(),
-                  32.hb,
-                  _informations(),
-                  48.hb,
-                  _tabDetail(),
-                  14.hb,
-                  Divider(
-                    height: 1.w,
-                    color: const Color(0xFFDDDDDD),
-                  ),
-                  60.hb,
-                  _bottonBar()
-                ],
-              )
-              // Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-
+    return Scaffold(
+        //path: Assets.images.noticeBg.path,
+        // bodyColor: kForeGroundColor,
+        // appbar:
+        //extendBody: true,
+        //extendBodyBehindAppBar: true,
+        body: NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return [
+          SliverAppBar(
+              pinned: true,
+              floating: false,
+              snap: false,
+              expandedHeight: 920.w,
+              leading: const CloudBackButton(
+                isSpecial: true,
               ),
-        ],
-      ),
-    );
+              // title: SizedBox(
+              //     width: 750.w,
+              //     height: 120.w,
+              //     child: Stack(
+              //       children: [
+              //         Image(
+              //           image: Assets.images.noticeBg,
+              //           width: 750.w,
+              //           height: 120.w,
+              //         ),
+              //         Positioned(
+              //             child: Row(
+              //           children: [
+              //             const CloudBackButton(
+              //               isSpecial: true,
+              //             ),
+              //             Text('data'),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 Get.to(() => const SearchPage());
+              //               },
+              //               child: Image.asset(Assets.icons.collection.path,
+              //                   height: 48.w, width: 48.w),
+              //             ),
+              //             24.wb,
+              //             GestureDetector(
+              //               onTap: () {
+              //                 Get.to(() => const SearchPage());
+              //               },
+              //               child: Image.asset(Assets.icons.icShare.path,
+              //                   color: Colors.black, height: 48.w, width: 48.w),
+              //             ),
+              //             16.wb,
+              //           ],
+              //         ))
+              //       ],
+              //     ))
+
+              // actions: [
+              //   Row(
+              //     children: [
+              //       GestureDetector(
+              //         onTap: () {
+              //           Get.to(() => const SearchPage());
+              //         },
+              //         child: Image.asset(Assets.icons.collection.path,
+              //             height: 48.w, width: 48.w),
+              //       ),
+              //       24.wb,
+              //       GestureDetector(
+              //         onTap: () {
+              //           Get.to(() => const SearchPage());
+              //         },
+              //         child: Image.asset(Assets.icons.icShare.path,
+              //             color: Colors.black, height: 48.w, width: 48.w),
+              //       ),
+              //       32.wb,
+              //     ],
+              //   )
+              // ],
+
+              backgroundColor: kForeGroundColor,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 32.w),
+                    child: Column(
+                      children: [
+                        // Container(
+                        //   color: Colors.transparent,
+                        //   height: 98.w,
+                        //   // kToolbarHeight + MediaQuery.of(context).padding.top,
+                        //   //alignment: Alignment.centerLeft,
+                        //   padding: EdgeInsets.only(
+                        //       top: MediaQuery.of(context).padding.top),
+                        //   child: Row(
+                        //     children: [
+                        //       32.wb,
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           Get.back();
+                        //         },
+                        //         child: Image.asset(Assets.icons.back.path,
+                        //             height: 48.w, width: 48.w),
+                        //       ),
+                        //       const Spacer(),
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           Get.to(() => const SearchPage());
+                        //         },
+                        //         child: Image.asset(
+                        //             Assets.icons.collection.path,
+                        //             height: 48.w,
+                        //             width: 48.w),
+                        //       ),
+                        //       24.wb,
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           Get.to(() => const SearchPage());
+                        //         },
+                        //         child: Image.asset(
+                        //             Assets.icons.icShare.path,
+                        //             color: Colors.black,
+                        //             height: 48.w,
+                        //             width: 48.w),
+                        //       ),
+                        //       16.wb,
+                        //     ],
+                        //   ),
+                        // ),
+                        const Spacer(),
+                        _title(),
+                        14.hb,
+                        _label(),
+                        14.hb,
+                        _information(),
+                        14.hb,
+                        _shuffling(),
+                        32.hb,
+                        _informations(),
+                      ],
+                    )
+                    // Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+
+                    ),
+              ))
+        ];
+      },
+      body:
+          //Stack(children: [
+          _tabDetail(),
+      //   //Positioned(left: 0, right: 0, bottom: 0, child: _bottonBar()),
+      // ]),
+    ));
   }
 
   //标题
@@ -263,22 +332,9 @@ class _CardetailPageState extends State<CardetailPage>
                   Row(
                     children: [
                       Text(
-                        '张斯斯',
+                        '黑色',
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
-                      8.wb,
-                      Text.rich(TextSpan(
-                          text: '立即联系',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              ?.copyWith(
-                                  color: const Color(0xFF027AFF),
-                                  fontSize: 20.sp),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = (() {
-                              ('object');
-                            })))
                     ],
                   ),
                   Row(
@@ -286,14 +342,14 @@ class _CardetailPageState extends State<CardetailPage>
                       SizedBox(
                         width: 28.w,
                         height: 28.w,
-                        child: Image.asset(Assets.icons.traffic.path),
+                        child: Image.asset(Assets.icons.carColor.path),
                       ),
                       // Icon(
                       //   Icons.timer,
                       //   size: 20,
                       // ),
                       Text(
-                        '车务',
+                        '车身颜色',
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1
@@ -357,43 +413,117 @@ class _CardetailPageState extends State<CardetailPage>
 
   //栏
   _tabDetail() {
-    return Column(children: [
-      Container(
-        padding: EdgeInsets.only(left: 280.w, top: 24.w),
-        width: 750.w,
-        height: 76.w,
-        decoration: BoxDecoration(
-            border: Border.all(width: 1.w, color: const Color(0xFFDDDDDD)),
-            // border: Border(
-            //     bottom: BorderSide(width: 1.w, color: const Color(0xFFDDDDDD))),
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16.w),
-                bottomRight: Radius.circular(16.w))),
-        child: Text(
-          '车辆详情',
-          style: TextStyle(
-              color: const Color(0xFF027AFF), fontSize: BaseStyle.fontSize28),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.symmetric(vertical: 28.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '基本信息',
-              style: Theme.of(context).textTheme.subtitle2,
+    return Stack(
+      children: [
+        ListView(children: [
+          Container(
+            padding: EdgeInsets.only(left: 280.w, top: 24.w),
+            width: 750.w,
+            height: 76.w,
+            decoration: BoxDecoration(
+                border: Border.all(width: 1.w, color: const Color(0xFFDDDDDD)),
+                // border: Border(
+                //     bottom: BorderSide(width: 1.w, color: const Color(0xFFDDDDDD))),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(16.w),
+                    bottomRight: Radius.circular(16.w))),
+            child: Text(
+              '车辆详情',
+              style: TextStyle(
+                  color: const Color(0xFF027AFF),
+                  fontSize: BaseStyle.fontSize28),
             ),
-            24.hb,
-            _getText('车架号', 'LGJ83476524683243'),
-            24.hb,
-            _getText('车辆类型', '二手车(中规)'),
-            24.hb,
-            _getText('品牌车型', '奥迪A3 2020款 Sportback 35 TFSI 进取运动型'),
-          ],
-        ),
-      )
-    ]);
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 32.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '基本信息',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+                24.hb,
+                _getText('车架号', 'LGJ83476524683243'),
+                24.hb,
+                _getText('车辆类型', '二手车(中规)'),
+                24.hb,
+                _getText('品牌车型', '奥迪A3 2020款 Sportback 35 TFSI 进取运动型'),
+                24.hb,
+                _getText('车身颜色', '黑色'),
+                24.hb,
+                _getText('发动机号', '728367'),
+                24.hb,
+                _getText('车辆编号', '893425'),
+                24.hb,
+                _getText('车辆所在地', '浙江 宁波'),
+                24.hb,
+                _getText('内饰颜色', '黑色'),
+              ],
+            ),
+          ),
+          48.hb,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 32.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '基本信息',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+                24.hb,
+                _getText('车架号', 'LGJ83476524683243'),
+                24.hb,
+                _getText('车辆类型', '二手车(中规)'),
+                24.hb,
+                _getText('品牌车型', '奥迪A3 2020款 Sportback 35 TFSI 进取运动型'),
+                24.hb,
+                _getText('车身颜色', '黑色'),
+                24.hb,
+                _getText('发动机号', '728367'),
+                24.hb,
+                _getText('车辆编号', '893425'),
+                24.hb,
+                _getText('车辆所在地', '浙江 宁波'),
+                24.hb,
+                _getText('内饰颜色', '黑色'),
+              ],
+            ),
+          ),
+          48.hb,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 32.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '基本信息',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+                24.hb,
+                _getText('车架号', 'LGJ83476524683243'),
+                24.hb,
+                _getText('车辆类型', '二手车(中规)'),
+                24.hb,
+                _getText('品牌车型', '奥迪A3 2020款 Sportback 35 TFSI 进取运动型'),
+                24.hb,
+                _getText('车身颜色', '黑色'),
+                24.hb,
+                _getText('发动机号', '728367'),
+                24.hb,
+                _getText('车辆编号', '893425'),
+                24.hb,
+                _getText('车辆所在地', '浙江 宁波'),
+                24.hb,
+                _getText('内饰颜色', '黑色'),
+              ],
+            ),
+          )
+        ]),
+        Positioned(left: 0, right: 0, bottom: 0, child: _bottonBar())
+      ],
+    );
   }
 
   //底部
@@ -402,7 +532,8 @@ class _CardetailPageState extends State<CardetailPage>
     return Container(
       width: 750.w,
       height: 98.w,
-      margin: EdgeInsets.symmetric(horizontal: 32.w),
+      color: kForeGroundColor,
+      padding: EdgeInsets.symmetric(horizontal: 32.w),
       child: Row(
         children: [
           SizedBox(
@@ -580,16 +711,17 @@ class _CardetailPageState extends State<CardetailPage>
 //
   _getText(String title, String text) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 130.w,
+          width: 148.w,
           child: Text(
             title,
             style: TextStyle(
                 color: BaseStyle.color999999, fontSize: BaseStyle.fontSize28),
           ),
         ),
-        32.wb,
+        24.wb,
         SizedBox(
           width: 514.w,
           child: Text(

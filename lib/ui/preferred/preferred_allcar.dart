@@ -1,7 +1,7 @@
 import 'package:cloud_car/ui/home/carlist_page.dart';
 import 'package:cloud_car/ui/home/citylist_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
-import 'package:cloud_car/ui/preferred/preferred_car_detail.dart';
+
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -238,7 +238,7 @@ class _AllCarState extends State<AllCar> {
   get(item) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const CardetailPage());
+        //Get.to(() => const CarDetailPage());
       },
       child: Container(
         decoration: BoxDecoration(
