@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluwx/fluwx.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -93,7 +94,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
             40.hb,
             MaterialButton(
-              onPressed: () {
+              onPressed: () async{
+              var code =  sendWeChatAuth(scope: "snsapi_userinfo",state: 'wechat_sdk_demo_test');
+
                 Get.to(()=>const WxLoginPage());
               },
               elevation: 0,

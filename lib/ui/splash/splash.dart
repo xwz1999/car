@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
+import 'package:jverify/jverify.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/environment/environment.dart';
@@ -23,7 +25,13 @@ class _SplashPageState extends State<SplashPage> {
   final TapGestureRecognizer _privacyRecognizer = TapGestureRecognizer();
 
   Future initialAll() async {
+    ///第三方加载
     await HiveStore.init();
+    Jverify().setup(appKey: '', channel: 'devloper-default');
+    Jverify().setDebugMode(DevEV.instance.dev);
+    registerWxApi(
+        appId: 'wx39335cf7fcd19652',
+        universalLink: 'https://apiwenche.oa00.com/');
     var agreement = await HiveStore.appBox?.get('agreement') ?? false;
     if (!agreement) {
       var result = await _showLoginVerify();

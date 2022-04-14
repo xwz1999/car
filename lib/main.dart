@@ -11,7 +11,8 @@ import 'package:provider/provider.dart';
 
 import 'constants/app_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
   if (Platform.isAndroid) {
     SystemUiOverlayStyle style = const SystemUiOverlayStyle(

@@ -78,6 +78,10 @@ dependencies:
   timelines: ^0.1.0
   #日志输出
   power_logger: ^1.2.2
+  #极光认证
+  jverify: 2.1.2
+  #微信登录
+  fluwx: ^3.8.3
 
 
 dev_dependencies:

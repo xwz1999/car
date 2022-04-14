@@ -37,13 +37,23 @@ extension ImageOnString on String {
     if (height != null) parts.add('h=$height');
     return '$image@${parts.join('&')}';
   }
-
 }
 
 class _File {
   ///图片上传
-  String get uploadImage => '/app/broker/file/upload/image';
+  String get uploadImage => '/file/upload/image';
 
   ///文件上传
-  String get uploadFile => '/app/broker/file/upload/file';
+  String get uploadFile => '/file/upload/file';
+}
+
+class _Login {
+  ///手机号一键登录
+  String get phone => '/login/phone';
+
+  ///微信登录
+  String get weixin => 'login/wechat';
+
+  ///微信登录绑定账号
+  String get weixinBind => 'login/bind';
 }
