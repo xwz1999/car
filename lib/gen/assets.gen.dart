@@ -40,6 +40,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/advice.png
   AssetGenImage get advice => const AssetGenImage('assets/icons/advice.png');
 
+  /// File path: assets/icons/agricultural.png
+  AssetGenImage get agricultural =>
+      const AssetGenImage('assets/icons/agricultural.png');
+
   /// File path: assets/icons/already_collected.png
   AssetGenImage get alreadyCollected =>
       const AssetGenImage('assets/icons/already_collected.png');
