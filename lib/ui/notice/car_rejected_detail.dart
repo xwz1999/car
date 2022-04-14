@@ -4,7 +4,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
+
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
 class CardetailPage extends StatefulWidget {

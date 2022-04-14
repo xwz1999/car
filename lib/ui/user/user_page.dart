@@ -14,7 +14,6 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -32,8 +31,6 @@ class _UserPageState extends State<UserPage> {
 
   // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
-
-  late EasyRefreshController _refreshController;
 
   @override
   void initState() {
@@ -56,7 +53,6 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
@@ -107,16 +103,16 @@ class _UserPageState extends State<UserPage> {
             ],
           ),
           const Spacer(),
-          Row(
-            children: [
-              Padding(padding: EdgeInsets.only(left: 258.w)),
-              Text("云云问车 1.0",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: const Color(0xFFCCCCCC))),
-            ],
-          ),
+          ElevatedButton(
+              onPressed: () {
+                //Get.to(() => MyHomePage());
+              },
+              child: const Text('data')),
+          Text("云云问车 1.0",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  ?.copyWith(color: const Color(0xFFCCCCCC))),
           64.hb,
         ],
       )),

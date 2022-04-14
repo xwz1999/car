@@ -231,30 +231,4 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
       ],
     );
   }
-
-// //头部
-//   _getAppbar() {
-//     return Container(
-//       color: Colors.white,
-//       height: kToolbarHeight + MediaQuery.of(context).padding.top,
-//       alignment: Alignment.center,
-//       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           const CloudBackButton(
-//             isSpecial: true,
-//           ),
-//           Text('企业信息',
-//               style: TextStyle(
-//                   color: BaseStyle.color111111,
-//                   fontSize: BaseStyle.fontSize36,
-//                   fontWeight: FontWeight.bold)),
-//           SizedBox(
-//             width: 110.w,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
 }

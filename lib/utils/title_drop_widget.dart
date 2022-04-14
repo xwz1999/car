@@ -1,10 +1,10 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/title_drop_down_head_widget.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'drop_down_head_widget.dart';
-
-class DropDownWidget extends StatefulWidget {
+class TitleDropDownWidget extends StatefulWidget {
   //标题集合
   final List<String> titles;
 
@@ -12,12 +12,8 @@ class DropDownWidget extends StatefulWidget {
   final List<Widget> listWidget;
   // 高度
   final double height;
-
-  //子集
-  final Widget? child;
-
-  ///筛选
-  final String? screen;
+  final Widget? leftWidget;
+  final Widget? rightWidget;
 
 //筛选文字大小
   final double headFontSize;
@@ -29,27 +25,27 @@ class DropDownWidget extends StatefulWidget {
   // BoxConstraints constraints;
   final double bottomHeight;
 
-  final ScreenControl screenControl;
+  final TitleScreenControl screenControl;
 
   final VoidCallback? onTap;
 
-  const DropDownWidget(this.titles, this.listWidget,
-      { this.child,
-      this.height = 42,
+  const TitleDropDownWidget(this.titles, this.listWidget,
+      {this.height = 42,
       required this.headFontSize,
       this.iconData,
       required this.bottomHeight,
       required this.screenControl,
-      this.screen,
       Key? key,
-      this.onTap})
+      this.onTap,
+      this.leftWidget,
+      this.rightWidget})
       : super(key: key);
 
   @override
-  _DropDownWidgetState createState() => _DropDownWidgetState();
+  _TitleDropDownWidgetState createState() => _TitleDropDownWidgetState();
 }
 
-class ScreenControl {
+class TitleScreenControl {
   //自动
   void autoDisplay() {
     if (_controller.isDismissed) {
@@ -77,10 +73,10 @@ late Animation<double> curve;
 //按钮旋转状态
 List<bool> rotateState = [];
 
-class _DropDownWidgetState extends State<DropDownWidget>
+class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
     with SingleTickerProviderStateMixin {
   int tabIndex = 0;
-  final ScreenControl _screenControl = ScreenControl();
+  final TitleScreenControl _screenControl = TitleScreenControl();
   bool showBottom = false;
 
   @override
@@ -117,19 +113,26 @@ class _DropDownWidgetState extends State<DropDownWidget>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          alignment: Alignment.center,
-          height: widget.height,
-          decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.vertical(bottom: Radius.circular(16.w)),
-              color: Colors.white),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: getScreenTitle(),
-          ),
+        Row(
+          children: [
+            widget.leftWidget != null ? widget.leftWidget! : const SizedBox(),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                height: widget.height,
+                decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(16.w)),
+                    color: Colors.white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: getScreenTitle(),
+                ),
+              ),
+            ),
+            widget.rightWidget != null ? widget.rightWidget! : const SizedBox(),
+          ],
         ),
-        widget.child!=null?widget.child!:const SizedBox(),
         getBottomScreen()
       ],
     );
@@ -141,7 +144,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
       for (int i = 0; i < widget.titles.length; i++) {
         widgets.add(Expanded(
             flex: 1,
-            child: DropDownHeadWidget(
+            child: TitleDropDownHeadWidget(
               widget.titles[i],
               getRoState(i),
               () {
@@ -174,25 +177,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
         style: TextStyle(fontSize: 14.sp),
       ));
     }
-    if (widget.screen != null) {
-      widgets.add(Expanded(
-          flex: 1,
-          child: GestureDetector(
-            onTap: widget.onTap!,
-            child: Container(
-                alignment: Alignment.center,
-                width: double.infinity,
-                height: double.infinity,
-                padding: EdgeInsets.only(left: 5.r, right: 5.r),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text('筛选',
-                      style: TextStyle(
-                          fontSize: widget.headFontSize,
-                          color: const Color(0xff333333))),
-                ])),
-          )));
-    }
+
     return widgets;
   }
 

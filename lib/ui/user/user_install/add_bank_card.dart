@@ -2,6 +2,7 @@
 //  银行卡添加 35
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,11 @@ class _AddCardPageState extends State<AddCardPage> {
             56.hb,
             _getBody(),
             72.hb,
-            _getBottom()
+            CloudBottom(
+                text: '确认',
+                ontap: () {
+                  BotToast.showText(text: '绑定成功');
+                })
           ],
         ));
   }
@@ -207,33 +212,6 @@ class _AddCardPageState extends State<AddCardPage> {
           ),
           32.hb,
         ],
-      ),
-    );
-  }
-
-//底部按钮
-  _getBottom() {
-    return GestureDetector(
-      onTap: () {
-        BotToast.showText(text: '绑定成功');
-      },
-      child: Container(
-        width: 686.w,
-        height: 72.w,
-        padding: EdgeInsets.symmetric(horizontal: 312.w, vertical: 11.w),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.w),
-            gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-        child: Text(
-          '确认',
-          style: Theme.of(context)
-              .textTheme
-              .subtitle2
-              ?.copyWith(color: kForeGroundColor),
-        ),
       ),
     );
   }

@@ -352,7 +352,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     50.hb,
                                     GestureDetector(
                                       onTap: () {
-                                        print(1111111);
+
                                         sexId = 1;
                                         dialogSetState(() {});
                                       },
@@ -372,7 +372,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        print(0000000);
+
                                         sexId = 2;
                                         dialogSetState(() {});
                                       },
