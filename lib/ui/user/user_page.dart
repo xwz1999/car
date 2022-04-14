@@ -1,19 +1,21 @@
 import 'package:cloud_car/ui/home/home_page.dart';
-import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
-import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
-import 'package:cloud_car/ui/user/user_management/staff_management.dart';
-import 'package:cloud_car/ui/user/user_install/system_settings.dart';
+import 'package:cloud_car/ui/user/product_manuals.dart';
+import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
+import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
+import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
+import 'package:cloud_car/ui/user/user_install/system_settings.dart';
+import 'package:cloud_car/ui/user/user_invitation/user_invitation.dart';
+import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
+import 'package:cloud_car/ui/user/user_management/staff_management.dart';
+import 'package:cloud_car/ui/user/user_order/myorder.dart';
+import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../home/car_manager/car_manager_page.dart';
-
-import '../notice/car_system_informs.dart';
+import 'a.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -25,17 +27,12 @@ class UserPage extends StatefulWidget {
   _UserPageState createState() => _UserPageState();
 }
 
-class _UserPageState extends State<UserPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _UserPageState extends State<UserPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
 
   // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
-  final int assessment = 1;
-  final int wallet = 10210;
-  final int itation = 12;
-  late EasyRefreshController _refreshController;
 
   @override
   void initState() {
@@ -52,17 +49,17 @@ class _UserPageState extends State<UserPage>
         KingCoin(name: '意见反馈', url: Assets.icons.userfeedback.path));
     _KingCoinUserlist.add(
         KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
+    _KingCoinUserlist.add(
+        KingCoin(name: '我的邀约', url: Assets.icons.userInvitation.path));
   }
 
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return CloudScaffold(
       path: Assets.images.userBg.path,
       bodyColor: bgColor,
@@ -70,9 +67,10 @@ class _UserPageState extends State<UserPage>
         statusBarIconBrightness: Brightness.dark,
       ),
       appbar: Container(
-        height: kToolbarHeight + MediaQuery.of(context).padding.top,
+        //height: kToolbarHeight + MediaQuery.of(context).padding.top,
         //height: 334.w,
         alignment: Alignment.centerRight,
+        margin: EdgeInsets.only(top: 78.w, bottom: 78.w),
         child: Row(
           children: [
             Padding(
@@ -81,7 +79,7 @@ class _UserPageState extends State<UserPage>
             )),
             GestureDetector(
               onTap: () {
-                Get.to(() => const InatallPage());
+                Get.to(() => const SystemSettingPage());
               },
               child: Image.asset(Assets.icons.userSetUp.path,
                   height: 48.w, width: 48.w),
@@ -89,39 +87,99 @@ class _UserPageState extends State<UserPage>
           ],
         ),
       ),
-      extendBody: true,
-      //extendBodyBehindAppBar: true,
+
       body: Expanded(
-          child: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 32.w),
+          child: Column(
         children: [
-          //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-          Container(
-            padding: EdgeInsets.only(top: 65.w),
-            child: _shareUser(),
-            height: 408.w,
-          ),
-          32.hb,
-          _getBanner(),
-          24.hb,
-          _share(),
-          164.hb,
-          Row(
+          ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(horizontal: 32.w),
             children: [
-              Padding(padding: EdgeInsets.only(left: 258.w)),
-              Text("云云问车1.0",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: const Color(0xFFCCCCCC))),
+              //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+              _shareUser(),
+              32.hb,
+              _getBanner(),
+              24.hb,
+              _share(),
             ],
-          )
+          ),
+          const Spacer(),
+          ElevatedButton(
+              onPressed: () {
+                Get.to(() => ImageSelector());
+              },
+              child: const Text('data')),
+          Text("云云问车 1.0",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  ?.copyWith(color: const Color(0xFFCCCCCC))),
+          64.hb,
         ],
       )),
       // body: Text(
       //   '',
       //   style: Theme.of(context).textTheme.bodyText1,
       // ),
+    );
+  }
+
+  getCiap(String title) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.w),
+          color: title == '销售'
+              ? const Color(0xFFFF3B02).withOpacity(0.08)
+              : const Color(0xFF027AFF).withOpacity(0.08)),
+      child: Text(
+        title,
+        style: TextStyle(
+            color: title == '销售'
+                ? const Color(0xFFFF3B02)
+                : const Color(0xFF027AFF),
+            fontSize: BaseStyle.fontSize20),
+      ),
+    );
+  }
+
+  getText(String num, String title) {
+    return GestureDetector(
+      onTap: () {
+        switch (title) {
+          case '评估':
+            Get.to(() => const AssessmentNumPage());
+            break;
+          case '钱包':
+            Get.to(() => const AssessmentNumPage());
+            break;
+          case '邀请':
+            Get.to(() => const AssessmentNumPage());
+            break;
+        }
+      },
+      child: SizedBox(
+        width: 160.w,
+        child: Column(
+          children: [
+            Text(
+              num,
+              style: TextStyle(
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize40,
+                  fontWeight: FontWeight.bold),
+            ),
+            8.hb,
+            Text(
+              title,
+              style: TextStyle(
+                  color: BaseStyle.color999999,
+                  fontSize: BaseStyle.fontSize24,
+                  fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -144,24 +202,29 @@ class _UserPageState extends State<UserPage>
             top: 16.w,
             child: Stack(
               children: [
-                SizedBox(
+                Container(
                   width: 112.w,
                   height: 46.w,
-                  child: Image.asset(
-                    "assets/images/bubble.png",
-                    fit: BoxFit.fill,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        Assets.images.bubble.path,
+                      ),
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                Positioned(
-                    left: 6.w,
-                    top: 4.w,
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 8.w),
                     child: Text(
                       "首月6折",
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
-                          ?.copyWith(color: const Color(0xFFFFFFFF)),
-                    )),
+                          ?.copyWith(color: kForeGroundColor),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -191,7 +254,7 @@ class _UserPageState extends State<UserPage>
                   style: Theme.of(context)
                       .textTheme
                       .subtitle1
-                      ?.copyWith(color: const Color(0xFFFFFFFF)),
+                      ?.copyWith(color: kForeGroundColor),
                   // style: TextStyle(
                   //     fontSize: 32.sp,
                   //     color: Colors.white,
@@ -200,8 +263,10 @@ class _UserPageState extends State<UserPage>
               ),
               16.wb,
               Text("开通即享5项权益",
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      color: const Color.fromRGBO(255, 255, 255, 0.8))
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: Colors.white.withOpacity(0.8))
                   // TextStyle(
                   //   fontSize: 24.sp,
                   //   color: Colors.white60,
@@ -214,17 +279,14 @@ class _UserPageState extends State<UserPage>
               Get.to(() => const PartnerCenterPage());
             },
             child: Container(
-              width: 65,
-              height: 28,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.w),
                   color: Colors.white),
-              padding: const EdgeInsets.only(left: 6, top: 5),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
               child: Text("立即开通",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(color: const Color(0xFF027AFF))
+                  style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                      color: const Color(0xFF027AFF),
+                      fontWeight: FontWeight.bold)
                   // TextStyle(
                   //     color: Colors.blue,
                   //     fontSize: 13,
@@ -240,46 +302,33 @@ class _UserPageState extends State<UserPage>
 //头像信息
   _shareUser() {
     return Container(
-        //width: double.infinity,
-        //height: 163,
-        // margin: EdgeInsets.only(
-        //   left: 20,
-        //   right: 20,
-        // ),
-        //上下留白symmetric
-        //padding: EdgeInsets.only(left: 10, top: 16),
         padding: EdgeInsets.all(32.w),
         decoration: BoxDecoration(
           color: Colors.white, //底色
-          borderRadius: BorderRadius.circular(10), //圆角弧度
+          borderRadius: BorderRadius.circular(16.w), //圆角弧度
         ),
         child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+          GestureDetector(
+            onTap: () {
+              Get.to(() => const BasicInformationPage());
+            },
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
                 children: [
-                  32.wb,
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => BasicInformationPage());
-                    },
-                    child: SizedBox(
-                      //头像
-                      width: 100.w, height: 100.w,
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(60.w)),
-                            child: Container(
-                              color: Colors.blue,
-                            )),
-                      ),
+                  SizedBox(
+                    //头像
+                    width: 120.w, height: 120.w,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(60.w)),
+                          child: Container(
+                            color: Colors.blue,
+                          )),
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.only(left: 8)),
+                  32.wb,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -291,148 +340,27 @@ class _UserPageState extends State<UserPage>
                       ),
                       const Padding(padding: EdgeInsets.only(top: 5)),
                       Row(
-                        children: [
-                          Container(
-                            width: 18,
-                            height: 8,
-                            color: const Color.fromARGB(255, 245, 205, 146),
-                            padding: const EdgeInsets.only(
-                                top: 1, left: 4, right: 4),
-                            child: const Text(
-                              "销售",
-                              style: // Theme.of(context).textTheme.bodyText3,
-                                  TextStyle(
-                                      fontSize: 5,
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const Padding(padding: EdgeInsets.only(left: 5)),
-                          Container(
-                            width: 30,
-                            height: 8,
-                            color: const Color.fromARGB(255, 164, 229, 245),
-                            padding: const EdgeInsets.only(
-                                top: 1, left: 4, right: 4),
-                            child: const Text(
-                              "云云问车",
-                              style: //Theme.of(context).textTheme.bodyText4
-                                  TextStyle(
-                                      fontSize: 5,
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          // RawChip(
-                          //   label: Text(
-                          //     "销售",
-                          //     style: TextStyle(fontSize: 5, color: Colors.orange),
-                          //   ),
-                          //   backgroundColor: Colors.orange[50],
-                          //   shape: RoundedRectangleBorder(
-                          //       borderRadius: BorderRadius.circular(2)),
-
-                          // )
-                        ],
+                        children: [getCiap('销售'), 16.wb, getCiap('云云问车')],
                       )
                     ],
                   ),
-                  Padding(padding: EdgeInsets.only(right: 245.w)),
-                  RawChip(
-                    label: const Icon(Icons.keyboard_arrow_right),
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(1)),
-                  ),
+                  255.wb,
+                  SizedBox(
+                    width: 40.w,
+                    height: 40.w,
+                    child: const Icon(Icons.keyboard_arrow_right),
+                  )
                 ],
               ),
-            ],
+            ),
           ),
-          Column(children: [
-            const Padding(padding: EdgeInsets.only(top: 25, left: 50)),
-            Row(children: [
-              const Padding(
-                  padding: EdgeInsets.only(
-                top: 10,
-                right: 15,
-                left: 20,
-              )),
-              GestureDetector(
-                onTap: (() {
-                  Get.to(() => const AssessmentNumPage());
-                }),
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Text('$assessment',
-                          style: Theme.of(context).textTheme.headline3
-                          // TextStyle(
-                          //   color: Colors.black,
-                          //   fontSize: 32.sp,
-                          //   letterSpacing: 1,
-                          //   fontFamily:
-                          // ),
-                          ),
-                      RawChip(
-                        label: Text(
-                          '评估',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              ?.copyWith(color: const Color(0xFF999999)),
-                          //TextStyle(fontSize: 10, color: Colors.black45),
-                        ),
-                        backgroundColor: Colors.white,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              const Padding(
-                  padding: EdgeInsets.only(
-                top: 10,
-                right: 15,
-                left: 20,
-              )),
-              Column(
-                children: [
-                  Text('$wallet', style: Theme.of(context).textTheme.headline3),
-                  RawChip(
-                    label: Text(
-                      '钱包',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(color: const Color(0xFF999999)),
-                    ),
-                    backgroundColor: Colors.white,
-                  )
-                ],
-              ),
-              const Padding(
-                  padding: EdgeInsets.only(
-                top: 10,
-                right: 10,
-                left: 30,
-              )),
-              Column(
-                children: [
-                  Text('$itation',
-                      style: Theme.of(context).textTheme.headline3),
-                  RawChip(
-                    label: Text(
-                      '邀请',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(color: const Color(0xFF999999)),
-                    ),
-                    backgroundColor: Colors.white,
-                  )
-                ],
-              ),
-            ]),
+          48.hb,
+          Row(children: [
+            getText('1', '评估'),
+            70.wb,
+            getText('10210', '钱包'),
+            70.wb,
+            getText('12', '邀请'),
           ]),
         ]));
   }
@@ -442,29 +370,30 @@ class _UserPageState extends State<UserPage>
     return Container(
       width: double.infinity,
       height: 460.w,
-      //margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-      padding: EdgeInsets.all(32.w),
+      padding: EdgeInsets.only(
+        left: 32.w,
+        top: 40.w,
+      ),
       decoration: BoxDecoration(
         color: Colors.white, //底色
         borderRadius: BorderRadius.circular(10), //圆角弧度
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Padding(padding: EdgeInsets.only(left: 32.w, top: 48.w, right: 510.w)),
           Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 48.w, left: 32.w)),
               Text(
                 '其他功能',
                 style: Theme.of(context)
                     .textTheme
                     .headline6
-                    ?.copyWith(fontSize: 36.sp),
+                    ?.copyWith(fontSize: 36.sp, fontWeight: FontWeight.bold),
               ),
             ],
           ),
+          20.hb,
           _getKingCoin(),
         ],
       ),
@@ -476,6 +405,7 @@ class _UserPageState extends State<UserPage>
     return GridView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: _KingCoinUserlist.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         //横轴元素个数
@@ -499,13 +429,25 @@ class _UserPageState extends State<UserPage>
       onTap: () {
         switch (name) {
           case '我的订单':
-            Get.to(() => const CarManagerPage());
+            Get.to(() => const MyOrderPage());
             break;
           case '关于云云':
-            Get.to(() => const systemPage());
+            Get.to(() => const AboutPage());
             break;
           case '员工管理':
             Get.to(() => const StaffManagement());
+            break;
+          case '查看合同':
+            Get.to(() => const ConsignmentContract());
+            break;
+          case '产品手册':
+            Get.to(() => const ProductManuals());
+            break;
+          case '意见反馈':
+            Get.to(() => const FeedbackPage());
+            break;
+          case '我的邀约':
+            Get.to(() => const UserInvitation());
             break;
         }
       },
@@ -526,12 +468,7 @@ class _UserPageState extends State<UserPage>
     );
   }
 
-  @override
   bool get wantKeepAlive => true;
-}
-
-class Button {
-  Button(Null Function() param0);
 }
 
 void column() {}

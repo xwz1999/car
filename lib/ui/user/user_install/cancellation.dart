@@ -1,11 +1,9 @@
 // ignore_for_file: unused_element
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_install/validation.dart';
 import 'package:cloud_car/utils/headers.dart';
-
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 
 class CancellationPage extends StatefulWidget {
@@ -43,9 +41,9 @@ class _CancellationPageState extends State<CancellationPage> {
                   fontWeight: FontWeight.bold)),
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: Color(0xffffffff), //内容颜色
+        backgroundColor: kForeGroundColor, //内容颜色
         extendBody: true,
-        body: Container(
+        body: SizedBox(
           width: 750.w,
           child: Column(
             children: [
@@ -61,8 +59,13 @@ class _CancellationPageState extends State<CancellationPage> {
                   // )
                 ],
               ),
-              604.hb,
-              _getBottom()
+              const Spacer(),
+              CloudBottom(
+                  text: '我了解风险,下一步',
+                  ontap: () {
+                    Get.to(() => const ValidationPage());
+                  }),
+              32.hb,
             ],
           ),
         )
@@ -103,8 +106,7 @@ class _CancellationPageState extends State<CancellationPage> {
 
 //
   _getBody() {
-    return Container(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -114,7 +116,7 @@ class _CancellationPageState extends State<CancellationPage> {
         32.hb,
         SizedBox(
           width: 300.w,
-          height: 328.w,
+
           // child: Text(
           // '',
           // style: Theme.of(context)
@@ -141,7 +143,7 @@ class _CancellationPageState extends State<CancellationPage> {
           ),
         )
       ],
-    ));
+    );
   }
 
 //
@@ -154,37 +156,6 @@ class _CancellationPageState extends State<CancellationPage> {
             .textTheme
             .subtitle2
             ?.copyWith(color: const Color(0xFF666666)),
-      ),
-    );
-  }
-
-//底部按钮
-  _getBottom() {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => const ValidationPage());
-      },
-      child: Container(
-        width: 686.w,
-        height: 72.w,
-        padding: EdgeInsets.only(left: 218.w, top: 22.w),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.w),
-            gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-        child: SizedBox(
-          width: 252.w,
-          height: 28.w,
-          child: Text(
-            '我了解风险，下一步',
-            style: Theme.of(context)
-                .textTheme
-                .subtitle2
-                ?.copyWith(color: const Color(0xffffffff)),
-          ),
-        ),
       ),
     );
   }

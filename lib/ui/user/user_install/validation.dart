@@ -2,12 +2,11 @@
 
 import 'dart:async';
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_install/no_withdrawal.dart';
 import 'package:cloud_car/utils/headers.dart';
-
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -30,7 +29,6 @@ class _ValidationPageState extends State<ValidationPage> {
   late TextEditingController _smsCodeController;
   late FocusNode _phoneFocusNode;
   late FocusNode _smsCodeFocusNode;
-  bool _loginEnable = false;
   bool _cantSelected = false;
   @override
   void initState() {
@@ -66,12 +64,13 @@ class _ValidationPageState extends State<ValidationPage> {
                   fontWeight: FontWeight.bold)),
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        backgroundColor: Color(0xffffffff), //内容颜色
+        backgroundColor: kForeGroundColor, //内容颜色
         extendBody: true,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w),
           child: Column(
             children: [
+              72.hb,
               Text(
                 '请先验证身份',
                 style: Theme.of(context)
@@ -79,7 +78,6 @@ class _ValidationPageState extends State<ValidationPage> {
                     .headline3
                     ?.copyWith(fontSize: 48.w),
               ),
-              128.hb,
               // SizedBox(
               //   width: 606.w,
               //   height: 80.w,
@@ -89,7 +87,6 @@ class _ValidationPageState extends State<ValidationPage> {
               //         contentPadding: EdgeInsets.only(bottom: 24.w), //文字与边框的距离
               //         //border: InputBorder.none, //去掉下划线
               //         //border: BorderSide(color: Color(0xfffffff)),
-
               //         prefixText: '+86',
               //         prefixStyle: TextStyle(
               //             fontSize: BaseStyle.fontSize36,
@@ -115,7 +112,6 @@ class _ValidationPageState extends State<ValidationPage> {
               _phoneTFWidget(),
               20.hb,
               _codeWidget(),
-
               //         suffixIcon: GestureDetector(
               //             child: Text(
               //           '发送验证码',
@@ -134,7 +130,11 @@ class _ValidationPageState extends State<ValidationPage> {
               //   ),
               // ),
               94.hb,
-              _getBottom(),
+              CloudBottom(
+                  text: '提交',
+                  ontap: () {
+                    Get.to(() => NoWithddrawalPage());
+                  })
             ],
           ),
         ));
@@ -158,10 +158,11 @@ class _ValidationPageState extends State<ValidationPage> {
                       setState(() {
                         if (phone.length >= 11) {
                           _getCodeEnable = true;
-                          _loginEnable = _verifyLoginEnable();
                         } else {
                           _getCodeEnable = false;
-                          _loginEnable = false;
+                        }
+                        if (kDebugMode) {
+                          //print(_loginEnable);
                         }
                       });
                     },
@@ -233,9 +234,7 @@ class _ValidationPageState extends State<ValidationPage> {
                 Expanded(
                   child: TextField(
                     onChanged: (String phone) {
-                      setState(() {
-                        _loginEnable = _verifyLoginEnable();
-                      });
+                      setState(() {});
                     },
                     controller: _smsCodeController,
                     focusNode: _smsCodeFocusNode,
@@ -322,37 +321,5 @@ class _ValidationPageState extends State<ValidationPage> {
         _countDownStr = "重新获取(${_countDownNum--})";
       });
     });
-  }
-
-//底部按钮
-  _getBottom() {
-    return GestureDetector(
-      onTap: () {
-        //BotToast.showText(text: '验证码输入错误');
-        Get.to(() => const NoWithddrawalPage());
-      },
-      child: Container(
-        width: 686.w,
-        height: 72.w,
-        padding: EdgeInsets.only(left: 318.w, top: 22.w),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.w),
-            gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-        child: SizedBox(
-          width: 252.w,
-          height: 28.w,
-          child: Text(
-            '提交',
-            style: Theme.of(context)
-                .textTheme
-                .subtitle2
-                ?.copyWith(color: const Color(0xffffffff)),
-          ),
-        ),
-      ),
-    );
   }
 }

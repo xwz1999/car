@@ -7,7 +7,7 @@ import '../../../utils/headers.dart';
 import '../../../widget/cloud_back_button.dart';
 
 class AddEmployee extends StatefulWidget {
-  AddEmployee({Key? key}) : super(key: key);
+  const AddEmployee({Key? key}) : super(key: key);
 
   @override
   State<AddEmployee> createState() => _AddEmployeeState();
@@ -28,6 +28,7 @@ class _AddEmployeeState extends State<AddEmployee> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +44,7 @@ class _AddEmployeeState extends State<AddEmployee> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           40.hb,
@@ -71,7 +72,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                 style: Theme.of(context)
                     .textTheme
                     .subtitle2
-                    ?.copyWith(color: const Color(0xffffffff)),
+                    ?.copyWith(color: kForeGroundColor),
               ),
             )),
           )
@@ -193,7 +194,7 @@ class _AddEmployeeState extends State<AddEmployee> {
           32.hb,
           GestureDetector(
             onTap: (() {
-              Get.to(() => StructurePage());
+              Get.to(() =>const StructurePage());
             }),
             child: Row(children: [
               SizedBox(

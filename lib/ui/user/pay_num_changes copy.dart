@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
@@ -27,6 +29,7 @@ class _PayChangesPageState extends State<PayChangesPage>
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     //super.build(context);
     return Scaffold(

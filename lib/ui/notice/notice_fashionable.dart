@@ -1,7 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class FashionablePage extends StatefulWidget {
   const FashionablePage({Key? key}) : super(key: key);
@@ -32,12 +31,10 @@ class _FashionablePageState extends State<FashionablePage>
       'conditions': '1',
     },
   ];
-  late EasyRefreshController _refreshController;
 
   @override
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
@@ -45,25 +42,24 @@ class _FashionablePageState extends State<FashionablePage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-        appBar: AppBar(
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          backgroundColor: kForeGroundColor,
-          title: Text('分账确认', style: Theme.of(context).textTheme.headline6),
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
+      appBar: AppBar(
+        leading: const CloudBackButton(
+          isSpecial: true,
         ),
-        extendBody: true,
-        extendBodyBehindAppBar: true,
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-          child: ListView.builder(
-            itemCount: 2,
-            itemBuilder: (ctx, index) {
-              return _fashionablecard(fashionablelist[index]);
-            },
-          ),
-        ));
+        backgroundColor: kForeGroundColor,
+        title: Text('分账确认', style: Theme.of(context).textTheme.headline6),
+        //leading:  Container(width: 10.w, child: const CloudBackButton()),
+      ),
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: ListView.builder(
+        //padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+        itemCount: 2,
+        itemBuilder: (ctx, index) {
+          return _fashionablecard(fashionablelist[index]);
+        },
+      ),
+    );
   }
 
 //已读 未读
@@ -105,10 +101,11 @@ class _FashionablePageState extends State<FashionablePage>
   }
 
   _fashionablecard(item) {
-    return Card(
-      //onTap: () {},
+    return GestureDetector(
       child: Container(
-        decoration: const BoxDecoration(color: Colors.white),
+        margin: EdgeInsets.only(top: 16.w, right: 32.w, left: 32.w),
+        decoration: BoxDecoration(
+            color: kForeGroundColor, borderRadius: BorderRadius.circular(8.w)),
         child: Column(children: [
           Row(
             children: [

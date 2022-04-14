@@ -1,6 +1,6 @@
 class Config {
   ///用户根目录
-  static const String homeDir = '/users/datang';
+  static const String homeDir = '/users/zhangmeng';
 
   ///包名
   static const String packageName = 'cloud_car';
@@ -11,9 +11,9 @@ class Config {
 
   ///测试包文件夹
   static String get apkDevDir =>
-      '/users/datang/team/cloud/app/cloud_car/dev';
+      '/users/zhangmeng/team/cloud/app/cloud_car/dev';
 
   ///正式包文件夹
   static String get apkDir =>
-      '/users/datang/team/cloud/app/cloud_car/release';
+      '/users/zhangmeng/team/cloud/app/cloud_car/release';
 }

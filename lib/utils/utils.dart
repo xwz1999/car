@@ -4,7 +4,6 @@ import 'package:cloud_car/utils/headers.dart';
 //
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Utils {
   static String getImgPath(String name, {String format = 'png'}) {

@@ -2,9 +2,7 @@ import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
@@ -209,10 +207,11 @@ class _AssessmentPageState extends State<AssessmentPage> {
         children: [
         Text(
         '奥迪A3 2020款 35 TFSI 进取型 国V',
-        style: TextStyle(
-            fontSize: 32.sp,
-            color: BaseStyle.color333333,
-            fontWeight: FontWeight.bold
+        style: Theme.of(context)
+            .textTheme
+            .subtitle1
+            ?.copyWith(
+          fontWeight: FontWeight.bold,
         ),
       ),
       16.hb,
@@ -241,17 +240,24 @@ class _AssessmentPageState extends State<AssessmentPage> {
           width: 120.w,
           child: Text(
             title,
-            style: TextStyle(
-                fontSize: 28.sp, color: BaseStyle.color666666
+            style:  Theme.of(context)
+                .textTheme
+                .subtitle2
+                ?.copyWith(
+              color:   const Color(0xFF666666),
             ),
           ),
         ),
         20.wb,
         Text(
           content,
-          style: TextStyle(
-            fontSize: 28.sp, color: isRed?const Color(0xFFFF3B02): BaseStyle.color333333,
-          ),
+          style:
+    Theme.of(context)
+        .textTheme
+        .subtitle2
+        ?.copyWith(
+    color: isRed? const Color(0xFFFF3B02):  const Color(0xFF333333),
+    )
         ),
       ],
     );

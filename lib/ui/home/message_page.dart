@@ -1,3 +1,4 @@
+import 'package:cloud_car/ui/home/chat_screen_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:cloud_car/widget/message_item_widget.dart';
@@ -40,35 +41,40 @@ class _MessagePageState extends State<MessagePage> {
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
-      body: Column(
-        children: [
-          ListView.separated(
-              shrinkWrap: true,
-              //padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
-              padding: EdgeInsets.only(top: 10.w),
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  child: MessageItemWidget(
-                    time: '01-09 12;22',
-                    url: Assets.icons.customerCare.path,
-                    tip:
-                        '你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱',
-                    num: 101,
-                    title: '李小里',
-                    type: TaskType.message,
-                  ),
-                );
-              },
-              separatorBuilder: (_, __) {
-                return Divider(
-                  indent: 32.w,
-                  endIndent: 32.w,
-                  height: 1.w,
-                  color: BaseStyle.coloreeeeee,
-                );
-              },
-              itemCount: 6),
-        ],
+      body: GestureDetector(
+        onTap: (() {
+          Get.to(() => const ChartPage());
+        }),
+        child: Column(
+          children: [
+            ListView.separated(
+                shrinkWrap: true,
+                //padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
+                padding: EdgeInsets.only(top: 10.w),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    child: MessageItemWidget(
+                      time: '01-09 12;22',
+                      url: Assets.icons.customerCare.path,
+                      tip:
+                          '你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱',
+                      num: 101,
+                      title: '李小里',
+                      type: TaskType.message,
+                    ),
+                  );
+                },
+                separatorBuilder: (_, __) {
+                  return Divider(
+                    indent: 32.w,
+                    endIndent: 32.w,
+                    height: 1.w,
+                    color: BaseStyle.coloreeeeee,
+                  );
+                },
+                itemCount: 6),
+          ],
+        ),
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 
 class UserInfoPage extends StatefulWidget {
@@ -51,6 +50,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                   expandedHeight: 740.w,
                   leadingWidth: 0,
                   titleSpacing: 0,
+
                   title: Container(
                     color: Colors.white,
                     width: double.infinity,

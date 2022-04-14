@@ -1,3 +1,5 @@
+
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +52,7 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFF66A2FF), Color(0xffffffff)])),
+                    colors: [Color(0xFF66A2FF), kForeGroundColor])),
             child: Stack(
               children: [
                 Align(
@@ -74,84 +76,105 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                 Positioned(left: 72.w, top: 280.w, child: _getbody()),
                 Positioned(
                     left: 70.w,
-                    top: 1102.w,
+                    top: 1246.w,
                     child: Row(
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('扫码识别'),
+                            const Text('扫码识别'),
                             Text(
                               '即可成为云云问车客户',
                               style: Theme.of(context).textTheme.subtitle2,
                             )
                           ],
                         ),
+                        200.wb,
                         Padding(
                           padding: EdgeInsets.only(right: 32.w),
-                          child: Image.asset(Assets.images.qrCode.path),
+                          child: SizedBox(
+                            width: 128.w,
+                            height: 128.w,
+                            child: Image.asset(Assets.images.qrCode.path),
+                          ),
                         )
                       ],
-                    ))
+                    )),
+                Positioned(
+                    top: 1488.w,
+                    right: 32.w,
+                    child: Container(
+                      width: 72.w,
+                      height: 72.w,
+                      padding: EdgeInsets.all(20.w),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF000000).withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(36.w)),
+                      child: Image.asset(
+                        Assets.images.download.path,
+                        fit: BoxFit.fill,
+                      ),
+                    )),
               ],
             )));
   }
 
 //底部
-  _getBottom() {
-    return Row(
-      children: [
-        Padding(padding: EdgeInsets.only(left: 40.w)),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                //getBox(),
-                2.wb,
-                //getBox(),
-                2.wb,
-                //getBox(),
-                2.wb,
-                //getBox()
-              ],
-            ),
-            Container(
-              width: 560.w,
-              height: 4.w,
-              decoration: const BoxDecoration(color: Colors.black
-                  // gradient: LinearGradient(
-                  //     begin: Alignment.center,
-                  //     end: Alignment.center,
-                  //     colors: [Color(0xFF86B5FF), Color(0x00FFFFFF)]),
-                  ),
-            )
-          ],
-        ),
-        46.wb,
-        GestureDetector(
-          child: Stack(
-            children: [
-              Container(
-                width: 72.w,
-                height: 72.w,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(36.w),
-                    color: const Color.fromRGBO(0, 0, 0, 0.5)),
-              ),
-              Positioned(
-                  left: 20.w,
-                  top: 20.w,
-                  child: SizedBox(
-                    width: 32.w,
-                    height: 32.w,
-                    child: Image.asset(Assets.images.download.path),
-                  ))
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+//   _getBottom() {
+//     return Row(
+//       children: [
+//         Padding(padding: EdgeInsets.only(left: 40.w)),
+//         Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Row(
+//               children: [
+//                 //getBox(),
+//                 2.wb,
+//                 //getBox(),
+//                 2.wb,
+//                 //getBox(),
+//                 2.wb,
+//                 //getBox()
+//               ],
+//             ),
+//             Container(
+//               width: 560.w,
+//               height: 4.w,
+//               decoration: const BoxDecoration(color: Colors.black
+//                   // gradient: LinearGradient(
+//                   //     begin: Alignment.center,
+//                   //     end: Alignment.center,
+//                   //     colors: [Color(0xFF86B5FF), Color(0x00FFFFFF)]),
+//                   ),
+//             )
+//           ],
+//         ),
+//         46.wb,
+//         GestureDetector(
+//           child: Stack(
+//             children: [
+//               Container(
+//                 width: 72.w,
+//                 height: 72.w,
+//                 decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(36.w),
+//                     color: const Color.fromRGBO(0, 0, 0, 0.5)),
+//               ),
+//               Positioned(
+//                   left: 20.w,
+//                   top: 20.w,
+//                   child: SizedBox(
+//                     width: 32.w,
+//                     height: 32.w,
+//                     child: Image.asset(Assets.images.download.path),
+//                   ))
+//             ],
+//           ),
+//         ),
+//       ],
+//     );
+//   }
 
 //
   _getbody() {
@@ -186,7 +209,7 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
               child: Text(
                 '即刻成为',
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: const Color(0xffffffff),
+                    color: kForeGroundColor,
                     fontSize: 56.sp,
                     fontFamily: 'YouSheBiaoTiHei'),
               )),
@@ -198,7 +221,7 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
-                    ?.copyWith(color: const Color(0xffffffff), fontSize: 72.sp),
+                    ?.copyWith(color: kForeGroundColor, fontSize: 72.sp),
               ))
         ],
       ),
@@ -206,67 +229,67 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
   }
 
 //内容
-  _getBody1() {
-    return Container(
-      margin: EdgeInsets.only(left: 40.w, right: 40.w),
-      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 40.w),
-      decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(16.w)),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                '云云问车客户邀请码',
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    fontSize: 40.sp,
-                    color: const Color(0xFF1986FF),
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          24.hb,
-          Divider(
-            height: 10.w,
-          ),
-          24.hb,
-          32.hb,
-          Divider(
-            height: 10.w,
-          ),
-          62.hb,
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '扫码识别',
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                        fontSize: 40.sp, fontWeight: FontWeight.bold),
-                  ),
-                  22.hb,
-                  Text(
-                    '即刻成为云云问车客户',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  )
-                ],
-              ),
-              150.wb,
-              SizedBox(
-                width: 128.w,
-                height: 128.w,
-                child: Image.asset(
-                  Assets.images.qrCode.path,
-                  fit: BoxFit.fill,
-                ),
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
+//   _getBody1() {
+//     return Container(
+//       margin: EdgeInsets.only(left: 40.w, right: 40.w),
+//       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 40.w),
+//       decoration: BoxDecoration(
+//           color: Colors.red, borderRadius: BorderRadius.circular(16.w)),
+//       child: Column(
+//         children: [
+//           Row(
+//             children: [
+//               Text(
+//                 '云云问车客户邀请码',
+//                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
+//                     fontSize: 40.sp,
+//                     color: const Color(0xFF1986FF),
+//                     fontWeight: FontWeight.bold),
+//               ),
+//             ],
+//           ),
+//           24.hb,
+//           Divider(
+//             height: 10.w,
+//           ),
+//           24.hb,
+//           32.hb,
+//           Divider(
+//             height: 10.w,
+//           ),
+//           62.hb,
+//           Row(
+//             children: [
+//               Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     '扫码识别',
+//                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
+//                         fontSize: 40.sp, fontWeight: FontWeight.bold),
+//                   ),
+//                   22.hb,
+//                   Text(
+//                     '即刻成为云云问车客户',
+//                     style: Theme.of(context).textTheme.subtitle2,
+//                   )
+//                 ],
+//               ),
+//               150.wb,
+//               SizedBox(
+//                 width: 128.w,
+//                 height: 128.w,
+//                 child: Image.asset(
+//                   Assets.images.qrCode.path,
+//                   fit: BoxFit.fill,
+//                 ),
+//               )
+//             ],
+//           )
+//         ],
+//       ),
+//     );
+//   }
 
 // //头部
 //   _getHeard() {

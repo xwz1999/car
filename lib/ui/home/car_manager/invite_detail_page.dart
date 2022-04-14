@@ -1,8 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 
 import 'choose_car_page.dart';
@@ -77,9 +75,9 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                         padding: EdgeInsets.symmetric(vertical: 32.w),
                         width: 120.w,
                         child: Text('邀约人',
-                            style: TextStyle(
-                                color: BaseStyle.color999999,
-                                fontSize: BaseStyle.fontSize28,)),
+                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                              color: const Color(0xFF999999),
+                            )),
                       ),
                       50.wb,
                       Expanded(
@@ -129,9 +127,9 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                           padding: EdgeInsets.symmetric(vertical: 32.w),
                           width: 120.w,
                           child: Text('预定车辆',
-                              style: TextStyle(
-                                color: BaseStyle.color999999,
-                                fontSize: BaseStyle.fontSize28,)),
+                              style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                                color: const Color(0xFF999999),
+                              )),
                         ),
                         50.wb,
                         Expanded(

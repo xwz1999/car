@@ -1,12 +1,13 @@
-import 'package:cloud_car/ui/user/user_partner_center/partner_renewal.dart';
+import 'package:cloud_car/ui/user/user_partner_center/partner_shop_contract.dart';
 import 'package:cloud_car/ui/user/user_recommended/user_recommended.dart';
 import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class PartnerCenterPage extends StatefulWidget {
   const PartnerCenterPage({Key? key}) : super(key: key);
@@ -20,19 +21,20 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
-
-  late EasyRefreshController _refreshController;
+  late bool conditions = false;
+  bool _getSure = false;
   late bool certification;
+  bool bl = true;
   @override
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
-    //super.build(context);
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
@@ -86,33 +88,45 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
         Row(
           children: [
             Padding(padding: EdgeInsets.only(left: 80.w)),
-            Radio(
-              value: true,
-              onChanged: (Value) {
+            GestureDetector(
+              onTap: () {
                 setState(() {
                   Alert.show(
                       context,
                       NormalContentDialog(
                         type: NormalTextDialogType.delete,
                         title: '确认提示',
-                        content: const Text('是否确认屏幕下方屏幕协议'),
+                        content: const Text('是否确认屏幕下方付款协议?'),
                         items: const ['取消'],
-                        deleteItem: '确认',
+                        deleteItem: '确定',
                         //监听器
                         listener: (index) {
                           Alert.dismiss(context);
-                          Value = false;
-                          (Value);
+                          _getSure = false;
+                          //Value = false;
+                          //(Value);
                         },
                         deleteListener: () {
                           Alert.dismiss(context);
-                          Value = true;
-                          (Value);
+                          _getSure = true;
+                          //print(_getSure);
+                          //Value = true;
+                          //(Value);
                         },
                       ));
                 });
               },
-              groupValue: Value,
+              child: SizedBox(
+                  width: 32.w,
+                  height: 32.w,
+                  // decoration: BoxDecoration(
+                  //     border: Border.all(width: 2.w, color: Color(0xFFCCCCCC)),
+                  //     borderRadius: BorderRadius.circular(16.w)),
+                  child: !_getSure
+                      ? const Icon(CupertinoIcons.circle,
+                          size: 18, color: Color(0xFFCCCCCC))
+                      : const Icon(CupertinoIcons.checkmark_circle,
+                          size: 18, color: Colors.blue)),
             ),
             // RichText(
             //   text: TextSpan(
@@ -146,28 +160,12 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                 )
               ],
             ),
-            _getBubbles(),
+            conditions ? const SizedBox() : _getBubbles(),
           ],
         ),
-        Container(
-          width: double.infinity,
-          height: 72.w,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(8.w)),
-          child: SizedBox(
-              child: GestureDetector(
-            onTap: () {
-              Get.to(() => const PartnerRenewalPage());
-            },
-            child: Text(
-              '确认协议并续费¥1500.00',
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle2
-                  ?.copyWith(color: const Color(0xffffffff)),
-            ),
-          )),
+        CloudBottom(
+          ontap: () {},
+          text: '确认协议并续费¥1500.00',
         )
       ]),
     );
@@ -342,6 +340,9 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                           )),
                     ),
                     GestureDetector(
+                      onTap: () {
+                        Get.to(() => const PartnerShopContractPage());
+                      },
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.w),
@@ -479,14 +480,14 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                           style: Theme.of(context)
                               .textTheme
                               .headline6
-                              ?.copyWith(color: const Color(0xffffffff)),
+                              ?.copyWith(color: kForeGroundColor),
                         ),
                         Text(
                           '189****3627',
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
-                              ?.copyWith(color: const Color(0xffffffff)),
+                              ?.copyWith(color: kForeGroundColor),
                         )
                       ],
                     ),
@@ -500,7 +501,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                 top: 16.w,
               ),
               child: Text(
-                '还未成为云云问车合伙人',
+                conditions ? '合伙人有效期至2022-11-18' : '还未成为云云问车合伙人',
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
@@ -530,7 +531,9 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
             ),
           ],
         )),
-        Positioned(left: 172.w, top: 188.w, child: _getBubbles()),
+        conditions
+            ? const SizedBox()
+            : Positioned(left: 172.w, top: 188.w, child: _getBubbles()),
       ]),
     );
   }
@@ -555,7 +558,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
               style: Theme.of(context)
                   .textTheme
                   .bodyText1
-                  ?.copyWith(color: const Color(0xffffffff)),
+                  ?.copyWith(color: kForeGroundColor),
             )),
       ],
     );

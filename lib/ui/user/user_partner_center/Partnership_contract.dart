@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_car/ui/user/user_partner_center/successful.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -34,6 +36,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage>
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     //super.build(context);
     return Scaffold(
@@ -254,7 +257,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage>
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
-                                  ?.copyWith(color: const Color(0xffffffff)),
+                                  ?.copyWith(color: kForeGroundColor),
                             ),
                           ),
                         ),
@@ -271,7 +274,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage>
           style: Theme.of(context)
               .textTheme
               .subtitle2
-              ?.copyWith(color: const Color(0xffffffff)),
+              ?.copyWith(color: kForeGroundColor),
         ),
       ),
     );

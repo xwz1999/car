@@ -4,7 +4,7 @@ import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class AddStores extends StatefulWidget {
-  AddStores({Key? key}) : super(key: key);
+  const AddStores({Key? key}) : super(key: key);
 
   @override
   State<AddStores> createState() => _AddStoresState();
@@ -27,7 +27,7 @@ class _AddStoresState extends State<AddStores> {
 
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: BodyColor,
+      backgroundColor: bodyColor,
       body: Column(
         children: [
           16.hb,

@@ -9,7 +9,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'home/home_page.dart';
 import 'notice/notice_page.dart';
 
-
 class TabNavigator extends StatefulWidget {
   final int? index;
 
@@ -35,11 +34,10 @@ class _TabNavigatorState extends State<TabNavigator>
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(milliseconds: 0),() async{
+    Future.delayed(const Duration(milliseconds: 0), () async {
       Hive.initFlutter;
       await HiveStore.init();
     });
-
 
     _pages = [
       const HomePage(),
@@ -85,7 +83,7 @@ class _TabNavigatorState extends State<TabNavigator>
       _buildBottomBar(
         '云云优选',
         Assets.icons.tabCar.path,
-          Assets.icons.tabCarChoose.path,
+        Assets.icons.tabCarChoose.path,
       ),
       _buildBottomBar(
         '通知',
@@ -102,7 +100,8 @@ class _TabNavigatorState extends State<TabNavigator>
       body: WillPopScope(
         onWillPop: () async {
           if (_lastPressed == null ||
-              DateTime.now().difference(_lastPressed!) > const Duration(seconds: 1)) {
+              DateTime.now().difference(_lastPressed!) >
+                  const Duration(seconds: 1)) {
             //两次点击间隔超过1秒重新计算
             _lastPressed = DateTime.now();
             BotToast.showText(text: '再点击一次返回退出');
@@ -116,7 +115,6 @@ class _TabNavigatorState extends State<TabNavigator>
           controller: _tabController,
           physics: const NeverScrollableScrollPhysics(),
         ),
-
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNav,
@@ -125,8 +123,8 @@ class _TabNavigatorState extends State<TabNavigator>
         selectedFontSize: 20.sp,
         unselectedFontSize: 20.sp,
         onTap: (index) {
-            _tabController!.animateTo(index, curve: Curves.easeInOutCubic);
-            setState(() => _currentIndex = index);
+          _tabController!.animateTo(index, curve: Curves.easeInOutCubic);
+          setState(() => _currentIndex = index);
         },
       ),
     );

@@ -3,9 +3,9 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-import 'assessment_page.dart';
-import 'direct_sale_manager_page.dart';
 import '../manager_container_item.dart';
+import 'assessment_page.dart';
+import 'direct_sale/direct_sale_manager_page.dart';
 
 class CarManagerPage extends StatefulWidget {
   const CarManagerPage({Key? key}) : super(key: key);
@@ -36,15 +36,18 @@ class _CarManagerPageState extends State<CarManagerPage> {
         ),
         backgroundColor: kForeGroundColor,
         title: Text('车辆管理',
-            style: TextStyle(
-                color: BaseStyle.color111111,
-                fontSize: BaseStyle.fontSize36,
-                fontWeight: FontWeight.bold)),
+            style: Theme.of(context)
+                .textTheme
+                .headline4
+                ,
+
+
+        ),
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
-      body: Column(
+      body: ListView(
         children: [
           _getItem('直卖车辆'),
           40.hb,
@@ -65,10 +68,15 @@ class _CarManagerPageState extends State<CarManagerPage> {
         Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(text,
-              style: TextStyle(
-                  color: BaseStyle.color333333,
-                  fontSize: BaseStyle.fontSize32,
-                  fontWeight: FontWeight.bold)),
+              style:
+          Theme.of(context)
+              .textTheme
+              .subtitle1
+              ?.copyWith(
+          color: const Color(0xFF333333),
+    fontWeight: FontWeight.bold
+          )
+          ),
         ),
         24.hb,
         GridView.builder(

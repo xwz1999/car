@@ -1,4 +1,4 @@
-import 'package:bot_toast/bot_toast.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
@@ -31,7 +31,7 @@ class ScreenWidget extends StatefulWidget {
 }
 
 class _ScreenWidgetState extends State<ScreenWidget> {
-  late final String _chooseItem = '';
+  // late final String _chooseItem = '';
 
   @override
   void initState() {
@@ -46,12 +46,13 @@ class _ScreenWidgetState extends State<ScreenWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.zero,
       shrinkWrap: true,
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 24.w),
+          padding: EdgeInsets.only(left: 32.w, right: 32.w,top: 24.w),
           child: SortWidget(
-            crossAxisSpacing: widget.mainAxisSpacing,
+            crossAxisSpacing: widget.crossAxisSpacing,
             itemList: widget.itemList,
             childAspectRatio: widget.childAspectRatio,
             crossAxisCount: widget.crossAxisCount,
@@ -67,46 +68,47 @@ class _ScreenWidgetState extends State<ScreenWidget> {
               if (kDebugMode) {
                 print(item.name);
               }
+              widget.callback(item.name);
               setState(() {});
             },
           ),
         ),
-        48.hb,
-        widget.haveButton ? _confirmBtn() : const SizedBox(),
+        // widget.haveButton ? 48.hb: const SizedBox(),
+        // widget.haveButton ? _confirmBtn() : const SizedBox(),
         40.hb,
       ],
     );
   }
 
-  _confirmBtn() {
-    return GestureDetector(
-      onTap: () {
-        if (_chooseItem.isNotEmpty) {
-          widget.callback(_chooseItem);
-        } else {
-          BotToast.showText(text: '请先选择一个区间分类');
-        }
-      },
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 16.w),
-        alignment: Alignment.center,
-        margin: EdgeInsets.only(left: 32.w, right: 32.w),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: <Color>[
-              Color(0xFF0593FF),
-              Color(0xFF027AFF),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(8.w)),
-        ),
-        child: Text(
-          '确  定',
-          style: TextStyle(
-              color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
-        ),
-      ),
-    );
-  }
+  // _confirmBtn() {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       if (_chooseItem.isNotEmpty) {
+  //         widget.callback(_chooseItem);
+  //       } else {
+  //         BotToast.showText(text: '请先选择一个区间分类');
+  //       }
+  //     },
+  //     child: Container(
+  //       width: double.infinity,
+  //       padding: EdgeInsets.symmetric(vertical: 16.w),
+  //       alignment: Alignment.center,
+  //       margin: EdgeInsets.only(left: 32.w, right: 32.w),
+  //       decoration: BoxDecoration(
+  //         gradient: const LinearGradient(
+  //           colors: <Color>[
+  //             Color(0xFF0593FF),
+  //             Color(0xFF027AFF),
+  //           ],
+  //         ),
+  //         borderRadius: BorderRadius.all(Radius.circular(8.w)),
+  //       ),
+  //       child: Text(
+  //         '确  定',
+  //         style: TextStyle(
+  //             color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
