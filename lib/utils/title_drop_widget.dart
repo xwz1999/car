@@ -1,8 +1,9 @@
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_down_head_widget.dart';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 
 class TitleDropDownWidget extends StatefulWidget {
   //标题集合
@@ -14,6 +15,8 @@ class TitleDropDownWidget extends StatefulWidget {
   final double height;
   final Widget? leftWidget;
   final Widget? rightWidget;
+  //子集
+  final Widget? child;
 
 //筛选文字大小
   final double headFontSize;
@@ -30,15 +33,15 @@ class TitleDropDownWidget extends StatefulWidget {
   final VoidCallback? onTap;
 
   const TitleDropDownWidget(this.titles, this.listWidget,
-      {this.height = 42,
-      required this.headFontSize,
-      this.iconData,
-      required this.bottomHeight,
-      required this.screenControl,
-      Key? key,
-      this.onTap,
-      this.leftWidget,
-      this.rightWidget})
+      {
+        this.height = 42,
+        required this.headFontSize,
+        this.iconData,
+        required this.bottomHeight,
+        required this.screenControl,
+
+        Key? key,
+        this.onTap, this.leftWidget, this.rightWidget, this.child})
       : super(key: key);
 
   @override
@@ -113,16 +116,19 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        
         Row(
           children: [
-            widget.leftWidget != null ? widget.leftWidget! : const SizedBox(),
+
+            widget.leftWidget!=null?widget.leftWidget!:const SizedBox(),
+
             Expanded(
               child: Container(
                 alignment: Alignment.center,
                 height: widget.height,
                 decoration: BoxDecoration(
                     borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(16.w)),
+                    BorderRadius.vertical(bottom: Radius.circular(16.w)),
                     color: Colors.white),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -130,9 +136,12 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                 ),
               ),
             ),
-            widget.rightWidget != null ? widget.rightWidget! : const SizedBox(),
+
+            widget.rightWidget!=null?widget.rightWidget!:const SizedBox(),
+
           ],
         ),
+        widget.child!=null?widget.child!:const SizedBox(),
         getBottomScreen()
       ],
     );
@@ -147,7 +156,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
             child: TitleDropDownHeadWidget(
               widget.titles[i],
               getRoState(i),
-              () {
+                  () {
                 if (kDebugMode) {
                   print("click${rotateState.length}");
                 }
@@ -207,7 +216,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
       margin: EdgeInsets.only(top: widget.height),
       alignment: Alignment.topCenter,
       color: Colors.black26,
-      height: MediaQuery.of(context).size.height - widget.height,
+     // height: MediaQuery.of(context).size.height - widget.height,
       width: double.infinity,
       child: Container(
         width: double.infinity,

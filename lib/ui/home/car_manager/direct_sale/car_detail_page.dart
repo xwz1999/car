@@ -1,19 +1,20 @@
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:cloud_car/widget/swiper_pagination_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
-class PreferredCardDetailPage extends StatefulWidget {
-  const PreferredCardDetailPage({Key? key}) : super(key: key);
+class CardDetailPage extends StatefulWidget {
+  const CardDetailPage({Key? key}) : super(key: key);
 
   @override
-  _PreferredCardDetailPageState createState() => _PreferredCardDetailPageState();
+  _CardDetailPageState createState() => _CardDetailPageState();
 }
 
-class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
+class _CardDetailPageState extends State<CardDetailPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
   late EasyRefreshController _refreshController;
@@ -60,6 +61,7 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
                   height: 48.w, width: 48.w),
             ),
             24.wb,
+            ///收藏按钮 自己发布的车辆没有该按钮
             GestureDetector(
               onTap: () {
                 Get.to(() => const SearchPage());
@@ -73,7 +75,7 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
                 Get.to(() => const SearchPage());
               },
               child: Image.asset(Assets.icons.icShare.path,
-                  color: Colors.black, height: 48.w, width: 48.w),
+                  color: Colors.black, height: 40.w, width: 40.w),
             ),
             16.wb,
           ],
@@ -81,18 +83,20 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
       ),
       extendBody: true,
       //extendBodyBehindAppBar: true,
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
         children: [
           Container(
               padding: EdgeInsets.symmetric(horizontal: 32.w),
               child: Column(
                 children: [
                   _title(),
-                  14.hb,
+                  32.hb,
                   _label(),
-                  14.hb,
+                  18.hb,
                   _information(),
-                  14.hb,
+                  30.hb,
                   _shuffling(),
                   32.hb,
                   _informations(),
@@ -117,21 +121,17 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
 
   //标题
   _title() {
-    return Column(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          height: 96.w,
-          child: Flexible(
-              child: Text(
-            '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                ?.copyWith(color: const Color(0xFF111111), fontSize: 40.sp),
-          )),
-        ),
-      ],
+    return SizedBox(
+      width: double.infinity,
+
+      child: Flexible(
+          child: Text(
+        '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
+        style: Theme.of(context)
+            .textTheme
+            .headline6
+            ?.copyWith(color: const Color(0xFF111111), fontSize: 40.sp),
+      )),
     );
   }
 
@@ -141,7 +141,6 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
       children: [
         SizedBox(
           width: double.infinity,
-          height: 41.w,
           child: Row(
             children: [
               _noRelease('在售'),
@@ -197,8 +196,7 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
   //信息栏
   _informations() {
     return SizedBox(
-      width: 686.w,
-      height: 116.w,
+
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.w),
@@ -263,22 +261,10 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
                   Row(
                     children: [
                       Text(
-                        '张斯斯',
+                        '黑色',
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
-                      8.wb,
-                      Text.rich(TextSpan(
-                          text: '立即联系',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              ?.copyWith(
-                                  color: const Color(0xFF027AFF),
-                                  fontSize: 20.sp),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = (() {
-                              ('object');
-                            })))
+
                     ],
                   ),
                   Row(
@@ -286,14 +272,10 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
                       SizedBox(
                         width: 28.w,
                         height: 28.w,
-                        child: Image.asset(Assets.icons.traffic.path),
+                        child: Image.asset(Assets.icons.icColor.path),
                       ),
-                      // Icon(
-                      //   Icons.timer,
-                      //   size: 20,
-                      // ),
                       Text(
-                        '车务',
+                        '车身颜色',
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1
@@ -525,10 +507,10 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
         //指示器显示的位置
         alignment: Alignment.bottomCenter, //位置在底部
         //距离调整
-        margin: const EdgeInsets.fromLTRB(0, 0, 0, 5), //坐上右下
+        margin: const EdgeInsets.fromLTRB(0, 0, 0, 10), //坐上右下
         //指示器构建
-        builder: FractionPaginationBuilder(
-            color: Colors.white, activeFontSize: 20.sp, fontSize: 20.sp)
+        builder: SwiperPaginationWidget(
+            color: Colors.white, activeFontSize: 20.sp, fontSize: 20.sp,activeColor: Colors.white)
         // builder: DotSwiperPaginationBuilder(
         //   //点之间的间距
         //   space: 2,
@@ -547,7 +529,7 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
 //图片样式
   _bannerStyle() {
     return Swiper(
-      itemCount: 6,
+      itemCount: 4,
       //横向
       scrollDirection: Axis.horizontal,
       //布局构建

@@ -193,8 +193,7 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home_share.png
   AssetGenImage get homeShare =>
       const AssetGenImage('assets/icons/home_share.png');
-
-  /// File path: assets/icons/ic_contract.png
+  AssetGenImage get icColor => const AssetGenImage('assets/icons/ic_color.png');
   AssetGenImage get icContract =>
       const AssetGenImage('assets/icons/ic_contract.png');
 
