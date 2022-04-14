@@ -19,10 +19,10 @@ class SwiperPaginationWidget extends SwiperPlugin {
 
   const SwiperPaginationWidget(
       {this.color,
-        this.fontSize: 20.0,
+        this.fontSize= 20.0,
         this.key,
         this.activeColor,
-        this.activeFontSize: 35.0});
+        this.activeFontSize= 35.0});
 
   @override
   Widget build(BuildContext context, SwiperPluginConfig? config) {

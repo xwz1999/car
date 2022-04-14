@@ -8,6 +8,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
 class CarsDetailPage extends StatefulWidget {
@@ -76,7 +77,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                 expandedHeight: 1150.w,
                 elevation: 0,
                 backgroundColor:headerWhite?Colors.white:  Colors.transparent ,
-                brightness: Brightness.light,
+                systemOverlayStyle: SystemUiOverlayStyle.light,
                 snap: false,
                 centerTitle: false,
                 title: headerWhite ? const Text('奥迪A3 2020款', style: TextStyle(
@@ -312,7 +313,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   }
 
   _tab(int index, String text) {
-    return Container(width: 150.w, child: Text(text));
+    return SizedBox(width: 150.w, child: Text(text));
   }
 
 
@@ -894,28 +895,4 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     );
   }
 
-//
-  _getText(String title, String text) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 130.w,
-          child: Text(
-            title,
-            style: TextStyle(
-                color: BaseStyle.color999999, fontSize: BaseStyle.fontSize28),
-          ),
-        ),
-        32.wb,
-        SizedBox(
-          width: 514.w,
-          child: Text(
-            text,
-            style: TextStyle(
-                color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
-          ),
-        )
-      ],
-    );
-  }
 }

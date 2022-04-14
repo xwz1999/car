@@ -1,5 +1,4 @@
-import 'package:cloud_car/base/base_style.dart';
-import 'package:cloud_car/ui/home/car_manager/choose_car_page.dart';
+
 import 'package:cloud_car/ui/home/car_manager/direct_sale/choose_customer_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';

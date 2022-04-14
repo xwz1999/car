@@ -1,12 +1,8 @@
 
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/cars_detail_page.dart';
-import 'package:cloud_car/ui/notice/car_rejected_detail.dart';
-import 'package:cloud_car/ui/preferred/preferred_car_detail.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/car_item_widget.dart';
-import 'package:cloud_car/widget/choose_widget.dart';
+
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
