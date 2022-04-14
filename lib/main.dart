@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       },
       child: ScreenUtilInit(
         designSize: const Size(750, 1334),
-        builder: (context) => GetMaterialApp(
+        builder: () => GetMaterialApp(
           onGenerateTitle: (context) => '云云问车',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.theme,

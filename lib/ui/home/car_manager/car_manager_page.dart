@@ -47,7 +47,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
-      body: Column(
+      body: ListView(
         children: [
           _getItem('直卖车辆'),
           40.hb,

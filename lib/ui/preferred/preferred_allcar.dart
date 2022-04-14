@@ -238,7 +238,7 @@ class _AllCarState extends State<AllCar> {
   get(item) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const CardetailPage());
+        Get.to(() => const PreferredCardDetailPage());
       },
       child: Container(
         decoration: BoxDecoration(

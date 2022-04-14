@@ -1,7 +1,6 @@
-import 'package:cloud_car/ui/home/search_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_down_head_widget.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,8 @@ class TitleDropDownWidget extends StatefulWidget {
   final double height;
   final Widget? leftWidget;
   final Widget? rightWidget;
-
+  //子集
+  final Widget? child;
 
 //筛选文字大小
   final double headFontSize;
@@ -41,7 +41,7 @@ class TitleDropDownWidget extends StatefulWidget {
         required this.screenControl,
 
         Key? key,
-        this.onTap, this.leftWidget, this.rightWidget})
+        this.onTap, this.leftWidget, this.rightWidget, this.child})
       : super(key: key);
 
   @override
@@ -141,6 +141,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
 
           ],
         ),
+        widget.child!=null?widget.child!:const SizedBox(),
         getBottomScreen()
       ],
     );
@@ -215,7 +216,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
       margin: EdgeInsets.only(top: widget.height),
       alignment: Alignment.topCenter,
       color: Colors.black26,
-      height: MediaQuery.of(context).size.height - widget.height,
+     // height: MediaQuery.of(context).size.height - widget.height,
       width: double.infinity,
       child: Container(
         width: double.infinity,
