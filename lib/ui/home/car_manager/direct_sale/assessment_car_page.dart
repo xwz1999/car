@@ -1,23 +1,24 @@
 
+import 'package:cloud_car/ui/home/car_manager/direct_sale/cars_detail_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/car_item_widget.dart';
-import 'package:cloud_car/widget/choose_widget.dart';
+
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class DirectSalePage extends StatefulWidget {
-  final int type;///1未直卖 2为收购
+
+///评估车辆页面
+class AssessmentCarPage extends StatefulWidget {
   final Function callBack;
-  const DirectSalePage({Key? key, required this.callBack, required this.type}) : super(key: key);
+  const AssessmentCarPage({Key? key, required this.callBack}) : super(key: key);
 
   @override
-  _DirectSalePageState createState() => _DirectSalePageState();
+  _AssessmentCarPageState createState() => _AssessmentCarPageState();
 }
 
-class _DirectSalePageState extends State<DirectSalePage> {
+class _AssessmentCarPageState extends State<AssessmentCarPage> {
    final List<String>   _dropDownHeaderItemStrings = [
     '排序',
   ];
@@ -71,30 +72,12 @@ class _DirectSalePageState extends State<DirectSalePage> {
 
    }
 
-
   @override
   Widget build(BuildContext context) {
     return  Column(
       children: [
         const SizedBox(
           height:  kToolbarHeight ,
-        ),
-        ChooseWidget(
-          callBack: (name) {
-            setState(() {});
-          },
-          items: const [
-            '在售',
-            '已预定',
-            '已售',
-            '退库',
-            '待审核',
-            '已驳回',
-          ],
-        ),
-        Divider(
-          height: 1.w,
-          color: BaseStyle.colordddddd,
         ),
         Expanded(
           child: DropDownWidget(
@@ -106,22 +89,12 @@ class _DirectSalePageState extends State<DirectSalePage> {
             headFontSize: 28.sp,
             child: Container(
               margin: EdgeInsets.only(top: 80.w),
-
               child: ListView.separated(
                 shrinkWrap: true,
                 padding:
                 EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
                 itemBuilder: (context, index) {
-                  return CarItemWidget(
-                    widgetPadding: EdgeInsets.symmetric(
-                        horizontal: 24.w, vertical: 20.w),
-                    name: '奔驰CLE 插电混动 纯电动续航103km',
-                    time: '2019年5月',
-                    distance: '20.43万公里',
-                    standard: '国六',
-                    url: Assets.images.homeBg.path,
-                    price: '27.43万',
-                  );
+                  return getItem();
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return Container(
@@ -143,4 +116,93 @@ class _DirectSalePageState extends State<DirectSalePage> {
       ],
     );
   }
+  
+  getItem(){
+     return GestureDetector(
+       onTap: (){
+         Get.to(()=>const CarsDetailPage());
+       },
+       child: Container(
+         padding: EdgeInsets.symmetric(vertical: 24.w,horizontal: 32.w),
+         decoration: BoxDecoration(
+           color: Colors.white,
+           borderRadius: BorderRadius.circular(8.w),
+
+
+         ),
+         height: 500.w,
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+           children: [
+             Expanded(
+               child: Row(
+                 children: [
+                   Text(
+                     '奥迪A3 2020款 35 TFSI 进取型 国V',
+                     style: TextStyle(
+                         color: BaseStyle.color333333,
+                         fontSize: BaseStyle.fontSize32,
+                         fontWeight: FontWeight.bold
+                     ),
+                     maxLines: 1,
+                     overflow: TextOverflow.ellipsis,
+                   ),
+                 ],
+               ),
+             ),
+             16.hb,
+             getText('车架号','GDL26173890989890'),
+
+             16.hb,
+             getText('首次上牌','2020-01'),
+             16.hb,
+             getText('车牌号','浙B236Y'),
+             16.hb,
+             getText('发动机号','647382'),
+             16.hb,
+             getText('车身颜色','白色'),
+             16.hb,
+             getText('显表里程','3.0万公里'),
+             16.hb,
+             getText('系统估计','8.80万元',isRed: true),
+
+           ],
+         ),
+       ),
+     );
+     
+     
+  }
+
+
+  getText(String title,String content,{bool isRed = false,}){
+     return           Row(
+       children: [
+         SizedBox(
+           width: 180.w,
+           child: Text(
+             title,
+             style: TextStyle(
+                 color: BaseStyle.color666666,
+                 fontSize: BaseStyle.fontSize28,
+
+             ),
+           ),
+         ),
+
+         Text(
+           content,
+           style: TextStyle(
+               color:isRed?const Color(0xFFFF3B02): BaseStyle.color333333,
+               fontSize: BaseStyle.fontSize28,
+
+           ),
+
+         ),
+       ],
+     );
+  }
+  
+  
+  
 }

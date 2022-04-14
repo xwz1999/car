@@ -1,9 +1,13 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, deprecated_member_use, duplicate_ignore
+
+import 'dart:io';
 
 import 'package:cloud_car/ui/user/user_basic_information/enterprise.dart';
 import 'package:cloud_car/utils/headers.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
 
@@ -16,6 +20,29 @@ class BasicInformationPage extends StatefulWidget {
 
 class _BasicInformationPageState extends State<BasicInformationPage> {
   int sexId = 1;
+  final picker = ImagePicker();
+  late File imagePath = File('path');
+  Future getImage() async {
+    // ignore: deprecated_member_use
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final File file = File(pickedFile!.path);
+    setState(() {
+      if (pickedFile != null) {
+        imagePath = file;
+      } else {
+        print('no image selected');
+      }
+    });
+  }
+
+  void openGallery() async {
+    // ignore: deprecated_member_use
+    PickedFile? pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final File file = File(pickedFile!.path);
+    setState(() {
+      imagePath = file;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +78,14 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                       const Spacer(),
-                      Container(
+                      ClipOval(
+                        child: Image.file(
+                          imagePath,
                           width: 70.w,
                           height: 70.w,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(35.w),
-                          )),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -95,7 +123,9 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                   ),
                                   const Spacer(),
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        //Get.to(() => getImage());
+                                      },
                                       icon: Icon(
                                         CupertinoIcons.clear,
                                         color: BaseStyle.colorcccccc,
@@ -112,6 +142,9 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     width: 40.w,
                                   ),
                                   GestureDetector(
+                                    onTap: () {
+                                      getImage();
+                                    },
                                     child: SizedBox(
                                       child: Column(
                                         children: [
@@ -133,6 +166,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                   ),
                                   74.wb,
                                   GestureDetector(
+                                    onTap: openGallery,
                                     child: SizedBox(
                                       child: Column(
                                         children: [
@@ -352,7 +386,6 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     50.hb,
                                     GestureDetector(
                                       onTap: () {
-
                                         sexId = 1;
                                         dialogSetState(() {});
                                       },
@@ -372,7 +405,6 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-
                                         sexId = 2;
                                         dialogSetState(() {});
                                       },

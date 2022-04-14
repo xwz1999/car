@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_car/ui/home/car_manager/direct_sale/direct_sale_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/sort_list_page.dart';
@@ -11,10 +9,11 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
-import 'package:cloud_car/widget/title_drop_scaffold.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'assessment_car_page.dart';
 
 class DirectSaleManagerPage extends StatefulWidget {
   const DirectSaleManagerPage({Key? key}) : super(key: key);
@@ -66,7 +65,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           childAspectRatio: 200 / 56,
           callback: (String item) {
             _dropDownHeaderItemStrings1 = [item];
-
             screenControl1.screenHide();
             setState(() {});
           },
@@ -96,52 +94,55 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           backgroundColor: bodyColor,
           extendBodyBehindAppBar: true,
           extendBody: true,
-          body: Stack(
-            children: [
-              DirectSalePage(
-                callBack: () {
-                  _scaffoldKey.currentState?.openEndDrawer();
-                  print('1112312312');
-                },
-              ),
-              Container(
-                color: Colors.white,
-                //height: kToolbarHeight + MediaQuery.of(context).padding.top,
-                //alignment: Alignment.centerLeft,
-                padding:
-                    EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: TitleDropDownWidget(
-                        _dropDownHeaderItemStrings1,
-                        listWidget1,
-                        height: kToolbarHeight,
-                        bottomHeight: 24.w,
-                        screenControl: screenControl1,
-                        headFontSize: 36.sp,
-                        leftWidget: const CloudBackButton(
-                          isSpecial: true,
-                        ),
-                        rightWidget: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(() => const SearchPage());
-                              },
-                              child: Image.asset(Assets.icons.mainSearch.path,
-                                  height: 48.w, width: 48.w),
-                            ),
-                            20.wb,
-                          ],
-                        ),
-                      ),
+          body: Container(
+            color: Colors.white,
+            //height: kToolbarHeight + MediaQuery.of(context).padding.top,
+            //alignment: Alignment.centerLeft,
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: TitleDropDownWidget(
+                    _dropDownHeaderItemStrings1,
+                    listWidget1,
+                    height: kToolbarHeight,
+                    bottomHeight: 24.w,
+                    screenControl: screenControl1,
+                    headFontSize: 36.sp,
+                    leftWidget: const CloudBackButton(
+                      isSpecial: true,
                     ),
-                  ],
+                    rightWidget: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => const SearchPage());
+                          },
+                          child: Image.asset(Assets.icons.mainSearch.path,
+                              height: 48.w, width: 48.w),
+                        ),
+                        20.wb,
+                      ],
+                    ),
+                    child: _dropDownHeaderItemStrings1.first == '直卖车辆' ||
+                            _dropDownHeaderItemStrings1.first == '收购车辆'
+                        ? DirectSalePage(
+                            callBack: () {
+                              _scaffoldKey.currentState?.openEndDrawer();
+                            },
+                            type: _dropDownHeaderItemStrings1 == ['直卖车辆']
+                                ? 1
+                                : 2,
+                          )
+                        : AssessmentCarPage(callBack: () {
+                            _scaffoldKey.currentState?.openEndDrawer();
+                          }),
+                  ),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
           endDrawer: CustomDrawer(
               widthPercent: 0.86,
@@ -149,60 +150,66 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
               callback: (bool isOpened) {},
               child: _getSortList())),
     );
-    return TitleDropScaffold(
-        key: _scaffoldKey,
-        bodyColor: bgColor,
-        systemStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-        ),
-        appbar: Container(
-          color: Colors.white,
-          //height: kToolbarHeight + MediaQuery.of(context).padding.top,
-          //alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: TitleDropDownWidget(
-                  _dropDownHeaderItemStrings1,
-                  listWidget1,
-                  height: kToolbarHeight,
-                  bottomHeight: 24.w,
-                  screenControl: screenControl1,
-                  headFontSize: 36.sp,
-                  leftWidget: const CloudBackButton(
-                    isSpecial: true,
-                  ),
-                  rightWidget: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => const SearchPage());
-                        },
-                        child: Image.asset(Assets.icons.mainSearch.path,
-                            height: 48.w, width: 48.w),
-                      ),
-                      20.wb,
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        extendBody: true,
-        drawer: CustomDrawer(
-            widthPercent: 0.86,
-            backgroundColor: Colors.white,
-            callback: (bool isOpened) {},
-            child: _getSortList()),
-        body: DirectSalePage(
-          callBack: () {
-            _scaffoldKey.currentState?.openEndDrawer();
-            print('1112312312');
-          },
-        ));
+    // return TitleDropScaffold(
+    //   key: _scaffoldKey,
+    //     bodyColor: bgColor,
+    //     systemStyle: const SystemUiOverlayStyle(
+    //       statusBarIconBrightness: Brightness.dark,
+    //     ),
+    //     appbar: Container(
+    //       color: Colors.white,
+    //       //height: kToolbarHeight + MediaQuery.of(context).padding.top,
+    //       //alignment: Alignment.centerLeft,
+    //       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+    //       child: Row(
+    //         mainAxisAlignment: MainAxisAlignment.start,
+    //         children: [
+    //
+    //
+    //           Expanded(
+    //             child: TitleDropDownWidget(
+    //
+    //               _dropDownHeaderItemStrings1,
+    //               listWidget1,
+    //               height: kToolbarHeight ,
+    //               bottomHeight: 24.w,
+    //               screenControl: screenControl1,
+    //               headFontSize: 36.sp,
+    //               leftWidget:  const CloudBackButton(
+    //                 isSpecial: true,
+    //               ),
+    //               rightWidget:       Row(
+    //                 children: [
+    //                   GestureDetector(
+    //                     onTap: () {
+    //                       Get.to(() => const SearchPage());
+    //                     },
+    //                     child: Image.asset(Assets.icons.mainSearch.path,
+    //                         height: 48.w, width: 48.w),
+    //                   ),
+    //                   20.wb,
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    //
+    //         ],
+    //       ),
+    //     ),
+    //     extendBody: true,
+    //     drawer: CustomDrawer(
+    //         widthPercent: 0.86,
+    //         backgroundColor: Colors.white,
+    //         callback: (bool isOpened) {},
+    //         child: _getSortList()),
+    //     body:
+    //     DirectSalePage(callBack:(){
+    //       _scaffoldKey.currentState?.openEndDrawer();
+    //       print('1112312312');
+    //     },
+    //
+    //     )
+    // );
   }
 
   _getSortList() {
