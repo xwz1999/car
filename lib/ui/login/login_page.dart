@@ -1,12 +1,15 @@
 import 'package:cloud_car/ui/login/wx_login_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/text_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart';
+
+import '../../constants/api/api.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -95,8 +98,8 @@ class _LoginPageState extends State<LoginPage> {
             40.hb,
             MaterialButton(
               onPressed: () async{
-              var code =  sendWeChatAuth(scope: "snsapi_userinfo",state: 'wechat_sdk_demo_test');
-
+                await sendWeChatAuth(scope: "snsapi_userinfo",state: 'wechat_sdk_demo_test');
+             var base =  await apiClient.request(API.login.weixin);
                 Get.to(()=>const WxLoginPage());
               },
               elevation: 0,

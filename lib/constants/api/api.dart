@@ -26,6 +26,7 @@ class API {
   static String get baseURL => '$host/app/broker';
 
   static _File file = _File();
+  static _Login login = _Login();
 }
 
 extension ImageOnString on String {
