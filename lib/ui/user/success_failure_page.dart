@@ -44,11 +44,11 @@ class _SuccessFailureState extends State<SuccessFailure> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
-                    height: 206,
+                    height: 112,
                   ),
                   SizedBox(
-                    width: 122.w,
-                    height: 80.w,
+                    width: 202.w,
+                    height: 200.w,
                     child: Image.asset(
                       Assets.icons.successful.path,
                       fit: BoxFit.fill,

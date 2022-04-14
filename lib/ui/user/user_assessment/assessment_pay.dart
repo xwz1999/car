@@ -1,8 +1,10 @@
 //评估次数充值 62
 
-import 'package:cloud_car/ui/user/user_assessment/pay_results.dart';
+import 'package:cloud_car/ui/user/success_failure_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -28,12 +30,9 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
   ];
   //List payList2 = ['支付宝支付'];
 
-  // late EasyRefreshController _refreshController;
-
   @override
   @override
   void dispose() {
-    // _refreshController.dispose();
     super.dispose();
   }
 
@@ -91,7 +90,17 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
                 child: SizedBox(
                     child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const PayResultsPage());
+                    Get.to(() => SuccessFailure(
+                        conditions: true,
+                        headline: '评估次数',
+                        body: Text(
+                          '评估次数充值成功',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        bottom: CloudBottom(
+                          ontap: () {},
+                          text: '返回我的',
+                        )));
                   },
                   child: Text(
                     '确认支付',
@@ -141,27 +150,27 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
   }
 
 //支付
-//   _getPay() {
-//     return Container(
-//       height: 500.w,
-//       decoration: BoxDecoration(
-//           color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
-//       child: Column(
-//         children: [
-//           SizedBox(
-//             height: 100.w,
-//             child:
-//                 getChooseList((String choices) => null, payList, _selectIndex1),
-//           ),
-//           // SizedBox(
-//           //   height: 100.w,
-//           //   child: getChooseList(
-//           //       (String choices) => null, payList2, _selectIndex2),
-//           // ),
-//         ],
-//       ),
-//     );
-//   }
+  // _getPay() {
+  //   return Container(
+  //     height: 500.w,
+  //     decoration: BoxDecoration(
+  //         color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
+  //     child: Column(
+  //       children: [
+  //         SizedBox(
+  //           height: 100.w,
+  //           child:
+  //               getChooseList((String choices) => null, payList, _selectIndex1),
+  //         ),
+  //         // SizedBox(
+  //         //   height: 100.w,
+  //         //   child: getChooseList(
+  //         //       (String choices) => null, payList2, _selectIndex2),
+  //         // ),
+  //       ],
+  //     ),
+  //   );
+  // }
 //支付判断
 
   getChooseList(Function(String) callBack, List models, List<int> choices) {
@@ -249,7 +258,6 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
   //     ],
   //   );
   // }
-
 
 }
 

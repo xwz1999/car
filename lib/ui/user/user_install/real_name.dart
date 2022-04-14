@@ -205,7 +205,7 @@ class _RealNamePageState extends State<RealNamePage> {
         GestureDetector(
           onTap: () {
             _getSure = !_getSure;
-            print(_getSure);
+
             setState(() {});
           },
           child: SizedBox(

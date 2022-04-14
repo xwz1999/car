@@ -1,6 +1,8 @@
-import 'package:cloud_car/ui/user/user_assessment/pay_results.dart';
+import 'package:cloud_car/ui/user/success_failure_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/material.dart';
 
 class ContractPayPage extends StatefulWidget {
@@ -65,7 +67,17 @@ class _ContractPayPageState extends State<ContractPayPage> {
                 child: SizedBox(
                     child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const PayResultsPage());
+                    Get.to(() => SuccessFailure(
+                        conditions: true,
+                        headline: '合同签订',
+                        body: Text(
+                          '合同签订成功',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        bottom: CloudBottom(
+                          ontap: () {},
+                          text: '返回支付',
+                        )));
                   },
                   child: Text(
                     '确认支付',
@@ -168,6 +180,5 @@ class _ContractPayPageState extends State<ContractPayPage> {
     );
   }
 }
-
 
 void column() {}
