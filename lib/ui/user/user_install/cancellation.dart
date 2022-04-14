@@ -2,6 +2,7 @@
 
 import 'package:cloud_car/ui/user/user_install/validation.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
@@ -58,8 +59,13 @@ class _CancellationPageState extends State<CancellationPage> {
                   // )
                 ],
               ),
-              604.hb,
-              _getBottom()
+              const Spacer(),
+              CloudBottom(
+                  text: '我了解风险,下一步',
+                  ontap: () {
+                    Get.to(() => const ValidationPage());
+                  }),
+              32.hb,
             ],
           ),
         )
@@ -103,39 +109,39 @@ class _CancellationPageState extends State<CancellationPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-    Text(
-      '账号被注销后，如下信息将被清空且无法找回',
-      style: Theme.of(context).textTheme.subtitle2,
-    ),
-    32.hb,
-    SizedBox(
-      width: 300.w,
+        Text(
+          '账号被注销后，如下信息将被清空且无法找回',
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+        32.hb,
+        SizedBox(
+          width: 300.w,
 
-      // child: Text(
-      // '',
-      // style: Theme.of(context)
-      //     .textTheme
-      //     .subtitle2
-      //     ?.copyWith(color: const Color(0xff666666)),
-      // ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //Padding(padding: EdgeInsets.symmetric(vertical: 20.w)),
-          _getText('1、账号内公司相关信息'),
-          20.hb,
-          _getText('2、发布车辆信息'),
-          20.hb,
-          _getText('3、邀请客户信息'),
-          20.hb,
-          _getText('4、成交合同数据 '),
-          20.hb,
-          _getText('5、钱包余额'),
-          20.hb,
-          _getText('6、绑定银行卡信息')
-        ],
-      ),
-    )
+          // child: Text(
+          // '',
+          // style: Theme.of(context)
+          //     .textTheme
+          //     .subtitle2
+          //     ?.copyWith(color: const Color(0xff666666)),
+          // ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Padding(padding: EdgeInsets.symmetric(vertical: 20.w)),
+              _getText('1、账号内公司相关信息'),
+              20.hb,
+              _getText('2、发布车辆信息'),
+              20.hb,
+              _getText('3、邀请客户信息'),
+              20.hb,
+              _getText('4、成交合同数据 '),
+              20.hb,
+              _getText('5、钱包余额'),
+              20.hb,
+              _getText('6、绑定银行卡信息')
+            ],
+          ),
+        )
       ],
     );
   }
@@ -150,35 +156,6 @@ class _CancellationPageState extends State<CancellationPage> {
             .textTheme
             .subtitle2
             ?.copyWith(color: const Color(0xFF666666)),
-      ),
-    );
-  }
-
-//底部按钮
-  _getBottom() {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => const ValidationPage());
-      },
-      child: Container(
-
-        height: 72.w,
-        width: double.infinity,
-        alignment: Alignment.center,
-        margin: EdgeInsets.symmetric(horizontal: 32.w),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.w),
-            gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-        child: Text(
-          '我了解风险，下一步',
-          style: Theme.of(context)
-              .textTheme
-              .subtitle2
-              ?.copyWith(color: kForeGroundColor),
-        ),
       ),
     );
   }

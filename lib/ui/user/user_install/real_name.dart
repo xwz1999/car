@@ -1,7 +1,15 @@
+// ignore_for_file: avoid_print
+
+import 'package:bot_toast/bot_toast.dart';
+
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
+
 import 'package:cloud_car/widget/cloud_back_button.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RealNamePage extends StatefulWidget {
   const RealNamePage({Key? key}) : super(key: key);
@@ -13,6 +21,17 @@ class RealNamePage extends StatefulWidget {
 class _RealNamePageState extends State<RealNamePage> {
   List<dynamic>? data;
   bool _getSure = false;
+  final picker = ImagePicker();
+  Future getImage() async {
+    // ignore: deprecated_member_use
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null) {
+      } else {
+        print('no image selected');
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -42,7 +61,22 @@ class _RealNamePageState extends State<RealNamePage> {
         backgroundColor: bodyColor, //内容颜色
         extendBody: true,
         body: Column(
-          children: [16.hb, _real(), 72.hb, _getSubmit(), 36.hb, _getBottom()],
+          children: [
+            16.hb,
+            _real(),
+            72.hb,
+            CloudBottom(
+                text: '提交',
+                ontap: () {
+                  if (_getSure) {
+                  } else {
+                    BotToast.showText(text: '请同意实名认证协议');
+                  }
+                  //Get.to(() => const NoWithddrawalPage());
+                }),
+            36.hb,
+            _getBottom()
+          ],
         ));
   }
 
@@ -51,10 +85,9 @@ class _RealNamePageState extends State<RealNamePage> {
 //实名认证
   _real() {
     return Container(
-
       color: Colors.white,
       padding: EdgeInsets.only(top: 16.w),
-      child:  Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           12.hb,
@@ -70,8 +103,8 @@ class _RealNamePageState extends State<RealNamePage> {
                 child: Text(
                   '身份证照',
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                    color: const Color(0xFF999999),
-                  ),
+                        color: const Color(0xFF999999),
+                      ),
                 ),
               ),
               40.wb,
@@ -82,7 +115,7 @@ class _RealNamePageState extends State<RealNamePage> {
                     height: 150.w,
                     child: GestureDetector(
                         onTap: () {
-                          //Get.to(() => ImagePickerWidget());
+                          getImage();
                         },
                         child: Stack(
                           children: [
@@ -101,8 +134,7 @@ class _RealNamePageState extends State<RealNamePage> {
                                 height: 72.w,
                                 decoration: BoxDecoration(
                                     color: const Color.fromRGBO(0, 0, 0, 0.5),
-                                    borderRadius:
-                                    BorderRadius.circular(36.w)),
+                                    borderRadius: BorderRadius.circular(36.w)),
                                 child: Image.asset(
                                   Assets.images.camera.path,
                                   fit: BoxFit.fill,
@@ -125,7 +157,7 @@ class _RealNamePageState extends State<RealNamePage> {
                     height: 150.w,
                     child: GestureDetector(
                         onTap: () {
-                          //Get.to(() => ImagePickerWidget());
+                          getImage();
                         },
                         child: Stack(
                           children: [
@@ -144,8 +176,7 @@ class _RealNamePageState extends State<RealNamePage> {
                                 height: 72.w,
                                 decoration: BoxDecoration(
                                     color: const Color.fromRGBO(0, 0, 0, 0.5),
-                                    borderRadius:
-                                    BorderRadius.circular(36.w)),
+                                    borderRadius: BorderRadius.circular(36.w)),
                                 child: Image.asset(
                                   Assets.images.camera.path,
                                   fit: BoxFit.fill,
@@ -166,33 +197,6 @@ class _RealNamePageState extends State<RealNamePage> {
     );
   }
 
-//提交按钮
-  _getSubmit() {
-    return GestureDetector(
-      child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 32.w),
-        child: Container(
-          height: 72.w,
-          width: double.infinity,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.w),
-              gradient: const LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-          child: Text(
-            '提交',
-            style: Theme.of(context)
-                .textTheme
-                .subtitle2
-                ?.copyWith(color: kForeGroundColor),
-          ),
-        ),
-      ),
-    );
-  }
-
 //底部
   _getBottom() {
     return Row(
@@ -201,6 +205,7 @@ class _RealNamePageState extends State<RealNamePage> {
         GestureDetector(
           onTap: () {
             _getSure = !_getSure;
+            print(_getSure);
             setState(() {});
           },
           child: SizedBox(

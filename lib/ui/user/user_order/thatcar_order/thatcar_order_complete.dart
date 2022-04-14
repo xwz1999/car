@@ -1,4 +1,5 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
@@ -35,13 +36,80 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
           getCarBox(Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              getTitle('订单信息'),
-              32.wb,
+              Row(
+                children: [
+                  Text(
+                    '订单信息',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Alert.show(
+                          context,
+                          NormalContentDialog(
+                            type: NormalTextDialogType.delete,
+                            title: '',
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 238.w,
+                                  height: 174.w,
+                                  child: Image.asset(
+                                    Assets.images.immediately.path,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                48.hb,
+                                Text(
+                                  '183-****-1289',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      ?.copyWith(
+                                          fontSize: BaseStyle.fontSize40),
+                                ),
+                                16.hb,
+                                Text(
+                                  '使用虚拟号联系绑定销售',
+                                  style: Theme.of(context).textTheme.subtitle2,
+                                ),
+                              ],
+                            ),
+                            items: const ['取消'],
+                            deleteItem: '立即联系',
+                            //监听器
+                            listener: (index) {
+                              Alert.dismiss(context);
+                              //Value = false;
+                              //(Value);
+                            },
+                            deleteListener: () {
+                              Alert.dismiss(context);
+                              //Value = true;
+                              //(Value);
+                            },
+                          ));
+                    },
+                    child: Text(
+                      '联系车务',
+                      style: TextStyle(
+                          color: const Color(0xFF027AFF),
+                          fontSize: BaseStyle.fontSize28),
+                    ),
+                  )
+                ],
+              ),
+              32.hb,
               _getText('客户姓名', '李四'),
               16.hb,
               _getText('联系方式', '18998785432'),
               16.hb,
-              _getText('绑定销售', '张三三'),
+              _getText('绑定销售', '张三'),
               16.hb,
               _getText('上门地址', '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
               16.hb,
@@ -52,7 +120,7 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               getTitle('支付信息'),
-              32.wb,
+              32.hb,
               _getText('支付方式', '支付宝'),
               16.hb,
               _getText('支付时间', '2022-01-04 12:00'),
@@ -62,7 +130,7 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               getTitle('车辆信息上门'),
-              32.wb,
+              32.hb,
               _getText('上门人员', '张斯斯'),
               16.hb,
               _getText('上门时间', '2022-01-04 12:00'),
@@ -74,7 +142,7 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     getTitle('退款信息'),
-                    32.wb,
+                    32.hb,
                     _getText('退回方式', '支付宝'),
                     16.hb,
                     _getText('退回时间', '2022-01-04 12:00'),
@@ -166,8 +234,8 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
               color: stat == '已退款'
-                  ? const Color(0xFF4F5A74).withOpacity(0.08)
-                  : const Color(0xFF027AFF).withOpacity(0.08)),
+                  ? const Color(0xFF4F5A74).withOpacity(0.1)
+                  : const Color(0xFF027AFF).withOpacity(0.1)),
           child: Text(
             num,
             style: TextStyle(
@@ -182,7 +250,7 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: const Color(0xFF4F5A74).withOpacity(0.08)),
+              color: const Color(0xFF4F5A74).withOpacity(0.1)),
           child: Text(
             time,
             style: TextStyle(
@@ -194,7 +262,7 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: const Color(0xFF4F5A74).withOpacity(0.08)),
+              color: const Color(0xFF4F5A74).withOpacity(0.1)),
           child: Text(
             distance,
             style: TextStyle(
@@ -286,12 +354,16 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
 
 //标题
   getTitle(String title) {
-    return Text(
-      title,
-      style: Theme.of(context)
-          .textTheme
-          .subtitle2
-          ?.copyWith(fontWeight: FontWeight.bold),
+    return Row(
+      children: [
+        Text(
+          title,
+          style: Theme.of(context)
+              .textTheme
+              .subtitle2
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 
@@ -321,6 +393,80 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
       ],
     );
   }
+
+  // _getText1(
+  //   String title,
+  // ) {
+  //   return Row(
+  //     children: [
+  //       SizedBox(
+  //         width: 120.w,
+  //         child: Text(
+  //           title,
+  //           style: TextStyle(
+  //               color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+  //         ),
+  //       ),
+  //       32.wb,
+  //       GestureDetector(
+  //         onTap: () {
+  //           setState(() {
+  //             Alert.show(
+  //                 context,
+  //                 NormalContentDialog(
+  //                   type: NormalTextDialogType.delete,
+  //                   title: '',
+  //                   content: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.center,
+  //                     children: [
+  //                       SizedBox(
+  //                         width: 238.w,
+  //                         height: 174.w,
+  //                         child: Image.asset(
+  //                           Assets.images.immediately.path,
+  //                           fit: BoxFit.fill,
+  //                         ),
+  //                       ),
+  //                       48.hb,
+  //                       Text(
+  //                         '183-****-1289',
+  //                         style: Theme.of(context)
+  //                             .textTheme
+  //                             .subtitle2
+  //                             ?.copyWith(fontSize: BaseStyle.fontSize40),
+  //                       ),
+  //                       16.hb,
+  //                       Text(
+  //                         '使用虚拟号联系绑定销售',
+  //                         style: Theme.of(context).textTheme.subtitle2,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   items: const ['取消'],
+  //                   deleteItem: '立即联系',
+  //                   //监听器
+  //                   listener: (index) {
+  //                     Alert.dismiss(context);
+  //                     //Value = false;
+  //                     //(Value);
+  //                   },
+  //                   deleteListener: () {
+  //                     Alert.dismiss(context);
+  //                     //Value = true;
+  //                     //(Value);
+  //                   },
+  //                 ));
+  //           });
+  //         },
+  //         child: Text(
+  //           '立即联系',
+  //           style: TextStyle(
+  //               color: const Color(0xFF027AFF), fontSize: BaseStyle.fontSize20),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 
   _getPicture(String title, String url) {
     return Column(

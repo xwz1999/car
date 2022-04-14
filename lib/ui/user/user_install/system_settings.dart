@@ -103,11 +103,9 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
   ///
   _getView() {
     return Container(
-
       color: Colors.white,
       child: ListView.separated(
         shrinkWrap: true,
-
         itemCount: 3,
         itemBuilder: (context, index) {
           return _getList(list[index]);
@@ -137,20 +135,19 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
         }
       },
       child: Container(
-        height: 92.w,
-        color: Colors.transparent,
-        alignment: Alignment.center,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            32.wb,
-            Text(item['title'], style: Theme.of(context).textTheme.subtitle2),
-            const Spacer(),
-            const Icon(Icons.keyboard_arrow_right),
-            32.wb,
-          ],
-        )
-      ),
+          height: 92.w,
+          color: Colors.transparent,
+          alignment: Alignment.center,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              32.wb,
+              Text(item['title'], style: Theme.of(context).textTheme.subtitle2),
+              const Spacer(),
+              const Icon(Icons.keyboard_arrow_right),
+              32.wb,
+            ],
+          )),
     );
   }
 

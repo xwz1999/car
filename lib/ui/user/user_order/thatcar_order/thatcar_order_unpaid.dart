@@ -1,4 +1,5 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,74 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
           getCarBox(Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              getTitle('订单信息'),
+              Row(
+                children: [
+                  Text(
+                    '订单信息',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Alert.show(
+                          context,
+                          NormalContentDialog(
+                            type: NormalTextDialogType.delete,
+                            title: '',
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 238.w,
+                                  height: 174.w,
+                                  child: Image.asset(
+                                    Assets.images.immediately.path,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                48.hb,
+                                Text(
+                                  '183-****-1289',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      ?.copyWith(
+                                          fontSize: BaseStyle.fontSize40),
+                                ),
+                                16.hb,
+                                Text(
+                                  '使用虚拟号联系绑定销售',
+                                  style: Theme.of(context).textTheme.subtitle2,
+                                ),
+                              ],
+                            ),
+                            items: const ['取消'],
+                            deleteItem: '立即联系',
+                            //监听器
+                            listener: (index) {
+                              Alert.dismiss(context);
+                              //Value = false;
+                              //(Value);
+                            },
+                            deleteListener: () {
+                              Alert.dismiss(context);
+                              //Value = true;
+                              //(Value);
+                            },
+                          ));
+                    },
+                    child: Text(
+                      '联系车务',
+                      style: TextStyle(
+                          color: const Color(0xFF027AFF),
+                          fontSize: BaseStyle.fontSize28),
+                    ),
+                  )
+                ],
+              ),
               32.hb,
               _getText('客户姓名', '李四'),
               16.hb,
@@ -261,12 +329,16 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
 
 //标题
   getTitle(String title) {
-    return Text(
-      title,
-      style: Theme.of(context)
-          .textTheme
-          .subtitle2
-          ?.copyWith(fontWeight: FontWeight.bold),
+    return Row(
+      children: [
+        Text(
+          title,
+          style: Theme.of(context)
+              .textTheme
+              .subtitle2
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 

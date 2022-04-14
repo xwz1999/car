@@ -5,6 +5,7 @@ import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
 import 'package:cloud_car/ui/user/user_install/system_settings.dart';
+import 'package:cloud_car/ui/user/user_invitation/user_invitation.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
@@ -13,7 +14,6 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -32,8 +32,6 @@ class _UserPageState extends State<UserPage> {
   // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
 
-  late EasyRefreshController _refreshController;
-
   @override
   void initState() {
     super.initState();
@@ -49,11 +47,12 @@ class _UserPageState extends State<UserPage> {
         KingCoin(name: '意见反馈', url: Assets.icons.userfeedback.path));
     _KingCoinUserlist.add(
         KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
+    _KingCoinUserlist.add(
+        KingCoin(name: '我的邀约', url: Assets.icons.userInvitation.path));
   }
 
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
@@ -90,35 +89,33 @@ class _UserPageState extends State<UserPage> {
       // extendBodyBehindAppBar: true,
       body: Expanded(
           child: Column(
-            children: [
-              ListView(
-                shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: 32.w),
         children: [
+          ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(horizontal: 32.w),
+            children: [
               //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
               _shareUser(),
               32.hb,
               _getBanner(),
               24.hb,
               _share(),
-
-
-        ],
-      ),
-              const Spacer(),
-              Row(
-                children: [
-                  Padding(padding: EdgeInsets.only(left: 258.w)),
-                  Text("云云问车 1.0",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(color: const Color(0xFFCCCCCC))),
-                ],
-              ),
-              64.hb,
             ],
-          )),
+          ),
+          const Spacer(),
+          ElevatedButton(
+              onPressed: () {
+                //Get.to(() => MyHomePage());
+              },
+              child: const Text('data')),
+          Text("云云问车 1.0",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  ?.copyWith(color: const Color(0xFFCCCCCC))),
+          64.hb,
+        ],
+      )),
       // body: Text(
       //   '',
       //   style: Theme.of(context).textTheme.bodyText1,
@@ -162,19 +159,22 @@ class _UserPageState extends State<UserPage> {
       },
       child: SizedBox(
         width: 160.w,
-
         child: Column(
           children: [
             Text(
               num,
               style: TextStyle(
-                  color: BaseStyle.color111111, fontSize: BaseStyle.fontSize40,fontWeight: FontWeight.bold),
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize40,
+                  fontWeight: FontWeight.bold),
             ),
             8.hb,
             Text(
               title,
               style: TextStyle(
-                  color: BaseStyle.color999999, fontSize: BaseStyle.fontSize24,fontWeight: FontWeight.bold),
+                  color: BaseStyle.color999999,
+                  fontSize: BaseStyle.fontSize24,
+                  fontWeight: FontWeight.bold),
             )
           ],
         ),
@@ -201,19 +201,20 @@ class _UserPageState extends State<UserPage> {
             top: 16.w,
             child: Stack(
               children: [
-
                 Container(
                   width: 112.w,
                   height: 46.w,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(Assets.images.bubble.path,),
+                      image: AssetImage(
+                        Assets.images.bubble.path,
+                      ),
                       fit: BoxFit.fill,
                     ),
                   ),
                   alignment: Alignment.center,
                   child: Padding(
-                    padding:  EdgeInsets.only(bottom: 8.w),
+                    padding: EdgeInsets.only(bottom: 8.w),
                     child: Text(
                       "首月6折",
                       style: Theme.of(context)
@@ -261,8 +262,10 @@ class _UserPageState extends State<UserPage> {
               ),
               16.wb,
               Text("开通即享5项权益",
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      color: Colors.white.withOpacity(0.8))
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: Colors.white.withOpacity(0.8))
                   // TextStyle(
                   //   fontSize: 24.sp,
                   //   color: Colors.white60,
@@ -278,12 +281,11 @@ class _UserPageState extends State<UserPage> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.w),
                   color: Colors.white),
-              padding:  EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
               child: Text("立即开通",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(color: const Color(0xFF027AFF),fontWeight: FontWeight.bold)
+                  style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                      color: const Color(0xFF027AFF),
+                      fontWeight: FontWeight.bold)
                   // TextStyle(
                   //     color: Colors.blue,
                   //     fontSize: 13,
@@ -367,25 +369,26 @@ class _UserPageState extends State<UserPage> {
     return Container(
       width: double.infinity,
       height: 460.w,
-      padding: EdgeInsets.only(left: 32.w, top: 40.w,),
+      padding: EdgeInsets.only(
+        left: 32.w,
+        top: 40.w,
+      ),
       decoration: BoxDecoration(
         color: Colors.white, //底色
         borderRadius: BorderRadius.circular(10), //圆角弧度
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Padding(padding: EdgeInsets.only(left: 32.w, top: 48.w, right: 510.w)),
           Row(
             children: [
-
               Text(
                 '其他功能',
                 style: Theme.of(context)
                     .textTheme
                     .headline6
-                    ?.copyWith(fontSize: 36.sp,fontWeight: FontWeight.bold),
+                    ?.copyWith(fontSize: 36.sp, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -401,7 +404,7 @@ class _UserPageState extends State<UserPage> {
     return GridView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
-      physics:const NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: _KingCoinUserlist.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         //横轴元素个数
@@ -441,6 +444,9 @@ class _UserPageState extends State<UserPage> {
             break;
           case '意见反馈':
             Get.to(() => const FeedbackPage());
+            break;
+          case '我的邀约':
+            Get.to(() => const UserInvitation());
             break;
         }
       },
