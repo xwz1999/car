@@ -1,16 +1,18 @@
 import 'dart:io';
-
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/login/login_page.dart';
+import 'package:cloud_car/providers/user_provider.dart';
+import 'package:cloud_car/ui/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:provider/provider.dart';
 
 import 'constants/app_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
   if (Platform.isAndroid) {
     SystemUiOverlayStyle style = const SystemUiOverlayStyle(
@@ -27,7 +29,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
       },
       child: ScreenUtilInit(
         designSize: const Size(750, 1334),
+<<<<<<< HEAD
         builder: (context) => GetMaterialApp(
           onGenerateTitle: (context) => '云云问车',
           debugShowCheckedModeBanner: false,
@@ -138,14 +140,33 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+=======
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => UserProvider()),
+>>>>>>> 61e995e0be186a5a0eaa843d20101d977f4234fe
           ],
+          child: GetMaterialApp(
+            onGenerateTitle: (context) => '云云问车',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.theme,
+            home: const SplashPage(),
+            supportedLocales: const [Locale('zh')],
+            locale: const Locale('zh'),
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
+            //builder: BotToastInit(),
+            builder: (context, child) {
+              ScreenUtil.setContext(context);
+              return MediaQuery(
+                //设置文字大小不随系统设置改变
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: BotToastInit().call(context, child),
+              );
+            },
+            navigatorObservers: [BotToastNavigatorObserver()],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

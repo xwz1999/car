@@ -2,6 +2,10 @@ import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
+<<<<<<< HEAD
+
+=======
+>>>>>>> 61e995e0be186a5a0eaa843d20101d977f4234fe
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
@@ -60,6 +64,7 @@ class _CardDetailPageState extends State<CardDetailPage>
                   height: 48.w, width: 48.w),
             ),
             24.wb,
+
             ///收藏按钮 自己发布的车辆没有该按钮
             GestureDetector(
               onTap: () {
@@ -122,7 +127,6 @@ class _CardDetailPageState extends State<CardDetailPage>
   _title() {
     return SizedBox(
       width: double.infinity,
-
       child: Flexible(
           child: Text(
         '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
@@ -195,7 +199,6 @@ class _CardDetailPageState extends State<CardDetailPage>
   //信息栏
   _informations() {
     return SizedBox(
-
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.w),
@@ -263,7 +266,6 @@ class _CardDetailPageState extends State<CardDetailPage>
                         '黑色',
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
-
                     ],
                   ),
                   Row(
@@ -509,7 +511,10 @@ class _CardDetailPageState extends State<CardDetailPage>
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 10), //坐上右下
         //指示器构建
         builder: SwiperPaginationWidget(
-            color: Colors.white, activeFontSize: 20.sp, fontSize: 20.sp,activeColor: Colors.white)
+            color: Colors.white,
+            activeFontSize: 20.sp,
+            fontSize: 20.sp,
+            activeColor: Colors.white)
         // builder: DotSwiperPaginationBuilder(
         //   //点之间的间距
         //   space: 2,

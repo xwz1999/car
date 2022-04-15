@@ -17,7 +17,6 @@ class AppTheme {
               color: const Color(0xFF111111),
               fontWeight: FontWeight.bold,
             ),
-
             subtitle1: TextStyle(
               fontSize: 32.sp,
               color: const Color(0xFF333333),
@@ -30,14 +29,10 @@ class AppTheme {
               fontSize: 24.sp,
               color: const Color(0xFF333333),
             ),
-            // bodyText3: TextStyle(
-            //   fontSize: 20.sp,
-            //   color: const Color(0xFFFF3B02),
-            // ),
-            // bodyText4: TextStyle(
-            //   fontSize: 20.sp,
-            //   color: const Color(0xFF027AFF),
-            // ),
+            bodyText2: TextStyle(
+              fontSize: 28.sp,
+              color: const Color(0xFF333333),
+            ),
           ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData().copyWith(
         backgroundColor: const Color(0xFFFFD000),
