@@ -31,12 +31,9 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
     ChooseItem(name: '自定义', pice: '充值次数'),
   ];
 
-  late EasyRefreshController _refreshController;
-
   @override
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
@@ -116,6 +113,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
                           ));
                     });
                   }),
+              32.hb,
             ],
           ),
         ));

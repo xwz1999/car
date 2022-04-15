@@ -1,8 +1,10 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_car/model/configuration_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,19 @@ class ImmediateWithdrawal extends StatefulWidget {
   State<ImmediateWithdrawal> createState() => _ImmediateWithdrawalState();
 }
 
+final List<int> _selectIndex = [];
+final List<ConfigurationModel> _chooseModels = [];
+List<ConfigurationModel> moddels = [
+  ConfigurationModel(
+      subtitle: Assets.icons.agricultural.path, title: '中国农业银行(1278)'),
+  ConfigurationModel(
+      subtitle: Assets.icons.agricultural.path, title: '中国农业银行(1278)'),
+  ConfigurationModel(
+      subtitle: Assets.icons.agricultural.path, title: '中国农业银行(1278)'),
+];
+
 class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
+  int id = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +56,88 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                   ),
                   17.hb,
                   GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          backgroundColor:
+                              const Color.fromRGBO(255, 255, 255, 0),
+                          builder: (BuildContext context) {
+                            return StatefulBuilder(
+                                builder: (context, dialogSetState) {
+                              return Container(
+                                  width: double.infinity,
+                                  height: 600.w,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(16.w))),
+                                  child: Column(children: [
+                                    32.hb,
+                                    Row(
+                                      children: [
+                                        30.wb,
+                                        SizedBox(
+                                          child: GestureDetector(
+                                            child: Text(
+                                              '取消',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2
+                                                  ?.copyWith(
+                                                      color: BaseStyle
+                                                          .color999999),
+                                            ),
+                                          ),
+                                        ),
+                                        224.wb,
+                                        Text(
+                                          '选择银行卡',
+                                          style: TextStyle(
+                                              color: const Color(0xFF111111),
+                                              fontSize: 32.sp,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        210.wb,
+                                        GestureDetector(
+                                          child: SizedBox(
+                                            child: Text(
+                                              '确认',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2
+                                                  ?.copyWith(
+                                                      color: const Color(
+                                                          0xFF027AFF)),
+                                            ),
+                                          ),
+                                        ),
+                                        30.wb,
+                                      ],
+                                    ),
+                                    40.hb,
+                                    Column(children: [
+                                      50.hb,
+                                      Expanded(
+                                        child: ListView.separated(
+                                            itemBuilder: (context, index) {
+                                              return _getItem(
+                                                  index, moddels[index]);
+                                            },
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                    int index) {
+                                              return Container(
+                                                  //   color: const Color(0xFFF6F6F6),
+                                                  //   height: 16.w,
+                                                  ); //背景色高度
+                                            },
+                                            itemCount: moddels.length),
+                                      ),
+                                    ]),
+                                  ]));
+                            });
+                          });
+                    },
                     child: Row(children: [
                       SizedBox(
                         width: 64.w,
@@ -135,5 +231,52 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
             96.hb,
           ],
         ));
+  }
+
+  _getItem(int index, ConfigurationModel model) {
+    return Container(
+      padding: EdgeInsets.only(left: 32.w),
+      color: Colors.white,
+      height: 150.w,
+      child: Row(
+        children: [
+          Expanded(
+              child: Column(
+            children: [
+              ListTile(
+                title: Text(
+                  '销售员',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+                subtitle: Text(
+                  '负责录入车辆信息、编辑店里的车辆',
+                  style: TextStyle(
+                      fontSize: BaseStyle.fontSize24,
+                      color: const Color(0xFF999999)),
+                ),
+              )
+            ],
+          )),
+          GestureDetector(
+            onTap: () {
+              if (_selectIndex.contains(index)) {
+                _selectIndex.remove(index);
+                _chooseModels.remove(model);
+              } else {
+                _selectIndex.clear();
+                _selectIndex.add(index);
+                _chooseModels.add(model);
+              }
+              setState(() {});
+            }, //点击获取点击选项的下标
+            child: SizedBox(
+                child: BeeCheckRadio(
+              value: index,
+              groupValue: _selectIndex,
+            )),
+          ),
+        ],
+      ),
+    );
   }
 }

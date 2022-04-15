@@ -103,12 +103,18 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                         listener: (index) {
                           Alert.dismiss(context);
                           _getSure = false;
+                          setState(() {
+                            _getSure;
+                          });
                           //Value = false;
                           //(Value);
                         },
                         deleteListener: () {
                           Alert.dismiss(context);
                           _getSure = true;
+                          setState(() {
+                            _getSure;
+                          });
                           //print(_getSure);
                           //Value = true;
                           //(Value);
