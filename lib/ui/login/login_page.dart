@@ -4,11 +4,15 @@ import 'package:cloud_car/ui/login/wx_login_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/text_utils.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluwx/fluwx.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
+
+import '../../constants/api/api.dart';
+import '../../utils/new_work/api_client.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -27,6 +31,29 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     _operator = '中国移动认证';
     _phone = '12345678909';
+
+    fluwx.weChatResponseEventHandler.distinct((a, b) => a == b).listen((event) {
+      var res = event as fluwx.WeChatAuthResponse;
+      print('code ${res.code} errcode:${res.errCode} ${res.errStr}');
+      print(res.toString());
+      switch (res.errCode) {
+        case 0:
+          apiClient.request(API.login.weixin, data: {'code', res.code});
+          Get.to(() => const WxLoginPage());
+          break;
+        case -4:
+          CloudToast.show('用户拒绝授权');
+          break;
+        case -2:
+          CloudToast.show('用户取消授权');
+          break;
+        case -6:
+          CloudToast.show('应用签名错误');
+          break;
+        default:
+          CloudToast.show('未知错误');
+      }
+    });
   }
 
   @override
@@ -100,22 +127,23 @@ class _LoginPageState extends State<LoginPage> {
             ),
             40.hb,
             MaterialButton(
-              onPressed: () async{
-                await sendWeChatAuth(scope: "snsapi_userinfo",state: 'wechat_sdk_demo_test');
-             // var base =  await apiClient.request(API.login.weixin);
-                Get.to(()=>const WxLoginPage());
-              },
-              elevation: 0,
-              height: 72.w,
-              minWidth: 590.w,
-              color: kForeGroundColor,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(width: 2.w, color: kPrimaryColor),
-                borderRadius: BorderRadius.circular(8.w),
-              ),
-              child: Text('微信授权登录',style: TextStyle(fontSize:BaseStyle.fontSize28,color: kPrimaryColor ),
-              )
-            ),
+                onPressed: () async {
+                  await fluwx.sendWeChatAuth(
+                      scope: "snsapi_userinfo", state: 'wechat_sdk_demo_test');
+                },
+                elevation: 0,
+                height: 72.w,
+                minWidth: 590.w,
+                color: kForeGroundColor,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 2.w, color: kPrimaryColor),
+                  borderRadius: BorderRadius.circular(8.w),
+                ),
+                child: Text(
+                  '微信授权登录',
+                  style: TextStyle(
+                      fontSize: BaseStyle.fontSize28, color: kPrimaryColor),
+                )),
             42.hb,
             GestureDetector(
               onTap: () {

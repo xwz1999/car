@@ -17,9 +17,9 @@ class API {
 
   static String get imageHost {
     if (DevEV.instance.dev) {
-      return 'https://static.apiwenche.oa00.com';
+      return 'https://static.oa00.com/wenche';
     } else {
-      return 'https://static.apiwenche.oa00.com';
+      return 'https://static.oa00.com/wenche';
     }
   }
 
