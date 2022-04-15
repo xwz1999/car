@@ -7,7 +7,9 @@ import '../toast/cloud_toast.dart';
 class NetworkInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    if (true) {}
+    if (true) {
+      LoggerData.addData(options);
+    }
     super.onRequest(options, handler);
   }
 
