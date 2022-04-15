@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 
 import '../model/user/user_info_model.dart';
@@ -14,18 +13,22 @@ class UserProvider extends ChangeNotifier {
   UserInfoModel get userInfo => _userInfo;
 
   Future<bool> init() async {
-    if (HiveStore.appBox?.containsKey('token')??false) {
+    if (HiveStore.appBox?.containsKey('token') ?? false) {
       final token = HiveStore.appBox?.get('token') as String;
 
       _isLogin = true;
-      apiClient.setToken(token);
-      //每次打开app更新用户信息
-      await updateUserInfo();
+      await setToken(token);
       return true;
     } else {
       _isLogin = false;
       return false;
     }
+  }
+
+  Future setToken(String token) async {
+    apiClient.setToken(token);
+    //每次打开app更新用户信息
+    await updateUserInfo();
   }
 
   Future logout() async {
@@ -42,6 +45,6 @@ class UserProvider extends ChangeNotifier {
     // } else {
     //   CloudToast.show(base.msg);
     // }
+    notifyListeners();
   }
-
 }
