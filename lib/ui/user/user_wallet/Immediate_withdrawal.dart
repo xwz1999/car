@@ -115,25 +115,25 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                                       ],
                                     ),
                                     40.hb,
-                                    Column(children: [
-                                      50.hb,
-                                      Expanded(
-                                        child: ListView.separated(
-                                            itemBuilder: (context, index) {
-                                              return _getItem(
-                                                  index, moddels[index]);
-                                            },
-                                            separatorBuilder:
-                                                (BuildContext context,
-                                                    int index) {
-                                              return Container(
-                                                  //   color: const Color(0xFFF6F6F6),
-                                                  //   height: 16.w,
-                                                  ); //背景色高度
-                                            },
-                                            itemCount: moddels.length),
-                                      ),
-                                    ]),
+                                    // Column(children: [
+                                    //   50.hb,
+                                    //   Expanded(
+                                    //     child: ListView.separated(
+                                    //         itemBuilder: (context, index) {
+                                    //           return _getItem(
+                                    //               index, moddels[index]);
+                                    //         },
+                                    //         separatorBuilder:
+                                    //             (BuildContext context,
+                                    //                 int index) {
+                                    //           return Container(
+                                    //               //   color: const Color(0xFFF6F6F6),
+                                    //               //   height: 16.w,
+                                    //               ); //背景色高度
+                                    //         },
+                                    //         itemCount: moddels.length),
+                                    //   ),
+                                    // ]),
                                   ]));
                             });
                           });

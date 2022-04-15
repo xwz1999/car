@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/providers/user_provider.dart';
+import 'package:cloud_car/ui/login/login_page.dart';
 import 'package:cloud_car/ui/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,7 +44,6 @@ class MyApp extends StatelessWidget {
       },
       child: ScreenUtilInit(
         designSize: const Size(750, 1334),
-<<<<<<< HEAD
         builder: (context) => GetMaterialApp(
           onGenerateTitle: (context) => '云云问车',
           debugShowCheckedModeBanner: false,
@@ -107,66 +107,67 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    var builder;
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-=======
-        builder: (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => UserProvider()),
->>>>>>> 61e995e0be186a5a0eaa843d20101d977f4234fe
-          ],
-          child: GetMaterialApp(
-            onGenerateTitle: (context) => '云云问车',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.theme,
-            home: const SplashPage(),
-            supportedLocales: const [Locale('zh')],
-            locale: const Locale('zh'),
-            localizationsDelegates: GlobalMaterialLocalizations.delegates,
-            //builder: BotToastInit(),
-            builder: (context, child) {
-              ScreenUtil.setContext(context);
-              return MediaQuery(
-                //设置文字大小不随系统设置改变
-                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                child: BotToastInit().call(context, child),
-              );
-            },
-            navigatorObservers: [BotToastNavigatorObserver()],
-          ),
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
         ),
-      ),
-    );
+        body: Center(
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: Column(
+              // Column is also a layout widget. It takes a list of children and
+              // arranges them vertically. By default, it sizes itself to fit its
+              // children horizontally, and tries to be as tall as its parent.
+              //
+              // Invoke "debug painting" (press "p" in the console, choose the
+              // "Toggle Debug Paint" action from the Flutter Inspector in Android
+              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+              // to see the wireframe for each widget.
+              //
+              // Column has various properties to control how it sizes itself and
+              // how it positions its children. Here we use mainAxisAlignment to
+              // center the children vertically; the main axis here is the vertical
+              // axis because Columns are vertical (the cross axis would be
+              // horizontal).
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  'You have pushed the button this many times:',
+                ),
+                Text(
+                  '$_counter',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                builder[() => MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(create: (_) => UserProvider()),
+                      ],
+                      child: GetMaterialApp(
+                        onGenerateTitle: (context) => '云云问车',
+                        debugShowCheckedModeBanner: false,
+                        theme: AppTheme.theme,
+                        home: const SplashPage(),
+                        supportedLocales: const [Locale('zh')],
+                        locale: const Locale('zh'),
+                        localizationsDelegates:
+                            GlobalMaterialLocalizations.delegates,
+                        //builder: BotToastInit(),
+                        builder: (context, child) {
+                          ScreenUtil.setContext(context);
+                          return MediaQuery(
+                            //设置文字大小不随系统设置改变
+                            data: MediaQuery.of(context)
+                                .copyWith(textScaleFactor: 1.0),
+                            child: BotToastInit().call(context, child),
+                          );
+                        },
+                        navigatorObservers: [BotToastNavigatorObserver()],
+                      ),
+                    )],
+              ]),
+        ));
   }
 }

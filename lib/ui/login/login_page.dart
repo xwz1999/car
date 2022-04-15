@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:cloud_car/ui/login/wx_login_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -73,46 +75,53 @@ class _LoginPageState extends State<LoginPage> {
             ),
             56.hb,
             Container(
-              decoration:  BoxDecoration(
-                borderRadius:BorderRadius.circular(8.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.w),
                 gradient: const LinearGradient(
                     colors: [Color(0xFF0593FF), kPrimaryColor],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight),
               ),
               child: MaterialButton(
-                onPressed: () {
-                  if (kDebugMode) {
-                    print('本机号码一键登录');
-                  }
-                  Get.to(()=>const TabNavigator());
+                  onPressed: () {
+                    if (kDebugMode) {
+                      print('本机号码一键登录');
+                    }
+                    Get.to(() => const TabNavigator());
+                  },
+                  elevation: 0,
+                  height: 72.w,
+                  minWidth: 590.w,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.w)),
+                  child: Text(
+                    '本机号码一键登录',
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize28,
+                        color: kForeGroundColor),
+                  )),
+            ),
+            40.hb,
+            MaterialButton(
+                onPressed: () async {
+                  await sendWeChatAuth(
+                      scope: "snsapi_userinfo", state: 'wechat_sdk_demo_test');
+                  var base = await apiClient.request(API.login.weixin);
+                  Get.to(() => const WxLoginPage());
                 },
                 elevation: 0,
                 height: 72.w,
                 minWidth: 590.w,
+                color: kForeGroundColor,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.w)),
-                child: Text('本机号码一键登录',style: TextStyle(fontSize:BaseStyle.fontSize28,color: kForeGroundColor ),)
-              ),
-            ),
-            40.hb,
-            MaterialButton(
-              onPressed: () async{
-                await sendWeChatAuth(scope: "snsapi_userinfo",state: 'wechat_sdk_demo_test');
-             var base =  await apiClient.request(API.login.weixin);
-                Get.to(()=>const WxLoginPage());
-              },
-              elevation: 0,
-              height: 72.w,
-              minWidth: 590.w,
-              color: kForeGroundColor,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(width: 2.w, color: kPrimaryColor),
-                borderRadius: BorderRadius.circular(8.w),
-              ),
-              child: Text('微信授权登录',style: TextStyle(fontSize:BaseStyle.fontSize28,color: kPrimaryColor ),
-              )
-            ),
+                  side: BorderSide(width: 2.w, color: kPrimaryColor),
+                  borderRadius: BorderRadius.circular(8.w),
+                ),
+                child: Text(
+                  '微信授权登录',
+                  style: TextStyle(
+                      fontSize: BaseStyle.fontSize28, color: kPrimaryColor),
+                )),
             42.hb,
             GestureDetector(
               onTap: () {
