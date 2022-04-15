@@ -3,7 +3,6 @@
 import 'package:cloud_car/ui/login/wx_login_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/text_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart';
 
-import '../../constants/api/api.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -114,6 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                 minWidth: 590.w,
                 color: kForeGroundColor,
                 shape: RoundedRectangleBorder(
+<<<<<<< HEAD
                   side: BorderSide(width: 2.w, color: kPrimaryColor),
                   borderRadius: BorderRadius.circular(8.w),
                 ),
@@ -122,6 +121,30 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(
                       fontSize: BaseStyle.fontSize28, color: kPrimaryColor),
                 )),
+=======
+                    borderRadius: BorderRadius.circular(8.w)),
+                child: Text('本机号码一键登录',style: TextStyle(fontSize:BaseStyle.fontSize28,color: kForeGroundColor ),)
+              ),
+            ),
+            40.hb,
+            MaterialButton(
+              onPressed: () async{
+                await sendWeChatAuth(scope: "snsapi_userinfo",state: 'wechat_sdk_demo_test');
+             // var base =  await apiClient.request(API.login.weixin);
+                Get.to(()=>const WxLoginPage());
+              },
+              elevation: 0,
+              height: 72.w,
+              minWidth: 590.w,
+              color: kForeGroundColor,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(width: 2.w, color: kPrimaryColor),
+                borderRadius: BorderRadius.circular(8.w),
+              ),
+              child: Text('微信授权登录',style: TextStyle(fontSize:BaseStyle.fontSize28,color: kPrimaryColor ),
+              )
+            ),
+>>>>>>> 907d9bf00796be4276f431c7b6e616d70960d6a0
             42.hb,
             GestureDetector(
               onTap: () {

@@ -1,9 +1,9 @@
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
@@ -231,62 +231,8 @@ class _CarsDetailPageState extends State<CarsDetailPage>
             ),
           ),
         ),
-        bottomNavi: Container(
-          color: Colors.white,
-          height: 120.w,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                  child: _getBottom(Assets.icons.icPhone.path, '电话', () {
-                Alert.show(
-                    context,
-                    NormalContentDialog(
-                      type: NormalTextDialogType.delete,
-                      content: RichText(
-                        text: TextSpan(
-                            text: '是否拨打电话',
-                            style: TextStyle(
-                                color: BaseStyle.color333333,
-                                fontSize: BaseStyle.fontSize28),
-                            children: [
-                              TextSpan(
-                                text: '[1289038123093]',
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: BaseStyle.fontSize28),
-                              ),
-                              TextSpan(
-                                text: '?',
-                                style: TextStyle(
-                                    color: BaseStyle.color333333,
-                                    fontSize: BaseStyle.fontSize28),
-                              ),
-                            ]),
-                      ),
-                      items: const ['取消'],
-                      listener: (index) {
-                        Alert.dismiss(context);
-                      },
-                      deleteListener: () {
-                        Alert.dismiss(context);
-                      },
-                      title: '呼出提示',
-                      deleteItem: '确定',
-                    ));
-              })),
-              Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
-              Expanded(
-                  child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
-                Get.to(() => const InviteDetailPage());
-              })),
-              Expanded(
-                  child: _getBottom(Assets.icons.icContract.path, '发起合同', () {
-                Get.to(() => const InitiateContractPage());
-              })),
-            ],
-          ),
-        )
+        bottomNavi:
+        _bottom(),
     );
   }
 
@@ -712,93 +658,32 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     // ]),
   }
 
-
-
-  //底部
-
-  _bottonBar() {
-    return Container(
-      width: 750.w,
-      height: 98.w,
-      margin: EdgeInsets.symmetric(horizontal: 32.w),
+  _bottom(){
+    return         Container(
+      color: Colors.white,
+      height: 120.w,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 150.w,
-            height: 98.w,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 56.w,
-                  height: 56.w,
-                  child: Image.asset(Assets.icons.noEditor.path),
-                ),
-                4.hb,
-                Text(
-                  '重新编辑',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 150.w,
-            height: 98.w,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 56.w,
-                  height: 56.w,
-                  child: Image.asset(Assets.icons.noTransmission.path),
-                ),
-                Text(
-                  '调价',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 170.w,
-            height: 98.w,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 56.w,
-                  height: 56.w,
-                  child: Image.asset(Assets.icons.upload.path),
-                ),
-                Text(
-                  '出售',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 150.w,
-            height: 98.w,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 56.w,
-                  height: 56.w,
-                  child: Image.asset(Assets.icons.noDownload.path),
-                ),
-                Text(
-                  '下架/退库',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
+          Expanded(
+              child: _getBottom(Assets.icons.noEditor.path, '编辑', () {
+                Get.to(()=>const EditCarPage());
+              })),
+          Expanded(child: _getBottom(Assets.icons.noTransmission.path, '调价', () {})),
+          Expanded(
+              child: _getBottom(Assets.icons.upload.path, '出售', () {
+                Get.to(() => const InviteDetailPage());
+              })),
+          Expanded(
+              child: _getBottom(Assets.icons.noDownload.path, '下架/退库', () {
+                Get.to(() => const InitiateContractPage());
+              })),
         ],
       ),
     );
   }
 
-//部分
-//未发布
+
   _noRelease(String text) {
     return Container(
       decoration: BoxDecoration(

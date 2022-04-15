@@ -5,7 +5,6 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../widget/alert.dart';
 

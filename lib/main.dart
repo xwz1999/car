@@ -1,14 +1,20 @@
 import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
+<<<<<<< HEAD
 import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/login/login_page.dart';
 import 'package:cloud_car/ui/splash/splash.dart';
+=======
+
+import 'package:cloud_car/ui/login/login_page.dart';
+
+>>>>>>> 907d9bf00796be4276f431c7b6e616d70960d6a0
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:provider/provider.dart';
+
 
 import 'constants/app_theme.dart';
 
@@ -66,6 +72,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+<<<<<<< HEAD
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -171,3 +178,5 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 }
+=======
+>>>>>>> 907d9bf00796be4276f431c7b6e616d70960d6a0

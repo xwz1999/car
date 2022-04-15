@@ -1,7 +1,10 @@
 
 import 'package:cloud_car/ui/home/car_manager/direct_sale/choose_customer_page.dart';
+import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +69,64 @@ class _CallOrderPageState extends State<CallOrderPage> {
         child:
         GestureDetector(
           onTap: (){
-            Get.back();
+            Get.to(() => SuccessFailure(
+                conditions: true,
+                headline: '叫车订单',
+                body: Text(
+                  '发起成功，点击下方联系车务',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                bottom: CloudBottom(
+                  ontap: () {
+                    Alert.show(
+                        context,
+                        NormalContentDialog(
+                          type: NormalTextDialogType.delete,
+                          title: '',
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              30.hb,
+                              SizedBox(
+                                width: 238.w,
+                                height: 174.w,
+                                child: Image.asset(
+                                  Assets.images.immediately.path,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              48.hb,
+                              Text(
+                                '183-****-1289',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    ?.copyWith(
+                                    fontSize: BaseStyle.fontSize40),
+                              ),
+                              16.hb,
+                              Text(
+                                '使用虚拟号联系绑定销售',
+                                style: Theme.of(context).textTheme.subtitle2,
+                              ),
+                              30.hb,
+                            ],
+                          ),
+                          items: const ['取消'],
+                          deleteItem: '立即联系',
+                          //监听器
+                          listener: (index) {
+                            Alert.dismiss(context);
+
+                          },
+                          deleteListener: () {
+                            Alert.dismiss(context);
+
+                          },
+                        ));
+                  },
+                  text: '立即联系',
+                )));
 
           },
           child:Container(
@@ -398,22 +458,22 @@ class _CallOrderPageState extends State<CallOrderPage> {
       ),
     );
   }
-
-  _textview(String text) {
-    return Container(
-      decoration: BoxDecoration(
-          color: const Color.fromRGBO(79, 90, 116, 0.08),
-          borderRadius: BorderRadius.all(
-            Radius.circular(4.w),
-          )),
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
-      child: Text(text,
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1
-              ?.copyWith(color: const Color(0xFF4F5A74))),
-    );
-  }
+  //
+  // _textview(String text) {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //         color: const Color.fromRGBO(79, 90, 116, 0.08),
+  //         borderRadius: BorderRadius.all(
+  //           Radius.circular(4.w),
+  //         )),
+  //     padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
+  //     child: Text(text,
+  //         style: Theme.of(context)
+  //             .textTheme
+  //             .bodyText1
+  //             ?.copyWith(color: const Color(0xFF4F5A74))),
+  //   );
+  // }
 }
 
 
