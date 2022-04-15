@@ -458,22 +458,22 @@ class _CallOrderPageState extends State<CallOrderPage> {
       ),
     );
   }
-
-  _textview(String text) {
-    return Container(
-      decoration: BoxDecoration(
-          color: const Color.fromRGBO(79, 90, 116, 0.08),
-          borderRadius: BorderRadius.all(
-            Radius.circular(4.w),
-          )),
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
-      child: Text(text,
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1
-              ?.copyWith(color: const Color(0xFF4F5A74))),
-    );
-  }
+  //
+  // _textview(String text) {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //         color: const Color.fromRGBO(79, 90, 116, 0.08),
+  //         borderRadius: BorderRadius.all(
+  //           Radius.circular(4.w),
+  //         )),
+  //     padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.w),
+  //     child: Text(text,
+  //         style: Theme.of(context)
+  //             .textTheme
+  //             .bodyText1
+  //             ?.copyWith(color: const Color(0xFF4F5A74))),
+  //   );
+  // }
 }
 
 

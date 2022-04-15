@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 // import 'package:http_parser/http_parser.dart';
 
 class ImageSelector extends StatefulWidget {
-  ImageSelector({
+  const ImageSelector({
     Key? key,
   }) : super(key: key);
 
@@ -23,10 +23,10 @@ class ImageState extends State<ImageSelector> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('1')),
+      appBar: AppBar(title: const Text('1')),
       body: Column(
         children: [
-          ElevatedButton(onPressed: openGallery, child: Text('图库')),
+          ElevatedButton(onPressed: openGallery, child: const Text('图库')),
           //ElevatedButton(onPressed: takePhotos, child: Text('拍照')),
           // ignore: unnecessary_null_comparison
           // if (imagePath == 'path')
@@ -44,7 +44,7 @@ class ImageState extends State<ImageSelector> {
   }
 
   void openGallery() async {
-    // ignore: deprecated_member_use
+
     PickedFile? pickedFile =
         await _picker.getImage(source: ImageSource.gallery);
     final File file = File(pickedFile!.path);

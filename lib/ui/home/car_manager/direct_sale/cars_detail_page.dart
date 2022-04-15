@@ -4,7 +4,6 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
@@ -684,91 +683,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     );
   }
 
-  //底部
 
-  _bottonBar() {
-    return Container(
-      width: 750.w,
-      height: 98.w,
-      margin: EdgeInsets.symmetric(horizontal: 32.w),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 150.w,
-            height: 98.w,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 56.w,
-                  height: 56.w,
-                  child: Image.asset(Assets.icons.noEditor.path),
-                ),
-                4.hb,
-                Text(
-                  '重新编辑',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 150.w,
-            height: 98.w,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 56.w,
-                  height: 56.w,
-                  child: Image.asset(Assets.icons.noTransmission.path),
-                ),
-                Text(
-                  '调价',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 170.w,
-            height: 98.w,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 56.w,
-                  height: 56.w,
-                  child: Image.asset(Assets.icons.upload.path),
-                ),
-                Text(
-                  '出售',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 150.w,
-            height: 98.w,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 56.w,
-                  height: 56.w,
-                  child: Image.asset(Assets.icons.noDownload.path),
-                ),
-                Text(
-                  '下架/退库',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-//部分
-//未发布
   _noRelease(String text) {
     return Container(
       decoration: BoxDecoration(

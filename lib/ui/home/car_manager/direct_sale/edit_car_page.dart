@@ -116,14 +116,14 @@ class _EditCarPageState extends State<EditCarPage>  with SingleTickerProviderSta
         extendBody: true,
         body:TabBarView(
           controller: _tabController,
-          children: [
-            const CarDetailItem(),
-            const CarImageItem(),
-            const CarDetailItem(),
-            const CarDetailItem(),
-            const CarDetailItem(),
-            const CarDetailItem(),
-            const CarDetailItem(),
+          children: const [
+            CarDetailItem(),
+            CarImageItem(),
+            CarDetailItem(),
+            CarDetailItem(),
+            CarDetailItem(),
+            CarDetailItem(),
+            CarDetailItem(),
           ],
         ),
 

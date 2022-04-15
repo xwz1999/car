@@ -106,7 +106,7 @@ class _UserPageState extends State<UserPage> {
           const Spacer(),
           ElevatedButton(
               onPressed: () {
-                Get.to(() => ImageSelector());
+                Get.to(() => const ImageSelector());
               },
               child: const Text('data')),
           Text("云云问车 1.0",
