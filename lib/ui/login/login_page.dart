@@ -10,7 +10,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -101,33 +100,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
             40.hb,
             MaterialButton(
-                onPressed: () async {
-                  await sendWeChatAuth(
-                      scope: "snsapi_userinfo", state: 'wechat_sdk_demo_test');
-                  var base = await apiClient.request(API.login.weixin);
-                  Get.to(() => const WxLoginPage());
-                },
-                elevation: 0,
-                height: 72.w,
-                minWidth: 590.w,
-                color: kForeGroundColor,
-                shape: RoundedRectangleBorder(
-<<<<<<< HEAD
-                  side: BorderSide(width: 2.w, color: kPrimaryColor),
-                  borderRadius: BorderRadius.circular(8.w),
-                ),
-                child: Text(
-                  '微信授权登录',
-                  style: TextStyle(
-                      fontSize: BaseStyle.fontSize28, color: kPrimaryColor),
-                )),
-=======
-                    borderRadius: BorderRadius.circular(8.w)),
-                child: Text('本机号码一键登录',style: TextStyle(fontSize:BaseStyle.fontSize28,color: kForeGroundColor ),)
-              ),
-            ),
-            40.hb,
-            MaterialButton(
               onPressed: () async{
                 await sendWeChatAuth(scope: "snsapi_userinfo",state: 'wechat_sdk_demo_test');
              // var base =  await apiClient.request(API.login.weixin);
@@ -144,7 +116,6 @@ class _LoginPageState extends State<LoginPage> {
               child: Text('微信授权登录',style: TextStyle(fontSize:BaseStyle.fontSize28,color: kPrimaryColor ),
               )
             ),
->>>>>>> 907d9bf00796be4276f431c7b6e616d70960d6a0
             42.hb,
             GestureDetector(
               onTap: () {
