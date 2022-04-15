@@ -75,7 +75,9 @@ class _ContractPayPageState extends State<ContractPayPage> {
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         bottom: CloudBottom(
-                          ontap: () {},
+                          ontap: () {
+
+                          },
                           text: '返回支付',
                         )));
                   },
