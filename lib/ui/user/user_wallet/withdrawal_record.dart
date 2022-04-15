@@ -1,5 +1,4 @@
-// ignore_for_file: file_names
-
+import 'package:cloud_car/ui/user/user_wallet/withdrawal.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
   // ignore: non_constant_identifier_names
   late final Rect position;
   late final double menuHeight;
+  int num = 1;
 
   @override
   @override
@@ -24,6 +24,10 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
     super.dispose();
   }
 
+  List timeList = [
+    {'time': '12月2日 12:00:09', 'pice': '¥15,000.00', 'bankname': '工商银行'},
+    {'time': '12月20日 14:00:09', 'pice': '¥15,000.00', 'bankname': '工商银行'}
+  ];
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
@@ -38,122 +42,124 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
-        body: Container(
-          //padding: EdgeInsets.symmetric(horizontal: 32.w),
-          color: const Color.fromRGBO(246, 246, 246, 1),
-          child: Column(
-            children: [
-              //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-              _downList()
-            ],
-          ),
-        ));
+        body:
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Get.to(() => Withdrawal(
+            //         pice: timeList[0]['pice'],
+            //         bankName: '银行',
+            //         time: timeList[0]['time']));
+            //   },
+            //   child: Text('data'),
+            // )
+            GestureDetector(
+                onTap: (() {
+                  num++;
+                  setState(() {});
+                }),
+                child: Column(
+                  children: [
+                    Container(
+                      color: kForeGroundColor,
+                      width: 750.w,
+                      height: 96.w,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 32.w, vertical: 22.w),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '2022年12月',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                ?.copyWith(fontSize: 32.w),
+                          ),
+                          16.wb,
+                          SizedBox(
+                              width: 32.w,
+                              height: 32.w,
+                              child: Icon(
+                                num % 2 == 0
+                                    ? Icons.keyboard_arrow_down
+                                    : Icons.keyboard_arrow_right,
+                                color: num % 2 == 0
+                                    ? Colors.blue
+                                    : BaseStyle.color999999,
+                              ))
+                        ],
+                      ),
+                    ),
+                    getList()
+                  ],
+                )));
+  }
+
+  getList() {
+    return Offstage(
+      offstage: num % 2 != 0,
+      child: SizedBox(
+          height: 700.w,
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                  onTap: () {
+                    Get.to(() => Withdrawal(
+                        pice: timeList[index]['pice'],
+                        bankName: timeList[index]['bankname'],
+                        time: timeList[index]['time']));
+                  },
+                  child: Container(
+                    width: 750.w,
+                    height: 140.w,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+                    color: kForeGroundColor,
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '提现到银行卡',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            Text(
+                              timeList[index]['time'],
+                              style: TextStyle(
+                                  color: BaseStyle.color999999,
+                                  fontSize: BaseStyle.fontSize24),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Row(
+                          children: [
+                            Text(
+                              timeList[index]['pice'],
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                            SizedBox(
+                                width: 40.w,
+                                height: 40.w,
+                                child: const Icon(
+                                  Icons.keyboard_arrow_right,
+                                ))
+                          ],
+                        )
+                      ],
+                    ),
+                  ));
+            },
+            itemCount: timeList.length,
+          )),
+    );
   }
 
 //自定义下拉列表
-  _downList() {
-    return Container(
-      color: Colors.red,
-      // decoration: BoxDecoration(
-      //     color: Colors.white,
-      //     border: const Border(
-      //       bottom: BorderSide(color: Colors.black),
-      //       top: BorderSide(color: Colors.white),
-      //       left: BorderSide(color: Colors.white),
-      //       right: BorderSide(color: Colors.white),
-      //     ), //单边框
-      //     borderRadius: BorderRadius.only(
-      //         bottomLeft: Radius.circular(16.w),
-      //         bottomRight: Radius.circular(16.w))),
-      child: GestureDetector(
-        onTap: (() {
-          // RenderBox renderBox = _globalKey.currentContext.findRenderObject();
-          // Rect box = renderBox.localToGlobal(Offset.zero) & renderBox.size;
-          // (box);
-          // Navigator.push(
-          //     context, _DropDownMenuRoute(position: box, menuHeight: 300));
-        }),
-        child: Row(
-          children: [
-            const Text('data'),
-            16.wb,
-            SizedBox(
-              width: 32.w,
-              height: 32.w,
-              child: const Icon(
-                Icons.keyboard_arrow_down,
-                color: Color.fromRGBO(102, 102, 102, 1),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
 
   @override
   bool get wantKeepAlive => true;
 }
-
-// class _globalKey {
-//   static var currentContext;
-// }
-
-//___________________________________________________________
-// class _DropDownMenuRouteLayout extends SingleChildLayoutDelegate {
-//   final Rect position;
-//   final double menuHeight;
-//
-//   _DropDownMenuRouteLayout({required this.position, required this.menuHeight});
-//
-//   @override
-//   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
-//     return BoxConstraints.loose(Size(position.right - position.left, 300));
-//   }
-//
-//   @override
-//   Offset getPositionForChild(Size size, Size childSize) {
-//     return Offset(0, position.bottom);
-//   }
-//
-//   @override
-//   bool shouldRelayout(SingleChildLayoutDelegate oldDelegate) {
-//     return true;
-//   }
-// }
-
-// class _DropDownMenuRoute extends PopupRoute {
-//   final Rect position;
-//   final double menuHeight;
-//
-//   _DropDownMenuRoute({required this.position, required this.menuHeight});
-//
-//   @override
-//   Color? get barrierColor => null;
-//
-//   @override
-//   bool get barrierDismissible => true;
-//
-//   @override
-//   String? get barrierLabel => null;
-//
-//   @override
-//   Widget buildPage(BuildContext context, Animation<double> animation,
-//       Animation<double> secondaryAnimation) {
-//     return CustomSingleChildLayout(
-//       delegate:
-//           _DropDownMenuRouteLayout(position: position, menuHeight: menuHeight),
-//       child: SizeTransition(
-//         sizeFactor: Tween<double>(begin: 0.0, end: 1.0).animate(animation),
-//         child: Container(
-//           color: const Color(0xffff0000),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   @override
-//   Duration get transitionDuration => const Duration(milliseconds: 300);
-// }
 
 void column() {}

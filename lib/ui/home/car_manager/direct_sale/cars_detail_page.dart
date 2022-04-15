@@ -23,8 +23,10 @@ class CarsDetailPage extends StatefulWidget {
 class _CarsDetailPageState extends State<CarsDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
   ///滚动监听设置
   late ScrollController _scrollController;
+
   ///头部背景布局 true滚动一定的高度 false 滚动高度为0
   bool headerWhite = false;
   List tabs = [];
@@ -32,25 +34,21 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   @override
   void initState() {
     ///自己发布的 tab2个 否则1个
-    tabs = ['车辆详情','车辆轨迹'];
-    _tabController = TabController(initialIndex: 0, length: tabs.length, vsync: this);
+    tabs = ['车辆详情', '车辆轨迹'];
+    _tabController =
+        TabController(initialIndex: 0, length: tabs.length, vsync: this);
 
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(() {
       ///监听滚动位置设置导航栏颜色
-      if(_scrollController.offset > 900.w&&headerWhite!=true){
-        headerWhite =  true ;
-        setState(() {
-
-        });
-      }else if(_scrollController.offset < 900.w&&headerWhite!=false){
-        headerWhite =  false ;
-        setState(() {
-
-        });
+      if (_scrollController.offset > 900.w && headerWhite != true) {
+        headerWhite = true;
+        setState(() {});
+      } else if (_scrollController.offset < 900.w && headerWhite != false) {
+        headerWhite = false;
+        setState(() {});
       }
-
     });
   }
 
@@ -63,176 +61,168 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   @override
   Widget build(BuildContext context) {
     return CloudScaffold(
-        path: Assets.images.noticeBg.path,
-        extendBody: true,
-        body: Expanded(
-          child:
-          NestedScrollView(
-            controller: _scrollController,
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-              return [
-               SliverAppBar(
-                pinned: true,
-                stretch: true,
-                expandedHeight: 1150.w,
-                elevation: 0,
-                backgroundColor:headerWhite?Colors.white:  Colors.transparent ,
-                systemOverlayStyle: SystemUiOverlayStyle.light,
-                snap: false,
-                centerTitle: false,
-                title: headerWhite ? const Text('奥迪A3 2020款', style: TextStyle(
-                    color: Color(0xFF333333),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 17,
-
-                ),) : const Text(''),
-                leading: const CloudBackButton(),
-                     actions: [
-                       GestureDetector(
-                         onTap: () {
-                            Get.to(()=>const CallOrderPage());
-                         },
-                         child: Image.asset(Assets.icons.carDetail.path,
-                             height: 48.w, width: 48.w),
-                       ),
-                       24.wb,
-                       ///收藏按钮 自己发布的车辆没有该按钮
-                       GestureDetector(
-                         onTap: () {
-
-                         },
-                         child: Image.asset(Assets.icons.collection.path,
-                             height: 48.w, width: 48.w),
-                       ),
-                       24.wb,
-                       GestureDetector(
-                         onTap: () {
-
-                         },
-                         child: Image.asset(Assets.icons.icShare.path,
-                             color: Colors.black, height: 40.w, width: 40.w),
-                       ),
-                       16.wb,
-
-                     ],
-                flexibleSpace: FlexibleSpaceBar(
-                  //centerTitle: true,
-                  background: Container(
-                    alignment: Alignment.center,
-                    width: double.infinity,
-                    color: Colors.transparent,
-                    //
-                    //height: double.infinity,
-
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        135.hb,
-                        Container(
-                          decoration:
-                           BoxDecoration(color: headerWhite?Colors.white:  Colors.transparent ,),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 32.w, vertical: 24.w),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _title(),
-                              32.hb,
-                              _label(),
-                              18.hb,
-                              _information(),
-                              30.hb,
-                              _shuffling(),
-                              32.hb,
-                              _informations(),
-
-                            ],
+      path: Assets.images.noticeBg.path,
+      extendBody: true,
+      body: Expanded(
+        child: NestedScrollView(
+          controller: _scrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                  pinned: true,
+                  stretch: true,
+                  expandedHeight: 1150.w,
+                  elevation: 0,
+                  backgroundColor:
+                      headerWhite ? Colors.white : Colors.transparent,
+                  systemOverlayStyle: SystemUiOverlayStyle.light,
+                  snap: false,
+                  centerTitle: false,
+                  title: headerWhite
+                      ? const Text(
+                          '奥迪A3 2020款',
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 17,
                           ),
-                        ),
-                        50.hb,
-                      ],
+                        )
+                      : const Text(''),
+                  leading: const CloudBackButton(),
+                  actions: [
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => const CallOrderPage());
+                      },
+                      child: Image.asset(Assets.icons.carDetail.path,
+                          height: 48.w, width: 48.w),
+                    ),
+                    24.wb,
+
+                    ///收藏按钮 自己发布的车辆没有该按钮
+                    GestureDetector(
+                      onTap: () {},
+                      child: Image.asset(Assets.icons.collection.path,
+                          height: 48.w, width: 48.w),
+                    ),
+                    24.wb,
+                    GestureDetector(
+                      onTap: () {},
+                      child: Image.asset(Assets.icons.icShare.path,
+                          color: Colors.black, height: 40.w, width: 40.w),
+                    ),
+                    16.wb,
+                  ],
+                  flexibleSpace: FlexibleSpaceBar(
+                    //centerTitle: true,
+                    background: Container(
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      color: Colors.transparent,
+                      //
+                      //height: double.infinity,
+
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          135.hb,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: headerWhite
+                                  ? Colors.white
+                                  : Colors.transparent,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 32.w, vertical: 24.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _title(),
+                                32.hb,
+                                _label(),
+                                18.hb,
+                                _information(),
+                                30.hb,
+                                _shuffling(),
+                                32.hb,
+                                _informations(),
+                              ],
+                            ),
+                          ),
+                          50.hb,
+                        ],
+                      ),
                     ),
                   ),
-
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(kToolbarHeight - 10.w),
+                    child: Container(
+                      height: kToolbarHeight - 10.w,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: TabBar(
+                          onTap: (index) {
+                            setState(() {});
+                          },
+                          isScrollable: true,
+                          labelPadding: EdgeInsets.symmetric(
+                              vertical: 10.w, horizontal: 40.w),
+                          controller: _tabController,
+                          indicatorWeight: 3,
+                          labelColor: kPrimaryColor,
+                          unselectedLabelColor: BaseStyle.color333333,
+                          indicatorPadding: EdgeInsets.symmetric(
+                              horizontal: 30.w, vertical: 0.w),
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          labelStyle: TextStyle(
+                            color: Colors.white.withOpacity(0.85),
+                          ),
+                          indicator: const BoxDecoration(),
+                          indicatorColor: kPrimaryColor,
+                          tabs: [
+                            _tab(0, tabs[0]),
+                            _tab(1, tabs[1]),
+                          ]),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: BaseStyle.colordddddd, width: 2.w))),
+                    ),
+                  )),
+            ];
+          },
+          body: Padding(
+            padding: EdgeInsets.only(bottom: 120.w),
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                const CarDetailItem(),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        index == 0
+                            ? Container(
+                                width: double.infinity,
+                                height: 40.w,
+                                color: Colors.white,
+                              )
+                            : const SizedBox(),
+                        _getListItem(index, index < 2),
+                      ],
+                    );
+                  },
+                  itemCount: 5,
                 ),
-                     bottom: PreferredSize(
-                       preferredSize: Size.fromHeight(kToolbarHeight - 10.w),
-                       child: Container(
-                         height: kToolbarHeight - 10.w,
-                         width: double.infinity,
-                          alignment: Alignment.center,
-                         child: TabBar(
-                             onTap: (index) {
-                               setState(() {});
-                             },
-                             isScrollable: true,
-                             labelPadding: EdgeInsets.symmetric(
-                                 vertical: 10.w, horizontal: 40.w),
-                             controller: _tabController,
-                             indicatorWeight: 3,
-                             labelColor: kPrimaryColor,
-                             unselectedLabelColor: BaseStyle.color333333,
-                             indicatorPadding: EdgeInsets.symmetric(
-                                 horizontal: 30.w, vertical: 0.w),
-                             indicatorSize: TabBarIndicatorSize.tab,
-                             labelStyle: TextStyle(
-                               color: Colors.white.withOpacity(0.85),
-                             ),
-                             indicator: const BoxDecoration(),
-                             indicatorColor: kPrimaryColor,
-                             tabs: [
-                               _tab(0, tabs[0]),
-                               _tab(1, tabs[1]),
-
-                             ]),
-                         decoration: BoxDecoration(
-                             color: Colors.white,
-
-                             border: Border(
-                                 bottom: BorderSide(
-                                     color: BaseStyle.colordddddd, width: 2.w))),
-                       ),
-                     )
-              ),
-              ];
-            },
-            body: Padding(
-              padding: EdgeInsets.only(bottom: 120.w),
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  const CarDetailItem(),
-
-
-
-
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          index == 0
-                              ? Container(
-                                  width: double.infinity,
-                                  height: 40.w,
-                                  color: Colors.white,
-                                )
-                              : const SizedBox(),
-                          _getListItem(index, index < 2),
-                        ],
-                      );
-                    },
-                    itemCount: 5,
-                  ),
-
-                ],
-              ),
+              ],
             ),
           ),
         ),
-        bottomNavi:
-        _bottom(),
+      ),
+      bottomNavi: _bottom(),
     );
   }
 
@@ -261,7 +251,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   _tab(int index, String text) {
     return SizedBox(width: 150.w, child: Text(text));
   }
-
 
   _getListItem(int index, bool ing) {
     return Container(
@@ -431,22 +420,20 @@ class _CarsDetailPageState extends State<CarsDetailPage>
         : const SizedBox();
   }
 
-
   //标题
   _title() {
-    return
-      Row(
-        children: [
-          Flexible(
-              child: Text(
-                '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    ?.copyWith(color: const Color(0xFF111111), fontSize: 40.sp),
-              )),
-        ],
-      );
+    return Row(
+      children: [
+        Flexible(
+            child: Text(
+          '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              ?.copyWith(color: const Color(0xFF111111), fontSize: 40.sp),
+        )),
+      ],
+    );
   }
 
   //标签
@@ -510,7 +497,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   //信息栏
   _informations() {
     return SizedBox(
-
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.w),
@@ -581,7 +567,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                           '黑色',
                           style: Theme.of(context).textTheme.subtitle2,
                         ),
-
                       ],
                     ),
                     Row(
@@ -612,7 +597,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                   decoration: BoxDecoration(color: Colors.grey)),
             ),
             13.wb,
-
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 22.w),
@@ -658,8 +642,8 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     // ]),
   }
 
-  _bottom(){
-    return         Container(
+  _bottom() {
+    return Container(
       color: Colors.white,
       height: 120.w,
       child: Row(
@@ -667,22 +651,22 @@ class _CarsDetailPageState extends State<CarsDetailPage>
         children: [
           Expanded(
               child: _getBottom(Assets.icons.noEditor.path, '编辑', () {
-                Get.to(()=>const EditCarPage());
-              })),
-          Expanded(child: _getBottom(Assets.icons.noTransmission.path, '调价', () {})),
+            Get.to(() => const EditCarPage());
+          })),
+          Expanded(
+              child: _getBottom(Assets.icons.noTransmission.path, '调价', () {})),
           Expanded(
               child: _getBottom(Assets.icons.upload.path, '出售', () {
-                Get.to(() => const InviteDetailPage());
-              })),
+            Get.to(() => const InviteDetailPage());
+          })),
           Expanded(
               child: _getBottom(Assets.icons.noDownload.path, '下架/退库', () {
-                Get.to(() => const InitiateContractPage());
-              })),
+            Get.to(() => const InitiateContractPage());
+          })),
         ],
       ),
     );
   }
-
 
   _noRelease(String text) {
     return Container(
@@ -725,26 +709,29 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   _bulidPagination() {
     return SwiperPagination(
 
-      //指示器显示的位置
+        //指示器显示的位置
         alignment: Alignment.bottomCenter, //位置在底部
         //距离调整
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 10), //坐上右下
         //指示器构建
         builder: SwiperPaginationWidget(
-            color: Colors.white, activeFontSize: 20.sp, fontSize: 20.sp,activeColor: Colors.white)
-      // builder: DotSwiperPaginationBuilder(
-      //   //点之间的间距
-      //   space: 2,
-      //   //没选中时的大小
-      //   size: 6,
-      //   //选中时的大小
-      //   activeSize: 12,
-      //   //没选中时的颜色
-      //   color: Colors.black,
-      //   //选中时的颜色
-      //   activeColor: Colors.white,
-      // )
-    );
+            color: Colors.white,
+            activeFontSize: 20.sp,
+            fontSize: 20.sp,
+            activeColor: Colors.white)
+        // builder: DotSwiperPaginationBuilder(
+        //   //点之间的间距
+        //   space: 2,
+        //   //没选中时的大小
+        //   size: 6,
+        //   //选中时的大小
+        //   activeSize: 12,
+        //   //没选中时的颜色
+        //   color: Colors.black,
+        //   //选中时的颜色
+        //   activeColor: Colors.white,
+        // )
+        );
   }
 
 //图片样式
@@ -779,5 +766,4 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       loop: true,
     );
   }
-
 }
