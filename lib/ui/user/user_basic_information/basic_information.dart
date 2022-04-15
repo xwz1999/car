@@ -355,7 +355,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                         ),
                                       ),
                                     ),
-                                    224.wb,
+                                    200.wb,
                                     Text(
                                       '选择性别',
                                       style: TextStyle(
@@ -363,7 +363,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                           fontSize: 32.sp,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    210.wb,
+                                    const Spacer(),
                                     GestureDetector(
                                       child: SizedBox(
                                         child: Text(
