@@ -100,25 +100,22 @@ class _LoginPageState extends State<LoginPage> {
             ),
             40.hb,
             MaterialButton(
-                onPressed: () async {
-                  await sendWeChatAuth(
-                      scope: "snsapi_userinfo", state: 'wechat_sdk_demo_test');
-                  // var base =  await apiClient.request(API.login.weixin);
-                  Get.to(() => const WxLoginPage());
-                },
-                elevation: 0,
-                height: 72.w,
-                minWidth: 590.w,
-                color: kForeGroundColor,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 2.w, color: kPrimaryColor),
-                  borderRadius: BorderRadius.circular(8.w),
-                ),
-                child: Text(
-                  '微信授权登录',
-                  style: TextStyle(
-                      fontSize: BaseStyle.fontSize28, color: kPrimaryColor),
-                )),
+              onPressed: () async{
+                await sendWeChatAuth(scope: "snsapi_userinfo",state: 'wechat_sdk_demo_test');
+             // var base =  await apiClient.request(API.login.weixin);
+                Get.to(()=>const WxLoginPage());
+              },
+              elevation: 0,
+              height: 72.w,
+              minWidth: 590.w,
+              color: kForeGroundColor,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(width: 2.w, color: kPrimaryColor),
+                borderRadius: BorderRadius.circular(8.w),
+              ),
+              child: Text('微信授权登录',style: TextStyle(fontSize:BaseStyle.fontSize28,color: kPrimaryColor ),
+              )
+            ),
             42.hb,
             GestureDetector(
               onTap: () {
