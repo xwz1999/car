@@ -116,10 +116,64 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                                     Expanded(
                                       child: ListView.separated(
                                           itemBuilder: (context, index) {
-                                            return _getItem(
-                                              index,
-                                              moddels[index],
+                                            return Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 32.w),
+                                              color: Colors.white,
+                                              height: 108.w,
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                      child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 64.w,
+                                                        height: 64.w,
+                                                        child: Image.asset(
+                                                            Assets
+                                                                .icons
+                                                                .agricultural
+                                                                .path),
+                                                      ),
+                                                      16.wb,
+                                                      Text(
+                                                        '中国农业银行(1278)',
+                                                        style: TextStyle(
+                                                            color: BaseStyle
+                                                                .color333333,
+                                                            fontSize: 32.w),
+                                                      )
+                                                    ],
+                                                  )),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      if (_selectIndex
+                                                          .contains(index)) {
+                                                        _selectIndex
+                                                            .remove(index);
+                                                        _chooseModels.remove(
+                                                            moddels[index]);
+                                                      } else {
+                                                        _selectIndex.clear();
+                                                        _selectIndex.add(index);
+                                                        _chooseModels.add(
+                                                            moddels[index]);
+                                                      }
+                                                      dialogSetState(() {});
+                                                    },
+                                                    child: SizedBox(
+                                                        child: BeeCheckRadio(
+                                                      border: false,
+                                                      value: index,
+                                                      groupValue: _selectIndex,
+                                                    )),
+                                                  )
+
+                                                  //点击获取点击选项的下标
+                                                ],
+                                              ),
                                             );
+                                            ;
                                           },
                                           separatorBuilder:
                                               (BuildContext context,
@@ -230,59 +284,14 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
         ));
   }
 
-  _getItem(
-    int index,
-    ConfigurationModel model,
-  ) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 32.w),
-      color: Colors.white,
-      height: 108.w,
-      child: Row(
-        children: [
-          Expanded(
-              child: Row(
-            children: [
-              SizedBox(
-                width: 64.w,
-                height: 64.w,
-                child: Image.asset(Assets.icons.agricultural.path),
-              ),
-              16.wb,
-              Text(
-                '中国农业银行(1278)',
-                style: TextStyle(color: BaseStyle.color333333, fontSize: 32.w),
-              )
-            ],
-          )),
-          GestureDetector(
-            child: StatefulBuilder(
-              builder: (BuildContext context, setState) {
-                return GestureDetector(
-                  onTap: () {
-                    if (_selectIndex.contains(index)) {
-                      _selectIndex.remove(index);
-                      _chooseModels.remove(model);
-                    } else {
-                      _selectIndex.clear();
-                      _selectIndex.add(index);
-                      _chooseModels.add(model);
-                    }
-                    setState(() {});
-                  },
-                  child: SizedBox(
-                      child: BeeCheckRadio(
-                    border: false,
-                    value: index,
-                    groupValue: _selectIndex,
-                  )),
-                );
-              },
-            ),
-            //点击获取点击选项的下标
-          ),
-        ],
-      ),
-    );
-  }
+  // _getItem(
+  //   int index,
+  //   ConfigurationModel model,
+  // ) {
+  //   return StatefulBuilder(
+  //     builder: (BuildContext context, setState) {
+  //       return
+  //     },
+  //   );
+  // }
 }
