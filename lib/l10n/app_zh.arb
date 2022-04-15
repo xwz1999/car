@@ -1,0 +1,6 @@
+{
+    "appName":"云云问车",
+    "@appName":{
+        "description":"应用名称"
+    }
+}
