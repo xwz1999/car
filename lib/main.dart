@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
 
 import 'package:cloud_car/providers/user_provider.dart';
-import 'package:cloud_car/ui/login/login_page.dart';
 import 'package:cloud_car/ui/splash/splash.dart';
 
 import 'package:cloud_car/ui/login/login_page.dart';
