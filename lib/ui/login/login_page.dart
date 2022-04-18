@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
       var res = event as fluwx.WeChatAuthResponse;
       if (kDebugMode) {
         print(
-          '微信登录数据返回 code ${res.code} errcode:${res.errCode} ${res.errStr} state: ${res.state} type: ${res.type}');
+            '微信登录数据返回 code ${res.code} errcode:${res.errCode} ${res.errStr} state: ${res.state} type: ${res.type}');
       }
       switch (res.errCode) {
         case 0:
@@ -153,6 +153,12 @@ class _LoginPageState extends State<LoginPage> {
                         return;
                       }
                       var cancel = CloudToast.loading;
+                      var setup = await Jverify().isInitSuccess();
+                      if (!setup['result']) {
+                        CloudToast.show('初始化未完成');
+                        cancel();
+                        return;
+                      }
                       var re = await Jverify().checkVerifyEnable();
                       if (kDebugMode) {
                         print('检查认证网络环境数据返回： ${re.toString()}');

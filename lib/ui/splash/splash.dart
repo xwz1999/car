@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
   Future initialAll() async {
     ///第三方加载
     await HiveStore.init();
-    Jverify().setup(appKey: 'f00d39763a7796744f3effd3', channel: 'devloper-default');
+    Jverify().setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
     Jverify().setDebugMode(DevEV.instance.dev);
     registerWxApi(
         appId: 'wx9bc3ffb23a749254',
