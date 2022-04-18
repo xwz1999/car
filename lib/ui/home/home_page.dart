@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import 'car_manager/car_manager_page.dart';
+import 'car_manager/push_car_page.dart';
 import 'home_title.dart';
 
 class HomePage extends StatefulWidget {
@@ -160,6 +161,9 @@ class _HomePageState extends State<HomePage>
             break;
           case '客户管理':
             Get.to(() => const UserManagerPage());
+            break;
+          case '车辆发布':
+            Get.to(() => const PushCarPage());
             break;
         }
       },
