@@ -78,16 +78,42 @@ class _WithdrawalState extends State<Withdrawal> {
                       color: BaseStyle.color999999,
                       fontSize: BaseStyle.fontSize24),
                 ),
-                const ProgressBar(
-                  index: 2,
-                  length: 2,
-                  num: 2,
+                Row(
+                  children: [
+                    ProgressBar(
+                      //direction: 'level',
+                      length: 2,
+                      num: 2,
+                      HW: 200,
+                      texts: [
+                        getText('提交转出提醒', widget.time),
+                        getText('到账时间', widget.time)
+                      ],
+                    )
+                  ],
                 )
               ],
             ),
           )
         ],
       ),
+    );
+  }
+
+  getText(String title, String time) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              color: BaseStyle.color111111, fontSize: BaseStyle.fontSize28),
+        ),
+        Text(
+          time,
+          style: TextStyle(
+              color: BaseStyle.color999999, fontSize: BaseStyle.fontSize24),
+        )
+      ],
     );
   }
 }
