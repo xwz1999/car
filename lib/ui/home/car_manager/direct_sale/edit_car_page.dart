@@ -1,5 +1,9 @@
 
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_detail_item.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_owner_item.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_report_page.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_source_item.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -117,11 +121,14 @@ class _EditCarPageState extends State<EditCarPage>  with SingleTickerProviderSta
         body:TabBarView(
           controller: _tabController,
           children: const [
-            CarDetailItem(),
             CarImageItem(),
-            CarDetailItem(),
-            CarDetailItem(),
-            CarDetailItem(),
+            EditCarDetailItem(),
+
+            EditCarReportPage(),
+            EditCarSourceItem(),
+            EditCarOwnerItem(),
+
+
             CarDetailItem(),
             CarDetailItem(),
           ],
