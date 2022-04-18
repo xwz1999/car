@@ -297,7 +297,7 @@ class _UserPageState extends State<UserPage> {
 
 //头像信息
   _shareUser() {
-    //var re = apiClient.request(API.user.wallet.wallet, data: {});
+    //var re = apiClient.request(API.user.wallet.assessCount, data: {});
     return Container(
         padding: EdgeInsets.all(32.w),
         decoration: BoxDecoration(
