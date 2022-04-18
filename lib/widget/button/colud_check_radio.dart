@@ -7,10 +7,15 @@ class BeeCheckRadio<T> extends StatefulWidget {
   final List<T>? groupValue;
   final Widget? indent;
   final Color? backColor;
-
-  const BeeCheckRadio(
-      {Key? key, this.value, this.groupValue, this.indent, this.backColor})
-      : super(key: key);
+  final bool? border;
+  const BeeCheckRadio({
+    Key? key,
+    this.value,
+    this.groupValue,
+    this.indent,
+    this.backColor,
+    this.border = true,
+  }) : super(key: key);
 
   @override
   _BeeCheckRadioState createState() => _BeeCheckRadioState();
@@ -30,16 +35,19 @@ class _BeeCheckRadioState extends State<BeeCheckRadio> {
     return AnimatedContainer(
       height: 40.w,
       width: 40.w,
-      decoration: BoxDecoration(
-        color: widget.backColor ?? kPrimaryColor.withOpacity(_selected ? 1 : 0),
-        border: Border.all(
-          color: widget.backColor != null
-              ?   kForeGroundColor
-              : (_selected ? kPrimaryColor : const Color(0xFF979797)),
-          width: 2.w,
-        ),
-        borderRadius: BorderRadius.circular(20.w),
-      ),
+      decoration: widget.border!
+          ? BoxDecoration(
+              color: widget.backColor ??
+                  kPrimaryColor.withOpacity(_selected ? 1 : 0),
+              border: Border.all(
+                color: widget.backColor != null
+                    ? kForeGroundColor
+                    : (_selected ? kPrimaryColor : const Color(0xFF979797)),
+                width: 2.w,
+              ),
+              borderRadius: BorderRadius.circular(20.w),
+            )
+          : const BoxDecoration(),
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOutCubic,
       alignment: Alignment.center,
@@ -50,7 +58,7 @@ class _BeeCheckRadioState extends State<BeeCheckRadio> {
         child: widget.indent ??
             Icon(
               CupertinoIcons.checkmark,
-              color: Colors.white,
+              color: widget.border! ? Colors.white : const Color(0xFF027AFF),
               size: 28.w,
             ),
       ),
