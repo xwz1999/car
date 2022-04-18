@@ -1,5 +1,7 @@
 import '../environment/environment.dart';
 
+part 'user_api.dart';
+
 /// * user  用户接口
 /// * data 基础数据接口
 /// * product 产品接口
@@ -25,8 +27,12 @@ class API {
 
   static String get baseURL => '$host/app/broker';
 
+  ///根分类
   static _File file = _File();
   static _Login login = _Login();
+
+  ///二级分类
+  static _UserApi user= _UserApi();
 }
 
 extension ImageOnString on String {

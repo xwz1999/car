@@ -1,11 +1,6 @@
 
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_detail_item.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
-
-import 'car_image_page.dart';
 
 class EditCarReportPage extends StatefulWidget {
   const EditCarReportPage({Key? key}) : super(key: key);
