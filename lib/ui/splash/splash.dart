@@ -27,23 +27,21 @@ class _SplashPageState extends State<SplashPage> {
   Future initialAll() async {
     ///第三方加载
     await HiveStore.init();
-    Jverify().setup(appKey: '', channel: 'devloper-default');
+    Jverify().setup(appKey: 'f00d39763a7796744f3effd3', channel: 'devloper-default');
     Jverify().setDebugMode(DevEV.instance.dev);
     registerWxApi(
         appId: 'wx39335cf7fcd19652',
         universalLink: 'https://apiwenche.oa00.com/');
-    var agreement = await HiveStore.appBox?.get('agreement') ?? false;
-    if (!agreement) {
-      var result = await _showLoginVerify();
-      if (result == null || !result) {
-        await SystemNavigator.pop();
-        await HiveStore.appBox?.put('agreement', false);
-      } else {
-        await HiveStore.appBox?.put('agreement', true);
-      }
-    }
-    // await MainInitialize.jPush();
-    // await MainInitialize.firebase();
+    // var agreement = await HiveStore.appBox?.get('agreement') ?? false;
+    // if (!agreement) {
+    //   var result = await _showLoginVerify();
+    //   if (result == null || !result) {
+    //     await SystemNavigator.pop();
+    //     await HiveStore.appBox?.put('agreement', false);
+    //   } else {
+    //     await HiveStore.appBox?.put('agreement', true);
+    //   }
+    // }
   }
 
   Future<bool?> _showLoginVerify() async {

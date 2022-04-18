@@ -15,8 +15,6 @@ import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'a.dart';
-
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
 // int assessment=0,//评估
@@ -106,7 +104,7 @@ class _UserPageState extends State<UserPage> {
           const Spacer(),
           ElevatedButton(
               onPressed: () {
-                Get.to(() => const ImageSelector());
+                //Get.to(() => const ImageSelector());
               },
               child: const Text('data')),
           Text("云云问车 1.0",

@@ -80,8 +80,10 @@ dependencies:
   power_logger: ^1.2.2
   #极光认证
   jverify: 2.1.2
-  #微信登录
+  #微信登录及支付
   fluwx: ^3.8.3
+  #支付宝支付
+  tobias: ^2.4.0+2
 
 
 dev_dependencies:
