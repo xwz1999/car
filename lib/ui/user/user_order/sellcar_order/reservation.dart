@@ -5,6 +5,7 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:cloud_car/widget/timelines_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -54,22 +55,25 @@ class _ReservationState extends State<Reservation> {
             ListView(
               children: [
                 Container(
-                    margin: EdgeInsets.only(
-                        left: 32.w, right: 32.w, top: 16.w, bottom: 8.w),
-                    height: 120.w,
-                    color: Colors.white,
-                    child: TimeLinesWidget(
-                      index: 1,
-                      items: const [
-                        '预定',
-                        '检测',
-                        '首付',
-                        '过户',
-                        '尾款',
-                        '完成',
-                      ],
-                      number: 1,
-                    )),
+                  margin: EdgeInsets.only(
+                      left: 32.w, right: 32.w, top: 16.w, bottom: 8.w),
+                  height: 120.w,
+                  color: Colors.white,
+                  child: ProgressBar(
+                    length: 6,
+                    num: 3,
+                    direction: 'qw',
+                    HW: 96,
+                    texts: [
+                      text('预定'),
+                      text('签订'),
+                      text('上架'),
+                      text('出售'),
+                      text('到账'),
+                      text('成交'),
+                    ],
+                  ),
+                ),
                 getContainer(
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1631,6 +1635,14 @@ class _ReservationState extends State<Reservation> {
           ]))
         ],
       ),
+    );
+  }
+
+  text(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+          color: BaseStyle.color111111, fontSize: BaseStyle.fontSize24),
     );
   }
 }

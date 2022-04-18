@@ -187,6 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                         CloudToast.show('当前网络不支持认证');
                       }
                       cancel();
+                      //Get.to(() => const TabNavigator());
                     },
                     elevation: 0,
                     height: 72.w,

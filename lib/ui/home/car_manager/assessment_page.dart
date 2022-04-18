@@ -29,14 +29,15 @@ class _AssessmentPageState extends State<AssessmentPage> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   List<ChooseItem> _sortList = [];
   String title = '直卖车辆';
 
   @override
   void initState() {
     super.initState();
-    _dropDownHeaderItemStrings = ['排序',];
+    _dropDownHeaderItemStrings = [
+      '排序',
+    ];
 
     _sortList = [
       ChooseItem(name: '最近创建'),
@@ -91,26 +92,25 @@ class _AssessmentPageState extends State<AssessmentPage> {
               20.wb,
             ],
             backgroundColor: kForeGroundColor,
-
             title: Text("评估记录",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 36.sp,
                   color: const Color(0xFF333333),
-                ))
-
-        ),
+                ))),
         endDrawer: CustomDrawer(
             widthPercent: 0.86,
             backgroundColor: Colors.white,
             callback: (bool isOpened) {},
-            child: _getSortList()
-        ),
+            child: _getSortList()),
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
         body: Column(
           children: [
-            Divider(height: 1.w, color: BaseStyle.colordddddd,),
+            Divider(
+              height: 1.w,
+              color: BaseStyle.colordddddd,
+            ),
             Expanded(
               child: DropDownWidget(
                 _dropDownHeaderItemStrings,
@@ -123,8 +123,8 @@ class _AssessmentPageState extends State<AssessmentPage> {
                   margin: EdgeInsets.only(top: 80.w),
                   child: ListView.separated(
                     shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 24.w, vertical: 20.w),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
                     itemBuilder: (context, index) {
                       return _getAssessmentItem();
                     },
@@ -141,22 +141,21 @@ class _AssessmentPageState extends State<AssessmentPage> {
                 onTap: () {
                   screenControl.screenHide();
                   _scaffoldKey.currentState?.openEndDrawer();
-
                 },
               ),
             )
           ],
-        )
-
-    );
+        ));
   }
 
   _getSortList() {
-    return SortListPage(callback: (ChooseItem item) {
-      if (kDebugMode) {
-        print(item.name + '123123');
-      }
-    },);
+    return SortListPage(
+      callback: (ChooseItem item) {
+        if (kDebugMode) {
+          print(item.name + '123123');
+        }
+      },
+    );
   }
 
   getTitle(String title) {
@@ -176,10 +175,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
                 // 20.wb,
                 Text(
                   title,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .subtitle2,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
                 //  Icon(
                 //   Icons.keyboard_arrow_down,
@@ -198,70 +194,53 @@ class _AssessmentPageState extends State<AssessmentPage> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.w),
-            color: kForeGroundColor
-      ),
+          borderRadius: BorderRadius.circular(16.w), color: kForeGroundColor),
       child: Column(
-
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        Text(
-        '奥迪A3 2020款 35 TFSI 进取型 国V',
-        style: Theme.of(context)
-            .textTheme
-            .subtitle1
-            ?.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
+          Text(
+            '奥迪A3 2020款 35 TFSI 进取型 国V',
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          16.hb,
+          _getText('车架号', 'GDL26173890989890'),
+          16.hb,
+          _getText('车架号', 'GDL26173890989890'),
+          16.hb,
+          _getText('车架号1', 'GDL26173890989890'),
+          16.hb,
+          _getText('车架号', 'GDL26173890989890'),
+          16.hb,
+          _getText('车架号', 'GDL26173890989890'),
+          16.hb,
+          _getText('车架号', 'GDL26173890989890', isRed: true),
+          16.hb,
+        ],
       ),
-      16.hb,
-      _getText('车架号', 'GDL26173890989890'),
-      16.hb,
-      _getText('车架号', 'GDL26173890989890'),
-      16.hb,
-      _getText('车架号1', 'GDL26173890989890'),
-      16.hb,
-      _getText('车架号', 'GDL26173890989890'),
-      16.hb,
-      _getText('车架号', 'GDL26173890989890'),
-      16.hb,
-      _getText('车架号', 'GDL26173890989890',isRed: true),
-      16.hb,
-
-      ],
-    ),);
+    );
   }
 
-
-  _getText(String title, String content,{bool isRed = false}) {
+  _getText(String title, String content, {bool isRed = false}) {
     return Row(
       children: [
         SizedBox(
           width: 120.w,
           child: Text(
             title,
-            style:  Theme.of(context)
-                .textTheme
-                .subtitle2
-                ?.copyWith(
-              color:   const Color(0xFF666666),
-            ),
+            style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                  color: const Color(0xFF666666),
+                ),
           ),
         ),
         20.wb,
-        Text(
-          content,
-          style:
-    Theme.of(context)
-        .textTheme
-        .subtitle2
-        ?.copyWith(
-    color: isRed? const Color(0xFFFF3B02):  const Color(0xFF333333),
-    )
-        ),
+        Text(content,
+            style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                  color:
+                      isRed ? const Color(0xFFFF3B02) : const Color(0xFF333333),
+                )),
       ],
     );
   }
-
-
 }

@@ -1,7 +1,5 @@
 import '../environment/environment.dart';
 
-part 'user_api.dart';
-
 /// * user  用户接口
 /// * data 基础数据接口
 /// * product 产品接口
@@ -26,13 +24,12 @@ class API {
   }
 
   static String get baseURL => '$host/app/broker';
-
-  ///根分类
+  //根分类
   static _File file = _File();
   static _Login login = _Login();
 
-  ///二级分类
-  static _UserApi user= _UserApi();
+  //二级分类
+  static _UserApi user = _UserApi();
 }
 
 extension ImageOnString on String {
@@ -63,4 +60,12 @@ class _Login {
 
   ///微信登录绑定账号
   String get weixinBind => 'login/bind';
+}
+
+class _UserApi {
+  _Wallet wallet = _Wallet();
+}
+
+class _Wallet {
+  String get wallet => 'user/wallet/assess/count';
 }
