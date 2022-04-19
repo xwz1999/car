@@ -1,24 +1,32 @@
 import 'dart:async';
 
+import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/text_utils.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../constants/api/api.dart';
 
 class WxLoginPage extends StatefulWidget {
-  const WxLoginPage({Key? key}) : super(key: key);
+  final String token;
+
+  const WxLoginPage({Key? key, required this.token}) : super(key: key);
 
   @override
   _WxLoginPageState createState() => _WxLoginPageState();
 }
 
-class _WxLoginPageState extends State<WxLoginPage>{
-
+class _WxLoginPageState extends State<WxLoginPage> {
   bool _getCodeEnable = false;
+
   // late Timer _timer;
   final String _countDownStr = "发送验证码";
+
   // int _countDownNum = 59;
   late TextEditingController _phoneController;
   late TextEditingController _smsCodeController;
@@ -26,6 +34,7 @@ class _WxLoginPageState extends State<WxLoginPage>{
   late FocusNode _smsCodeFocusNode;
   bool _loginEnable = false;
   bool _cantSelected = false;
+
   @override
   void initState() {
     super.initState();
@@ -56,34 +65,47 @@ class _WxLoginPageState extends State<WxLoginPage>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             250.hb,
-
             Text(
               '微信账号绑定手机号',
               style: TextStyle(
-                  color: BaseStyle.color333333,
-                  fontSize: BaseStyle.fontSize48),
+                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize48),
             ),
             100.hb,
             _phoneTFWidget(),
             20.hb,
             _codeWidget(),
-
-
             94.hb,
             Container(
               width: double.infinity,
               margin: EdgeInsets.symmetric(horizontal: 32.w),
-              decoration:  BoxDecoration(
-                borderRadius:BorderRadius.circular(8.w),
-                gradient:  const LinearGradient(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.w),
+                gradient: const LinearGradient(
                     colors: [Color(0xFF0593FF), kPrimaryColor],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight),
               ),
               child: MaterialButton(
-                onPressed: () {
-                  if (kDebugMode) {
-                    print('提       交');
+                onPressed: () async {
+                  if (!RegexUtil.isMobileSimple(_phoneController.text)) {
+                    CloudToast.show('请输入正确的手机号！');
+                    return;
+                  } else if (_smsCodeController.text.trim().isEmpty) {
+                    CloudToast.show('请输入验证码！');
+                    return;
+                  }
+                  var base =
+                      await apiClient.request(API.login.weixinBind, data: {
+                    'phone': _phoneController.text,
+                    'code': _smsCodeController.text,
+                    'bindToken': widget.token,
+                    'inviteCode': '',
+                  });
+
+                  if (base.code == 0) {
+                    Get.offAll(const TabNavigator());
+                  } else {
+                    CloudToast.show(base.msg);
                   }
                 },
                 elevation: 0,
@@ -91,22 +113,18 @@ class _WxLoginPageState extends State<WxLoginPage>{
                 minWidth: double.infinity,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.w)),
-                child:    Text(
+                child: Text(
                   '提       交',
                   style: TextStyle(
-                      color: kForeGroundColor,
-                      fontSize: BaseStyle.fontSize28),
+                      color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
                 ),
               ),
             ),
-
-
           ],
         ),
       ),
     );
   }
-
 
   _phoneTFWidget() {
     return Container(
@@ -139,7 +157,9 @@ class _WxLoginPageState extends State<WxLoginPage>{
                     controller: _phoneController,
                     focusNode: _phoneFocusNode,
                     keyboardType: TextInputType.number,
-                    style: TextStyle(fontSize: BaseStyle.fontSize36,color: BaseStyle.color999999),
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize36,
+                        color: BaseStyle.color999999),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(11),
                     ],
@@ -147,35 +167,33 @@ class _WxLoginPageState extends State<WxLoginPage>{
                     decoration: InputDecoration(
                       // contentPadding: EdgeInsets.only(
                       //     left: rSize(10), top: rSize(13)),
-                      prefixIcon:
-
-                      Container(
+                      prefixIcon: Container(
                         width: 10.w,
-
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "+86",
                           style: TextStyle(
                             fontSize: BaseStyle.fontSize36,
-                            color: BaseStyle.color999999,),
-                        ),
-                      ),
-                        enabledBorder:  const UnderlineInputBorder( // 不是焦点的时候颜色
-                          borderSide: BorderSide(
-                              color: BaseStyle.colordddddd,
+                            color: BaseStyle.color999999,
                           ),
                         ),
-                        // focusedBorder:  const UnderlineInputBorder( // 焦点集中的时候颜色
-                        //   borderSide: BorderSide(
-                        //       color: Color(0x19000000)
-                        //   ),
-                        // ),
+                      ),
+                      enabledBorder: const UnderlineInputBorder(
+                        // 不是焦点的时候颜色
+                        borderSide: BorderSide(
+                          color: BaseStyle.colordddddd,
+                        ),
+                      ),
+                      // focusedBorder:  const UnderlineInputBorder( // 焦点集中的时候颜色
+                      //   borderSide: BorderSide(
+                      //       color: Color(0x19000000)
+                      //   ),
+                      // ),
                       //border: InputBorder.none,
                       hintText: "请输入手机号",
                       hintStyle: TextStyle(
                           color: BaseStyle.colorcccccc,
-                          fontSize: BaseStyle.fontSize36 ),
-
+                          fontSize: BaseStyle.fontSize36),
                     ),
                   ),
                 ),
@@ -187,7 +205,6 @@ class _WxLoginPageState extends State<WxLoginPage>{
       ),
     );
   }
-
 
   _codeWidget() {
     return Container(
@@ -212,41 +229,48 @@ class _WxLoginPageState extends State<WxLoginPage>{
                     controller: _smsCodeController,
                     focusNode: _smsCodeFocusNode,
                     keyboardType: TextInputType.number,
-                    style: TextStyle(fontSize: BaseStyle.fontSize36,color: BaseStyle.color999999),
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize36,
+                        color: BaseStyle.color999999),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(4),
                     ],
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                        enabledBorder:  const UnderlineInputBorder( // 不是焦点的时候颜色
+                        enabledBorder: const UnderlineInputBorder(
+                          // 不是焦点的时候颜色
                           borderSide: BorderSide(
                             color: BaseStyle.colordddddd,
                           ),
                         ),
-                      hintText: "请输入验证码",
-                      hintStyle: TextStyle(
-                          color: BaseStyle.colorcccccc,
-                          fontSize: BaseStyle.fontSize36 ),
-                      suffixIcon: GestureDetector(
-                        onTap: !_getCodeEnable?(){}:(){
-                          if (_cantSelected) return;
-                          _cantSelected = true;
-                          Future.delayed(const Duration(seconds: 2), () {
-                            _cantSelected = false;
-                          });
-                        },
-                        child: Container(
-                          width: 160.w,
-                          alignment: Alignment.centerRight,
-                          color: Colors.transparent,
-                          child: Text(
-                              _countDownStr,style: TextStyle(color: _getCodeEnable?kPrimaryColor:BaseStyle.colorcccccc),
+                        hintText: "请输入验证码",
+                        hintStyle: TextStyle(
+                            color: BaseStyle.colorcccccc,
+                            fontSize: BaseStyle.fontSize36),
+                        suffixIcon: GestureDetector(
+                          onTap: !_getCodeEnable
+                              ? () {}
+                              : () {
+                                  if (_cantSelected) return;
+                                  _cantSelected = true;
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    _cantSelected = false;
+                                  });
+                                },
+                          child: Container(
+                            width: 160.w,
+                            alignment: Alignment.centerRight,
+                            color: Colors.transparent,
+                            child: Text(
+                              _countDownStr,
+                              style: TextStyle(
+                                  color: _getCodeEnable
+                                      ? kPrimaryColor
+                                      : BaseStyle.colorcccccc),
+                            ),
                           ),
-                        ),
-                      )
-
-
-                    ),
+                        )),
                   ),
                 ),
               ],
@@ -257,37 +281,35 @@ class _WxLoginPageState extends State<WxLoginPage>{
       ),
     );
   }
+
   _verifyLoginEnable() {
     if (!TextUtils.verifyPhone(_phoneController.text)) {
-      setState(() {
-      });
+      setState(() {});
       return false;
     }
     return _smsCodeController.text.length == 4;
   }
 
-  // _beginCountDown() {///开始倒计时
-  //   setState(() {
-  //     _getCodeEnable = false;
-  //     _countDownStr = "重新获取($_countDownNum)";
-  //   });
-  //   _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-  //     if ( !mounted) {
-  //       return;
-  //     }
-  //     setState(() {
-  //       if (_countDownNum == 0) {
-  //         _countDownNum = 59;
-  //         _countDownStr = "获取验证码";
-  //         _getCodeEnable = true;
-  //         _timer.cancel();
-  //         return;
-  //       }
-  //       _countDownStr = "重新获取(${_countDownNum--})";
-  //     });
-  //   });
-  // }
-
+// _beginCountDown() {///开始倒计时
+//   setState(() {
+//     _getCodeEnable = false;
+//     _countDownStr = "重新获取($_countDownNum)";
+//   });
+//   _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+//     if ( !mounted) {
+//       return;
+//     }
+//     setState(() {
+//       if (_countDownNum == 0) {
+//         _countDownNum = 59;
+//         _countDownStr = "获取验证码";
+//         _getCodeEnable = true;
+//         _timer.cancel();
+//         return;
+//       }
+//       _countDownStr = "重新获取(${_countDownNum--})";
+//     });
+//   });
+// }
 
 }
-

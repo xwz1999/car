@@ -59,7 +59,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void addFluwxListen() {
-    fluwx.weChatResponseEventHandler.distinct((a, b) => a == b).listen((event) {
+    fluwx.weChatResponseEventHandler
+        .distinct((a, b) => a == b)
+        .listen((event) async {
       var res = event as fluwx.WeChatAuthResponse;
       if (kDebugMode) {
         print(
@@ -67,8 +69,15 @@ class _LoginPageState extends State<LoginPage> {
       }
       switch (res.errCode) {
         case 0:
-          apiClient.request(API.login.weixin, data: {'code', res.code});
-          Get.to(() => const WxLoginPage());
+          var base = await apiClient
+              .request(API.login.weixin, data: {'code', res.code});
+          if (base.code == 0) {
+            Get.to(() => WxLoginPage(
+                  token: base.msg ?? "",
+                ));
+          } else {
+            CloudToast.show(base.msg);
+          }
           break;
         case -4:
           CloudToast.show('用户拒绝授权');
