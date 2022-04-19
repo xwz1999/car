@@ -57,7 +57,7 @@ android {
         multiDexEnabled true
         manifestPlaceholders = [
                 JPUSH_PKGNAME  : applicationId,
-                JPUSH_APPKEY   : "f00d39763a7796744f3effd3", // NOTE: JPush 上注册的包名对应的 Appkey.
+                JPUSH_APPKEY   : "c185d29d6fb92c29cfeda32a", // NOTE: JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL  : "developer-default", //暂时填写默认值即可.
                 applicationName: "io.flutter.app.FlutterApplication"
         ]
