@@ -12,6 +12,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:jverify/jverify.dart';
+import 'package:power_logger/power_logger.dart';
 
 import '../../constants/api/api.dart';
 import '../../utils/new_work/api_client.dart';
@@ -209,9 +210,14 @@ class _LoginPageState extends State<LoginPage> {
                       return;
                     }
                     var cancel = CloudToast.loading;
-                    await fluwx.sendWeChatAuth(
-                        scope: "snsapi_userinfo",
-                        state: 'wechat_sdk_demo_test');
+                    try {
+                      await fluwx.sendWeChatAuth(
+                          scope: "snsapi_userinfo",
+                          state: 'wechat_sdk_demo_test');
+                    } catch (e) {
+                      CloudToast.show('fluwx初始化失败');
+                      LoggerData.addData(e.toString());
+                    }
                     cancel();
                   },
                   elevation: 0,

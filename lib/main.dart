@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           onGenerateTitle: (context) => '云云问车',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.theme,
-          home: const LoginPage(),
+          home: const SplashPage(),
           supportedLocales: const [Locale('zh')],
           locale: const Locale('zh'),
           localizationsDelegates: GlobalMaterialLocalizations.delegates,
