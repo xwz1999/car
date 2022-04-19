@@ -236,7 +236,7 @@ class NormalContentDialog extends Dialog {
 
     children.add(SizedBox(
 
-        height: 80.w,
+        height: 100.w,
         child: Row(
           children: _buildItems(),
           mainAxisAlignment: MainAxisAlignment.center,

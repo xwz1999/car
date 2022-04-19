@@ -1,11 +1,9 @@
 import 'package:cloud_car/ui/home/car_manager/direct_sale/direct_sale_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/sort_list_page.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';

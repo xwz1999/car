@@ -10,12 +10,11 @@ class EditCarReportPage extends StatefulWidget {
 }
 
 class _EditCarReportPageState extends State<EditCarReportPage> {
-  late TabController _tabController;
+
   List tabs = [];
 
   @override
   void initState() {
-    ///自己发布的 tab2个 否则1个
 
 
     super.initState();
@@ -24,7 +23,7 @@ class _EditCarReportPageState extends State<EditCarReportPage> {
 
   @override
   void dispose() {
-    _tabController.dispose();
+
     super.dispose();
   }
 
