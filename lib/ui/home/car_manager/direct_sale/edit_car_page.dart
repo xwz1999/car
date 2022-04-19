@@ -1,11 +1,15 @@
 
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_card_info_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_detail_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_owner_item.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_price_info_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_report_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_source_item.dart';
+import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/material.dart';
 
 import 'car_image_page.dart';
@@ -54,7 +58,46 @@ class _EditCarPageState extends State<EditCarPage>  with SingleTickerProviderSta
             actions: [
               GestureDetector(
                 onTap: () {
+                  Alert.show(
+                      context,
+                      NormalContentDialog(
+                        type: NormalTextDialogType.delete,
+                        title: '提交确认',
+                        content: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            16.hb,
+                            Text(
+                              '所有信息是否确认无误并提交',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
 
+                          ],
+                        ),
+                        items: const ['取消'],
+                        deleteItem: '提交',
+                        //监听器
+                        listener: (index) {
+                          Alert.dismiss(context);
+
+                        },
+                        deleteListener: () {
+                          Alert.dismiss(context);
+                          Get.off(() => SuccessFailure(
+                              conditions: true,
+                              headline: '编辑车辆',
+                              body: Text(
+                                '提交成功，等待平台审核',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                              bottom: CloudBottom(
+                                ontap: () {
+                                    Get.back();
+                                },
+                                text: '返回汽车详情',
+                              )));
+                        },
+                      ));
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -129,8 +172,8 @@ class _EditCarPageState extends State<EditCarPage>  with SingleTickerProviderSta
             EditCarOwnerItem(),
 
 
-            CarDetailItem(),
-            CarDetailItem(),
+            EditCardInfoItem(),
+            EditCarPriceInfoItem(),
           ],
         ),
 

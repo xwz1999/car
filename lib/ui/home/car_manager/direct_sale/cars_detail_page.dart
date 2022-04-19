@@ -1,8 +1,8 @@
-import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_page.dart';
-import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/off_car_page.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -10,6 +10,8 @@ import 'package:cloud_car/widget/swiper_pagination_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
+
+import 'modify_price_page.dart';
 
 class CarsDetailPage extends StatefulWidget {
   const CarsDetailPage({
@@ -640,6 +642,9 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     // ]),
   }
 
+
+  ///自己发布的车辆可以编辑、调价、出售、下架。其他销售看见我发布的车辆详情时，只有出售操作。no去掉
+
   _bottom() {
     return Container(
       color: Colors.white,
@@ -652,14 +657,17 @@ class _CarsDetailPageState extends State<CarsDetailPage>
             Get.to(() => const EditCarPage());
           })),
           Expanded(
-              child: _getBottom(Assets.icons.noTransmission.path, '调价', () {})),
+              child: _getBottom(Assets.icons.noTransmission.path, '调价', () {
+                Get.to(() => const ModifyPricePage());
+
+              })),
           Expanded(
               child: _getBottom(Assets.icons.upload.path, '出售', () {
-            Get.to(() => const InviteDetailPage());
+            Get.to(() => const SellCarOrderPage());
           })),
           Expanded(
               child: _getBottom(Assets.icons.noDownload.path, '下架/退库', () {
-            Get.to(() => const InitiateContractPage());
+            Get.to(() => const OffCarPage());
           })),
         ],
       ),

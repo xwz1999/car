@@ -181,7 +181,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
             borderRadius: BorderRadius.circular(16.w), color: kForeGroundColor),
         child: Stack(
           children: [
-            isImport?Positioned(
+              !isImport?Positioned(
               child: Image.asset(
                 Assets.images.importantUser.path,
                 width: 130.w,
@@ -207,7 +207,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
-                    isImport?const SizedBox():GestureDetector(
+                    !isImport?const SizedBox():GestureDetector(
                       onTap: (){
 
                       },
@@ -223,7 +223,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                   ],
                 ),
                 10.hb,
-                const Divider(height: 2,color: BaseStyle.colorf6f6f6,),
+
                 Row(
                   children: [
                     36.wb,

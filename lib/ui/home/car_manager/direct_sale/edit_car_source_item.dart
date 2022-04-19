@@ -1,4 +1,5 @@
 
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,7 @@ class _EditCarSourceItemState extends State<EditCarSourceItem> {
 
         padding: EdgeInsets.only(left: 32.w,right: 32.w),
         children: [
-          48.hb,
+
           getItem1(),
           48.hb,
         ],
@@ -51,10 +52,12 @@ class _EditCarSourceItemState extends State<EditCarSourceItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        EditItemWidget(title: '车辆来源', value: '个人直卖',callback: (String content) {  },),
 
-        getContentItem('车辆来源','个人直卖'),
-        getContentItem('上架人','张三'),
-        getContentItem('门店','云云问车'),
+        EditItemWidget(title: '上架人', value: '张三',callback: (String content) {  },),
+
+        EditItemWidget(title: '门店', value: '云云问车', callback: (String content) {  },),
+
 
       ],
     );
@@ -74,7 +77,7 @@ class _EditCarSourceItemState extends State<EditCarSourceItem> {
             ),),
           ),
           SizedBox(
-            width: 150.w,
+            width: 170.w,
             child: Text(title,style: TextStyle(
               fontSize: 28.sp,color: const Color(0xFF999999),
             ),),

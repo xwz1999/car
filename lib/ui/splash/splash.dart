@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/hive_store.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,10 +28,14 @@ class _SplashPageState extends State<SplashPage> {
   Future initialAll() async {
     ///第三方加载
     await HiveStore.init();
-    Jverify().setup(appKey: 'f00d39763a7796744f3effd3', channel: 'devloper-default');
+    Jverify()
+        .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
     Jverify().setDebugMode(DevEV.instance.dev);
+    var isAndroid = Platform.isAndroid;
     registerWxApi(
         appId: 'wx9bc3ffb23a749254',
+        doOnIOS: !isAndroid,
+        doOnAndroid: isAndroid,
         universalLink: 'https://apiwenche.oa00.com/');
     // var agreement = await HiveStore.appBox?.get('agreement') ?? false;
     // if (!agreement) {
@@ -96,8 +102,9 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    DevEV.instance.setEnvironment(
-        const String.fromEnvironment('ENV', defaultValue: 'dev') == 'dev');
+    var env = const String.fromEnvironment('ENV', defaultValue: 'dev') == 'dev';
+    print('env :$env');
+    DevEV.instance.setEnvironment(env);
     DevEV.instance.init(context);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll();

@@ -12,6 +12,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:jverify/jverify.dart';
+import 'package:power_logger/power_logger.dart';
 
 import '../../constants/api/api.dart';
 import '../../utils/new_work/api_client.dart';
@@ -58,7 +59,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void addFluwxListen() {
-    fluwx.weChatResponseEventHandler.distinct((a, b) => a == b).listen((event) {
+    fluwx.weChatResponseEventHandler
+        .distinct((a, b) => a == b)
+        .listen((event) async {
       var res = event as fluwx.WeChatAuthResponse;
       if (kDebugMode) {
         print(
@@ -66,8 +69,15 @@ class _LoginPageState extends State<LoginPage> {
       }
       switch (res.errCode) {
         case 0:
-          apiClient.request(API.login.weixin, data: {'code', res.code});
-          Get.to(() => const WxLoginPage());
+          var base = await apiClient
+              .request(API.login.weixin, data: {'code', res.code});
+          if (base.code == 0) {
+            Get.to(() => WxLoginPage(
+                  token: base.msg ?? "",
+                ));
+          } else {
+            CloudToast.show(base.msg);
+          }
           break;
         case -4:
           CloudToast.show('用户拒绝授权');
@@ -153,6 +163,12 @@ class _LoginPageState extends State<LoginPage> {
                         return;
                       }
                       var cancel = CloudToast.loading;
+                      var setup = await Jverify().isInitSuccess();
+                      if (!setup['result']) {
+                        CloudToast.show('初始化未完成');
+                        cancel();
+                        return;
+                      }
                       var re = await Jverify().checkVerifyEnable();
                       if (kDebugMode) {
                         print('检查认证网络环境数据返回： ${re.toString()}');
@@ -203,9 +219,14 @@ class _LoginPageState extends State<LoginPage> {
                       return;
                     }
                     var cancel = CloudToast.loading;
-                    await fluwx.sendWeChatAuth(
-                        scope: "snsapi_userinfo",
-                        state: 'wechat_sdk_demo_test');
+                    try {
+                      await fluwx.sendWeChatAuth(
+                          scope: "snsapi_userinfo",
+                          state: 'wechat_sdk_demo_test');
+                    } catch (e) {
+                      CloudToast.show('fluwx初始化失败');
+                      LoggerData.addData(e.toString());
+                    }
                     cancel();
                   },
                   elevation: 0,
