@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:cloud_car/ui/login/jverify_error_code.dart';
 import 'package:cloud_car/ui/login/wx_login_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
@@ -70,11 +71,17 @@ class _LoginPageState extends State<LoginPage> {
       switch (res.errCode) {
         case 0:
           var base = await apiClient
-              .request(API.login.weixin, data: {'code', res.code});
+              .request(API.login.weixin, data: {'code': res.code});
           if (base.code == 0) {
-            Get.to(() => WxLoginPage(
-                  token: base.msg ?? "",
-                ));
+            var wxLoginResponse = WxLoginModel.fromJson(base.data);
+            if (!wxLoginResponse.isBind) {
+              Get.to(() => WxLoginPage(
+                    token: wxLoginResponse.bindToken,
+                  ));
+            } else {
+              UserTool.userProvider.setToken(wxLoginResponse.loginInfo.token);
+              Get.offAll(const TabNavigator());
+            }
           } else {
             CloudToast.show(base.msg);
           }

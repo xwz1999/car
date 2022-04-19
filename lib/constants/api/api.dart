@@ -56,10 +56,10 @@ class _Login {
   String get phone => '/login/phone';
 
   ///微信登录
-  String get weixin => 'login/wechat';
+  String get weixin => '/login/wechat';
 
   ///微信登录绑定账号
-  String get weixinBind => 'login/bind';
+  String get weixinBind => '/login/bind';
 }
 
 class _UserApi {
@@ -67,5 +67,5 @@ class _UserApi {
 }
 
 class _Wallet {
-  String get wallet => 'user/wallet/assess/count';
+  String get wallet => '/user/wallet/assess/count';
 }
