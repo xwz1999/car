@@ -5,6 +5,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/text_utils.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -103,6 +104,7 @@ class _WxLoginPageState extends State<WxLoginPage> {
                   });
 
                   if (base.code == 0) {
+                    UserTool.userProvider.setToken(base.data['token']);
                     Get.offAll(const TabNavigator());
                   } else {
                     CloudToast.show(base.msg);
