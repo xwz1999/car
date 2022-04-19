@@ -1,5 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 class TransactionCancelled extends StatefulWidget {
@@ -39,23 +40,24 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
           children: [
             16.hb,
             Container(
-                margin: EdgeInsets.symmetric(horizontal: 32.w),
-                height: 120.w,
-                color: Colors.white,
-                child: const Text('')
-                // TimeLinesWidget(
-                //   index: 1,
-                //   items: [
-                //     '预定',
-                //     '检测',
-                //     '首付',
-                //     '过户',
-                //     '尾款',
-                //     '完成',
-                //   ],
-                //   number: 1,
-                // )
-                ),
+              margin: EdgeInsets.symmetric(horizontal: 32.w),
+              height: 120.w,
+              color: Colors.white,
+              child: ProgressBar(
+                length: 6,
+                num: 3,
+                direction: 'qw',
+                HW: 96,
+                texts: [
+                  text('预定'),
+                  text('签订'),
+                  text('上架'),
+                  text('出售'),
+                  text('到账'),
+                  text('成交'),
+                ],
+              ),
+            ),
             16.hb,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -445,6 +447,14 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
           ]))
         ],
       ),
+    );
+  }
+
+  text(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+          color: BaseStyle.color111111, fontSize: BaseStyle.fontSize24),
     );
   }
 }

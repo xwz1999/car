@@ -258,80 +258,78 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     return Container(
       width: double.infinity,
       color: Colors.white,
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.only(left: 32.w),
-              height: double.infinity,
-              child: Column(
-                children: [
-                  index != 0
-                      ? Container(
-                          width: 2.w,
-                          height: 10.w,
-                          decoration: BoxDecoration(
-                            color: ing ? kPrimaryColor : BaseStyle.colorcccccc,
-                          ),
-                        )
-                      : const SizedBox(),
-                  Container(
-                    margin: EdgeInsets.only(top: index != 0 ? 0 : 10.w),
-                    width: 20.w,
-                    height: 20.w,
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.only(left: 32.w),
+            height: double.infinity,
+            child: Column(
+              children: [
+                index != 0
+                    ? Container(
+                        width: 2.w,
+                        height: 10.w,
+                        decoration: BoxDecoration(
+                          color: ing ? kPrimaryColor : BaseStyle.colorcccccc,
+                        ),
+                      )
+                    : const SizedBox(),
+                Container(
+                  margin: EdgeInsets.only(top: index != 0 ? 0 : 10.w),
+                  width: 20.w,
+                  height: 20.w,
+                  decoration: BoxDecoration(
+                    color: ing ? kPrimaryColor : BaseStyle.colorcccccc,
+                    borderRadius: BorderRadius.circular(10.w),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    width: 2.w,
+                    height: double.infinity,
                     decoration: BoxDecoration(
                       color: ing ? kPrimaryColor : BaseStyle.colorcccccc,
-                      borderRadius: BorderRadius.circular(10.w),
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      width: 2.w,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: ing ? kPrimaryColor : BaseStyle.colorcccccc,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            30.wb,
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: const [
-                    Text('浏览车辆'),
-                    Text(' ｜ '),
-                    Text('云云问车-微信小程序-点击浏览'),
-                  ],
-                ),
-                16.hb,
-                const Text('2021-12-01 09:30:12'),
-                16.hb,
-                Container(
-                  width: 560.w,
-                  height: 200.w,
-                  child: _getCarItem(
-                    '',
-                    '奥迪A8',
-                    '2020-2',
-                    '',
-                    '31.56万',
-                    '12.44万公里',
-                  ),
-                  decoration: BoxDecoration(
-                    color: BaseStyle.colorf6f6f6,
-                    borderRadius: BorderRadius.circular(8.w),
-                  ),
-                ),
-                50.hb,
+                )
               ],
             ),
-          ],
-        ),
+          ),
+          30.wb,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: const [
+                  Text('浏览车辆'),
+                  Text(' ｜ '),
+                  Text('云云问车-微信小程序-点击浏览'),
+                ],
+              ),
+              16.hb,
+              const Text('2021-12-01 09:30:12'),
+              16.hb,
+              Container(
+                width: 560.w,
+                height: 200.w,
+                child: _getCarItem(
+                  '',
+                  '奥迪A8',
+                  '2020-2',
+                  '',
+                  '31.56万',
+                  '12.44万公里',
+                ),
+                decoration: BoxDecoration(
+                  color: BaseStyle.colorf6f6f6,
+                  borderRadius: BorderRadius.circular(8.w),
+                ),
+              ),
+              50.hb,
+            ],
+          ),
+        ],
       ),
     );
   }

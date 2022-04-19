@@ -34,7 +34,7 @@ class DropDownWidget extends StatefulWidget {
   final VoidCallback? onTap;
 
   const DropDownWidget(this.titles, this.listWidget,
-      { this.child,
+      {this.child,
       this.height = 42,
       required this.headFontSize,
       this.iconData,
@@ -62,22 +62,18 @@ class ScreenControl {
 
   //显示
   void screenShow() {
-    if(_controller.isAnimating){
+    if (_controller.isAnimating) {
       _controller.forward();
     }
-
   }
 
   //隐藏
   void screenHide() {
-    if(_controller.isAnimating){
+    if (_controller.isAnimating) {
       _controller.reverse();
     }
     rotateState = rotateState.map((e) => false).toList();
   }
-
-
-
 }
 
 late AnimationController _controller;
@@ -138,13 +134,13 @@ class _DropDownWidgetState extends State<DropDownWidget>
                   color: BaseStyle.colordddddd,
                 )
               ],
-               ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: getScreenTitle(),
             ),
           ),
-          widget.child!=null?widget.child!:const SizedBox(),
+          widget.child != null ? widget.child! : const SizedBox(),
           getBottomScreen()
         ],
       ),
@@ -153,6 +149,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
 
   List<Widget> getScreenTitle() {
     List<Widget> widgets = [];
+
     if (widget.titles.isNotEmpty) {
       for (int i = 0; i < widget.titles.length; i++) {
         widgets.add(Expanded(
@@ -171,23 +168,21 @@ class _DropDownWidgetState extends State<DropDownWidget>
                       if (rotateState[j]) {
                         rotateState = rotateState.map((e) => false).toList();
 
-                          _controller.reverse();
-
-
+                        _controller.reverse();
                       } else {
                         rotateState = rotateState.map((e) => false).toList();
                         rotateState[j] = !rotateState[j];
 
-                          _controller.forward();
-
-                        }
-
+                        _controller.forward();
+                      }
                     }
                   }
                 });
               },
               headFontSize: widget.headFontSize,
               iconData: widget.iconData ?? Icons.arrow_drop_down_outlined,
+
+              // decoration: get(),
             )));
       }
     } else {
@@ -196,6 +191,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
         style: TextStyle(fontSize: 14.sp),
       ));
     }
+
     if (widget.screen != null) {
       widgets.add(Expanded(
           flex: 1,
@@ -207,7 +203,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
                 height: double.infinity,
                 decoration: BoxDecoration(
                     borderRadius:
-                    BorderRadius.only(bottomRight: Radius.circular(16.w)),
+                        BorderRadius.only(bottomRight: Radius.circular(16.w)),
                     color: Colors.white),
                 padding: EdgeInsets.only(left: 5.r, right: 5.r),
                 child:
@@ -261,5 +257,35 @@ class _DropDownWidgetState extends State<DropDownWidget>
         child: widget.listWidget[tabIndex],
       ),
     );
+  }
+
+  Decoration? get() {
+    for (int i = 0; i < widget.titles.length; i++) {
+      //const int index = widget.titles.length - 1;
+      switch (i) {
+        case 0:
+          return BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16.w),
+              ),
+              color: Colors.white);
+          // ignore: dead_code
+          break;
+        // case index:
+        //   return BoxDecoration(
+        //       borderRadius: BorderRadius.only(
+        //     bottomRight: Radius.circular(16.w),
+        //   ));
+        //   // ignore: dead_code
+        //   break;
+        default:
+          return BoxDecoration(
+              borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(16.w),
+          ));
+          // ignore: dead_code
+          break;
+      }
+    }
   }
 }

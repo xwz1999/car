@@ -7,10 +7,17 @@ class DropDownHeadWidget extends StatefulWidget {
   final Function onClick;
   final double headFontSize;
   final IconData? iconData;
-
+  final Decoration? decoration;
   const DropDownHeadWidget(this.title, this.isForward, this.onClick,
       {this.headFontSize = 12.0,
       this.iconData = Icons.arrow_drop_down_outlined,
+      this.decoration = const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.zero,
+
+        ),
+        color: Colors.white,
+      ),
       key})
       : super(key: key);
 
@@ -86,14 +93,12 @@ class _DropDownHeadWidgetState extends State<DropDownHeadWidget>
           width: double.infinity,
           height: double.infinity,
           padding: EdgeInsets.only(left: 5.r, right: 5.r),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16.w),
-              ),
-              // border: Border(
-              //     bottom: BorderSide(color: BaseStyle.colordddddd, width: 1.w),
-              //     left: BorderSide(color: BaseStyle.colordddddd, width: 1.w)),
-              color: Colors.white),
+
+          decoration: widget.decoration,
+          // border: Border(
+          //     bottom: BorderSide(color: BaseStyle.colordddddd, width: 1.w),
+          //     left: BorderSide(color: BaseStyle.colordddddd, width: 1.w)),
+
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(widget.title, style: headTextStyle),
             RotationTransition(

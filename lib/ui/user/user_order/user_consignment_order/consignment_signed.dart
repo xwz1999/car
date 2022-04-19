@@ -1,6 +1,8 @@
 // ignore_for_file: dead_code
 
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/backup/consignment_audit.dart';
+import 'package:cloud_car/widget/progress_bar.dart';
+import 'package:cloud_car/widget/timelines_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/headers.dart';
@@ -40,10 +42,25 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
             ListView(children: [
               16.hb,
               Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32.w),
-                  height: 120.w,
-                  color: Colors.white,
-                  child: const Text('')),
+                margin: EdgeInsets.symmetric(horizontal: 32.w),
+                padding: EdgeInsets.only(top: 32.w),
+                height: 120.w,
+                color: Colors.white,
+                child: ProgressBar(
+                  length: 6,
+                  num: 3,
+                  direction: 'qw',
+                  HW: 96,
+                  texts: [
+                    text('预定'),
+                    text('签订'),
+                    text('上架'),
+                    text('出售'),
+                    text('到账'),
+                    text('成交'),
+                  ],
+                ),
+              ),
               16.hb,
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -460,6 +477,14 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
         //       children: [Chip(label: Text(time)), Chip(label: Text(distance))],
         //     ))
       ],
+    );
+  }
+
+  text(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+          color: BaseStyle.color111111, fontSize: BaseStyle.fontSize24),
     );
   }
 }

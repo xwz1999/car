@@ -36,15 +36,18 @@ class _LoginPageState extends State<LoginPage> {
 
   Future getPrePhone() async {
     var re = await Jverify().preLogin();
-    print("预取号${re.toString()}");
+    if (kDebugMode) {
+      print("预取号${re.toString()}");
+    }
   }
 
   void addJverifyListen() {
     /// 添加 loginAuthSyncApi 接口回调的监听
     Jverify().addLoginAuthCallBackListener((event) async {
-
       var _result = "监听获取返回数据：[${event.code}] message = ${event.message}";
-      print(_result);
+      if (kDebugMode) {
+        print(_result);
+      }
       if (event.code == 6000) {
         UserTool.userProvider.setToken(event.message);
         Get.offAll(() => const TabNavigator());
@@ -57,8 +60,10 @@ class _LoginPageState extends State<LoginPage> {
   void addFluwxListen() {
     fluwx.weChatResponseEventHandler.distinct((a, b) => a == b).listen((event) {
       var res = event as fluwx.WeChatAuthResponse;
-      print(
+      if (kDebugMode) {
+        print(
           '微信登录数据返回 code ${res.code} errcode:${res.errCode} ${res.errStr} state: ${res.state} type: ${res.type}');
+      }
       switch (res.errCode) {
         case 0:
           apiClient.request(API.login.weixin, data: {'code', res.code});
@@ -143,36 +148,40 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: MaterialButton(
                     onPressed: () async {
-
-                      Get.offAll(() => const TabNavigator());
-                      //
-                      // if (!_chooseAgreement) {
-                      //   CloudToast.show('请阅读并同意用户协议和隐私政策');
-                      //   return;
-                      // }
-                      // var cancel = CloudToast.loading;
-                      // var re = await Jverify().checkVerifyEnable();
-                      // print('检查认证网络环境数据返回： ${re.toString()}');
-                      // if (re["result"]) {
-                      //   var map = await Jverify().getToken();
-                      //   print('极光认证获取token数据返回： ${map.toString()}');
-                      //   if (map['code'] == 2000) {
-                      //     var token = map['message'];
-                      //     var base = await apiClient.request(API.login.phone,
-                      //         data: {'token': token, 'inviteCode': ''});
-                      //     if (base.code == 0) {
-                      //       print('调用登陆接口返回手机号：  ${base.data}');
-                      //     } else {
-                      //       CloudToast.show(base.msg);
-                      //     }
-                      //     await _authToken();
-                      //   } else {
-                      //     CloudToast.show('获取token失败');
-                      //   }
-                      // } else {
-                      //   CloudToast.show('当前网络不支持认证');
-                      // }
-                      // cancel();
+                      if (!_chooseAgreement) {
+                        CloudToast.show('请阅读并同意用户协议和隐私政策');
+                        return;
+                      }
+                      var cancel = CloudToast.loading;
+                      var re = await Jverify().checkVerifyEnable();
+                      if (kDebugMode) {
+                        print('检查认证网络环境数据返回： ${re.toString()}');
+                      }
+                      if (re["result"]) {
+                        var map = await Jverify().getToken();
+                        if (kDebugMode) {
+                          print('极光认证获取token数据返回： ${map.toString()}');
+                        }
+                        if (map['code'] == 2000) {
+                          var token = map['message'];
+                          var base = await apiClient.request(API.login.phone,
+                              data: {'token': token, 'inviteCode': ''});
+                          if (base.code == 0) {
+                            if (kDebugMode) {
+                              print('调用登陆接口返回手机号：  ${base.data}');
+                            }
+                          } else {
+                            CloudToast.show(base.msg);
+                          }
+                          await _authToken();
+                        } else {
+                          CloudToast.show('获取token失败');
+                        }
+                      } else {
+                        CloudToast.show('当前网络不支持认证');
+                      }
+                      cancel();
+                      //Get.to(() => const TabNavigator());
                     },
                     elevation: 0,
                     height: 72.w,
@@ -279,9 +288,9 @@ class _LoginPageState extends State<LoginPage> {
 
   ///调起一键登录页面
   Future _authToken() async {
-    final screenSize = MediaQuery.of(context).size;
-    final screenWidth = screenSize.width;
-    final screenHeight = screenSize.height;
+    // final screenSize = MediaQuery.of(context).size;
+    // final screenWidth = screenSize.width;
+    // final screenHeight = screenSize.height;
     bool isiOS = Platform.isIOS;
 
     /// 自定义授权的 UI 界面，以下设置的图片必须添加到资源文件里，
@@ -373,7 +382,7 @@ class _LoginPageState extends State<LoginPage> {
     // uiConfig.privacyNavReturnBtnImage = "return_bg"; //图片必须存在;
 
     /// 添加自定义的 控件 到授权界面
-    List<JVCustomWidget> widgetList = [];
+    // List<JVCustomWidget> widgetList = [];
 
     /// 步骤 1：调用接口设置 UI
     Jverify()

@@ -3,7 +3,6 @@ import 'package:cloud_car/utils/hive_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
 import 'package:jverify/jverify.dart';
@@ -30,7 +29,7 @@ class _SplashPageState extends State<SplashPage> {
     Jverify().setup(appKey: 'f00d39763a7796744f3effd3', channel: 'devloper-default');
     Jverify().setDebugMode(DevEV.instance.dev);
     registerWxApi(
-        appId: 'wx39335cf7fcd19652',
+        appId: 'wx9bc3ffb23a749254',
         universalLink: 'https://apiwenche.oa00.com/');
     // var agreement = await HiveStore.appBox?.get('agreement') ?? false;
     // if (!agreement) {

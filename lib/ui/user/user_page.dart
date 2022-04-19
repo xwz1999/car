@@ -11,9 +11,12 @@ import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../../constants/api/api.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -102,11 +105,6 @@ class _UserPageState extends State<UserPage> {
             ],
           ),
           const Spacer(),
-          ElevatedButton(
-              onPressed: () {
-                //Get.to(() => const ImageSelector());
-              },
-              child: const Text('data')),
           Text("云云问车 1.0",
               style: Theme.of(context)
                   .textTheme
@@ -299,6 +297,7 @@ class _UserPageState extends State<UserPage> {
 
 //头像信息
   _shareUser() {
+    //var re = apiClient.request(API.user.wallet.assessCount, data: {});
     return Container(
         padding: EdgeInsets.all(32.w),
         decoration: BoxDecoration(
@@ -308,7 +307,8 @@ class _UserPageState extends State<UserPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () {
-              Get.to(() => const BasicInformationPage());
+              //print("aaaaa:${re.data}");
+              //Get.to(() => const BasicInformationPage());
             },
             child: Container(
               color: Colors.transparent,
