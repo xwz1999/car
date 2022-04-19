@@ -1,4 +1,5 @@
 import '../environment/environment.dart';
+part 'user_api.dart';
 
 /// * user  用户接口
 /// * data 基础数据接口
@@ -60,12 +61,4 @@ class _Login {
 
   ///微信登录绑定账号
   String get weixinBind => 'login/bind';
-}
-
-class _UserApi {
-  _Wallet wallet = _Wallet();
-}
-
-class _Wallet {
-  String get wallet => 'user/wallet/assess/count';
 }

@@ -2,7 +2,7 @@ import 'package:cloud_car/ui/home/home_page.dart';
 import 'package:cloud_car/ui/user/product_manuals.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
-import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
+
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
 import 'package:cloud_car/ui/user/user_install/system_settings.dart';
 import 'package:cloud_car/ui/user/user_invitation/user_invitation.dart';
@@ -20,9 +20,6 @@ import '../../constants/api/api.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
-// int assessment=0,//评估
-//  int wallet=0,//钱包
-//  int invitation=0,//邀请
 
   @override
   _UserPageState createState() => _UserPageState();
@@ -34,10 +31,13 @@ class _UserPageState extends State<UserPage> {
 
   // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
-
+  late int assessment; //评估
+//  int wallet=0,//钱包
+//  int invitation=0,//邀请
   @override
   void initState() {
     super.initState();
+    assess();
     _KingCoinUserlist.add(
         KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
     _KingCoinUserlist.add(
@@ -52,6 +52,14 @@ class _UserPageState extends State<UserPage> {
         KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
     _KingCoinUserlist.add(
         KingCoin(name: '我的邀约', url: Assets.icons.userInvitation.path));
+  }
+
+  void assess() async {
+    var res = await apiClient.request(API.user.wallet.assessCount, data: {});
+    //print(res.data['count']);
+    setState(() {
+      assessment = res.data['count'];
+    });
   }
 
   @override
@@ -297,7 +305,6 @@ class _UserPageState extends State<UserPage> {
 
 //头像信息
   _shareUser() {
-    //var re = apiClient.request(API.user.wallet.assessCount, data: {});
     return Container(
         padding: EdgeInsets.all(32.w),
         decoration: BoxDecoration(
@@ -307,7 +314,7 @@ class _UserPageState extends State<UserPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () {
-              //print("aaaaa:${re.data}");
+              //print("aaaaa:${re.data['count']}");
               //Get.to(() => const BasicInformationPage());
             },
             child: Container(
@@ -354,9 +361,9 @@ class _UserPageState extends State<UserPage> {
           ),
           48.hb,
           Row(children: [
-            getText('1', '评估'),
+            getText("$assessment", '评估'),
             70.wb,
-            getText('10210', '钱包'),
+            getText("$assessment", '钱包'),
             70.wb,
             getText('12', '邀请'),
           ]),

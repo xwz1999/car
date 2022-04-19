@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
       var res = event as fluwx.WeChatAuthResponse;
       if (kDebugMode) {
         print(
-          '微信登录数据返回 code ${res.code} errcode:${res.errCode} ${res.errStr} state: ${res.state} type: ${res.type}');
+            '微信登录数据返回 code ${res.code} errcode:${res.errCode} ${res.errStr} state: ${res.state} type: ${res.type}');
       }
       switch (res.errCode) {
         case 0:
@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                         CloudToast.show('当前网络不支持认证');
                       }
                       cancel();
-                      //Get.to(() => const TabNavigator());
+                      Get.to(() => const TabNavigator());
                     },
                     elevation: 0,
                     height: 72.w,
