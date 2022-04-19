@@ -1,11 +1,6 @@
 
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_detail_item.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
-
-import 'car_image_page.dart';
 
 class EditCarReportPage extends StatefulWidget {
   const EditCarReportPage({Key? key}) : super(key: key);
@@ -15,12 +10,11 @@ class EditCarReportPage extends StatefulWidget {
 }
 
 class _EditCarReportPageState extends State<EditCarReportPage> {
-  late TabController _tabController;
+
   List tabs = [];
 
   @override
   void initState() {
-    ///自己发布的 tab2个 否则1个
 
 
     super.initState();
@@ -29,7 +23,7 @@ class _EditCarReportPageState extends State<EditCarReportPage> {
 
   @override
   void dispose() {
-    _tabController.dispose();
+
     super.dispose();
   }
 

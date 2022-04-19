@@ -65,7 +65,11 @@ class _UserInfoPageState extends State<UserInfoPage>
                       ],
                     ),
                   ),
-                  leading: const SizedBox(),
+                  leading:Image.asset(
+                    Assets.images.importantUser.path,
+                    width: 130.w,
+                    fit: BoxFit.fitWidth,
+                  ),
                   // collapsedHeight:kToolbarHeight,
                   backgroundColor: const Color(0xFFF6F6F6),
                   flexibleSpace: FlexibleSpaceBar(

@@ -2,7 +2,6 @@
 import 'package:cloud_car/ui/home/car_manager/direct_sale/cars_detail_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';

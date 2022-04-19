@@ -51,7 +51,7 @@ class CarItemWidget extends StatelessWidget {
                         fit: BoxFit.cover,
                         placeholder: '',
                       )
-                    : Image.asset(url),
+                    : Image.asset(url,width: 240.w,height: 180.w,fit: BoxFit.fill,),
               ),
             ),
           ),
@@ -64,6 +64,7 @@ class CarItemWidget extends StatelessWidget {
                     maxLines: 2,
                     style: Theme.of(context).textTheme.subtitle2?.copyWith(
                           overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
                           color: const Color(0xFF111111),
                         )),
                 16.hb,
@@ -76,14 +77,16 @@ class CarItemWidget extends StatelessWidget {
                     _getTextView(standard),
                   ],
                 ),
-                24.hb,
+                20.hb,
                 Text(
                   price,
                   style: TextStyle(
                     color: const Color(0xFFFF3B02),
                     fontSize: BaseStyle.fontSize36,
+                    fontWeight: FontWeight.bold
                   ),
                 ),
+
               ],
             ),
           ),

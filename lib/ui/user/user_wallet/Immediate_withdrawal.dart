@@ -173,7 +173,7 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                                                 ],
                                               ),
                                             );
-                                            ;
+
                                           },
                                           separatorBuilder:
                                               (BuildContext context,

@@ -1,4 +1,5 @@
 
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,7 @@ class _EditCarOwnerItemState extends State<EditCarOwnerItem> {
 
         padding: EdgeInsets.only(left: 32.w,right: 32.w),
         children: [
-          48.hb,
+
           getItem1(1),
           30.hb,
           getImageItem('身份证照'),
@@ -62,7 +63,7 @@ class _EditCarOwnerItemState extends State<EditCarOwnerItem> {
               ),),
             ),
             SizedBox(
-              width: 150.w,
+              width: 170.w,
               child: Text(title,style: TextStyle(
                 fontSize: 28.sp,color: const Color(0xFF999999),
               ),),
@@ -120,6 +121,9 @@ class _EditCarOwnerItemState extends State<EditCarOwnerItem> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
+
+
+
         getContentItem('车主类别','个人寄卖'),
         getContentItem(type==1?'公司名称':'车主姓名','张三'),
         getContentItem(type==1?'信用代码':'身份证号','39209239891212131',isSpecial: true, path: Assets.icons.scan.path),
@@ -133,32 +137,37 @@ class _EditCarOwnerItemState extends State<EditCarOwnerItem> {
 
 
   getContentItem(String title,String content,{isSpecial = false, path}){
-    return Padding(
-      padding:  EdgeInsets.only(top: 24.w),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top:15.w),
-            child: Text('*  ',style: TextStyle(
-              fontSize: 28.sp,color: const Color(0xFFE62222),
-            ),),
-          ),
-          SizedBox(
-            width: 150.w,
-            child: Text(title,style: TextStyle(
-              fontSize: 28.sp,color: const Color(0xFF999999),
-            ),),
-          ),
-          Expanded(child: Padding(
-            padding:  EdgeInsets.only(top: isSpecial?0.w:0.w),
-            child: Text(content.isEmpty?'-':content,style: TextStyle(
-                fontSize: 28.sp,color: BaseStyle.color333333),maxLines: 2,overflow: TextOverflow.ellipsis,),
-          )),
-          path!=null?Image.asset(path,width: 32.w,height: 32.w,):const SizedBox(),
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding:  EdgeInsets.only(top: 0.w),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            // Padding(
+            //   padding: EdgeInsets.only(top:15.w),
+            //   child: Text('*  ',style: TextStyle(
+            //     fontSize: 28.sp,color: const Color(0xFFE62222),
+            //   ),),
+            // ),
+            // SizedBox(
+            //   width: 150.w,
+            //   child: Text(title,style: TextStyle(
+            //     fontSize: 28.sp,color: const Color(0xFF999999),
+            //   ),),
+            // ),
+            Expanded(child: Padding(
+              padding:  EdgeInsets.only(top: isSpecial?0.w:0.w),
+              child: EditItemWidget(title: title, value: content, callback: (String content) {  },)
+            )),
+            path!=null?Padding(
+              padding:  EdgeInsets.only(bottom: 5.w),
+              child: Image.asset(path,width: 32.w,height: 32.w,),
+            ):const SizedBox(),
 
 
-        ],
+          ],
+        ),
       ),
     );
   }
