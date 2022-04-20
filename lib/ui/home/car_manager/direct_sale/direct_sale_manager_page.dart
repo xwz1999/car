@@ -112,18 +112,11 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                     leftWidget: const CloudBackButton(
                       isSpecial: true,
                     ),
-                    rightWidget: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => const SearchPage());
-                          },
-                          child: Image.asset(Assets.icons.mainSearch.path,
-                              height: 48.w, width: 48.w),
-                        ),
-                        20.wb,
-                      ],
-                    ),
+                    callback: (text){
+                      print(text);
+                    },
+                    tips: '请输入车辆名称',
+
                     child: _dropDownHeaderItemStrings1.first == '直卖车辆' ||
                             _dropDownHeaderItemStrings1.first == '收购车辆'
                         ? DirectSalePage(

@@ -1,4 +1,8 @@
+
 import '../environment/environment.dart';
+
+part 'home_api.dart';
+
 
 /// * user  用户接口
 /// * data 基础数据接口
@@ -28,8 +32,12 @@ class API {
   static _File file = _File();
   static _Login login = _Login();
 
+
   //二级分类
   static _UserApi user = _UserApi();
+  static _HomeApi home = _HomeApi();
+
+
 }
 
 extension ImageOnString on String {

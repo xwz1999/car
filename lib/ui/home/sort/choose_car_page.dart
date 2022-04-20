@@ -12,9 +12,14 @@ import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+typedef CarCallback = Function(String name, int id);
+
 
 class ChooseCarPage extends StatefulWidget {
-  const ChooseCarPage({Key? key}) : super(key: key);
+  final CarCallback callback;
+
+
+  const ChooseCarPage({Key? key, required this.callback}) : super(key: key);
 
   @override
   _ChooseCarPageState createState() => _ChooseCarPageState();
@@ -61,8 +66,8 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
 
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
-        body: CarListPage(carCallback: (String city) {
-
+        body: CarListPage(carCallback: (String city,int id) {
+          widget.callback(city,id);
         },),
     );
   }

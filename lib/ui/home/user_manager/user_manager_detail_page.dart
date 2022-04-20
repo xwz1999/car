@@ -7,6 +7,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/choose_widget.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
+import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -75,27 +76,27 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Get.to(() => const SearchPage());
-              },
-              child: Image.asset(Assets.icons.mainSearch.path,
-                  height: 48.w, width: 48.w),
-            ),
-            20.wb,
-          ],
-          backgroundColor: kForeGroundColor,
-          title: Text('客户统计',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
-        ),
+        // appBar: AppBar(
+        //   leading: const CloudBackButton(
+        //     isSpecial: true,
+        //   ),
+        //   actions: [
+        //     GestureDetector(
+        //       onTap: () {
+        //         Get.to(() => const SearchPage());
+        //       },
+        //       child: Image.asset(Assets.icons.mainSearch.path,
+        //           height: 48.w, width: 48.w),
+        //     ),
+        //     20.wb,
+        //   ],
+        //   backgroundColor: kForeGroundColor,
+        //   title: Text('客户统计',
+        //       style: TextStyle(
+        //           color: BaseStyle.color111111,
+        //           fontSize: BaseStyle.fontSize36,
+        //           fontWeight: FontWeight.bold)),
+        // ),
         endDrawer: CustomDrawer(
             widthPercent: 0.86,
             backgroundColor: Colors.white,
@@ -103,8 +104,13 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
             child: _getSortList()),
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
-        body: Column(
+        body:
+
+
+
+        Column(
           children: [
+            _getAppbar(),
             ChooseWidget(
               callBack: (name) {
                 setState(() {});
@@ -113,8 +119,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                 '浏览客户',
                 '意向客户',
                 '邀请注册',
-                '购车客户',
-                '寄卖客户'
+                '成交客户',
               ],
             ),
             Divider(
@@ -159,6 +164,20 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
             )
           ],
         ));
+  }
+
+
+  _getAppbar() {
+    return SearchBarWidget(callback: (String text) {
+
+    }, tips: '请输入车辆名称', title:Container(
+      alignment: Alignment.center,
+      child: Text(
+        '客户统计',
+        style: TextStyle(
+            color: Color(0xFF111111), fontSize: BaseStyle.fontSize36,fontWeight: FontWeight.bold),
+      ),
+    ),);
   }
 
   _getSortList() {

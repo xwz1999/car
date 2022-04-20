@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:cloud_car/ui/login/jverify_error_code.dart';
 import 'package:cloud_car/ui/login/wx_login_page.dart';
@@ -15,7 +16,6 @@ import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:jverify/jverify.dart';
 import 'package:power_logger/power_logger.dart';
 
-import '../../constants/api/api.dart';
 import '../../utils/new_work/api_client.dart';
 
 class LoginPage extends StatefulWidget {

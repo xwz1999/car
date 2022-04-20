@@ -2,10 +2,9 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car_item_model.dart';
 
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/text_utils.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
+import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,11 +14,12 @@ typedef CarCallback = Function(String city);
 
 ///单选
 class ChooseCarPage extends StatefulWidget {
+  final String title;
   final CarCallback callback;
 
   const ChooseCarPage({
     Key? key,
-    required this.callback,
+    required this.callback, required this.title,
   }) : super(key: key);
 
   @override
@@ -30,6 +30,8 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
   //选中的item
   final List<int> _selectIndex = [];
   final List<CarItemModel> _chooseModels = [];
+
+  String _search = '';
 
   List<CarItemModel> models = [
     CarItemModel(
@@ -118,31 +120,27 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
         backgroundColor: bodyColor,
         extendBodyBehindAppBar: true,
         extendBody: true,
-        body: Stack(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _getAppbar() ?? const SizedBox(),
-                Expanded(
-                  child: ListView.separated(
-                    padding:
-                        EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return _getItem(index, models[index]);
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Container(
-                        color: const Color(0xFFF6F6F6),
-                        height: 16.w,
-                      );
-                    },
-                    itemCount: models.length,
-                  ),
-                ),
-              ],
-            )
+            _getAppbar() ?? const SizedBox(),
+            Expanded(
+              child: ListView.separated(
+                padding:
+                    EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return _getItem(index, models[index]);
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Container(
+                    color: const Color(0xFFF6F6F6),
+                    height: 16.w,
+                  );
+                },
+                itemCount: models.length,
+              ),
+            ),
           ],
         ),
         bottomNavigationBar: Container(
@@ -187,98 +185,17 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
   }
 
   _getAppbar() {
-    return Container(
-      color: Colors.white,
-      height: kToolbarHeight + MediaQuery.of(context).padding.top,
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const CloudBackButton(
-            isSpecial: true,
-          ),
-          Container(
-
-            width: 500.w,
-            height: 72.w,
-            child: TextField(
-              keyboardType: TextInputType.text,
-              onEditingComplete: () {
-                setState(() {});
-                // _refreshController.callRefresh();
-              },
-              focusNode: _contentFocusNode,
-              onChanged: (text) {
-                _searchText = text;
-                setState(() {});
-              },
-              onTap: () {},
-              onSubmitted: (_submitted) async {
-                if (TextUtils.isEmpty(_searchText)) return;
-
-                _contentFocusNode.unfocus();
-                _searchText = _searchText.trimLeft();
-                _searchText = _searchText.trimRight();
-
-                setState(() {});
-              },
-              style: TextStyle(
-                textBaseline: TextBaseline.ideographic,
-                fontSize: 32.sp,
-                color: Colors.black,
-              ),
-              controller: _editingController,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 20.w),
-                filled: true,
-                fillColor: const Color(0xFFF6F6F6)      ,
-                hintText: "请输入想要搜索的内容...",
-                hintStyle: TextStyle(
-                    color: Colors.grey.shade500,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                prefixIcon: const Icon(
-                  CupertinoIcons.search,
-                  size: 16,
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  //
-                  // 不是焦点的时候颜色
-                  borderRadius: BorderRadius.circular(36.w),
-                  borderSide: const BorderSide(
-                    color: kForeGroundColor,
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  // 焦点集中的时候颜色
-                  borderRadius: BorderRadius.circular(36.w),
-                  borderSide: const BorderSide(color: kForeGroundColor),
-                ),
-                //border: InputBorder.none,
-              ),
-            ),
-          ),
-          30.wb,
-          GestureDetector(
-            onTap: () {
-              if (TextUtils.isEmpty(_searchText)) return;
-              _contentFocusNode.unfocus();
-              _searchText = _searchText.trimLeft();
-              _searchText = _searchText.trimRight();
-
-              setState(() {});
-            },
-            child: Text('搜索',
-                style: TextStyle(
-                    color: BaseStyle.color111111,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32.sp)),
-          ),
-          20.wb,
-        ],
+    return SearchBarWidget(callback: (String text) {
+      _search  = text;
+      print(_search);
+    }, tips: '请输入车辆名称', title:Container(
+      alignment: Alignment.center,
+      child: Text(
+        widget.title,
+        style: TextStyle(
+            color: Color(0xFF111111), fontSize: BaseStyle.fontSize36),
       ),
-    );
+    ),);
   }
 
   _getItem(int index, CarItemModel model) {

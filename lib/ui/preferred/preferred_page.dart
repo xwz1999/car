@@ -91,7 +91,7 @@ class _PreferredPageState extends State<PreferredPage>
         },
       ),
       CarListPage(
-        carCallback: (String city) {
+        carCallback: (String city,int id) {
           if (kDebugMode) {
             print(city);
           }
