@@ -523,6 +523,10 @@ class $AssetsImagesGen {
   AssetGenImage get drivingLicense =>
       const AssetGenImage('assets/images/driving_license.png');
 
+  /// File path: assets/images/driving_license2.png
+  AssetGenImage get drivingLicense2 =>
+      const AssetGenImage('assets/images/driving_license2.png');
+
   /// File path: assets/images/head.png
   AssetGenImage get head => const AssetGenImage('assets/images/head.png');
 

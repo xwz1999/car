@@ -158,45 +158,45 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: MaterialButton(
                     onPressed: () async {
-                      if (!_chooseAgreement) {
-                        CloudToast.show('请阅读并同意用户协议和隐私政策');
-                        return;
-                      }
-                      var cancel = CloudToast.loading;
-                      var setup = await Jverify().isInitSuccess();
-                      if (!setup['result']) {
-                        CloudToast.show('初始化未完成');
-                        cancel();
-                        return;
-                      }
-                      var re = await Jverify().checkVerifyEnable();
-                      if (kDebugMode) {
-                        print('检查认证网络环境数据返回： ${re.toString()}');
-                      }
-                      if (re["result"]) {
-                        var map = await Jverify().getToken();
-                        if (kDebugMode) {
-                          print('极光认证获取token数据返回： ${map.toString()}');
-                        }
-                        if (map['code'] == 2000) {
-                          var token = map['message'];
-                          var base = await apiClient.request(API.login.phone,
-                              data: {'token': token, 'inviteCode': ''});
-                          if (base.code == 0) {
-                            if (kDebugMode) {
-                              print('调用登陆接口返回手机号：  ${base.data}');
-                            }
-                          } else {
-                            CloudToast.show(base.msg);
-                          }
-                          await _authToken();
-                        } else {
-                          CloudToast.show('获取token失败');
-                        }
-                      } else {
-                        CloudToast.show('当前网络不支持认证');
-                      }
-                      cancel();
+                      // if (!_chooseAgreement) {
+                      //   CloudToast.show('请阅读并同意用户协议和隐私政策');
+                      //   return;
+                      // }
+                      // var cancel = CloudToast.loading;
+                      // var setup = await Jverify().isInitSuccess();
+                      // if (!setup['result']) {
+                      //   CloudToast.show('初始化未完成');
+                      //   cancel();
+                      //   return;
+                      // }
+                      // var re = await Jverify().checkVerifyEnable();
+                      // if (kDebugMode) {
+                      //   print('检查认证网络环境数据返回： ${re.toString()}');
+                      // }
+                      // if (re["result"]) {
+                      //   var map = await Jverify().getToken();
+                      //   if (kDebugMode) {
+                      //     print('极光认证获取token数据返回： ${map.toString()}');
+                      //   }
+                      //   if (map['code'] == 2000) {
+                      //     var token = map['message'];
+                      //     var base = await apiClient.request(API.login.phone,
+                      //         data: {'token': token, 'inviteCode': ''});
+                      //     if (base.code == 0) {
+                      //       if (kDebugMode) {
+                      //         print('调用登陆接口返回手机号：  ${base.data}');
+                      //       }
+                      //     } else {
+                      //       CloudToast.show(base.msg);
+                      //     }
+                      //     await _authToken();
+                      //   } else {
+                      //     CloudToast.show('获取token失败');
+                      //   }
+                      // } else {
+                      //   CloudToast.show('当前网络不支持认证');
+                      // }
+                      // cancel();
                       Get.to(() => const TabNavigator());
                     },
                     elevation: 0,

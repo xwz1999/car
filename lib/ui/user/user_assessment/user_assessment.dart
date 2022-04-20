@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/ui/user/interface/user_interface.dart';
 import 'package:cloud_car/ui/user/user_assessment/pay_num_changes.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -15,13 +16,13 @@ class AssessmentNumPage extends StatefulWidget {
   _AssessmentNumPageState createState() => _AssessmentNumPageState();
 }
 
-class _AssessmentNumPageState extends State<AssessmentNumPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _AssessmentNumPageState extends State<AssessmentNumPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
+  String _assessment = '';
   //评估次数充值
-  late int assessmentNum;
+
   final List<ChooseItem> _piceList = [
     ChooseItem(name: '充值10次', pice: '¥10.00'),
     ChooseItem(name: '充值20次', pice: '¥20.00'),
@@ -31,31 +32,25 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
     ChooseItem(name: '自定义', pice: '充值次数'),
   ];
 
-
-
   @override
   void initState() {
     super.initState();
-    assessment();
-  }
 
-  void assessment() async {
-    var res = await apiClient.request(API.user.wallet.assessCount, data: {});
-    setState(() {
-      assessmentNum = res.data['count'];
+    ///动态appbar导致 refresh组件刷新判出现问题 首次刷新手动触发
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+      setState(() {});
     });
   }
 
   @override
   void dispose() {
-
     super.dispose();
   }
 
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
@@ -129,7 +124,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                   ),
                   24.wb,
                   Text(
-                    "$assessmentNum",
+                    _assessment,
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         fontSize: 42.sp,
                         color: const Color(0xFF027AFF),
@@ -268,12 +263,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
         ));
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  _refresh() async {
+    _assessment = await User.getWallet();
+  }
 }
-
-// class Button {
-//   Button(Null Function() param0);
-// }
-
-void column() {}

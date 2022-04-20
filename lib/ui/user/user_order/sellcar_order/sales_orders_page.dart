@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, unused_field
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
@@ -8,9 +8,13 @@ import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_page.da
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/title_drop_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/car_widget.dart';
+import 'package:cloud_car/widget/screen_widget.dart';
+import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'backup/make_deal.dart';
 
@@ -23,10 +27,16 @@ class SalesOrders extends StatefulWidget {
 
 class _SalesOrdersState extends State<SalesOrders> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  late List<String> _dropDownHeaderItemStrings1;
   List<Widget> listWidget = []; //创建方法列表
-  //List<ChooseItem> _sortList = [];
+  final List<ChooseItem> _sortList = [
+    ChooseItem(name: '售卖订单'),
+    ChooseItem(name: '寄卖订单'),
+    ChooseItem(name: '租车订单'),
+    ChooseItem(name: '叫车订单'),
+  ];
   late String title = '售车订单';
-  ScreenControl screenControl = ScreenControl();
+  TitleScreenControl screenControl = TitleScreenControl();
   List carList = [
     {
       'judge': false,
@@ -137,28 +147,36 @@ class _SalesOrdersState extends State<SalesOrders> {
     //   ChooseItem(name: '租车订单'),
     //   ChooseItem(name: '租车订单')
     // ];
-    // listWidget = [
-    //   Container(
-    //     width: double.infinity,
-    //     decoration: BoxDecoration(
-    //         borderRadius: BorderRadius.all(Radius.circular(16.w)),
-    //         color: kForeGroundColor),
-    //     clipBehavior: Clip.antiAlias,
-    //     child: ScreenWidget(
-    //       childAspectRatio: 144 / 56,
-    //       callback: (String item) {},
-    //       mainAxisSpacing: 10.w,
-    //       crossAxisSpacing: 24.w,
-    //       crossAxisCount: 3,
-    //       haveButton: true,
-    //       itemList: _sortList,
-    //     ),
-    //   ),
-    // ];
+    listWidget = [
+      Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(16.w)),
+            color: kForeGroundColor),
+        clipBehavior: Clip.antiAlias,
+        child: ScreenWidget(
+          childAspectRatio: 200 / 56,
+          callback: (String item) {
+            _dropDownHeaderItemStrings1 = [item];
+            screenControl.screenHide();
+            setState(() {});
+          },
+          mainAxisSpacing: 10.w,
+          crossAxisSpacing: 24.w,
+          crossAxisCount: 3,
+          //haveButton: true,
+          itemList: _sortList,
+        ),
+      ),
+    ];
+    _dropDownHeaderItemStrings1 = [
+      '售卖订单',
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(

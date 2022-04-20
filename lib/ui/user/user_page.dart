@@ -1,4 +1,5 @@
 import 'package:cloud_car/ui/home/home_page.dart';
+import 'package:cloud_car/ui/user/interface/user_interface.dart';
 import 'package:cloud_car/ui/user/product_manuals.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
@@ -31,13 +32,18 @@ class _UserPageState extends State<UserPage> {
 
   // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
-  late int assessment; //评估
+  String _assessment = ''; //评估
 //  int wallet=0,//钱包
 //  int invitation=0,//邀请
   @override
   void initState() {
     super.initState();
-    assess();
+
+    ///动态appbar导致 refresh组件刷新判出现问题 首次刷新手动触发
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+      setState(() {});
+    });
     _KingCoinUserlist.add(
         KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
     _KingCoinUserlist.add(
@@ -52,14 +58,6 @@ class _UserPageState extends State<UserPage> {
         KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
     _KingCoinUserlist.add(
         KingCoin(name: '我的邀约', url: Assets.icons.userInvitation.path));
-  }
-
-  void assess() async {
-    var res = await apiClient.request(API.user.wallet.assessCount, data: {});
-    //print(res.data['count']);
-    setState(() {
-      assessment = res.data['count'];
-    });
   }
 
   @override
@@ -361,9 +359,9 @@ class _UserPageState extends State<UserPage> {
           ),
           48.hb,
           Row(children: [
-            getText("$assessment", '评估'),
+            getText(_assessment, '评估'),
             70.wb,
-            getText("$assessment", '钱包'),
+            getText('', '钱包'),
             70.wb,
             getText('12', '邀请'),
           ]),
@@ -473,7 +471,7 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  bool get wantKeepAlive => true;
+  _refresh() async {
+    _assessment = await User.getWallet();
+  }
 }
-
-void column() {}
