@@ -1,6 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car_item_model.dart';
-import 'package:cloud_car/ui/home/search_page.dart';
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/text_utils.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../widget/cloud_scaffold.dart';
 
 typedef CarCallback = Function(String city);
 
@@ -186,181 +184,6 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
       ),
     );
 
-    CloudScaffold(
-      systemStyle: const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
-      ),
-      bodyColor: kForeGroundColor,
-      appbar: _getAppbar(),
-      extendBody: true,
-      body: Expanded(
-        child: ListView.separated(
-          padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return _getItem(index, models[index]);
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-              color: const Color(0xFFF6F6F6),
-              height: 16.w,
-            );
-          },
-          itemCount: models.length,
-        ),
-      ),
-    );
-
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
-        ),
-        backgroundColor: kForeGroundColor,
-        title: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(36.w),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 0.w),
-                blurRadius: 10.w,
-                color: const Color(0x33027AFF),
-              )
-            ],
-          ),
-          height: 72.w,
-          child: TextField(
-            keyboardType: TextInputType.text,
-            onEditingComplete: () {
-              setState(() {});
-              // _refreshController.callRefresh();
-            },
-            focusNode: _contentFocusNode,
-            onChanged: (text) {
-              setState(() {});
-            },
-            onTap: () {},
-            onSubmitted: (_submitted) async {
-              setState(() {});
-            },
-            style: TextStyle(
-              textBaseline: TextBaseline.ideographic,
-              fontSize: 32.sp,
-              color: Colors.black,
-            ),
-            controller: _editingController,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 20.w, top: 5.w),
-              filled: true,
-              fillColor: Colors.white,
-              hintText: "请输入想要搜索的内容...",
-              hintStyle: TextStyle(
-                  color: Colors.grey.shade500,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              prefixIcon: const Icon(
-                CupertinoIcons.search,
-                size: 16,
-              ),
-              enabledBorder: UnderlineInputBorder(
-                //
-                // 不是焦点的时候颜色
-                borderRadius: BorderRadius.circular(36.w),
-                borderSide: const BorderSide(
-                  color: kForeGroundColor,
-                ),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                // 焦点集中的时候颜色
-                borderRadius: BorderRadius.circular(36.w),
-                borderSide: const BorderSide(color: kForeGroundColor),
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(36.w),
-                  borderSide: const BorderSide(color: kForeGroundColor)),
-            ),
-          ),
-        ),
-        actions: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  if (TextUtils.isEmpty(_searchText)) return;
-                  _contentFocusNode.unfocus();
-                  _searchText = _searchText.trimLeft();
-                  _searchText = _searchText.trimRight();
-
-                  setState(() {});
-                },
-                child: Text('搜索',
-                    style: TextStyle(
-                        color: BaseStyle.color111111,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 32.sp)),
-              ),
-            ],
-          ),
-        ],
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
-      ),
-      backgroundColor: const Color(0xFFF6F6F6),
-      extendBody: true,
-      body: SafeArea(
-        child: ListView.separated(
-          padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
-          itemBuilder: (context, index) {
-            return _getItem(index, models[index]);
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-              color: const Color(0xFFF6F6F6),
-              height: 16.w,
-            );
-          },
-          itemCount: models.length,
-        ),
-      ),
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 30.w),
-        height: 150.w,
-        color: kForeGroundColor,
-        child: GestureDetector(
-          onTap: () {
-            if (_selectIndex.isEmpty) {
-              BotToast.showText(text: '请先选择车辆');
-            } else {
-              widget.callback(models[_selectIndex.first].name ?? '');
-              Get.back();
-            }
-          },
-          child: Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            padding: EdgeInsets.symmetric(vertical: 16.w),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: <Color>[
-                  Color(0xFF0593FF),
-                  Color(0xFF027AFF),
-                ],
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(8.w)),
-            ),
-            child: Text(
-              '确定选择',
-              style: TextStyle(
-                  color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   _getAppbar() {
@@ -407,7 +230,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
               ),
               controller: _editingController,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 20.w, top: 5.w),
+                contentPadding: EdgeInsets.only(left: 20.w),
                 filled: true,
                 fillColor: const Color(0xFFF6F6F6)      ,
                 hintText: "请输入想要搜索的内容...",

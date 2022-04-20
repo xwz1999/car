@@ -114,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
+    print(11111);
     Jverify().dismissLoginAuthView();
   }
 

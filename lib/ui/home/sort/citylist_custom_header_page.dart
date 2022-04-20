@@ -1,29 +1,26 @@
 import 'dart:convert';
 
 import 'package:azlistview/azlistview.dart';
-import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
 
-import 'models.dart';
+import '../models.dart';
 
-typedef CarCallback = Function(String city);
+class CityListCustomHeaderPage extends StatefulWidget {
+  const CityListCustomHeaderPage({Key? key}) : super(key: key);
 
-class CarListPage extends StatefulWidget {
-   final CarCallback carCallback;
-
-  const CarListPage({Key? key, required this.carCallback}) : super(key: key);
   @override
-  _CarListPageState createState() =>
-      _CarListPageState();
+  _CityListCustomHeaderPageState createState() =>
+      _CityListCustomHeaderPageState();
 }
 
-class _CarListPageState extends State<CarListPage> {
+class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
   List<CityModel> cityList = [];
   double susItemHeight = 36;
-  String imgFavorite = Assets.icons.barToTop.path;
+  String imgFavorite = Utils.getImgPath('ic_favorite');
 
   @override
   void initState() {
@@ -77,56 +74,36 @@ class _CarListPageState extends State<CarListPage> {
   Widget _buildHeader() {
     List<CityModel> hotCityList = [];
     hotCityList.addAll([
-      CityModel(name: "奥迪"),
-      CityModel(name: "奔驰"),
-      CityModel(name: "宝马"),
-      CityModel(name: "雷克萨斯"),
-      CityModel(name: "沃尔沃"),
+      CityModel(name: "北京市"),
+      CityModel(name: "广州市"),
+      CityModel(name: "成都市"),
+      CityModel(name: "深圳市"),
+      CityModel(name: "杭州市"),
+      CityModel(name: "武汉市"),
     ]);
-
-    return
-
-      Column(
-        children: [
-
-          GridView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            itemCount: 5,
-            //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //横轴元素个数
-                crossAxisCount: 5,
-                //纵轴间距
-                mainAxisSpacing: 6,
-                //横轴间距
-                crossAxisSpacing: 24,
-                //子组件宽高长度比例
-                childAspectRatio: 1),
-            itemBuilder: (BuildContext context, int index) {
-              //Widget Function(BuildContext context, int index)
-              return _getCityView(
-                  hotCityList[index].name,isLocation: index==0);
-            }),
-        ],
-      );
-  }
-
-
-  _getCityView(String name,{bool isLocation = false}){
-    return Container(
-      width: 54.w,
-      padding: EdgeInsets.symmetric(vertical:14.w ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(4.w),
-        border: Border.all(color: const Color(0xFFEEEEEE),width: 1.w),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(name,style: Theme.of(context).textTheme.subtitle2,)
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        runAlignment: WrapAlignment.center,
+        spacing: 10.0,
+        children: hotCityList.map((e) {
+          return OutlinedButton(
+            style: const ButtonStyle(
+                //side: BorderSide(color: Colors.grey[300], width: .5),
+                ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Text(e.name),
+            ),
+            onPressed: () {
+              if (kDebugMode) {
+                print("OnItemClick: $e");
+              }
+              Navigator.pop(context, e);
+            },
+          );
+        }).toList(),
       ),
     );
   }
@@ -171,28 +148,9 @@ class _CarListPageState extends State<CarListPage> {
             },
             indexBarData: SuspensionUtil.getTagIndexList(cityList),
             indexBarOptions: IndexBarOptions(
-
               needRebuild: true,
               color: Colors.transparent,
               downColor: const Color(0xFFEEEEEE),
-
-              indexHintDecoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(Assets.icons.barBubbleGray.path),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              selectTextStyle: const TextStyle(
-                  fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500),
-              selectItemDecoration:
-              const BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor),
-              indexHintAlignment: Alignment.centerRight,
-              indexHintChildAlignment: Alignment.center,
-              indexHintTextStyle: TextStyle(fontSize: 40.sp, color: Colors.black87),
-
-              indexHintOffset: const Offset(-10, 0),
-              indexHintWidth: 100.w,
-              indexHintHeight: 100.w,
               localImages: [imgFavorite], //local images.
             ),
           ),
