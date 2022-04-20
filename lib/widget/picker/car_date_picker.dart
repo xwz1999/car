@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -16,7 +15,7 @@ class CarDatePicker {
     return await Get.bottomSheet(_CarDatePicker(
       date: initDate,
       mode: mode,
-      min: min ?? DateTime.now().subtract(Duration(days: 1)),
+      min: min ?? DateTime.now().subtract(const Duration(days: 1)),
       max: max,
     ));
   }
@@ -25,7 +24,7 @@ class CarDatePicker {
     return await Get.bottomSheet(_CarDatePicker(
       date: initDate,
       min: initDate,
-      max: initDate.add(Duration(days: 7)),
+      max: initDate.add(const Duration(days: 7)),
       mode: CupertinoDatePickerMode.dateAndTime,
     ));
   }
@@ -38,7 +37,7 @@ class _CarDatePicker extends StatefulWidget {
   final DateTime? min;
   final CupertinoDatePickerMode? mode;
 
-  _CarDatePicker({
+  const _CarDatePicker({
     Key? key,
     required this.date,
     this.use24H = false,

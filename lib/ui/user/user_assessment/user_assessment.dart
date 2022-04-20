@@ -1,10 +1,12 @@
+import 'package:cloud_car/ui/user/interface/user_interface.dart';
 import 'package:cloud_car/ui/user/user_assessment/pay_num_changes.dart';
 import 'package:cloud_car/utils/headers.dart';
+
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:cloud_car/widget/recharge_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
+//import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class AssessmentNumPage extends StatefulWidget {
   const AssessmentNumPage({Key? key}) : super(key: key);
@@ -13,11 +15,13 @@ class AssessmentNumPage extends StatefulWidget {
   _AssessmentNumPageState createState() => _AssessmentNumPageState();
 }
 
-class _AssessmentNumPageState extends State<AssessmentNumPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _AssessmentNumPageState extends State<AssessmentNumPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
+  String _assessment = '';
+  //评估次数充值
+
   final List<ChooseItem> _piceList = [
     ChooseItem(name: '充值10次', pice: '¥10.00'),
     ChooseItem(name: '充值20次', pice: '¥20.00'),
@@ -27,19 +31,25 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
     ChooseItem(name: '自定义', pice: '充值次数'),
   ];
 
-  late EasyRefreshController _refreshController;
+  @override
+  void initState() {
+    super.initState();
+
+    ///动态appbar导致 refresh组件刷新判出现问题 首次刷新手动触发
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+      setState(() {});
+    });
+  }
 
   @override
-  @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
@@ -113,7 +123,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
                   ),
                   24.wb,
                   Text(
-                    '49',
+                    _assessment,
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         fontSize: 42.sp,
                         color: const Color(0xFF027AFF),
@@ -252,12 +262,7 @@ class _AssessmentNumPageState extends State<AssessmentNumPage>
         ));
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  _refresh() async {
+    _assessment = await User.getWallet();
+  }
 }
-
-// class Button {
-//   Button(Null Function() param0);
-// }
-
-void column() {}

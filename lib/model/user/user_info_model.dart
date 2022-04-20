@@ -1,14 +1,15 @@
+// ignore_for_file: prefer_adjacent_string_concatenation
+
 import 'package:json_annotation/json_annotation.dart';
-import 'package:equatable/equatable.dart';
 
 part 'user_info_model.g.dart';
 
 @JsonSerializable()
-class UserInfoModel  {
-   int id;
-   String nickname;
-   String headImg;
-   int level;
+class UserInfoModel {
+  int id;
+  String nickname;
+  String headImg;
+  int level;
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);
 

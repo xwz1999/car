@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:cloud_car/ui/user/user_partner_center/successful.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 

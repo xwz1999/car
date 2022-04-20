@@ -6,7 +6,7 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
-import 'package:cloud_car/widget/timelines_widget.dart';
+
 import 'package:flutter/material.dart';
 
 class Reservation extends StatefulWidget {

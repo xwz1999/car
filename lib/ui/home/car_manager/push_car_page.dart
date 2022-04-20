@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../base/base_style.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/picker/car_date_picker.dart';
 import '../../../widget/picker/car_picker_box.dart';
@@ -19,14 +18,14 @@ class PushCarPage extends StatefulWidget {
 }
 
 class _PushCarPageState extends State<PushCarPage> {
-  TextEditingController _vinumController = TextEditingController();
-  String? _brand = '';
+  final TextEditingController _vinumController = TextEditingController();
+  final String? _brand = '';
   DateTime? _firstdate;
-  TextEditingController _carnummController = TextEditingController();
-  TextEditingController _versionController = TextEditingController();
-  TextEditingController _mileController = TextEditingController();
-  String? _color = '';
-  String? _source = '';
+  final TextEditingController _carnummController = TextEditingController();
+  final TextEditingController _versionController = TextEditingController();
+  final TextEditingController _mileController = TextEditingController();
+  final String? _color = '';
+  final String? _source = '';
 
   @override
   void initState() {
@@ -215,10 +214,13 @@ class _PushCarPageState extends State<PushCarPage> {
                               },
                               style: ButtonStyle(
                                 backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
+                                    MaterialStateProperty.all(Colors.blue),
                               ),
-                              child:
-                              '下一步'.text.size(30.sp).color(Colors.white).make(),
+                              child: '下一步'
+                                  .text
+                                  .size(30.sp)
+                                  .color(Colors.white)
+                                  .make(),
                             ),
                           ),
                         ],
@@ -328,14 +330,12 @@ class _PushCarPageState extends State<PushCarPage> {
           vinum,
           40.w.heightBox,
           _function(
-              '选择品牌车型',
-              '品牌车型',
-                  () {},
-              _brand!,
-              '请输入具体车型',
-              Container(
-
-              ),
+            '选择品牌车型',
+            '品牌车型',
+            () {},
+            _brand!,
+            '请输入具体车型',
+            Container(),
           ),
           40.w.heightBox,
           firstdate,
@@ -344,22 +344,27 @@ class _PushCarPageState extends State<PushCarPage> {
           40.w.heightBox,
           version,
           40.w.heightBox,
-          _function('选择车身颜色','车身颜色', () {}, _color!, '请输入车身颜色',
-              Wrap(
-                  children: [
-                    Container(
-                    ),
-                  ],
-              ),
+          _function(
+            '选择车身颜色',
+            '车身颜色',
+            () {},
+            _color!,
+            '请输入车身颜色',
+            Wrap(
+              children: [
+                Container(),
+              ],
+            ),
           ),
           40.w.heightBox,
           mile,
           40.w.heightBox,
-          _function('选择车辆来源','车辆来源', () {}, _source!, '请选择车辆来源',Container()),
+          _function('选择车辆来源', '车辆来源', () {}, _source!, '请选择车辆来源', Container()),
         ],
       ),
     );
   }
+
   _textarea(
     String title,
     String hint,
@@ -408,7 +413,6 @@ class _PushCarPageState extends State<PushCarPage> {
     String content,
     String msg,
     Widget child,
-
   ) {
     return GestureDetector(
       onTap: () async {
@@ -444,7 +448,7 @@ class _PushCarPageState extends State<PushCarPage> {
                 .size(30.sp)
                 .color(Colors.black.withOpacity(content.isEmpty ? 0.25 : 0.85))
                 .make(),
-            Spacer(),
+            const Spacer(),
             Icon(
               CupertinoIcons.chevron_right,
               color: Colors.black.withOpacity(0.45),
@@ -456,9 +460,13 @@ class _PushCarPageState extends State<PushCarPage> {
     );
   }
 }
+
 class RadioModel {
   bool? isSelected;
   String? buttonText;
 
-  RadioModel(this.isSelected, this.buttonText,);
+  RadioModel(
+    this.isSelected,
+    this.buttonText,
+  );
 }
