@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'History_model.dart';
+part of 'storeselect_moedl.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-HistoryModel _$HistoryModelFromJson(Map<String, dynamic> json) => HistoryModel(
+StoreselectMoedl _$StoreselectMoedlFromJson(Map<String, dynamic> json) =>
+    StoreselectMoedl(
       id: json['id'] as int,
-      type: json['type'] as int,
-      count: json['count'] as num,
-      createdAt: json['createdAt'] as int,
+      name: json['name'] as String,
     );

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 part 'History_model.g.dart';
@@ -10,7 +12,7 @@ class HistoryModel extends Equatable {
   final int createdAt;
   factory HistoryModel.fromJson(Map<String, dynamic> json) =>
       _$HistoryModelFromJson(json);
-  const HistoryModel(this.id, this.type, this.count, this.createdAt);
+
   @override
   List<Object?> get props => [
         id,
@@ -18,4 +20,11 @@ class HistoryModel extends Equatable {
         count,
         createdAt,
       ];
+
+  const HistoryModel({
+    required this.id,
+    required this.type,
+    required this.count,
+    required this.createdAt,
+  });
 }

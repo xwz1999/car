@@ -12,12 +12,10 @@ import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
+
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../../constants/api/api.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);

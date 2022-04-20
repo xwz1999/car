@@ -1,11 +1,8 @@
-import 'dart:ffi';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../base/base_style.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/picker/car_picker_box.dart';
 
@@ -17,14 +14,14 @@ class EvainfoPage extends StatefulWidget {
 }
 
 class _EvainfoPageState extends State<EvainfoPage> {
-  String? _transfer = ''; //过户次数
-  String? _paint = ''; //油漆面
-  String? _metal = ''; //钣金面
-  String? _replace = ''; //更换件
-  String? _transmission = ''; //变速箱
-  String? _accident = ''; //重大事故
-  String? _maintain = ''; //4s保养
-  String? _kilometers = ''; //真实公里数
+  final String? _transfer = ''; //过户次数
+  final String? _paint = ''; //油漆面
+  final String? _metal = ''; //钣金面
+  final String? _replace = ''; //更换件
+  final String? _transmission = ''; //变速箱
+  final String? _accident = ''; //重大事故
+  final String? _maintain = ''; //4s保养
+  final String? _kilometers = ''; //真实公里数
 
   @override
   void initState() {
@@ -176,13 +173,11 @@ class _EvainfoPageState extends State<EvainfoPage> {
                   Get.to(() => const EvainfoPage());
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                child:
-                '马上估价'.text.size(30.sp).color(Colors.white).make(),
+                child: '马上估价'.text.size(30.sp).color(Colors.white).make(),
               ),
-            ).paddingOnly(top: 1000.h,left: 40.w,right: 40.w),
+            ).paddingOnly(top: 1000.h, left: 40.w, right: 40.w),
           ],
         ),
       ),
@@ -232,7 +227,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                   .color(
                       Colors.black.withOpacity(content.isEmpty ? 0.25 : 0.85))
                   .make(),
-              Spacer(),
+              const Spacer(),
               Icon(
                 CupertinoIcons.chevron_right,
                 color: Colors.black.withOpacity(0.45),

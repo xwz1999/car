@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 typedef CarCallback = Function(String city);
 
 ///单选
@@ -183,7 +182,6 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
         ),
       ),
     );
-
   }
 
   _getAppbar() {
@@ -198,8 +196,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
           const CloudBackButton(
             isSpecial: true,
           ),
-          Container(
-
+          SizedBox(
             width: 500.w,
             height: 72.w,
             child: TextField(
@@ -232,7 +229,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(left: 20.w),
                 filled: true,
-                fillColor: const Color(0xFFF6F6F6)      ,
+                fillColor: const Color(0xFFF6F6F6),
                 hintText: "请输入想要搜索的内容...",
                 hintStyle: TextStyle(
                     color: Colors.grey.shade500,

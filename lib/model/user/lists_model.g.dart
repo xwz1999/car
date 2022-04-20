@@ -7,12 +7,12 @@ part of 'lists_model.dart';
 // **************************************************************************
 
 ListsModel _$ListsModelFromJson(Map<String, dynamic> json) => ListsModel(
-      json['id'] as int,
-      json['oredrSn'] as String,
-      json['status'] as int,
-      json['modeNamel'] as String,
-      json['licensingDate'] as int,
-      json['mileage'] as int,
-      json['price'] as String,
-      json['createAt'] as int,
+      id: json['id'] as int,
+      oredrSn: json['oredrSn'] as String,
+      status: json['status'] as int,
+      modeNamel: json['modeNamel'] as String,
+      licensingDate: json['licensingDate'] as int,
+      mileage: json['mileage'] as int,
+      price: json['price'] as String,
+      createAt: json['createAt'] as int,
     );

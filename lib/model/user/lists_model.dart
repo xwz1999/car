@@ -14,8 +14,7 @@ class ListsModel extends Equatable {
   final int createAt;
 
   // ignore: prefer_const_constructors_in_immutables
-  ListsModel(this.id, this.oredrSn, this.status, this.modeNamel,
-      this.licensingDate, this.mileage, this.price, this.createAt);
+
 
   factory ListsModel.fromJson(Map<String, dynamic> json) =>
       _$ListsModelFromJson(json);
@@ -33,4 +32,15 @@ class ListsModel extends Equatable {
           createAt
         }
       ];
+
+  const ListsModel({
+    required this.id,
+    required this.oredrSn,
+    required this.status,
+    required this.modeNamel,
+    required this.licensingDate,
+    required this.mileage,
+    required this.price,
+    required this.createAt,
+  });
 }
