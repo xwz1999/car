@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                   ));
             } else {
               UserTool.userProvider.setToken(wxLoginResponse.loginInfo.token);
-              Get.offAll(const TabNavigator());
+              //Get.offAll(const TabNavigator());
             }
           } else {
             CloudToast.show(base.msg);
