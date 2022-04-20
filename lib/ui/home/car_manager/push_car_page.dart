@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/ui/home/car_manager/fill_evainfo_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,7 +56,6 @@ class _PushCarPageState extends State<PushCarPage> {
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
                 fontWeight: FontWeight.bold)),
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
@@ -207,16 +207,18 @@ class _PushCarPageState extends State<PushCarPage> {
                           ),
                           _rewardWidget(),
                           100.w.heightBox,
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(() => const EvainfoPage());
+                              },
                               style: ButtonStyle(
                                 backgroundColor:
                                 MaterialStateProperty.all(Colors.blue),
                               ),
                               child:
-                              '下一步'.text.size(28.sp).color(Colors.white).make(),
+                              '下一步'.text.size(30.sp).color(Colors.white).make(),
                             ),
                           ),
                         ],
@@ -240,13 +242,13 @@ class _PushCarPageState extends State<PushCarPage> {
       color: Colors.transparent,
       child: Row(
         children: [
-          '*'.text.size(28.sp).color(Colors.red).make().paddingOnly(top: 5),
+          '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
           10.wb,
           SizedBox(
             width: 160.w,
             child: '表显里程'
                 .text
-                .size(28.sp)
+                .size(30.sp)
                 .color(Colors.black.withOpacity(0.45))
                 .make(),
           ),
@@ -262,25 +264,25 @@ class _PushCarPageState extends State<PushCarPage> {
                   border: InputBorder.none,
                   hintText: '请输入行驶里程',
                   hintStyle: TextStyle(
-                    fontSize: 28.sp,
+                    fontSize: 30.sp,
                     color: Colors.black.withOpacity(0.25),
                   )),
             ),
           ),
           24.wb,
-          '万公里'.text.size(28.sp).color(Colors.black.withOpacity(0.8)).make(),
+          '万公里'.text.size(30.sp).color(Colors.black.withOpacity(0.8)).make(),
         ],
       ),
     );
     var firstdate = Row(
       children: [
-        '*'.text.size(28.sp).color(Colors.red).make().paddingOnly(top: 5),
+        '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
         10.wb,
         SizedBox(
           width: 160.w,
           child: '预计时间'
               .text
-              .size(28.sp)
+              .size(30.sp)
               .color(Colors.black.withOpacity(0.45))
               .make(),
         ),
@@ -297,7 +299,7 @@ class _PushCarPageState extends State<PushCarPage> {
                       : DateUtil.formatDate(_firstdate,
                           format: DateFormats.zh_mo_d_h_m))
                   .text
-                  .size(28.sp)
+                  .size(30.sp)
                   .align(TextAlign.start)
                   .color(Colors.black
                       .withOpacity(_firstdate == null ? 0.25 : 0.85))
@@ -309,7 +311,7 @@ class _PushCarPageState extends State<PushCarPage> {
         Icon(
           CupertinoIcons.chevron_right,
           color: Colors.black.withOpacity(0.45),
-          size: 28.w,
+          size: 30.w,
         ),
       ],
     );
@@ -367,12 +369,12 @@ class _PushCarPageState extends State<PushCarPage> {
       color: Colors.transparent,
       child: Row(
         children: [
-          '*'.text.size(28.sp).color(Colors.red).make().paddingOnly(top: 5),
+          '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
           10.wb,
           SizedBox(
             width: 160.w,
             child: title.text
-                .size(28.sp)
+                .size(30.sp)
                 .color(Colors.black.withOpacity(0.45))
                 .make(),
           ),
@@ -388,7 +390,7 @@ class _PushCarPageState extends State<PushCarPage> {
                   border: InputBorder.none,
                   hintText: hint,
                   hintStyle: TextStyle(
-                    fontSize: 28.sp,
+                    fontSize: 30.sp,
                     color: Colors.black.withOpacity(0.25),
                   )),
             ),
@@ -428,18 +430,18 @@ class _PushCarPageState extends State<PushCarPage> {
         color: Colors.transparent,
         child: Row(
           children: [
-            '*'.text.size(28.sp).color(Colors.red).make().paddingOnly(top: 5),
+            '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
             10.wb,
             SizedBox(
               width: 160.w,
               child: title.text
-                  .size(28.sp)
+                  .size(30.sp)
                   .color(Colors.black.withOpacity(0.45))
                   .make(),
             ),
             (content.isEmpty ? msg : content)
                 .text
-                .size(28.sp)
+                .size(30.sp)
                 .color(Colors.black.withOpacity(content.isEmpty ? 0.25 : 0.85))
                 .make(),
             Spacer(),

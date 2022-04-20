@@ -1,15 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_info_model.dart';
+part of 'sort_car_model_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
-    UserInfoModel(
+SortCarModelModel _$SortCarModelModelFromJson(Map<String, dynamic> json) =>
+    SortCarModelModel(
       id: json['id'] as int,
-      nickname: json['nickname'] as String,
-      headImg: json['headImg'] as String,
-      level: json['level'] as int,
+      name: json['name'] as String,
+      year: json['year'] as int,
     );

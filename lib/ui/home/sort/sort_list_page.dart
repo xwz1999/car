@@ -1,10 +1,11 @@
 
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/sort_edit_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../widget/sort_list_widget.dart';
+import '../../../widget/sort_list_widget.dart';
 
 typedef ItemCallback = Function(ChooseItem item);
 
@@ -20,6 +21,7 @@ class SortListPage extends StatefulWidget {
   _SortListPageState createState() => _SortListPageState();
 }
 
+///根据筛选的json 把筛选页面的所有数据放入model里传回
 class _SortListPageState extends State<SortListPage> {
   List<ChooseItem> _price  = [];
   List<ChooseItem> _structure  = [];
@@ -111,7 +113,8 @@ class _SortListPageState extends State<SortListPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
+
+                Text('不限品牌',style: Theme.of(context).textTheme.subtitle2,),
                 10.wb,
                 Padding(
                   padding:  EdgeInsets.only(top: 5.w),
@@ -137,12 +140,23 @@ class _SortListPageState extends State<SortListPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
+                SortEditWidget(callback: (String content) {
+
+                },),
+                5.wb,
+                Container(
+                  color: const Color(0xFFDDDDDD),
+                  width: 8.w,
+                  height: 2.w,
+                ),
+                5.wb,
+                SortEditWidget(callback: (String content) {
+
+                },),
                 10.wb,
-                Padding(
-                  padding:  EdgeInsets.only(top: 5.w),
-                  child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
-                )
+
+                Text('万元',style: Theme.of(context).textTheme.subtitle2,),
+
               ],
             ),
           ),
@@ -244,12 +258,23 @@ class _SortListPageState extends State<SortListPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
+                SortEditWidget(callback: (String content) {
+
+                },),
+                5.wb,
+                Container(
+                  color: const Color(0xFFDDDDDD),
+                  width: 8.w,
+                  height: 2.w,
+                ),
+                5.wb,
+                SortEditWidget(callback: (String content) {
+
+                },),
                 10.wb,
-                Padding(
-                  padding:  EdgeInsets.only(top: 5.w),
-                  child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
-                )
+
+                Text('万公里',style: Theme.of(context).textTheme.subtitle2,),
+
               ],
             ),
           ),

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
 
-import 'models.dart';
+import '../models.dart';
 
 typedef CityCallback = Function(String city);
 

@@ -1,3 +1,4 @@
+import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:flutter/foundation.dart';
 
 import '../model/user/user_info_model.dart';
@@ -25,10 +26,17 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future setToken(String token) async {
+  Future setToken(String token, {User? user}) async {
     apiClient.setToken(token);
-    //每次打开app更新用户信息
-    await updateUserInfo();
+
+    if (user != null) {
+      userInfo.nickname = user.nickname;
+      userInfo.headImg = user.headImg;
+      userInfo.level = user.level;
+    }else{
+      //每次打开app更新用户信息
+      await updateUserInfo();
+    }
   }
 
   Future logout() async {
