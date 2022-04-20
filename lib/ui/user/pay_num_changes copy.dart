@@ -4,7 +4,6 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class PayChangesPage extends StatefulWidget {
   const PayChangesPage({Key? key}) : super(key: key);
@@ -19,12 +18,9 @@ class _PayChangesPageState extends State<PayChangesPage>
   // ignore: non_constant_identifier_names
   // List listWidget = [];
 
-  late EasyRefreshController _refreshController;
-
   @override
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
@@ -96,34 +92,6 @@ class _PayChangesPageState extends State<PayChangesPage>
             ),
           ),
           ListTile(
-            title: Text('评估车辆1次',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                )),
-            subtitle: Text(
-              '12月1日 16:34:09',
-              style: TextStyle(
-                  fontSize: 24.sp,
-                  color: const Color.fromRGBO(153, 153, 153, 1)),
-            ),
-            trailing: Text('-1',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold)),
-          ),
-          ListTile(
-            title: Text('评估车辆1次',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                )),
-            subtitle: Text(
-              '12月1日 16:34:09',
-              style: TextStyle(
-                  fontSize: 24.sp,
-                  color: const Color.fromRGBO(153, 153, 153, 1)),
-            ),
-            trailing: Text('-1',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold)),
-          ),
-          ListTile(
             title: Text('充值次数',
                 style: TextStyle(
                   fontSize: 28.sp,
@@ -139,62 +107,6 @@ class _PayChangesPageState extends State<PayChangesPage>
                     color: const Color.fromRGBO(153, 153, 153, 1),
                     overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                16.hb,
-                Text(
-                  '12月1日 16:34:09',
-                  style: TextStyle(
-                      fontSize: 24.sp,
-                      color: const Color.fromRGBO(153, 153, 153, 1)),
-                ),
-              ],
-            ),
-            trailing: Text('+20',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold)),
-          ),
-          ListTile(
-            title: Text('充值次数',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                )),
-            subtitle: Column(
-              //左对齐
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '支付宝付款：¥20.0',
-                  style: TextStyle(
-                      fontSize: 24.sp,
-                      color: const Color.fromRGBO(153, 153, 153, 1),
-                      overflow: TextOverflow.ellipsis),
-                ),
-                16.hb,
-                Text(
-                  '12月1日 16:34:09',
-                  style: TextStyle(
-                      fontSize: 24.sp,
-                      color: const Color.fromRGBO(153, 153, 153, 1),
-                      overflow: TextOverflow.ellipsis),
-                ),
-              ],
-            ),
-            trailing: Text('+20',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold)),
-          ),
-          ListTile(
-            title: Text('充值次数',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                )),
-            subtitle: Column(
-              //左对齐
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '微信付款：¥20.00',
-                  style: TextStyle(
-                      fontSize: 24.sp,
-                      color: const Color.fromRGBO(153, 153, 153, 1)),
                 ),
                 16.hb,
                 Text(

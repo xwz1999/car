@@ -1,6 +1,8 @@
+//import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/ui/user/user_wallet/Immediate_withdrawal.dart';
 import 'package:cloud_car/ui/user/user_wallet/Withdrawal_record.dart';
 import 'package:cloud_car/utils/headers.dart';
+//import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
@@ -19,7 +21,8 @@ class WalletCertificationPage extends StatefulWidget {
 class _WalletCertificationPageState extends State<WalletCertificationPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
-  // List listWidget = [];
+  //评估次数
+
   // ignore: unused_field
   final List<ChooseItem> _priceList = [
     ChooseItem(name: '充值10次', pice: '¥10.00'),
@@ -129,7 +132,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
             width: 686.w,
             height: 160.w,
             child: Image.asset(
-              'assets/images/my_wallet.png',
+              Assets.images.myWallet.path,
               fit: BoxFit.fill,
             ),
           ),

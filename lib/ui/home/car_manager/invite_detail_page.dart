@@ -119,7 +119,7 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                         setState(() {
 
                         });
-                      },));
+                      }, title: '选择预定车辆',));
                     },
                     child: Row(
                       children: [

@@ -7,7 +7,8 @@ class CarCustomPicker extends StatefulWidget {
   final Widget? body;
   final VoidCallback? onPressed;
 
-  CarCustomPicker({Key? key, this.body, this.onPressed}) : super(key: key);
+  const CarCustomPicker({Key? key, this.body, this.onPressed})
+      : super(key: key);
 
   @override
   _CarCustomPickerState createState() => _CarCustomPickerState();
@@ -18,7 +19,7 @@ class _CarCustomPickerState extends State<CarCustomPicker> {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Material(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
         child: Column(
           children: [
             SizedBox(

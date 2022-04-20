@@ -4,8 +4,6 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/splash/splash.dart';
 
-import 'package:cloud_car/ui/login/login_page.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

@@ -17,6 +17,7 @@ class UserInfoPage extends StatefulWidget {
 class _UserInfoPageState extends State<UserInfoPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool _isImportant = false;
 
   @override
   void initState() {
@@ -60,7 +61,39 @@ class _UserInfoPageState extends State<UserInfoPage>
                       children: [
                         const CloudBackButton(),
                         30.wb,
-                        const Text('李四')
+                        const Text('李四'),
+                        Spacer(),
+
+                        _isImportant?GestureDetector(
+                          onTap: (){
+                            _isImportant = false;
+                            setState(() {
+
+                            });
+                          },
+                          child: Image.asset(
+                            Assets.images.importantUser.path,
+                            width: 130.w,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ):
+                        GestureDetector(
+                          onTap: (){
+                            _isImportant = true;
+                            setState(() {
+
+                            });
+                          },
+                          child: Padding(
+                            padding:  EdgeInsets.only(right: 32.w),
+                            child: Text(
+                              '设为重要',
+                              style: TextStyle(
+                                  color: BaseStyle.color999999,
+                                  fontSize: BaseStyle.fontSize28,),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),

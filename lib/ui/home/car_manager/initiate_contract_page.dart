@@ -1,62 +1,46 @@
-// ignore_for_file: file_names
 
+import 'package:cloud_car/ui/home/car_manager/choose_car_page.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_second_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
+import 'package:cloud_car/widget/car_item_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'choose_car_page.dart';
-
 class InitiateContractPage extends StatefulWidget {
-  const InitiateContractPage({
-    Key? key,
-  }) : super(key: key);
+  const InitiateContractPage({Key? key}) : super(key: key);
 
   @override
   _InitiateContractPageState createState() => _InitiateContractPageState();
 }
 
 class _InitiateContractPageState extends State<InitiateContractPage> {
-  late TextEditingController _editingController1;
-  late TextEditingController _editingController2;
-  late TextEditingController _editingController3;
-  late TextEditingController _editingController4;
-  late TextEditingController _editingController5;
 
   final List<int> _selectIndex1 = [];
 
   final List<int> _selectIndex2 = [];
 
-  final List<int> _selectIndex3 = [];
-
   final List<String> _models1 = ['全款', '按揭'];
+
 
   final List<String> _models2 = ['本地', '外迁'];
 
-  final List<String> _models3 = ['零售', '批发', '中介'];
-
   @override
   void initState() {
-    _editingController1 = TextEditingController(text: '李四 18912345432');
-    _editingController2 = TextEditingController();
-    _editingController3 = TextEditingController();
-    _editingController4 = TextEditingController();
-    _editingController5 = TextEditingController();
+
 
     super.initState();
   }
 
+
   @override
   void dispose() {
-    _editingController1.dispose();
-    _editingController2.dispose();
-    _editingController3.dispose();
-    _editingController4.dispose();
-    _editingController5.dispose();
+
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,386 +49,248 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text(
-          '发起合同',
-          style: Theme.of(context).textTheme.headline4?.copyWith(),
-          // TextStyle(
-          //
-          //     color: BaseStyle.color111111,
-          //     fontSize: BaseStyle.fontSize36,
-          //     fontWeight: FontWeight.bold)
+        title: Text('发起合同',
+          style: Theme.of(context)
+              .textTheme
+              .headline4,
         ),
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      backgroundColor: const Color(0xFFF6F6F6),
+      backgroundColor: bodyColor,
       extendBody: true,
-      body: Column(
+
+      body: ListView(
+        padding: EdgeInsets.zero,
         children: [
+          16.hb,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: (){
+                  Get.to(()=>ChooseCarPage(title: '更换车辆', callback: (String city) {
+
+                  },));
+                },
+                child: Text(
+                  '更换车辆',
+                  style: TextStyle(
+                    fontSize: 28.sp,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+              24.wb,
+
+
+
+            ],
+          ),
+
+
+          Padding(
+            padding:  EdgeInsets.all(24.w),
+            child: Container(
+              width: double.infinity,
+
+              color: kForeGroundColor,
+              padding: EdgeInsets.only(left: 24.w,right: 24.w,top: 24.w,bottom: 24.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  CarItemWidget(
+                    widgetPadding: EdgeInsets.zero,
+                    name: '奔驰CLE 插电混动 纯电动续航103km',
+                    time: '2019年5月',
+                    distance: '20.43万公里',
+                    standard: '国六',
+                    url:Assets.images.carBanner.path,
+                    price: '27.43万',
+                  ),
+
+                ],
+              ),
+            ),
+          ),
+
+          Padding(
+            padding:  EdgeInsets.only(left: 24.w,top: 12.w),
+            child: Text('上门地址信息',
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle1?.copyWith(
+                  color: BaseStyle.color111111,fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
+          20.hb,
           Container(
-            margin: EdgeInsets.only(top: 8.w),
-            padding: EdgeInsets.symmetric(horizontal: 32.w),
+            width: double.infinity,
+
             color: kForeGroundColor,
+            padding: EdgeInsets.only(left: 32.w,right: 32.w),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 32.w),
-                      width: 120.w,
-                      child: Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              '* ',
-                              style: TextStyle(
-                                color: const Color(0xFFE62222),
-                                fontSize: BaseStyle.fontSize28,
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(top: 18.w),
-                            height: 50.w,
-                          ),
-                          Text('成交价',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(
-                                    color: const Color(0xFF999999),
-                                  )),
-                        ],
-                      ),
-                    ),
-                    50.wb,
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        onEditingComplete: () {
-                          setState(() {});
-                          // _refreshController.callRefresh();
-                        },
-                        onChanged: (text) {
-                          setState(() {});
-                        },
-                        style: Theme.of(context).textTheme.subtitle2,
-                        controller: _editingController1,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 0.w),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: "请输入",
-                          hintStyle: TextStyle(
-                              color: Colors.grey.shade500,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 32.w),
-                      child: Text('万元',
-                          style:
-                              Theme.of(context).textTheme.subtitle2?.copyWith(
-                                    color: const Color(0xFF999999),
-                                  )),
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
+                EditItemWidget(
+                  paddingTop: 30.w,
+
+                  title: '成交价',
+                  value: '',
+                  callback: (String content) {},
+                  endText: '元',
+
                 ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 32.w),
-                      width: 120.w,
-                      child: Text('定金',
-                          style:
-                              Theme.of(context).textTheme.subtitle2?.copyWith(
-                                    overflow: TextOverflow.ellipsis,
-                                    color: const Color(0xFF999999),
-                                  )),
-                    ),
-                    50.wb,
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        onEditingComplete: () {
-                          setState(() {});
-                          // _refreshController.callRefresh();
-                        },
-                        onChanged: (text) {
-                          setState(() {});
-                        },
-                        style: Theme.of(context).textTheme.subtitle2,
-                        controller: _editingController1,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 0.w),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: "请输入",
-                          hintStyle: TextStyle(
-                              color: Colors.grey.shade500,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 32.w),
-                      child: Text('元',
-                          style:
-                              Theme.of(context).textTheme.subtitle2?.copyWith(
-                                    color: const Color(0xFF999999),
-                                  )),
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
+
+                EditItemWidget(
+
+                  title: '定金',
+                  topIcon: false,
+                  value: '',
+                  callback: (String content) {},
+                  endText: '元',
+
                 ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 32.w),
-                      width: 150.w,
-                      child: Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              '* ',
-                              style: TextStyle(
-                                color: const Color(0xFFE62222),
-                                fontSize: BaseStyle.fontSize28,
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(top: 18.w),
-                            height: 50.w,
-                          ),
-                          Text('付款方式',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(
-                                    color: const Color(0xFF999999),
-                                  )),
-                        ],
-                      ),
-                    ),
-                    20.wb,
-                    SizedBox(
-                      height: 50.w,
-                      child: getChooseList(
-                          (String choice) {}, _models1, _selectIndex1),
-                    ),
-                  ],
+                EditItemWidget(
+
+                  title: '首付',
+                  topIcon: false,
+                  value: '',
+                  callback: (String content) {},
+                  endText: '元',
+
                 ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 32.w),
-                      width: 150.w,
-                      child: Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              '* ',
-                              style: TextStyle(
-                                color: const Color(0xFFE62222),
-                                fontSize: BaseStyle.fontSize28,
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(top: 18.w),
-                            height: 50.w,
-                          ),
-                          Text('过户方式',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(
-                                    color: const Color(0xFF999999),
-                                  )),
-                        ],
-                      ),
-                    ),
-                    20.wb,
-                    SizedBox(
-                      height: 50.w,
-                      child: getChooseList(
-                          (String choice) {}, _models2, _selectIndex2),
-                    ),
-                  ],
+
+                EditItemWidget(
+
+                  title: '尾款',
+                  topIcon: false,
+                  value: '',
+                  callback: (String content) {},
+                  endText: '元',
+
                 ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 32.w),
-                      width: 150.w,
-                      child: Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              '* ',
-                              style: TextStyle(
-                                color: const Color(0xFFE62222),
-                                fontSize: BaseStyle.fontSize28,
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(top: 18.w),
-                            height: 50.w,
-                          ),
-                          Text(
-                            '销售类型',
-                            style:
-                                Theme.of(context).textTheme.subtitle2?.copyWith(
-                                      color: const Color(0xFF999999),
-                                    ),
-                          )
-                        ],
-                      ),
-                    ),
-                    20.wb,
-                    SizedBox(
-                      height: 50.w,
-                      child: getChooseList(
-                          (String choice) {}, _models3, _selectIndex3),
-                    ),
-                  ],
+
+                EditItemWidget(
+
+                  title: '服务费比列',
+                  canChange: false,
+                  value: '2%',
+                  callback: (String content) {},
+                  endText: '元',
+
                 ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 32.w),
-                      width: 120.w,
-                      child: Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              '* ',
-                              style: TextStyle(
-                                color: const Color(0xFFE62222),
-                                fontSize: BaseStyle.fontSize28,
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(top: 18.w),
-                            height: 50.w,
-                          ),
-                          Text('销售',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(
-                                    color: const Color(0xFF999999),
-                                  )),
-                        ],
-                      ),
-                    ),
-                    50.wb,
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        onEditingComplete: () {
-                          setState(() {});
-                          // _refreshController.callRefresh();
-                        },
-                        onChanged: (text) {
-                          setState(() {});
-                        },
-                        style: Theme.of(context).textTheme.subtitle2,
-                        controller: _editingController1,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 0.w),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: "请输入",
-                          hintStyle: TextStyle(
-                              color: Colors.grey.shade500,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => ChooseCarPage(
-                          callback: (String city) {
-                            _editingController2.text = city;
-                            setState(() {});
-                          },
-                        ));
-                  },
+                Padding(
+                  padding: EdgeInsets.only(top: 40.w),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 32.w),
-                        width: 150.w,
-                        child: Text('全款到期日',
-                            style:
-                                Theme.of(context).textTheme.subtitle2?.copyWith(
-                                      color: const Color(0xFF999999),
-                                    )),
-                      ),
-                      20.wb,
-                      Expanded(
-                        child: TextField(
-                          enabled: false,
-                          keyboardType: TextInputType.text,
-                          onEditingComplete: () {
-                            setState(() {});
-                            // _refreshController.callRefresh();
-                          },
-                          onChanged: (text) {
-                            setState(() {});
-                          },
-                          style: Theme.of(context).textTheme.subtitle2,
-                          controller: _editingController2,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 0.w),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "请选择",
-                            hintStyle: TextStyle(
-                                color: Colors.grey.shade500,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w300),
-                            border: InputBorder.none,
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.w),
+                        child: Text(
+                          '*  ',
+                          style: TextStyle(
+                            fontSize: 28.sp,
+                            color: const Color(0xFFE62222),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        width: 170.w,
+                        child: Text(
+                          '付款方式',
+                          style: TextStyle(
+                            fontSize: 28.sp,
+                            color: const Color(0xFF999999),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50.w,
+                        child: getChooseList(
+                                (String choice) {}, _models1, _selectIndex1),
                       ),
                     ],
                   ),
                 ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 40.w),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.w),
+                        child: Text(
+                          '*  ',
+                          style: TextStyle(
+                            fontSize: 28.sp,
+                            color: const Color(0xFFE62222),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 170.w,
+                        child: Text(
+                          '过户方式',
+                          style: TextStyle(
+                            fontSize: 28.sp,
+                            color: const Color(0xFF999999),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50.w,
+                        child: getChooseList(
+                                (String choice) {}, _models2, _selectIndex2),
+                      ),
+                    ],
+                  ),
+                ),
+                30.hb,
+
               ],
             ),
           ),
-          72.hb,
+
+          30.hb,
+
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            padding: EdgeInsets.symmetric(vertical: 16.w),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: <Color>[
-                  Color(0xFF0593FF),
-                  Color(0xFF027AFF),
-                ],
+            padding: EdgeInsets.symmetric(vertical: 30.w),
+            height: 150.w,
+
+            child:
+            GestureDetector(
+              onTap: (){
+                Get.to(()=>const SellCarOrderSecondPage());
+
+              },
+              child:Container(
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(horizontal: 32.w),
+                padding: EdgeInsets.symmetric(vertical: 16.w),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: <Color>[
+                      Color(0xFF0593FF),
+                      Color(0xFF027AFF),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                ),
+                child: Text(
+                  '下一步',
+                  style: TextStyle(
+                      color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
+                ),
               ),
-              borderRadius: BorderRadius.all(Radius.circular(8.w)),
-            ),
-            child: Text(
-              '确  定',
-              style: TextStyle(
-                  color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
             ),
           ),
+          30.hb,
+
+
         ],
       ),
     );
@@ -457,35 +303,37 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
       children: [
         ...models
             .mapIndexed((currentValue, index) => GestureDetector(
-                  onTap: () {
-                    if (choices.contains(index)) {
-                      choices.remove(index);
-                    } else {
-                      choices.clear();
-                      choices.add(index);
-                    }
-                    setState(() {});
-                  },
-                  child: Container(
-                    width: 160.w,
-                    color: Colors.white,
-                    child: Row(
-                      children: [
-                        BeeCheckRadio(
-                          value: index,
-                          groupValue: choices,
-                        ),
-                        16.wb,
-                        Text(
-                          currentValue,
-                          style: Theme.of(context).textTheme.subtitle2,
-                        ),
-                      ],
-                    ),
-                  ),
-                ))
+          onTap: () {
+            if (choices.contains(index)) {
+              choices.remove(index);
+            } else {
+              choices.clear();
+              choices.add(index);
+            }
+            setState(() {});
+          },
+          child: Container(
+            width: 160.w,
+            color: Colors.white,
+            child: Row(
+              children: [
+                BeeCheckRadio(
+                  value: index,
+                  groupValue: choices,
+                ),
+                16.wb,
+                Text(
+                  currentValue,
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+              ],
+            ),
+          ),
+        ))
             .toList(),
       ],
     );
   }
 }
+
+

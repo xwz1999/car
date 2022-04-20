@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable, avoid_unnecessary_containers
 
-import 'package:cloud_car/ui/home/carlist_page.dart';
-import 'package:cloud_car/ui/home/citylist_page.dart';
+import 'package:cloud_car/ui/home/sort/carlist_page.dart';
+import 'package:cloud_car/ui/home/sort/citylist_page.dart';
 import 'package:cloud_car/ui/preferred/preferred_allcar.dart';
 import 'package:cloud_car/ui/preferred/preferred_carcollection.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
@@ -91,7 +91,7 @@ class _PreferredPageState extends State<PreferredPage>
         },
       ),
       CarListPage(
-        carCallback: (String city) {
+        carCallback: (String city,int id) {
           if (kDebugMode) {
             print(city);
           }

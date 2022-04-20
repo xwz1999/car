@@ -1,8 +1,9 @@
 import 'package:cloud_car/ui/home/home_page.dart';
+import 'package:cloud_car/ui/user/interface/user_interface.dart';
 import 'package:cloud_car/ui/user/product_manuals.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
-import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
+
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
 import 'package:cloud_car/ui/user/user_install/system_settings.dart';
 import 'package:cloud_car/ui/user/user_invitation/user_invitation.dart';
@@ -11,18 +12,13 @@ import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
+
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../constants/api/api.dart';
-
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
-// int assessment=0,//评估
-//  int wallet=0,//钱包
-//  int invitation=0,//邀请
 
   @override
   _UserPageState createState() => _UserPageState();
@@ -34,10 +30,18 @@ class _UserPageState extends State<UserPage> {
 
   // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
-
+  String _assessment = ''; //评估
+//  int wallet=0,//钱包
+//  int invitation=0,//邀请
   @override
   void initState() {
     super.initState();
+
+    ///动态appbar导致 refresh组件刷新判出现问题 首次刷新手动触发
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+      setState(() {});
+    });
     _KingCoinUserlist.add(
         KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
     _KingCoinUserlist.add(
@@ -297,7 +301,6 @@ class _UserPageState extends State<UserPage> {
 
 //头像信息
   _shareUser() {
-    //var re = apiClient.request(API.user.wallet.assessCount, data: {});
     return Container(
         padding: EdgeInsets.all(32.w),
         decoration: BoxDecoration(
@@ -307,7 +310,7 @@ class _UserPageState extends State<UserPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () {
-              //print("aaaaa:${re.data}");
+              //print("aaaaa:${re.data['count']}");
               //Get.to(() => const BasicInformationPage());
             },
             child: Container(
@@ -354,9 +357,9 @@ class _UserPageState extends State<UserPage> {
           ),
           48.hb,
           Row(children: [
-            getText('1', '评估'),
+            getText(_assessment, '评估'),
             70.wb,
-            getText('10210', '钱包'),
+            getText('', '钱包'),
             70.wb,
             getText('12', '邀请'),
           ]),
@@ -466,7 +469,7 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  bool get wantKeepAlive => true;
+  _refresh() async {
+    _assessment = await User.getWallet();
+  }
 }
-
-void column() {}

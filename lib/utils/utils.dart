@@ -42,13 +42,12 @@ class Utils {
     );
   }
 
-  static Widget getListItem(BuildContext context, CityModel model,
+  static Widget getListItem(BuildContext context,CityModel model, Function(String name,int id) callBack,
       {double susHeight = 40}) {
     return ListTile(
       title: Text(model.name),
       onTap: () {
-        LogUtil.e("onItemClick : $model");
-        Utils.showSnackBar(context, 'onItemClick : ${model.name}');
+        callBack(model.name,model.id??0);
       },
     );
 //    return Column(

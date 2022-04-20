@@ -1,6 +1,6 @@
 import 'package:cloud_car/ui/home/car_manager/direct_sale/direct_sale_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
-import 'package:cloud_car/ui/home/sort_list_page.dart';
+import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -112,18 +112,11 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                     leftWidget: const CloudBackButton(
                       isSpecial: true,
                     ),
-                    rightWidget: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => const SearchPage());
-                          },
-                          child: Image.asset(Assets.icons.mainSearch.path,
-                              height: 48.w, width: 48.w),
-                        ),
-                        20.wb,
-                      ],
-                    ),
+                    callback: (text){
+                      print(text);
+                    },
+                    tips: '请输入车辆名称',
+
                     child: _dropDownHeaderItemStrings1.first == '直卖车辆' ||
                             _dropDownHeaderItemStrings1.first == '收购车辆'
                         ? DirectSalePage(
