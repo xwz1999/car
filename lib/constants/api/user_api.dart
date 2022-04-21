@@ -2,8 +2,6 @@ part of 'api.dart';
 
 class _UserApi {
   _Wallet wallet = _Wallet();
-  _Recharge recharge = _Recharge();
-  _History history = _History();
   _Ail ail = _Ail();
   _Result result = _Result();
   _Sign sign = _Sign();
@@ -13,15 +11,9 @@ class _UserApi {
 class _Wallet {
   ///获取剩余评估次数
   String get assessCount => '/user/wallet/assess/count';
-}
-
 //钱包充值
-class _Recharge {
   String get assessRecharge => '/user/wallet/assess/recharge';
-}
-
 //评估记录
-class _History {
   String get assessHistory => '/user/wallet/assess/history';
 }
 

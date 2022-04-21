@@ -49,6 +49,7 @@ class _SplashPageState extends State<SplashPage> {
     // }
   }
 
+  // ignore: unused_element
   Future<bool?> _showLoginVerify() async {
     return await showCupertinoDialog(
       barrierDismissible: false,
@@ -103,6 +104,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     var env = const String.fromEnvironment('ENV', defaultValue: 'dev') == 'dev';
+    // ignore: avoid_print
     print('env :$env');
     DevEV.instance.setEnvironment(env);
     DevEV.instance.init(context);

@@ -35,7 +35,7 @@ class User {
 //评估记录
   static Future<List<HistoryModel>> getHistory() async {
     BaseListModel res =
-        await apiClient.requestList(API.user.history.assessHistory);
+        await apiClient.requestList(API.user.wallet.assessHistory);
     // ignore: unrelated_type_equality_checks
     if (res.data!.list == 0) return [];
     return res.data!.list!.map((e) => HistoryModel.fromJson(e)).toList();
@@ -245,7 +245,7 @@ class User {
       'roleId': roleId,
       'commission': commission
     });
-    if (res.data! == null) return '';
-    return (res.data! as String).toString();
+    if (res.data! == null) return '11';
+    return (res.data as String).toString();
   }
 }
