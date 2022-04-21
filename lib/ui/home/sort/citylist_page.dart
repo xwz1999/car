@@ -158,8 +158,9 @@ class _CityListPageState extends State<CityListPage> {
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) return _buildHeader();
               CityModel model = cityList[index];
-              return Utils.getListItem(context, model,
-                  susHeight: susItemHeight);
+              return Utils.getListItem(context, model, (name, id) {
+
+              });
             },
             susItemHeight: susItemHeight,
             susItemBuilder: (BuildContext context, int index) {

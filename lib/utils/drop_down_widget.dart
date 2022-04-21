@@ -64,16 +64,16 @@ class ScreenControl {
 
   //显示
   void screenShow() {
-    if (_controller.isAnimating) {
+
       _controller.forward();
-    }
+
   }
 
   //隐藏
   void screenHide() {
-    if (_controller.isAnimating) {
+
       _controller.reverse();
-    }
+
     rotateState = rotateState.map((e) => false).toList();
   }
 }
@@ -121,31 +121,28 @@ class _DropDownWidgetState extends State<DropDownWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: bodyColor,
-      child: Stack(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            height: widget.height,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 1.w),
-                  blurRadius: 0.5.w,
-                  color: BaseStyle.colordddddd,
-                )
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: getScreenTitle(),
-            ),
+    return Stack(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          height: widget.height,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(0, 1.w),
+                blurRadius: 0.5.w,
+                color: BaseStyle.colordddddd,
+              )
+            ],
           ),
-          widget.child != null ? widget.child! : const SizedBox(),
-          getBottomScreen()
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: getScreenTitle(),
+          ),
+        ),
+        widget.child != null ? widget.child! : const SizedBox(),
+        getBottomScreen()
+      ],
     );
   }
 

@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:github_language_colors/github_language_colors.dart';
 
 class CityModel extends ISuspensionBean {
+  int? id;
   String name;
   String? tagIndex;
   String? namePinyin;
 
   CityModel({
+    this.id,
     required this.name,
     this.tagIndex,
     this.namePinyin,

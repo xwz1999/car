@@ -11,6 +11,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import 'car_manager/car_manager_page.dart';
 import 'car_manager/push_car_page.dart';
+import 'car_valuation/car_valuation_page.dart';
 import 'home_title.dart';
 
 class HomePage extends StatefulWidget {
@@ -164,6 +165,9 @@ class _HomePageState extends State<HomePage>
             break;
           case '车辆发布':
             Get.to(() => const PushCarPage());
+            break;
+          case '车辆估值':
+            Get.to(() => const CarValuationPage());
             break;
         }
       },

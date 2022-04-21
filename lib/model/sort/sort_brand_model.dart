@@ -10,6 +10,7 @@ class SortBrandModel extends Equatable {
   final String name;
   final String initial;
 
+
   factory SortBrandModel.fromJson(Map<String, dynamic> json) =>
       _$SortBrandModelFromJson(json);
 

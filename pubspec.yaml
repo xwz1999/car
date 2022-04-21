@@ -45,35 +45,24 @@ dependencies:
   gzx_dropdown_menu: ^3.1.0
   #各种扩展
   velocity_x: ^3.0.0
-
-
   #列表选择器
   azlistview: ^2.0.0
-
-  # 汉字转拼音
-  lpinyin: ^2.0.0
-
   github_language_colors:
     git:
-      url: git://github.com/Sky24n/github_language_colors.git
+      url: https://github.com/meng-fucius/github_language_colors.git
+  # 汉字转拼音
+  lpinyin: ^2.0.0
+  #轮播
   flutter_swiper: ^1.1.6
   flutter_swiper_tv: ^1.1.6-nullsafety
+  #角标
   badges: ^2.0.2
   #手写
   signature: ^5.0.0
-  # 上传图片
-  
-  flutter_picker: ^1.0.11
-  # 调用相册上传图片
-  http_parser: ^4.0.0
-  fluttertoast: ^8.0.9
-  image_picker_for_web: ^2.1.6
-  video_player: ^2.3.0
    # 相机
   image_picker: ^0.8.5
   # 虚线框
   dotted_border: ^2.0.0+2
-  dash_painter: ^1.0.2
   # 时间轴
   timelines: ^0.1.0
   #日志输出

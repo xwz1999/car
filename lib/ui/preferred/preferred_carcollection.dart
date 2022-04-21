@@ -113,7 +113,7 @@ class _CarCollectionState extends State<CarCollection> {
         },
       ),
       CarListPage(
-        carCallback: (String city) {
+        carCallback: (String city,int id) {
           if (kDebugMode) {
             print(city);
           }

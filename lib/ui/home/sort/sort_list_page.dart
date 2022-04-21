@@ -1,4 +1,5 @@
 
+import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_edit_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
@@ -28,6 +29,8 @@ class _SortListPageState extends State<SortListPage> {
   List<ChooseItem> _gearbox  = [];
   List<ChooseItem> _mileage = [];
   List<ChooseItem> _emission  = [];
+
+  String _carName = '不限品牌';
 
 
   @override
@@ -108,19 +111,32 @@ class _SortListPageState extends State<SortListPage> {
           title: '品牌车型',
           rightWidget: GestureDetector(
             onTap: (){
-              
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              Get.to(()=> ChooseCarPage(callback: (String name, int id) {
+                Get.back();
+                Get.back();
+                Get.back();
+                _carName = name;
+                setState(() {
 
-                Text('不限品牌',style: Theme.of(context).textTheme.subtitle2,),
-                10.wb,
-                Padding(
-                  padding:  EdgeInsets.only(top: 5.w),
-                  child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
-                )
-              ],
+
+                });
+              },));
+            },
+            child: Container(
+              color: Colors.transparent,
+              width: 400.w,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+
+                  Expanded(child: Text(_carName,style: Theme.of(context).textTheme.subtitle2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.end,),),
+                  10.wb,
+                  Padding(
+                    padding:  EdgeInsets.only(top: 5.w),
+                    child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
+                  )
+                ],
+              ),
             ),
           ),
         ),

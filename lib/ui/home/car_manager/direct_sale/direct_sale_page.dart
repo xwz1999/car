@@ -136,6 +136,7 @@ class _DirectSalePageState extends State<DirectSalePage> {
             onTap:
                 () {
               screenControl.screenHide();
+
               widget.callBack();
             },
           ),

@@ -1,4 +1,5 @@
 
+import 'package:cloud_car/ui/home/sort/choose_item_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_list_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
@@ -61,7 +62,12 @@ class _UserSortListPageState extends State<UserSortListPage> {
               title: '门店',
               rightWidget: GestureDetector(
                 onTap: (){
+                  Get.to(()=>ChooseItemPage(callback: (String name) {
+                    Get.back();
 
+                  }, items: const [
+                    '1','2','3'
+                  ], name: '门店',));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
