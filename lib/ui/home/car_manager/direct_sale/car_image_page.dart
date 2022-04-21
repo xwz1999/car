@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 import 'package:flutter/material.dart';
 
 class CarImageItem extends StatefulWidget {
@@ -9,47 +12,51 @@ class CarImageItem extends StatefulWidget {
 }
 
 class _CarImageItemState extends State<CarImageItem> {
+  List<File> _files = [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child:
-      GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 24.w),
-          itemCount: 4,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //横轴元素个数
-              crossAxisCount: 3,
-              //纵轴间距
-              mainAxisSpacing: 10,
-              //横轴间距
-              crossAxisSpacing: 20,
-              //子组件宽高长度比例
-              childAspectRatio: 2/2),
-          itemBuilder: (BuildContext context, int index) {
-            return getItem(Assets.images.carBanner.path,15,'车辆照片');
+      padding: EdgeInsets.all(32.w),
+      child: MultiImagePickWidget(
+          width: 216.w,
+          height: 160.w,
+          spacing: 15.w,
+          onChanged: (files) {
+            _files = files;
           }),
-
+      // GridView.builder(
+      //     physics: const NeverScrollableScrollPhysics(),
+      //     shrinkWrap: true,
+      //     padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 24.w),
+      //     itemCount: 4,
+      //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //       //横轴元素个数
+      //         crossAxisCount: 3,
+      //         //纵轴间距
+      //         mainAxisSpacing: 10,
+      //         //横轴间距
+      //         crossAxisSpacing: 20,
+      //         //子组件宽高长度比例
+      //         childAspectRatio: 2/2),
+      //     itemBuilder: (BuildContext context, int index) {
+      //       return getItem(Assets.images.carBanner.path,15,'车辆照片');
+      //     }),
     );
   }
-  getItem(String path, int number,String name) {
-    return GestureDetector(
-      onTap: (){
 
-      },
+  getItem(String path, int number, String name) {
+    return GestureDetector(
+      onTap: () {},
       child: Column(
         children: [
           Container(
             clipBehavior: Clip.antiAlias,
-
-
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
             ),
-            child:
-            Stack(
+            child: Stack(
               clipBehavior: Clip.none,
               children: [
                 Image.asset(
@@ -58,12 +65,12 @@ class _CarImageItemState extends State<CarImageItem> {
                   // height: double.infinity,
                   // width: double.infinity,
                 ),
-
                 Positioned(
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 12.w),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8.w, horizontal: 12.w),
                       child: Text(
                         '$number张',
                         style: TextStyle(color: Colors.white, fontSize: 20.sp),
@@ -71,8 +78,6 @@ class _CarImageItemState extends State<CarImageItem> {
                     ))
               ],
             ),
-
-
           ),
           16.hb,
           Text(
@@ -84,11 +89,3 @@ class _CarImageItemState extends State<CarImageItem> {
     );
   }
 }
-
-
-
-
-
-
-
-

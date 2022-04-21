@@ -6,14 +6,6 @@ import '../toast/cloud_toast.dart';
 
 class NetworkInterceptor extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    if (true) {
-      LoggerData.addData(options);
-    }
-    super.onRequest(options, handler);
-  }
-
-  @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     // final userProvider = Provider.of<UserProvider>(Get.context!, listen: false);
     LoggerData.addData(response);
