@@ -117,8 +117,6 @@ class _SortListPageState extends State<SortListPage> {
                 Get.back();
                 _carName = name;
                 setState(() {
-
-
                 });
               },));
             },

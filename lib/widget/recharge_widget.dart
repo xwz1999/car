@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 typedef ItemCallback = Function(String item);
 
 class RechargeWidget extends StatefulWidget {
-  final List<ChooseItem> itemList;
+  final List<ChooseItems> itemList;
   final ItemCallback callback;
   final int crossAxisCount;
   final double mainAxisSpacing;
@@ -57,7 +57,7 @@ class _RechargeWidgetState extends State<RechargeWidget> {
             childAspectRatio: widget.childAspectRatio,
             crossAxisCount: widget.crossAxisCount,
             mainAxisSpacing: widget.mainAxisSpacing,
-            callback: (ChooseItem item, int index) {
+            callback: (ChooseItems item, int index) {
               for (int i = 0; i < widget.itemList.length; i++) {
                 if (i != index) {
                   widget.itemList[i].isChoose = false;

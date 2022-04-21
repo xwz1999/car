@@ -1,14 +1,14 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
-typedef ItemCallback = Function(ChooseItem item, int index);
+typedef ItemCallback = Function(ChooseItems item, int index);
 
-class ChooseItem {
+class ChooseItems {
   String name;
   String pice;
   bool isChoose;
 
-  ChooseItem({
+  ChooseItems({
     required this.name,
     required this.pice,
     this.isChoose = false,
@@ -16,7 +16,7 @@ class ChooseItem {
 }
 
 class SortWidget extends StatelessWidget {
-  final List<ChooseItem> itemList;
+  final List<ChooseItems> itemList;
   final ItemCallback callback;
 
   final int crossAxisCount;
@@ -57,7 +57,7 @@ class SortWidget extends StatelessWidget {
         });
   }
 
-  _getItem(ChooseItem item, int index) {
+  _getItem(ChooseItems item, int index) {
     return GestureDetector(
       onTap: () {
         callback(item, index);
