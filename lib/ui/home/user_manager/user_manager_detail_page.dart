@@ -1,9 +1,9 @@
-import 'package:cloud_car/ui/home/search_page.dart';
+
 import 'package:cloud_car/ui/home/user_manager/user_info_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
+
 import 'package:cloud_car/widget/choose_widget.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
@@ -175,7 +175,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
       child: Text(
         '客户统计',
         style: TextStyle(
-            color: Color(0xFF111111), fontSize: BaseStyle.fontSize36,fontWeight: FontWeight.bold),
+            color: const Color(0xFF111111), fontSize: BaseStyle.fontSize36,fontWeight: FontWeight.bold),
       ),
     ),);
   }

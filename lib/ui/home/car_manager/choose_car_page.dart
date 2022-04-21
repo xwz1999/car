@@ -5,7 +5,6 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -93,7 +92,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
   ];
 
   late TextEditingController _editingController;
-  String _searchText = "";
+
   late FocusNode _contentFocusNode;
 
   @override
@@ -187,13 +186,13 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
   _getAppbar() {
     return SearchBarWidget(callback: (String text) {
       _search  = text;
-      print(_search);
+
     }, tips: '请输入车辆名称', title:Container(
       alignment: Alignment.center,
       child: Text(
         widget.title,
         style: TextStyle(
-            color: Color(0xFF111111), fontSize: BaseStyle.fontSize36),
+            color: const Color(0xFF111111), fontSize: BaseStyle.fontSize36),
       ),
     ),);
   }

@@ -144,7 +144,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
 
               widget.leftWidget!=null?widget.leftWidget!:const SizedBox(),
 
-              _show? Container(
+              _show? SizedBox(
                 width: 500.w,
                 height: 72.w,
                 child: TextField(
@@ -234,7 +234,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                   ),
                 ),
               ),
-              _show?Spacer():SizedBox(),
+              _show?const Spacer():const SizedBox(),
               _show? GestureDetector(
                 onTap: () {
                   _show = false;

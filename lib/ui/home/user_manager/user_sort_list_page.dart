@@ -65,7 +65,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
                   Get.to(()=>ChooseItemPage(callback: (String name) {
                     Get.back();
 
-                  }, items: [
+                  }, items: const [
                     '1','2','3'
                   ], name: '门店',));
                 },

@@ -62,7 +62,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                         const CloudBackButton(),
                         30.wb,
                         const Text('李四'),
-                        Spacer(),
+                        const Spacer(),
 
                         _isImportant?GestureDetector(
                           onTap: (){

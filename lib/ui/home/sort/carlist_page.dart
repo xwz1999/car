@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 
 import 'package:azlistview/azlistview.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
@@ -6,7 +6,7 @@ import 'package:cloud_car/ui/home/sort/sort_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:lpinyin/lpinyin.dart';
 
 import '../models.dart';
@@ -84,62 +84,62 @@ class _CarListPageState extends State<CarListPage> {
     setState(() {});
   }
 
-  Widget _buildHeader() {
-    List<CityModel> hotCityList = [];
-    hotCityList.addAll([
-      CityModel(name: "奥迪"),
-      CityModel(name: "奔驰"),
-      CityModel(name: "宝马"),
-      CityModel(name: "雷克萨斯"),
-      CityModel(name: "沃尔沃"),
-    ]);
+  // Widget _buildHeader() {
+  //   List<CityModel> hotCityList = [];
+  //   hotCityList.addAll([
+  //     CityModel(name: "奥迪"),
+  //     CityModel(name: "奔驰"),
+  //     CityModel(name: "宝马"),
+  //     CityModel(name: "雷克萨斯"),
+  //     CityModel(name: "沃尔沃"),
+  //   ]);
+  //
+  //   return
+  //
+  //     Column(
+  //       children: [
+  //
+  //         GridView.builder(
+  //           shrinkWrap: true,
+  //           padding: EdgeInsets.zero,
+  //           itemCount: 5,
+  //           //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+  //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //             //横轴元素个数
+  //               crossAxisCount: 5,
+  //               //纵轴间距
+  //               mainAxisSpacing: 6,
+  //               //横轴间距
+  //               crossAxisSpacing: 24,
+  //               //子组件宽高长度比例
+  //               childAspectRatio: 1),
+  //           itemBuilder: (BuildContext context, int index) {
+  //             //Widget Function(BuildContext context, int index)
+  //             return _getCityView(
+  //                 hotCityList[index].name,isLocation: index==0);
+  //           }),
+  //       ],
+  //     );
+  // }
 
-    return
 
-      Column(
-        children: [
-
-          GridView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            itemCount: 5,
-            //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //横轴元素个数
-                crossAxisCount: 5,
-                //纵轴间距
-                mainAxisSpacing: 6,
-                //横轴间距
-                crossAxisSpacing: 24,
-                //子组件宽高长度比例
-                childAspectRatio: 1),
-            itemBuilder: (BuildContext context, int index) {
-              //Widget Function(BuildContext context, int index)
-              return _getCityView(
-                  hotCityList[index].name,isLocation: index==0);
-            }),
-        ],
-      );
-  }
-
-
-  _getCityView(String name,{bool isLocation = false}){
-    return Container(
-      width: 54.w,
-      padding: EdgeInsets.symmetric(vertical:14.w ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(4.w),
-        border: Border.all(color: const Color(0xFFEEEEEE),width: 1.w),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(name,style: Theme.of(context).textTheme.subtitle2,)
-        ],
-      ),
-    );
-  }
+  // _getCityView(String name,{bool isLocation = false}){
+  //   return Container(
+  //     width: 54.w,
+  //     padding: EdgeInsets.symmetric(vertical:14.w ),
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       borderRadius: BorderRadius.circular(4.w),
+  //       border: Border.all(color: const Color(0xFFEEEEEE),width: 1.w),
+  //     ),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Text(name,style: Theme.of(context).textTheme.subtitle2,)
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

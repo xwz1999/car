@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/hive_store.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart';
@@ -103,7 +104,9 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     var env = const String.fromEnvironment('ENV', defaultValue: 'dev') == 'dev';
-    print('env :$env');
+    if (kDebugMode) {
+      print('env :$env');
+    }
     DevEV.instance.setEnvironment(env);
     DevEV.instance.init(context);
     Future.delayed(const Duration(milliseconds: 1000), () async {

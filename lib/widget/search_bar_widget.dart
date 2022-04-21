@@ -56,7 +56,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             isSpecial: true,
           ),
 
-          _show? Container(
+          _show? SizedBox(
             width: 500.w,
             height: 72.w,
             child: TextField(

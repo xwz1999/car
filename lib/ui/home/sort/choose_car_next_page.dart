@@ -6,7 +6,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
 
-import '../manager_container_item.dart';
+
 
 typedef CarCallback = Function(String name, int id);
 
