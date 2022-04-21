@@ -40,18 +40,6 @@ class API {
   static _UserApi user = _UserApi();
   static _HomeApi home = _HomeApi();
 }
-
-extension ImageOnString on String {
-  String get image => '${API.imageHost}/$this';
-
-  String sizeImage(int width, [int? height]) {
-    var parts = <String>[];
-    parts.add('w=$width');
-    if (height != null) parts.add('h=$height');
-    return '$image@${parts.join('&')}';
-  }
-}
-
 class _File {
   ///图片上传
   String get uploadImage => '/file/upload/image';
