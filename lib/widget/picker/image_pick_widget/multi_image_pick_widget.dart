@@ -122,6 +122,7 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
           var place = _files[index];
           _files[index] = _files[acceptIndex];
           _files[acceptIndex] = place;
+          widget.onChanged(_files);
           setState(() {});
         },
         builder: (context, cdata, rdata) {
