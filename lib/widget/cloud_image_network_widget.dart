@@ -27,11 +27,11 @@ class CloudImageNetworkWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInImage.assetNetwork(
-      placeholder: Assets.images.placeHolder.path,
+      placeholder: Assets.images.placeholder.path,
       image: imagePath,
       imageErrorBuilder: (context, obj, stackTrace) {
         return Image.asset(
-          Assets.images.placeHolder.path,
+          Assets.images.placeholder.path,
           width: width ?? 160.w,
           height: height ?? 160.w,
           fit: BoxFit.cover,

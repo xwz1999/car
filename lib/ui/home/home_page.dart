@@ -1,10 +1,10 @@
-
 import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/task_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -80,11 +80,9 @@ class _HomePageState extends State<HomePage>
               width: 64.w, height: 64.w,
               child: AspectRatio(
                 aspectRatio: 1,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(32.w)),
-                    child: Container(
-                      color: Colors.blue,
-                    )),
+                child: CloudAvatarWidget(
+                  urls: [UserTool.userProvider.userInfo.headImg],
+                ),
               ),
             ),
             16.wb,

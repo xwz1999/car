@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../utils/user_tool.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class BasicInformationPage extends StatefulWidget {
@@ -208,7 +209,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                       const Spacer(),
                       SizedBox(
                         child: Text(
-                          '${UserTool.userProvider.userInfo.nickname}',
+                          UserTool.userProvider.userInfo.nickname,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1

@@ -174,7 +174,7 @@ class _PosterEditPageState extends State<PosterEditPage> {
                     width: double.parse(widget.model.size),
                     height: double.parse(widget.model.size),
                     data:
-                        '$posterCodePrefix${UserTool.userProvider.userInfo.inviteCode}',
+                        '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
                     barcode: Barcode.qrCode()),
               ))
         ],

@@ -20,7 +20,8 @@ class UserProvider extends ChangeNotifier {
       final token = HiveStore.appBox?.get('token') as String;
 
       _isLogin = true;
-      await setToken(token);
+      apiClient.setToken(token);
+      await updateUserInfo();
       return true;
     } else {
       _isLogin = false;
@@ -32,6 +33,7 @@ class UserProvider extends ChangeNotifier {
     apiClient.setToken(token);
     HiveStore.appBox!.put('token', token);
     if (user != null) {
+      _userInfo = UserInfoModel(inviteCode: '', nickname: '', headImg: '', level: 0);
       userInfo.nickname = user.nickname;
       userInfo.headImg = user.headImg;
       userInfo.level = user.level;
