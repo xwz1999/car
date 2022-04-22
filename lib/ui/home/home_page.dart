@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../utils/user_tool.dart';
 import 'car_manager/car_manager_page.dart';
 import 'car_manager/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage>
               ),
             ),
             16.wb,
-            Text('Hi,张三',
+            Text('Hi,${UserTool.userProvider.userInfo.nickname}',
                 style: TextStyle(
                     color: BaseStyle.color111111,
                     fontWeight: FontWeight.bold,

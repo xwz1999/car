@@ -3,6 +3,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/material.dart';
 
+import '../../../utils/user_tool.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class NoWithddrawalPage extends StatefulWidget {
@@ -111,7 +112,7 @@ class _NoWithddrawalPageState extends State<NoWithddrawalPage> {
                             ),
                             32.hb,
                             Text(
-                              '当前账号: 张三',
+                              '当前账号: ${UserTool.userProvider.userInfo.nickname}',
                               style: TextStyle(
                                   fontSize: BaseStyle.fontSize24,
                                   color: BaseStyle.color333333),

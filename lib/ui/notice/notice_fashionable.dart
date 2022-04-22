@@ -1,6 +1,7 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/user_tool.dart';
 import '../../widget/button/cloud_back_button.dart';
 
 class FashionablePage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _FashionablePageState extends State<FashionablePage>
     {
       'title': '奥迪A3分账群',
       'content': '买车',
-      'name': '张三',
+      'name': UserTool.userProvider.userInfo.nickname,
       'money': '50000元/1000000元',
       'time': '2020—12-30 12:20',
       'conditions': '0',
@@ -26,7 +27,7 @@ class _FashionablePageState extends State<FashionablePage>
     {
       'title': '宝马CLS级分账群',
       'content': '洗车',
-      'name': '张三',
+      'name': UserTool.userProvider.userInfo.nickname,
       'money': '10元/50元',
       'time': '2020—12-30 12:20',
       'conditions': '1',

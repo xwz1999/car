@@ -3,6 +3,8 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart'
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/user_tool.dart';
+
 class EditCarSourceItem extends StatefulWidget {
   const EditCarSourceItem({Key? key}) : super(key: key);
 
@@ -54,7 +56,7 @@ class _EditCarSourceItemState extends State<EditCarSourceItem> {
       children: [
         EditItemWidget(title: '车辆来源', value: '个人直卖',callback: (String content) {  },),
 
-        EditItemWidget(title: '上架人', value: '张三',callback: (String content) {  },),
+        EditItemWidget(title: '上架人', value: UserTool.userProvider.userInfo.nickname,callback: (String content) {  },),
 
         EditItemWidget(title: '门店', value: '云云问车', callback: (String content) {  },),
 

@@ -2,6 +2,7 @@
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 
 class EditCarOwnerItem extends StatefulWidget {
   const EditCarOwnerItem({Key? key}) : super(key: key);
@@ -125,7 +126,7 @@ class _EditCarOwnerItemState extends State<EditCarOwnerItem> {
 
 
         getContentItem('车主类别','个人寄卖'),
-        getContentItem(type==1?'公司名称':'车主姓名','张三'),
+        getContentItem(type==1?'公司名称':'车主姓名',UserTool.userProvider.userInfo.nickname),
         getContentItem(type==1?'信用代码':'身份证号','39209239891212131',isSpecial: true, path: Assets.icons.scan.path),
         getContentItem(type==1?'联系方式':'手机号码','18963625362',isSpecial: true,),
         getContentItem('开户行','中国银行XX支行'),

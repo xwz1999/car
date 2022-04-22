@@ -1,7 +1,9 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +122,8 @@ class _PosterEditPageState extends State<PosterEditPage> {
                       quality: 100,
                     );
                     if (re['isSuccess']) {
-                      CloudToast.show('海报已保存到${re['filePath']}',align: Alignment.center);
+                      CloudToast.show('海报已保存到${re['filePath']}',
+                          align: Alignment.center);
                     } else {
                       CloudToast.show('保存海报失败');
                     }
@@ -170,7 +173,8 @@ class _PosterEditPageState extends State<PosterEditPage> {
                 child: BarcodeWidget(
                     width: double.parse(widget.model.size),
                     height: double.parse(widget.model.size),
-                    data: '123456',
+                    data:
+                        '$posterCodePrefix${UserTool.userProvider.userInfo.inviteCode}',
                     barcode: Barcode.qrCode()),
               ))
         ],

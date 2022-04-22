@@ -1,9 +1,11 @@
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:flutter/foundation.dart';
 
+import '../constants/api/api.dart';
 import '../model/user/user_info_model.dart';
 import '../utils/hive_store.dart';
 import '../utils/new_work/api_client.dart';
+import '../utils/toast/cloud_toast.dart';
 
 class UserProvider extends ChangeNotifier {
   bool _isLogin = false;
@@ -47,12 +49,12 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future updateUserInfo() async {
-    // var base = await apiClient.request(API.user.info);
-    // if (base.code == 0) {
-    //   _userInfo = UserInfoModel.fromJson(base.data);
-    // } else {
-    //   CloudToast.show(base.msg);
-    // }
+    var base = await apiClient.request(API.user.userInfo);
+    if (base.code == 0) {
+      _userInfo = UserInfoModel.fromJson(base.data);
+    } else {
+      CloudToast.show(base.msg);
+    }
     notifyListeners();
   }
 }

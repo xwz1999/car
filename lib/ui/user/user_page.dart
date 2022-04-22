@@ -17,6 +17,8 @@ import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../utils/user_tool.dart';
+
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
 
@@ -334,7 +336,7 @@ class _UserPageState extends State<UserPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "张三",
+                        UserTool.userProvider.userInfo.nickname,
                         style: Theme.of(context).textTheme.headline3,
                         // style: TextStyle(
                         //     fontSize: 20, fontWeight: FontWeight.bold),

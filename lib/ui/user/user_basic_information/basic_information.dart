@@ -208,7 +208,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                       const Spacer(),
                       SizedBox(
                         child: Text(
-                          '张三',
+                          '${UserTool.userProvider.userInfo.nickname}',
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -306,7 +306,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                           filled: true,
                                           isDense: true,
                                           fillColor: Colors.white,
-                                          hintText: "张三",
+                                          hintText: "${UserTool.userProvider.userInfo.nickname}",
                                           hintStyle: TextStyle(
                                               color: Colors.grey.shade500,
                                               fontSize: 14,
