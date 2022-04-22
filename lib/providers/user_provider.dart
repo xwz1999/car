@@ -28,7 +28,7 @@ class UserProvider extends ChangeNotifier {
 
   Future setToken(String token, {User? user}) async {
     apiClient.setToken(token);
-
+    HiveStore.appBox!.put('token', token);
     if (user != null) {
       userInfo.nickname = user.nickname;
       userInfo.headImg = user.headImg;

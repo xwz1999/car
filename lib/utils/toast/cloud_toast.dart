@@ -3,9 +3,10 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
 class CloudToast {
-  static show(String text) {
+  static show(String text,{AlignmentGeometry? align}) {
     BotToast.showText(
       text: text,
+      align: align,
       borderRadius: BorderRadius.circular(20),
     );
   }
