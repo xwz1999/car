@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'car_custom_picker.dart';
+import 'car_month_pick_body.dart';
 
 class CarDatePicker {
   static Future<DateTime?> pick(
@@ -27,6 +28,12 @@ class CarDatePicker {
       max: initDate.add(const Duration(days: 7)),
       mode: CupertinoDatePickerMode.dateAndTime,
     ));
+  }
+
+  static Future<DateTime?> monthPicker(DateTime initDate) async {
+    return await Get.bottomSheet(
+        CarMonthPickBody(initTime: initDate)
+    );
   }
 }
 
@@ -64,6 +71,7 @@ class __CarDatePickerState extends State<_CarDatePicker> {
     return CarCustomPicker(
       onPressed: () => Get.back(result: _date),
       body: CupertinoDatePicker(
+
         use24hFormat: widget.use24H,
         maximumDate: widget.max,
         minimumDate: widget.min,

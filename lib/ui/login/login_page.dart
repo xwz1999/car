@@ -72,21 +72,27 @@ class _LoginPageState extends State<LoginPage> {
       }
       switch (res.errCode) {
         case 0:
-          var base = await apiClient
-              .request(API.login.weixin, data: {'code': res.code});
-          if (base.code == 0) {
-            var wxLoginResponse = WxLoginModel.fromJson(base.data);
-            if (!wxLoginResponse.isBind) {
-              Get.to(() => WxLoginPage(
-                    token: wxLoginResponse.bindToken,
-                  ));
+          var cancel = CloudToast.loading;
+          try {
+            var base = await apiClient
+                .request(API.login.weixin, data: {'code': res.code});
+            if (base.code == 0) {
+              var wxLoginResponse = WxLoginModel.fromJson(base.data);
+              if (!wxLoginResponse.isBind) {
+                Get.to(() => WxLoginPage(
+                      token: wxLoginResponse.bindToken,
+                    ));
+              } else {
+                UserTool.userProvider.setToken(wxLoginResponse.loginInfo.token);
+                Get.offAll(() => const TabNavigator());
+              }
             } else {
-              UserTool.userProvider.setToken(wxLoginResponse.loginInfo.token);
-              //Get.offAll(const TabNavigator());
+              CloudToast.show(base.msg);
             }
-          } else {
-            CloudToast.show(base.msg);
+          } catch (e) {
+            LoggerData.addData(e.toString());
           }
+          cancel();
           break;
         case -4:
           CloudToast.show('用户拒绝授权');
