@@ -34,9 +34,9 @@ class UserProvider extends ChangeNotifier {
     HiveStore.appBox!.put('token', token);
     if (user != null) {
       _userInfo = UserInfoModel(inviteCode: '', nickname: '', headImg: '', level: 0);
-      userInfo.nickname = user.nickname;
-      userInfo.headImg = user.headImg;
-      userInfo.level = user.level;
+      _userInfo.nickname = user.nickname;
+      _userInfo.headImg = user.headImg;
+      _userInfo.level = user.level;
     }else{
       //每次打开app更新用户信息
       await updateUserInfo();

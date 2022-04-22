@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                       token: wxLoginResponse.bindToken,
                     ));
               } else {
-                UserTool.userProvider.setToken(wxLoginResponse.loginInfo.token);
+               await UserTool.userProvider.setToken(wxLoginResponse.loginInfo.token);
                 Get.offAll(() => const TabNavigator());
               }
             } else {

@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../utils/user_tool.dart';
+import '../../widget/cloud_avatar_widget.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -322,13 +323,8 @@ class _UserPageState extends State<UserPage> {
                   SizedBox(
                     //头像
                     width: 120.w, height: 120.w,
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(60.w)),
-                          child: Container(
-                            color: Colors.blue,
-                          )),
+                    child: CloudAvatarWidget(
+                      urls: [UserTool.userProvider.userInfo.headImg],
                     ),
                   ),
                   32.wb,
