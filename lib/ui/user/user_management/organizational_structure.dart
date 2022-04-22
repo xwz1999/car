@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/cloud_back_button.dart';
 
+typedef TextCallback = Function(String content);
+
 class StructurePage extends StatefulWidget {
-  final CarCallback callback;
+  final TextCallback callback;
 
   const StructurePage({Key? key, required this.callback}) : super(key: key);
 
@@ -89,6 +91,7 @@ class _StructurePageState extends State<StructurePage> {
                     _selectIndex.clear();
                     _selectIndex.add(index);
                   }
+
                   setState(() {});
                   //print("我点击了：${_selectIndex.first}");
                   widget.callback(moddels[_selectIndex.first]['title'] ?? '');

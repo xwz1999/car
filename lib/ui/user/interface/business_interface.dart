@@ -1,0 +1,70 @@
+import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/user/roleall_model.dart';
+import 'package:cloud_car/model/user/storeall_model.dart';
+import 'package:cloud_car/model/user/storeselect_moedl.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
+import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
+
+class Business {
+  //组织架构
+  static Future<List<StoreallModel>> getStoreall() async {
+    BaseListModel res =
+        await apiClient.requestList(API.storemanagement.storeAll, data: {});
+
+    if (res.data!.list == null) return [];
+    return (res.data!.list!).map((e) => StoreallModel.fromJson(e)).toList();
+  }
+
+  //全部角色
+  static Future<List<RoleallModel>> getRoleall() async {
+    BaseListModel res =
+        await apiClient.requestList(API.storemanagement.roleAll, data: {});
+    if (res.data!.list == null) return [];
+    return (res.data!.list!).map((e) => RoleallModel.fromJson(e)).toList();
+  }
+
+  //门店筛选
+  static Future<List<StoreselectMoedl>> getStoreselect() async {
+    BaseListModel res =
+        await apiClient.requestList(API.storemanagement.storeSelect, data: {});
+    if (res.data!.list == null) return [];
+    return (res.data!.list!).map((e) => StoreselectMoedl.fromJson(e)).toList();
+  }
+
+  //添加门店
+  static Future<String> getStoreadd(
+    String name,
+    String address,
+  ) async {
+    BaseModel res =
+        await apiClient.request(API.storemanagement.storeAdd, data: {
+      'name': name,
+      'address': address,
+    });
+    if (res.data! == null) return '';
+    return (res.data! as String).toString();
+  }
+
+  //添加员工
+  static Future<String> getStaffadd(
+    String name,
+    int gender,
+    String phone,
+    int storeId,
+    int roleId,
+    String commission,
+  ) async {
+    BaseModel res =
+        await apiClient.request(API.storemanagement.staffAdd, data: {
+      'name': name,
+      'gender': gender,
+      'phone': phone,
+      'storeId': storeId,
+      'roleId': roleId,
+      'commission': commission
+    });
+    if (res.data! == null) return '11';
+    return (res.data as String).toString();
+  }
+}

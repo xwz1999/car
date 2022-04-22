@@ -39,6 +39,12 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
   }
 
   @override
+  void didUpdateWidget(covariant TextEditItemWidget oldWidget) {
+    _editingController = TextEditingController(text: widget.value);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     _editingController.dispose();
 
@@ -47,69 +53,66 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBuilder(builder: (context, dialogSetState) {
-      return GestureDetector(
-        onTap: () {
-          widget.ontap();
-          dialogSetState(() {});
-        },
-        child: Row(
-          children: [
-            SizedBox(
-              width: 170.w,
-              child: Text(
-                widget.title,
-                style: TextStyle(
-                  color: BaseStyle.color999999,
-                  fontSize: BaseStyle.fontSize28,
-                ),
+    return GestureDetector(
+      onTap: () {
+        widget.ontap();
+      },
+      child: Row(
+        children: [
+          SizedBox(
+            width: 170.w,
+            child: Text(
+              widget.title,
+              style: TextStyle(
+                color: BaseStyle.color999999,
+                fontSize: BaseStyle.fontSize28,
               ),
             ),
-            SizedBox(
-              width: 300.w,
-              height: 35.w,
-              child: TextField(
-                keyboardType: TextInputType.text,
-                // onSubmitted: (text) {
+          ),
+          SizedBox(
+            width: 300.w,
+            height: 35.w,
+            child: TextField(
+              keyboardType: TextInputType.text,
+              // onSubmitted: (text) {
 
-                //   setState(() {});
-                //   // _refreshController.callRefresh();
-                // },
-                onChanged: (text) {
-                  widget.callback(text);
-                  //print("是否有值${text.isNotEmpty}");
-                },
-                // style: TextStyle(
-                //   color: widget.canChange
-                //       ? BaseStyle.color333333
-                //       : BaseStyle.color999999,
-                //   fontSize: BaseStyle.fontSize28,
-                // ),
-                maxLines: null,
-                controller: _editingController,
-                decoration: InputDecoration(
-                  //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
-                  enabled: widget.endIcon ? false : true,
-                  filled: true,
-                  isCollapsed: true,
-                  fillColor: Colors.white,
-                  hintText: widget.tips,
-                  hintStyle: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w300),
-                  border: InputBorder.none,
-                ),
+              //   setState(() {});
+              //   // _refreshController.callRefresh();
+              // },
+              onChanged: (text) {
+                widget.callback(text);
+                //print("是否有值${text.isNotEmpty}");
+              },
+              // style: TextStyle(
+              //   color: widget.canChange
+              //       ? BaseStyle.color333333
+              //       : BaseStyle.color999999,
+              //   fontSize: BaseStyle.fontSize28,
+              // ),
+              maxLines: null,
+              controller: _editingController,
+              decoration: InputDecoration(
+                //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
+                enabled: widget.endIcon ? false : true,
+                filled: true,
+                isCollapsed: true,
+                fillColor: Colors.white,
+                hintText: widget.tips,
+                hintStyle: TextStyle(
+                    color: Colors.grey.shade500,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                border: InputBorder.none,
               ),
             ),
-            const Spacer(),
-            SizedBox(
-              child: widget.widget,
-            ),
-            32.wb,
-          ],
-        ),
-      );
-    });
+          ),
+          const Spacer(),
+          SizedBox(
+            child: widget.widget,
+          ),
+          32.wb,
+        ],
+      ),
+    );
   }
 }

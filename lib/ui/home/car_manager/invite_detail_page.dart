@@ -118,6 +118,7 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                             _editingController2.text = city;
                             setState(() {});
                           },
+                          title: '',
                         ));
                   },
                   child: Row(

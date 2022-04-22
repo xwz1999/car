@@ -1,7 +1,9 @@
+import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
+
 import '../environment/environment.dart';
 
 part 'user_api.dart';
-
+part 'order_api.dart';
 part 'home_api.dart';
 
 /// * user  用户接口
@@ -34,11 +36,11 @@ class API {
   static _Login login = _Login();
 
   static _Storemanagement storemanagement = _Storemanagement();
-  static _Order order = _Order();
 
   //二级分类
   static _UserApi user = _UserApi();
   static _HomeApi home = _HomeApi();
+  static _OrderApi order = _OrderApi();
 }
 
 extension ImageOnString on String {
@@ -69,35 +71,6 @@ class _Login {
 
   ///微信登录绑定账号
   String get weixinBind => '/login/bind';
-}
-
-class _Order {
-  //寄卖订单->寄卖订单列表
-  get consignmentLists => '/order/consignment/lists';
-
-//寄卖订单->发布车辆
-  get consignmentPublish => '/order/consignment/publish';
-
-//邀约
-  get inviteAdd => '/order/invite/add';
-
-//售车订单->售车订单列表
-  get saleLists => '/order/sale/lists';
-
-//上传检车报告
-  get saleTestrepord => '/order/sale/test_report';
-
-//过户
-  get scaleTransfer => '/order/sale/transfer';
-
-//完结订单
-  get saleFinal => '/order/sale/final';
-
-//叫车订单->添加叫车订单
-  get carAdd => '/order/call/car/add';
-
-//交车
-  get carFinal => '/order/call/car/final';
 }
 
 //门店管理
