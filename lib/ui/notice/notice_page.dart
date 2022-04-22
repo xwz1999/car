@@ -134,7 +134,7 @@ class _NoticePageState extends State<NoticePage>
               Get.to(() => const ExaminationPage());
               break;
             case '系统通知':
-              Get.to(() => const systemPage());
+              Get.to(() => const SystemPage());
               break;
           }
         },

@@ -1,4 +1,5 @@
-import 'package:cloud_car/ui/home/poster_edit_page.dart';
+
+import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/task_page.dart';
@@ -247,7 +248,7 @@ class _HomePageState extends State<HomePage>
           title: '海报',
           suffixTitle: '查看全部',
           onTap: () {
-            Get.to(() => const PosterEditPage());
+            Get.to(() => const PosterListPage());
           },
         ),
         12.hb,

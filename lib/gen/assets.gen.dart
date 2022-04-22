@@ -585,6 +585,10 @@ class $AssetsImagesGen {
   AssetGenImage get placeHolder =>
       const AssetGenImage('assets/images/place_holder.png');
 
+  /// File path: assets/images/place_holder_list.png
+  AssetGenImage get placeHolderList =>
+      const AssetGenImage('assets/images/place_holder_list.png');
+
   /// File path: assets/images/real_name_badge.png
   AssetGenImage get realNameBadge =>
       const AssetGenImage('assets/images/real_name_badge.png');

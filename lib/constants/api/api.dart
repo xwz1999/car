@@ -33,8 +33,9 @@ class API {
   static _File file = _File();
   static _Login login = _Login();
 
-  static _Storemanagement storemanagement = _Storemanagement();
+  static _StoreManagement storeManagement = _StoreManagement();
   static _Order order = _Order();
+  static _Poster poster = _Poster();
 
   //二级分类
   static _UserApi user = _UserApi();
@@ -89,7 +90,7 @@ class _Order {
 }
 
 //门店管理
-class _Storemanagement {
+class _StoreManagement {
 //组织架构
   get storeAll => '/business/store/all';
 
@@ -104,4 +105,9 @@ class _Storemanagement {
 
   //添加员工
   get staffAdd => '/business/staff/add';
+}
+
+class _Poster{
+  ///海报列表
+  String get list => '/playbill/lists';
 }

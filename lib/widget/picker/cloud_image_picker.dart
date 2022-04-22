@@ -33,7 +33,7 @@ class CloudImagePicker {
             );
             Get.back(
               result: pickFile,
-            )
+            );
           },
           child: [
             const Icon(CupertinoIcons.photo),
@@ -51,7 +51,7 @@ class CloudImagePicker {
               Get.back(
                 result: pickFile,
               );
-            }
+            },
             child: [
             const Icon(CupertinoIcons.camera),
         30.wb,
