@@ -8,7 +8,7 @@ typedef TextCallback = Function(String content);
 
 ///对list或者grid形式的列表进行选择操作
 class CarListPicker extends StatefulWidget {
-  final TextCallback onPressed;
+  final TextCallback callback;
   final String confirmString;
   final String? title;
   final bool isGrid;///是否是grid列表
@@ -16,7 +16,7 @@ class CarListPicker extends StatefulWidget {
 
   const CarListPicker(
       {Key? key,
-      required this.onPressed,
+      required this.callback,
       this.confirmString = '确认',
       this.title, this.isGrid = true,
       required this.items})
@@ -32,58 +32,62 @@ class _CarListPickerState extends State<CarListPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: kForeGroundColor,
-      child: SizedBox(
-        height: 650.w,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 88.w,
-              child: NavigationToolbar(
-                leading: _buildButton(
-                  title: '取消',
-                  onPressed: () => Navigator.pop(context),
-                  color:Colors.black26,
-                ),
-                middle: Text(
+    return Container(
+
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 24.w),
+      clipBehavior:Clip.antiAlias,
+      height: 650.w,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildButton(
+                title: '取消',
+                onPressed: () => Navigator.pop(context),
+                color:Colors.black26,
+              ),
+              Expanded(
+                child: Text(
                   widget.title ?? '',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: const Color(0xFF111111),
                     fontWeight: FontWeight.bold,
-                    fontSize: 30.sp,
+                    fontSize: 32.sp,
                   ),
                 ),
-                trailing: _buildButton(
-                  title: widget.confirmString,
-                  onPressed: widget.onPressed(_chooseItem),
-                  color: Colors.blue,
-                ),
               ),
-            ),
-            Expanded(child:
-            widget.isGrid?
-            ScreenWidget(
-              childAspectRatio: 72 / 28,
-              callback: (String item) {
-                _chooseItem = item;
-                setState(() {
+              _buildButton(
+                title: widget.confirmString,
+                onPressed: ()=> widget.callback(_chooseItem),
+                color: Colors.blue,
+              ),
+            ],
+          ),
 
-                });
-              },
-              mainAxisSpacing: 10.w,
-              crossAxisSpacing: 24.w,
-              crossAxisCount: 4,
-              haveButton: true,
-              itemList: widget.items,
-            ):ListView(
+          ScreenWidget(
+            isGrid: widget.isGrid,
+            childAspectRatio: 72 / 28,
+            callback: (String item) {
+              _chooseItem = item;
 
-            )
+              setState(() {
 
-            ),
-          ],
-        ),
+              });
+            },
+            mainAxisSpacing: 24.w,
+            crossAxisSpacing: 24.w,
+            crossAxisCount: 4,
+            haveButton: true,
+            itemList: widget.items,
+
+          ),
+        ],
       ),
     );
   }
@@ -94,16 +98,15 @@ class _CarListPickerState extends State<CarListPicker> {
     required VoidCallback? onPressed,
     required Color color,
   }) {
-    return SizedBox(
+    return GestureDetector(
+      onTap: onPressed,
       // height: 48.w,
-      child: TextButton(
-        onPressed: onPressed,
-        child: Text(title,
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.bold,
-            )),
-      ),
+      child: Text(title,
+          style: TextStyle(
+            color: color,
+            fontSize: 28.sp,
+            fontWeight: FontWeight.bold,
+          )),
     );
   }
 }

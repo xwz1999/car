@@ -59,6 +59,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
       backgroundColor: kForeGroundColor,
       extendBody: true,
       body: ListView(
+        shrinkWrap: true,
         children: [
           Column(
             children: [
@@ -275,11 +276,16 @@ class _CarValuationPageState extends State<CarValuationPage> {
               onTap: () async{
                 await showModalBottomSheet(
                   context: context,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
                   builder: (context) {
-                    return CarListPicker(items: colorList, onPressed: (String content) {
-                      print(content);
-                    },
-                    isGrid: true,
+                    return CarListPicker(items: colorList, callback: (String content) {
+                      Get.back();
+                      _carInfo.color = content;
+                      setState(() {
+
+                      });
+                    },title: '车身颜色',
+
 
                     );
                   },
