@@ -77,57 +77,73 @@ class _CityListPageState extends State<CityListPage> {
   Widget _buildHeader() {
     List<CityModel> hotCityList = [];
     hotCityList.addAll([
-      CityModel(name: "北京市"),
-      CityModel(name: "广州市"),
-      CityModel(name: "成都市"),
-      CityModel(name: "深圳市"),
-      CityModel(name: "杭州市"),
-      CityModel(name: "武汉市"),
+      CityModel(name: "杭州"),
+      CityModel(name: "北京"),
+      CityModel(name: "上海"),
+      CityModel(name: "广州"),
+      CityModel(name: "深圳"),
+      CityModel(name: "成都"),
+
+      CityModel(name: "重庆"),
+      CityModel(name: "天津"),
+      CityModel(name: "南京"),
+      CityModel(name: "苏州"),
+      CityModel(name: "武汉"),
+      CityModel(name: "西安"),
     ]);
-    hotCityList.insert(0, CityModel(name: "宁波市"));
+
     return
 
-      Column(
-        children: [
+      Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 32.w),
+        child: Column(
+          children: [
 
-          GridView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemCount: hotCityList.length,
-              //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                //横轴元素个数
-                  crossAxisCount: 4,
-                  //纵轴间距
-                  mainAxisSpacing: 6,
-                  //横轴间距
-                  crossAxisSpacing: 24,
-                  //子组件宽高长度比例
-                  childAspectRatio: 1),
-              itemBuilder: (BuildContext context, int index) {
-                //Widget Function(BuildContext context, int index)
-                return _getCityView(
-                    hotCityList[index].name,isLocation: index==0);
-              }),
-        ],
+            GridView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemCount: hotCityList.length,
+                //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  //横轴元素个数
+                    crossAxisCount: 4,
+                    //纵轴间距
+                    mainAxisSpacing: 6,
+                    //横轴间距
+                    crossAxisSpacing: 10,
+                    //子组件宽高长度比例
+                    childAspectRatio: 152/56),
+                itemBuilder: (BuildContext context, int index) {
+                  //Widget Function(BuildContext context, int index)
+                  return _getCityView(
+                      hotCityList[index].name,isLocation: index==0);
+                }),
+          ],
+        ),
       );
   }
 
 
   _getCityView(String name,{bool isLocation = false}){
-    return Container(
-      width: 56.w,
-      padding: EdgeInsets.symmetric(vertical:14.w ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(4.w),
-        border: Border.all(color: const Color(0xFFEEEEEE),width: 1.w),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(name,style: Theme.of(context).textTheme.subtitle2,)
-        ],
+    return GestureDetector(
+      onTap: (){
+        Get.back();
+        widget.cityCallback(name);
+      },
+      child: Container(
+        width: 56.w,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(4.w),
+          border: Border.all(color: const Color(0xFFEEEEEE),width: 1.w),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(name,style: Theme.of(context).textTheme.subtitle2,)
+          ],
+        ),
       ),
     );
   }
@@ -135,21 +151,13 @@ class _CityListPageState extends State<CityListPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ListTile(
-            title: const Text("当前城市"),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: const <Widget>[
-                Icon(
-                  Icons.place,
-                  size: 20.0,
-                ),
-                Text(" 成都市"),
-              ],
-            )),
-        const Divider(
-          height: .0,
+        Padding(
+          padding:  EdgeInsets.symmetric(vertical: 16.w,horizontal: 32.w),
+          child: Text("热门城市",style: TextStyle(
+            color: BaseStyle.color999999,fontSize: 24.sp
+          ),),
         ),
         Expanded(
           child: AzListView(
@@ -159,6 +167,9 @@ class _CityListPageState extends State<CityListPage> {
               if (index == 0) return _buildHeader();
               CityModel model = cityList[index];
               return Utils.getListItem(context, model, (name, id) {
+                Get.back();
+                widget.cityCallback(name);
+
 
               });
             },

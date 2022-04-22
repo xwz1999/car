@@ -329,6 +329,10 @@ class $AssetsIconsGen {
   AssetGenImage get shanghaibankhead =>
       const AssetGenImage('assets/icons/shanghaibankhead.png');
 
+  /// File path: assets/icons/sort_choose.png
+  AssetGenImage get sortChoose =>
+      const AssetGenImage('assets/icons/sort_choose.png');
+
   /// File path: assets/icons/successful.png
   AssetGenImage get successful =>
       const AssetGenImage('assets/icons/successful.png');
@@ -588,6 +592,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/place_holder_list.png
   AssetGenImage get placeHolderList =>
       const AssetGenImage('assets/images/place_holder_list.png');
+
+  /// File path: assets/images/push_car_top.png
+  AssetGenImage get pushCarTop =>
+      const AssetGenImage('assets/images/push_car_top.png');
 
   /// File path: assets/images/real_name_badge.png
   AssetGenImage get realNameBadge =>

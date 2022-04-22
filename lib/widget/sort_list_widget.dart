@@ -15,6 +15,7 @@ class SortListWidget extends StatefulWidget {
   final double crossAxisSpacing;
   final double childAspectRatio;
   final Widget? rightWidget;
+  final bool isGrid;
 
   const SortListWidget({
     Key? key,
@@ -25,7 +26,7 @@ class SortListWidget extends StatefulWidget {
     required this.crossAxisSpacing,
     required this.childAspectRatio,
     required this.title,
-    this.rightWidget,
+    this.rightWidget, this.isGrid = true,
   }) : super(key: key);
 
   @override

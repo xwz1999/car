@@ -1,3 +1,6 @@
+
+import 'dart:ffi';
+import 'package:cloud_car/ui/home/car_manager/check_pushcar_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -170,7 +173,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => const EvainfoPage());
+                  Get.to(() => const CheckPushPage());
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
