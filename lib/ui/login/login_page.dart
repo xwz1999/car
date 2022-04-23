@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_car/constants/api/api.dart';
@@ -31,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   // String _operator = '';
   // String _phone = '';
   bool _chooseAgreement = false;
-
+ late StreamSubscription _fluwxListenObjcet;
   Map<String, String> simOperator = {
     'CM': '中国移动',
     'CU': '中国联通',
@@ -47,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void addJverifyListen() {
     /// 添加 loginAuthSyncApi 接口回调的监听
-    Jverify().addLoginAuthCallBackListener((event) async {
+  Jverify().addLoginAuthCallBackListener((event) async {
       var _result = "监听获取返回数据：[${event.code}] message = ${event.message}";
       if (kDebugMode) {
         print(_result);
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void addFluwxListen() {
-    fluwx.weChatResponseEventHandler
+   _fluwxListenObjcet= fluwx.weChatResponseEventHandler
         .distinct((a, b) => a == b)
         .listen((event) async {
       var res = event as fluwx.WeChatAuthResponse;
@@ -83,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                       token: wxLoginResponse.bindToken,
                     ));
               } else {
-                UserTool.userProvider.setToken(wxLoginResponse.loginInfo.token);
+               await UserTool.userProvider.setToken(wxLoginResponse.loginInfo.token);
                 Get.offAll(() => const TabNavigator());
               }
             } else {
@@ -122,8 +123,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
-    print(11111);
     Jverify().dismissLoginAuthView();
+    _fluwxListenObjcet.cancel();
   }
 
   @override

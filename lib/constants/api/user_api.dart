@@ -8,6 +8,9 @@ class _UserApi {
   _Result result = _Result();
   _Sign sign = _Sign();
   _Pay pay = _Pay();
+
+  ///用户详情
+  String get userInfo => '/user/info';
 }
 
 class _Wallet {

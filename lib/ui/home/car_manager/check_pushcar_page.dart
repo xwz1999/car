@@ -92,7 +92,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
               Padding(
                 padding: EdgeInsets.only(top: 340.h),
                 child: Container(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20.w),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8.0),

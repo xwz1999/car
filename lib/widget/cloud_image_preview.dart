@@ -64,11 +64,11 @@ class _CloudImagePreviewState extends State<CloudImagePreview> {
       return Hero(
         tag: widget.tag ?? widget.path!,
         child: FadeInImage.assetNetwork(
-          placeholder: Assets.images.placeHolder.path,
+          placeholder: Assets.images.placeholder.path,
           image: widget.path.imageWithHost,
           imageErrorBuilder: (context, obj, stackTrace) {
             return Image.asset(
-              Assets.images.placeHolder.path,
+              Assets.images.placeholder.path,
               fit: BoxFit.fill,
             );
           },

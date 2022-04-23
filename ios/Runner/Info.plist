@@ -20,6 +20,10 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>App需要访问相册以提供上传车辆照片、保存海报等功能</string>
+    <key>NSCameraUsageDescription</key>
+    <string>App需要访问相机用于扫描行驶证等功能</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

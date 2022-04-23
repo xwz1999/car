@@ -12,6 +12,9 @@ class EditItemWidget extends StatefulWidget {
   final String endText;
   final double paddingTop;
   final String tips;
+  final double paddingStart;
+  final Widget? endIcon;
+
 
   const EditItemWidget(
       {Key? key,
@@ -20,7 +23,7 @@ class EditItemWidget extends StatefulWidget {
       this.canChange = true,
       required this.callback,
       this.endText = '',
-      this.topIcon = true, this.paddingTop=0, this.tips = '请输入'})
+      this.topIcon = true, this.paddingTop=0, this.tips = '请输入', this.paddingStart = 28, this.endIcon,})
       : super(key: key);
 
   @override
@@ -39,8 +42,13 @@ class _EditItemWidgetState extends State<EditItemWidget> {
       paddingTop = widget.paddingTop;
     }
     _editingController = TextEditingController(text: widget.value);
-
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant EditItemWidget oldWidget) {
+    _editingController = TextEditingController(text: widget.value);
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -67,12 +75,8 @@ class _EditItemWidgetState extends State<EditItemWidget> {
             ),
           ):Padding(
            padding: EdgeInsets.only(top: 10.w),
-           child: Text(
-             '*  ',
-             style: TextStyle(
-               fontSize: 28.sp,
-               color: Colors.transparent,
-             ),
+           child: SizedBox(
+             width: widget.paddingStart.w,
            ),
          ),
           SizedBox(
@@ -96,9 +100,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
               },
               onChanged: (text) {},
               style: TextStyle(
-                color: widget.canChange
-                    ? BaseStyle.color333333
-                    : BaseStyle.color999999,
+                color:  BaseStyle.color333333,
                 fontSize: BaseStyle.fontSize28,
               ),
               maxLines: null,
@@ -109,23 +111,30 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                 isCollapsed: true,
                 fillColor: Colors.white,
                 hintText: widget.tips,
-                hintStyle: TextStyle(
-                    color: Colors.grey.shade500,
+                hintStyle: const TextStyle(
+                    color: Color(0xFFcccccc),
                     fontSize: 14,
                     fontWeight: FontWeight.w300),
                 border: InputBorder.none,
               ),
             ),
           ),
-          widget.endText.isNotEmpty
-              ? Text(
-                  widget.endText,
-                  style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color(0xFF333333),
-                  ),
-                )
-              : const SizedBox(),
+
+          widget.endIcon!=null?
+              Padding(padding: EdgeInsets.only(right: 32.w,),child:widget.endIcon! ,)
+              :
+          (widget.endText.isNotEmpty
+              ? Padding(
+            padding: EdgeInsets.only(right: 32.w,),
+                child: Text(
+            widget.endText,
+            style: TextStyle(
+                fontSize: 28.sp,
+                color: const Color(0xFF333333),
+            ),
+          ),
+              )
+              : const SizedBox()),
         ],
       ),
     );

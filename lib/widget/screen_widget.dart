@@ -14,6 +14,7 @@ class ScreenWidget extends StatefulWidget {
   final double crossAxisSpacing;
   final double childAspectRatio;
   final bool haveButton;
+  final bool isGrid;
 
   const ScreenWidget(
       {Key? key,
@@ -23,7 +24,7 @@ class ScreenWidget extends StatefulWidget {
       required this.mainAxisSpacing,
       required this.crossAxisSpacing,
       required this.childAspectRatio,
-      this.haveButton = false})
+      this.haveButton = false, this.isGrid = true})
       : super(key: key);
 
   @override
@@ -45,39 +46,68 @@ class _ScreenWidgetState extends State<ScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 32.w, right: 32.w,top: 24.w),
-          child: SortWidget(
-            crossAxisSpacing: widget.crossAxisSpacing,
-            itemList: widget.itemList,
-            childAspectRatio: widget.childAspectRatio,
-            crossAxisCount: widget.crossAxisCount,
-            mainAxisSpacing: widget.mainAxisSpacing,
-            callback: (ChooseItem item, int index) {
-              for (int i = 0; i < widget.itemList.length; i++) {
-                if (i != index) {
-                  widget.itemList[i].isChoose = false;
-                } else {
-                  widget.itemList[i].isChoose = !widget.itemList[i].isChoose;
-                }
+    return     Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(top: 24.w,bottom: 40.w),
+        child: SortWidget(
+          isGrid: widget.isGrid,
+          crossAxisSpacing: widget.crossAxisSpacing,
+          itemList: widget.itemList,
+          childAspectRatio: widget.childAspectRatio,
+          crossAxisCount: widget.crossAxisCount,
+          mainAxisSpacing: widget.mainAxisSpacing,
+          callback: (ChooseItem item, int index) {
+            for (int i = 0; i < widget.itemList.length; i++) {
+              if (i != index) {
+                widget.itemList[i].isChoose = false;
+              } else {
+                widget.itemList[i].isChoose = !widget.itemList[i].isChoose;
               }
-              if (kDebugMode) {
-                print(item.name);
-              }
-              widget.callback(item.name);
-              setState(() {});
-            },
-          ),
+            }
+            if (kDebugMode) {
+              print(item.name);
+            }
+            widget.callback(item.name);
+          },
         ),
-        // widget.haveButton ? 48.hb: const SizedBox(),
-        // widget.haveButton ? _confirmBtn() : const SizedBox(),
-        40.hb,
-      ],
+      ),
     );
+
+    //   ListView(
+    //   padding: EdgeInsets.zero,
+    //   shrinkWrap: true,
+    //   physics: const NeverScrollableScrollPhysics(),
+    //   children: [
+    //     Padding(
+    //       padding: EdgeInsets.only(left: 32.w, right: 32.w,top: 24.w),
+    //       child: SortWidget(
+    //         isGrid: widget.isGrid,
+    //         crossAxisSpacing: widget.crossAxisSpacing,
+    //         itemList: widget.itemList,
+    //         childAspectRatio: widget.childAspectRatio,
+    //         crossAxisCount: widget.crossAxisCount,
+    //         mainAxisSpacing: widget.mainAxisSpacing,
+    //         callback: (ChooseItem item, int index) {
+    //           for (int i = 0; i < widget.itemList.length; i++) {
+    //             if (i != index) {
+    //               widget.itemList[i].isChoose = false;
+    //             } else {
+    //               widget.itemList[i].isChoose = !widget.itemList[i].isChoose;
+    //             }
+    //           }
+    //           if (kDebugMode) {
+    //             print(item.name);
+    //           }
+    //           widget.callback(item.name);
+    //           setState(() {});
+    //         },
+    //       ),
+    //     ),
+    //     // widget.haveButton ? 48.hb: const SizedBox(),
+    //     // widget.haveButton ? _confirmBtn() : const SizedBox(),
+    //     40.hb,
+    //   ],
+    // );
   }
 
   // _confirmBtn() {

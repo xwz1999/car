@@ -329,6 +329,10 @@ class $AssetsIconsGen {
   AssetGenImage get shanghaibankhead =>
       const AssetGenImage('assets/icons/shanghaibankhead.png');
 
+  /// File path: assets/icons/sort_choose.png
+  AssetGenImage get sortChoose =>
+      const AssetGenImage('assets/icons/sort_choose.png');
+
   /// File path: assets/icons/successful.png
   AssetGenImage get successful =>
       const AssetGenImage('assets/icons/successful.png');
@@ -489,6 +493,10 @@ class $AssetsImagesGen {
   AssetGenImage get assessmentBg =>
       const AssetGenImage('assets/images/assessment_bg.png');
 
+  /// File path: assets/images/avatar_placeholder.png
+  AssetGenImage get avatarPlaceholder =>
+      const AssetGenImage('assets/images/avatar_placeholder.png');
+
   /// File path: assets/images/badge.png
   AssetGenImage get badge => const AssetGenImage('assets/images/badge.png');
 
@@ -581,9 +589,17 @@ class $AssetsImagesGen {
   /// File path: assets/images/photo.png
   AssetGenImage get photo => const AssetGenImage('assets/images/photo.png');
 
-  /// File path: assets/images/place_holder.png
-  AssetGenImage get placeHolder =>
-      const AssetGenImage('assets/images/place_holder.png');
+  /// File path: assets/images/placeholder.png
+  AssetGenImage get placeholder =>
+      const AssetGenImage('assets/images/placeholder.png');
+
+  /// File path: assets/images/placeholder_list.png
+  AssetGenImage get placeholderList =>
+      const AssetGenImage('assets/images/placeholder_list.png');
+
+  /// File path: assets/images/push_car_top.png
+  AssetGenImage get pushCarTop =>
+      const AssetGenImage('assets/images/push_car_top.png');
 
   /// File path: assets/images/real_name_badge.png
   AssetGenImage get realNameBadge =>
