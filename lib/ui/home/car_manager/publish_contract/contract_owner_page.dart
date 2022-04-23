@@ -13,6 +13,8 @@ class ContractOwnerPage extends StatefulWidget {
 }
 
 class _ContractOwnerPageState extends State<ContractOwnerPage> {
+  bool _chooseOwner = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +44,112 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               padding: EdgeInsets.all(30.w),
               child: '车主信息'.text.size(32.sp).bold.color(Colors.black).make(),
             ),
+            Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 20.h, bottom: 20.h,left: 30.w,right: 30.w),
+                    color: Colors.transparent,
+                    child: Row(
+                      children: [
+                        '*'
+                            .text
+                            .size(30.sp)
+                            .color(Colors.red)
+                            .normal
+                            .textStyle(
+                                TextStyle(decoration: TextDecoration.none))
+                            .make()
+                            .paddingOnly(top: 5),
+                        10.wb,
+                        SizedBox(
+                          width: 160.w,
+                          child: '车主类别'
+                              .text
+                              .size(30.sp)
+                              .normal
+                              .textStyle(
+                                  TextStyle(decoration: TextDecoration.none))
+                              .color(Colors.black.withOpacity(0.45))
+                              .make(),
+                        ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  _chooseOwner = !_chooseOwner;
+                                  setState(() {});
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        width: 50.w,
+                                        height: 50.w,
+                                        padding:
+                                        EdgeInsets.only(top: 6.w, right: 5.w),
+                                        child: !_chooseOwner
+                                            ? const Icon(CupertinoIcons.circle,
+                                            size: 18, color: Color(0xFFdddddd))
+                                            : const Icon(
+                                            CupertinoIcons.checkmark_alt_circle_fill,
+                                            size: 18,
+                                            color: Colors.blue)),
+                                    RichText(
+                                      text: TextSpan(
+                                        text: "个人寄卖",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12 * 2.sp),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _chooseOwner = !_chooseOwner;
+                                  setState(() {});
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        width: 50.w,
+                                        height: 50.w,
+                                        padding:
+                                        EdgeInsets.only(top: 6.w, right: 5.w),
+                                        child: _chooseOwner
+                                            ? const Icon(CupertinoIcons.circle,
+                                            size: 18, color: Color(0xFFdddddd))
+                                            : const Icon(
+                                            CupertinoIcons.checkmark_alt_circle_fill,
+                                            size: 18,
+                                            color: Colors.blue)),
+                                    RichText(
+                                      text: TextSpan(
+                                        text: "公司车辆",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12 * 2.sp),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

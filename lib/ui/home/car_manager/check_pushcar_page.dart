@@ -99,101 +99,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                   ),
                   width: double.infinity,
                   height: 800.h,
-                  child: Column(
-                    children: [
-                      _showarea('车架号', carNum!),
-                      _showarea('品牌车型', carShape!),
-                      _showarea('首次上牌', carDate!),
-                      _showarea('车牌号', licenseNum!),
-                      _showarea('发动机号', engineNum!),
-                      _showarea('车身颜色', carColor!),
-                      Container(
-                        padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-                        color: Colors.transparent,
-                        child: Row(
-                          children: [
-                            '*'
-                                .text
-                                .size(30.sp)
-                                .color(Colors.red)
-                                .normal
-                                .textStyle(
-                                    TextStyle(decoration: TextDecoration.none))
-                                .make()
-                                .paddingOnly(top: 5),
-                            10.wb,
-                            SizedBox(
-                              width: 160.w,
-                              child: '表显里程'
-                                  .text
-                                  .size(30.sp)
-                                  .normal
-                                  .textStyle(TextStyle(
-                                      decoration: TextDecoration.none))
-                                  .color(Colors.black.withOpacity(0.45))
-                                  .make(),
-                            ),
-                            Expanded(
-                              child: carRoute!.text
-                                  .size(30.sp)
-                                  .normal
-                                  .textStyle(TextStyle(
-                                      decoration: TextDecoration.none))
-                                  .color(Colors.black)
-                                  .make(),
-                            ),
-                            24.wb,
-                            '万公里'
-                                .text
-                                .size(30.sp)
-                                .normal
-                                .textStyle(
-                                    TextStyle(decoration: TextDecoration.none))
-                                .color(Colors.black.withOpacity(0.8))
-                                .make(),
-                          ],
-                        ),
-                      ),
-                      30.heightBox,
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Get.to(() => const ContractBeginPage());
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
-                          ),
-                          child: '发起合同'
-                              .text
-                              .size(30.sp)
-                              .color(Colors.white)
-                              .make(),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          '已签订合同？'
-                              .text
-                              .color(Colors.black.withOpacity(0.45))
-                              .textStyle(const TextStyle(decoration: TextDecoration.none))
-                              .normal
-                              .size(20.sp)
-                              .make(),
-                          TextButton(onPressed: (){}, child:'继续发布车辆'
-                              .text
-                              .color(Colors.blue)
-                              .textStyle(const TextStyle(decoration: TextDecoration.none))
-                              .normal
-                              .size(20.sp)
-                              .make(),).paddingZero
-                        ],
-                      )
-
-                    ],
-                  ),
+                  child: showPushCar(Colors.black),
                 ),
               ),
             ],
@@ -206,6 +112,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
   _showarea(
     String title,
     String content,
+    Color fontColor,
   ) {
     return Container(
       padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
@@ -235,12 +142,103 @@ class _CheckPushPageState extends State<CheckPushPage> {
                 .size(28.sp)
                 .normal
                 .textStyle(TextStyle(decoration: TextDecoration.none))
-                .color(Colors.black)
+                .color(fontColor)
                 .make(),
           ),
           24.wb,
         ],
       ),
+    );
+  }
+
+  Column showPushCar(Color fontColor) {
+    return Column(
+      children: [
+        _showarea('车架号', carNum!,fontColor),
+        _showarea('品牌车型', carShape!,fontColor),
+        _showarea('首次上牌', carDate!,fontColor),
+        _showarea('车牌号', licenseNum!,fontColor),
+        _showarea('发动机号', engineNum!,fontColor),
+        _showarea('车身颜色', carColor!,fontColor),
+        Container(
+          padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
+          color: Colors.transparent,
+          child: Row(
+            children: [
+              '*'
+                  .text
+                  .size(30.sp)
+                  .color(Colors.red)
+                  .normal
+                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .make()
+                  .paddingOnly(top: 5),
+              10.wb,
+              SizedBox(
+                width: 160.w,
+                child: '表显里程'
+                    .text
+                    .size(30.sp)
+                    .normal
+                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .color(Colors.black.withOpacity(0.45))
+                    .make(),
+              ),
+              Expanded(
+                child: carRoute!.text
+                    .size(30.sp)
+                    .normal
+                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .color(fontColor)
+                    .make(),
+              ),
+              24.wb,
+              '万公里'
+                  .text
+                  .size(30.sp)
+                  .normal
+                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .color(Colors.black.withOpacity(0.8))
+                  .make(),
+            ],
+          ),
+        ),
+        30.heightBox,
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              Get.to(() => const ContractBeginPage());
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.blue),
+            ),
+            child: '发起合同'.text.size(30.sp).color(Colors.white).make(),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            '已签订合同？'
+                .text
+                .color(Colors.black.withOpacity(0.45))
+                .textStyle(const TextStyle(decoration: TextDecoration.none))
+                .normal
+                .size(20.sp)
+                .make(),
+            TextButton(
+              onPressed: () {},
+              child: '继续发布车辆'
+                  .text
+                  .color(Colors.blue)
+                  .textStyle(const TextStyle(decoration: TextDecoration.none))
+                  .normal
+                  .size(20.sp)
+                  .make(),
+            ).paddingZero
+          ],
+        )
+      ],
     );
   }
 }
