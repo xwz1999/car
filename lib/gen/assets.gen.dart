@@ -500,13 +500,8 @@ class $AssetsImagesGen {
   /// File path: assets/images/agricultural.png
   AssetGenImage get agricultural =>
       const AssetGenImage('assets/images/agricultural.png');
-<<<<<<< HEAD
-  AssetGenImage get avatarPlaceholder =>
-      const AssetGenImage('assets/images/avatar_placeholder.png');
-=======
 
   /// File path: assets/images/assessment_bg.png
->>>>>>> a6642649efd4b8f582e9d5f9b08c8c4d92a2fcd6
   AssetGenImage get assessmentBg =>
       const AssetGenImage('assets/images/assessment_bg.png');
 
@@ -537,6 +532,22 @@ class $AssetsImagesGen {
   /// File path: assets/images/car_banner.png
   AssetGenImage get carBanner =>
       const AssetGenImage('assets/images/car_banner.png');
+
+  /// File path: assets/images/car_company.png
+  AssetGenImage get carCompany =>
+      const AssetGenImage('assets/images/car_company.png');
+
+  /// File path: assets/images/car_person_back.png
+  AssetGenImage get carPersonBack =>
+      const AssetGenImage('assets/images/car_person_back.png');
+
+  /// File path: assets/images/car_person_head.png
+  AssetGenImage get carPersonHead =>
+      const AssetGenImage('assets/images/car_person_head.png');
+
+  /// File path: assets/images/car_person_photo.png
+  AssetGenImage get carPersonPhoto =>
+      const AssetGenImage('assets/images/car_person_photo.png');
 
   /// File path: assets/images/car_valuation_bg.png
   AssetGenImage get carValuationBg =>

@@ -18,6 +18,8 @@ class CloudScaffold extends StatelessWidget {
   final bool normal;
   final String? title;
   final List<Widget> actions;
+  final Color? appBarBackColor;
+  final PreferredSizeWidget? appBarBottom;
 
   const CloudScaffold({
     Key? key,
@@ -32,6 +34,8 @@ class CloudScaffold extends StatelessWidget {
   })  : normal = false,
         title = '',
         actions = const [],
+        appBarBackColor = Colors.white,
+        appBarBottom = null,
         super(key: key);
 
   const CloudScaffold.white({
@@ -47,6 +51,8 @@ class CloudScaffold extends StatelessWidget {
         normal = false,
         title = '',
         actions = const [],
+        appBarBackColor = Colors.white,
+        appBarBottom = null,
         super(key: key);
 
   const CloudScaffold.normal(
@@ -60,6 +66,8 @@ class CloudScaffold extends StatelessWidget {
       this.extendBody = false,
       this.path,
       this.title,
+      this.appBarBackColor = Colors.white,
+      this.appBarBottom,
       this.actions = const []})
       : normal = true,
         assert(title != null || appbar != null),
@@ -108,6 +116,8 @@ class CloudScaffold extends StatelessWidget {
                 child: title == null
                     ? appbar!
                     : AppBar(
+                        backgroundColor:
+                            extendBody ? Colors.transparent : appBarBackColor,
                         leading: const CloudBackButton(),
                         title: Text(title!),
                         actions: actions,

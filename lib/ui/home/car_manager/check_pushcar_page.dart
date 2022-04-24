@@ -123,7 +123,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
               .text
               .size(28.sp)
               .normal
-              .textStyle(TextStyle(decoration: TextDecoration.none))
+              .textStyle(const TextStyle(decoration: TextDecoration.none))
               .color(Colors.red)
               .make()
               .paddingOnly(top: 5),

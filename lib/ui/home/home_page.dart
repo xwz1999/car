@@ -1,15 +1,21 @@
+import 'package:cloud_car/model/poster/poster_list_model.dart';
+import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/task_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../constants/api/api.dart';
 import '../../utils/user_tool.dart';
 import 'car_manager/car_manager_page.dart';
 import 'car_manager/push_car_page.dart';
@@ -29,6 +35,21 @@ class _HomePageState extends State<HomePage>
   late final List<KingCoin> _kingCoinList = [];
 
   late EasyRefreshController _refreshController;
+
+  //海报列表 默认显示前10个
+  List<PosterListModel> _posters = [];
+
+  Future _fetchPosterData() async {
+    var baseList = await apiClient
+        .requestList(API.poster.list, data: {"page": 1, "size": 10});
+    if (baseList.code == 0) {
+      _posters = baseList.nullSafetyList
+          .map((e) => PosterListModel.fromJson(e))
+          .toList();
+    } else {
+      CloudToast.show(baseList.msg);
+    }
+  }
 
   @override
   void initState() {
@@ -113,20 +134,27 @@ class _HomePageState extends State<HomePage>
       ),
       extendBody: true,
       body: Expanded(
-        child: ListView(
-          children: [
-            Container(
-              padding: EdgeInsets.only(left: 34.w, right: 34.w, top: 20.w),
-              child: _getKingCoin(),
-              height: 344.w,
-            ),
-            _getBanner(),
-            48.hb,
-            _getShare(),
-            48.hb,
-            _getPoster(),
-            48.hb,
-          ],
+        child: EasyRefresh(
+          firstRefresh: true,
+          header: MaterialHeader(),
+          onRefresh: () async {
+            await _fetchPosterData();
+          },
+          child: ListView(
+            children: [
+              Container(
+                padding: EdgeInsets.only(left: 34.w, right: 34.w, top: 20.w),
+                child: _getKingCoin(),
+                height: 344.w,
+              ),
+              _getBanner(),
+              48.hb,
+              _getShare(),
+              48.hb,
+              _getPoster(),
+              48.hb,
+            ],
+          ),
         ),
       ),
     );
@@ -267,12 +295,12 @@ class _HomePageState extends State<HomePage>
                 width: 200.w,
                 child: Builder(
                   builder: (context) {
-                    return _posterItem();
+                    return _posterItem(_posters[index]);
                   },
                 ),
               );
             },
-            itemCount: 5,
+            itemCount: _posters.length,
           ),
         ),
       ],
@@ -343,17 +371,18 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  _posterItem() {
-    return Container(
-      width: 240.w,
-      height: 360.w,
-
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.w),
-        color: Colors.lightBlue,
+  _posterItem(PosterListModel model) {
+    return GestureDetector(
+      onTap: ()=> Get.to(()=>PosterEditPage(model: model)),
+      child: Container(
+        width: 240.w,
+        height: 360.w,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.w),
+        ),
+        child: CloudImageNetworkWidget(urls: [model.path],),
       ),
-      //child: Image.asset(R.ASSETS_IMAGES_BANNER_BG_PNG,width: 240.w,height: 360.w,),
     );
   }
 
