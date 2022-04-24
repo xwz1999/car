@@ -10,7 +10,7 @@ class PreferredFunc{
   ///获取收藏列表
   static Future<List<CollectCarModel>> getCollectCarList(int page,int size) async {
     BaseListModel baseList = await apiClient.requestList(
-        API.home.car.getCollectLists,data: {
+        API.car.getCollectLists,data: {
       'page':page,'size':size
     }
     );
@@ -25,7 +25,7 @@ class PreferredFunc{
   ///加入收藏
   static Future<bool> addCollect(int carId) async {
     BaseModel model = await apiClient.request(
-        API.home.car.addCollect,data: {
+        API.car.addCollect,data: {
       'carId':carId,
 
     }
@@ -46,7 +46,7 @@ class PreferredFunc{
   ///取消收藏
   static Future<bool> cancelCollect(int carId) async {
     BaseModel model = await apiClient.request(
-        API.home.car.cancelCollect,data: {
+        API.car.cancelCollect,data: {
       'carId':carId,
     }
     );

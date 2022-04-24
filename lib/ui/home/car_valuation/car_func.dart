@@ -19,7 +19,7 @@ class CarFunc{
   ///获取车辆品牌
   static Future<List<SortBrandModel>> getBrandList() async {
     BaseListModel baseList = await apiClient.requestList(
-      API.home.sort.getCarBrand,
+      API.car.getCarBrand,
     );
     if (baseList.code!=0) {
       CloudToast.show(baseList.msg);
@@ -32,7 +32,7 @@ class CarFunc{
   ///行驶证 识别
   static Future<CarDistinguishModel?> carDistinguish(String path) async {
     BaseModel model = await apiClient.request(
-      API.home.car.getCarVehicle,data: {
+      API.car.getCarVehicle,data: {
         "path":path,
     }
     );
@@ -49,7 +49,7 @@ class CarFunc{
   ///获取车辆列表
   static Future<List<CarListModel>> getCarList(int page,int size) async {
     BaseListModel baseList = await apiClient.requestList(
-      API.home.car.getCarLists,data: {
+      API.car.getCarLists,data: {
       'page':page,'size':size
     }
     );
@@ -65,7 +65,7 @@ class CarFunc{
   ///获取我的车辆列表  new_create=最新创建 max_price=标价最高 min_price=标价最低 min_age=车龄最短 min_mileage=里程最少 new_update=最近更新
   static Future<List<CarListModel>> getMyCarList(int page,int size,String order) async {
     BaseListModel baseList = await apiClient.requestList(
-        API.home.car.getCarSelfLists,data: {
+        API.car.getCarSelfLists,data: {
       'page':page,'size':size,'order':order
     }
     );
@@ -81,7 +81,7 @@ class CarFunc{
 ///车辆详情
   static Future<CarInfoModel?> getCarInfo(int carId) async {
     BaseModel model = await apiClient.request(
-        API.home.car.getCarIfo,data: {
+        API.car.getCarIfo,data: {
       'carId':carId,
     }
     );
@@ -98,7 +98,7 @@ class CarFunc{
   ///费用计算
   static Future<CarAmountModel?> getCarAmount(num amount) async {
     BaseModel model = await apiClient.request(
-        API.home.car.priceAmount,data: {
+        API.car.priceAmount,data: {
       'amount':amount,
     }
     );
@@ -115,7 +115,7 @@ class CarFunc{
   ///估算价格
   static Future<String> getEstimatePrice(CarInfo carInfo) async {
     BaseModel model = await apiClient.request(
-        API.home.car.estimatePrice,data: {
+        API.car.estimatePrice,data: {
       'modelId':carInfo.modelId,
       'licensePlate':carInfo.licensePlate,
       'color':carInfo.color,
@@ -157,7 +157,7 @@ class CarFunc{
     };
 
     BaseModel model = await apiClient.request(
-        API.home.contract.addSaleContract,data: {
+        API.contract.addSaleContract,data: {
       'priceId':contractModel.priceId,
       'customerId':contractModel.customerId,
       'price':contractModel.price,
@@ -194,7 +194,7 @@ class CarFunc{
   static Future<bool> addSale(CarSaleContractModel saleModel) async {
 
     BaseModel model = await apiClient.request(
-        API.home.contract.addSaleContract,data: {
+        API.contract.addSaleContract,data: {
       'carId':saleModel.carId,
       'customerId':saleModel.customerId,
       'phone':saleModel.phone,

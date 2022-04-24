@@ -10,7 +10,7 @@ class SortFunc{
   ///获取车辆品牌
   static Future<List<SortBrandModel>> getBrandList() async {
     var model = await apiClient.request(
-        API.home.sort.getCarBrand,
+        API.car.getCarBrand,
     );
     if ((model.data as List).isEmpty) return [];
     return (model.data as List).map((e) => SortBrandModel.fromJson(e)).toList();
@@ -20,7 +20,7 @@ class SortFunc{
   ///获取车辆品牌
   static Future<List<SortSeriesModel>> getSeriesList(int brandId) async {
     var model = await apiClient.request(
-      API.home.sort.getCarSeries,data:{'brandId':brandId}
+      API.car.getCarSeries,data:{'brandId':brandId}
     );
     if ((model.data as List).isEmpty) return [];
     return (model.data as List).map((e) => SortSeriesModel.fromJson(e)).toList();
@@ -30,7 +30,7 @@ class SortFunc{
   ///获取车型
   static Future<List<SortCarModelModel>> getModelList(int seriesId) async {
     var model = await apiClient.request(
-        API.home.sort.getCarModel,data:{'seriesId':seriesId}
+        API.car.getCarModel,data:{'seriesId':seriesId}
     );
     if ((model.data as List).isEmpty) return [];
     return (model.data as List).map((e) => SortCarModelModel.fromJson(e)).toList();
