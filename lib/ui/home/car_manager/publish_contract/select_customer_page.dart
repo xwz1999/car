@@ -1,9 +1,8 @@
-import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_purchase_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class SelectCustomerPage extends StatefulWidget {
@@ -47,7 +46,7 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
               ),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 590.w,
                     height: 70.h,
                     child: TextField(

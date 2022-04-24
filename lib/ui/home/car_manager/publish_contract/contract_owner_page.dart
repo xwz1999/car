@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
-import '../../../../widget/picker/car_picker_box.dart';
+
 import 'contract_license_page.dart';
 
 class ContractOwnerPage extends StatefulWidget {
@@ -69,7 +69,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                             .color(Colors.red)
                             .normal
                             .textStyle(
-                                TextStyle(decoration: TextDecoration.none))
+                                const TextStyle(decoration: TextDecoration.none))
                             .make()
                             .paddingOnly(top: 5),
                         10.wb,
@@ -80,7 +80,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                               .size(30.sp)
                               .normal
                               .textStyle(
-                                  TextStyle(decoration: TextDecoration.none))
+                                  const TextStyle(decoration: TextDecoration.none))
                               .color(Colors.black.withOpacity(0.45))
                               .make(),
                         ),
@@ -188,71 +188,67 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
   }
 
   Widget personInfo() {
-    return Container(
-      child: Column(
-        children: [
-          _noIcon('车主姓名', _carOwnerNameController),
-          _haveIcon('身份证号', _idCardController, () {}),
-          _noIcon('手机号码', _phoneController),
-          _haveIcon('银行卡号', _bankNumController, () {}),
-          _noIcon('开户行', _depositBankController),
-          _takePhoto(
-            '身份证照',
-            Row(
+    return Column(
+      children: [
+        _noIcon('车主姓名', _carOwnerNameController),
+        _haveIcon('身份证号', _idCardController, () {}),
+        _noIcon('手机号码', _phoneController),
+        _haveIcon('银行卡号', _bankNumController, () {}),
+        _noIcon('开户行', _depositBankController),
+        _takePhoto(
+          '身份证照',
+          Row(
+            children: [
+              GestureDetector(
+                child: Stack(
+                  children: [
+                    Image.asset('assets/images/car_person_head.png'),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                child: Stack(
+                  children: [
+                    Image.asset('assets/images/car_person_back.png'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        _takePhoto(
+          '半身照',
+          GestureDetector(
+            child: Stack(
               children: [
-                GestureDetector(
-                  child: Stack(
-                    children: [
-                      Image.asset('assets/images/car_person_head.png'),
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  child: Stack(
-                    children: [
-                      Image.asset('assets/images/car_person_back.png'),
-                    ],
-                  ),
-                ),
+                Image.asset('assets/images/car_person_photo.png'),
               ],
             ),
           ),
-          _takePhoto(
-            '半身照',
-            GestureDetector(
-              child: Stack(
-                children: [
-                  Image.asset('assets/images/car_person_photo.png'),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Widget companyInfo() {
-    return Container(
-      child: Column(
-        children: [
-          _noIcon('公司名称', _companyController),
-          _noIcon('信用代码', _creditCodeController),
-          _noIcon('联系方式', _phoneController),
-          _noIcon('开户行', _depositBankController),
-          _haveIcon('银行卡号', _bankNumController, () {}),
-          _takePhoto(
-            '营业执照',
-            GestureDetector(
-              child: Stack(
-                children: [
-                  Image.asset('assets/images/car_company.png'),
-                ],
-              ),
+    return Column(
+      children: [
+        _noIcon('公司名称', _companyController),
+        _noIcon('信用代码', _creditCodeController),
+        _noIcon('联系方式', _phoneController),
+        _noIcon('开户行', _depositBankController),
+        _haveIcon('银行卡号', _bankNumController, () {}),
+        _takePhoto(
+          '营业执照',
+          GestureDetector(
+            child: Stack(
+              children: [
+                Image.asset('assets/images/car_company.png'),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

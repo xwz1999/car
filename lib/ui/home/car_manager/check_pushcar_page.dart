@@ -1,6 +1,6 @@
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_begin_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -133,7 +133,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
             child: title.text
                 .size(28.sp)
                 .normal
-                .textStyle(TextStyle(decoration: TextDecoration.none))
+                .textStyle(const TextStyle(decoration: TextDecoration.none))
                 .color(Colors.black.withOpacity(0.45))
                 .make(),
           ),
@@ -141,7 +141,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
             child: content.text
                 .size(28.sp)
                 .normal
-                .textStyle(TextStyle(decoration: TextDecoration.none))
+                .textStyle(const TextStyle(decoration: TextDecoration.none))
                 .color(fontColor)
                 .make(),
           ),
@@ -170,7 +170,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                   .size(30.sp)
                   .color(Colors.red)
                   .normal
-                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .make()
                   .paddingOnly(top: 5),
               10.wb,
@@ -180,7 +180,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                     .text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black.withOpacity(0.45))
                     .make(),
               ),
@@ -188,7 +188,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                 child: carRoute!.text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(fontColor)
                     .make(),
               ),
@@ -197,7 +197,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                   .text
                   .size(30.sp)
                   .normal
-                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .color(Colors.black.withOpacity(0.8))
                   .make(),
             ],

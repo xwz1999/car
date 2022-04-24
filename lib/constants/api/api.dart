@@ -44,8 +44,33 @@ class API {
 
   static _Contract contract = _Contract();
 
+
+  static _Customer customer = _Customer();
+
+  static _Task task = _Task();
+
 }
 
+
+class _Task{
+  ///客户邀约列表
+  String get getInviteLists => '/task/invite/lists';
+
+
+
+
+}
+
+class _Customer{
+  ///客户轨迹
+  String get customerTrail => '/customer/trail/all';
+
+
+  ///浏览车辆列表
+  String get browseLists => '/customer/browse/lists';
+
+
+}
 
 class _Car{
 
@@ -140,11 +165,16 @@ class _Order {
 ///完结订单
   get saleFinal => '/order/sale/final';
 
-//叫车订单->添加叫车订单
+///叫车订单->添加叫车订单
   get carAdd => '/order/call/car/add';
 
-//交车
+///交车
   get carFinal => '/order/call/car/final';
+
+
+  ///添加车商寄卖订单
+  get addConsignment => '/order/dealer/consignment/add';
+  
 }
 
 //门店管理

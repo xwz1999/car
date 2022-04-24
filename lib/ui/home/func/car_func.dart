@@ -175,11 +175,7 @@ class CarFunc{
     }
     );
     if (model.code==0) {
-      if(model.msg=='操作成功'){
-        return true;
-      }else{
-        return false;
-      }
+      return true;
     } else{
       CloudToast.show(model.msg);
       return false;
@@ -210,11 +206,7 @@ class CarFunc{
     }
     );
     if (model.code==0) {
-      if(model.msg=='操作成功'){
-        return true;
-      }else{
-        return false;
-      }
+      return true;
     } else{
       CloudToast.show(model.msg);
       return false;

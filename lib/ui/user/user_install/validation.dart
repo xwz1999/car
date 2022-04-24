@@ -133,7 +133,7 @@ class _ValidationPageState extends State<ValidationPage> {
               CloudBottom(
                   text: '提交',
                   ontap: () {
-                    Get.to(() => NoWithddrawalPage());
+                    Get.to(() => const NoWithddrawalPage());
                   })
             ],
           ),
