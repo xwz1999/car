@@ -91,6 +91,12 @@ class $AssetsIconsGen {
   AssetGenImage get download =>
       const AssetGenImage('assets/icons/download.png');
   AssetGenImage get editor => const AssetGenImage('assets/icons/editor.png');
+  AssetGenImage get estimateDate =>
+      const AssetGenImage('assets/icons/estimate_date.png');
+  AssetGenImage get estimateDistance =>
+      const AssetGenImage('assets/icons/estimate_distance.png');
+  AssetGenImage get estimateLocation =>
+      const AssetGenImage('assets/icons/estimate_location.png');
   AssetGenImage get examination =>
       const AssetGenImage('assets/icons/examination.png');
   AssetGenImage get fashionable =>
@@ -249,6 +255,8 @@ class $AssetsImagesGen {
   AssetGenImage get camera => const AssetGenImage('assets/images/camera.png');
   AssetGenImage get carBanner =>
       const AssetGenImage('assets/images/car_banner.png');
+  AssetGenImage get carValuationBg =>
+      const AssetGenImage('assets/images/car_valuation_bg.png');
   AssetGenImage get chinabankbg =>
       const AssetGenImage('assets/images/chinabankbg.png');
   AssetGenImage get citicbankbg =>

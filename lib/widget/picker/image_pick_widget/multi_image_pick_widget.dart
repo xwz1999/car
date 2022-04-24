@@ -51,7 +51,7 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
               widget.maxCount != null && _files.length >= widget.maxCount!,
           child: GestureDetector(
             onTap: () async {
-              await CloudImagePicker.pickMultiImage(title: '选择图片').then(
+              await CloudImagePicker.pickMultiAndSingleImage(title: '选择图片').then(
                 (value) {
                   _files.addAll(value);
                 },
@@ -66,8 +66,8 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
               dashPattern: const [6, 3],
               radius: Radius.circular(8.w),
               child: SizedBox(
-                width: widget.width ?? 160.w,
-                height: widget.height ?? 160.w,
+                width: widget.width!=null?widget.width!-10.w:160.w,
+                height: widget.height!=null?widget.height!-10.w:160.w,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,23 +97,25 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
     return Draggable(
       data: index,
       childWhenDragging: Container(
-        width: widget.width ?? 100.w,
-        height: widget.height ?? 100.w,
+        width: widget.width ?? 160.w,
+        height: widget.height ?? 160.w,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.w),
             color: Colors.black.withOpacity(0.03)),
       ),
       feedback: Container(
-        width: widget.width ?? 100.w,
-        height: widget.height ?? 100.w,
+        width:( widget.width ?? 160.w)*0.8,
+        height:( widget.height ?? 160.w)*0.8,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.w),
             color: Colors.black.withOpacity(0.03)),
         child: Image.file(
           file,
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
+          width: widget.width ?? 100.w,
+          height: widget.height ?? 100.w,
         ),
       ),
       child: DragTarget(
@@ -140,7 +142,9 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
                     color: Colors.black.withOpacity(0.03)),
                 child: Image.file(
                   file,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
+                  width: widget.width ?? 100.w,
+                  height: widget.height ?? 100.w,
                 ),
               ),
             ),

@@ -88,6 +88,23 @@ class ApiClient {
     return model.data['path'];
   }
 
+
+  Future<List<String>> uploadFiles(List<File> files, ) async {
+    List<String> urls = [];
+    if (files.isEmpty) {
+      return [];
+    } else {
+      for (var item in files) {
+        String path = await ApiClient().uploadImage( item);
+        if (path.isNotEmpty) {
+          urls.add(path);
+        }
+      }
+    }
+    return urls;
+  }
+
+
   ///上传文件
   Future<String> uploadFile(File file) async {
     var response = await _dio.post(

@@ -1,14 +1,23 @@
+
+
+import 'dart:io';
+
+import 'package:cloud_car/model/car_valuation/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
+import 'package:cloud_car/ui/home/car_valuation/car_func.dart';
+import 'package:cloud_car/ui/home/car_valuation/car_valuation_result_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/picker/car_date_picker.dart';
 import 'package:cloud_car/widget/picker/car_list_picker.dart';
-import 'package:cloud_car/widget/picker/car_picker_box.dart';
+import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:cloud_car/extensions/string_extension.dart';
 
 class CarValuationPage extends StatefulWidget {
   const CarValuationPage({Key? key}) : super(key: key);
@@ -18,8 +27,9 @@ class CarValuationPage extends StatefulWidget {
 }
 
 class _CarValuationPageState extends State<CarValuationPage> {
-  late CarInfo _carInfo = CarInfo(color: '', distance: '', address: '', name: '', time: '');
+  final CarInfo _carInfo = CarInfo(color: '', distance: '', address: '', name: '', time: '');
   DateTime? _firstDate;
+  late CarDistinguishModel? carInfoModel;
 
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
@@ -189,12 +199,32 @@ class _CarValuationPageState extends State<CarValuationPage> {
         child: Column(
           children: [
             GestureDetector(
-              child: Stack(
-                children: [
-                  Image.asset(
-                      'assets/images/driving_license2.png'),
-                ],
-              ),
+              onTap: () async{
+                await CloudImagePicker.pickSingleImage(title: '选择图片').then(
+                      (value) async {
+                        if(value!=null){
+                          File files = value;
+                          String urls = await ApiClient().uploadImage(files);
+                          carInfoModel = await CarFunc.carDistinguish(urls.imageWithHost);
+                          if(carInfoModel!=null){
+                            _carInfo.name = carInfoModel!.cartype;
+
+                            _carInfo.address = carInfoModel!.address;
+
+                            _carInfo.time = carInfoModel!.regdate;
+                            setState(() {
+
+                            });
+                          }
+
+                        }
+
+                  },
+                );
+                setState(() {});
+              },
+              child: Image.asset(
+                  'assets/images/driving_license2.png'),
             ),
             GestureDetector(
               onTap: () async{
@@ -322,7 +352,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-
+                    Get.to(()=>CarValuationResultPage(carInfo: _carInfo,));
                 },
                 style: ButtonStyle(
                   backgroundColor:
