@@ -18,7 +18,6 @@ class HomeTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        85.hb,
         32.wb,
         Stack(
           children: [

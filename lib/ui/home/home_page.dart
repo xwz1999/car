@@ -1,25 +1,26 @@
+import 'package:cloud_car/model/car_manager/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
+import 'package:cloud_car/ui/home/poster/poster_func.dart';
 import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/task_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
-import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../../constants/api/api.dart';
 import '../../utils/user_tool.dart';
 import 'car_manager/car_manager_page.dart';
 import 'car_manager/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
+import 'func/car_func.dart';
 import 'home_title.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,19 +38,10 @@ class _HomePageState extends State<HomePage>
   late EasyRefreshController _refreshController;
 
   //海报列表 默认显示前10个
-  List<PosterListModel> _posters = [];
+  List<PosterListModel> _posterList = [];
 
-  Future _fetchPosterData() async {
-    var baseList = await apiClient
-        .requestList(API.poster.list, data: {"page": 1, "size": 10});
-    if (baseList.code == 0) {
-      _posters = baseList.nullSafetyList
-          .map((e) => PosterListModel.fromJson(e))
-          .toList();
-    } else {
-      CloudToast.show(baseList.msg);
-    }
-  }
+  //快速分享列表
+  List<CarListModel> _shareCarList = [];
 
   @override
   void initState() {
@@ -138,7 +130,9 @@ class _HomePageState extends State<HomePage>
           firstRefresh: true,
           header: MaterialHeader(),
           onRefresh: () async {
-            await _fetchPosterData();
+            _posterList = await PosterFunc.getPosterList(page: 1);
+            _shareCarList = await CarFunc.getMyCarList(1,'');
+            setState(() {});
           },
           child: ListView(
             children: [
@@ -239,9 +233,8 @@ class _HomePageState extends State<HomePage>
             Get.to(() => const ShareHomePage());
           },
         ),
-        12.hb,
         Container(
-          height: 338.w,
+          height: 400.w,
           padding: EdgeInsets.only(left: 32.w),
           child: ListView.separated(
             padding: EdgeInsets.zero,
@@ -256,12 +249,12 @@ class _HomePageState extends State<HomePage>
                 width: 240.w,
                 child: Builder(
                   builder: (context) {
-                    return _shareItem();
+                    return _shareItem(_shareCarList[index]);
                   },
                 ),
               );
             },
-            itemCount: 5,
+            itemCount: _shareCarList.length,
           ),
         ),
       ],
@@ -280,7 +273,7 @@ class _HomePageState extends State<HomePage>
         ),
         12.hb,
         Container(
-          height: 400.w,
+          height: 340.w,
           padding: EdgeInsets.only(left: 32.w),
           child: ListView.separated(
             padding: EdgeInsets.zero,
@@ -295,64 +288,72 @@ class _HomePageState extends State<HomePage>
                 width: 200.w,
                 child: Builder(
                   builder: (context) {
-                    return _posterItem(_posters[index]);
+                    return _posterItem(_posterList[index]);
                   },
                 ),
               );
             },
-            itemCount: _posters.length,
+            itemCount: _posterList.length,
           ),
         ),
       ],
     );
   }
 
-  _shareItem() {
+  _shareItem(CarListModel model) {
     return Container(
       width: 240.w,
-      height: 338.w,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.w), color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          CloudImageNetworkWidget(
             width: 240.w,
             height: 180.w,
-            color: Colors.lightBlue,
+            urls: [model.mainPhoto],
           ),
-          // Image.asset(
-          //   R.ASSETS_IMAGES_BANNER_BG_PNG,
-          //   width: 240.w,height: 180.w,
-          // ),
-          Container(
+          Padding(
             padding: EdgeInsets.only(left: 20.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                15.hb,
+                24.hb,
                 Text(
-                  '奥迪A6',
+                  model.modelName,
                   style: TextStyle(
                       color: const Color(0xFF111111),
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold),
                 ),
-                9.hb,
+                12.hb,
                 Row(
                   children: [
-                    _getTextView('2019'),
+                    _getTextView(DateUtil.getDateTimeByMs(
+                            model.licensingDate.toInt() * 1000)
+                        .year
+                        .toString()),
                     12.wb,
-                    _getTextView('1.1万公里'),
+                    _getTextView('${model.mileage}万公里'),
                   ],
                 ),
+                16.hb,
                 Row(
                   children: [
-                    Text(
-                      '27.4万',
-                      style: TextStyle(
-                          color: const Color(0xFFFF3E02), fontSize: 32.sp),
+                    RichText(
+                      text: TextSpan(
+                          text:
+                              '${NumUtil.divide(num.parse(model.price), 10000)}',
+                          style: TextStyle(
+                              color: const Color(0xFFFF3E02), fontSize: 32.sp),
+                          children: [
+                            TextSpan(
+                                text: '万',
+                                style: TextStyle(
+                                    color: const Color(0xFFFF3E02),
+                                    fontSize: 26.sp))
+                          ]),
                     ),
                     const Spacer(),
                     Image.asset(
@@ -360,9 +361,10 @@ class _HomePageState extends State<HomePage>
                       width: 28.w,
                       height: 28.w,
                     ),
-                    20.wb,
+                    16.wb,
                   ],
-                )
+                ),
+                24.hb,
               ],
             ),
           )
@@ -373,7 +375,7 @@ class _HomePageState extends State<HomePage>
 
   _posterItem(PosterListModel model) {
     return GestureDetector(
-      onTap: ()=> Get.to(()=>PosterEditPage(model: model)),
+      onTap: () => Get.to(() => PosterEditPage(model: model)),
       child: Container(
         width: 240.w,
         height: 360.w,
@@ -381,7 +383,9 @@ class _HomePageState extends State<HomePage>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.w),
         ),
-        child: CloudImageNetworkWidget(urls: [model.path],),
+        child: CloudImageNetworkWidget(
+          urls: [model.path],
+        ),
       ),
     );
   }
