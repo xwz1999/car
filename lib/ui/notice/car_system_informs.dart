@@ -4,15 +4,15 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-class systemPage extends StatefulWidget {
-  const systemPage({Key? key}) : super(key: key);
+class SystemPage extends StatefulWidget {
+  const SystemPage({Key? key}) : super(key: key);
 
   @override
-  _systemPageState createState() => _systemPageState();
+  _SystemPageState createState() => _SystemPageState();
 }
 
-class _systemPageState extends State<systemPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _SystemPageState extends State<SystemPage>
+    {
   List<dynamic>? data;
 
   @override
@@ -27,7 +27,7 @@ class _systemPageState extends State<systemPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+
     return Scaffold(
         appBar: AppBar(
           leading: const CloudBackButton(

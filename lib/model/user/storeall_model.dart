@@ -6,7 +6,7 @@ part 'storeall_model.g.dart';
 class StoreallModel extends Equatable {
   final int id;
   final String name;
-  final List<Staff> staffs;
+  final List<Staff>? staffs;
 
 
 

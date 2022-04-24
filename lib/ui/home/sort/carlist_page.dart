@@ -1,5 +1,3 @@
-
-
 import 'package:azlistview/azlistview.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_func.dart';
@@ -12,20 +10,19 @@ import 'package:lpinyin/lpinyin.dart';
 import '../models.dart';
 import 'choose_car_next_page.dart';
 
-typedef CarCallback = Function(String city,int id);
+typedef CarCallback = Function(String city, int id);
 
 class CarListPage extends StatefulWidget {
-   final CarCallback carCallback;
+  final CarCallback carCallback;
 
   const CarListPage({Key? key, required this.carCallback}) : super(key: key);
   @override
-  _CarListPageState createState() =>
-      _CarListPageState();
+  _CarListPageState createState() => _CarListPageState();
 }
 
 class _CarListPageState extends State<CarListPage> {
   List<CityModel> cityList = [];
-  List<SortBrandModel> brandList =[ ];
+  List<SortBrandModel> brandList = [];
   double susItemHeight = 36;
   String imgFavorite = Assets.icons.barToTop.path;
 
@@ -39,16 +36,14 @@ class _CarListPageState extends State<CarListPage> {
 
   void loadData() async {
     brandList = await SortFunc.getBrandList();
-    if(brandList.isNotEmpty){
+    if (brandList.isNotEmpty) {
       for (var v in brandList) {
-        cityList.add(CityModel(
-          name: v.name,id: v.id));
+        cityList.add(CityModel(name: v.name, id: v.id));
       }
       _handleList(cityList);
-
     }
 
-        //加载城市列表
+    //加载城市列表
     // rootBundle.loadString('assets/data/china.json').then((value) {
     //   cityList.clear();
     //   Map countyMap = json.decode(value);
@@ -58,7 +53,6 @@ class _CarListPageState extends State<CarListPage> {
     //   }
     //   _handleList(cityList);
     // });
-
   }
 
   void _handleList(List<CityModel> list) {
@@ -79,7 +73,6 @@ class _CarListPageState extends State<CarListPage> {
 
     // show sus tag.
     SuspensionUtil.setShowSuspensionStatus(cityList);
-
 
     setState(() {});
   }
@@ -122,7 +115,6 @@ class _CarListPageState extends State<CarListPage> {
   //     );
   // }
 
-
   // _getCityView(String name,{bool isLocation = false}){
   //   return Container(
   //     width: 54.w,
@@ -147,7 +139,6 @@ class _CarListPageState extends State<CarListPage> {
       color: kForeGroundColor,
       child: Column(
         children: [
-
           Expanded(
             child: AzListView(
               data: cityList,
@@ -156,13 +147,17 @@ class _CarListPageState extends State<CarListPage> {
                 // if (index == 0) return _buildHeader();
                 CityModel model = cityList[index];
                 return Utils.getListItem(context, model, (name, id) {
-                    Get.to(()=>ChooseCarNextPage(name: name, callback: (String name, int id) {
-                      widget.carCallback(name,id);
-                    }, id: id,));
+                  Get.to(() => ChooseCarNextPage(
+                        name: name,
+                        callback: (String name, int id) {
+                          widget.carCallback(name, id);
+                        },
+                        id: id,
+                      ));
                 });
 
-                  // Utils.getListItem(context, model,
-                  //   susHeight: susItemHeight);
+                // Utils.getListItem(context, model,
+                //   susHeight: susItemHeight);
               },
               susItemHeight: susItemHeight,
               susItemBuilder: (BuildContext context, int index) {
@@ -175,7 +170,6 @@ class _CarListPageState extends State<CarListPage> {
               },
               indexBarData: SuspensionUtil.getTagIndexList(cityList),
               indexBarOptions: IndexBarOptions(
-
                 needRebuild: true,
                 color: Colors.transparent,
                 downColor: const Color(0xFFEEEEEE),
@@ -187,12 +181,15 @@ class _CarListPageState extends State<CarListPage> {
                   ),
                 ),
                 selectTextStyle: const TextStyle(
-                    fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500),
-                selectItemDecoration:
-                const BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor),
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500),
+                selectItemDecoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: kPrimaryColor),
                 indexHintAlignment: Alignment.centerRight,
                 indexHintChildAlignment: Alignment.center,
-                indexHintTextStyle: TextStyle(fontSize: 40.sp, color: Colors.black87),
+                indexHintTextStyle:
+                    TextStyle(fontSize: 40.sp, color: Colors.black87),
 
                 indexHintOffset: const Offset(-10, 0),
                 indexHintWidth: 100.w,

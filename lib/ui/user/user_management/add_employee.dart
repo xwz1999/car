@@ -1,28 +1,43 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/interface/business_interface.dart';
-import 'package:cloud_car/ui/user/interface/user_interface.dart';
+
 import 'package:cloud_car/ui/user/user_management/access_configuration.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 
 import 'package:flutter/material.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/cloud_back_button.dart';
 
 class AddEmployee extends StatefulWidget {
-  const AddEmployee({Key? key}) : super(key: key);
+  final String permissions1;
+  final String nameText;
+  final String genderText;
+  final String phoneText;
+  final String storeidText;
+  final String commissionText;
+  const AddEmployee(
+      {Key? key,
+      this.permissions1 = '',
+      this.nameText = '',
+      this.genderText = '',
+      this.phoneText = '',
+      this.storeidText = '',
+      this.commissionText = ''})
+      : super(key: key);
 
   @override
   State<AddEmployee> createState() => _AddEmployeeState();
 }
 
 class _AddEmployeeState extends State<AddEmployee> {
-  late String permissions1 = '';
-  late String nameText = '';
-  late String genderText = '';
-  late String phoneText = '';
-  late String storeidText = '';
-  late String commissionText = '';
+  late String permissions1 = widget.permissions1;
+  late String nameText = widget.permissions1;
+  late String genderText = widget.permissions1;
+  late String phoneText = widget.permissions1;
+  late String storeidText = widget.permissions1;
+  late String commissionText = widget.permissions1;
 
   int sexId = 1;
   List blText = [];
@@ -69,15 +84,9 @@ class _AddEmployeeState extends State<AddEmployee> {
           24.hb,
           getpermissions(),
           88.hb,
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            height: 72.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(8.w)),
-            child: SizedBox(
-                child: GestureDetector(
-              onTap: () async {
+          CloudBottom(
+            ontap: () {
+              () async {
                 if (!nameText.isNotEmpty) {
                   BotToast.showText(text: '请输入姓名');
                 } else {
@@ -107,7 +116,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                 await _refresh();
                                 setState(() {});
                               });
-                              BotToast.showText(text: '添加成功，${zhi.codeUnits}');
+                              BotToast.showText(text: '提交成功${zhi.codeUnits}');
                               //print("输出返回值：$zhi");
                             }
                           }
@@ -116,16 +125,10 @@ class _AddEmployeeState extends State<AddEmployee> {
                     }
                   }
                 }
-              },
-              child: Text(
-                '新增',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    ?.copyWith(color: kForeGroundColor),
-              ),
-            )),
-          )
+              };
+            },
+            text: '提交',
+          ),
         ],
       ),
     );
