@@ -500,8 +500,13 @@ class $AssetsImagesGen {
   /// File path: assets/images/agricultural.png
   AssetGenImage get agricultural =>
       const AssetGenImage('assets/images/agricultural.png');
+<<<<<<< HEAD
+  AssetGenImage get avatarPlaceholder =>
+      const AssetGenImage('assets/images/avatar_placeholder.png');
+=======
 
   /// File path: assets/images/assessment_bg.png
+>>>>>>> a6642649efd4b8f582e9d5f9b08c8c4d92a2fcd6
   AssetGenImage get assessmentBg =>
       const AssetGenImage('assets/images/assessment_bg.png');
 
