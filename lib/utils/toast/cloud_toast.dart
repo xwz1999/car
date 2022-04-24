@@ -6,7 +6,7 @@ class CloudToast {
   static show(String text,{AlignmentGeometry? align}) {
     BotToast.showText(
       text: text,
-      align: align,
+      align: align??Alignment.bottomCenter,
       borderRadius: BorderRadius.circular(20),
     );
   }

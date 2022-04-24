@@ -41,7 +41,7 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
           children: [
             Container(
               padding: EdgeInsets.only(left: 30.w,bottom: 20.h),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
                 color: Colors.white,
               ),
@@ -58,16 +58,16 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
                         hintText: '请输入客户名称',
                         hintStyle:
                             TextStyle(color: Colors.black.withOpacity(0.45)),
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(50),
                           ),
                         ),
-                        contentPadding: EdgeInsets.only(
+                        contentPadding: const EdgeInsets.only(
                           top: 0,
                           bottom: 0,
                         ),
-                        prefixIcon: Icon(Icons.search),
+                        prefixIcon: const Icon(Icons.search),
                       ),
                       controller: _searchController,
                     ),
@@ -84,7 +84,7 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
             Container(
               width: double.infinity,
               height: 970.h,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: ListView(
 
               ),
