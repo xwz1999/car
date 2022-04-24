@@ -1,3 +1,4 @@
+import 'package:flustars/flustars.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 
@@ -7,13 +8,18 @@ part 'car_list_model.g.dart';
 class CarListModel extends Equatable {
   final int id;
   final String modelName;
+  ///类型：1 二手车
   final int type;
   final String mainPhoto;
   final num licensingDate;
+  ///单位：元
   final String price;
   final String downPayment;
+  ///里程：万公里
   final String mileage;
+  ///转手次数
   final int transfer;
+  ///是否收藏
   final int collect;
 
   factory CarListModel.fromJson(Map<String, dynamic> json) =>
