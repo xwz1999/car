@@ -172,35 +172,6 @@ class _PushCarPageState extends State<PushCarPage> {
                               children: [
                                 Image.asset(
                                     'assets/images/driving_license2.png'),
-                                // Center(
-                                //     child: Column(
-                                //   children: [
-                                //     Container(
-                                //       width: 80.w,
-                                //       height: 80.w,
-                                //       color: Colors.white30,
-                                //       child: ClipOval(
-                                //         child: Image.asset(
-                                //           'assets/images/shooting.png',
-                                //           height: 100,
-                                //           width: 100,
-                                //           fit: BoxFit.cover,
-                                //           color: Colors.white54,
-                                //           colorBlendMode: BlendMode.difference,
-                                //         ),
-                                //       ),
-                                //     ),
-                                //     10.hb,
-                                //     const Text(
-                                //       '扫描驾驶证',
-                                //       style: TextStyle(
-                                //         fontWeight: FontWeight.bold,
-                                //         fontSize: 13,
-                                //         color: Colors.black45,
-                                //       ),
-                                //     ),
-                                //   ],
-                                // )).paddingOnly(top: 150.h),
                               ],
                             ),
                           ),

@@ -243,6 +243,8 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/Societe_generalebankbg.png');
   AssetGenImage get agricultural =>
       const AssetGenImage('assets/images/agricultural.png');
+  AssetGenImage get avatarPlaceholder =>
+      const AssetGenImage('assets/images/avatar_placeholder.png');
   AssetGenImage get assessmentBg =>
       const AssetGenImage('assets/images/assessment_bg.png');
   AssetGenImage get badge => const AssetGenImage('assets/images/badge.png');
