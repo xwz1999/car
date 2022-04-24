@@ -245,6 +245,8 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/agricultural.png');
   AssetGenImage get assessmentBg =>
       const AssetGenImage('assets/images/assessment_bg.png');
+  AssetGenImage get avatarPlaceholder =>
+      const AssetGenImage('assets/images/avatar_placeholder.png');
   AssetGenImage get badge => const AssetGenImage('assets/images/badge.png');
   AssetGenImage get bannerBg =>
       const AssetGenImage('assets/images/banner_bg.png');
@@ -255,26 +257,14 @@ class $AssetsImagesGen {
   AssetGenImage get camera => const AssetGenImage('assets/images/camera.png');
   AssetGenImage get carBanner =>
       const AssetGenImage('assets/images/car_banner.png');
-
-  /// File path: assets/images/car_valuation_bg.png
-
-  /// File path: assets/images/car_company.png
   AssetGenImage get carCompany =>
       const AssetGenImage('assets/images/car_company.png');
-
-  /// File path: assets/images/car_person_back.png
   AssetGenImage get carPersonBack =>
       const AssetGenImage('assets/images/car_person_back.png');
-
-  /// File path: assets/images/car_person_head.png
   AssetGenImage get carPersonHead =>
       const AssetGenImage('assets/images/car_person_head.png');
-
-  /// File path: assets/images/car_person_photo.png
   AssetGenImage get carPersonPhoto =>
       const AssetGenImage('assets/images/car_person_photo.png');
-
-  /// File path: assets/images/car_valuation_bg.png
   AssetGenImage get carValuationBg =>
       const AssetGenImage('assets/images/car_valuation_bg.png');
   AssetGenImage get chinabankbg =>
@@ -309,16 +299,10 @@ class $AssetsImagesGen {
   AssetGenImage get partnerCenterBg =>
       const AssetGenImage('assets/images/partner_center_bg.png');
   AssetGenImage get photo => const AssetGenImage('assets/images/photo.png');
-
-  /// File path: assets/images/placeholder.png
   AssetGenImage get placeholder =>
       const AssetGenImage('assets/images/placeholder.png');
-
-  /// File path: assets/images/placeholder_list.png
   AssetGenImage get placeholderList =>
       const AssetGenImage('assets/images/placeholder_list.png');
-
-  /// File path: assets/images/push_car_top.png
   AssetGenImage get pushCarTop =>
       const AssetGenImage('assets/images/push_car_top.png');
   AssetGenImage get realNameBadge =>
