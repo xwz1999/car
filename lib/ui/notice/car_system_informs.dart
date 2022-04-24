@@ -1,8 +1,8 @@
-// ignore_for_file: camel_case_types
 
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:flutter/material.dart';
+
+import '../../widget/button/cloud_back_button.dart';
 
 class SystemPage extends StatefulWidget {
   const SystemPage({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class SystemPage extends StatefulWidget {
 }
 
 class _SystemPageState extends State<SystemPage>
-    {
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
 
   @override
@@ -27,7 +27,7 @@ class _SystemPageState extends State<SystemPage>
 
   @override
   Widget build(BuildContext context) {
-
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           leading: const CloudBackButton(

@@ -1,11 +1,11 @@
-// ignore_for_file: file_names
 
 import 'package:cloud_car/ui/user/user_install/add_bank_card.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/utils.dart';
 import 'package:cloud_car/widget/alert.dart';
-import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:flutter/material.dart';
+
+import '../../../widget/button/cloud_back_button.dart';
 
 class BankCardPage extends StatefulWidget {
   const BankCardPage({Key? key}) : super(key: key);

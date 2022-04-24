@@ -1,14 +1,16 @@
-import 'package:cloud_car/ui/home/poster_edit_page.dart';
+import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/task_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../utils/user_tool.dart';
 import 'car_manager/car_manager_page.dart';
 import 'car_manager/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
@@ -78,15 +80,13 @@ class _HomePageState extends State<HomePage>
               width: 64.w, height: 64.w,
               child: AspectRatio(
                 aspectRatio: 1,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(32.w)),
-                    child: Container(
-                      color: Colors.blue,
-                    )),
+                child: CloudAvatarWidget(
+                  urls: [UserTool.userProvider.userInfo.headImg],
+                ),
               ),
             ),
             16.wb,
-            Text('Hi,张三',
+            Text('Hi,${UserTool.userProvider.userInfo.nickname}',
                 style: TextStyle(
                     color: BaseStyle.color111111,
                     fontWeight: FontWeight.bold,
@@ -247,7 +247,7 @@ class _HomePageState extends State<HomePage>
           title: '海报',
           suffixTitle: '查看全部',
           onTap: () {
-            Get.to(() => const PosterEditPage());
+            Get.to(() => const PosterListPage());
           },
         ),
         12.hb,

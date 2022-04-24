@@ -42,16 +42,6 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
           leading: const CloudBackButton(
             isSpecial: true,
           ),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Get.to(() => const SearchPage());
-              },
-              child: Image.asset(Assets.icons.mainSearch.path,
-                  height: 48.w, width: 48.w),
-            ),
-            20.wb,
-          ],
           backgroundColor: kForeGroundColor,
           title:   Text(widget.isCity?'定位筛选':"选择车型",
               style: TextStyle(

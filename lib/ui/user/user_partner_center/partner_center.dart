@@ -9,6 +9,8 @@ import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../utils/user_tool.dart';
+
 class PartnerCenterPage extends StatefulWidget {
   const PartnerCenterPage({Key? key}) : super(key: key);
 
@@ -482,7 +484,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "张三",
+                          UserTool.userProvider.userInfo.nickname,
                           style: Theme.of(context)
                               .textTheme
                               .headline6

@@ -73,6 +73,12 @@ dependencies:
   fluwx: ^3.8.3
   #支付宝支付
   tobias: ^2.4.0+2
+  #widget转image
+  screenshot: ^1.2.3
+  #保存图片
+  image_gallery_saver: ^1.7.1
+  #生成二维码
+  barcode_widget: ^2.0.2
 
 
 dev_dependencies:

@@ -184,6 +184,18 @@ class $AssetsIconsGen {
   /// File path: assets/icons/editor1.png
   AssetGenImage get editor1 => const AssetGenImage('assets/icons/editor1.png');
 
+  /// File path: assets/icons/estimate_date.png
+  AssetGenImage get estimateDate =>
+      const AssetGenImage('assets/icons/estimate_date.png');
+
+  /// File path: assets/icons/estimate_distance.png
+  AssetGenImage get estimateDistance =>
+      const AssetGenImage('assets/icons/estimate_distance.png');
+
+  /// File path: assets/icons/estimate_location.png
+  AssetGenImage get estimateLocation =>
+      const AssetGenImage('assets/icons/estimate_location.png');
+
   /// File path: assets/icons/examination.png
   AssetGenImage get examination =>
       const AssetGenImage('assets/icons/examination.png');
@@ -502,6 +514,10 @@ class $AssetsImagesGen {
   AssetGenImage get assessmentBg =>
       const AssetGenImage('assets/images/assessment_bg.png');
 
+  /// File path: assets/images/avatar_placeholder.png
+  AssetGenImage get avatarPlaceholder =>
+      const AssetGenImage('assets/images/avatar_placeholder.png');
+
   /// File path: assets/images/badge.png
   AssetGenImage get badge => const AssetGenImage('assets/images/badge.png');
 
@@ -525,6 +541,26 @@ class $AssetsImagesGen {
   /// File path: assets/images/car_banner.png
   AssetGenImage get carBanner =>
       const AssetGenImage('assets/images/car_banner.png');
+
+  /// File path: assets/images/car_company.png
+  AssetGenImage get carCompany =>
+      const AssetGenImage('assets/images/car_company.png');
+
+  /// File path: assets/images/car_person_back.png
+  AssetGenImage get carPersonBack =>
+      const AssetGenImage('assets/images/car_person_back.png');
+
+  /// File path: assets/images/car_person_head.png
+  AssetGenImage get carPersonHead =>
+      const AssetGenImage('assets/images/car_person_head.png');
+
+  /// File path: assets/images/car_person_photo.png
+  AssetGenImage get carPersonPhoto =>
+      const AssetGenImage('assets/images/car_person_photo.png');
+
+  /// File path: assets/images/car_valuation_bg.png
+  AssetGenImage get carValuationBg =>
+      const AssetGenImage('assets/images/car_valuation_bg.png');
 
   /// File path: assets/images/chinabankbg.png
   AssetGenImage get chinabankbg =>
@@ -594,9 +630,13 @@ class $AssetsImagesGen {
   /// File path: assets/images/photo.png
   AssetGenImage get photo => const AssetGenImage('assets/images/photo.png');
 
-  /// File path: assets/images/place_holder.png
-  AssetGenImage get placeHolder =>
-      const AssetGenImage('assets/images/place_holder.png');
+  /// File path: assets/images/placeholder.png
+  AssetGenImage get placeholder =>
+      const AssetGenImage('assets/images/placeholder.png');
+
+  /// File path: assets/images/placeholder_list.png
+  AssetGenImage get placeholderList =>
+      const AssetGenImage('assets/images/placeholder_list.png');
 
   /// File path: assets/images/push_car_top.png
   AssetGenImage get pushCarTop =>

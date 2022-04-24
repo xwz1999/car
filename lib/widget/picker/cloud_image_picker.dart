@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_car/extensions/num_ext.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +12,74 @@ class CloudImagePicker {
     double maxHeight = 1000}) async {
     List<XFile>? _files = [];
     _files = await ImagePicker().pickMultiImage();
+    if (_files == null) {
+      return <File>[];
+    } else {
+      return _files.map((e) => File(e.path)).toList();
+    }
+  }
+
+
+
+  static Future<List<File>> pickMultiAndSingleImage({required String title,
+    double maxWidth = 1000,
+    double maxHeight = 1000}) async {
+    List<XFile>? _files = [];
+    // _files = await ImagePicker().pickMultiImage();
+
+      _files = await Get.bottomSheet(CupertinoActionSheet(
+      title: title.text.isIntrinsic.make(),
+      actions: [
+        CupertinoDialogAction(
+          onPressed: () async {
+
+             await ImagePicker().pickMultiImage().then((value){
+               if(value!=null){
+                 Get.back(
+                   result: value,
+                 );
+               }
+
+            });
+
+          },
+          child: [
+            const Icon(CupertinoIcons.photo),
+            30.wb,
+            '相册(长按图片多选)'.text.isIntrinsic.make(),
+          ].row(),
+        ),
+        CupertinoDialogAction(
+            onPressed: () async {
+              await ImagePicker().pickImage(
+                source: ImageSource.camera,
+                maxHeight: maxHeight,
+                maxWidth: maxWidth,
+              ).then((value) {
+                if(value!=null){
+                  XFile _pickFile = value;
+                  List<XFile> _files = [];
+                  _files.add(_pickFile);
+                  Get.back(
+                    result: _files,
+                  );
+                }
+
+              }) ;
+
+            },
+            child: [
+            const Icon(CupertinoIcons.camera),
+        30.wb,
+        '相机'.text.isIntrinsic.make(),
+      ].row(),
+    ),
+        ],
+        cancelButton: CupertinoDialogAction(
+        onPressed: Get.back,
+        child: '取消'.text.isIntrinsic.make()
+    ,),
+    ));
     if (_files == null) {
       return <File>[];
     } else {
@@ -30,10 +99,12 @@ class CloudImagePicker {
               source: ImageSource.gallery,
               maxHeight: maxHeight,
               maxWidth: maxWidth,
-            );
-            Get.back(
-              result: pickFile,
-            )
+            ).then((value) {
+              Get.back(
+                result: value,
+              )
+            });
+
           },
           child: [
             const Icon(CupertinoIcons.photo),
@@ -47,10 +118,12 @@ class CloudImagePicker {
                 source: ImageSource.camera,
                 maxHeight: maxHeight,
                 maxWidth: maxWidth,
-              );
-              Get.back(
-                result: pickFile,
-              );
+              ).then((value){
+                Get.back(
+                  result: value,
+                );
+              })
+
             }
             child: [
             const Icon(CupertinoIcons.camera),
@@ -70,4 +143,7 @@ class CloudImagePicker {
     return null;
     }
   }
+
+
+
 }

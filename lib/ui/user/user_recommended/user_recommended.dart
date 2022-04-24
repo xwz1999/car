@@ -3,6 +3,8 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../../utils/user_tool.dart';
+
 class RecommendedPage extends StatefulWidget {
   const RecommendedPage({Key? key}) : super(key: key);
 
@@ -223,7 +225,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                                           16.hb,
                                           _getText('联系方式', '18912345432'),
                                           16.hb,
-                                          _getText('销售', '张三'),
+                                          _getText('销售', UserTool.userProvider.userInfo.nickname),
                                           24.hb,
                                         ],
                                       ),
@@ -309,7 +311,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                                           16.hb,
                                           _getText('联系方式', '18912345432'),
                                           16.hb,
-                                          _getText('销售', '张三'),
+                                          _getText('销售', UserTool.userProvider.userInfo.nickname),
                                           24.hb,
                                         ],
                                       )

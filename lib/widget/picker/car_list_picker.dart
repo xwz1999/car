@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
@@ -11,14 +10,17 @@ class CarListPicker extends StatefulWidget {
   final TextCallback callback;
   final String confirmString;
   final String? title;
-  final bool isGrid;///是否是grid列表
+  final bool isGrid;
+
+  ///是否是grid列表
   final List<ChooseItem> items;
 
   const CarListPicker(
       {Key? key,
       required this.callback,
       this.confirmString = '确认',
-      this.title, this.isGrid = true,
+      this.title,
+      this.isGrid = true,
       required this.items})
       : super(key: key);
 
@@ -29,16 +31,15 @@ class CarListPicker extends StatefulWidget {
 class _CarListPickerState extends State<CarListPicker> {
   late String _chooseItem = '';
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
-
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.w)),
       ),
-      padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 24.w),
-      clipBehavior:Clip.antiAlias,
+      padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 24.w),
+      clipBehavior: Clip.antiAlias,
       height: 650.w,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -49,7 +50,7 @@ class _CarListPickerState extends State<CarListPicker> {
               _buildButton(
                 title: '取消',
                 onPressed: () => Navigator.pop(context),
-                color:Colors.black26,
+                color: Colors.black26,
               ),
               Expanded(
                 child: Text(
@@ -64,34 +65,29 @@ class _CarListPickerState extends State<CarListPicker> {
               ),
               _buildButton(
                 title: widget.confirmString,
-                onPressed: ()=> widget.callback(_chooseItem),
+                onPressed: () => widget.callback(_chooseItem),
                 color: Colors.blue,
               ),
             ],
           ),
-
           ScreenWidget(
             isGrid: widget.isGrid,
             childAspectRatio: 72 / 28,
             callback: (String item) {
               _chooseItem = item;
 
-              setState(() {
-
-              });
+              setState(() {});
             },
             mainAxisSpacing: 24.w,
             crossAxisSpacing: 24.w,
             crossAxisCount: 4,
             haveButton: true,
             itemList: widget.items,
-
           ),
         ],
       ),
     );
   }
-
 
   _buildButton({
     required String title,

@@ -48,7 +48,7 @@ class _ScreenWidgetState extends State<ScreenWidget> {
   Widget build(BuildContext context) {
     return     Expanded(
       child: Padding(
-        padding: EdgeInsets.only(top: 24.w,bottom: 40.w),
+        padding: EdgeInsets.only(top: 24.w,bottom: 40.w,left: 32.w,right: 32.w),
         child: SortWidget(
           isGrid: widget.isGrid,
           crossAxisSpacing: widget.crossAxisSpacing,
