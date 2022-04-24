@@ -191,7 +191,7 @@ class User {
   //组织架构
   static Future<List<StoreallModel>> getStoreall() async {
     BaseListModel res =
-        await apiClient.requestList(API.storemanagement.storeAll, data: {});
+        await apiClient.requestList(API.storeManagement.storeAll, data: {});
 
     if (res.data!.list == null) return [];
     return (res.data!.list!).map((e) => StoreallModel.fromJson(e)).toList();
@@ -200,7 +200,7 @@ class User {
   //全部角色
   static Future<List<RoleallModel>> getRoleall() async {
     BaseListModel res =
-        await apiClient.requestList(API.storemanagement.roleAll, data: {});
+        await apiClient.requestList(API.storeManagement.roleAll, data: {});
     if (res.data!.list == null) return [];
     return (res.data!.list!).map((e) => RoleallModel.fromJson(e)).toList();
   }
@@ -208,7 +208,7 @@ class User {
   //门店筛选
   static Future<List<StoreselectMoedl>> getStoreselect() async {
     BaseListModel res =
-        await apiClient.requestList(API.storemanagement.storeSelect, data: {});
+        await apiClient.requestList(API.storeManagement.storeSelect, data: {});
     if (res.data!.list == null) return [];
     return (res.data!.list!).map((e) => StoreselectMoedl.fromJson(e)).toList();
   }
@@ -219,7 +219,7 @@ class User {
     String address,
   ) async {
     BaseModel res =
-        await apiClient.request(API.storemanagement.storeAdd, data: {
+        await apiClient.request(API.storeManagement.storeAdd, data: {
       'name': name,
       'address': address,
     });
@@ -237,7 +237,7 @@ class User {
     String commission,
   ) async {
     BaseModel res =
-        await apiClient.request(API.storemanagement.staffAdd, data: {
+        await apiClient.request(API.storeManagement.staffAdd, data: {
       'name': name,
       'gender': gender,
       'phone': phone,

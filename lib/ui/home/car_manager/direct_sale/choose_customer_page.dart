@@ -5,6 +5,8 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/user_tool.dart';
+
 
 typedef CarCallback = Function(String city);
 
@@ -135,7 +137,7 @@ class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
                 if(_selectIndex.isEmpty){
                   BotToast.showText(text: '请先选择车辆');
                 }else{
-                  widget.callback('张三');
+                  widget.callback(UserTool.userProvider.userInfo.nickname);
                   Get.back();
                 }
 
@@ -218,7 +220,7 @@ class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
            getContentItem('跟进时间','2021-12-01 12:22:12'),
            getContentItem('客户来源','微信小程序'),
            getContentItem('注册时间','2021-10-12 14:23:56'),
-           getContentItem('销售','张三'),
+           getContentItem('销售',UserTool.userProvider.userInfo.nickname),
          ],
        ),
       ),

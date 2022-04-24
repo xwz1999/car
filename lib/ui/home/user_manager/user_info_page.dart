@@ -5,6 +5,8 @@ import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../../utils/user_tool.dart';
+
 class UserInfoPage extends StatefulWidget {
   const UserInfoPage({
     Key? key,
@@ -149,7 +151,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                                 16.hb,
                                 _getText(
                                   '销售',
-                                  '张三',
+                                  UserTool.userProvider.userInfo.nickname,
                                 ),
                               ],
                             ),

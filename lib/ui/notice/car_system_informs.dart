@@ -1,17 +1,17 @@
-// ignore_for_file: camel_case_types
 
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-class systemPage extends StatefulWidget {
-  const systemPage({Key? key}) : super(key: key);
+import '../../widget/button/cloud_back_button.dart';
+
+class SystemPage extends StatefulWidget {
+  const SystemPage({Key? key}) : super(key: key);
 
   @override
-  _systemPageState createState() => _systemPageState();
+  _SystemPageState createState() => _SystemPageState();
 }
 
-class _systemPageState extends State<systemPage>
+class _SystemPageState extends State<SystemPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
 

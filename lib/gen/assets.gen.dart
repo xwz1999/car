@@ -289,8 +289,16 @@ class $AssetsImagesGen {
   AssetGenImage get partnerCenterBg =>
       const AssetGenImage('assets/images/partner_center_bg.png');
   AssetGenImage get photo => const AssetGenImage('assets/images/photo.png');
-  AssetGenImage get placeHolder =>
-      const AssetGenImage('assets/images/place_holder.png');
+
+  /// File path: assets/images/placeholder.png
+  AssetGenImage get placeholder =>
+      const AssetGenImage('assets/images/placeholder.png');
+
+  /// File path: assets/images/placeholder_list.png
+  AssetGenImage get placeholderList =>
+      const AssetGenImage('assets/images/placeholder_list.png');
+
+  /// File path: assets/images/push_car_top.png
   AssetGenImage get pushCarTop =>
       const AssetGenImage('assets/images/push_car_top.png');
   AssetGenImage get realNameBadge =>

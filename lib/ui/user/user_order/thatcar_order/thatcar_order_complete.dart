@@ -3,6 +3,8 @@ import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/user_tool.dart';
+
 class ThatcarComplete extends StatefulWidget {
   final String stat;
   const ThatcarComplete({Key? key, required this.stat}) : super(key: key);
@@ -109,7 +111,7 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
               16.hb,
               _getText('联系方式', '18998785432'),
               16.hb,
-              _getText('绑定销售', '张三'),
+              _getText('绑定销售', UserTool.userProvider.userInfo.nickname),
               16.hb,
               _getText('上门地址', '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
               16.hb,

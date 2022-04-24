@@ -103,12 +103,11 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    var env = const String.fromEnvironment('ENV', defaultValue: 'dev') == 'dev';
+    var env = const String.fromEnvironment('ENV', defaultValue: 'dev');
     if (kDebugMode) {
       print('env :$env');
     }
-    DevEV.instance.setEnvironment(env);
-    DevEV.instance.init(context);
+    DevEV.instance.setEnvironment(env=='dev',context);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll();
       if (!await userProvider.init()) {

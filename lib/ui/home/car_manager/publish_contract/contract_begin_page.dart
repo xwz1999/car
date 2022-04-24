@@ -3,12 +3,9 @@ import 'package:cloud_car/ui/home/car_manager/publish_contract/select_customer_p
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
-import '../../../../widget/picker/car_picker_box.dart';
 
 class ContractBeginPage extends StatefulWidget {
   const ContractBeginPage({Key? key}) : super(key: key);
@@ -81,7 +78,7 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
                           .color(Colors.black
                           .withOpacity(customer!.isEmpty ? 0.25 : 0.85))
                           .make(),
-                      Spacer(),
+                      const Spacer(),
                       Icon(
                         CupertinoIcons.chevron_right,
                         color: Colors.black.withOpacity(0.45),

@@ -7,6 +7,7 @@ class BaseListModel<T> {
   final int code;
   final String msg;
   final ListInnerModel? data;
+
   BaseListModel({
     required this.code,
     required this.msg,
@@ -16,10 +17,22 @@ class BaseListModel<T> {
   factory BaseListModel.fromJson(Map<String, dynamic> json) =>
       _$BaseListModelFromJson(json);
 
-  List<T> map(T Function(dynamic) f) {
-    if (data == null) return [];
-    if (data!.list == null) return [];
-    return data!.list!.map(f).toList();
+  List get nullSafetyList {
+    if (data == null) {
+      return [];
+    } else if (data!.list == null) {
+      return [];
+    } else {
+      return data!.list!;
+    }
+  }
+
+  int get nullSafetyTotal {
+    if (data == null) {
+      return 0;
+    } else {
+      return data!.total;
+    }
   }
 }
 
@@ -27,10 +40,12 @@ class BaseListModel<T> {
 class ListInnerModel {
   final List<dynamic>? list;
   final int total;
+
   ListInnerModel({
     this.list,
     required this.total,
   });
+
   factory ListInnerModel.fromJson(Map<String, dynamic> json) =>
       _$ListInnerModelFromJson(json);
 }

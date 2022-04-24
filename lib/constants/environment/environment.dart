@@ -10,11 +10,8 @@ class DevEV {
 
   bool dev = false;
 
-  void setEnvironment(bool environment) {
+  void setEnvironment(bool environment,context) {
     dev = environment;
-  }
-
-  void init(BuildContext context) {
     PowerLogger.start(context, debug: dev);
   }
 }

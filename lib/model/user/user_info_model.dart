@@ -6,7 +6,7 @@ part 'user_info_model.g.dart';
 
 @JsonSerializable()
 class UserInfoModel {
-  int id;
+  String inviteCode;
   String nickname;
   String headImg;
   int level;
@@ -16,7 +16,7 @@ class UserInfoModel {
 //<editor-fold desc="Data Methods">
 
   UserInfoModel({
-    required this.id,
+    required this.inviteCode,
     required this.nickname,
     required this.headImg,
     required this.level,
@@ -27,19 +27,22 @@ class UserInfoModel {
       identical(this, other) ||
       (other is UserInfoModel &&
           runtimeType == other.runtimeType &&
-          id == other.id &&
+          inviteCode == other.inviteCode &&
           nickname == other.nickname &&
           headImg == other.headImg &&
           level == other.level);
 
   @override
   int get hashCode =>
-      id.hashCode ^ nickname.hashCode ^ headImg.hashCode ^ level.hashCode;
+      inviteCode.hashCode ^
+      nickname.hashCode ^
+      headImg.hashCode ^
+      level.hashCode;
 
   @override
   String toString() {
     return 'UserInfoModel{' +
-        ' id: $id,' +
+        ' inviteCode: $inviteCode,' +
         ' nickname: $nickname,' +
         ' headImg: $headImg,' +
         ' level: $level,' +
@@ -47,18 +50,19 @@ class UserInfoModel {
   }
 
   UserInfoModel copyWith({
-    int? id,
+    String? inviteCode,
     String? nickname,
     String? headImg,
     int? level,
   }) {
     return UserInfoModel(
-      id: id ?? this.id,
+      inviteCode: inviteCode ?? this.inviteCode,
       nickname: nickname ?? this.nickname,
       headImg: headImg ?? this.headImg,
       level: level ?? this.level,
     );
   }
+
 
 //</editor-fold>
 }
