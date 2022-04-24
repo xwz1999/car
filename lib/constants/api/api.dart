@@ -110,4 +110,5 @@ class _StoreManagement {
 class _Poster{
   ///海报列表
   String get list => '/playbill/lists';
+
 }

@@ -27,7 +27,7 @@ class CarValuationPage extends StatefulWidget {
 }
 
 class _CarValuationPageState extends State<CarValuationPage> {
-  final CarInfo _carInfo = CarInfo(color: '', distance: '', address: '', name: '', time: '');
+  final CarInfo _carInfo = CarInfo();
   DateTime? _firstDate;
   late CarDistinguishModel? carInfoModel;
 
@@ -211,7 +211,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
 
                             _carInfo.address = carInfoModel!.address;
 
-                            _carInfo.time = carInfoModel!.regdate;
+                            _carInfo.licensingDate = carInfoModel!.regdate;
                             setState(() {
 
                             });
@@ -233,6 +233,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
                   Get.back();
                   Get.back();
                   _carInfo.name = name;
+                  _carInfo.modelId = id;
                 },));
                 setState(() {
 
@@ -241,7 +242,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               child: EditItemWidget(
                 title: '具体车型',
                 callback: (String content) {},
-                value: _carInfo.name,
+                value: _carInfo.name??'',
 
                 tips: '请选择具体车型',
                 topIcon: false,
@@ -267,7 +268,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               child: EditItemWidget(
                 title: '车牌所在地',
                 callback: (String content) {},
-                value: _carInfo.address,
+                value: _carInfo.address??'',
                 tips: '请选择车牌所在地',
                 topIcon: false,
                 paddingStart: 32,
@@ -283,14 +284,14 @@ class _CarValuationPageState extends State<CarValuationPage> {
             GestureDetector(
               onTap: () async{
                 _firstDate = await CarDatePicker.monthPicker(DateTime.now());
-                _carInfo.time = DateUtil.formatDate(_firstDate,
+                _carInfo.licensingDate = DateUtil.formatDate(_firstDate,
                     format: 'yyyy-MM');
                 setState(() {});
               },
               child: EditItemWidget(
                 title: '首次上牌',
                 callback: (String content) {},
-                value:  _carInfo.time,
+                value:  _carInfo.licensingDate??'',
                 tips: '请选择首次上牌时间',
                 topIcon: false,
                 paddingStart: 32,
@@ -324,7 +325,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               child: EditItemWidget(
                 title: '车身颜色',
                 callback: (String content) {},
-                value: _carInfo.color,
+                value: _carInfo.color??'',
                 tips: '请选择车身颜色',
                 topIcon: false,
                 paddingStart: 32,
@@ -339,7 +340,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
             EditItemWidget(
               title: '行驶里程',
               callback: (String content) {},
-              value: _carInfo.distance,
+              value: _carInfo.mileage??'',
               tips: '请输入行驶里程',
               topIcon: false,
               paddingStart: 32,
@@ -352,6 +353,10 @@ class _CarValuationPageState extends State<CarValuationPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
+
+
+
+
                     Get.to(()=>CarValuationResultPage(carInfo: _carInfo,));
                 },
                 style: ButtonStyle(
@@ -374,17 +379,44 @@ class _CarValuationPageState extends State<CarValuationPage> {
 
 
 class CarInfo{
-  String name;
-  String address;
-  String time;
-  String color;
-  String distance;
+  String? name;
+  String? address;
+
+
+  int? modelId;///车型id
+  String? licensePlate;///牌照
+  String? licensingDate;///上牌照时间
+  String? mileage;///里程
+  String? color;
+  int? transfer;///过户次数
+  int? paint;
+  int? plate;
+  List<int>? parts;
+  int? engine;
+  List<int>? accidents;
+  int? maintain;
+  String? vin;
+  String? engineNo;
+  int? source;
+  int? shamMileage;
 
   CarInfo({
-    required this.name,
-    required this.address,
-    required this.time,
-    required this.color,
-    required this.distance,
+    this.name,
+    this.address,
+    this.modelId,
+    this.licensePlate,
+    this.licensingDate,
+    this.mileage,
+    this.transfer,
+    this.paint,
+    this.plate,
+    this.parts,
+    this.engine,
+    this.accidents,
+    this.maintain,
+    this.vin,
+    this.engineNo,
+    this.source,
+    this.shamMileage,
   });
 }
