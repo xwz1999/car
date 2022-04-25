@@ -33,8 +33,8 @@ class _ShareHomePageState extends State<ShareHomePage>
   List<Widget> listWidget = [];
   ScreenControl screenControlMy = ScreenControl();
   ScreenControl screenControlAll = ScreenControl();
-  EasyRefreshController _myRefreshController = EasyRefreshController();
-  EasyRefreshController _allRefreshController = EasyRefreshController();
+  final EasyRefreshController _myRefreshController = EasyRefreshController();
+  final EasyRefreshController _allRefreshController = EasyRefreshController();
    String _pickCity='';
    String _pickBrand='';
    String _pickPrice='';
