@@ -1,7 +1,6 @@
 import '../environment/environment.dart';
 
 part 'user_api.dart';
-part 'order_api.dart';
 
 /// * user  用户接口
 /// * data 基础数据接口
@@ -36,8 +35,6 @@ class API {
 
   //二级分类
   static _UserApi user = _UserApi();
-
-  static _OrderApi order = _OrderApi();
 }
 
 extension ImageOnString on String {
