@@ -13,6 +13,9 @@ class Config {
   static String get apkDevDir =>
       '$homeDir/team/cloud/cloud_car/dev';
 
+
+
+  
   ///正式包文件夹
   static String get apkDir =>
       '$homeDir/team/bee/cloud_car/release';
