@@ -1,12 +1,17 @@
 
+import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
 
 
-class CustomerItem extends StatelessWidget {
+class CustomerInviteItem extends StatelessWidget {
+  // final int type;///1为客服付款 2为客户跟踪 3客户邀约
+  final TaskInviteListModel model;
 
-  const CustomerItem({Key? key}) : super(key: key);
+
+  const CustomerInviteItem({Key? key,  required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +26,13 @@ class CustomerItem extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('支付定金提醒',
+              Text('看车邀约提醒',
                   style: TextStyle(
                       color: BaseStyle.color333333,
                       fontSize: BaseStyle.fontSize32,
                       fontWeight: FontWeight.bold)),
               const Spacer(),
-              getState('看车'),
+              getState(model.type),
             ],
           ),
           32.hb,
@@ -39,11 +44,14 @@ class CustomerItem extends StatelessWidget {
                       fontSize: BaseStyle.fontSize28,
                       )),
               48.wb,
-              Text('支付定金提醒',
+              Text(model.customerNickname,
                   style: Theme.of(context).textTheme.subtitle2),
             ],
           ),
           32.hb,
+
+          getRemainingTime(DateUtil.getDateTimeByMs(
+              model.inviteAt.toInt() * 1000))>0?
           Row(
             children: [
               Text('剩余时间',
@@ -52,11 +60,13 @@ class CustomerItem extends StatelessWidget {
                     fontSize: BaseStyle.fontSize28,
                   )),
               48.wb,
-              Text('支付定金提醒',
+              Text('剩余时间小于${getRemainingTime(DateUtil.getDateTimeByMs(
+                  model.inviteAt.toInt() * 1000))}小时',
                   style: Theme.of(context).textTheme.subtitle2),
             ],
-          ),
-          32.hb,
+          ):const SizedBox(),
+          getRemainingTime(DateUtil.getDateTimeByMs(
+              model.inviteAt.toInt() * 1000))<=0?const SizedBox():32.hb,
           Row(
             children: [
               Text('邀约时间',
@@ -65,8 +75,12 @@ class CustomerItem extends StatelessWidget {
                     fontSize: BaseStyle.fontSize28,
                   )),
               48.wb,
-              Text('支付定金提醒',
-                  style: Theme.of(context).textTheme.subtitle2),
+              Padding(
+                padding:  EdgeInsets.only(top: 10.w),
+                child: Text( DateUtil.formatDate(DateUtil.getDateTimeByMs(
+                    model.inviteAt.toInt() * 1000),format: 'yyyy-MM-dd HH:mm'),
+                    style: Theme.of(context).textTheme.subtitle2),
+              ),
             ],
           )
         ],
@@ -75,7 +89,29 @@ class CustomerItem extends StatelessWidget {
   }
 
 
-  getState(String state ){
+
+  getRemainingTime(DateTime dateTime){
+    if( dateTime.difference(DateTime.now()).inHours>0){
+      return (dateTime.difference(DateTime.now()).inHours+1);
+      // return '剩余时间小于+${ dateTime.difference(DateTime.now()).inHours+1}小时';
+    }else{
+      return (dateTime.difference(DateTime.now()).inHours+1);
+      return '剩余时间小于+${ dateTime.difference(DateTime.now()).inHours+1}小时';
+    }
+  }
+
+
+  getState(int type ){
+    String state = '';
+    if(type==1){
+      state = '看车';
+    }else if(type==2){
+      state = '检车';
+    }
+    if(getRemainingTime(DateUtil.getDateTimeByMs(
+        model.inviteAt.toInt() * 1000))<=0){
+      state = '过期' ;
+    }
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8.w,horizontal: 16.w),
       decoration: BoxDecoration(
@@ -89,6 +125,12 @@ class CustomerItem extends StatelessWidget {
               fontWeight: FontWeight.bold)),
     );
   }
+
+
+
+
+
+
 
   getTextColor(String state ){
     switch(state){
