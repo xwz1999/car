@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/hive_store.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -48,6 +49,9 @@ class _SplashPageState extends State<SplashPage> {
     //     await HiveStore.appBox?.put('agreement', true);
     //   }
     // }
+
+    //初始化省市区版本
+    UserTool.cityProvider.init();
   }
 
   Future<bool?> _showLoginVerify() async {
@@ -107,7 +111,7 @@ class _SplashPageState extends State<SplashPage> {
     if (kDebugMode) {
       print('env :$env');
     }
-    DevEV.instance.setEnvironment(env=='dev',context);
+    DevEV.instance.setEnvironment(env == 'dev', context);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll();
       if (!await userProvider.init()) {

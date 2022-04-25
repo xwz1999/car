@@ -25,7 +25,9 @@ class AllCarView extends StatefulWidget {
       required this.dropDownHeaderItemStrings,
       required this.listWidget,
       required this.screenControl,
-      required this.onTap, required this.sort, required this.refreshController})
+      required this.onTap,
+      required this.sort,
+      required this.refreshController})
       : super(key: key);
 
   @override
@@ -52,10 +54,11 @@ class _AllCarViewState extends State<AllCarView> {
         header: MaterialHeader(),
         onRefresh: () async {
           _page = 1;
-          _allCarList = await CarFunc.getCarList(_page, _size,order: CarMap.carSortString
-              .getKeyFromValue(widget.sort)
-              .toString()
-              .toSnake);
+          _allCarList = await CarFunc.getCarList(_page, _size,
+              order: CarMap.carSortString
+                  .getKeyFromValue(widget.sort)
+                  .toString()
+                  .toSnake);
           setState(() {});
         },
         onLoad: () async {
@@ -94,7 +97,7 @@ class _AllCarViewState extends State<AllCarView> {
                       NumUtil.divide(num.parse(model.price), 10000).toString() +
                           '万元',
                 );
-              },childCount: _allCarList.length),
+              }, childCount: _allCarList.length),
             ),
           )
         ],
