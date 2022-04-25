@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:cloud_car/extensions/num_ext.dart';
-import 'package:cloud_car/utils/toast/cloud_toast.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -95,7 +95,7 @@ class CloudImagePicker {
       actions: [
         CupertinoDialogAction(
           onPressed: () async {
-            var pickFile = ImagePicker().pickImage(
+            await ImagePicker().pickImage(
               source: ImageSource.gallery,
               maxHeight: maxHeight,
               maxWidth: maxWidth,
@@ -114,7 +114,7 @@ class CloudImagePicker {
         ),
         CupertinoDialogAction(
             onPressed: () async {
-              var pickFile = ImagePicker().pickImage(
+              await ImagePicker().pickImage(
                 source: ImageSource.camera,
                 maxHeight: maxHeight,
                 maxWidth: maxWidth,

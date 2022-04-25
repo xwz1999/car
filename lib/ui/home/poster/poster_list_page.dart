@@ -1,6 +1,7 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
+import 'package:cloud_car/ui/home/poster/poster_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
@@ -51,16 +52,7 @@ class _PosterListPageState extends State<PosterListPage> {
               controller: _easyRefreshController,
               onRefresh: () async {
                 _page = 1;
-                BaseListModel baseList = await apiClient.requestList(
-                    API.poster.list,
-                    data: {"page": _page, "size": _size});
-                if (baseList.code == 0) {
-                  _models = baseList.nullSafetyList
-                      .map((e) => PosterListModel.fromJson(e))
-                      .toList();
-                } else {
-                  CloudToast.show(baseList.msg);
-                }
+                _models = await PosterFunc.getPosterList(page: _page);
                 setState(() {});
               },
               onLoad: () async {

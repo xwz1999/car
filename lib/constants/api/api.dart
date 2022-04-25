@@ -2,7 +2,6 @@ import '../environment/environment.dart';
 
 part 'user_api.dart';
 
-part 'home_api.dart';
 
 /// * user  用户接口
 /// * data 基础数据接口
@@ -39,8 +38,92 @@ class API {
 
   //二级分类
   static _UserApi user = _UserApi();
-  static _HomeApi home = _HomeApi();
+
+
+  static _Car car = _Car();
+
+  static _Contract contract = _Contract();
+
+
+  static _Customer customer = _Customer();
+
+  static _Task task = _Task();
+
 }
+
+
+class _Task{
+  ///客户邀约列表
+  String get getInviteLists => '/task/invite/lists';
+
+
+
+
+}
+
+class _Customer{
+  ///客户轨迹
+  String get customerTrail => '/customer/trail/all';
+
+
+  ///浏览车辆列表
+  String get browseLists => '/customer/browse/lists';
+
+
+}
+
+class _Car{
+
+  ///获取车辆品牌
+  String get getCarBrand => '/car/brand/all';
+
+  ///获取车辆品牌下车系
+  String get getCarSeries => '/car/series/all';
+
+  ///获取车辆车系下车型
+  String get getCarModel => '/car/model/all';
+
+  ///行驶证识别
+  String get getCarVehicle => '/car/cor/vehicle';
+
+  ///估算价格
+  String get estimatePrice => '/car/price/estimate';
+
+  ///费用计算
+  String get priceAmount => '/car/price/amount';
+
+  ///车辆列表  //分享
+  String get getCarLists => '/car/lists';
+
+  ///我的车辆列表  //分享
+  String get getCarSelfLists => '/car/self';
+
+  ///车辆信息
+  String get getCarIfo => '/car/self';
+
+
+  ///收藏列表 云云优选
+  String get getCollectLists => '/car/collect/lists';
+
+  ///添加到收藏 云云优选
+  String get addCollect => '/car/collect/add';
+
+  ///取消收藏 云云优选
+  String get cancelCollect => '/car/collect/cancel';
+
+
+}
+class _Contract{
+
+  ///发起寄卖合同
+  String get addConsignment => '/contract/consignment/add';
+
+  ///发起出售合同
+  String get addSaleContract=> '/contract/sale/add';
+
+}
+
+
 class _File {
   ///图片上传
   String get uploadImage => '/file/upload/image';
@@ -85,11 +168,16 @@ class _Order {
 ///完结订单
   get saleFinal => '/order/sale/final';
 
-//叫车订单->添加叫车订单
+///叫车订单->添加叫车订单
   get carAdd => '/order/call/car/add';
 
-//交车
+///交车
   get carFinal => '/order/call/car/final';
+
+
+  ///添加车商寄卖订单
+  get addConsignment => '/order/dealer/consignment/add';
+  
 }
 
 //门店管理
@@ -113,4 +201,5 @@ class _StoreManagement {
 class _Poster{
   ///海报列表
   String get list => '/playbill/lists';
+
 }

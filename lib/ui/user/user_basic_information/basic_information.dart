@@ -307,7 +307,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                           filled: true,
                                           isDense: true,
                                           fillColor: Colors.white,
-                                          hintText: "${UserTool.userProvider.userInfo.nickname}",
+                                          hintText: UserTool.userProvider.userInfo.nickname,
                                           hintStyle: TextStyle(
                                               color: Colors.grey.shade500,
                                               fontSize: 14,
