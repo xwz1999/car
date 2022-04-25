@@ -1,6 +1,7 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/text_utils.dart';
 import 'package:cloud_car/utils/title_drop_down_head_widget.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 typedef TextCallback = Function(String text);
 
 class TitleDropDownWidget extends StatefulWidget {
+  final bool? isSearch;
   final TextCallback? callback;
   final Widget? title;
   final String? tips;
@@ -20,7 +22,7 @@ class TitleDropDownWidget extends StatefulWidget {
   // 高度
   final double height;
   final Widget? leftWidget;
-  final Widget? rightWidget;
+
   //子集
   final Widget? child;
 
@@ -47,11 +49,11 @@ class TitleDropDownWidget extends StatefulWidget {
       Key? key,
       this.onTap,
       this.leftWidget,
-      this.rightWidget,
+
       this.child,
       this.callback,
       this.title,
-      this.tips})
+      this.tips, this.isSearch = true})
       : super(key: key);
 
   @override
@@ -135,7 +137,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Padding(
+        widget.isSearch!?Padding(
           padding: EdgeInsets.only(top: 10.w),
           child: Row(
             children: [
@@ -262,6 +264,35 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
               32.wb,
             ],
           ),
+        ):Padding( padding: EdgeInsets.only(top: 10.w),
+
+        child: Row(
+          children: [
+            widget.leftWidget != null ? widget.leftWidget! : const SizedBox(),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                height: 72.w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(16.w)),
+                    color: Colors.white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: getScreenTitle(),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+              },
+              icon: const Icon(
+                CupertinoIcons.chevron_back,
+                color: Colors.transparent,
+              ),
+            ),
+          ],
+        ),
         ),
         widget.child != null ? widget.child! : const SizedBox(),
         getBottomScreen()
