@@ -12,6 +12,7 @@ class DropDownWidget extends StatefulWidget {
 
   //展开视图集合
   final List<Widget> listWidget;
+
   // 高度
   final double height;
 
@@ -64,15 +65,12 @@ class ScreenControl {
 
   //显示
   void screenShow() {
-
-      _controller.forward();
-
+    _controller.forward();
   }
 
   //隐藏
   void screenHide() {
-
-      _controller.reverse();
+    _controller.reverse();
 
     rotateState = rotateState.map((e) => false).toList();
   }
@@ -113,16 +111,17 @@ class _DropDownWidgetState extends State<DropDownWidget>
     });
   }
 
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        widget.child != null ? widget.child! : const SizedBox(),
         Container(
           alignment: Alignment.center,
           height: widget.height,
@@ -140,7 +139,6 @@ class _DropDownWidgetState extends State<DropDownWidget>
             children: getScreenTitle(),
           ),
         ),
-        widget.child != null ? widget.child! : const SizedBox(),
         getBottomScreen()
       ],
     );

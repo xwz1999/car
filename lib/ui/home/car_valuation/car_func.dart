@@ -59,7 +59,7 @@ class CarFunc {
   ///获取我的车辆列表  new_create=最新创建 max_price=标价最高 min_price=标价最低 min_age=车龄最短 min_mileage=里程最少 new_update=最近更新
   static Future<List<CarListModel>> getMyCarList(
       {required int page, int size = 10, String? order}) async {
-    BaseListModel baseList = await apiClient.requestList(
+    var baseList = await apiClient.requestList(
         API.car.getCarSelfLists,
         data: {'page': page, 'size': size, 'order': order});
     if (baseList.code != 0) {

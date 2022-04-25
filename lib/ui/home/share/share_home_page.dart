@@ -1,3 +1,6 @@
+
+import 'package:cloud_car/ui/home/share/all_car_view.dart';
+import 'package:cloud_car/ui/home/share/my_car_view.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
 import 'package:cloud_car/ui/home/sort/citylist_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
@@ -6,13 +9,14 @@ import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/custom_floating_action_button_location.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../../../widget/car_item_widget.dart';
 
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
@@ -77,14 +81,14 @@ class _ShareHomePageState extends State<ShareHomePage>
         },
       ),
       CarListPage(
-        carCallback: (String city,int id) {
+        carCallback: (String city, int id) {
           Get.back();
           Get.back();
           Get.back();
           if (kDebugMode) {
             print(city);
           }
-         // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
+          // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
           setState(() {});
         },
       ),
@@ -205,8 +209,27 @@ class _ShareHomePageState extends State<ShareHomePage>
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
         body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
           controller: _tabController,
-          children: [_myCar(), _allCar()],
+          children:[
+            MyCarView(
+                dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
+                listWidget: listWidget,
+                screenControl: screenControlMy,
+                onTap: () {
+                  screenControlMy.screenHide();
+                  _scaffoldKey.currentState?.openEndDrawer();
+                }),
+            AllCarView(
+                dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
+                listWidget: listWidget,
+                screenControl: screenControlAll,
+                onTap: () {
+                  screenControlMy.screenHide();
+                  _scaffoldKey.currentState?.openEndDrawer();
+                })
+          ],
+          // children: [_myCar(), _allCar()],
         ));
   }
 
