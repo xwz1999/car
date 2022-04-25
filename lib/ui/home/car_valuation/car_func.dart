@@ -43,7 +43,8 @@ class CarFunc {
   }
 
   ///获取车辆列表
-  static Future<List<CarListModel>> getCarList(int page, int size) async {
+  static Future<List<CarListModel>> getCarList(int page, int size,
+      {String? order}) async {
     BaseListModel baseList = await apiClient
         .requestList(API.car.getCarLists, data: {'page': page, 'size': size});
     if (baseList.code != 0) {

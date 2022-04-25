@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:flustars/flustars.dart';
@@ -9,19 +10,23 @@ import '../../../model/car_manager/car_list_model.dart';
 import '../../../utils/drop_down_widget.dart';
 import '../../../widget/car_item_widget.dart';
 import '../car_valuation/car_func.dart';
+import 'package:cloud_car/extensions/map_extension.dart';
+import 'package:cloud_car/extensions/string_extension.dart';
 
 class MyCarView extends StatefulWidget {
   final List<String> dropDownHeaderItemStrings;
   final List<Widget> listWidget;
   final ScreenControl screenControl;
   final VoidCallback onTap;
-
+  final String sort;
+  final EasyRefreshController refreshController;
   const MyCarView(
       {Key? key,
       required this.dropDownHeaderItemStrings,
       required this.listWidget,
       required this.screenControl,
-      required this.onTap})
+      required this.onTap,
+      required this.sort, required this.refreshController})
       : super(key: key);
 
   @override
@@ -32,13 +37,6 @@ class _MyCarViewState extends State<MyCarView> {
   List<CarListModel> _myCarList = [];
   int _page = 1;
   final int _size = 10;
-  final EasyRefreshController _refreshController = EasyRefreshController();
-
-  @override
-  void dispose() {
-    _refreshController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +49,18 @@ class _MyCarViewState extends State<MyCarView> {
       headFontSize: 28.sp,
       child: EasyRefresh.custom(
         firstRefresh: true,
-        controller: _refreshController,
+        controller: widget.refreshController,
         header: MaterialHeader(),
         footer: MaterialFooter(),
         onRefresh: () async {
           _page = 1;
-          _myCarList = await CarFunc.getMyCarList(page: _page, size: _size);
+          _myCarList = await CarFunc.getMyCarList(
+              page: _page,
+              size: _size,
+              order: CarMap.carSortString
+                  .getKeyFromValue(widget.sort)
+                  .toString()
+                  .toSnake);
           setState(() {});
         },
         onLoad: () async {
@@ -68,7 +72,7 @@ class _MyCarViewState extends State<MyCarView> {
                 .map((e) => CarListModel.fromJson(e))
                 .toList());
           } else {
-            _refreshController.finishLoad(noMore: true);
+            widget.refreshController.finishLoad(noMore: true);
           }
           setState(() {});
         },
@@ -90,9 +94,7 @@ class _MyCarViewState extends State<MyCarView> {
                 distance: model.mileage + '万公里',
                 // standard: '国六',
                 url: model.mainPhoto,
-                price:
-                    NumUtil.divide(num.parse(model.price), 10000).toString() +
-                        '万元',
+                price: NumUtil.divide(num.parse(model.price), 10000).toString(),
               );
             }, childCount: _myCarList.length)),
           ),

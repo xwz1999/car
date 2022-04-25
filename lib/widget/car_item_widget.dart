@@ -76,12 +76,21 @@ class CarItemWidget extends StatelessWidget {
                   ],
                 ),
                 20.hb,
-                Text(
-                  price,
-                  style: TextStyle(
-                      color: const Color(0xFFFF3B02),
-                      fontSize: BaseStyle.fontSize36,
-                      fontWeight: FontWeight.bold),
+                RichText(
+                  text: TextSpan(
+                      text: price,
+                      style: TextStyle(
+                          color: const Color(0xFFFF3B02),
+                          fontSize: BaseStyle.fontSize36,
+                          fontWeight: FontWeight.bold),
+                      children: [
+                        TextSpan(
+                            text: ' 万',
+                            style: TextStyle(
+                                color: const Color(0xFFFF3B02),
+                                fontSize: BaseStyle.fontSize28,
+                                fontWeight: FontWeight.normal)),
+                      ]),
                 ),
               ],
             ),

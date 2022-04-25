@@ -156,6 +156,7 @@ class _CarListPageState extends State<CarListPage> {
                 // if (index == 0) return _buildHeader();
                 CityModel model = cityList[index];
                 return Utils.getListItem(context, model, (name, id) {
+                  print(1111111111111);
                     Get.to(()=>ChooseCarNextPage(name: name, callback: (String name, int id) {
                       widget.carCallback(name,id);
                     }, id: id,));
