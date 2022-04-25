@@ -1,26 +1,28 @@
-// ignore_for_file: body_might_complete_normally_nullable
-
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/text_utils.dart';
+import 'package:cloud_car/utils/title_drop_down_head_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'drop_down_head_widget.dart';
+typedef TextCallback = Function(String text);
 
-class DropDownWidget extends StatefulWidget {
+class TitleDropDownWidget extends StatefulWidget {
+  final TextCallback? callback;
+  final Widget? title;
+  final String? tips;
+
   //标题集合
   final List<String> titles;
 
   //展开视图集合
   final List<Widget> listWidget;
-
   // 高度
   final double height;
-
+  final Widget? leftWidget;
+  final Widget? rightWidget;
   //子集
   final Widget? child;
-
-  ///筛选
-  final String? screen;
 
 //筛选文字大小
   final double headFontSize;
@@ -32,27 +34,33 @@ class DropDownWidget extends StatefulWidget {
   // BoxConstraints constraints;
   final double bottomHeight;
 
-  final ScreenControl screenControl;
-
   final VoidCallback? onTap;
 
-  const DropDownWidget(this.titles, this.listWidget,
-      {this.child,
-      this.height = 42,
-      required this.headFontSize,
-      this.iconData,
-      required this.bottomHeight,
-      required this.screenControl,
-      this.screen,
-      Key? key,
-      this.onTap})
-      : super(key: key);
+  final TitleScreenControl screenControl;
+
+  const TitleDropDownWidget(
+    this.titles,
+    this.listWidget, {
+    this.height = 42,
+    required this.headFontSize,
+    this.iconData,
+    required this.bottomHeight,
+    required this.screenControl,
+    Key? key,
+    this.onTap,
+    this.leftWidget,
+    this.rightWidget,
+    this.child,
+    this.callback,
+    this.title,
+    this.tips,
+  }) : super(key: key);
 
   @override
-  _DropDownWidgetState createState() => _DropDownWidgetState();
+  _TitleDropDownWidgetState createState() => _TitleDropDownWidgetState();
 }
 
-class ScreenControl {
+class TitleScreenControl {
   //自动
   void autoDisplay() {
     if (_controller.isDismissed) {
@@ -71,7 +79,6 @@ class ScreenControl {
   //隐藏
   void screenHide() {
     _controller.reverse();
-
     rotateState = rotateState.map((e) => false).toList();
   }
 }
@@ -81,15 +88,21 @@ late Animation<double> curve;
 //按钮旋转状态
 List<bool> rotateState = [];
 
-class _DropDownWidgetState extends State<DropDownWidget>
+class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
     with SingleTickerProviderStateMixin {
   int tabIndex = 0;
-  final ScreenControl _screenControl = ScreenControl();
+
   bool showBottom = false;
+
+  late TextEditingController _editingController;
+
+  late FocusNode _contentFocusNode;
 
   @override
   void initState() {
     super.initState();
+    _contentFocusNode = FocusNode();
+    _editingController = TextEditingController();
     widget.bottomHeight;
     //展开隐藏控制器，动画初始化
     _controller = AnimationController(
@@ -114,6 +127,8 @@ class _DropDownWidgetState extends State<DropDownWidget>
   @override
   void dispose() {
     _controller.dispose();
+    _editingController.dispose();
+    _contentFocusNode.dispose();
     super.dispose();
   }
 
@@ -121,24 +136,36 @@ class _DropDownWidgetState extends State<DropDownWidget>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        widget.child != null ? widget.child! : const SizedBox(),
         Container(
-          alignment: Alignment.center,
-          height: widget.height,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 1.w),
-                blurRadius: 0.5.w,
-                color: BaseStyle.colordddddd,
-              )
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: getScreenTitle(),
+          color: Colors.white,
+          height: 188.w,
+          child: Padding(
+            padding: EdgeInsets.only(top: 10.w),
+            child: Row(
+              children: [
+                widget.leftWidget != null
+                    ? widget.leftWidget!
+                    : const SizedBox(),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 72.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(16.w)),
+                        color: Colors.white),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: getScreenTitle(),
+                    ),
+                  ),
+                ),
+                32.wb,
+              ],
+            ),
           ),
         ),
+        widget.child != null ? widget.child! : const SizedBox(),
         getBottomScreen()
       ],
     );
@@ -146,12 +173,11 @@ class _DropDownWidgetState extends State<DropDownWidget>
 
   List<Widget> getScreenTitle() {
     List<Widget> widgets = [];
-
     if (widget.titles.isNotEmpty) {
       for (int i = 0; i < widget.titles.length; i++) {
         widgets.add(Expanded(
             flex: 1,
-            child: DropDownHeadWidget(
+            child: TitleDropDownHeadWidget(
               widget.titles[i],
               getRoState(i),
               () {
@@ -164,12 +190,10 @@ class _DropDownWidgetState extends State<DropDownWidget>
                     if (i == j) {
                       if (rotateState[j]) {
                         rotateState = rotateState.map((e) => false).toList();
-
                         _controller.reverse();
                       } else {
                         rotateState = rotateState.map((e) => false).toList();
                         rotateState[j] = !rotateState[j];
-
                         _controller.forward();
                       }
                     }
@@ -178,8 +202,6 @@ class _DropDownWidgetState extends State<DropDownWidget>
               },
               headFontSize: widget.headFontSize,
               iconData: widget.iconData ?? Icons.arrow_drop_down_outlined,
-
-              // decoration: get(),
             )));
       }
     } else {
@@ -189,29 +211,6 @@ class _DropDownWidgetState extends State<DropDownWidget>
       ));
     }
 
-    if (widget.screen != null) {
-      widgets.add(Expanded(
-          flex: 1,
-          child: GestureDetector(
-            onTap: widget.onTap!,
-            child: Container(
-                alignment: Alignment.center,
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.only(bottomRight: Radius.circular(16.w)),
-                    color: Colors.white),
-                padding: EdgeInsets.only(left: 5.r, right: 5.r),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text('筛选',
-                      style: TextStyle(
-                          fontSize: widget.headFontSize,
-                          color: const Color(0xff333333))),
-                ])),
-          )));
-    }
     return widgets;
   }
 
@@ -219,9 +218,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
     return SizedBox(
       height: showBottom ? double.infinity : 0.0,
       child: GestureDetector(
-        onTap: () {
-          _screenControl.screenHide();
-        },
+        onTap: () {},
         child: getBottomIndex(),
       ),
     );
@@ -241,7 +238,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
       margin: EdgeInsets.only(top: widget.height),
       alignment: Alignment.topCenter,
       color: Colors.black26,
-      height: MediaQuery.of(context).size.height - widget.height,
+      // height: MediaQuery.of(context).size.height - widget.height,
       width: double.infinity,
       child: Container(
         width: double.infinity,
@@ -254,35 +251,5 @@ class _DropDownWidgetState extends State<DropDownWidget>
         child: widget.listWidget[tabIndex],
       ),
     );
-  }
-
-  Decoration? get() {
-    for (int i = 0; i < widget.titles.length; i++) {
-      //const int index = widget.titles.length - 1;
-      switch (i) {
-        case 0:
-          return BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16.w),
-              ),
-              color: Colors.white);
-          // ignore: dead_code
-          break;
-        // case index:
-        //   return BoxDecoration(
-        //       borderRadius: BorderRadius.only(
-        //     bottomRight: Radius.circular(16.w),
-        //   ));
-        //   // ignore: dead_code
-        //   break;
-        default:
-          return BoxDecoration(
-              borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(16.w),
-          ));
-          // ignore: dead_code
-          break;
-      }
-    }
   }
 }

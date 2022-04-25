@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_element
 
 import 'dart:async';
 import 'dart:io';
@@ -214,7 +214,8 @@ class _LoginPageState extends State<LoginPage> {
                         CloudToast.show('当前网络不支持认证');
                       }
                       cancel();
-                      //Get.to(() => const TabNavigator());
+                      // Get.to(() => const TabNavigator());
+                      // await UserTool.userProvider.updateUserInfo();
                     },
                     elevation: 0,
                     height: 72.w,

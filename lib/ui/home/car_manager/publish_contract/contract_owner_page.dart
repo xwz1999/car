@@ -15,7 +15,7 @@ class ContractOwnerPage extends StatefulWidget {
 }
 
 class _ContractOwnerPageState extends State<ContractOwnerPage> {
-  bool _chooseOwner = false;
+  bool _chooseOwner = true;
   final TextEditingController _carOwnerNameController = TextEditingController();
   final TextEditingController _idCardController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -50,7 +50,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.all(30.w),
+              padding: EdgeInsets.only(top: 30.h,left: 30.w,right: 30.w,bottom: 15.h),
               child: '车主信息'.text.size(32.sp).bold.color(Colors.black).make(),
             ),
             Container(
@@ -68,8 +68,8 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                             .size(30.sp)
                             .color(Colors.red)
                             .normal
-                            .textStyle(
-                                const TextStyle(decoration: TextDecoration.none))
+                            .textStyle(const TextStyle(
+                                decoration: TextDecoration.none))
                             .make()
                             .paddingOnly(top: 5),
                         10.wb,
@@ -79,8 +79,8 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                               .text
                               .size(30.sp)
                               .normal
-                              .textStyle(
-                                  const TextStyle(decoration: TextDecoration.none))
+                              .textStyle(const TextStyle(
+                                  decoration: TextDecoration.none))
                               .color(Colors.black.withOpacity(0.45))
                               .make(),
                         ),
@@ -115,7 +115,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                                         text: "个人寄卖",
                                         style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 12 * 2.sp),
+                                            fontSize: 30.sp),
                                       ),
                                     ),
                                   ],
@@ -149,7 +149,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                                         text: "公司车辆",
                                         style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 12 * 2.sp),
+                                            fontSize: 30.sp),
                                       ),
                                     ),
                                   ],
@@ -161,29 +161,33 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                       ],
                     ),
                   ),
+                  Container(
+                    padding: EdgeInsets.only(
+                      left: 30.w,
+                      right: 30.w,
+                      bottom: 30.h,
+                    ),
+                    child: _chooseOwner ? personInfo() : companyInfo(),
+                  )
                 ],
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: SizedBox(
+      bottomNavigationBar: Container(
+        color: Colors.white,
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {
             Get.to(() => const ContractLicencePage());
           },
           style: ButtonStyle(
-            backgroundColor:
-            MaterialStateProperty.all(Colors.blue),
+            backgroundColor: MaterialStateProperty.all(Colors.blue),
           ),
-          child: '下一步'
-              .text
-              .size(30.sp)
-              .color(Colors.white)
-              .make(),
+          child: '下一步'.text.size(30.sp).color(Colors.white).make(),
         ),
-      ),
+      ).paddingAll(20.w),
     );
   }
 
@@ -202,14 +206,16 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               GestureDetector(
                 child: Stack(
                   children: [
-                    Image.asset('assets/images/car_person_head.png'),
+                    Assets.images.carPersonHead
+                        .image(width: 200.w, height: 150.h),
                   ],
                 ),
               ),
               GestureDetector(
                 child: Stack(
                   children: [
-                    Image.asset('assets/images/car_person_back.png'),
+                    Assets.images.carPersonBack
+                        .image(width: 200.w, height: 150.h),
                   ],
                 ),
               ),
@@ -221,7 +227,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
           GestureDetector(
             child: Stack(
               children: [
-                Image.asset('assets/images/car_person_photo.png'),
+                Assets.images.carPersonPhoto.image(width: 200.w, height: 150.h),
               ],
             ),
           ),
@@ -241,10 +247,9 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
         _takePhoto(
           '营业执照',
           GestureDetector(
-            child: Stack(
-              children: [
-                Image.asset('assets/images/car_company.png'),
-              ],
+            child: SizedBox(
+              child:
+                  Assets.images.carCompany.image(width: 200.w, height: 150.h),
             ),
           ),
         ),
@@ -290,8 +295,10 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
           24.wb,
           IconButton(
             onPressed: _onTap,
-            icon: const ImageIcon(
-              AssetImage('assets/icon/scan.png'),
+            icon:ImageIcon(
+              Assets.icons.scan,
+              size: 35.w,
+              color: Colors.black38,
             ),
           ),
         ],
@@ -344,8 +351,10 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
     Widget content,
   ) {
     return Container(
+      padding: EdgeInsets.only(top: 30.h),
       color: Colors.transparent,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -360,6 +369,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               ),
             ],
           ),
+          15.heightBox,
           content,
         ],
       ),

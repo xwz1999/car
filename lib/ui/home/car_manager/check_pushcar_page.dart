@@ -33,7 +33,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
           Stack(
             children: [
               Container(
-                height: 350.h,
+                height: 420.h,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/push_car_top.png'),
@@ -90,7 +90,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 340.h),
+                padding: EdgeInsets.only(top: 410.h),
                 child: Container(
                   padding: EdgeInsets.all(20.w),
                   decoration: BoxDecoration(
@@ -98,7 +98,6 @@ class _CheckPushPageState extends State<CheckPushPage> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   width: double.infinity,
-                  height: 800.h,
                   child: showPushCar(Colors.black),
                 ),
               ),

@@ -29,6 +29,10 @@ class $AssetsIconsGen {
   AssetGenImage get industrialCommercialbankhead =>
       const AssetGenImage('assets/icons/Industrial_commercialbankhead.png');
 
+  /// File path: assets/icons/Inreview.png
+  AssetGenImage get inreview =>
+      const AssetGenImage('assets/icons/Inreview.png');
+
   /// File path: assets/icons/Societe_generalebankhead.png
   AssetGenImage get societeGeneralebankhead =>
       const AssetGenImage('assets/icons/Societe_generalebankhead.png');
@@ -164,6 +168,9 @@ class $AssetsIconsGen {
   AssetGenImage get customerTrack =>
       const AssetGenImage('assets/icons/customer_track.png');
 
+  /// File path: assets/icons/delete.png
+  AssetGenImage get delete => const AssetGenImage('assets/icons/delete.png');
+
   /// File path: assets/icons/detail_file.png
   AssetGenImage get detailFile =>
       const AssetGenImage('assets/icons/detail_file.png');
@@ -177,6 +184,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/editor.png
   AssetGenImage get editor => const AssetGenImage('assets/icons/editor.png');
+
+  /// File path: assets/icons/editor1.png
+  AssetGenImage get editor1 => const AssetGenImage('assets/icons/editor1.png');
 
   /// File path: assets/icons/estimate_date.png
   AssetGenImage get estimateDate =>
@@ -204,6 +214,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/file.png
   AssetGenImage get file => const AssetGenImage('assets/icons/file.png');
+
+  /// File path: assets/icons/hasrejected.png
+  AssetGenImage get hasrejected =>
+      const AssetGenImage('assets/icons/hasrejected.png');
 
   /// File path: assets/icons/home_share.png
   AssetGenImage get homeShare =>
@@ -329,6 +343,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/recommended_code.png
   AssetGenImage get recommendedCode =>
       const AssetGenImage('assets/icons/recommended_code.png');
+
+  /// File path: assets/icons/record.png
+  AssetGenImage get record => const AssetGenImage('assets/icons/record.png');
 
   /// File path: assets/icons/scan.png
   AssetGenImage get scan => const AssetGenImage('assets/icons/scan.png');
@@ -678,7 +695,7 @@ class Assets {
 }
 
 class AssetGenImage extends AssetImage {
-  const AssetGenImage(String assetName) : super(assetName);
+  const   AssetGenImage(String assetName) : super(assetName);
 
   Image image({
     Key? key,

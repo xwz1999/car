@@ -98,7 +98,6 @@ class _CityListPageState extends State<CityListPage> {
         padding:  EdgeInsets.symmetric(horizontal: 32.w),
         child: Column(
           children: [
-
             GridView.builder(
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
@@ -127,7 +126,6 @@ class _CityListPageState extends State<CityListPage> {
   _getCityView(String name,{bool isLocation = false}){
     return GestureDetector(
       onTap: (){
-        Get.back();
         widget.cityCallback(name);
       },
       child: Container(
@@ -167,9 +165,7 @@ class _CityListPageState extends State<CityListPage> {
               if (index == 0) return _buildHeader();
               CityModel model = cityList[index];
               return Utils.getListItem(context, model, (name, id) {
-                Get.back();
                 widget.cityCallback(name);
-
 
               });
             },

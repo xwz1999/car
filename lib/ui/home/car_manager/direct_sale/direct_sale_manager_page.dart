@@ -95,8 +95,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
             color: Colors.white,
             //height: kToolbarHeight + MediaQuery.of(context).padding.top,
             //alignment: Alignment.centerLeft,
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -111,20 +110,16 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                     leftWidget: const CloudBackButton(
                       isSpecial: true,
                     ),
-                    callback: (text){
-
-                    },
+                    callback: (text) {},
                     tips: '请输入车辆名称',
-
                     child: _dropDownHeaderItemStrings1.first == '直卖车辆' ||
                             _dropDownHeaderItemStrings1.first == '收购车辆'
                         ? DirectSalePage(
                             callBack: () {
                               _scaffoldKey.currentState?.openEndDrawer();
                             },
-                            type: _dropDownHeaderItemStrings1 == ['直卖车辆']
-                                ? 1
-                                : 2,
+                            type:
+                                _dropDownHeaderItemStrings1 == ['直卖车辆'] ? 1 : 2,
                           )
                         : AssessmentCarPage(callBack: () {
                             _scaffoldKey.currentState?.openEndDrawer();
