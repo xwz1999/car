@@ -1,9 +1,8 @@
-import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_purchase_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class SelectCustomerPage extends StatefulWidget {
@@ -16,7 +15,7 @@ class SelectCustomerPage extends StatefulWidget {
 class _SelectCustomerPageState extends State<SelectCustomerPage> {
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _searchController=TextEditingController();
+    final TextEditingController _searchController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         leading: const CloudBackButton(
@@ -40,15 +39,16 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 30.w,bottom: 20.h),
+              padding: EdgeInsets.only(left: 30.w, bottom: 20.h),
               decoration: const BoxDecoration(
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(15)),
                 color: Colors.white,
               ),
               child: Row(
                 children: [
                   Container(
-                    width: 590.w,
+                    width: 580.w,
                     height: 70.h,
                     child: TextField(
                       style: TextStyle(
@@ -67,7 +67,10 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
                           top: 0,
                           bottom: 0,
                         ),
-                        prefixIcon: const Icon(Icons.search),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          size: 20,
+                        ),
                       ),
                       controller: _searchController,
                     ),
@@ -75,7 +78,10 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
                   TextButton(
                     onPressed: () {},
                     child: _searchController.text.isEmptyOrNull
-                        ? '搜索'.text.size(30.sp).make()
+                        ? '搜索'
+                            .text
+                            .size(30.sp)
+                            .make() //Text('搜索',style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.black),)
                         : '取消'.text.size(30.sp).make(),
                   ),
                 ],
@@ -84,30 +90,34 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
             Container(
               width: double.infinity,
               height: 970.h,
-              padding: const EdgeInsets.all(20),
-              child: ListView(
-
-              ),
+              padding: EdgeInsets.all(20.w),
+              child: ListView(),
             ),
-            Container(
-              width: double.infinity,
-              color: Colors.white,
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.back();
-                },
-                style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all(Colors.blue),
-                ),
-                child: '确定选择'
-                    .text
-                    .size(30.sp)
-                    .color(Colors.white)
-                    .make(),
-              ),
-            ).paddingOnly(top: 10.h,bottom:10.h,right: 30.w,left: 30.w),
           ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(20.w),
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0, 0), //阴影xy轴偏移量
+                blurRadius: 15.0, //阴影模糊程度
+                spreadRadius: 1.0 //阴影扩散程度
+                ),
+          ],
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            Get.back();
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.blue),
+          ),
+          child: '确定选择'.text.size(30.sp).color(Colors.white).make(),
         ),
       ),
     );

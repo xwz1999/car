@@ -1,3 +1,6 @@
+import 'package:cloud_car/ui/home/func/car_map.dart';
+import 'package:cloud_car/ui/home/share/all_car_view.dart';
+import 'package:cloud_car/ui/home/share/my_car_view.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
 import 'package:cloud_car/ui/home/sort/citylist_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
@@ -6,13 +9,15 @@ import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/custom_floating_action_button_location.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+
+import '../../../widget/car_item_widget.dart';
 
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
@@ -28,10 +33,12 @@ class _ShareHomePageState extends State<ShareHomePage>
   List<Widget> listWidget = [];
   ScreenControl screenControlMy = ScreenControl();
   ScreenControl screenControlAll = ScreenControl();
-  late String city;
-  late String brand;
-  late String price;
-  late String sort;
+  EasyRefreshController _myRefreshController = EasyRefreshController();
+  EasyRefreshController _allRefreshController = EasyRefreshController();
+  late String _pickCity;
+  late String _pickBrand;
+  late String _pickPrice;
+  late String _pickSort;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -57,14 +64,9 @@ class _ShareHomePageState extends State<ShareHomePage>
       ChooseItem(name: '50万以上'),
     ];
 
-    _sortList = [
-      ChooseItem(name: '最近创建'),
-      ChooseItem(name: '标价最高'),
-      ChooseItem(name: '标价最低'),
-      ChooseItem(name: '车龄最短'),
-      ChooseItem(name: '里程最少'),
-      ChooseItem(name: '最近更新'),
-    ];
+    _sortList = CarSort.values
+        .map((e) => ChooseItem(name: CarMap.carSortString[e]!))
+        .toList();
 
     listWidget = [
       CityListPage(
@@ -72,19 +74,22 @@ class _ShareHomePageState extends State<ShareHomePage>
           if (kDebugMode) {
             print(city);
           }
-          _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
+          // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
+          screenControlMy.screenHide();
+          _pickCity = city;
           setState(() {});
         },
       ),
       CarListPage(
-        carCallback: (String city,int id) {
-          Get.back();
-          Get.back();
-          Get.back();
+        carCallback: (String city, int id) {
           if (kDebugMode) {
             print(city);
           }
-         // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
+          // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
+          screenControlMy.screenHide();
+          _pickBrand = city;
+          Get.back();
+          Get.back();
           setState(() {});
         },
       ),
@@ -96,9 +101,9 @@ class _ShareHomePageState extends State<ShareHomePage>
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
           callback: (String item) {
-            if (kDebugMode) {
-              print(item + '1231232');
-            }
+            screenControlMy.screenHide();
+
+            _pickPrice = item;
           },
           childAspectRatio: 144 / 56,
           mainAxisSpacing: 10.w,
@@ -116,7 +121,10 @@ class _ShareHomePageState extends State<ShareHomePage>
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
           childAspectRatio: 144 / 56,
-          callback: (String item) {},
+          callback: (String item) {
+            screenControlMy.screenHide();
+            _pickSort = item;
+          },
           mainAxisSpacing: 10.w,
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
@@ -205,98 +213,35 @@ class _ShareHomePageState extends State<ShareHomePage>
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
         body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
           controller: _tabController,
-          children: [_myCar(), _allCar()],
+          children: [
+            MyCarView(
+                sort: _pickSort,
+                refreshController: _myRefreshController,
+                dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
+                listWidget: listWidget,
+                screenControl: screenControlMy,
+                onTap: () {
+                  screenControlMy.screenHide();
+                  _scaffoldKey.currentState?.openEndDrawer();
+                }),
+            AllCarView(
+                sort: _pickSort,
+                refreshController: _allRefreshController,
+                dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
+                listWidget: listWidget,
+                screenControl: screenControlAll,
+                onTap: () {
+                  screenControlMy.screenHide();
+                  _scaffoldKey.currentState?.openEndDrawer();
+                })
+          ],
+          // children: [_myCar(), _allCar()],
         ));
   }
 
-  _myCar() {
-    return DropDownWidget(
-      _dropDownHeaderItemStrings,
-      listWidget,
-      height: 80.r,
-      bottomHeight: 400.r,
-      screenControl: screenControlMy,
-      headFontSize: 28.sp,
-      child: Container(
-        margin: EdgeInsets.only(top: 80.r),
-        child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
-          itemBuilder: (context, index) {
-            return CarItemWidget(
-              widgetPadding:
-                  EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
-              name: '奔驰CLE 插电混动 纯电动续航103km',
-              time: '2019年5月',
-              distance: '20.43万公里',
-              standard: '国六',
-              url: Assets.images.homeBg.path,
-              price: '27.43万',
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-              color: const Color(0xFFF6F6F6),
-              height: 16.w,
-            );
-          },
-          itemCount: 6,
-        ),
-      ),
-      screen: '筛选',
-      onTap: () {
-        screenControlMy.screenHide();
-        _scaffoldKey.currentState?.openEndDrawer();
-        if (kDebugMode) {
-          print('筛选');
-        }
-      },
-    );
-  }
 
-  _allCar() {
-    return DropDownWidget(
-      _dropDownHeaderItemStrings,
-      listWidget,
-      height: 80.r,
-      bottomHeight: 400.r,
-      screenControl: screenControlAll,
-      headFontSize: 28.sp,
-      child: Container(
-        margin: EdgeInsets.only(top: 80.r),
-        child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
-          itemBuilder: (context, index) {
-            return CarItemWidget(
-              widgetPadding:
-                  EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
-              name: '奔驰CLE 插电混动 纯电动续航103km',
-              time: '2019年5月',
-              distance: '20.43万公里',
-              standard: '国六',
-              url: Assets.images.homeBg.path,
-              price: '27.43万',
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-              color: const Color(0xFFF6F6F6),
-              height: 16.w,
-            );
-          },
-          itemCount: 5,
-        ),
-      ),
-      screen: '筛选',
-      onTap: () {
-        screenControlAll.screenHide();
-        _scaffoldKey.currentState?.openEndDrawer();
-        if (kDebugMode) {
-          print('筛选');
-        }
-      },
-    );
-  }
 
   _tab(int index, String text) {
     return Text(text);

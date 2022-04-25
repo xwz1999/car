@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:power_logger/power_logger.dart';
 
 class DevEV {

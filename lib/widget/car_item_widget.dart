@@ -3,12 +3,14 @@ import 'dart:core';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
+import 'cloud_image_network_widget.dart';
+
 class CarItemWidget extends StatelessWidget {
   final String name;
   final String price;
   final String time;
   final String distance;
-  final String standard;
+  final String? standard;
   final String url;
 
   final EdgeInsetsGeometry widgetPadding;
@@ -19,7 +21,7 @@ class CarItemWidget extends StatelessWidget {
     required this.price,
     required this.time,
     required this.distance,
-    required this.standard,
+    this.standard,
     required this.url,
     required this.widgetPadding,
   }) : super(key: key);
@@ -45,13 +47,9 @@ class CarItemWidget extends StatelessWidget {
               aspectRatio: 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
-                child: url.contains('http')
-                    ? FadeInImage.assetNetwork(
-                        image: url,
-                        fit: BoxFit.cover,
-                        placeholder: '',
-                      )
-                    : Image.asset(url,width: 240.w,height: 180.w,fit: BoxFit.fill,),
+                child: CloudImageNetworkWidget(
+                  urls: [url],
+                ),
               ),
             ),
           ),
@@ -74,19 +72,26 @@ class CarItemWidget extends StatelessWidget {
                     16.wb,
                     _getTextView(distance),
                     16.wb,
-                    _getTextView(standard),
+                    // _getTextView(standard),
                   ],
                 ),
                 20.hb,
-                Text(
-                  price,
-                  style: TextStyle(
-                    color: const Color(0xFFFF3B02),
-                    fontSize: BaseStyle.fontSize36,
-                    fontWeight: FontWeight.bold
-                  ),
+                RichText(
+                  text: TextSpan(
+                      text: price,
+                      style: TextStyle(
+                          color: const Color(0xFFFF3B02),
+                          fontSize: BaseStyle.fontSize36,
+                          fontWeight: FontWeight.bold),
+                      children: [
+                        TextSpan(
+                            text: ' 万',
+                            style: TextStyle(
+                                color: const Color(0xFFFF3B02),
+                                fontSize: BaseStyle.fontSize28,
+                                fontWeight: FontWeight.normal)),
+                      ]),
                 ),
-
               ],
             ),
           ),
