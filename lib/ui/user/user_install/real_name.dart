@@ -29,7 +29,7 @@ class _RealNamePageState extends State<RealNamePage> {
     setState(() {
       if (pickedFile != null) {
       } else {
-        print('no image selected');
+
       }
     });
   }

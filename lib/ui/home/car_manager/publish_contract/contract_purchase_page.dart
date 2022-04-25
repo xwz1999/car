@@ -90,7 +90,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
               .text
               .size(28.sp)
               .normal
-              .textStyle(TextStyle(decoration: TextDecoration.none))
+              .textStyle(const TextStyle(decoration: TextDecoration.none))
               .color(Colors.red)
               .make()
               .paddingOnly(top: 5),
@@ -100,7 +100,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
             child: title.text
                 .size(28.sp)
                 .normal
-                .textStyle(TextStyle(decoration: TextDecoration.none))
+                .textStyle(const TextStyle(decoration: TextDecoration.none))
                 .color(Colors.black.withOpacity(0.45))
                 .make(),
           ),
@@ -108,7 +108,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
             child: content.text
                 .size(28.sp)
                 .normal
-                .textStyle(TextStyle(decoration: TextDecoration.none))
+                .textStyle(const TextStyle(decoration: TextDecoration.none))
                 .color(fontColor)
                 .make(),
           ),
@@ -137,7 +137,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                   .size(30.sp)
                   .color(Colors.red)
                   .normal
-                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .make()
                   .paddingOnly(top: 5),
               10.wb,
@@ -147,7 +147,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                     .text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black.withOpacity(0.45))
                     .make(),
               ),
@@ -155,7 +155,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                 child: carRoute!.text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(fontColor)
                     .make(),
               ),
@@ -164,7 +164,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                   .text
                   .size(30.sp)
                   .normal
-                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .color(Colors.black.withOpacity(0.8))
                   .make(),
             ],
@@ -180,7 +180,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                   .size(30.sp)
                   .color(Colors.red)
                   .normal
-                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .make()
                   .paddingOnly(top: 5),
               10.wb,
@@ -190,7 +190,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                     .text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black.withOpacity(0.45))
                     .make(),
               ),
@@ -216,7 +216,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                   .text
                   .size(30.sp)
                   .normal
-                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .color(Colors.black.withOpacity(0.8))
                   .make(),
             ],
@@ -234,7 +234,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                     .text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black.withOpacity(0.45))
                     .make(),
               ),
@@ -243,7 +243,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                     .text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black)
                     .make(),
               ),
@@ -262,7 +262,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                     .text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black.withOpacity(0.45))
                     .make(),
               ),
@@ -271,7 +271,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                     .text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black)
                     .make(),
               ),

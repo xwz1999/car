@@ -1,6 +1,5 @@
 import 'package:cloud_car/model/car_manager/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
-import 'package:cloud_car/ui/home/car_valuation/car_func.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_func.dart';
 import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
@@ -21,6 +20,7 @@ import '../../utils/user_tool.dart';
 import 'car_manager/car_manager_page.dart';
 import 'car_manager/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
+import 'func/car_func.dart';
 import 'home_title.dart';
 
 class HomePage extends StatefulWidget {
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage>
           header: MaterialHeader(),
           onRefresh: () async {
             _posterList = await PosterFunc.getPosterList(page: 1);
-            _shareCarList = await CarFunc.getMyCarList(page: 1);
+            _shareCarList = await CarFunc.getMyCarList(1,'');
             setState(() {});
           },
           child: ListView(

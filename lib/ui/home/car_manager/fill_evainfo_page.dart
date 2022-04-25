@@ -71,7 +71,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
               padding: EdgeInsets.only(top: 100.w),
               child: Container(
                 width: double.infinity,
-                height: 780.h,
+                height: 860.h,
                 padding: EdgeInsets.only(left: 24.w, right: 24.w),
                 decoration: const BoxDecoration(
                   color: Colors.white,
