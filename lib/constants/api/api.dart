@@ -58,6 +58,9 @@ class _Login {
 
   ///微信登录绑定账号
   String get weixinBind => '/login/bind';
+
+  ///微信绑定手机号发送验证码
+  String get phoneCode => '/login/sms';
 }
 
 class _Order {

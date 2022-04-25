@@ -25,10 +25,10 @@ class WxLoginPage extends StatefulWidget {
 class _WxLoginPageState extends State<WxLoginPage> {
   bool _getCodeEnable = false;
 
-  // late Timer _timer;
-  final String _countDownStr = "发送验证码";
-
-  // int _countDownNum = 59;
+  late Timer _timer;
+  String _countDownStr = "发送验证码";
+  int seconds = 60;
+  int _countDownNum = 59;
   late TextEditingController _phoneController;
   late TextEditingController _smsCodeController;
   late FocusNode _phoneFocusNode;
@@ -41,7 +41,6 @@ class _WxLoginPageState extends State<WxLoginPage> {
     super.initState();
     _phoneFocusNode = FocusNode();
     _smsCodeFocusNode = FocusNode();
-
     _phoneController = TextEditingController();
     _smsCodeController = TextEditingController();
   }
@@ -235,44 +234,49 @@ class _WxLoginPageState extends State<WxLoginPage> {
                         fontSize: BaseStyle.fontSize36,
                         color: BaseStyle.color999999),
                     inputFormatters: [
-                      LengthLimitingTextInputFormatter(4),
+                      LengthLimitingTextInputFormatter(6),
                     ],
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          // 不是焦点的时候颜色
-                          borderSide: BorderSide(
-                            color: BaseStyle.colordddddd,
+                      enabledBorder: const UnderlineInputBorder(
+                        // 不是焦点的时候颜色
+                        borderSide: BorderSide(
+                          color: BaseStyle.colordddddd,
+                        ),
+                      ),
+                      hintText: "请输入验证码",
+                      hintStyle: TextStyle(
+                          color: BaseStyle.colorcccccc,
+                          fontSize: BaseStyle.fontSize36),
+                      suffixIcon: GestureDetector(
+                        onTap: !_getCodeEnable
+                            ? () {}
+                            : () async {
+                                await apiClient
+                                    .request(API.login.phoneCode, data: {
+                                  'phone': _phoneController.text,
+                                });
+                                _beginCountDown();
+                                if (_cantSelected) return;
+                                _cantSelected = true;
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  _cantSelected = false;
+                                });
+                              },
+                        child: Container(
+                          width: 180.w,
+                          alignment: Alignment.centerRight,
+                          color: Colors.transparent,
+                          child: Text(
+                            _countDownStr,
+                            style: TextStyle(
+                                color: _getCodeEnable
+                                    ? kPrimaryColor
+                                    : BaseStyle.colorcccccc),
                           ),
                         ),
-                        hintText: "请输入验证码",
-                        hintStyle: TextStyle(
-                            color: BaseStyle.colorcccccc,
-                            fontSize: BaseStyle.fontSize36),
-                        suffixIcon: GestureDetector(
-                          onTap: !_getCodeEnable
-                              ? () {}
-                              : () {
-                                  if (_cantSelected) return;
-                                  _cantSelected = true;
-                                  Future.delayed(const Duration(seconds: 2),
-                                      () {
-                                    _cantSelected = false;
-                                  });
-                                },
-                          child: Container(
-                            width: 160.w,
-                            alignment: Alignment.centerRight,
-                            color: Colors.transparent,
-                            child: Text(
-                              _countDownStr,
-                              style: TextStyle(
-                                  color: _getCodeEnable
-                                      ? kPrimaryColor
-                                      : BaseStyle.colorcccccc),
-                            ),
-                          ),
-                        )),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -289,29 +293,29 @@ class _WxLoginPageState extends State<WxLoginPage> {
       setState(() {});
       return false;
     }
-    return _smsCodeController.text.length == 4;
+    return _smsCodeController.text.length == 6;
   }
 
-// _beginCountDown() {///开始倒计时
-//   setState(() {
-//     _getCodeEnable = false;
-//     _countDownStr = "重新获取($_countDownNum)";
-//   });
-//   _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-//     if ( !mounted) {
-//       return;
-//     }
-//     setState(() {
-//       if (_countDownNum == 0) {
-//         _countDownNum = 59;
-//         _countDownStr = "获取验证码";
-//         _getCodeEnable = true;
-//         _timer.cancel();
-//         return;
-//       }
-//       _countDownStr = "重新获取(${_countDownNum--})";
-//     });
-//   });
-// }
-
+  _beginCountDown() {
+    ///开始倒计时
+    setState(() {
+      _getCodeEnable = false;
+      _countDownStr = "重新获取($_countDownNum)";
+    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        if (_countDownNum == 0) {
+          _countDownNum = 59;
+          _countDownStr = "获取验证码";
+          _getCodeEnable = true;
+          _timer.cancel();
+          return;
+        }
+        _countDownStr = "重新获取(${_countDownNum--})";
+      });
+    });
+  }
 }

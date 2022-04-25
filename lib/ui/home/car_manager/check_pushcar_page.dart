@@ -33,7 +33,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
           Stack(
             children: [
               Container(
-                height: 350.h,
+                height: 420.h,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/push_car_top.png'),
@@ -90,7 +90,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 340.h),
+                padding: EdgeInsets.only(top: 410.h),
                 child: Container(
                   padding: EdgeInsets.all(20.w),
                   decoration: BoxDecoration(
@@ -98,7 +98,6 @@ class _CheckPushPageState extends State<CheckPushPage> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   width: double.infinity,
-                  height: 800.h,
                   child: showPushCar(Colors.black),
                 ),
               ),
@@ -123,7 +122,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
               .text
               .size(28.sp)
               .normal
-              .textStyle(TextStyle(decoration: TextDecoration.none))
+              .textStyle(const TextStyle(decoration: TextDecoration.none))
               .color(Colors.red)
               .make()
               .paddingOnly(top: 5),
@@ -133,7 +132,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
             child: title.text
                 .size(28.sp)
                 .normal
-                .textStyle(TextStyle(decoration: TextDecoration.none))
+                .textStyle(const TextStyle(decoration: TextDecoration.none))
                 .color(Colors.black.withOpacity(0.45))
                 .make(),
           ),
@@ -141,7 +140,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
             child: content.text
                 .size(28.sp)
                 .normal
-                .textStyle(TextStyle(decoration: TextDecoration.none))
+                .textStyle(const TextStyle(decoration: TextDecoration.none))
                 .color(fontColor)
                 .make(),
           ),
@@ -170,7 +169,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                   .size(30.sp)
                   .color(Colors.red)
                   .normal
-                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .make()
                   .paddingOnly(top: 5),
               10.wb,
@@ -180,7 +179,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                     .text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black.withOpacity(0.45))
                     .make(),
               ),
@@ -188,7 +187,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                 child: carRoute!.text
                     .size(30.sp)
                     .normal
-                    .textStyle(TextStyle(decoration: TextDecoration.none))
+                    .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(fontColor)
                     .make(),
               ),
@@ -197,7 +196,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                   .text
                   .size(30.sp)
                   .normal
-                  .textStyle(TextStyle(decoration: TextDecoration.none))
+                  .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .color(Colors.black.withOpacity(0.8))
                   .make(),
             ],
