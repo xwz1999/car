@@ -28,79 +28,42 @@ class API {
   static String get baseURL => '$host/app/broker';
 
   //根分类
+  ///文件
   static _File file = _File();
+  ///登陆
   static _Login login = _Login();
-  static _Poster poster = _Poster();
-  static _Storemanagement storemanagement = _Storemanagement();
+  ///门店管理
+  static _StoreManagement storeManagement = _StoreManagement();
+  ///订单
   static _Order order = _Order();
+  ///海报
+  static _Poster poster = _Poster();
+  ///车辆
+  static _Car car = _Car();
+  ///合同
+  static _Contract contract = _Contract();
+  ///客户
+  static _Customer customer = _Customer();
+  ///任务
+  static _Task task = _Task();
+  ///地区
+  static _Region region = _Region();
 
   //二级分类
   static _UserApi user = _UserApi();
-
-  static _Car car = _Car();
-
-  static _Contract contract = _Contract();
-
-  static _Customer customer = _Customer();
-
-  static _Task task = _Task();
-}
-
-extension ImageOnString on String {
-  String get image => '${API.imageHost}/$this';
-  String sizeImage(int width, [int? height]) {
-    var parts = <String>[];
-    parts.add('w=$width');
-    if (height != null) parts.add('h=$height');
-    return '$image@${parts.join('&')}';
-  }
-}
-
-class _File {
-  ///图片上传
-  String get uploadImage => '/file/upload/image';
-
-  ///文件上传
-  String get uploadFile => '/file/upload/file';
-}
-
-class _Login {
-  ///手机号一键登录
-  String get phone => '/login/phone';
-
-  ///微信登录
-  String get weixin => '/login/wechat';
-
-  ///微信登录绑定账号
-  String get weixinBind => '/login/bind';
-}
-
-///门店管理
-class _Storemanagement {
-  ///组织架构
-  get storeAll => '/business/store/all';
-
-  ///全部角色
-  get roleAll => '/business/role/all';
-
-  ///门店筛选
-  get storeSelect => '/business/store/select';
-
-  ///添加门店
-  get storeAdd => '/business/store/add';
-
-  ///添加员工
-  get staffAdd => '/business/staff/add';
-}
-
-class _Poster {
-  ///海报列表
-  String get list => '/playbill/lists';
 }
 
 class _Task {
   ///客户邀约列表
   String get getInviteLists => '/task/invite/lists';
+}
+
+class _Customer {
+  ///客户轨迹
+  String get customerTrail => '/customer/trail/all';
+
+  ///浏览车辆列表
+  String get browseLists => '/customer/browse/lists';
 }
 
 class _Car {
@@ -141,20 +104,34 @@ class _Car {
   String get cancelCollect => '/car/collect/cancel';
 }
 
-class _Customer {
-  ///客户轨迹
-  String get customerTrail => '/customer/trail/all';
-
-  ///浏览车辆列表
-  String get browseLists => '/customer/browse/lists';
-}
-
 class _Contract {
   ///发起寄卖合同
   String get addConsignment => '/contract/consignment/add';
 
   ///发起出售合同
   String get addSaleContract => '/contract/sale/add';
+}
+
+class _File {
+  ///图片上传
+  String get uploadImage => '/file/upload/image';
+
+  ///文件上传
+  String get uploadFile => '/file/upload/file';
+}
+
+class _Login {
+  ///手机号一键登录
+  String get phone => '/login/phone';
+
+  ///微信登录
+  String get weixin => '/login/wechat';
+
+  ///微信登录绑定账号
+  String get weixinBind => '/login/bind';
+
+  ///微信绑定手机号发送验证码
+  String get phoneCode => '/login/sms';
 }
 
 class _Order {
@@ -188,3 +165,40 @@ class _Order {
   ///添加车商寄卖订单
   get addConsignment => '/order/dealer/consignment/add';
 }
+
+class _Poster {
+  ///海报列表
+  String get list => '/playbill/lists';
+}
+
+class _Region {
+  ///获取省市区数据
+  String get all => '/area/all';
+
+  ///获取省市区数据版本
+  String get version => '/area/version';
+}
+
+///门店管理
+class _StoreManagement {
+  ///组织架构
+  get storeAll => '/business/store/all';
+
+  ///全部角色
+  get roleAll => '/business/role/all';
+
+  ///门店筛选
+  get storeSelect => '/business/store/select';
+
+  ///添加门店
+  get storeAdd => '/business/store/add';
+
+  ///添加员工
+  get staffAdd => '/business/staff/add';
+}
+
+
+
+
+
+

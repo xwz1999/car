@@ -35,10 +35,10 @@ class _ShareHomePageState extends State<ShareHomePage>
   ScreenControl screenControlAll = ScreenControl();
   EasyRefreshController _myRefreshController = EasyRefreshController();
   EasyRefreshController _allRefreshController = EasyRefreshController();
-  late String _pickCity;
-  late String _pickBrand;
-  late String _pickPrice;
-  late String _pickSort;
+   String _pickCity='';
+   String _pickBrand='';
+   String _pickPrice='';
+   String _pickSort='';
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
