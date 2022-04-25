@@ -17,7 +17,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../../../widget/car_item_widget.dart';
 
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
