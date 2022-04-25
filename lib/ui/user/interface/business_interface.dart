@@ -10,7 +10,7 @@ class Business {
   ///组织架构
   static Future<List<StoreallModel>> getStoreall() async {
     BaseModel res =
-        await apiClient.request(API.storemanagement.storeAll, data: {});
+        await apiClient.request(API.storeManagement.storeAll, data: {});
 
     if ((res.data as List).isEmpty) return [];
     return (res.data as List).map((e) => StoreallModel.fromJson(e)).toList();
@@ -19,7 +19,7 @@ class Business {
   ///全部角色
   static Future<List<RoleallModel>> getRoleall() async {
     BaseModel res = await apiClient.request(
-      API.storemanagement.roleAll,
+      API.storeManagement.roleAll,
     );
     if ((res.data as List).isEmpty) return [];
     return (res.data as List).map((e) => RoleallModel.fromJson(e)).toList();
@@ -28,7 +28,7 @@ class Business {
   ///门店筛选
   static Future<List<StoreselectMoedl>> getStoreselect() async {
     BaseListModel res =
-        await apiClient.requestList(API.storemanagement.storeSelect, data: {});
+        await apiClient.requestList(API.storeManagement.storeSelect, data: {});
     if (res.data!.list == null) return [];
     return (res.data!.list!).map((e) => StoreselectMoedl.fromJson(e)).toList();
   }
@@ -39,7 +39,7 @@ class Business {
     String address,
   ) async {
     BaseModel res =
-        await apiClient.request(API.storemanagement.storeAdd, data: {
+        await apiClient.request(API.storeManagement.storeAdd, data: {
       'name': name,
       'address': address,
     });
@@ -57,7 +57,7 @@ class Business {
     String commission,
   ) async {
     BaseModel res =
-        await apiClient.request(API.storemanagement.staffAdd, data: {
+        await apiClient.request(API.storeManagement.staffAdd, data: {
       'name': name,
       'gender': gender,
       'phone': phone,
