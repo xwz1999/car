@@ -7,23 +7,24 @@ import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 
 class Order {
-  //寄卖订单列表
+  ///寄卖订单列表
   static Future<List<ListsModel>> getLists() async {
     BaseListModel res = await apiClient
         .requestList(API.order.consignment.consignmentLists, data: {});
-    // ignore: unnecessary_null_comparison
+
+    /// ignore: unnecessary_null_comparison
     if (res.data!.list! == null) return [];
     return (res.data!.list!).map((e) => ListsModel.fromJson(e)).toList();
   }
 
-  // //发布车辆
-  // static Future<StringBuffer> getPublish(int orderId, List photos) async {
-  //   BaseListModel res = await apiClient
-  //       .requestList(API.order.publish.consignmentPublish, data: {});
-  // }
-//车商寄卖订单=>添加车商寄卖订单
+  /// ///发布车辆
+  /// static Future<StringBuffer> getPublish(int orderId, List photos) async {
+  ///   BaseListModel res = await apiClient
+  ///       .requestList(API.order.publish.consignmentPublish, data: {});
+  /// }
+  ///车商寄卖订单=>添加车商寄卖订单
 
-  //邀约
+  ///邀约
   static Future<String> getAdd(
     int customerId,
     int carId,
@@ -43,7 +44,7 @@ class Order {
     return (res.data as String).toString();
   }
 
-  //售车订单列表
+  ///售车订单列表
   static Future<List<SalelistsModel>> getSaleList() async {
     BaseListModel res =
         await apiClient.requestList(API.order.sale.saleLists, data: {});
@@ -51,7 +52,7 @@ class Order {
     return (res.data!.list!).map((e) => SalelistsModel.fromJson(e)).toList();
   }
 
-//售车订单详情
+  ///售车订单详情
   static Future<List<SaleinfoModel>> getsaleInfo(int orderId) async {
     BaseListModel res = await apiClient
         .requestList(API.order.sale.saleInfo, data: {'orderId': orderId});
@@ -59,7 +60,7 @@ class Order {
     return (res.data!.list)!.map((e) => SaleinfoModel.fromJson(e)).toList();
   }
 
-  //上传检车报告
+  ///上传检车报告
   static Future<String> getTestrepord(
     int orderId,
     String report,
@@ -73,7 +74,7 @@ class Order {
     return (res.data as String).toString();
   }
 
-  //过户
+  ///过户
   static Future<String> getTransfer(
     int orderId,
     String certificate,
@@ -95,7 +96,7 @@ class Order {
     return (res.data! as String).toString();
   }
 
-  //完结订单
+  ///完结订单
   static Future<String> getFinal(int orderId) async {
     BaseModel res = await apiClient.request(API.order.sale.saleFinal, data: {
       'orderId': orderId,
@@ -104,7 +105,7 @@ class Order {
     return (res.data! as String).toString();
   }
 
-  //叫车订单->添加叫车订单
+  ///叫车订单->添加叫车订单
   static Future<String> getCaradd(
     int carId,
     int customerId,
@@ -125,7 +126,7 @@ class Order {
     return (res.data! as String).toString();
   }
 
-  //交车
+  ///交车
   static Future<String> getCarfinal(int orderId) async {
     BaseModel res = await apiClient.request(API.order.callcar.carFinal, data: {
       'orderId': orderId,

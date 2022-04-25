@@ -10,16 +10,22 @@ import 'package:flutter/material.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
-class AddEmployee extends StatefulWidget {
+typedef TextCallback = Function(bool audit);
+
+class EditorEmployee extends StatefulWidget {
+  final TextCallback callback;
   final String permissions1;
   final String nameText;
   final String genderText;
   final String phoneText;
   final String storeidText;
   final String commissionText;
+  final int storeid;
 
-  const AddEmployee(
+  const EditorEmployee(
       {Key? key,
+      this.storeid = 0,
+      required this.callback,
       this.permissions1 = '',
       this.nameText = '',
       this.genderText = '',
@@ -29,19 +35,18 @@ class AddEmployee extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<AddEmployee> createState() => _AddEmployeeState();
+  State<EditorEmployee> createState() => _EditorEmployeeState();
 }
 
-class _AddEmployeeState extends State<AddEmployee> {
-  late int storeId;
+class _EditorEmployeeState extends State<EditorEmployee> {
   late int roleId;
   late String permissions1 = widget.permissions1;
-  late String nameText = widget.permissions1;
-  late String genderText = widget.permissions1;
-  late String phoneText = widget.permissions1;
-  late String storeidText = widget.permissions1;
-  late String commissionText = widget.permissions1;
-
+  late String nameText = widget.nameText;
+  late String genderText = widget.genderText;
+  late String phoneText = widget.phoneText;
+  late String storeidText = widget.storeidText;
+  late String commissionText = widget.commissionText;
+  late int storeid;
   int sexId = 1;
   List blText = [];
 
@@ -114,11 +119,12 @@ class _AddEmployeeState extends State<AddEmployee> {
                             BotToast.showText(text: '请输入销售提成');
                           } else {
                             BotToast.showText(text: '提交成功');
+                            widget.callback(false);
+                            print(widget.callback);
                             Get.back();
                             Future.delayed(const Duration(milliseconds: 0),
                                 () async {
                               await _refresh();
-                              setState(() {});
                             });
 
                             //print("输出返回值：$zhi");
@@ -354,7 +360,7 @@ class _AddEmployeeState extends State<AddEmployee> {
               await Get.to(() => StructurePage(
                     callback: (String city, int id) {
                       storeidText = city;
-                      storeId = id;
+                      storeid = id;
                     },
                   ));
               setState(() {});
@@ -416,6 +422,6 @@ class _AddEmployeeState extends State<AddEmployee> {
 
   _refresh() async {
     zhi = await Business.getStaffadd(nameText, genderText == '女' ? 1 : 2,
-        phoneText, storeId, roleId, commissionText);
+        phoneText, storeid, roleId, commissionText);
   }
 }

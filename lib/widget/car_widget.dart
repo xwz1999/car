@@ -22,7 +22,7 @@ class _CarWidgetState extends State<CarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 88.w,
+      //height: 88.w,
       decoration: BoxDecoration(
           color: kForeGroundColor, borderRadius: BorderRadius.circular(16.w)),
       child: ListView(
@@ -30,27 +30,27 @@ class _CarWidgetState extends State<CarWidget> {
         children: [
           ...widget.items.mapIndexed(
             (e, index) => SizedBox(
-                height: 88.w,
+                //height: 88.w,
                 child: GestureDetector(
-                  onTap: () {
-                    _isChoose = index;
-                    widget.callBack(e);
-                  },
-                  child: Container(
-                      width: 160.w,
-                      alignment: Alignment.center,
-                      // padding: EdgeInsets.symmetric(
-                      //   vertical: 20.w,
-                      // ),
-                      child: Text(
-                        e,
-                        style: TextStyle(
-                            fontSize: 28.sp,
-                            color: index == _isChoose
-                                ? kPrimaryColor
-                                : BaseStyle.color333333),
-                      )),
-                )),
+              onTap: () {
+                _isChoose = index;
+                widget.callBack(e);
+              },
+              child: Container(
+                  width: 160.w,
+                  alignment: Alignment.center,
+                  // padding: EdgeInsets.symmetric(
+                  //   vertical: 20.w,
+                  // ),
+                  child: Text(
+                    e,
+                    style: TextStyle(
+                        fontSize: 28.sp,
+                        color: index == _isChoose
+                            ? kPrimaryColor
+                            : BaseStyle.color333333),
+                  )),
+            )),
           )
         ],
       ),

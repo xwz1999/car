@@ -1,7 +1,8 @@
 // ignore_for_file: dead_code
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/user/user_management/add_employee.dart';
+
+import 'package:cloud_car/ui/user/user_management/editor_employee.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -32,6 +33,7 @@ class EmployeeDetails extends StatefulWidget {
 }
 
 bool _getSure = false;
+bool audit = true;
 
 class _EmployeeDetailsState extends State<EmployeeDetails> {
   @override
@@ -58,13 +60,15 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
   _getPermissions() {
     return Container(
       color: Colors.white,
+      height: 1045.w,
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 56.w),
+            padding: EdgeInsets.only(left: 16.w),
             child: SizedBox(
-                height: 76.w,
+                height: 36.w,
                 child: Text(
                   '权限描述',
                   style: TextStyle(
@@ -76,20 +80,24 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
           ),
           const Divider(),
           Container(
+            margin: EdgeInsets.only(left: 16.w),
             decoration: BoxDecoration(
                 color: const Color(0xFF027AFF).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(4.w)),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
             child: Text(
-              widget.business,
+              widget.permissions,
               style: TextStyle(
                   color: const Color(0xFF027AFF),
                   fontSize: BaseStyle.fontSize28),
             ),
           ),
           24.hb,
-          describe(),
-          //const Spacer(),
+          Padding(
+            padding: EdgeInsets.only(left: 16.w),
+            child: describe(),
+          ),
+          const Spacer(),
           const Divider(),
           Row(
             children: [
@@ -101,7 +109,7 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                       NormalContentDialog(
                         type: NormalTextDialogType.delete,
                         title: '确认提示',
-                        content: const Text('是否确认屏幕下方付款协议?'),
+                        content: const Text('确认删除该员工吗？'),
                         items: const ['取消'],
                         deleteItem: '确定',
                         //监听器
@@ -129,16 +137,20 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                       ));
                 });
               }),
-              228.wb,
+              200.wb,
               _getBotton(Assets.icons.editor1.path, '编辑', () {
-                Get.to(() => AddEmployee(
+                Get.to(() => EditorEmployee(
                       nameText: widget.name,
                       genderText: widget.sex,
                       phoneText: widget.phone,
                       storeidText: widget.business,
                       permissions1: widget.permissions,
                       commissionText: widget.proportion,
+                      callback: (bool audit) {
+                        audit = audit;
+                      },
                     ));
+                //print(audit);
               })
             ],
           )
@@ -147,26 +159,41 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
     );
   }
 
+  getAudit() {
+    return Offstage(
+      offstage: audit,
+      child: Image.asset(
+        Assets.icons.inreview.path,
+        width: 140.w,
+        height: 140.w,
+      ),
+    );
+  }
+
 //按钮
   _getBotton(String url, String text, Function() ontap) {
-    return GestureDetector(
-      onTap: () {
-        ontap();
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 56.w,
-            height: 56.w,
-          ),
-          4.hb,
-          Text(
-            text,
-            style: TextStyle(
-                color: BaseStyle.color333333, fontSize: BaseStyle.fontSize24),
-          )
-        ],
+    return Offstage(
+      offstage: !audit,
+      child: GestureDetector(
+        onTap: () {
+          ontap();
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 56.w,
+              height: 56.w,
+              child: Image.asset(url),
+            ),
+            4.hb,
+            Text(
+              text,
+              style: TextStyle(
+                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize24),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -184,7 +211,24 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                   color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
             ),
             32.hb,
-            _getText('销售提成比例', widget.proportion)
+            Row(
+              children: [
+                SizedBox(
+                    width: 170.w,
+                    child: Text(
+                      '销售提成比例',
+                      style: TextStyle(
+                          color: BaseStyle.color666666,
+                          fontSize: BaseStyle.fontSize28),
+                    )),
+                Text(
+                  widget.proportion,
+                  style: TextStyle(
+                      color: BaseStyle.color333333,
+                      fontSize: BaseStyle.fontSize28),
+                )
+              ],
+            ),
           ],
         );
 
@@ -198,6 +242,7 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
         break;
       case '销售/车务':
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               '可以录入车辆信息、编辑车辆，并进行客户跟踪、销售下单',
@@ -205,7 +250,24 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                   color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
             ),
             32.hb,
-            _getText('销售提成比例', widget.proportion)
+            Row(
+              children: [
+                SizedBox(
+                    width: 170.w,
+                    child: Text(
+                      '销售提成比例',
+                      style: TextStyle(
+                          color: BaseStyle.color666666,
+                          fontSize: BaseStyle.fontSize28),
+                    )),
+                Text(
+                  widget.proportion,
+                  style: TextStyle(
+                      color: BaseStyle.color333333,
+                      fontSize: BaseStyle.fontSize28),
+                )
+              ],
+            ),
           ],
         );
         break;
@@ -221,28 +283,35 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
 
 //员工信息
   _getUserinfo() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Padding(
-          padding: EdgeInsets.only(left: 32.w),
-          child: Text(
-            widget.name,
-            style: TextStyle(
-                color: BaseStyle.color333333,
-                fontWeight: FontWeight.bold,
-                fontSize: BaseStyle.fontSize36),
-          ),
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+              padding: EdgeInsets.only(left: 32.w),
+              child: Text(
+                widget.name,
+                style: TextStyle(
+                    color: BaseStyle.color333333,
+                    fontWeight: FontWeight.bold,
+                    fontSize: BaseStyle.fontSize36),
+              ),
+            ),
+            _getText('性别', widget.sex),
+            _getText('手机号', widget.phone),
+            _getText('权限配置', widget.permissions),
+            _getText('所属门店', widget.stores),
+            _getText('所属入驻商', widget.business),
+          ]),
         ),
-        _getText('性别', widget.sex),
-        _getText('手机号', widget.phone),
-        _getText('权限配置', widget.permissions),
-        _getText('所属门店', widget.stores),
-        _getText('所属入驻商', widget.business),
-      ]),
+        Positioned(left: 534.w, top: 12.w, child: getAudit())
+      ],
     );
+    ;
   }
 
 //文字样式
@@ -252,7 +321,7 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
       child: Row(
         children: [
           SizedBox(
-              width: 160.w,
+              width: 170.w,
               child: Text(
                 title,
                 style: TextStyle(

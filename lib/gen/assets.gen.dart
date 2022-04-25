@@ -29,6 +29,10 @@ class $AssetsIconsGen {
   AssetGenImage get industrialCommercialbankhead =>
       const AssetGenImage('assets/icons/Industrial_commercialbankhead.png');
 
+  /// File path: assets/icons/Inreview.png
+  AssetGenImage get inreview =>
+      const AssetGenImage('assets/icons/Inreview.png');
+
   /// File path: assets/icons/Societe_generalebankhead.png
   AssetGenImage get societeGeneralebankhead =>
       const AssetGenImage('assets/icons/Societe_generalebankhead.png');
@@ -210,6 +214,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/file.png
   AssetGenImage get file => const AssetGenImage('assets/icons/file.png');
+
+  /// File path: assets/icons/hasrejected.png
+  AssetGenImage get hasrejected =>
+      const AssetGenImage('assets/icons/hasrejected.png');
 
   /// File path: assets/icons/home_share.png
   AssetGenImage get homeShare =>

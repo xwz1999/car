@@ -1,7 +1,12 @@
-
-
+import 'package:barcode_widget/barcode_widget.dart';
+import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:screenshot/screenshot.dart';
 
 class ShareDetailCustomerPage extends StatefulWidget {
   const ShareDetailCustomerPage({Key? key}) : super(key: key);
@@ -14,6 +19,7 @@ class ShareDetailCustomerPage extends StatefulWidget {
 class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
+
   // ignore: non_constant_identifier_names
 
   // a() {
@@ -42,6 +48,7 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
   //   //   super.dispose();
   //   // }
   // }
+  final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +73,7 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                   top: 184.w,
                   child: Text(
                     '云云问车客户邀请码',
+                    //UserTool.userProvider.userInfo.inviteCode,
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           fontSize: 40.sp,
                           color: const Color(0xFF1986FF),
@@ -95,7 +103,18 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                           child: SizedBox(
                             width: 128.w,
                             height: 128.w,
-                            child: Image.asset(Assets.images.qrCode.path),
+                            child: Container(
+                              padding: EdgeInsets.all(4.w),
+                              color: Colors.white,
+                              child: BarcodeWidget(
+                                  width:
+                                      128.w, //double.parse(widget.model.size),
+                                  height:
+                                      128.w, //double.parse(widget.model.size),
+                                  data:
+                                      '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
+                                  barcode: Barcode.qrCode()),
+                            ),
                           ),
                         )
                       ],
@@ -103,16 +122,46 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                 Positioned(
                     top: 1488.w,
                     right: 32.w,
-                    child: Container(
-                      width: 72.w,
-                      height: 72.w,
-                      padding: EdgeInsets.all(20.w),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFF000000).withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(36.w)),
-                      child: Image.asset(
-                        Assets.images.download.path,
-                        fit: BoxFit.fill,
+                    child: GestureDetector(
+                      onTap: () async {
+                        var permission = await Permission.storage.isGranted;
+                        if (!permission) {
+                          await Permission.storage.request();
+                          var permissionTwice =
+                              await Permission.storage.isGranted;
+                          if (!permissionTwice) {
+                            CloudToast.show('权限未授予');
+                            return;
+                          }
+                        }
+                        var u8List = await _screenshotController.capture(
+                            delay: const Duration(milliseconds: 10));
+                        if (u8List != null) {
+                          var re = await ImageGallerySaver.saveImage(
+                            u8List,
+                            quality: 100,
+                          );
+                          if (re['isSuccess']) {
+                            CloudToast.show('海报已保存到${re['filePath']}',
+                                align: Alignment.center);
+                          } else {
+                            CloudToast.show('保存海报失败');
+                          }
+                        } else {
+                          CloudToast.show('海报生成失败');
+                        }
+                      },
+                      child: Container(
+                        width: 72.w,
+                        height: 72.w,
+                        padding: EdgeInsets.all(20.w),
+                        decoration: BoxDecoration(
+                            color: const Color(0xFF000000).withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(36.w)),
+                        child: Image.asset(
+                          Assets.images.download.path,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     )),
               ],

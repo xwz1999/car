@@ -10,6 +10,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -27,14 +28,20 @@ List<StoreallModel> Employees = [];
 // List<String> nameList = [];
 
 class _StaffManagementState extends State<StaffManagement> {
-  late EasyRefreshController _refreshController;
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
   late TextEditingController _editingController;
   String searchText = '';
   @override
   void initState() {
     super.initState();
-    _refreshController = EasyRefreshController();
+
     _editingController = TextEditingController(text: searchText);
+  }
+
+  @override
+  void dispose() {
+    _easyRefreshController.dispose();
+    super.dispose();
   }
 
   _refresh() async {
@@ -84,7 +91,9 @@ class _StaffManagementState extends State<StaffManagement> {
           Expanded(
               child: EasyRefresh(
                   firstRefresh: true,
-                  controller: _refreshController,
+                  header: MaterialHeader(),
+                  footer: MaterialFooter(),
+                  controller: _easyRefreshController,
                   onRefresh: () async {
                     _refresh();
                   },
@@ -231,7 +240,7 @@ class _StaffManagementState extends State<StaffManagement> {
                           //员工手机
                           phone: e.phone,
                           //销售比例
-                          proportion: '10',
+                          proportion: '10%',
                           //性别
                           sex: e.auditStatus == 1 ? '女' : '男',
                           //所属门店
@@ -289,13 +298,11 @@ class _StaffManagementState extends State<StaffManagement> {
                 fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
           24.wb,
-          SizedBox(child: judge == 1 ? getBox() : a())
+          SizedBox(child: judge == 1 ? getBox() : const SizedBox())
         ],
       ),
     );
   }
-
-  a() {}
 
   getBox() {
     return Container(

@@ -3,40 +3,40 @@ import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_order_page.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/title_drop_widget.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_page.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_page.dart';
-
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/title_drop_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/car_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'backup/make_deal.dart';
 
-class SalesOrders extends StatefulWidget {
-  const SalesOrders({Key? key}) : super(key: key);
+class SalesOrder extends StatefulWidget {
+  const SalesOrder({Key? key}) : super(key: key);
 
   @override
-  State<SalesOrders> createState() => _SalesOrdersState();
+  State<SalesOrder> createState() => _SalesOrderState();
 }
 
-class _SalesOrdersState extends State<SalesOrders> {
+class _SalesOrderState extends State<SalesOrder> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   late List<String> _dropDownHeaderItemStrings1;
+  TitleScreenControl screenControl1 = TitleScreenControl();
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [
     ChooseItem(name: '售卖订单'),
-    ChooseItem(name: '寄卖订单'),
+    ChooseItem(name: '个人寄卖'),
     ChooseItem(name: '租车订单'),
     ChooseItem(name: '叫车订单'),
+    ChooseItem(name: '车商寄卖'),
   ];
   late String title = '售车订单';
-  TitleScreenControl screenControl = TitleScreenControl();
+
   List carList = [
     {
       'judge': false,
@@ -141,12 +141,7 @@ class _SalesOrdersState extends State<SalesOrders> {
   @override
   void initState() {
     super.initState();
-    // _sortList = [
-    //   ChooseItem(name: '售车订单'),
-    //   ChooseItem(name: '寄卖订单'),
-    //   ChooseItem(name: '租车订单'),
-    //   ChooseItem(name: '租车订单')
-    // ];
+
     listWidget = [
       Container(
         width: double.infinity,
@@ -158,13 +153,12 @@ class _SalesOrdersState extends State<SalesOrders> {
           childAspectRatio: 200 / 56,
           callback: (String item) {
             _dropDownHeaderItemStrings1 = [item];
-            screenControl.screenHide();
+            screenControl1.screenHide();
             setState(() {});
           },
           mainAxisSpacing: 10.w,
           crossAxisSpacing: 24.w,
           crossAxisCount: 3,
-          //haveButton: true,
           itemList: _sortList,
         ),
       ),
@@ -177,135 +171,70 @@ class _SalesOrdersState extends State<SalesOrders> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.dark,
         ),
-        backgroundColor: kForeGroundColor,
-        title: SizedBox(
-          width: 200.w,
-          child: PopupMenuButton(
-              offset: const Offset(20, 25),
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 34.sp,
-                        color: const Color(0xFF333333),
-                      )),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.black87,
-                    size: 40.w,
-                  ),
-                ],
-              ),
-              onSelected: (String value) {
-                setState(() {
-                  title = value;
-                  // onTap() {
-                  //   switch (title) {
-                  //     case '寄卖订单':
-                  //       Get.to(() => const ConsignmentOrderPage());
-                  //       //BotToast.showText(text: '寄卖订单');
-                  //       break;
-                  //     default:
-                  //   }
-                  // }
-
-                  setState(() {
-                    switch (title) {
-                      case '售车订单':
-                        Get.to(() => const SalesOrders());
-                        break;
-                      case '寄卖订单':
-                        Get.to(() => const ConsignmentOrderPage());
-                        break;
-
-                      case '租车订单':
-                        Get.to(() => const RentalcarOrderPage());
-                        break;
-                      case '叫车订单':
-                        Get.to(() => const ThatcarOrderPage());
-                        break;
-                    }
-                  });
-                });
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                    PopupMenuItem(
-                        value: "售车订单",
-                        child: Text("售车订单",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.sp,
-                              color: const Color(0xFF333333),
-                            ))),
-                    PopupMenuItem(
-                        value: "寄卖订单",
-                        child: Text("寄卖订单",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.sp,
-                              color: const Color(0xFF333333),
-                            ))),
-                    PopupMenuItem(
-                        value: "租车订单",
-                        child: Text("租车订单",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.sp,
-                              color: const Color(0xFF333333),
-                            ))),
-                    PopupMenuItem(
-                        value: "叫车订单",
-                        child: Text("叫车订单",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.sp,
-                              color: const Color(0xFF333333),
-                            ))),
-                  ]),
-        ),
-      ),
-      extendBody: true,
-      backgroundColor: bodyColor,
-      body: Column(
-        children: [
-          SizedBox(
-              height: 88.w,
-              child: CarWidget(
-                items: const [
-                  '全部',
-                  '待预定',
-                  '已预定',
-                  '待检测',
-                  '支付首付',
-                  '待过户',
-                  '支付尾款',
-                  '交易完成',
-                  '交易取消'
-                ],
-                callBack: (name) {
-                  setState(() {});
-                },
-              )),
-          16.hb,
-          Expanded(
-            child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return getCar(carList[index]);
-                },
-                itemCount: carList.length),
+        child: Scaffold(
+          key: _scaffoldKey,
+          //backgroundColor: Colors.red,
+          extendBodyBehindAppBar: true,
+          extendBody: true,
+          body: Container(
+            color: bodyColor,
+            padding: EdgeInsets.only(top: 0.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                    child: TitleDropDownWidget(
+                        _dropDownHeaderItemStrings1, listWidget,
+                        bottomHeight: 24.w,
+                        headFontSize: 36.sp,
+                        leftWidget: const CloudBackButton(
+                          isSpecial: true,
+                        ),
+                        screenControl: screenControl1,
+                        child: get()))
+              ],
+            ),
           ),
-        ],
-      ),
-    );
+        ));
+  }
+
+  get() {
+    switch (_dropDownHeaderItemStrings1.first) {
+      case '售卖车辆':
+        return SalesOrderPage(callBack: () {
+          _scaffoldKey.currentState?.openDrawer();
+        });
+        // ignore: dead_code
+        break;
+      case '个人寄卖':
+        return ConsignmentOrderPage(callBack: () {
+          _scaffoldKey.currentState?.openDrawer();
+        });
+        // ignore: dead_code
+        break;
+      case '租车订单':
+        return RentalcarOrderPage(callBack: () {
+          _scaffoldKey.currentState?.openDrawer();
+        });
+        // ignore: dead_code
+        break;
+      case '叫车订单':
+        return ThatcarOrderPage(callBack: () {
+          _scaffoldKey.currentState?.openDrawer();
+        });
+        // ignore: dead_code
+        break;
+      case '车商寄卖':
+        return ConsignmentOrderPage(callBack: () {
+          _scaffoldKey.currentState?.openDrawer();
+        });
+        // ignore: dead_code
+        break;
+    }
   }
 
   getCar(item) {

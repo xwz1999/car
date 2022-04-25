@@ -9,7 +9,7 @@ import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/button/colud_check_radio.dart';
 
-typedef CarCallback = Function(String city); //
+typedef CarCallback = Function(String city, int id); //
 
 class AccessConfiguration extends StatefulWidget {
   final CarCallback callback; //
@@ -78,7 +78,8 @@ class _AccessConfigurationState extends State<AccessConfiguration> {
                 if (_selectIndex.isEmpty) {
                   BotToast.showText(text: '请先选择车辆');
                 } else {
-                  widget.callback(permissions[_selectIndex.first].name);
+                  widget.callback(permissions[_selectIndex.first].name,
+                      permissions[_selectIndex.first].id);
                   //widget.callback(moddels[_selectIndex.first].subtitle ?? '');
                   Get.back();
                 }
