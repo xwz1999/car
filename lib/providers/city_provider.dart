@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 
 import '../constants/api/api.dart';
 import '../model/region/china_region_model.dart';
-import '../utils/hive_store.dart';
 import '../utils/new_work/api_client.dart';
 
 class CityProvider extends ChangeNotifier {
@@ -41,5 +40,47 @@ class CityProvider extends ChangeNotifier {
     await _regionBox.delete('regions');
     await _regionBox.put('regions', _regions);
     notifyListeners();
+  }
+
+  List<ChinaRegionModel> get hotCities {
+    var hots = [
+      '杭州',
+      '北京',
+      '上海',
+      '广州',
+      '深圳',
+      '成都',
+      '重庆',
+      '天津',
+      '南京',
+      '武汉',
+      '苏州',
+      '西安'
+    ];
+    if (_regions.isEmpty) {
+      return [];
+    } else {
+      var list = <ChinaRegionModel>[];
+      //遍历省
+      for (var element in _regions) {
+        if (element.children == null) {
+          break;
+        }
+        //遍历市
+        for (var item in element.children!) {
+          //遍历热门城市列表 若其中包含此城市名则加入列表
+          for (var i in hots) {
+            if (item.name.contains(i)) {
+              hots.remove(i);
+              list.add(item);
+              if (hots.isEmpty) {
+                return list;
+              }
+            }
+          }
+        }
+      }
+      return list;
+    }
   }
 }

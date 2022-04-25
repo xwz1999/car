@@ -52,7 +52,7 @@ class _ShareHomePageState extends State<ShareHomePage>
   void initState() {
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
-    _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
+    _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
     _priceList = [
       ChooseItem(name: '不限'),
       ChooseItem(name: '4万以下'),
@@ -69,17 +69,17 @@ class _ShareHomePageState extends State<ShareHomePage>
         .toList();
 
     listWidget = [
-      CityListPage(
-        cityCallback: (String city) {
-          if (kDebugMode) {
-            print(city);
-          }
-          // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
-          screenControlMy.screenHide();
-          _pickCity = city;
-          setState(() {});
-        },
-      ),
+      // CityListPage(
+      //   cityCallback: (String city) {
+      //     if (kDebugMode) {
+      //       print(city);
+      //     }
+      //     // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
+      //     screenControlMy.screenHide();
+      //     _pickCity = city;
+      //     setState(() {});
+      //   },
+      // ),
       CarListPage(
         carCallback: (String city, int id) {
           if (kDebugMode) {
