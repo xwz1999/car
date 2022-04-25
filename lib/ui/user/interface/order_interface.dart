@@ -10,7 +10,9 @@ class Order {
   ///寄卖订单列表
   static Future<List<ListsModel>> getLists() async {
     BaseListModel res = await apiClient
-        .requestList(API.order.consignment.consignmentLists, data: {});
+        .requestList(API.order.consignment.consignmentLists, data: {
+          ''
+        });
 
     /// ignore: unnecessary_null_comparison
     if (res.data!.list! == null) return [];
