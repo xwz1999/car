@@ -166,9 +166,22 @@ class _Order {
   get addConsignment => '/order/dealer/consignment/add';
 }
 
-//门店管理
+class _Poster {
+  ///海报列表
+  String get list => '/playbill/lists';
+}
+
+class _Region {
+  ///获取省市区数据
+  String get all => '/area/all';
+
+  ///获取省市区数据版本
+  String get version => '/area/version';
+}
+
+///门店管理
 class _StoreManagement {
-//组织架构
+  ///组织架构
   get storeAll => '/business/store/all';
 
   ///全部角色
@@ -182,17 +195,4 @@ class _StoreManagement {
 
   ///添加员工
   get staffAdd => '/business/staff/add';
-}
-
-class _Poster {
-  ///海报列表
-  String get list => '/playbill/lists';
-}
-
-class _Region {
-  ///获取省市区数据
-  String get all => '/area/all';
-
-  ///获取省市区数据版本
-  String get version => '/area/version';
 }

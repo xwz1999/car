@@ -10,8 +10,8 @@ StoreallModel _$StoreallModelFromJson(Map<String, dynamic> json) =>
     StoreallModel(
       id: json['id'] as int,
       name: json['name'] as String,
-      staffs: (json['staffs'] as List<dynamic>)
-          .map((e) => Staff.fromJson(e as Map<String, dynamic>))
+      staffs: (json['staffs'] as List<dynamic>?)
+          ?.map((e) => Staff.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

@@ -12,10 +12,10 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 class CustomerFunc{
 
   ///获取浏览车辆列表
-  static Future<List<CustomerBrowseListModel>> getCustomerBrowseList(int customerId,int page,int size) async {
+  static Future<List<CustomerBrowseListModel>> getCustomerBrowseList(int customerId,int page,) async {
     BaseListModel baseList = await apiClient.requestList(
       API.customer.browseLists,data: {
-        'customerId':customerId, 'page':page,'size':size
+        'customerId':customerId, 'page':page,'size':10
     }
     );
     if (baseList.code!=0) {

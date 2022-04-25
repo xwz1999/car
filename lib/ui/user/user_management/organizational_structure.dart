@@ -1,17 +1,29 @@
+import 'package:cloud_car/model/user/storeall_model.dart';
+import 'package:cloud_car/ui/user/interface/business_interface.dart';
+import 'package:cloud_car/ui/user/user_management/add_stores.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
+typedef TextCallback = Function(String content, int id);
+
 class StructurePage extends StatefulWidget {
-  const StructurePage({Key? key}) : super(key: key);
+  final TextCallback callback;
+
+  const StructurePage({Key? key, required this.callback}) : super(key: key);
 
   @override
   State<StructurePage> createState() => _StructurePageState();
 }
 
 class _StructurePageState extends State<StructurePage> {
+  //选中的item
+  final List<int> _selectIndex = [];
+  //选中的item内容
+  // final List<String> _chooseModels = [];
 
+  List<StoreallModel> moddels = [];
   //  for (var i = 0; i < 5; i++)
   //               {
   //                 CatWidget.add(ListTile(
@@ -20,6 +32,19 @@ class _StructurePageState extends State<StructurePage> {
   //               }
 
   @override
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 0), () {
+      _refresh();
+    });
+  }
+
+  _refresh() async {
+    moddels = await Business.getStoreall();
+    setState(() {});
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +62,7 @@ class _StructurePageState extends State<StructurePage> {
             children: [
               GestureDetector(
                 onTap: () {
-                  //Get.to(() => Permissions());
+                  Get.to(() => const AddStores());
                 },
                 child: Text(
                   '新增门店',
@@ -66,28 +91,34 @@ class _StructurePageState extends State<StructurePage> {
             ),
           ),
           24.hb,
-          SizedBox(
-            child: Column(children: [
-              ListTile(
-                title: Text(
-                  '门店1',
-                  style: Theme.of(context).textTheme.bodyText1,
+          Expanded(
+              child: ListView.builder(
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  if (_selectIndex.contains(index)) {
+                    _selectIndex.remove(index);
+                  } else {
+                    _selectIndex.clear();
+                    _selectIndex.add(index);
+                  }
+
+                  setState(() {});
+                  //print("我点击了：${_selectIndex.first}");
+                  widget.callback(moddels[_selectIndex.first].name,
+                      moddels[_selectIndex.first].id);
+                  Get.back();
+                }, //选中返回数值
+                child: ListTile(
+                  title: Text(
+                    moddels[index].name,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                 ),
-              ),
-              ListTile(
-                title: Text(
-                  '门店1',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  '门店1',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ),
-            ]),
-          )
+              );
+            },
+            itemCount: moddels.length,
+          ))
         ],
       ),
     );

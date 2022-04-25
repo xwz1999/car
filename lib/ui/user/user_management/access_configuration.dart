@@ -1,12 +1,15 @@
+// ignore_for_file: unnecessary_null_comparison, duplicate_ignore
+
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/model/configuration_model.dart';
+import 'package:cloud_car/model/user/roleall_model.dart';
+import 'package:cloud_car/ui/user/interface/business_interface.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/button/colud_check_radio.dart';
 
-typedef CarCallback = Function(String city); //
+typedef CarCallback = Function(String city, int id); //
 
 class AccessConfiguration extends StatefulWidget {
   final CarCallback callback; //
@@ -22,17 +25,20 @@ class AccessConfiguration extends StatefulWidget {
 class _AccessConfigurationState extends State<AccessConfiguration> {
   //选中的item
   final List<int> _selectIndex = [];
-  final List<ConfigurationModel> _chooseModels = []; //
-  List<ConfigurationModel> moddels = [
-    ConfigurationModel(title: '销售员', subtitle: '能够查看全店的车，并进行客户跟进、销售下单'),
-    ConfigurationModel(title: '评估师/车务', subtitle: '负责录入车辆信息、编辑店里的车辆'),
-    ConfigurationModel(title: '销售/车务', subtitle: '可以录入车辆信息、编辑车辆，并进行客户跟进、销售下单'),
-    ConfigurationModel(title: '店长', subtitle: '能够管理店内的客户、车辆、订单'),
-  ];
+  final List<RoleallModel> _chooseModels = []; //
+  List<RoleallModel> permissions = [];
 
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(milliseconds: 0), () {
+      _refresh();
+    });
+  }
+
+  _refresh() async {
+    permissions = await Business.getRoleall();
+    setState(() {});
   }
 
   @override
@@ -43,7 +49,7 @@ class _AccessConfigurationState extends State<AccessConfiguration> {
             isSpecial: true,
           ),
           backgroundColor: kForeGroundColor,
-          title: Text('新增门店',
+          title: Text('权限配置',
               style: TextStyle(
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize36,
@@ -55,24 +61,25 @@ class _AccessConfigurationState extends State<AccessConfiguration> {
         body: Column(
           children: [
             Expanded(
-              child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return _getItem(index, moddels[index]);
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Container(
-                        //   color: const Color(0xFFF6F6F6),
-                        //   height: 16.w,
-                        ); //背景色高度
-                  },
-                  itemCount: moddels.length),
-            ),
+                child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return _getItem(index, permissions[index]);
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Container(
+                          //   color: const Color(0xFFF6F6F6),
+                          //   height: 16.w,
+                          ); //背景色高度
+                    },
+                    itemCount: permissions.length)),
             GestureDetector(
               onTap: () {
+                // print(permissions);
                 if (_selectIndex.isEmpty) {
                   BotToast.showText(text: '请先选择车辆');
                 } else {
-                  widget.callback(moddels[_selectIndex.first].title ?? '');
+                  widget.callback(permissions[_selectIndex.first].name,
+                      permissions[_selectIndex.first].id);
                   //widget.callback(moddels[_selectIndex.first].subtitle ?? '');
                   Get.back();
                 }
@@ -103,7 +110,8 @@ class _AccessConfigurationState extends State<AccessConfiguration> {
         ));
   }
 
-  _getItem(int index, ConfigurationModel model) {
+  _getItem(int index, RoleallModel model) {
+    // ignore: unnecessary_null_comparison
     return Container(
       padding: EdgeInsets.only(left: 32.w),
       color: Colors.white,
@@ -133,11 +141,11 @@ class _AccessConfigurationState extends State<AccessConfiguration> {
             children: [
               ListTile(
                 title: Text(
-                  '销售员',
+                  model.name,
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
                 subtitle: Text(
-                  '负责录入车辆信息、编辑店里的车辆',
+                  model.describe,
                   style: TextStyle(
                       fontSize: BaseStyle.fontSize24,
                       color: const Color(0xFF999999)),
