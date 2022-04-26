@@ -2,7 +2,7 @@ import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/share/all_car_view.dart';
 import 'package:cloud_car/ui/home/share/my_car_view.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
-import 'package:cloud_car/ui/home/sort/citylist_page.dart';
+
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_car_page.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
@@ -17,7 +17,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../../../widget/car_item_widget.dart';
 
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
@@ -33,8 +32,8 @@ class _ShareHomePageState extends State<ShareHomePage>
   List<Widget> listWidget = [];
   ScreenControl screenControlMy = ScreenControl();
   ScreenControl screenControlAll = ScreenControl();
-  EasyRefreshController _myRefreshController = EasyRefreshController();
-  EasyRefreshController _allRefreshController = EasyRefreshController();
+  final EasyRefreshController _myRefreshController = EasyRefreshController();
+  final EasyRefreshController _allRefreshController = EasyRefreshController();
    String _pickCity='';
    String _pickBrand='';
    String _pickPrice='';
@@ -52,7 +51,7 @@ class _ShareHomePageState extends State<ShareHomePage>
   void initState() {
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
-    _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
+    _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
     _priceList = [
       ChooseItem(name: '不限'),
       ChooseItem(name: '4万以下'),
@@ -69,17 +68,17 @@ class _ShareHomePageState extends State<ShareHomePage>
         .toList();
 
     listWidget = [
-      CityListPage(
-        cityCallback: (String city) {
-          if (kDebugMode) {
-            print(city);
-          }
-          // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
-          screenControlMy.screenHide();
-          _pickCity = city;
-          setState(() {});
-        },
-      ),
+      // CityListPage(
+      //   cityCallback: (String city) {
+      //     if (kDebugMode) {
+      //       print(city);
+      //     }
+      //     // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
+      //     screenControlMy.screenHide();
+      //     _pickCity = city;
+      //     setState(() {});
+      //   },
+      // ),
       CarListPage(
         carCallback: (String city, int id) {
           if (kDebugMode) {

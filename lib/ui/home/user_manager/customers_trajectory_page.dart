@@ -1,23 +1,21 @@
-import 'package:cloud_car/model/car_manager/customer_browse_list_model.dart';
+
+import 'package:cloud_car/model/car_manager/customer_trail_model.dart';
 import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
 
-class BrowseCustomersPage extends StatefulWidget {
+class CustomersTrajectoryPage extends StatefulWidget {
   final int id;
-
-
-
-  const BrowseCustomersPage({Key? key, required this.id}) : super(key: key);
+  const CustomersTrajectoryPage({Key? key, required this.id}) : super(key: key);
 
   @override
-  _BrowseCustomersPageState createState() => _BrowseCustomersPageState();
+  _CustomersTrajectoryPageState createState() => _CustomersTrajectoryPageState();
 }
 
-class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
-  List<CustomerBrowseListModel> _list = [];
+class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
+  List<CustomerTrailModel> _list = [];
 
   int _page = 1;
 
@@ -34,18 +32,15 @@ class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
           footer: MaterialFooter(),
           controller: _easyRefreshController,
           onRefresh: () async {
-            List<CustomerBrowseListModel> list = [];
             _page = 1;
-            list = await CustomerFunc.getCustomerBrowseList(widget.id, _page);
+            _list = await CustomerFunc.getCustomerTrail(widget.id,);
 
-            _list.addAll(list);
-            _list.addAll(list);
 
             setState(() {});
           },
           onLoad: () async {
             _page++;
-            await CustomerFunc.getCustomerBrowseList(widget.id, _page).then((value) {
+            await CustomerFunc.getCustomerTrail(widget.id,).then((value) {
               if(value.isEmpty){
                 _easyRefreshController.finishLoad(noMore: true);
               }else{
@@ -59,9 +54,9 @@ class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
           child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.only(top: 32.w),
             itemBuilder: (BuildContext context, int index) {
-              return _getListItem(index, index < 2,_list[index]);
+              return _getListItem(index, index < 1,_list[index]);
             },
             itemCount: _list.length,
           ),
@@ -72,7 +67,7 @@ class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
 
   }
 
-  _getListItem(int index, bool ing,CustomerBrowseListModel model) {
+  _getListItem(int index, bool ing,CustomerTrailModel model) {
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -89,7 +84,7 @@ class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
                     width: 2.w,
                     height: 10.w,
                     decoration: BoxDecoration(
-                      color: ing ? kPrimaryColor : BaseStyle.colorcccccc,
+                      color: !ing ? kPrimaryColor : BaseStyle.colorcccccc,
                     ),
                   )
                       : const SizedBox(),
@@ -102,6 +97,7 @@ class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
                       borderRadius: BorderRadius.circular(10.w),
                     ),
                   ),
+                  index!=_list.length-1?
                   Expanded(
                     child: Container(
                       width: 2.w,
@@ -110,7 +106,7 @@ class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
                         color: ing ? kPrimaryColor : BaseStyle.colorcccccc,
                       ),
                     ),
-                  )
+                  ):const SizedBox()
                 ],
               ),
             ),
@@ -120,26 +116,63 @@ class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  children: const [
-                    Text('浏览车辆'),
-                    Text(' ｜ '),
-                    Text('云云问车-微信小程序-点击浏览'),
+                  children:  [
+                    Text(model.type,style: TextStyle(
+                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
+                    ),),
+                    Text(' ｜ ',style: TextStyle(
+                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
+                    ),),
+                    Text(model.initiatorName,style: TextStyle(
+                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
+                    ),),
+                    Text(' ｜ ',style: TextStyle(
+                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
+                    ),),
+                    Text(DateUtil.formatDate(DateUtil.getDateTimeByMs(
+                        model.createdAt.toInt() * 1000),format: 'yyyy-MM-dd HH:mm:ss'),style: TextStyle(
+                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
+                    ),),
                   ],
                 ),
                 16.hb,
-                Text(DateUtil.formatDate(DateUtil.getDateTimeByMs(
-                    model.createdAt.toInt() * 1000),format: 'yyyy-MM-dd HH:mm'),),
+                Text(model.content,style: TextStyle(
+                  color: const Color(0xFF027AFF),fontSize: 28.sp,
+                ),),
+
                 16.hb,
+
+                Text('邀约时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(
+                    model.invite.inviteAt.toInt() * 1000),format: 'yyyy-MM-dd HH:mm:ss')}',style: TextStyle(
+                  color: const Color(0xFF333333),fontSize: 28.sp,
+                ),),
+
+                16.hb,
+
+
+                Container(
+                  width: 500.w,
+
+                  child: Text('邀约地址：${model.invite.address}',style: TextStyle(
+                    color: const Color(0xFF333333),fontSize: 28.sp,
+                  ),maxLines: 2,overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+
+                16.hb,
+
                 Container(
                   width: 560.w,
                   height: 200.w,
                   child: _getCarItem(
-                    model.mainPhoto,
-                    model.modelName,
-                    '2020-2',
                     '',
-                    '31.56万',
-                    '12.44万公里',
+                    '',
+                    DateUtil.formatDate(DateUtil.getDateTimeByMs(
+                        model.createdAt.toInt() * 1000),format: 'yyyy年MM月'),
+                    '',
+
+                    '',
+
                   ),
                   decoration: BoxDecoration(
                     color: BaseStyle.colorf6f6f6,
@@ -155,8 +188,7 @@ class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
     );
   }
 
-  _getCarItem(String url, String name, String time, String distance,
-      String standard, String price) {
+  _getCarItem(String url, String name, String time, String distance, String price) {
     return Container(
       padding: EdgeInsets.only(left: 24.w),
       child: Row(
@@ -202,17 +234,22 @@ class _BrowseCustomersPageState extends State<BrowseCustomersPage> {
                     _getTextView(time),
                     16.wb,
                     _getTextView(distance),
-                    16.wb,
-                    _getTextView(standard),
                   ],
                 ),
                 16.hb,
-                Text(
-                  price,
-                  style: TextStyle(
-                    color: const Color(0xFFFF3B02),
-                    fontSize: BaseStyle.fontSize36,
-                  ),
+                RichText(
+                  text: TextSpan(
+                      text:
+                      price,
+                      style: TextStyle(
+                          color: const Color(0xFFFF3E02), fontSize: 32.sp),
+                      children: [
+                        TextSpan(
+                            text: '万',
+                            style: TextStyle(
+                                color: const Color(0xFFFF3E02),
+                                fontSize: 26.sp))
+                      ]),
                 ),
               ],
             ),

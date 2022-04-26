@@ -47,7 +47,7 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
               ),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 580.w,
                     height: 70.h,
                     child: TextField(
