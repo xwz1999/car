@@ -13,7 +13,6 @@ import '../car_valuation/car_func.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 
-
 class MyCarView extends StatefulWidget {
   final String sort;
   final EasyRefreshController refreshController;
@@ -41,7 +40,13 @@ class _MyCarViewState extends State<MyCarView>
         'seriesId': widget.pickCar.value.series.id,
         'minPrice': widget.pickCar.value.finalMinPrice,
         'maxPrice': widget.pickCar.value.finalMaxPrice,
-
+        'minAge': widget.pickCar.value.minCarAge,
+        'maxAge': widget.pickCar.value.maxCarAge,
+        'struct': widget.pickCar.value.struct,
+        'gearType': widget.pickCar.value.gearType,
+        'minMileage': widget.pickCar.value.finalMinMile,
+        'maxMileage': widget.pickCar.value.finalMaxMile,
+        'dischargeStandard': widget.pickCar.value.dischargeStandard,
       };
 
   @override
