@@ -497,6 +497,9 @@ class $AssetsImagesGen {
   AssetGenImage get societeGeneralebankbg =>
       const AssetGenImage('assets/images/Societe_generalebankbg.png');
 
+  /// File path: assets/images/addcar.png
+  AssetGenImage get addcar => const AssetGenImage('assets/images/addcar.png');
+
   /// File path: assets/images/agricultural.png
   AssetGenImage get agricultural =>
       const AssetGenImage('assets/images/agricultural.png');
@@ -678,7 +681,7 @@ class Assets {
 }
 
 class AssetGenImage extends AssetImage {
-  const   AssetGenImage(String assetName) : super(assetName);
+  const AssetGenImage(String assetName) : super(assetName);
 
   Image image({
     Key? key,
