@@ -54,7 +54,7 @@ class _AllCarViewState extends State<AllCarView> {
         header: MaterialHeader(),
         onRefresh: () async {
           _page = 1;
-          _allCarList = await CarFunc.getCarList(_page, _size,
+          _allCarList = await CarFunc.getCarList(_page,
               order: CarMap.carSortString
                   .getKeyFromValue(widget.sort)
                   .toString()

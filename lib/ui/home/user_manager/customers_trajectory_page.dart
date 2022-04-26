@@ -1,14 +1,16 @@
 import 'package:cloud_car/model/car_manager/customer_trail_model.dart';
+import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
 
 class CustomersTrajectoryPage extends StatefulWidget {
-  final int id;
-  const CustomersTrajectoryPage({Key? key, required this.id}) : super(key: key);
+  final TaskInviteListModel model;
+  const CustomersTrajectoryPage({Key? key, required this.model}) : super(key: key);
 
   @override
   _CustomersTrajectoryPageState createState() => _CustomersTrajectoryPageState();
@@ -17,23 +19,35 @@ class CustomersTrajectoryPage extends StatefulWidget {
 class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
   List<CustomerTrailModel> _list = [];
 
+  bool _onLoad = true;
+
+
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   @override
   Widget build(BuildContext context) {
     return  Padding(
       padding: EdgeInsets.symmetric(horizontal: 32.w),
-      child: EasyRefresh(
+      child:
+
+
+      EasyRefresh(
         firstRefresh: true,
         header: MaterialHeader(),
         footer: MaterialFooter(),
         controller: _easyRefreshController,
         onRefresh: () async {
 
-          _list = await CustomerFunc.getCustomerTrail(widget.id,);
+          _list = await CustomerFunc.getCustomerTrail(widget.model.id,);
+          _onLoad = false;
           setState(() {});
         },
-        child: ListView.builder(
+        //emptyWidget: const NoDataWidget(text: '暂无客户轨迹信息',),
+        child:
+
+        _onLoad?const SizedBox():
+        _list.isEmpty?const NoDataWidget(text: '暂无客户轨迹信息',paddingTop: 300,):
+        ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(top: 32.w),
@@ -121,7 +135,7 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
                   color: model.contentType==1?  const Color(0xFF027AFF):const Color(0xFF027AFF),fontSize: 28.sp,
                 ),),
 
-                16.hb,
+                model.contentType==1?const SizedBox():16.hb,
                 _getContent(model),
 
 
@@ -137,7 +151,7 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
 
 
   _getContent(CustomerTrailModel model){
-    return model.contentType==0?const SizedBox():Column(
+    return model.contentType==1?const SizedBox():Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(model.contentType==3?'邀约时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(

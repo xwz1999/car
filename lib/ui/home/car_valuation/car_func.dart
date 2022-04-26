@@ -43,10 +43,14 @@ class CarFunc {
   }
 
   ///获取车辆列表
-  static Future<List<CarListModel>> getCarList(int page, int size,
-      {String? order}) async {
+  static Future<List<CarListModel>> getCarList(int page,
+      {String? order,String? search,}) async {
+    Map<String, dynamic> params = {
+      "page": page,
+      'size':10,
+    };
     BaseListModel baseList = await apiClient
-        .requestList(API.car.getCarLists, data: {'page': page, 'size': size});
+        .requestList(API.car.getCarLists, data: {'page': page, 'size': 10});
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];

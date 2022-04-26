@@ -85,7 +85,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   // padding: EdgeInsets.only(top: 10.w),
                   itemBuilder: (context, index) {
                     return  GestureDetector(onTap: (){
-                      Get.to(()=> TaskUserInvitePage(id: lists[index].id,));
+                      Get.to(()=> TaskUserInvitePage(model: lists[index],));
                     }, child: CustomerInviteItem(model:lists[index]));
                   },
                   separatorBuilder: (_, __) {
