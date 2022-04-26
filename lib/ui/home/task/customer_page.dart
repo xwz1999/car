@@ -1,6 +1,7 @@
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/task_func.dart';
 import 'package:cloud_car/ui/home/task/customer_invite_item.dart';
+import 'package:cloud_car/ui/home/task/task_user_invite_page.dart';
 import 'package:cloud_car/ui/home/task/user_invite_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_info_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -84,7 +85,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   // padding: EdgeInsets.only(top: 10.w),
                   itemBuilder: (context, index) {
                     return  GestureDetector(onTap: (){
-                      Get.to(()=> UserInvitePage(id: lists[index].id,));
+                      Get.to(()=> TaskUserInvitePage(id: lists[index].id,));
                     }, child: CustomerInviteItem(model:lists[index]));
                   },
                   separatorBuilder: (_, __) {

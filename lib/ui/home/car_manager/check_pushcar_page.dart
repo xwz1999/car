@@ -1,3 +1,4 @@
+import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_begin_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
+import '../../../widget/publish_car_info_widget.dart';
 
 class CheckPushPage extends StatefulWidget {
   const CheckPushPage({Key? key}) : super(key: key);
@@ -14,13 +16,6 @@ class CheckPushPage extends StatefulWidget {
 }
 
 class _CheckPushPageState extends State<CheckPushPage> {
-  String? carNum = 'LGJB3476524683243';
-  String? carShape = '奥迪A3';
-  String? carDate = '2020-03';
-  String? licenseNum = '浙B236Y';
-  String? engineNum = '647382';
-  String? carColor = '蓝色';
-  String? carRoute = '8.12';
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +27,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
         children: [
           Stack(
             children: [
-              Container(
+                Container(
                 height: 420.h,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -98,146 +93,54 @@ class _CheckPushPageState extends State<CheckPushPage> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   width: double.infinity,
-                  child: showPushCar(Colors.black),
+                  child: Column(
+                    children: [
+                      const PublishCarInfoWidget(fontColor: Colors.black,),
+                      30.heightBox,
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Get.to(() => const ContractBeginPage());
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.blue),
+                          ),
+                          child: '发起合同'.text.size(30.sp).color(Colors.white).make(),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          '已签订合同？'
+                              .text
+                              .color(Colors.black.withOpacity(0.45))
+                              .textStyle(const TextStyle(decoration: TextDecoration.none))
+                              .normal
+                              .size(20.sp)
+                              .make(),
+                          TextButton(
+                            onPressed: () {
+                              Get.to(() => const CarPicturePage());
+                            },
+                            child: '继续发布车辆'
+                                .text
+                                .color(Colors.blue)
+                                .textStyle(const TextStyle(decoration: TextDecoration.none))
+                                .normal
+                                .size(20.sp)
+                                .make(),
+                          ).paddingZero
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-
-  _showarea(
-    String title,
-    String content,
-    Color fontColor,
-  ) {
-    return Container(
-      padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-      color: Colors.transparent,
-      child: Row(
-        children: [
-          '*'
-              .text
-              .size(28.sp)
-              .normal
-              .textStyle(const TextStyle(decoration: TextDecoration.none))
-              .color(Colors.red)
-              .make()
-              .paddingOnly(top: 5),
-          10.wb,
-          SizedBox(
-            width: 160.w,
-            child: title.text
-                .size(28.sp)
-                .normal
-                .textStyle(const TextStyle(decoration: TextDecoration.none))
-                .color(Colors.black.withOpacity(0.45))
-                .make(),
-          ),
-          Expanded(
-            child: content.text
-                .size(28.sp)
-                .normal
-                .textStyle(const TextStyle(decoration: TextDecoration.none))
-                .color(fontColor)
-                .make(),
-          ),
-          24.wb,
-        ],
-      ),
-    );
-  }
-
-  Column showPushCar(Color fontColor) {
-    return Column(
-      children: [
-        _showarea('车架号', carNum!,fontColor),
-        _showarea('品牌车型', carShape!,fontColor),
-        _showarea('首次上牌', carDate!,fontColor),
-        _showarea('车牌号', licenseNum!,fontColor),
-        _showarea('发动机号', engineNum!,fontColor),
-        _showarea('车身颜色', carColor!,fontColor),
-        Container(
-          padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-          color: Colors.transparent,
-          child: Row(
-            children: [
-              '*'
-                  .text
-                  .size(30.sp)
-                  .color(Colors.red)
-                  .normal
-                  .textStyle(const TextStyle(decoration: TextDecoration.none))
-                  .make()
-                  .paddingOnly(top: 5),
-              10.wb,
-              SizedBox(
-                width: 160.w,
-                child: '表显里程'
-                    .text
-                    .size(30.sp)
-                    .normal
-                    .textStyle(const TextStyle(decoration: TextDecoration.none))
-                    .color(Colors.black.withOpacity(0.45))
-                    .make(),
-              ),
-              Expanded(
-                child: carRoute!.text
-                    .size(30.sp)
-                    .normal
-                    .textStyle(const TextStyle(decoration: TextDecoration.none))
-                    .color(fontColor)
-                    .make(),
-              ),
-              24.wb,
-              '万公里'
-                  .text
-                  .size(30.sp)
-                  .normal
-                  .textStyle(const TextStyle(decoration: TextDecoration.none))
-                  .color(Colors.black.withOpacity(0.8))
-                  .make(),
-            ],
-          ),
-        ),
-        30.heightBox,
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {
-              Get.to(() => const ContractBeginPage());
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),
-            ),
-            child: '发起合同'.text.size(30.sp).color(Colors.white).make(),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            '已签订合同？'
-                .text
-                .color(Colors.black.withOpacity(0.45))
-                .textStyle(const TextStyle(decoration: TextDecoration.none))
-                .normal
-                .size(20.sp)
-                .make(),
-            TextButton(
-              onPressed: () {},
-              child: '继续发布车辆'
-                  .text
-                  .color(Colors.blue)
-                  .textStyle(const TextStyle(decoration: TextDecoration.none))
-                  .normal
-                  .size(20.sp)
-                  .make(),
-            ).paddingZero
-          ],
-        )
-      ],
     );
   }
 }

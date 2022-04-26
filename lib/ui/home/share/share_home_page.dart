@@ -1,6 +1,3 @@
-import 'package:cloud_car/model/sort/sort_brand_model.dart';
-import 'package:cloud_car/model/sort/sort_car_model_model.dart';
-import 'package:cloud_car/model/sort/sort_series_model.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/share/all_car_view.dart';
 import 'package:cloud_car/ui/home/share/my_car_view.dart';
@@ -19,6 +16,11 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+
+import '../../../model/sort/sort_brand_model.dart';
+import '../../../model/sort/sort_car_model_model.dart';
+import '../../../model/sort/sort_series_model.dart';
+
 
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);

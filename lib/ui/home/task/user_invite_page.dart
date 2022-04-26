@@ -1,12 +1,11 @@
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
-import 'package:cloud_car/ui/home/user_manager/browse_customers_page.dart';
+import 'package:cloud_car/ui/home/user_manager/customers_browse_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/user_tool.dart';
 
 class UserInvitePage extends StatefulWidget {
   final int id;
@@ -207,7 +206,7 @@ class _UserInvitePageState extends State<UserInvitePage>
             child: TabBarView(
               controller: _tabController,
               children: [
-                BrowseCustomersPage(id: widget.id,),
+                CustomersBrowsePage(id: widget.id,),
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
@@ -251,7 +250,7 @@ class _UserInvitePageState extends State<UserInvitePage>
           ),
         ),
         bottomNavigationBar: Container(
-          color: Colors.white,
+          color: Colors.red,
           height: 120.w,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,

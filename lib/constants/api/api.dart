@@ -6,7 +6,7 @@ part 'user_api.dart';
 /// * data 基础数据接口
 /// * product 产品接口
 class API {
-  static const tokenKey = 'cloud-car-token';
+  static const tokenKey = 'ansuex-user-token';
 
   ///HOST
   static String get host {
@@ -51,8 +51,9 @@ class API {
 
   //二级分类
   static _UserApi user = _UserApi();
+
 }
-  
+
 class _Task {
   ///客户邀约列表
   String get getInviteLists => '/task/invite/lists';
@@ -112,28 +113,6 @@ class _Contract {
   String get addSaleContract => '/contract/sale/add';
 }
 
-class _File {
-  ///图片上传
-  String get uploadImage => '/file/upload/image';
-
-  ///文件上传
-  String get uploadFile => '/file/upload/file';
-}
-
-class _Login {
-  ///手机号一键登录
-  String get phone => '/login/phone';
-
-  ///微信登录
-  String get weixin => '/login/wechat';
-
-  ///微信登录绑定账号
-  String get weixinBind => '/login/bind';
-
-  ///微信绑定手机号发送验证码
-  String get phoneCode => '/login/sms';
-}
-
 class _Order {
   ///寄卖订单->寄卖订单列表
   get consignmentLists => '/order/consignment/lists';
@@ -162,9 +141,36 @@ class _Order {
   ///交车
   get carFinal => '/order/call/car/final';
 
+
   ///添加车商寄卖订单
   get addConsignment => '/order/dealer/consignment/add';
+
 }
+
+
+
+class _File {
+  ///图片上传
+  String get uploadImage => '/file/upload/image';
+
+  ///文件上传
+  String get uploadFile => '/file/upload/file';
+}
+
+class _Login {
+  ///手机号一键登录
+  String get phone => '/login/phone';
+
+  ///微信登录
+  String get weixin => '/login/wechat';
+
+  ///微信登录绑定账号
+  String get weixinBind => '/login/bind';
+
+  ///微信绑定手机号发送验证码
+  String get phoneCode => '/login/sms';
+}
+
 
 class _Poster {
   ///海报列表
@@ -177,6 +183,10 @@ class _Region {
 
   ///获取省市区数据版本
   String get version => '/area/version';
+
+  ///微信绑定手机号发送验证码
+  String get phoneCode => '/login/sms';
+
 }
 
 ///门店管理
@@ -196,3 +206,4 @@ class _StoreManagement {
   ///添加员工
   get staffAdd => '/business/staff/add';
 }
+
