@@ -3,7 +3,9 @@
 import 'dart:io';
 
 import 'package:cloud_car/ui/user/user_basic_information/enterprise.dart';
+import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ class BasicInformationPage extends StatefulWidget {
 
 class _BasicInformationPageState extends State<BasicInformationPage> {
   int sexId = 1;
+  late String genderText = '男';
   final picker = ImagePicker();
   late File imagePath = File('path');
   Future getImage() async {
@@ -79,14 +82,13 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                       const Spacer(),
-                      ClipOval(
-                        child: Image.file(
-                          imagePath,
-                          width: 70.w,
-                          height: 70.w,
-                          fit: BoxFit.fill,
+                      SizedBox(
+                        width: 72.w,
+                        height: 72.w,
+                        child: CloudAvatarWidget(
+                          urls: [UserTool.userProvider.userInfo.headImg],
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -307,7 +309,8 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                           filled: true,
                                           isDense: true,
                                           fillColor: Colors.white,
-                                          hintText: UserTool.userProvider.userInfo.nickname,
+                                          hintText: UserTool
+                                              .userProvider.userInfo.nickname,
                                           hintStyle: TextStyle(
                                               color: Colors.grey.shade500,
                                               fontSize: 14,
@@ -323,8 +326,18 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                       });
                 },
               ),
-              ListTile(
-                onTap: () {
+              TextEditItemWidget(
+                isBold: true,
+                title: '性别 ',
+                endIcon: true,
+                tips: '请选择',
+                value: genderText,
+                widget: Image(
+                  image: Assets.icons.icGoto,
+                  width: 32.w,
+                  height: 32.w,
+                ),
+                ontap: () {
                   showModalBottomSheet(
                       context: context,
                       backgroundColor: const Color.fromRGBO(255, 255, 255, 0),
@@ -346,6 +359,9 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     30.wb,
                                     SizedBox(
                                       child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
                                         child: Text(
                                           '取消',
                                           style: Theme.of(context)
@@ -367,14 +383,22 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     const Spacer(),
                                     GestureDetector(
                                       child: SizedBox(
-                                        child: Text(
-                                          '确认',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2
-                                              ?.copyWith(
-                                                  color:
-                                                      const Color(0xFF027AFF)),
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            genderText = sexId == 1 ? '男' : "女";
+                                            Navigator.pop(context);
+                                            setState(() {});
+                                            //dialogSetState(() {});
+                                          },
+                                          child: Text(
+                                            '确认',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle2
+                                                ?.copyWith(
+                                                    color: const Color(
+                                                        0xFF027AFF)),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -395,7 +419,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                         height: 80.w,
                                         width: double.infinity,
                                         color: Colors.white,
-                                        child: Text(sexId == 1 ? '√ 男' : '男',
+                                        child: Text('男',
                                             style: TextStyle(
                                                 color: sexId == 1
                                                     ? const Color(0xFF027AFF)
@@ -411,10 +435,10 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                       },
                                       child: Container(
                                         alignment: Alignment.center,
-                                        height: 80..w,
+                                        height: 80.w,
                                         width: double.infinity,
                                         color: Colors.white,
-                                        child: Text(sexId == 2 ? '√ 女' : '女',
+                                        child: Text('女',
                                             style: TextStyle(
                                                 color: sexId == 2
                                                     ? const Color(0xFF027AFF)
@@ -432,32 +456,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                         });
                       });
                 },
-                title: SizedBox(
-                  child: Row(
-                    children: [
-                      Text(
-                        '性别',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      const Spacer(),
-                      SizedBox(
-                        child: Text(
-                          '男',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              ?.copyWith(color: const Color(0xFF999999)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                trailing: SizedBox(
-                    width: 40.w,
-                    height: 40.w,
-                    child: const Icon(
-                      Icons.keyboard_arrow_right,
-                    )),
+                callback: (String content) {},
               ),
               ListTile(
                 title:

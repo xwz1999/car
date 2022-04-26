@@ -150,9 +150,13 @@ class OrderFunc {
   }
 
   ///售车订单列表
-  static Future<List<SalelistsModel>> getSaleList() async {
+  static Future<List<SalelistsModel>> getSaleList(
+      {required int page, int size = 0}) async {
     BaseListModel baseList =
-        await apiClient.requestList(API.order.saleLists.saleLists, data: {});
+        await apiClient.requestList(API.order.saleLists, data: {
+      'page': page,
+      'size': size,
+    });
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];

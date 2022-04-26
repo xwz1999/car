@@ -33,7 +33,6 @@ class _StaffManagementState extends State<StaffManagement> {
   @override
   void initState() {
     super.initState();
-
     _editingController = TextEditingController(text: searchText);
   }
 
@@ -48,6 +47,7 @@ class _StaffManagementState extends State<StaffManagement> {
     setState(() {});
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -89,46 +89,47 @@ class _StaffManagementState extends State<StaffManagement> {
           32.hb,
           Expanded(
               child: EasyRefresh(
-                  firstRefresh: true,
-                  header: MaterialHeader(),
-                  footer: MaterialFooter(),
-                  controller: _easyRefreshController,
-                  onRefresh: () async {
-                    _refresh();
-                  },
-                  child: Employees.isNotEmpty
-                      ?
-                      // Employees.isEmpty
-                      //     ? const SizedBox()
-                      //     : ListView.builder(
-                      //         itemBuilder: (context, index) {
-                      //           return _getList(Employees[index]);
-                      //         },
-                      //         itemCount: Employees.length,
-                      //       ),
-                      ListView.builder(
-                          itemBuilder: (context, index) {
-                            return _getList(Employees[index]);
-                          },
-                          itemCount: Employees.length,
-                        )
-                      : Column(
-                          children: [
-                            294.hb,
-                            Image.asset(
-                              Assets.icons.record.path,
-                              width: 328.w,
-                              height: 328.w,
-                            ),
-                            48.wb,
-                            Text(
-                              '暂无相关员工信息',
-                              style: TextStyle(
-                                  color: BaseStyle.color333333,
-                                  fontSize: BaseStyle.fontSize28),
-                            )
-                          ],
-                        ))),
+            firstRefresh: true,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            controller: _easyRefreshController,
+            onRefresh: () async {
+              _refresh();
+            },
+            child:
+                //Employees.isEmpty?
+                Employees.isEmpty
+                    ? const SizedBox()
+                    : ListView.builder(
+                        itemBuilder: (context, index) {
+                          return _getList(Employees[index]);
+                        },
+                        itemCount: Employees.length,
+                      ),
+            // ListView.builder(
+            //     itemBuilder: (context, index) {
+            //       return _getList(Employees[index]);
+            //     },
+            //     itemCount: Employees.length,
+            //   )
+            // : Column(
+            //     children: [
+            //       294.hb,
+            //       Image.asset(
+            //         Assets.icons.record.path,
+            //         width: 328.w,
+            //         height: 328.w,
+            //       ),
+            //       48.wb,
+            //       Text(
+            //         '暂无相关员工信息',
+            //         style: TextStyle(
+            //             color: BaseStyle.color333333,
+            //             fontSize: BaseStyle.fontSize28),
+            //       )
+            //     ],
+            //   )
+          )),
           _getButtom(),
           34.hb
         ],

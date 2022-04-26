@@ -6,7 +6,7 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_order_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_page.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -14,6 +14,7 @@ import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'backup/make_deal.dart';
 
 class SalesOrder extends StatefulWidget {
@@ -141,7 +142,9 @@ class _SalesOrderState extends State<SalesOrder> {
   @override
   void initState() {
     super.initState();
-
+    _dropDownHeaderItemStrings1 = [
+      '售卖订单',
+    ];
     listWidget = [
       Container(
         width: double.infinity,
@@ -162,9 +165,6 @@ class _SalesOrderState extends State<SalesOrder> {
           itemList: _sortList,
         ),
       ),
-    ];
-    _dropDownHeaderItemStrings1 = [
-      '售卖订单',
     ];
   }
 
@@ -205,7 +205,7 @@ class _SalesOrderState extends State<SalesOrder> {
 
   get() {
     switch (_dropDownHeaderItemStrings1.first) {
-      case '售卖车辆':
+      case '售卖订单':
         return SalesOrderPage(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });

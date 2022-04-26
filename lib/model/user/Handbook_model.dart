@@ -2,36 +2,30 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 part 'Handbook_model.g.dart';
 
-
 @JsonSerializable()
-class HandbookModel extends Equatable{
-    final String name;
-    final List<Staff>? items;
+class HandbookModel extends Equatable {
+  final String name;
+  final List<Staff>? items;
 
-    factory HandbookModel.fromJson(Map<String, dynamic> json) =>_$HandbookModelFromJson(json);
+  factory HandbookModel.fromJson(Map<String, dynamic> json) =>
+      _$HandbookModelFromJson(json);
 
-
-    const HandbookModel({
+  const HandbookModel({
     required this.name,
-    this.items,
+    required this.items,
   });
-    @override
-    List<Object?> get props => [name,items];
+  @override
+  List<Object?> get props => [name, items];
 }
 
-
 @JsonSerializable()
-class Staff extends Equatable{
-    final int id;
-    final String name;
-    final int updatedAt;
-    factory Staff.fromJson(Map<String, dynamic> json) =>_$StaffFromJson(json);
+class Staff extends Equatable {
+  final int id;
+  final String name;
+  final int updatedAt;
+  factory Staff.fromJson(Map<String, dynamic> json) => _$StaffFromJson(json);
 
-    const Staff({
-    required this.id,
-    required this.name,
-        required this.updatedAt
-  });
-    @override
-    List<Object?> get props => [id,name,updatedAt];
+  const Staff({required this.id, required this.name, required this.updatedAt});
+  @override
+  List<Object?> get props => [id, name, updatedAt];
 }

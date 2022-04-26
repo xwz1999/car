@@ -1,8 +1,15 @@
+import 'package:cloud_car/model/user/Handbook_model.dart';
+import 'package:cloud_car/ui/user/interface/manuals_func.dart';
+import 'package:cloud_car/ui/user/product_manuals/product_manuals_info.dart';
+import 'package:extended_image/extended_image.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:velocity_x/velocity_x.dart';
 
-import '../../utils/headers.dart';
-import '../../widget/button/cloud_back_button.dart';
+import '../../../utils/headers.dart';
+import '../../../widget/button/cloud_back_button.dart';
 
 class ProductManuals extends StatefulWidget {
   const ProductManuals({Key? key}) : super(key: key);
@@ -12,6 +19,24 @@ class ProductManuals extends StatefulWidget {
 }
 
 class _ProductManualsState extends State<ProductManuals> {
+  List<HandbookModel> productManuals = [];
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _easyRefreshController.dispose();
+  }
+
+  _refresh() async {
+    productManuals = await Handbook.getHandbookAll();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +62,24 @@ class _ProductManualsState extends State<ProductManuals> {
             color: Colors.white,
             child: _search(),
           ),
-          _getList(),
-          34.hb
+          Expanded(
+              child: EasyRefresh(
+            firstRefresh: true,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            controller: _easyRefreshController,
+            onRefresh: () async {
+              _refresh();
+            },
+            child: productManuals.isEmpty
+                ? const SizedBox()
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      return _getList(productManuals[index]);
+                    },
+                    itemCount: productManuals.length,
+                  ),
+          ))
         ],
       ),
     );
@@ -114,58 +155,32 @@ class _ProductManualsState extends State<ProductManuals> {
     );
   }
 
-  _getList() {
+  _getList(HandbookModel model) {
     return Expanded(
-      child: ListView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              40.hb,
-              _getTItle('联系我们'),
-              24.hb,
-              _getText('销售更多服务', '2021-12-01')
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              40.hb,
-              _getTItle('系统管理'),
-              24.hb,
-              _getText('门店信息管理', '2021-12-01'),
-              _getText('权限管理', '2021-12-01')
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              40.hb,
-              _getTItle('车辆管理'),
-              24.hb,
-              _getText('车辆发布和编辑', '2021-12-01'),
-              _getText('车辆订单', '2021-12-01')
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              40.hb,
-              _getTItle('客户管理'),
-              24.hb,
-              _getText('客户跟进', '2021-12-01'),
-              _getText('添加客户', '2021-12-01')
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              40.hb,
-              _getTItle('销售订单管理'),
-              24.hb,
-              _getText('新建销售订单', '2021-12-01'),
-            ],
-          )
+          40.hb,
+          _getTItle(model.name),
+          24.hb,
+          ...model.items != null
+              ? model.items!.mapIndexed((e, index) {
+                  return GestureDetector(
+                      onTap: () {
+                        Get.to(() => HandbookInfo(
+                              //manualsBack: (int id) {},
+                              id: e.id,
+                              name: e.name,
+                            ));
+                      },
+                      child: _getText(
+                          e.name,
+                          DateUtil.formatDateMs(e.updatedAt.toInt() * 1000,
+                              format: 'yyyy-MM-dd')));
+                }).toList()
+              : []
+          //ListView.builder(itemBuilder: (context, index) {})
+          //_getText('销售更多服务', '2021-12-01')
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 typedef TextCallback = Function(String content);
 
 class TextEditItemWidget extends StatefulWidget {
+  final bool isBold;
   final bool endIcon;
   final String title;
   late final String value;
@@ -16,6 +17,7 @@ class TextEditItemWidget extends StatefulWidget {
 
   TextEditItemWidget({
     Key? key,
+    this.isBold = false,
     required this.title,
     this.value = '',
     this.endIcon = false,
@@ -58,20 +60,25 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
         widget.ontap();
       },
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          widget.isBold ? 32.wb : 0.wb,
           SizedBox(
             width: 170.w,
             child: Text(
               widget.title,
               style: TextStyle(
-                color: BaseStyle.color999999,
+                color: widget.isBold
+                    ? BaseStyle.color333333
+                    : BaseStyle.color999999,
                 fontSize: BaseStyle.fontSize28,
               ),
             ),
           ),
+          widget.isBold ? 400.wb : const SizedBox(),
           SizedBox(
-            width: 300.w,
-            height: 35.w,
+            width: widget.isBold ? 50.w : 300.w,
+            height: widget.isBold ? 100.w : 35.w,
             child: TextField(
               keyboardType: TextInputType.text,
               // onSubmitted: (text) {
@@ -98,6 +105,9 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
                 isCollapsed: true,
                 fillColor: Colors.white,
                 hintText: widget.tips,
+                contentPadding: widget.isBold
+                    ? EdgeInsets.only(top: 30.w)
+                    : EdgeInsets.only(top: 0.w),
                 hintStyle: TextStyle(
                     color: Colors.grey.shade500,
                     fontSize: 14,

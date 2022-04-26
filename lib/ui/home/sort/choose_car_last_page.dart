@@ -6,7 +6,6 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
 import 'package:flutter/material.dart';
 
-
 typedef CarCallback = Function(String name, int id);
 
 class ChooseCarLastPage extends StatefulWidget {
@@ -83,15 +82,17 @@ class _ChooseCarLastPageState extends State<ChooseCarLastPage> {
                 return _getItem(_list[index]);
               },
               separatorBuilder: (BuildContext context, int index) {
-               return  Padding(
-                 padding: EdgeInsets.only(left: 24.w, right: 24.w,),
-                 child: Container(
-
+                return Padding(
+                  padding: EdgeInsets.only(
+                    left: 24.w,
+                    right: 24.w,
+                  ),
+                  child: Container(
                     width: double.infinity,
                     color: const Color(0xFFEEEEEE),
                     height: 1.w,
                   ),
-               );
+                );
               },
               itemCount: _list.length,
             ),
@@ -100,25 +101,24 @@ class _ChooseCarLastPageState extends State<ChooseCarLastPage> {
 
   _getItem(SortCarModelModel model) {
     return GestureDetector(
-      onTap: (){
-        widget.callback(model.name,model.id);
-      },
+        onTap: () {
+          widget.callback(model.name, model.id);
+        },
         child: Column(
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 32.w),
-          alignment: Alignment.centerLeft,
-          color: Colors.transparent,
-          child: Text(
-            model.name,
-            style: TextStyle(
-                color: const Color(0xFF333333),
-                fontSize: 28.sp,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 32.w),
+              alignment: Alignment.centerLeft,
+              color: Colors.transparent,
+              child: Text(
+                model.name,
+                style: TextStyle(
+                  color: const Color(0xFF333333),
+                  fontSize: 28.sp,
                 ),
-          ),
-        ),
-
-      ],
-    ));
+              ),
+            ),
+          ],
+        ));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 
-
 import 'package:cloud_car/ui/user/user_management/access_configuration.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
@@ -51,7 +50,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
   int sexId = 1;
   List blText = [];
 
-  late String zhi = '';
+  late bool zhi = false;
   @override
   void initState() {
     super.initState();
