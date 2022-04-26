@@ -79,6 +79,8 @@ dependencies:
   image_gallery_saver: ^1.7.1
   #生成二维码
   barcode_widget: ^2.0.2
+  #json model生成注解
+  json_annotation: ^4.4.0
 
 
 dev_dependencies:

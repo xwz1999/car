@@ -6,7 +6,11 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../model/sort/sort_brand_model.dart';
+import '../../../model/sort/sort_car_model_model.dart';
+import '../../../model/sort/sort_series_model.dart';
 import '../../../widget/sort_list_widget.dart';
+import 'carlist_page.dart';
 
 typedef ItemCallback = Function(ChooseItem item);
 
@@ -32,7 +36,11 @@ class _SortListPageState extends State<SortListPage> {
 
   String _carName = '不限品牌';
 
-
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
+      series: SortSeriesModel.init,
+      brand: SortBrandModel.init,
+      car: SortCarModelModel.init,
+      returnType: 2));
   @override
   void initState() {
     super.initState();
@@ -111,14 +119,7 @@ class _SortListPageState extends State<SortListPage> {
           title: '品牌车型',
           rightWidget: GestureDetector(
             onTap: (){
-              Get.to(()=> ChooseCarPage(callback: (String name, int id) {
-                Get.back();
-                Get.back();
-                Get.back();
-                _carName = name;
-                setState(() {
-                });
-              },));
+              Get.to(()=> ChooseCarPage(callback:(){}, pickCar: _pickCar,));
             },
             child: Container(
               color: Colors.transparent,

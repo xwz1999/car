@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:cloud_car/model/car_valuation/car_distinguish_model.dart';
@@ -19,6 +17,11 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 
+import '../../../model/sort/sort_brand_model.dart';
+import '../../../model/sort/sort_car_model_model.dart';
+import '../../../model/sort/sort_series_model.dart';
+import '../sort/carlist_page.dart';
+
 class CarValuationPage extends StatefulWidget {
   const CarValuationPage({Key? key}) : super(key: key);
 
@@ -30,7 +33,11 @@ class _CarValuationPageState extends State<CarValuationPage> {
   final CarInfo _carInfo = CarInfo();
   DateTime? _firstDate;
   late CarDistinguishModel? carInfoModel;
-
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
+      series: SortSeriesModel.init,
+      brand: SortBrandModel.init,
+      car: SortCarModelModel.init,
+      returnType: 2));
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
     ChooseItem(name: '紫色'),
@@ -48,9 +55,6 @@ class _CarValuationPageState extends State<CarValuationPage> {
     ChooseItem(name: '黄色'),
     ChooseItem(name: '其他'),
   ];
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +90,8 @@ class _CarValuationPageState extends State<CarValuationPage> {
     );
   }
 
-
-  _topImage(){
-    return   Column(
+  _topImage() {
+    return Column(
       children: [
         24.hb,
         Container(
@@ -100,8 +103,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
           decoration: const BoxDecoration(
             color: Colors.black,
             image: DecorationImage(
-              image:
-              AssetImage('assets/images/assessment_bg.png'),
+              image: AssetImage('assets/images/assessment_bg.png'),
               fit: BoxFit.fill,
             ),
           ),
@@ -137,16 +139,14 @@ class _CarValuationPageState extends State<CarValuationPage> {
                     children: [
                       const Text(
                         '精准估值',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: Color(0x99eeeeee)),
+                        style:
+                            TextStyle(fontSize: 13, color: Color(0x99eeeeee)),
                       ),
                       20.wb,
                       const Text(
                         '守护您的车辆交易',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: Color(0x99eeeeee)),
+                        style:
+                            TextStyle(fontSize: 13, color: Color(0x99eeeeee)),
                       ),
                     ],
                   ),
@@ -180,7 +180,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
     );
   }
 
-  _bottomEdit(){
+  _bottomEdit() {
     return Padding(
       padding: EdgeInsets.only(top: 200.w),
       child: Container(
@@ -194,56 +194,48 @@ class _CarValuationPageState extends State<CarValuationPage> {
                   offset: Offset(0.0, -20.0), //阴影xy轴偏移量
                   blurRadius: 15.0, //阴影模糊程度
                   spreadRadius: 1.0 //阴影扩散程度
-              )
+                  )
             ]),
         child: Column(
           children: [
             GestureDetector(
-              onTap: () async{
+              onTap: () async {
                 await CloudImagePicker.pickSingleImage(title: '选择图片').then(
-                      (value) async {
-                        if(value!=null){
-                          File files = value;
-                          String urls = await ApiClient().uploadImage(files);
-                          carInfoModel = await CarFunc.carDistinguish(urls.imageWithHost);
-                          if(carInfoModel!=null){
-                            _carInfo.name = carInfoModel!.cartype;
+                  (value) async {
+                    if (value != null) {
+                      File files = value;
+                      String urls = await ApiClient().uploadImage(files);
+                      carInfoModel =
+                          await CarFunc.carDistinguish(urls.imageWithHost);
+                      if (carInfoModel != null) {
+                        _carInfo.name = carInfoModel!.cartype;
 
-                            _carInfo.address = carInfoModel!.address;
+                        _carInfo.address = carInfoModel!.address;
 
-                            _carInfo.licensingDate = carInfoModel!.regdate;
-                            setState(() {
-
-                            });
-                          }
-
-                        }
-
+                        _carInfo.licensingDate = carInfoModel!.regdate;
+                        setState(() {});
+                      }
+                    }
                   },
                 );
                 setState(() {});
               },
-              child: Image.asset(
-                  'assets/images/driving_license2.png'),
+              child: Image.asset('assets/images/driving_license2.png'),
             ),
             GestureDetector(
-              onTap: () async{
-                await  Get.to(()=> ChooseCarPage(callback: (String name, int id) {
-                  Get.back();
-                  Get.back();
-                  Get.back();
-                  _carInfo.name = name;
-                  _carInfo.modelId = id;
-                },));
-                setState(() {
-
-                });
+              onTap: () async {
+                await Get.to(() => ChooseCarPage(
+                      callback: () {
+                        _carInfo.name = _pickCar.value.car.name;
+                      },
+                      pickCar: _pickCar,
+                    ));
+                setState(() {});
               },
               child: EditItemWidget(
                 title: '具体车型',
                 callback: (String content) {},
-                value: _carInfo.name??'',
-
+                value: _carInfo.name ?? '',
                 tips: '请选择具体车型',
                 topIcon: false,
                 paddingStart: 32,
@@ -255,24 +247,22 @@ class _CarValuationPageState extends State<CarValuationPage> {
                 ),
               ),
             ),
-
             GestureDetector(
-              onTap: () async{
-                await  Get.to(()=> ChooseCarPage(callback: (String name, int id) {
-                  _carInfo.address = name;
-                },isCity: true,));
-                setState(() {
-
-                });
+              onTap: () async {
+                await Get.to(() => ChooseCarPage(
+                      callback: () {},
+                      isCity: true,
+                      pickCar: _pickCar,
+                    ));
+                setState(() {});
               },
               child: EditItemWidget(
                 title: '车牌所在地',
                 callback: (String content) {},
-                value: _carInfo.address??'',
+                value: _carInfo.address ?? '',
                 tips: '请选择车牌所在地',
                 topIcon: false,
                 paddingStart: 32,
-
                 canChange: false,
                 endIcon: Image.asset(
                   Assets.icons.icGoto.path,
@@ -282,16 +272,16 @@ class _CarValuationPageState extends State<CarValuationPage> {
               ),
             ),
             GestureDetector(
-              onTap: () async{
+              onTap: () async {
                 _firstDate = await CarDatePicker.monthPicker(DateTime.now());
-                _carInfo.licensingDate = DateUtil.formatDate(_firstDate,
-                    format: 'yyyy-MM');
+                _carInfo.licensingDate =
+                    DateUtil.formatDate(_firstDate, format: 'yyyy-MM');
                 setState(() {});
               },
               child: EditItemWidget(
                 title: '首次上牌',
                 callback: (String content) {},
-                value:  _carInfo.licensingDate??'',
+                value: _carInfo.licensingDate ?? '',
                 tips: '请选择首次上牌时间',
                 topIcon: false,
                 paddingStart: 32,
@@ -304,20 +294,21 @@ class _CarValuationPageState extends State<CarValuationPage> {
               ),
             ),
             GestureDetector(
-              onTap: () async{
+              onTap: () async {
                 await showModalBottomSheet(
                   context: context,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16.w))),
                   builder: (context) {
-                    return CarListPicker(items: colorList, callback: (String content) {
-                      Get.back();
-                      _carInfo.color = content;
-                      setState(() {
-
-                      });
-                    },title: '车身颜色',
-
-
+                    return CarListPicker(
+                      items: colorList,
+                      callback: (String content) {
+                        Get.back();
+                        _carInfo.color = content;
+                        setState(() {});
+                      },
+                      title: '车身颜色',
                     );
                   },
                 );
@@ -325,7 +316,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               child: EditItemWidget(
                 title: '车身颜色',
                 callback: (String content) {},
-                value: _carInfo.color??'',
+                value: _carInfo.color ?? '',
                 tips: '请选择车身颜色',
                 topIcon: false,
                 paddingStart: 32,
@@ -340,34 +331,27 @@ class _CarValuationPageState extends State<CarValuationPage> {
             EditItemWidget(
               title: '行驶里程',
               callback: (String content) {},
-              value: _carInfo.mileage??'',
+              value: _carInfo.mileage ?? '',
               tips: '请输入行驶里程',
               topIcon: false,
               paddingStart: 32,
               canChange: false,
               endText: '万公里',
             ),
-            100 .hb,
+            100.hb,
             Container(
               padding: EdgeInsets.symmetric(horizontal: 32.w),
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-
-
-
-
-                    Get.to(()=>CarValuationResultPage(carInfo: _carInfo,));
+                  Get.to(() => CarValuationResultPage(
+                        carInfo: _carInfo,
+                      ));
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                child: '开始估值'
-                    .text
-                    .size(30.sp)
-                    .color(Colors.white)
-                    .make(),
+                child: '开始估值'.text.size(30.sp).color(Colors.white).make(),
               ),
             ),
           ],
@@ -377,18 +361,26 @@ class _CarValuationPageState extends State<CarValuationPage> {
   }
 }
 
-
-class CarInfo{
+class CarInfo {
   String? name;
   String? address;
 
+  int? modelId;
 
-  int? modelId;///车型id
-  String? licensePlate;///牌照
-  String? licensingDate;///上牌照时间
-  String? mileage;///里程
+  ///车型id
+  String? licensePlate;
+
+  ///牌照
+  String? licensingDate;
+
+  ///上牌照时间
+  String? mileage;
+
+  ///里程
   String? color;
-  int? transfer;///过户次数
+  int? transfer;
+
+  ///过户次数
   int? paint;
   int? plate;
   List<int>? parts;

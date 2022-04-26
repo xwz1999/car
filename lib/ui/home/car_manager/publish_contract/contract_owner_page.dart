@@ -46,131 +46,135 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
         decoration: const BoxDecoration(
           color: Color(0x99eeeeee),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
-            Container(
-              padding: EdgeInsets.only(top: 30.h,left: 30.w,right: 30.w,bottom: 15.h),
-              child: '车主信息'.text.size(32.sp).bold.color(Colors.black).make(),
-            ),
-            Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: 20.h, bottom: 20.h, left: 30.w, right: 30.w),
-                    color: Colors.transparent,
-                    child: Row(
-                      children: [
-                        '*'
-                            .text
-                            .size(30.sp)
-                            .color(Colors.red)
-                            .normal
-                            .textStyle(const TextStyle(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 30.h,left: 30.w,right: 30.w,bottom: 15.h),
+                  child: '车主信息'.text.size(32.sp).bold.color(Colors.black).make(),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: 20.h, bottom: 20.h, left: 30.w, right: 30.w),
+                        color: Colors.transparent,
+                        child: Row(
+                          children: [
+                            '*'
+                                .text
+                                .size(30.sp)
+                                .color(Colors.red)
+                                .normal
+                                .textStyle(const TextStyle(
                                 decoration: TextDecoration.none))
-                            .make()
-                            .paddingOnly(top: 5),
-                        10.wb,
-                        SizedBox(
-                          width: 160.w,
-                          child: '车主类别'
-                              .text
-                              .size(30.sp)
-                              .normal
-                              .textStyle(const TextStyle(
+                                .make()
+                                .paddingOnly(top: 5),
+                            10.wb,
+                            SizedBox(
+                              width: 160.w,
+                              child: '车主类别'
+                                  .text
+                                  .size(30.sp)
+                                  .normal
+                                  .textStyle(const TextStyle(
                                   decoration: TextDecoration.none))
-                              .color(Colors.black.withOpacity(0.45))
-                              .make(),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  _chooseOwner = !_chooseOwner;
-                                  setState(() {});
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                        width: 50.w,
-                                        height: 50.w,
-                                        padding: EdgeInsets.only(
-                                            top: 6.w, right: 5.w),
-                                        child: !_chooseOwner
-                                            ? const Icon(CupertinoIcons.circle,
+                                  .color(Colors.black.withOpacity(0.45))
+                                  .make(),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      _chooseOwner = !_chooseOwner;
+                                      setState(() {});
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                            width: 50.w,
+                                            height: 50.w,
+                                            padding: EdgeInsets.only(
+                                                top: 6.w, right: 5.w),
+                                            child: !_chooseOwner
+                                                ? const Icon(CupertinoIcons.circle,
                                                 size: 18,
                                                 color: Color(0xFFdddddd))
-                                            : const Icon(
+                                                : const Icon(
                                                 CupertinoIcons
                                                     .checkmark_alt_circle_fill,
                                                 size: 18,
                                                 color: Colors.blue)),
-                                    RichText(
-                                      text: TextSpan(
-                                        text: "个人寄卖",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 30.sp),
-                                      ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "个人寄卖",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 30.sp),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _chooseOwner = !_chooseOwner;
-                                  setState(() {});
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                        width: 50.w,
-                                        height: 50.w,
-                                        padding: EdgeInsets.only(
-                                            top: 6.w, right: 5.w),
-                                        child: _chooseOwner
-                                            ? const Icon(CupertinoIcons.circle,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _chooseOwner = !_chooseOwner;
+                                      setState(() {});
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                            width: 50.w,
+                                            height: 50.w,
+                                            padding: EdgeInsets.only(
+                                                top: 6.w, right: 5.w),
+                                            child: _chooseOwner
+                                                ? const Icon(CupertinoIcons.circle,
                                                 size: 18,
                                                 color: Color(0xFFdddddd))
-                                            : const Icon(
+                                                : const Icon(
                                                 CupertinoIcons
                                                     .checkmark_alt_circle_fill,
                                                 size: 18,
                                                 color: Colors.blue)),
-                                    RichText(
-                                      text: TextSpan(
-                                        text: "公司车辆",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 30.sp),
-                                      ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "公司车辆",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 30.sp),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: 30.w,
+                          right: 30.w,
+                          bottom: 30.h,
+                        ),
+                        child: _chooseOwner ? personInfo() : companyInfo(),
+                      )
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.only(
-                      left: 30.w,
-                      right: 30.w,
-                      bottom: 30.h,
-                    ),
-                    child: _chooseOwner ? personInfo() : companyInfo(),
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
@@ -199,6 +203,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
         _noIcon('手机号码', _phoneController),
         _haveIcon('银行卡号', _bankNumController, () {}),
         _noIcon('开户行', _depositBankController),
+        30.hb,
         _takePhoto(
           '身份证照',
           Row(
@@ -222,6 +227,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
             ],
           ),
         ),
+        30.hb,
         _takePhoto(
           '半身照',
           GestureDetector(
@@ -240,8 +246,11 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
     return Column(
       children: [
         _noIcon('公司名称', _companyController),
+        30.hb,
         _noIcon('信用代码', _creditCodeController),
+        30.hb,
         _noIcon('联系方式', _phoneController),
+        30.hb,
         _noIcon('开户行', _depositBankController),
         _haveIcon('银行卡号', _bankNumController, () {}),
         _takePhoto(
@@ -351,7 +360,6 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
     Widget content,
   ) {
     return Container(
-      padding: EdgeInsets.only(top: 30.h),
       color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

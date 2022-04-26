@@ -2,7 +2,6 @@ import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/share/all_car_view.dart';
 import 'package:cloud_car/ui/home/share/my_car_view.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
-
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_car_page.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
@@ -17,6 +16,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../../model/sort/sort_brand_model.dart';
+import '../../../model/sort/sort_car_model_model.dart';
+import '../../../model/sort/sort_series_model.dart';
 
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
@@ -30,14 +32,20 @@ class _ShareHomePageState extends State<ShareHomePage>
   late List<String> _dropDownHeaderItemStrings;
   List<dynamic>? data;
   List<Widget> listWidget = [];
-  ScreenControl screenControlMy = ScreenControl();
-  ScreenControl screenControlAll = ScreenControl();
+  ScreenControl screenControl = ScreenControl();
   final EasyRefreshController _myRefreshController = EasyRefreshController();
   final EasyRefreshController _allRefreshController = EasyRefreshController();
-   String _pickCity='';
-   String _pickBrand='';
-   String _pickPrice='';
-   String _pickSort='';
+
+  // String _pickCity='';
+
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
+      SearchParamModel(
+          series: SortSeriesModel.init,
+          brand: SortBrandModel.init,
+          car: SortCarModelModel.init,
+          returnType: 2));
+
+  String _pickSort = '';
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -68,28 +76,15 @@ class _ShareHomePageState extends State<ShareHomePage>
         .toList();
 
     listWidget = [
-      // CityListPage(
-      //   cityCallback: (String city) {
-      //     if (kDebugMode) {
-      //       print(city);
-      //     }
-      //     // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
-      //     screenControlMy.screenHide();
-      //     _pickCity = city;
-      //     setState(() {});
-      //   },
-      // ),
       CarListPage(
-        carCallback: (String city, int id) {
-          if (kDebugMode) {
-            print(city);
+        pickCar: _pickCar,
+        carCallback: () {
+          screenControl.screenHide();
+          if (_tabController.index == 0) {
+            _myRefreshController.callRefresh();
+          } else {
+            _allRefreshController.callRefresh();
           }
-          // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
-          screenControlMy.screenHide();
-          _pickBrand = city;
-          Get.back();
-          Get.back();
-          setState(() {});
         },
       ),
       Container(
@@ -100,9 +95,13 @@ class _ShareHomePageState extends State<ShareHomePage>
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
           callback: (String item) {
-            screenControlMy.screenHide();
-
-            _pickPrice = item;
+            screenControl.screenHide();
+            if (_tabController.index == 0) {
+              _myRefreshController.callRefresh();
+            } else {
+              _allRefreshController.callRefresh();
+            }
+            _pickCar.value.price=item;
           },
           childAspectRatio: 144 / 56,
           mainAxisSpacing: 10.w,
@@ -121,7 +120,7 @@ class _ShareHomePageState extends State<ShareHomePage>
         child: ScreenWidget(
           childAspectRatio: 144 / 56,
           callback: (String item) {
-            screenControlMy.screenHide();
+            screenControl.screenHide();
             _pickSort = item;
           },
           mainAxisSpacing: 10.w,
@@ -137,13 +136,17 @@ class _ShareHomePageState extends State<ShareHomePage>
   @override
   void dispose() {
     _tabController.dispose();
+    _allRefreshController.dispose();
+    _myRefreshController.dispose();
     super.dispose();
   }
 
   _customer() {
     return GestureDetector(
       onTap: () async {
-        Get.to(() => const ShareCarPage());
+        Get.to(() => const ShareCarPage(
+              models: [],
+            ));
       },
       child: Container(
         width: 72.w,
@@ -211,32 +214,35 @@ class _ShareHomePageState extends State<ShareHomePage>
             child: _getSortList()),
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          children: [
-            MyCarView(
+        body: DropDownWidget(
+          _dropDownHeaderItemStrings,
+          listWidget,
+          height: 80.w,
+          bottomHeight: 400.w,
+          screenControl: screenControl,
+          headFontSize: 28.sp,
+          screen: '筛选',
+          onTap: () {
+            screenControl.screenHide();
+            _scaffoldKey.currentState?.openEndDrawer();
+          },
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: [
+              MyCarView(
                 sort: _pickSort,
                 refreshController: _myRefreshController,
-                dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
-                listWidget: listWidget,
-                screenControl: screenControlMy,
-                onTap: () {
-                  screenControlMy.screenHide();
-                  _scaffoldKey.currentState?.openEndDrawer();
-                }),
-            AllCarView(
+                pickCar: _pickCar,
+              ),
+              AllCarView(
+                pickCar: _pickCar,
                 sort: _pickSort,
                 refreshController: _allRefreshController,
-                dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
-                listWidget: listWidget,
-                screenControl: screenControlAll,
-                onTap: () {
-                  screenControlMy.screenHide();
-                  _scaffoldKey.currentState?.openEndDrawer();
-                })
-          ],
-          // children: [_myCar(), _allCar()],
+              )
+            ],
+            // children: [_myCar(), _allCar()],
+          ),
         ));
   }
 

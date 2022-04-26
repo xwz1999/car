@@ -514,6 +514,9 @@ class $AssetsImagesGen {
   AssetGenImage get societeGeneralebankbg =>
       const AssetGenImage('assets/images/Societe_generalebankbg.png');
 
+  /// File path: assets/images/addcar.png
+  AssetGenImage get addcar => const AssetGenImage('assets/images/addcar.png');
+
   /// File path: assets/images/agricultural.png
   AssetGenImage get agricultural =>
       const AssetGenImage('assets/images/agricultural.png');
@@ -565,6 +568,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/car_person_photo.png
   AssetGenImage get carPersonPhoto =>
       const AssetGenImage('assets/images/car_person_photo.png');
+
+  /// File path: assets/images/car_placeholder.png
+  AssetGenImage get carPlaceholder =>
+      const AssetGenImage('assets/images/car_placeholder.png');
 
   /// File path: assets/images/car_valuation_bg.png
   AssetGenImage get carValuationBg =>

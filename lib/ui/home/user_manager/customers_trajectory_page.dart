@@ -1,7 +1,8 @@
-
+import 'package:cloud_car/model/car_manager/customer_browse_list_model.dart';
 import 'package:cloud_car/model/car_manager/customer_trail_model.dart';
 import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
@@ -17,49 +18,30 @@ class CustomersTrajectoryPage extends StatefulWidget {
 class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
   List<CustomerTrailModel> _list = [];
 
-  int _page = 1;
-
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 32.w),
-        child: EasyRefresh(
-          firstRefresh: true,
-          header: MaterialHeader(),
-          footer: MaterialFooter(),
-          controller: _easyRefreshController,
-          onRefresh: () async {
-            _page = 1;
-            _list = await CustomerFunc.getCustomerTrail(widget.id,);
+    return  Padding(
+      padding: EdgeInsets.symmetric(horizontal: 32.w),
+      child: EasyRefresh(
+        firstRefresh: true,
+        header: MaterialHeader(),
+        footer: MaterialFooter(),
+        controller: _easyRefreshController,
+        onRefresh: () async {
 
-
-            setState(() {});
+          _list = await CustomerFunc.getCustomerTrail(widget.id,);
+          setState(() {});
+        },
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.only(top: 32.w),
+          itemBuilder: (BuildContext context, int index) {
+            return _getListItem(index, index < 1,_list[index]);
           },
-          onLoad: () async {
-            _page++;
-            await CustomerFunc.getCustomerTrail(widget.id,).then((value) {
-              if(value.isEmpty){
-                _easyRefreshController.finishLoad(noMore: true);
-              }else{
-                _list.addAll(value);
-                setState(() {
-
-                });
-              }
-            });
-          },
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.only(top: 32.w),
-            itemBuilder: (BuildContext context, int index) {
-              return _getListItem(index, index < 1,_list[index]);
-            },
-            itemCount: _list.length,
-          ),
+          itemCount: _list.length,
         ),
       ),
     );
@@ -84,7 +66,7 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
                     width: 2.w,
                     height: 10.w,
                     decoration: BoxDecoration(
-                      color: !ing ? kPrimaryColor : BaseStyle.colorcccccc,
+                      color:  index == 1 ? kPrimaryColor : BaseStyle.colorcccccc,
                     ),
                   )
                       : const SizedBox(),
@@ -137,48 +119,13 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
                 ),
                 16.hb,
                 Text(model.content,style: TextStyle(
-                  color: const Color(0xFF027AFF),fontSize: 28.sp,
+                  color: model.contentType==1?  const Color(0xFF027AFF):const Color(0xFF027AFF),fontSize: 28.sp,
                 ),),
 
                 16.hb,
-
-                Text('邀约时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(
-                    model.invite.inviteAt.toInt() * 1000),format: 'yyyy-MM-dd HH:mm:ss')}',style: TextStyle(
-                  color: const Color(0xFF333333),fontSize: 28.sp,
-                ),),
-
-                16.hb,
+                _getContent(model),
 
 
-                Container(
-                  width: 500.w,
-
-                  child: Text('邀约地址：${model.invite.address}',style: TextStyle(
-                    color: const Color(0xFF333333),fontSize: 28.sp,
-                  ),maxLines: 2,overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-
-                16.hb,
-
-                Container(
-                  width: 560.w,
-                  height: 200.w,
-                  child: _getCarItem(
-                    '',
-                    '',
-                    DateUtil.formatDate(DateUtil.getDateTimeByMs(
-                        model.createdAt.toInt() * 1000),format: 'yyyy年MM月'),
-                    '',
-
-                    '',
-
-                  ),
-                  decoration: BoxDecoration(
-                    color: BaseStyle.colorf6f6f6,
-                    borderRadius: BorderRadius.circular(8.w),
-                  ),
-                ),
                 50.hb,
               ],
             ),
@@ -187,6 +134,79 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
       ),
     );
   }
+
+
+
+  _getContent(CustomerTrailModel model){
+    return model.contentType==0?const SizedBox():Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(model.contentType==3?'邀约时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(
+            model.invite.inviteAt.toInt() * 1000),format: 'yyyy-MM-dd HH:mm:ss')}':'邀约到店时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(
+            model.invite.inviteAt.toInt() * 1000),format: 'yyyy-MM-dd HH:mm:ss')}',style: TextStyle(
+          color: const Color(0xFF333333),fontSize: 28.sp,
+        ),),
+        16.hb,
+
+        Container(
+          width: 500.w,
+          alignment: Alignment.centerLeft,
+          child: Text(model.contentType==3? '邀约地址：${model.reserve.address}':'邀约到店地址：${model.invite.address}',style: TextStyle(
+            color: const Color(0xFF333333),fontSize: 28.sp,
+          ),maxLines: 2,overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        16.hb,
+        model.contentType==2?SizedBox(
+          width: 500.w,
+          child: Text( model.invite.remark,style: TextStyle(
+            color: const Color(0xFF333333),fontSize: 28.sp,
+          ),maxLines: 2,overflow: TextOverflow.ellipsis,
+          ),
+        ):const SizedBox(),
+
+        16.hb,
+        model.contentType==2?
+        Container(
+          width: 560.w,
+          height: 200.w,
+          child: _getCarItem(
+            model.invite.mainPhoto,
+            model.invite.modelName,
+            DateUtil.formatDate(DateUtil.getDateTimeByMs(
+                model.invite.inviteAt.toInt() * 1000),format: 'yyyy年MM月'),
+            model.invite.mileage+'万公里',
+
+            model.invite.price,
+
+          ),
+          decoration: BoxDecoration(
+            color: BaseStyle.colorf6f6f6,
+            borderRadius: BorderRadius.circular(8.w),
+          ),
+        ):
+        Container(
+          width: 560.w,
+          height: 200.w,
+          child: _getCarItem(
+            '',
+            model.reserve.modelName,
+            DateUtil.formatDate(DateUtil.getDateTimeByMs(
+                model.reserve.licensingDate.toInt() * 1000),format: 'yyyy年MM月'),
+            model.reserve.mileage+'万公里',
+
+            '',
+
+          ),
+          decoration: BoxDecoration(
+            color: BaseStyle.colorf6f6f6,
+            borderRadius: BorderRadius.circular(8.w),
+          ),
+        ),
+      ],
+    );
+  }
+
 
   _getCarItem(String url, String name, String time, String distance, String price) {
     return Container(
@@ -203,13 +223,9 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
               aspectRatio: 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
-                child: url.contains('http')
-                    ? FadeInImage.assetNetwork(
-                  image: url,
-                  fit: BoxFit.cover,
-                  placeholder: '',
-                )
-                    : Image.asset(url),
+                child: CloudImageNetworkWidget.car(
+                  urls: [url],
+                ),
               ),
             ),
           ),
@@ -237,7 +253,7 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
                   ],
                 ),
                 16.hb,
-                RichText(
+                price.isEmpty?const SizedBox():  RichText(
                   text: TextSpan(
                       text:
                       price,
@@ -269,6 +285,7 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
       child: Text(
         text,
+        maxLines: 2,
         style: TextStyle(
           color: const Color(0xFF4F5A74),
           fontSize: 20.sp,

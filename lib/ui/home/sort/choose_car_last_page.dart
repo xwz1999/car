@@ -6,15 +6,19 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
 import 'package:flutter/material.dart';
 
-typedef CarCallback = Function(String name, int id);
+import 'carlist_page.dart';
+
+
+
 
 class ChooseCarLastPage extends StatefulWidget {
-  final CarCallback callback;
+  final VoidCallback callback;
   final String name;
   final int id;
 
+  final ValueNotifier<SearchParamModel> pickCar;
   const ChooseCarLastPage(
-      {Key? key, required this.name, required this.id, required this.callback})
+      {Key? key, required this.name, required this.id, required this.callback, required this.pickCar})
       : super(key: key);
 
   @override
@@ -82,17 +86,15 @@ class _ChooseCarLastPageState extends State<ChooseCarLastPage> {
                 return _getItem(_list[index]);
               },
               separatorBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    left: 24.w,
-                    right: 24.w,
-                  ),
-                  child: Container(
+               return  Padding(
+                 padding: EdgeInsets.only(left: 24.w, right: 24.w,),
+                 child: Container(
+
                     width: double.infinity,
                     color: const Color(0xFFEEEEEE),
                     height: 1.w,
                   ),
-                );
+               );
               },
               itemCount: _list.length,
             ),
@@ -101,24 +103,28 @@ class _ChooseCarLastPageState extends State<ChooseCarLastPage> {
 
   _getItem(SortCarModelModel model) {
     return GestureDetector(
-        onTap: () {
-          widget.callback(model.name, model.id);
-        },
+      onTap: (){
+        Get.back();
+        Get.back();
+        widget.pickCar.value.car=model;
+        widget.callback();
+      },
         child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 32.w),
-              alignment: Alignment.centerLeft,
-              color: Colors.transparent,
-              child: Text(
-                model.name,
-                style: TextStyle(
-                  color: const Color(0xFF333333),
-                  fontSize: 28.sp,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 32.w),
+          alignment: Alignment.centerLeft,
+          color: Colors.transparent,
+          child: Text(
+            model.name,
+            style: TextStyle(
+                color: const Color(0xFF333333),
+                fontSize: 28.sp,
                 ),
-              ),
-            ),
-          ],
-        ));
+          ),
+        ),
+
+      ],
+    ));
   }
 }

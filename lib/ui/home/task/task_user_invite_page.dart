@@ -2,6 +2,7 @@
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
 import 'package:cloud_car/ui/home/user_manager/customers_browse_page.dart';
+import 'package:cloud_car/ui/home/user_manager/customers_trajectory_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -127,25 +128,7 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>  with SingleTic
                 controller: _tabController,
                 children: [
                   CustomersBrowsePage(id: widget.id,),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          index == 0
-                              ? Container(
-                            width: double.infinity,
-                            height: 40.w,
-                            color: Colors.white,
-                          )
-                              : const SizedBox(),
-                          _getListItem(index, index < 2),
-                        ],
-                      );
-                    },
-                    itemCount: 5,
-                  ),
+                  CustomersTrajectoryPage(id: widget.id,),
                   ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,

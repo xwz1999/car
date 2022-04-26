@@ -10,6 +10,10 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/sort/sort_brand_model.dart';
+import '../../model/sort/sort_car_model_model.dart';
+import '../../model/sort/sort_series_model.dart';
+
 class CarCollection extends StatefulWidget {
   const CarCollection({Key? key}) : super(key: key);
 
@@ -24,6 +28,11 @@ class _CarCollectionState extends State<CarCollection> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<ChooseItem> _sortList = [];
   List<ChooseItem> _priceList = [];
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
+      series: SortSeriesModel.init,
+      brand: SortBrandModel.init,
+      car: SortCarModelModel.init,
+      returnType: 2));
   List carList = [
     {
       'url': Assets.images.carBanner,
@@ -113,13 +122,12 @@ class _CarCollectionState extends State<CarCollection> {
         },
       ),
       CarListPage(
-        carCallback: (String city,int id) {
-          if (kDebugMode) {
-            print(city);
-          }
-          _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
-          setState(() {});
-        },
+        carCallback:(){
+          screenControlMy.screenHide();
+          setState(() {
+
+          });
+        }, pickCar: _pickCar,
       ),
       Container(
         width: double.infinity,

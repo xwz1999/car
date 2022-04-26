@@ -14,6 +14,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../model/sort/sort_brand_model.dart';
+import '../../model/sort/sort_car_model_model.dart';
+import '../../model/sort/sort_series_model.dart';
+
 class PreferredPage extends StatefulWidget {
   const PreferredPage({Key? key}) : super(key: key);
 
@@ -28,6 +32,11 @@ class _PreferredPageState extends State<PreferredPage>
   List<ChooseItem> _priceList = [];
   ScreenControl screenControlMy = ScreenControl();
   List<ChooseItem> _sortList = [];
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
+      series: SortSeriesModel.init,
+      brand: SortBrandModel.init,
+      car: SortCarModelModel.init,
+      returnType: 2));
   List carList = [
     {
       'url': Assets.images.carBanner,
@@ -91,13 +100,12 @@ class _PreferredPageState extends State<PreferredPage>
         },
       ),
       CarListPage(
-        carCallback: (String city,int id) {
-          if (kDebugMode) {
-            print(city);
-          }
-          _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
-          setState(() {});
-        },
+        carCallback: (){
+          screenControlMy.screenHide();
+          setState(() {
+
+          });
+        }, pickCar: _pickCar,
       ),
       Container(
         width: double.infinity,
