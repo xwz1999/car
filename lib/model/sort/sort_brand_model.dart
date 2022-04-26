@@ -10,14 +10,19 @@ class SortBrandModel extends Equatable {
   final String name;
   final String initial;
 
-
   factory SortBrandModel.fromJson(Map<String, dynamic> json) =>
       _$SortBrandModelFromJson(json);
 
-
+  static SortBrandModel get init =>
+      const SortBrandModel(id: 0, icon: '', name: '', initial: '');
 
   @override
-  List<Object?> get props => [id,icon,name,initial,];
+  List<Object?> get props => [
+        id,
+        icon,
+        name,
+        initial,
+      ];
 
   const SortBrandModel({
     required this.id,

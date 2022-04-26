@@ -12,6 +12,7 @@ import '../../../utils/drop_down_widget.dart';
 import '../../../widget/car_item_widget.dart';
 import '../car_valuation/car_func.dart';
 import '../func/car_map.dart';
+import '../sort/carlist_page.dart';
 
 class AllCarView extends StatefulWidget {
   final List<String> dropDownHeaderItemStrings;
@@ -20,6 +21,8 @@ class AllCarView extends StatefulWidget {
   final VoidCallback onTap;
   final String sort;
   final EasyRefreshController refreshController;
+  final ValueNotifier<SearchParamModel> pickCar;
+
   const AllCarView(
       {Key? key,
       required this.dropDownHeaderItemStrings,
@@ -27,7 +30,8 @@ class AllCarView extends StatefulWidget {
       required this.screenControl,
       required this.onTap,
       required this.sort,
-      required this.refreshController})
+      required this.refreshController,
+      required this.pickCar})
       : super(key: key);
 
   @override
@@ -39,6 +43,10 @@ class _AllCarViewState extends State<AllCarView> {
   int _page = 1;
   final int _size = 10;
 
+  Map<String, dynamic> get _params => {
+    'brandId': widget.pickCar.value.brand.id,
+    'seriesId': widget.pickCar.value.series.id,
+  };
   @override
   Widget build(BuildContext context) {
     return DropDownWidget(
@@ -58,13 +66,21 @@ class _AllCarViewState extends State<AllCarView> {
               order: CarMap.carSortString
                   .getKeyFromValue(widget.sort)
                   .toString()
-                  .toSnake);
+                  .toSnake,searchParams: _params);
           setState(() {});
         },
         onLoad: () async {
           _page++;
-          var baseList = await apiClient.requestList(API.car.getCarSelfLists,
-              data: {'page': _page, 'size': _size, 'order': ''});
+          var baseList =
+              await apiClient.requestList(API.car.getCarSelfLists, data: {
+            'page': _page,
+            'size': _size,
+            'order': CarMap.carSortString
+                .getKeyFromValue(widget.sort)
+                .toString()
+                .toSnake,
+            'search': _params
+          });
           if (baseList.nullSafetyTotal > _allCarList.length) {
             _allCarList.addAll(baseList.nullSafetyList
                 .map((e) => CarListModel.fromJson(e))

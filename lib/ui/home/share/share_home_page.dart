@@ -1,3 +1,6 @@
+import 'package:cloud_car/model/sort/sort_brand_model.dart';
+import 'package:cloud_car/model/sort/sort_car_model_model.dart';
+import 'package:cloud_car/model/sort/sort_series_model.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/share/all_car_view.dart';
 import 'package:cloud_car/ui/home/share/my_car_view.dart';
@@ -17,8 +20,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../../../widget/car_item_widget.dart';
-
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
 
@@ -35,10 +36,18 @@ class _ShareHomePageState extends State<ShareHomePage>
   ScreenControl screenControlAll = ScreenControl();
   final EasyRefreshController _myRefreshController = EasyRefreshController();
   final EasyRefreshController _allRefreshController = EasyRefreshController();
-   String _pickCity='';
-   String _pickBrand='';
-   String _pickPrice='';
-   String _pickSort='';
+
+  // String _pickCity='';
+
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
+      SearchParamModel(
+          series: SortSeriesModel.init,
+          brand: SortBrandModel.init,
+          car: SortCarModelModel.init,
+          returnType: 2));
+
+  String _pickPrice = '';
+  String _pickSort = '';
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -69,28 +78,16 @@ class _ShareHomePageState extends State<ShareHomePage>
         .toList();
 
     listWidget = [
-      // CityListPage(
-      //   cityCallback: (String city) {
-      //     if (kDebugMode) {
-      //       print(city);
-      //     }
-      //     // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
-      //     screenControlMy.screenHide();
-      //     _pickCity = city;
-      //     setState(() {});
-      //   },
-      // ),
       CarListPage(
-        carCallback: (String city, int id) {
-          if (kDebugMode) {
-            print(city);
+        pickCar: _pickCar,
+        carCallback: () {
+          if (_tabController.index == 0) {
+            screenControlMy.screenHide();
+            _myRefreshController.callRefresh();
+          } else {
+            screenControlAll.screenHide();
+            _allRefreshController.callRefresh();
           }
-          // _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
-          screenControlMy.screenHide();
-          _pickBrand = city;
-          Get.back();
-          Get.back();
-          setState(() {});
         },
       ),
       Container(
@@ -101,8 +98,13 @@ class _ShareHomePageState extends State<ShareHomePage>
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
           callback: (String item) {
-            screenControlMy.screenHide();
-
+            if (_tabController.index == 0) {
+              screenControlMy.screenHide();
+              _myRefreshController.callRefresh();
+            } else {
+              screenControlAll.screenHide();
+              _allRefreshController.callRefresh();
+            }
             _pickPrice = item;
           },
           childAspectRatio: 144 / 56,
@@ -138,13 +140,17 @@ class _ShareHomePageState extends State<ShareHomePage>
   @override
   void dispose() {
     _tabController.dispose();
+    _allRefreshController.dispose();
+    _myRefreshController.dispose();
     super.dispose();
   }
 
   _customer() {
     return GestureDetector(
       onTap: () async {
-        Get.to(() => const ShareCarPage());
+        Get.to(() => const ShareCarPage(
+              models: [],
+            ));
       },
       child: Container(
         width: 72.w,
@@ -217,16 +223,19 @@ class _ShareHomePageState extends State<ShareHomePage>
           controller: _tabController,
           children: [
             MyCarView(
-                sort: _pickSort,
-                refreshController: _myRefreshController,
-                dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
-                listWidget: listWidget,
-                screenControl: screenControlMy,
-                onTap: () {
-                  screenControlMy.screenHide();
-                  _scaffoldKey.currentState?.openEndDrawer();
-                }),
+              sort: _pickSort,
+              refreshController: _myRefreshController,
+              dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
+              listWidget: listWidget,
+              screenControl: screenControlMy,
+              onTap: () {
+                screenControlMy.screenHide();
+                _scaffoldKey.currentState?.openEndDrawer();
+              },
+              pickCar: _pickCar,
+            ),
             AllCarView(
+                pickCar: _pickCar,
                 sort: _pickSort,
                 refreshController: _allRefreshController,
                 dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
@@ -240,8 +249,6 @@ class _ShareHomePageState extends State<ShareHomePage>
           // children: [_myCar(), _allCar()],
         ));
   }
-
-
 
   _tab(int index, String text) {
     return Text(text);

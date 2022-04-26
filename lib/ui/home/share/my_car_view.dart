@@ -13,6 +13,8 @@ import '../car_valuation/car_func.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 
+import '../sort/carlist_page.dart';
+
 class MyCarView extends StatefulWidget {
   final List<String> dropDownHeaderItemStrings;
   final List<Widget> listWidget;
@@ -20,13 +22,17 @@ class MyCarView extends StatefulWidget {
   final VoidCallback onTap;
   final String sort;
   final EasyRefreshController refreshController;
+  final ValueNotifier<SearchParamModel> pickCar;
+
   const MyCarView(
       {Key? key,
       required this.dropDownHeaderItemStrings,
       required this.listWidget,
       required this.screenControl,
       required this.onTap,
-      required this.sort, required this.refreshController})
+      required this.sort,
+      required this.refreshController,
+      required this.pickCar})
       : super(key: key);
 
   @override
@@ -37,6 +43,12 @@ class _MyCarViewState extends State<MyCarView> {
   List<CarListModel> _myCarList = [];
   int _page = 1;
   final int _size = 10;
+
+  Map<String, dynamic> get _params => {
+        'brandId': widget.pickCar.value.brand.id,
+        'seriesId': widget.pickCar.value.series.id,
+      };
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +72,22 @@ class _MyCarViewState extends State<MyCarView> {
               order: CarMap.carSortString
                   .getKeyFromValue(widget.sort)
                   .toString()
-                  .toSnake);
+                  .toSnake,
+              searchParams: _params);
           setState(() {});
         },
         onLoad: () async {
           _page++;
-          var baseList = await apiClient.requestList(API.car.getCarSelfLists,
-              data: {'page': _page, 'size': _size, 'order': ''});
+          var baseList =
+              await apiClient.requestList(API.car.getCarSelfLists, data: {
+            'page': _page,
+            'size': _size,
+            'order': CarMap.carSortString
+                .getKeyFromValue(widget.sort)
+                .toString()
+                .toSnake,
+            'search': _params
+          });
           if (baseList.nullSafetyTotal > _myCarList.length) {
             _myCarList.addAll(baseList.nullSafetyList
                 .map((e) => CarListModel.fromJson(e))

@@ -1,4 +1,5 @@
 import '../constants/api/api.dart';
+import 'package:lpinyin/lpinyin.dart';
 
 extension ImageOnString on String? {
   String get imageWithHost => '${API.imageHost}/$this';
@@ -19,4 +20,8 @@ extension ImageOnString on String? {
         .replaceAllMapped(exp, (Match m) => ('_' + m.group(0)!))
         .toLowerCase();
   }
+
+  String get pinyin => PinyinHelper.getPinyinE(this ?? '');
+
+  String get tag => pinyin.substring(0, 1).toUpperCase();
 }

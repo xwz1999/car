@@ -12,7 +12,7 @@ class SortSeriesModel extends Equatable {
   factory SortSeriesModel.fromJson(Map<String, dynamic> json) =>
       _$SortSeriesModelFromJson(json);
 
-  
+  static SortSeriesModel get init => const SortSeriesModel(id: 0, name: '', series: []);
   @override
   List<Object?> get props => [id,name,series,];
 

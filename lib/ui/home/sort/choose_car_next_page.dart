@@ -6,17 +6,21 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
 
-
-
-typedef CarCallback = Function(String name, int id);
+import 'carlist_page.dart';
 
 class ChooseCarNextPage extends StatefulWidget {
-  final CarCallback callback;
+  final VoidCallback callback;
   final String name;
   final int id;
 
+  final ValueNotifier<SearchParamModel> pickCar;
+
   const ChooseCarNextPage(
-      {Key? key, required this.name, required this.id, required this.callback})
+      {Key? key,
+      required this.name,
+      required this.id,
+      required this.callback,
+      required this.pickCar})
       : super(key: key);
 
   @override
@@ -81,9 +85,7 @@ class _ChooseCarNextPageState extends State<ChooseCarNextPage> {
                 return _getItem(_list[index]);
               },
               separatorBuilder: (BuildContext context, int index) {
-                return Container(
-
-                );
+                return Container();
               },
               itemCount: _list.length,
             ),
@@ -93,54 +95,62 @@ class _ChooseCarNextPageState extends State<ChooseCarNextPage> {
   _getItem(SortSeriesModel model) {
     return Column(
       children: [
-    Container(
-      padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 32.w),
-      alignment: Alignment.centerLeft,
-      color: const Color(0xFFf3f5f7),
-      child: Text(
-        model.name,
-        style: TextStyle(
-            color: const Color(0xFF333333),
-            fontSize: 35.sp,
-            fontWeight: FontWeight.bold),
-      ),
-    ),
-
-    ...model.series.mapIndexed((e,index) {
-      return GestureDetector(
-        onTap: (){
-          Get.to(()=>ChooseCarLastPage(callback: (String name, int id) {
-            widget.callback(name,id);
-          }, id: e.id, name: name+' >> '+e.name,));
-        },
-        child: Container(
-          padding: EdgeInsets.symmetric( horizontal: 32.w),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 32.w),
           alignment: Alignment.centerLeft,
-          color: Colors.transparent,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              20.hb,
-              Text(
-                e.name,
-                style: TextStyle(
-                  color: const Color(0xFF333333),
-                  fontSize: 28.sp,
-                ),
-              ),
-              25.hb,
-              index!=model.series.length-1?
-              Container(
-                width: double.infinity,
-                color: const Color(0xFFEEEEEE),
-                height: 1.w,
-              ):const SizedBox(),
-
-            ],
+          color: const Color(0xFFf3f5f7),
+          child: Text(
+            model.name,
+            style: TextStyle(
+                color: const Color(0xFF333333),
+                fontSize: 35.sp,
+                fontWeight: FontWeight.bold),
           ),
         ),
-      );
-    }).toList()
+        ...model.series.mapIndexed((e, index) {
+          return GestureDetector(
+            onTap: () async {
+              widget.pickCar.value.series=model;
+              if (widget.pickCar.value.returnType == 2) {
+                Get.back();
+                widget.callback();
+                return;
+              }
+              Get.to(() => ChooseCarLastPage(
+                    callback: widget.callback,
+                    id: e.id,
+                    name: name + ' >> ' + e.name,
+                    pickCar: widget.pickCar,
+                  ));
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 32.w),
+              alignment: Alignment.centerLeft,
+              color: Colors.transparent,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  20.hb,
+                  Text(
+                    e.name,
+                    style: TextStyle(
+                      color: const Color(0xFF333333),
+                      fontSize: 28.sp,
+                    ),
+                  ),
+                  25.hb,
+                  index != model.series.length - 1
+                      ? Container(
+                          width: double.infinity,
+                          color: const Color(0xFFEEEEEE),
+                          height: 1.w,
+                        )
+                      : const SizedBox(),
+                ],
+              ),
+            ),
+          );
+        }).toList()
       ],
     );
   }
