@@ -9,9 +9,10 @@ class CloudImageNetworkWidget extends StatelessWidget {
   final double? width;
   final double? height;
   final BoxFit? fit;
+  final bool? isCar;
 
   const CloudImageNetworkWidget(
-      {Key? key, this.width, this.height, this.urls, this.fit = BoxFit.cover})
+      {Key? key, this.width, this.height, this.urls, this.fit = BoxFit.cover, this.isCar = false})
       : super(key: key);
 
   String get imagePath {
@@ -24,9 +25,33 @@ class CloudImageNetworkWidget extends StatelessWidget {
     }
   }
 
+
+
+   const CloudImageNetworkWidget.car(
+      {Key? key, this.width, this.height, this.urls, this.fit = BoxFit.cover,this.isCar = true })
+      : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
-    return FadeInImage.assetNetwork(
+    return
+      isCar!?
+      FadeInImage.assetNetwork(
+          placeholder: Assets.images.carPlaceholder.path,
+          image: imagePath,
+          imageErrorBuilder: (context, obj, stackTrace) {
+      return Image.asset(
+        Assets.images.carPlaceholder.path,
+        width: width ?? 160.w,
+        height: height ?? 160.w,
+        fit: BoxFit.cover,
+      );
+    },
+    height: height ?? 160.w,
+    width: width ?? 160.w,
+    fit: fit,
+    ):
+      FadeInImage.assetNetwork(
       placeholder: Assets.images.placeholder.path,
       image: imagePath,
       imageErrorBuilder: (context, obj, stackTrace) {
