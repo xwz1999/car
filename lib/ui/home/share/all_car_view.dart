@@ -15,20 +15,12 @@ import '../func/car_map.dart';
 import '../sort/carlist_page.dart';
 
 class AllCarView extends StatefulWidget {
-  final List<String> dropDownHeaderItemStrings;
-  final List<Widget> listWidget;
-  final ScreenControl screenControl;
-  final VoidCallback onTap;
   final String sort;
   final EasyRefreshController refreshController;
   final ValueNotifier<SearchParamModel> pickCar;
 
   const AllCarView(
       {Key? key,
-      required this.dropDownHeaderItemStrings,
-      required this.listWidget,
-      required this.screenControl,
-      required this.onTap,
       required this.sort,
       required this.refreshController,
       required this.pickCar})
@@ -38,7 +30,7 @@ class AllCarView extends StatefulWidget {
   _AllCarViewState createState() => _AllCarViewState();
 }
 
-class _AllCarViewState extends State<AllCarView> {
+class _AllCarViewState extends State<AllCarView> with AutomaticKeepAliveClientMixin {
   List<CarListModel> _allCarList = [];
   int _page = 1;
   final int _size = 10;
@@ -49,77 +41,71 @@ class _AllCarViewState extends State<AllCarView> {
   };
   @override
   Widget build(BuildContext context) {
-    return DropDownWidget(
-      widget.dropDownHeaderItemStrings,
-      widget.listWidget,
-      height: 80.w,
-      bottomHeight: 400.w,
-      screenControl: widget.screenControl,
-      headFontSize: 28.sp,
-      child: EasyRefresh.custom(
-        firstRefresh: true,
-        controller: widget.refreshController,
-        header: MaterialHeader(),
-        onRefresh: () async {
-          _page = 1;
-          _allCarList = await CarFunc.getCarList(_page, _size,
-              order: CarMap.carSortString
-                  .getKeyFromValue(widget.sort)
-                  .toString()
-                  .toSnake,searchParams: _params);
-          setState(() {});
-        },
-        onLoad: () async {
-          _page++;
-          var baseList =
-              await apiClient.requestList(API.car.getCarSelfLists, data: {
-            'page': _page,
-            'size': _size,
-            'order': CarMap.carSortString
+    super.build(context);
+    return EasyRefresh.custom(
+      firstRefresh: true,
+      controller: widget.refreshController,
+      header: MaterialHeader(),
+      onRefresh: () async {
+        _page = 1;
+        _allCarList = await CarFunc.getCarList(_page, _size,
+            order: CarMap.carSortString
                 .getKeyFromValue(widget.sort)
                 .toString()
-                .toSnake,
-            'search': _params
-          });
-          if (baseList.nullSafetyTotal > _allCarList.length) {
-            _allCarList.addAll(baseList.nullSafetyList
-                .map((e) => CarListModel.fromJson(e))
-                .toList());
-          } else {
-            widget.refreshController.finishLoad(noMore: true);
-          }
-          setState(() {});
-        },
-        slivers: [
-          SliverToBoxAdapter(
-            child: 80.hb,
+                .toSnake,searchParams: _params);
+        setState(() {});
+      },
+      onLoad: () async {
+        _page++;
+        var baseList =
+            await apiClient.requestList(API.car.getCarSelfLists, data: {
+          'page': _page,
+          'size': _size,
+          'order': CarMap.carSortString
+              .getKeyFromValue(widget.sort)
+              .toString()
+              .toSnake,
+          'search': _params
+        });
+        if (baseList.nullSafetyTotal > _allCarList.length) {
+          _allCarList.addAll(baseList.nullSafetyList
+              .map((e) => CarListModel.fromJson(e))
+              .toList());
+        } else {
+          widget.refreshController.finishLoad(noMore: true);
+        }
+        setState(() {});
+      },
+      slivers: [
+        SliverToBoxAdapter(
+          child: 80.hb,
+        ),
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              var model = _allCarList[index];
+              return CarItemWidget(
+                widgetPadding:
+                    EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
+                name: model.modelName,
+                time: DateUtil.formatDateMs(
+                    model.licensingDate.toInt() * 1000,
+                    format: 'yyyy年MM月'),
+                distance: model.mileage + '万公里',
+                // standard: '国六',
+                url: model.mainPhoto,
+                price:
+                    NumUtil.divide(num.parse(model.price), 10000).toString() +
+                        '万元',
+              );
+            }, childCount: _allCarList.length),
           ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                var model = _allCarList[index];
-                return CarItemWidget(
-                  widgetPadding:
-                      EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
-                  name: model.modelName,
-                  time: DateUtil.formatDateMs(
-                      model.licensingDate.toInt() * 1000,
-                      format: 'yyyy年MM月'),
-                  distance: model.mileage + '万公里',
-                  // standard: '国六',
-                  url: model.mainPhoto,
-                  price:
-                      NumUtil.divide(num.parse(model.price), 10000).toString() +
-                          '万元',
-                );
-              }, childCount: _allCarList.length),
-            ),
-          )
-        ],
-      ),
-      screen: '筛选',
-      onTap: widget.onTap,
+        )
+      ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

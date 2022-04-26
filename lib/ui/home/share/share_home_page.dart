@@ -21,7 +21,6 @@ import '../../../model/sort/sort_brand_model.dart';
 import '../../../model/sort/sort_car_model_model.dart';
 import '../../../model/sort/sort_series_model.dart';
 
-
 class ShareHomePage extends StatefulWidget {
   const ShareHomePage({Key? key}) : super(key: key);
 
@@ -34,8 +33,7 @@ class _ShareHomePageState extends State<ShareHomePage>
   late List<String> _dropDownHeaderItemStrings;
   List<dynamic>? data;
   List<Widget> listWidget = [];
-  ScreenControl screenControlMy = ScreenControl();
-  ScreenControl screenControlAll = ScreenControl();
+  ScreenControl screenControl = ScreenControl();
   final EasyRefreshController _myRefreshController = EasyRefreshController();
   final EasyRefreshController _allRefreshController = EasyRefreshController();
 
@@ -83,11 +81,10 @@ class _ShareHomePageState extends State<ShareHomePage>
       CarListPage(
         pickCar: _pickCar,
         carCallback: () {
+          screenControl.screenHide();
           if (_tabController.index == 0) {
-            screenControlMy.screenHide();
             _myRefreshController.callRefresh();
           } else {
-            screenControlAll.screenHide();
             _allRefreshController.callRefresh();
           }
         },
@@ -100,11 +97,10 @@ class _ShareHomePageState extends State<ShareHomePage>
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
           callback: (String item) {
+            screenControl.screenHide();
             if (_tabController.index == 0) {
-              screenControlMy.screenHide();
               _myRefreshController.callRefresh();
             } else {
-              screenControlAll.screenHide();
               _allRefreshController.callRefresh();
             }
             _pickPrice = item;
@@ -126,7 +122,7 @@ class _ShareHomePageState extends State<ShareHomePage>
         child: ScreenWidget(
           childAspectRatio: 144 / 56,
           callback: (String item) {
-            screenControlMy.screenHide();
+            screenControl.screenHide();
             _pickSort = item;
           },
           mainAxisSpacing: 10.w,
@@ -220,35 +216,35 @@ class _ShareHomePageState extends State<ShareHomePage>
             child: _getSortList()),
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          children: [
-            MyCarView(
-              sort: _pickSort,
-              refreshController: _myRefreshController,
-              dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
-              listWidget: listWidget,
-              screenControl: screenControlMy,
-              onTap: () {
-                screenControlMy.screenHide();
-                _scaffoldKey.currentState?.openEndDrawer();
-              },
-              pickCar: _pickCar,
-            ),
-            AllCarView(
+        body: DropDownWidget(
+          _dropDownHeaderItemStrings,
+          listWidget,
+          height: 80.w,
+          bottomHeight: 400.w,
+          screenControl: screenControl,
+          headFontSize: 28.sp,
+          screen: '筛选',
+          onTap: () {
+            screenControl.screenHide();
+            _scaffoldKey.currentState?.openEndDrawer();
+          },
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: [
+              MyCarView(
+                sort: _pickSort,
+                refreshController: _myRefreshController,
+                pickCar: _pickCar,
+              ),
+              AllCarView(
                 pickCar: _pickCar,
                 sort: _pickSort,
                 refreshController: _allRefreshController,
-                dropDownHeaderItemStrings: _dropDownHeaderItemStrings,
-                listWidget: listWidget,
-                screenControl: screenControlAll,
-                onTap: () {
-                  screenControlMy.screenHide();
-                  _scaffoldKey.currentState?.openEndDrawer();
-                })
-          ],
-          // children: [_myCar(), _allCar()],
+              )
+            ],
+            // children: [_myCar(), _allCar()],
+          ),
         ));
   }
 
