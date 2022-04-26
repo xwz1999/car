@@ -1,4 +1,5 @@
-import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_order_page.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
             //Widget Function(BuildContext context, int index)
             return GestureDetector(
               onTap: () {
-                Get.to(() => const SalesOrders());
+                Get.to(() => const SalesOrder());
               },
               child: const ManagerContainerItem(
                 text: '售车订单',

@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cloud_car/ui/notice/car_system_informs.dart';
+
 import 'package:cloud_car/ui/notice/notice_examination.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -139,6 +140,7 @@ class _NoticePageState extends State<NoticePage>
           }
         },
         //头像
+
         leading: Container(
           width: 88.w,
           height: 88.w,

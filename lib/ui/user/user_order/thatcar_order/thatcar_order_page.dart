@@ -1,29 +1,34 @@
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders_page.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_order_page.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete_other.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid_other.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_page.dart';
-import 'package:cloud_car/utils/drop_down_widget.dart';
+
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
+
 import 'package:cloud_car/widget/car_widget.dart';
+import 'package:cloud_car/widget/screen_widget.dart';
+import 'package:cloud_car/widget/sort_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ThatcarOrderPage extends StatefulWidget {
-  const ThatcarOrderPage({Key? key}) : super(key: key);
+  final Function callBack;
+  const ThatcarOrderPage({
+    Key? key,
+    required this.callBack,
+  }) : super(key: key);
 
   @override
   State<ThatcarOrderPage> createState() => _ThatcarOrderPageState();
 }
 
 class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<Widget> listWidget = []; //创建方法列表
   //List<ChooseItem> _sortList = [];
-  late String title = '叫车订单';
-  ScreenControl screenControl = ScreenControl();
+  final List<ChooseItem> _sortList = [];
   List carList = [
     {
       'judge': false,
@@ -74,159 +79,69 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
   @override
   void initState() {
     super.initState();
-    // _sortList = [
-    //   ChooseItem(name: '售车订单'),
-    //   ChooseItem(name: '寄卖订单'),
-    //   ChooseItem(name: '租车订单'),
-    //   ChooseItem(name: '租车订单')
-    // ];
-    // listWidget = [
-    //   Container(
-    //     width: double.infinity,
-    //     decoration: BoxDecoration(
-    //         borderRadius: BorderRadius.all(Radius.circular(16.w)),
-    //         color: kForeGroundColor),
-    //     clipBehavior: Clip.antiAlias,
-    //     child: ScreenWidget(
-    //       childAspectRatio: 144 / 56,
-    //       callback: (String item) {},
-    //       mainAxisSpacing: 10.w,
-    //       crossAxisSpacing: 24.w,
-    //       crossAxisCount: 3,
-    //       haveButton: true,
-    //       itemList: _sortList,
-    //     ),
-    //   ),
-    // ];
+    listWidget = [
+      Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(16.w)),
+            color: kForeGroundColor),
+        clipBehavior: Clip.antiAlias,
+        child: ScreenWidget(
+          childAspectRatio: 200 / 56,
+          callback: (String item) {
+            if (kDebugMode) {
+              print(item);
+            }
+
+            ///调研接口 按照item进行排序
+            // screenControl.screenHide();
+            setState(() {});
+          },
+          mainAxisSpacing: 10.w,
+          crossAxisSpacing: 24.w,
+          crossAxisCount: 3,
+          itemList: _sortList,
+        ),
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
-        ),
-        backgroundColor: kForeGroundColor,
-        title: SizedBox(
-          width: 200.w,
-          child: PopupMenuButton(
-              offset: const Offset(20, 25),
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 34.sp,
-                        color: const Color(0xFF333333),
-                      )),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.black87,
-                    size: 40.w,
-                  ),
-                ],
-              ),
-              onSelected: (String value) {
-                setState(() {
-                  title = value;
-                  // onTap() {
-                  //   switch (title) {
-                  //     case '寄卖订单':
-                  //       Get.to(() => const ConsignmentOrderPage());
-                  //       //BotToast.showText(text: '寄卖订单');
-                  //       break;
-                  //     default:
-                  //   }
-                  // }
-
-                  setState(() {
-                    switch (title) {
-                      case '售车订单':
-                        Get.to(() => const SalesOrders());
-                        break;
-                      case '寄卖订单':
-                        Get.to(() => const ConsignmentOrderPage());
-                        break;
-
-                      case '租车订单':
-                        Get.to(() => const RentalcarOrderPage());
-                        break;
-                      case '叫车订单':
-                        Get.to(() => const ThatcarOrderPage());
-                        break;
-                    }
-                  });
-                });
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                    PopupMenuItem(
-                        value: "售车订单",
-                        child: Text("售车订单",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.sp,
-                              color: const Color(0xFF333333),
-                            ))),
-                    PopupMenuItem(
-                        value: "寄卖订单",
-                        child: Text("寄卖订单",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.sp,
-                              color: const Color(0xFF333333),
-                            ))),
-                    PopupMenuItem(
-                        value: "租车订单",
-                        child: Text("租车订单",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.sp,
-                              color: const Color(0xFF333333),
-                            ))),
-                    PopupMenuItem(
-                        value: "叫车订单",
-                        child: Text("叫车订单",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.sp,
-                              color: const Color(0xFF333333),
-                            ))),
-                  ]),
-        ),
-      ),
-      extendBody: true,
-      backgroundColor: bodyColor,
-      body: Column(
-        children: [
-          SizedBox(
-            height: 88.w,
-            child: CarWidget(
-              items: const [
-                '全部',
-                '待支付',
-                '待公交',
-                '已完成',
-              ],
-              callBack: (name) {
-                setState(() {});
-              },
+    return GestureDetector(
+        onTap: () {
+          widget.callBack();
+        },
+        child: Column(
+          children: [
+            const SizedBox(
+              height: kToolbarHeight,
             ),
-          ),
-          16.hb,
-          Expanded(
-            child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return getCar(carList[index]);
+            SizedBox(
+              height: 88.w,
+              child: CarWidget(
+                items: const [
+                  '全部',
+                  '待支付',
+                  '待公交',
+                  '已完成',
+                ],
+                callBack: (name) {
+                  setState(() {});
                 },
-                itemCount: carList.length),
-          ),
-        ],
-      ),
-    );
+              ),
+            ),
+            16.hb,
+            Expanded(
+              child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    return getCar(carList[index]);
+                  },
+                  itemCount: carList.length),
+            ),
+          ],
+        ));
   }
 
   getCar(item) {

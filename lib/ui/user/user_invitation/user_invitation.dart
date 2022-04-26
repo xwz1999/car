@@ -1,4 +1,4 @@
-import 'package:cloud_car/ui/home/customer_item.dart';
+import 'package:cloud_car/ui/home/task/customer_item.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 

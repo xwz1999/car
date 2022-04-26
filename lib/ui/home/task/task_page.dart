@@ -1,4 +1,4 @@
-import 'package:cloud_car/ui/home/customer_page.dart';
+import 'package:cloud_car/ui/home/task/customer_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/message_item_widget.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../widget/button/cloud_back_button.dart';
+import '../../../widget/button/cloud_back_button.dart';
 
 class TaskPage extends StatefulWidget {
   const TaskPage({Key? key}) : super(key: key);
@@ -99,9 +99,9 @@ class _TaskPageState extends State<TaskPage> {
                       Get.to(() => const CustomerPage());
                     },
                     child: GestureDetector(
-                      child: const MessageItemWidget(
+                      child:  MessageItemWidget(
                         time: '01-09 12;22',
-                        url: 'assets/images/care.png',
+                        url: Assets.icons.care.path,
                         tip: '您的购车客户保险将于7天后到期',
                         num: 11,
                         title: '客户关怀提醒',
@@ -118,7 +118,7 @@ class _TaskPageState extends State<TaskPage> {
                     color: BaseStyle.coloreeeeee,
                   );
                 },
-                itemCount: 20),
+                itemCount: 5),
           ],
         ),
       ),

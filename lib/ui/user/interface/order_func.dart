@@ -14,7 +14,7 @@ class OrderFunc{
   ///独立合伙人签订合同
   static Future<bool> getSign(String sign) async {
     BaseModel res =
-    await apiClient.request(API.user.pay.partnerPay, data: {'sign': sign});
+    await apiClient.request(API.user.sign.contractSign, data: {'sign': sign});
     if (res.code==0) {
       return true;
     } else{

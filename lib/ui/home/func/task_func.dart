@@ -7,10 +7,10 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 class TaskFunc{
   ///获取客户邀约列表
-  static Future<List<TaskInviteListModel>> getCarList(int page,int size) async {
+  static Future<List<TaskInviteListModel>> getCarList(int page) async {
     BaseListModel baseList = await apiClient.requestList(
         API.task.getInviteLists,data: {
-      'page':page,'size':size
+      'page':page,'size':10
     }
     );
     if (baseList.code!=0) {

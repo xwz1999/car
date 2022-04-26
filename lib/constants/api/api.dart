@@ -2,7 +2,6 @@ import '../environment/environment.dart';
 
 part 'user_api.dart';
 
-
 /// * user  用户接口
 /// * data 基础数据接口
 /// * product 产品接口
@@ -29,51 +28,46 @@ class API {
   static String get baseURL => '$host/app/broker';
 
   //根分类
+  ///文件
   static _File file = _File();
+  ///登陆
   static _Login login = _Login();
-
+  ///门店管理
   static _StoreManagement storeManagement = _StoreManagement();
+  ///订单
   static _Order order = _Order();
+  ///海报
   static _Poster poster = _Poster();
+  ///车辆
+  static _Car car = _Car();
+  ///合同
+  static _Contract contract = _Contract();
+  ///客户
+  static _Customer customer = _Customer();
+  ///任务
+  static _Task task = _Task();
+  ///地区
+  static _Region region = _Region();
 
   //二级分类
   static _UserApi user = _UserApi();
 
-
-  static _Car car = _Car();
-
-  static _Contract contract = _Contract();
-
-
-  static _Customer customer = _Customer();
-
-  static _Task task = _Task();
-
 }
 
-
-class _Task{
+class _Task {
   ///客户邀约列表
   String get getInviteLists => '/task/invite/lists';
-
-
-
-
 }
 
-class _Customer{
+class _Customer {
   ///客户轨迹
   String get customerTrail => '/customer/trail/all';
 
-
   ///浏览车辆列表
   String get browseLists => '/customer/browse/lists';
-
-
 }
 
-class _Car{
-
+class _Car {
   ///获取车辆品牌
   String get getCarBrand => '/car/brand/all';
 
@@ -101,7 +95,6 @@ class _Car{
   ///车辆信息
   String get getCarIfo => '/car/self';
 
-
   ///收藏列表 云云优选
   String get getCollectLists => '/car/collect/lists';
 
@@ -110,18 +103,50 @@ class _Car{
 
   ///取消收藏 云云优选
   String get cancelCollect => '/car/collect/cancel';
-
-
 }
-class _Contract{
 
+class _Contract {
   ///发起寄卖合同
   String get addConsignment => '/contract/consignment/add';
 
   ///发起出售合同
-  String get addSaleContract=> '/contract/sale/add';
+  String get addSaleContract => '/contract/sale/add';
+}
+
+class _Order {
+  ///寄卖订单->寄卖订单列表
+  get consignmentLists => '/order/consignment/lists';
+
+  ///寄卖订单->发布车辆
+  get consignmentPublish => '/order/consignment/publish';
+
+  ///邀约
+  get inviteAdd => '/order/invite/add';
+
+  ///售车订单->售车订单列表
+  get saleLists => '/order/sale/lists';
+
+  ///上传检车报告
+  get saleTestrepord => '/order/sale/test_report';
+
+  ///过户
+  get scaleTransfer => '/order/sale/transfer';
+
+  ///完结订单
+  get saleFinal => '/order/sale/final';
+
+  ///叫车订单->添加叫车订单
+  get carAdd => '/order/call/car/add';
+
+  ///交车
+  get carFinal => '/order/call/car/final';
+
+
+  ///添加车商寄卖订单
+  get addConsignment => '/order/dealer/consignment/add';
 
 }
+
 
 
 class _File {
@@ -146,43 +171,27 @@ class _Login {
   String get phoneCode => '/login/sms';
 }
 
-class _Order {
-  ///寄卖订单->寄卖订单列表
-  get consignmentLists => '/order/consignment/lists';
 
-///寄卖订单->发布车辆
-  get consignmentPublish => '/order/consignment/publish';
-
-///邀约
-  get inviteAdd => '/order/invite/add';
-
-///售车订单->售车订单列表
-  get saleLists => '/order/sale/lists';
-
-///上传检车报告
-  get saleTestrepord => '/order/sale/test_report';
-
-///过户
-  get scaleTransfer => '/order/sale/transfer';
-
-///完结订单
-  get saleFinal => '/order/sale/final';
-
-///叫车订单->添加叫车订单
-  get carAdd => '/order/call/car/add';
-
-///交车
-  get carFinal => '/order/call/car/final';
-
-
-  ///添加车商寄卖订单
-  get addConsignment => '/order/dealer/consignment/add';
-  
+class _Poster {
+  ///海报列表
+  String get list => '/playbill/lists';
 }
 
-//门店管理
+class _Region {
+  ///获取省市区数据
+  String get all => '/area/all';
+
+  ///获取省市区数据版本
+  String get version => '/area/version';
+
+  ///微信绑定手机号发送验证码
+  String get phoneCode => '/login/sms';
+
+}
+
+///门店管理
 class _StoreManagement {
-//组织架构
+  ///组织架构
   get storeAll => '/business/store/all';
 
   ///全部角色
@@ -198,8 +207,3 @@ class _StoreManagement {
   get staffAdd => '/business/staff/add';
 }
 
-class _Poster{
-  ///海报列表
-  String get list => '/playbill/lists';
-
-}

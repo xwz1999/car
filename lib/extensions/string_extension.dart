@@ -9,4 +9,14 @@ extension ImageOnString on String? {
     if (height != null) parts.add('h=$height');
     return '$imageWithHost@${parts.join('&')}';
   }
+
+  String get toSnake {
+    RegExp exp = RegExp(r'(?<=[a-z])[A-Z]');
+    if (this == null) {
+      return '';
+    }
+    return this!
+        .replaceAllMapped(exp, (Match m) => ('_' + m.group(0)!))
+        .toLowerCase();
+  }
 }

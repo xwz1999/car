@@ -1,3 +1,11 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/ui/user/interface/business_interface.dart';
+
+import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
+
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
@@ -9,6 +17,10 @@ class AddStores extends StatefulWidget {
   @override
   State<AddStores> createState() => _AddStoresState();
 }
+
+late String storesName = '';
+late String storesAddress = '';
+late String zhi;
 
 class _AddStoresState extends State<AddStores> {
   @override
@@ -43,29 +55,31 @@ class _AddStoresState extends State<AddStores> {
           32.hb,
           _real(),
           72.hb,
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            padding: EdgeInsets.symmetric(vertical: 16.w),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: <Color>[
-                  Color(0xFF0593FF),
-                  Color(0xFF027AFF),
-                ],
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(8.w)),
-            ),
-            child: Text(
-              '确  定',
-              style: TextStyle(
-                  color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
-            ),
-          ),
+          CloudBottom(
+            ontap: () async {
+              if (storesName.isEmpty) {
+                BotToast.showText(text: '请填写门店名称');
+              } else {
+                if (storesAddress.isEmpty) {
+                  BotToast.showText(text: '请输入门店地址');
+                } else {
+                  Future.delayed(const Duration(milliseconds: 0), () async {
+                    await _refresh();
+                    setState(() {});
+                    BotToast.showText(text: '新增成功');
+                  });
+                }
+              }
+            },
+            text: '新 建',
+          )
         ],
       ),
     );
+  }
+
+  _refresh() async {
+    zhi = await Business.getStoreadd(storesName, storesAddress);
   }
 }
 
@@ -73,46 +87,29 @@ _real() {
   return Container(
     width: 750.w,
     color: Colors.white,
-    padding: EdgeInsets.only(top: 16.w),
-    child: Row(children: [
-      36.wb,
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _getText('门店名称', '请输入门店名称'),
-          64.hb,
-          _getText('门店地址', '请输入门店地址'),
-          64.hb,
-        ],
-      ),
-    ]),
-  );
-}
-
-_getText(String title, String text) {
-  return Row(
-    children: [
-      SizedBox(
-        width: 150.w,
-        child: Text(
-          title,
-          style: TextStyle(
-              fontSize: BaseStyle.fontSize28, color: const Color(0xFF999999)),
+    padding: EdgeInsets.only(top: 16.w, left: 32.w),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextEditItemWidget(
+          callback: (String content) {
+            storesName = content;
+          },
+          ontap: () {},
+          title: '门店名称',
+          tips: '请输入门店名称',
         ),
-      ),
-      SizedBox(
-          width: 300.w,
-          height: 35.w,
-          child: TextField(
-              decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(bottom: 23.w), //文字与边框的距离
-            border: InputBorder.none, //去掉下划线
-            hintText: text,
-            hintStyle: TextStyle(
-              fontSize: BaseStyle.fontSize28, color: BaseStyle.colorcccccc,
-              // onChanged: ,
-            ),
-          )))
-    ],
+        64.hb,
+        TextEditItemWidget(
+          callback: (String content) {
+            storesAddress = content;
+          },
+          ontap: () {},
+          title: '门店地址',
+          tips: '请输入门店地址',
+        ),
+        64.hb,
+      ],
+    ),
   );
 }

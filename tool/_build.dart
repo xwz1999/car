@@ -10,7 +10,7 @@ buildApk() async {
       'apk',
       '--target-platform=android-arm64',
       '--dart-define',
-      'ENV=release',
+      'BUILD_TYPE=PRODUCT',
     ],
   );
 
@@ -34,7 +34,7 @@ buildApkDev() async {
       'apk',
       '--target-platform=android-arm64',
       '--dart-define',
-      'ENV=dev',
+      'BUILD_TYPE=Dev',
     ],
   );
   String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
@@ -56,7 +56,7 @@ buildIos() async {
       'build',
       'ios',
       '--dart-define',
-      'BUILD_TYPE=release',
+      'BUILD_TYPE=PRODUCT',
     ],
   );
 }

@@ -5,9 +5,6 @@ part 'roleall_model.g.dart';
 @JsonSerializable()
 class RoleallModel extends Equatable {
   final int id;
-
-
-
   final String name;
   final String describe;
   factory RoleallModel.fromJson(Map<String, dynamic> json) =>
@@ -21,4 +18,8 @@ class RoleallModel extends Equatable {
     required this.name,
     required this.describe,
   });
+
+  mapIndexed(Null Function(dynamic e, dynamic index) param0) {}
+
+  map(Null Function(dynamic e, dynamic index) param0) {}
 }
