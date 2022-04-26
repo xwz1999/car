@@ -64,7 +64,7 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> {
            crossAxisSpacing: 24.w,
            crossAxisCount: 4,
            haveButton: true,
-           itemList: _sortList,
+           itemList: _sortList, pickString: '',
          ),
        ),
      ];

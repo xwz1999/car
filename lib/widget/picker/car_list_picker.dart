@@ -72,6 +72,7 @@ class _CarListPickerState extends State<CarListPicker> {
             ],
           ),
           ScreenWidget(
+            pickString: '',
             isGrid: widget.isGrid,
             childAspectRatio: 72 / 28,
             callback: (String item) async{

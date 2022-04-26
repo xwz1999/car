@@ -21,6 +21,7 @@ import '../car_valuation/car_func.dart';
 import '../car_valuation/car_valuation_page.dart';
 import '../sort/carlist_page.dart';
 import '../sort/choose_car_page.dart';
+import '../sort/search_param_model.dart';
 import 'direct_sale/edit_item_widget.dart';
 import 'fill_evainfo_page.dart';
 
