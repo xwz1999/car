@@ -20,7 +20,7 @@ class _SelectPlacePageState extends State<SelectPlacePage> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('寄卖合同',
+        title: Text('车辆发布',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
