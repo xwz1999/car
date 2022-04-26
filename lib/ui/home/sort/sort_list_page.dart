@@ -1,21 +1,23 @@
-
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_edit_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../model/sort/sort_brand_model.dart';
+import '../../../model/sort/sort_car_model_model.dart';
+import '../../../model/sort/sort_series_model.dart';
 import '../../../widget/sort_list_widget.dart';
 
-typedef ItemCallback = Function(ChooseItem item);
-
 class SortListPage extends StatefulWidget {
-  final ItemCallback callback;
+  final ValueNotifier<SearchParamModel> pickCar;
+  final VoidCallback onConfirm;
 
   const SortListPage({
     Key? key,
-    required this.callback,
+    required this.pickCar, required this.onConfirm,
   }) : super(key: key);
 
   @override
@@ -24,14 +26,25 @@ class SortListPage extends StatefulWidget {
 
 ///根据筛选的json 把筛选页面的所有数据放入model里传回
 class _SortListPageState extends State<SortListPage> {
-  List<ChooseItem> _price  = [];
-  List<ChooseItem> _structure  = [];
-  List<ChooseItem> _gearbox  = [];
+  List<ChooseItem> _price = [];
+  List<ChooseItem> _structure = [];
+  List<ChooseItem> _gearbox = [];
   List<ChooseItem> _mileage = [];
-  List<ChooseItem> _emission  = [];
+  List<ChooseItem> _emission = [];
+  List<ChooseItem> _carAge = [];
 
-  String _carName = '不限品牌';
+  String get _carName {
+    return _pickCar.value.series.name.isEmpty
+        ? '不限品牌'
+        : '${_pickCar.value.brand.name}-${_pickCar.value.series.name}';
+  }
 
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
+      SearchParamModel(
+          series: SortSeriesModel.init,
+          brand: SortBrandModel.init,
+          car: SortCarModelModel.init,
+          returnType: 2));
 
   @override
   void initState() {
@@ -87,6 +100,14 @@ class _SortListPageState extends State<SortListPage> {
       ChooseItem(name: '欧五'),
       ChooseItem(name: '欧六'),
     ];
+    _carAge = [
+      ChooseItem(name: '全部'),
+      ChooseItem(name: '今年'),
+      ChooseItem(name: '去年'),
+      ChooseItem(name: '近3年'),
+      ChooseItem(name: '近5年'),
+      ChooseItem(name: '7年以上'),
+    ];
   }
 
   @override
@@ -97,28 +118,24 @@ class _SortListPageState extends State<SortListPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 100.w),
+      padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 100.w),
       children: [
         SortListWidget(
-
           childAspectRatio: 144 / 56,
           mainAxisSpacing: 10.w,
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
-          callback: (ChooseItem item) {
-            widget.callback(item);
-          },
+          callback: (m) {},
           title: '品牌车型',
           rightWidget: GestureDetector(
-            onTap: (){
-              Get.to(()=> ChooseCarPage(callback: (String name, int id) {
-                Get.back();
-                Get.back();
-                Get.back();
-                _carName = name;
-                setState(() {
-                });
-              },));
+            onTap: () {
+              Get.to(() => ChooseCarPage(
+                    callback: () {
+                      Get.back();
+                      setState(() {});
+                    },
+                    pickCar: _pickCar,
+                  ));
             },
             child: Container(
               color: Colors.transparent,
@@ -126,17 +143,28 @@ class _SortListPageState extends State<SortListPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-
-                  Expanded(child: Text(_carName,style: Theme.of(context).textTheme.subtitle2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.end,),),
+                  Expanded(
+                    child: Text(
+                      _carName,
+                      style: Theme.of(context).textTheme.subtitle2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
                   10.wb,
                   Padding(
-                    padding:  EdgeInsets.only(top: 5.w),
-                    child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
+                    padding: EdgeInsets.only(top: 5.w),
+                    child: Icon(
+                      CupertinoIcons.chevron_forward,
+                      size: 40.w,
+                      color: BaseStyle.colordddddd,
+                    ),
                   )
                 ],
               ),
             ),
           ),
+          pickString: '',
         ),
         16.hb,
         SortListWidget(
@@ -145,18 +173,21 @@ class _SortListPageState extends State<SortListPage> {
           mainAxisSpacing: 10.w,
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
-          callback: (ChooseItem item) {},
+          callback: (ChooseItem item) {
+            _pickCar.value.price = item.name;
+            setState(() {});
+          },
           title: '展示价格',
           rightWidget: GestureDetector(
-            onTap: (){
-
-            },
+            onTap: () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SortEditWidget(callback: (String content) {
-
-                },),
+                SortEditWidget(
+                  callback: (String content) {
+                    _pickCar.value.editMinPrice = int.parse(content);
+                  },
+                ),
                 5.wb,
                 Container(
                   color: const Color(0xFFDDDDDD),
@@ -164,71 +195,55 @@ class _SortListPageState extends State<SortListPage> {
                   height: 2.w,
                 ),
                 5.wb,
-                SortEditWidget(callback: (String content) {
-
-                },),
+                SortEditWidget(
+                  callback: (String content) {
+                    _pickCar.value.editMaxPrice = int.parse(content);
+                  },
+                ),
                 10.wb,
-
-                Text('万元',style: Theme.of(context).textTheme.subtitle2,),
-
+                Text(
+                  '万元',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
               ],
             ),
           ),
+          pickString: _pickCar.value.price,
         ),
         16.hb,
         SortListWidget(
+          itemList: _carAge,
           childAspectRatio: 144 / 56,
           mainAxisSpacing: 10.w,
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            widget.callback(item);
+            _pickCar.value.carAge = item.name;
+            setState(() {});
           },
           title: '首次上牌',
-          rightWidget: GestureDetector(
-            onTap: (){
-
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
-                10.wb,
-                Padding(
-                  padding:  EdgeInsets.only(top: 5.w),
-                  child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
-                )
-              ],
-            ),
-          ),
-
-        ),
-        16.hb,
-        SortListWidget(
-          childAspectRatio: 144 / 56,
-          mainAxisSpacing: 10.w,
-          crossAxisSpacing: 24.w,
-          crossAxisCount: 4,
-          callback: (ChooseItem item) {
-            widget.callback(item);
-          },
-          title: '门店',
-          rightWidget: GestureDetector(
-            onTap: (){
-
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
-                10.wb,
-                Padding(
-                  padding:  EdgeInsets.only(top: 5.w),
-                  child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
-                )
-              ],
-            ),
-          ),
+          // rightWidget: GestureDetector(
+          //   onTap: () {},
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Text(
+          //         '请选择',
+          //         style: Theme.of(context).textTheme.subtitle2,
+          //       ),
+          //       10.wb,
+          //       Padding(
+          //         padding: EdgeInsets.only(top: 5.w),
+          //         child: Icon(
+          //           CupertinoIcons.chevron_forward,
+          //           size: 40.w,
+          //           color: BaseStyle.colordddddd,
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
+          pickString: _pickCar.value.carAge,
         ),
         16.hb,
         SortListWidget(
@@ -238,9 +253,11 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            widget.callback(item);
+            _pickCar.value.struct = item.name;
+            setState(() {});
           },
           title: '车身结构',
+          pickString: _pickCar.value.struct,
         ),
         16.hb,
         SortListWidget(
@@ -250,9 +267,11 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            widget.callback(item);
+            _pickCar.value.gear = item.name;
+            setState(() {});
           },
           title: '变速箱类型',
+          pickString: _pickCar.value.gear,
         ),
         16.hb,
         SortListWidget(
@@ -262,19 +281,20 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            widget.callback(item);
+            _pickCar.value.mile = item.name;
+            setState(() {});
           },
           title: '表显里程',
           rightWidget: GestureDetector(
-            onTap: (){
-
-            },
+            onTap: () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SortEditWidget(callback: (String content) {
-
-                },),
+                SortEditWidget(
+                  callback: (String content) {
+                    _pickCar.value.editMinMile = int.parse(content.trim());
+                  },
+                ),
                 5.wb,
                 Container(
                   color: const Color(0xFFDDDDDD),
@@ -282,16 +302,20 @@ class _SortListPageState extends State<SortListPage> {
                   height: 2.w,
                 ),
                 5.wb,
-                SortEditWidget(callback: (String content) {
-
-                },),
+                SortEditWidget(
+                  callback: (String content) {
+                    _pickCar.value.editMaxMile = int.parse(content.trim());
+                  },
+                ),
                 10.wb,
-
-                Text('万公里',style: Theme.of(context).textTheme.subtitle2,),
-
+                Text(
+                  '万公里',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
               ],
             ),
           ),
+          pickString: _pickCar.value.mile,
         ),
         16.hb,
         SortListWidget(
@@ -301,19 +325,17 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            widget.callback(item);
+            _pickCar.value.dischargeStandard = item.name;
           },
           title: '排放标准',
+          pickString: _pickCar.value.dischargeStandard,
         ),
-
         56.hb,
-
         Row(
           children: [
             _resetBtn(),
             40.wb,
             _confirmBtn(),
-
           ],
         )
       ],
@@ -322,9 +344,7 @@ class _SortListPageState extends State<SortListPage> {
 
   _confirmBtn() {
     return GestureDetector(
-      onTap: () {
-
-      },
+      onTap: widget.onConfirm,
       child: Container(
         width: 300.w,
         padding: EdgeInsets.symmetric(vertical: 16.w),
@@ -350,7 +370,8 @@ class _SortListPageState extends State<SortListPage> {
   _resetBtn() {
     return GestureDetector(
       onTap: () {
-
+        _pickCar.value = SearchParamModel.init(returnType: 2);
+        setState(() {});
       },
       child: Container(
         width: 240.w,
@@ -362,12 +383,10 @@ class _SortListPageState extends State<SortListPage> {
         ),
         child: Text(
           '重  置',
-          style: TextStyle(
-              color: kPrimaryColor, fontSize: BaseStyle.fontSize28),
+          style:
+              TextStyle(color: kPrimaryColor, fontSize: BaseStyle.fontSize28),
         ),
       ),
     );
   }
-
-
 }

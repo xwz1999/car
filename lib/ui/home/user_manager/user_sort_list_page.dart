@@ -80,7 +80,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
                     )
                   ],
                 ),
-              ),
+              ), pickString: '',
             ),
             16.hb,
             SortListWidget(
@@ -105,7 +105,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
                     )
                   ],
                 ),
-              ),
+              ), pickString: '',
             ),
 
             16.hb,
@@ -118,7 +118,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
               callback: (ChooseItem item) {
                 widget.callback(item);
               },
-              title: '重要客户',
+              title: '重要客户', pickString: '',
             ),
             16.hb,
             SortListWidget(
@@ -145,7 +145,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
                     )
                   ],
                 ),
-              ),
+              ), pickString: '',
 
             ),
             16.hb,
@@ -173,7 +173,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
                     )
                   ],
                 ),
-              ),
+              ), pickString: '',
             ),
             16.hb,
 

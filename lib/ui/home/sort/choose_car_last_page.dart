@@ -1,4 +1,5 @@
 import 'package:cloud_car/model/sort/sort_car_model_model.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 
 import 'package:cloud_car/ui/home/sort/sort_func.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -6,16 +7,19 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
 import 'package:flutter/material.dart';
 
+import 'carlist_page.dart';
 
-typedef CarCallback = Function(String name, int id);
+
+
 
 class ChooseCarLastPage extends StatefulWidget {
-  final CarCallback callback;
+  final VoidCallback callback;
   final String name;
   final int id;
 
+  final ValueNotifier<SearchParamModel> pickCar;
   const ChooseCarLastPage(
-      {Key? key, required this.name, required this.id, required this.callback})
+      {Key? key, required this.name, required this.id, required this.callback, required this.pickCar})
       : super(key: key);
 
   @override
@@ -101,7 +105,10 @@ class _ChooseCarLastPageState extends State<ChooseCarLastPage> {
   _getItem(SortCarModelModel model) {
     return GestureDetector(
       onTap: (){
-        widget.callback(model.name,model.id);
+        Get.back();
+        Get.back();
+        widget.pickCar.value.car=model;
+        widget.callback();
       },
         child: Column(
       children: [

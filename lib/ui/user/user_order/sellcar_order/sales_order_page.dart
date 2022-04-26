@@ -138,7 +138,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
+        child: ScreenWidget(pickString: '',
           childAspectRatio: 200 / 56,
           callback: (String item) {
             if (kDebugMode) {

@@ -1,6 +1,6 @@
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
-import 'package:cloud_car/ui/home/sort/citylist_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/preferred/preferred_car_detail.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -9,6 +9,10 @@ import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../../model/sort/sort_brand_model.dart';
+import '../../model/sort/sort_car_model_model.dart';
+import '../../model/sort/sort_series_model.dart';
 
 class AllCar extends StatefulWidget {
   const AllCar({Key? key}) : super(key: key);
@@ -24,6 +28,11 @@ class _AllCarState extends State<AllCar> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<ChooseItem> _sortList = [];
   List<ChooseItem> _priceList = [];
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
+      series: SortSeriesModel.init,
+      brand: SortBrandModel.init,
+      car: SortCarModelModel.init,
+      returnType: 2));
   List carList = [
     {
       'url': Assets.images.carBanner,
@@ -80,6 +89,7 @@ class _AllCarState extends State<AllCar> {
       'choose': false,
     },
   ];
+
   @override
   void initState() {
     super.initState();
@@ -103,23 +113,13 @@ class _AllCarState extends State<AllCar> {
       ChooseItem(name: '最近更新'),
     ];
     listWidget = [
-      CityListPage(
-        cityCallback: (String city) {
-          if (kDebugMode) {
-            print(city);
-          }
-          _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
-          setState(() {});
-        },
-      ),
       CarListPage(
-        carCallback: (String city,int id) {
-          if (kDebugMode) {
-            print(city);
-          }
-          _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
+        carCallback: () {
+          _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
           setState(() {});
         },
+        pickCar:
+        _pickCar,
       ),
       Container(
         width: double.infinity,
@@ -127,7 +127,7 @@ class _AllCarState extends State<AllCar> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
+        child: ScreenWidget(pickString: '',
           callback: (String item) {
             if (kDebugMode) {
               print(item + '1231232');
@@ -147,7 +147,7 @@ class _AllCarState extends State<AllCar> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
+        child: ScreenWidget(pickString: '',
           childAspectRatio: 144 / 56,
           callback: (String item) {},
           mainAxisSpacing: 10.w,

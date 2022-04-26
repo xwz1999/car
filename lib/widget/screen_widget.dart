@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +14,7 @@ class ScreenWidget extends StatefulWidget {
   final double childAspectRatio;
   final bool haveButton;
   final bool isGrid;
+  final String pickString;
 
   const ScreenWidget(
       {Key? key,
@@ -24,7 +24,8 @@ class ScreenWidget extends StatefulWidget {
       required this.mainAxisSpacing,
       required this.crossAxisSpacing,
       required this.childAspectRatio,
-      this.haveButton = false, this.isGrid = true})
+      this.haveButton = false,
+      this.isGrid = true, required this.pickString})
       : super(key: key);
 
   @override
@@ -46,30 +47,29 @@ class _ScreenWidgetState extends State<ScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return     Expanded(
-      child: Padding(
-        padding: EdgeInsets.only(top: 24.w,bottom: 40.w,left: 32.w,right: 32.w),
-        child: SortWidget(
-          isGrid: widget.isGrid,
-          crossAxisSpacing: widget.crossAxisSpacing,
-          itemList: widget.itemList,
-          childAspectRatio: widget.childAspectRatio,
-          crossAxisCount: widget.crossAxisCount,
-          mainAxisSpacing: widget.mainAxisSpacing,
-          callback: (ChooseItem item, int index) {
-            for (int i = 0; i < widget.itemList.length; i++) {
-              if (i != index) {
-                widget.itemList[i].isChoose = false;
-              } else {
-                widget.itemList[i].isChoose = !widget.itemList[i].isChoose;
-              }
+    return Padding(
+      padding:
+          EdgeInsets.only(top: 24.w, bottom: 40.w, left: 32.w, right: 32.w),
+      child: SortWidget(
+        isGrid: widget.isGrid,
+        crossAxisSpacing: widget.crossAxisSpacing,
+        itemList: widget.itemList,
+        childAspectRatio: widget.childAspectRatio,
+        crossAxisCount: widget.crossAxisCount,
+        mainAxisSpacing: widget.mainAxisSpacing,
+        callback: (ChooseItem item, int index) {
+          for (int i = 0; i < widget.itemList.length; i++) {
+            if (i != index) {
+              widget.itemList[i].isChoose = false;
+            } else {
+              widget.itemList[i].isChoose = !widget.itemList[i].isChoose;
             }
-            if (kDebugMode) {
-              print(item.name);
-            }
-            widget.callback(item.name);
-          },
-        ),
+          }
+          if (kDebugMode) {
+            print(item.name);
+          }
+          widget.callback(item.name);
+        }, pickString: widget.pickString,
       ),
     );
 
@@ -110,35 +110,35 @@ class _ScreenWidgetState extends State<ScreenWidget> {
     // );
   }
 
-  // _confirmBtn() {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       if (_chooseItem.isNotEmpty) {
-  //         widget.callback(_chooseItem);
-  //       } else {
-  //         BotToast.showText(text: '请先选择一个区间分类');
-  //       }
-  //     },
-  //     child: Container(
-  //       width: double.infinity,
-  //       padding: EdgeInsets.symmetric(vertical: 16.w),
-  //       alignment: Alignment.center,
-  //       margin: EdgeInsets.only(left: 32.w, right: 32.w),
-  //       decoration: BoxDecoration(
-  //         gradient: const LinearGradient(
-  //           colors: <Color>[
-  //             Color(0xFF0593FF),
-  //             Color(0xFF027AFF),
-  //           ],
-  //         ),
-  //         borderRadius: BorderRadius.all(Radius.circular(8.w)),
-  //       ),
-  //       child: Text(
-  //         '确  定',
-  //         style: TextStyle(
-  //             color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
-  //       ),
-  //     ),
-  //   );
-  // }
+// _confirmBtn() {
+//   return GestureDetector(
+//     onTap: () {
+//       if (_chooseItem.isNotEmpty) {
+//         widget.callback(_chooseItem);
+//       } else {
+//         BotToast.showText(text: '请先选择一个区间分类');
+//       }
+//     },
+//     child: Container(
+//       width: double.infinity,
+//       padding: EdgeInsets.symmetric(vertical: 16.w),
+//       alignment: Alignment.center,
+//       margin: EdgeInsets.only(left: 32.w, right: 32.w),
+//       decoration: BoxDecoration(
+//         gradient: const LinearGradient(
+//           colors: <Color>[
+//             Color(0xFF0593FF),
+//             Color(0xFF027AFF),
+//           ],
+//         ),
+//         borderRadius: BorderRadius.all(Radius.circular(8.w)),
+//       ),
+//       child: Text(
+//         '确  定',
+//         style: TextStyle(
+//             color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
+//       ),
+//     ),
+//   );
+// }
 }

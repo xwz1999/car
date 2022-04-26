@@ -2,21 +2,22 @@ import 'package:cloud_car/ui/home/sort/carlist_page.dart';
 
 
 import 'package:cloud_car/ui/home/sort/citylist_page.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
 import 'package:flutter/material.dart';
-typedef CarCallback = Function(String name, int id);
 
 
 class ChooseCarPage extends StatefulWidget {
   final bool isCity;
 
-  final CarCallback callback;
+  final VoidCallback callback;
 
 
-  const ChooseCarPage({Key? key, required this.callback, this.isCity = false}) : super(key: key);
+  final ValueNotifier<SearchParamModel> pickCar;
+  const ChooseCarPage({Key? key, required this.callback, this.isCity = false, required this.pickCar}) : super(key: key);
 
   @override
   _ChooseCarPageState createState() => _ChooseCarPageState();
@@ -55,12 +56,10 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
         extendBody: true,
         body:
         widget.isCity?CityListPage(cityCallback: (String city){
-          widget.callback(city,0);
+          widget.callback();
         }):
 
-        CarListPage(carCallback: (String city,int id) {
-          widget.callback(city,id);
-        },),
+        CarListPage(carCallback: widget.callback, pickCar: widget.pickCar,),
     );
   }
 

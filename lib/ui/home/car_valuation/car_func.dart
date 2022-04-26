@@ -43,14 +43,11 @@ class CarFunc {
   }
 
   ///获取车辆列表
-  static Future<List<CarListModel>> getCarList(int page,
-      {String? order,String? search,}) async {
-    Map<String, dynamic> params = {
-      "page": page,
-      'size':10,
-    };
+  static Future<List<CarListModel>> getCarList(int page, int size,
+      {String? order,Map<String,dynamic>? searchParams}) async {
+   var data = {'page': page, 'size': size,'order':order,'search':searchParams};
     BaseListModel baseList = await apiClient
-        .requestList(API.car.getCarLists, data: {'page': page, 'size': 10});
+        .requestList(API.car.getCarLists, data: data);
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
@@ -63,9 +60,9 @@ class CarFunc {
 
   ///获取我的车辆列表  new_create=最新创建 max_price=标价最高 min_price=标价最低 min_age=车龄最短 min_mileage=里程最少 new_update=最近更新
   static Future<List<CarListModel>> getMyCarList(
-      {required int page, int size = 10, String? order}) async {
+      {required int page, int size = 10, String? order,Map<String,dynamic>? searchParams}) async {
     var baseList = await apiClient.requestList(API.car.getCarSelfLists,
-        data: {'page': page, 'size': size, 'order': order});
+        data: {'page': page, 'size': size, 'order': order,'search':searchParams});
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
