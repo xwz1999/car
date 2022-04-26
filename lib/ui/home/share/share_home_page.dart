@@ -2,7 +2,6 @@ import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/share/all_car_view.dart';
 import 'package:cloud_car/ui/home/share/my_car_view.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
-import 'package:cloud_car/ui/home/sort/citylist_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_car_page.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
@@ -46,7 +45,6 @@ class _ShareHomePageState extends State<ShareHomePage>
           car: SortCarModelModel.init,
           returnType: 2));
 
-  String _pickPrice = '';
   String _pickSort = '';
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -103,7 +101,7 @@ class _ShareHomePageState extends State<ShareHomePage>
             } else {
               _allRefreshController.callRefresh();
             }
-            _pickPrice = item;
+            _pickCar.value.price=item;
           },
           childAspectRatio: 144 / 56,
           mainAxisSpacing: 10.w,

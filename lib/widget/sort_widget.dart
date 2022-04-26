@@ -68,9 +68,7 @@ class SortWidget extends StatelessWidget {
 
   _getListItem(ChooseItem item, int index) {
     return GestureDetector(
-      onTap: () {
-        callback(item, index);
-      },
+      onTap:callback.call(item,index),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20.w),
         color: Colors.transparent,

@@ -19,15 +19,17 @@ class SearchParamModel {
 
   ///在哪个页面返回 1品牌 2车系
   int returnType;
+
   //*
   //车价
-
+  String price;
 
   SearchParamModel({
     required this.brand,
     required this.series,
     required this.car,
     this.returnType = 3,
+    this.price = '',
   });
 
   static SearchParamModel get init => SearchParamModel(

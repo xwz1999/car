@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../model/car_manager/car_list_model.dart';
-import '../../../utils/drop_down_widget.dart';
 import '../../../widget/car_item_widget.dart';
 import '../car_valuation/car_func.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
@@ -31,7 +30,8 @@ class MyCarView extends StatefulWidget {
   _MyCarViewState createState() => _MyCarViewState();
 }
 
-class _MyCarViewState extends State<MyCarView> with AutomaticKeepAliveClientMixin {
+class _MyCarViewState extends State<MyCarView>
+    with AutomaticKeepAliveClientMixin {
   List<CarListModel> _myCarList = [];
   int _page = 1;
   final int _size = 10;
@@ -39,8 +39,9 @@ class _MyCarViewState extends State<MyCarView> with AutomaticKeepAliveClientMixi
   Map<String, dynamic> get _params => {
         'brandId': widget.pickCar.value.brand.id,
         'seriesId': widget.pickCar.value.series.id,
+        'minPrice': widget.pickCar.value.price.minPrice,
+        'maxPrice': widget.pickCar.value.price.maxPrice,
       };
-
 
   @override
   Widget build(BuildContext context) {

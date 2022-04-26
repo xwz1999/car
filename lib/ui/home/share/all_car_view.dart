@@ -38,6 +38,8 @@ class _AllCarViewState extends State<AllCarView> with AutomaticKeepAliveClientMi
   Map<String, dynamic> get _params => {
     'brandId': widget.pickCar.value.brand.id,
     'seriesId': widget.pickCar.value.series.id,
+    'minPrice': widget.pickCar.value.price.minPrice,
+    'maxPrice': widget.pickCar.value.price.maxPrice,
   };
   @override
   Widget build(BuildContext context) {
