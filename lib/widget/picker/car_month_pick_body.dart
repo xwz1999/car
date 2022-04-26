@@ -55,7 +55,7 @@ class _CarMonthPickBodyState extends State<CarMonthPickBody> {
         children: [
           Expanded(
             child: CupertinoPicker(
-                itemExtent: 80.w,
+                itemExtent: 60.w,
                 magnification: 1.0,
                 looping: false,
                 scrollController: _yearController,

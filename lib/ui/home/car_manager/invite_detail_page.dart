@@ -1,13 +1,21 @@
+
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/picker/car_date_picker.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'choose_car_page.dart';
 
 class InviteDetailPage extends StatefulWidget {
+  final int id;
+  final String name;
+  final String phone;
   const InviteDetailPage({
-    Key? key,
+    Key? key, required this.id, required this.name, required this.phone,
   }) : super(key: key);
 
   @override
@@ -15,6 +23,16 @@ class InviteDetailPage extends StatefulWidget {
 }
 
 class _InviteDetailPageState extends State<InviteDetailPage> {
+
+  late int _carId = -1;
+
+  late String _inviteTime = '';
+
+  late String _address = '';
+
+  late String _remark = '';
+
+
   late TextEditingController _editingController1;
   late TextEditingController _editingController2;
   late TextEditingController _editingController3;
@@ -23,7 +41,7 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
 
   @override
   void initState() {
-    _editingController1 = TextEditingController(text: '李四 18912345432');
+    _editingController1 = TextEditingController(text: '${widget.name+'    '+widget.phone}');
     _editingController2 = TextEditingController();
     _editingController3 = TextEditingController();
     _editingController4 = TextEditingController();
@@ -59,7 +77,8 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
       ),
       backgroundColor: const Color(0xFFF6F6F6),
       extendBody: true,
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: [
           Container(
             margin: EdgeInsets.only(top: 8.w),
@@ -114,11 +133,12 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                 GestureDetector(
                   onTap: () {
                     Get.to(() => ChooseCarPage(
-                          callback: (String city) {
+                          callback: (String city,int carId) {
                             _editingController2.text = city;
+                            _carId = carId;
                             setState(() {});
                           },
-                          title: '',
+                          title: '选择预定车辆',
                         ));
                   },
                   child: Row(
@@ -174,6 +194,15 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                   ),
                 ),
                 GestureDetector(
+                  onTap: ()async{
+                    DateTime? _firstDate;
+                    _firstDate = await CarDatePicker.allTimePicker(DateTime.now());
+                    _editingController3.text = DateUtil.formatDate(_firstDate,
+                        format: 'yyyy-MM-dd HH:mm:ss');
+                    _inviteTime = DateUtil.formatDate(_firstDate,
+                        format: 'yyyy-MM-dd HH:mm:ss');
+                    setState(() {});
+                  },
                   child: Row(
                     children: [
                       Container(
@@ -191,6 +220,7 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                           enabled: false,
                           keyboardType: TextInputType.text,
                           onEditingComplete: () {
+
                             setState(() {});
                             // _refreshController.callRefresh();
                           },
@@ -242,11 +272,11 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                       child: TextField(
                         keyboardType: TextInputType.text,
                         onEditingComplete: () {
-                          setState(() {});
+
                           // _refreshController.callRefresh();
                         },
                         onChanged: (text) {
-                          setState(() {});
+                          _address = text;
                         },
                         style: TextStyle(
                           color: BaseStyle.color333333,
@@ -257,7 +287,7 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                           contentPadding: EdgeInsets.only(left: 0.w),
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: "请选择",
+                          hintText: "请输入",
                           hintStyle: TextStyle(
                               color: Colors.grey.shade500,
                               fontSize: 14,
@@ -294,11 +324,11 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                         maxLines: 50,
                         keyboardType: TextInputType.text,
                         onEditingComplete: () {
-                          setState(() {});
+
                           // _refreshController.callRefresh();
                         },
                         onChanged: (text) {
-                          setState(() {});
+                          _remark = text;
                         },
                         style: TextStyle(
                           color: BaseStyle.color333333,
@@ -326,24 +356,42 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
             ),
           ),
           72.hb,
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            padding: EdgeInsets.symmetric(vertical: 16.w),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: <Color>[
-                  Color(0xFF0593FF),
-                  Color(0xFF027AFF),
-                ],
+          GestureDetector(
+            onTap: () async{
+              if(_carId!=-1&&_inviteTime.isNotEmpty&&_address.isNotEmpty){
+                 await OrderFunc.getAdd(widget.id, _carId, _inviteTime, _address, _remark).then((value){
+                  if(value){
+                    Get.back();
+                    CloudToast.show('邀约成功');
+                  }
+                });
+
+              }
+              else{
+                CloudToast.show('请先完善邀约信息');
+              }
+
+
+            },
+            child: Container(
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(horizontal: 32.w),
+              padding: EdgeInsets.symmetric(vertical: 16.w),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: <Color>[
+                    Color(0xFF0593FF),
+                    Color(0xFF027AFF),
+                  ],
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(8.w)),
               ),
-              borderRadius: BorderRadius.all(Radius.circular(8.w)),
-            ),
-            child: Text(
-              '确  定',
-              style: TextStyle(
-                  color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
+              child: Text(
+                '确  定',
+                style: TextStyle(
+                    color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
+              ),
             ),
           ),
         ],

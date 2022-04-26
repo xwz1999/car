@@ -41,13 +41,12 @@ class CarItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            //头像
             width: 240.w, height: 180.w,
             child: AspectRatio(
               aspectRatio: 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
-                child: CloudImageNetworkWidget(
+                child: CloudImageNetworkWidget.car(
                   urls: [url],
                 ),
               ),
@@ -57,6 +56,7 @@ class CarItemWidget extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(name,
                     maxLines: 2,
