@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
-class CarReportPage extends StatefulWidget {
-  const CarReportPage({Key? key}) : super(key: key);
+class SelectPlacePage extends StatefulWidget {
+  const SelectPlacePage({Key? key}) : super(key: key);
 
   @override
-  State<CarReportPage> createState() => _CarReportPageState();
+  State<SelectPlacePage> createState() => _SelectPlacePageState();
 }
 
-class _CarReportPageState extends State<CarReportPage> {
+class _SelectPlacePageState extends State<SelectPlacePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
