@@ -1,10 +1,11 @@
 import 'package:cloud_car/model/user/storeall_model.dart';
-import 'package:cloud_car/ui/user/interface/business_interface.dart';
+
 import 'package:cloud_car/ui/user/user_management/add_stores.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
+import '../interface/business_func.dart';
 
 typedef TextCallback = Function(String content, int id);
 
