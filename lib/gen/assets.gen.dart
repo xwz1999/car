@@ -568,8 +568,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/car_person_photo.png
   AssetGenImage get carPersonPhoto =>
       const AssetGenImage('assets/images/car_person_photo.png');
+
+  /// File path: assets/images/car_placeholder.png
   AssetGenImage get carPlaceholder =>
       const AssetGenImage('assets/images/car_placeholder.png');
+
+  /// File path: assets/images/car_valuation_bg.png
   AssetGenImage get carValuationBg =>
       const AssetGenImage('assets/images/car_valuation_bg.png');
 
