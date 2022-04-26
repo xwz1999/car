@@ -37,7 +37,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
       series: SortSeriesModel.init,
       brand: SortBrandModel.init,
       car: SortCarModelModel.init,
-      returnType: 2));
+      returnType: 3));
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
     ChooseItem(name: '紫色'),
@@ -226,6 +226,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               onTap: () async {
                 await Get.to(() => ChooseCarPage(
                       callback: () {
+                        Get.back();
                         _carInfo.name = _pickCar.value.car.name;
                       },
                       pickCar: _pickCar,

@@ -8,7 +8,11 @@ import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/picker/car_picker_box.dart';
 
 class EvainfoPage extends StatefulWidget {
-  const EvainfoPage({Key? key}) : super(key: key);
+  final String carName;
+  final String carColor;
+  final String firstDate;
+  final String mile;
+  const EvainfoPage({Key? key, required this.carColor, required this.firstDate, required this.mile, required this.carName}) : super(key: key);
 
   @override
   State<EvainfoPage> createState() => _EvainfoPageState();
@@ -60,7 +64,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
           children: [
             Container(
               padding: EdgeInsets.all(30.w),
-              child: '奥迪A3 2020款 35 TFSI 进取型'
+              child:widget.carName
                   .text
                   .size(32.sp)
                   .bold
@@ -94,7 +98,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                                 .make(),
                           ),
                           Expanded(
-                              child: '白色'
+                              child: widget.carColor
                                   .text
                                   .size(30.sp)
                                   .color(Colors.black)
@@ -118,7 +122,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                                 .make(),
                           ),
                           Expanded(
-                              child: '2020-03'
+                              child: widget.firstDate
                                   .text
                                   .size(30.sp)
                                   .color(Colors.black)
@@ -142,7 +146,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                           ),
                           40.wb,
                           Expanded(
-                              child: '3.0'
+                              child: widget.mile
                                   .text
                                   .size(30.sp)
                                   .color(Colors.black)

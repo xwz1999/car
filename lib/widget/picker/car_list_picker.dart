@@ -40,8 +40,9 @@ class _CarListPickerState extends State<CarListPicker> {
       ),
       padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 24.w),
       clipBehavior: Clip.antiAlias,
-      height: 650.w,
+      height: 500.w,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
@@ -73,9 +74,8 @@ class _CarListPickerState extends State<CarListPicker> {
           ScreenWidget(
             isGrid: widget.isGrid,
             childAspectRatio: 72 / 28,
-            callback: (String item) {
+            callback: (String item) async{
               _chooseItem = item;
-
               setState(() {});
             },
             mainAxisSpacing: 24.w,

@@ -68,7 +68,9 @@ class SortWidget extends StatelessWidget {
 
   _getListItem(ChooseItem item, int index) {
     return GestureDetector(
-      onTap:callback.call(item,index),
+      onTap: () {
+        callback(item, index);
+      },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20.w),
         color: Colors.transparent,
@@ -76,13 +78,14 @@ class SortWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            item.isChoose?Image.asset(Assets.icons.sortChoose.path,width: 30.w,height: 30.w,fit: BoxFit.fill,):const SizedBox(),
+            item.isChoose?Image.asset(Assets.icons.sortChoose.path,width: 35.w,height: 35.w,fit: BoxFit.fill,):const SizedBox(),
             10.wb,
             Text(
               item.name,
               style: TextStyle(
                   color: item.isChoose ? kPrimaryColor : BaseStyle.color333333,
-                  fontSize: BaseStyle.fontSize24),
+                  fontWeight: item.isChoose?FontWeight.bold:FontWeight.normal,
+                  fontSize: BaseStyle.fontSize30),
             ),
             10.wb,
             item.isChoose?30.wb:const SizedBox(),
