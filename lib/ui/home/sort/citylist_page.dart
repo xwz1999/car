@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:azlistview/azlistview.dart';
+import 'package:cloud_car/model/region/china_region_model.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +11,8 @@ import 'package:lpinyin/lpinyin.dart';
 
 import '../models.dart';
 
-typedef CityCallback = Function(String city);
+///适配新数据
+typedef CityCallback = Function(ChinaRegionModel model);
 
 class CityListPage extends StatefulWidget {
   final CityCallback cityCallback;
@@ -22,8 +25,13 @@ class CityListPage extends StatefulWidget {
 
 class _CityListPageState extends State<CityListPage> {
   List<CityModel> cityList = [];
+  List<ChinaRegionModel> chinaLists = [];
+  List<ChinaRegionModel> hotLists = [];
+
+
   double susItemHeight = 36;
   String imgFavorite = Assets.icons.barToTop.path;
+  List<CityModel> hotCityList = [];
 
   @override
   void initState() {
@@ -34,16 +42,24 @@ class _CityListPageState extends State<CityListPage> {
   }
 
   void loadData() async {
-    //加载城市列表
-    rootBundle.loadString('assets/data/china.json').then((value) {
-      cityList.clear();
-      Map countyMap = json.decode(value);
-      List list = countyMap['china'];
-      for (var v in list) {
-        cityList.add(CityModel.fromJson(v));
-      }
-      _handleList(cityList);
+
+    hotLists = UserTool.cityProvider.hotCities;
+
+    hotLists.forEach((element) {
+      hotCityList.add(CityModel(name: element.name,model:element));
     });
+
+
+
+
+    //加载城市列表
+    chinaLists = UserTool.cityProvider.regions;
+
+    chinaLists.forEach((element) {
+      cityList.add(CityModel(name: element.name,model:element));
+    });
+
+    _handleList(cityList);
   }
 
   void _handleList(List<CityModel> list) {
@@ -75,22 +91,6 @@ class _CityListPageState extends State<CityListPage> {
   }
 
   Widget _buildHeader() {
-    List<CityModel> hotCityList = [];
-    hotCityList.addAll([
-      CityModel(name: "杭州"),
-      CityModel(name: "北京"),
-      CityModel(name: "上海"),
-      CityModel(name: "广州"),
-      CityModel(name: "深圳"),
-      CityModel(name: "成都"),
-
-      CityModel(name: "重庆"),
-      CityModel(name: "天津"),
-      CityModel(name: "南京"),
-      CityModel(name: "苏州"),
-      CityModel(name: "武汉"),
-      CityModel(name: "西安"),
-    ]);
 
     return
 
@@ -115,7 +115,7 @@ class _CityListPageState extends State<CityListPage> {
                 itemBuilder: (BuildContext context, int index) {
                   //Widget Function(BuildContext context, int index)
                   return _getCityView(
-                      hotCityList[index].name,isLocation: index==0);
+                      hotCityList[index],isLocation: index==0);
                 }),
           ],
         ),
@@ -123,10 +123,10 @@ class _CityListPageState extends State<CityListPage> {
   }
 
 
-  _getCityView(String name,{bool isLocation = false}){
+  _getCityView(CityModel model,{bool isLocation = false}){
     return GestureDetector(
       onTap: (){
-        widget.cityCallback(name);
+        widget.cityCallback(model.model!);
       },
       child: Container(
         width: 56.w,
@@ -139,7 +139,7 @@ class _CityListPageState extends State<CityListPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(name,style: Theme.of(context).textTheme.subtitle2,)
+            Text(model.name,style: Theme.of(context).textTheme.subtitle2,)
           ],
         ),
       ),
@@ -165,7 +165,7 @@ class _CityListPageState extends State<CityListPage> {
               if (index == 0) return _buildHeader();
               CityModel model = cityList[index];
               return Utils.getListItem(context, model, (name, id) {
-                widget.cityCallback(name);
+                widget.cityCallback(model.model!);
 
               });
             },

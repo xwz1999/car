@@ -91,7 +91,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
                 controller: _easyRefreshController,
                 onRefresh: () async {
                   _page = 1;
-                  models = await CarFunc.getCarList(_page,);
+                  models = await CarFunc.getCarList(_page,10);
                   _onLoad = false;
                   setState(() {});
                 },

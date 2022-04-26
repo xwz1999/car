@@ -114,11 +114,8 @@ class _CarCollectionState extends State<CarCollection> {
     ];
     listWidget = [
       CityListPage(
-        cityCallback: (String city) {
-          if (kDebugMode) {
-            print(city);
-          }
-          _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
+        cityCallback: (model) {
+
           setState(() {});
         },
       ),

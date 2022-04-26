@@ -5,6 +5,7 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart'
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_result_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
+import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -249,10 +250,10 @@ class _CarValuationPageState extends State<CarValuationPage> {
             ),
             GestureDetector(
               onTap: () async {
-                await Get.to(() => ChooseCarPage(
-                      callback: () {},
-                      isCity: true,
-                      pickCar: _pickCar,
+                await Get.to(() => ChooseCityPage(
+                      callback: (model) {
+                        _carInfo.address = model.name;
+                      },
                     ));
                 setState(() {});
               },
