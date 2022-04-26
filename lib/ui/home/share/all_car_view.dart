@@ -40,6 +40,13 @@ class _AllCarViewState extends State<AllCarView>
         'seriesId': widget.pickCar.value.series.id,
         'minPrice': widget.pickCar.value.finalMinPrice,
         'maxPrice': widget.pickCar.value.finalMaxPrice,
+        'minAge': widget.pickCar.value.minCarAge,
+        'maxAge': widget.pickCar.value.maxCarAge,
+        'struct': widget.pickCar.value.struct,
+        'gearType': widget.pickCar.value.gearType,
+        'minMileage': widget.pickCar.value.finalMinMile,
+        'maxMileage': widget.pickCar.value.finalMaxMile,
+        'dischargeStandard': widget.pickCar.value.dischargeStandard,
       };
 
   @override
