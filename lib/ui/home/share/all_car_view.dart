@@ -1,6 +1,7 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:flustars/flustars.dart';
@@ -8,11 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../model/car_manager/car_list_model.dart';
-import '../../../utils/drop_down_widget.dart';
 import '../../../widget/car_item_widget.dart';
 import '../car_valuation/car_func.dart';
 import '../func/car_map.dart';
-import '../sort/carlist_page.dart';
 
 class AllCarView extends StatefulWidget {
   final String sort;
@@ -30,17 +29,19 @@ class AllCarView extends StatefulWidget {
   _AllCarViewState createState() => _AllCarViewState();
 }
 
-class _AllCarViewState extends State<AllCarView> with AutomaticKeepAliveClientMixin {
+class _AllCarViewState extends State<AllCarView>
+    with AutomaticKeepAliveClientMixin {
   List<CarListModel> _allCarList = [];
   int _page = 1;
   final int _size = 10;
 
   Map<String, dynamic> get _params => {
-    'brandId': widget.pickCar.value.brand.id,
-    'seriesId': widget.pickCar.value.series.id,
-    'minPrice': widget.pickCar.value.price.minPrice,
-    'maxPrice': widget.pickCar.value.price.maxPrice,
-  };
+        'brandId': widget.pickCar.value.brand.id,
+        'seriesId': widget.pickCar.value.series.id,
+        'minPrice': widget.pickCar.value.finalMinPrice,
+        'maxPrice': widget.pickCar.value.finalMaxPrice,
+      };
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -54,7 +55,8 @@ class _AllCarViewState extends State<AllCarView> with AutomaticKeepAliveClientMi
             order: CarMap.carSortString
                 .getKeyFromValue(widget.sort)
                 .toString()
-                .toSnake,searchParams: _params);
+                .toSnake,
+            searchParams: _params);
         setState(() {});
       },
       onLoad: () async {
@@ -91,8 +93,7 @@ class _AllCarViewState extends State<AllCarView> with AutomaticKeepAliveClientMi
                 widgetPadding:
                     EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
                 name: model.modelName,
-                time: DateUtil.formatDateMs(
-                    model.licensingDate.toInt() * 1000,
+                time: DateUtil.formatDateMs(model.licensingDate.toInt() * 1000,
                     format: 'yyyy年MM月'),
                 distance: model.mileage + '万公里',
                 // standard: '国六',

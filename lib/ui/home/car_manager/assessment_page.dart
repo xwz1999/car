@@ -1,4 +1,8 @@
+import 'package:cloud_car/model/sort/sort_brand_model.dart';
+import 'package:cloud_car/model/sort/sort_car_model_model.dart';
+import 'package:cloud_car/model/sort/sort_series_model.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -6,7 +10,6 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AssessmentPage extends StatefulWidget {
@@ -31,7 +34,12 @@ class _AssessmentPageState extends State<AssessmentPage> {
 
   List<ChooseItem> _sortList = [];
   String title = '直卖车辆';
-
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
+      SearchParamModel(
+          series: SortSeriesModel.init,
+          brand: SortBrandModel.init,
+          car: SortCarModelModel.init,
+          returnType: 2));
   @override
   void initState() {
     super.initState();
@@ -62,7 +70,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           haveButton: true,
-          itemList: _sortList,
+          itemList: _sortList, pickString: '',
         ),
       ),
     ];
@@ -149,12 +157,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
   }
 
   _getSortList() {
-    return SortListPage(
-      callback: (ChooseItem item) {
-        if (kDebugMode) {
-          print(item.name + '123123');
-        }
-      },
+    return SortListPage( pickCar: _pickCar, onConfirm: () { Get.back(); },
     );
   }
 

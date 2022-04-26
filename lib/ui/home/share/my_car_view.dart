@@ -1,5 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:flustars/flustars.dart';
@@ -12,7 +13,6 @@ import '../car_valuation/car_func.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 
-import '../sort/carlist_page.dart';
 
 class MyCarView extends StatefulWidget {
   final String sort;
@@ -39,8 +39,9 @@ class _MyCarViewState extends State<MyCarView>
   Map<String, dynamic> get _params => {
         'brandId': widget.pickCar.value.brand.id,
         'seriesId': widget.pickCar.value.series.id,
-        'minPrice': widget.pickCar.value.price.minPrice,
-        'maxPrice': widget.pickCar.value.price.maxPrice,
+        'minPrice': widget.pickCar.value.finalMinPrice,
+        'maxPrice': widget.pickCar.value.finalMaxPrice,
+
       };
 
   @override

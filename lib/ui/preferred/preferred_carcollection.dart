@@ -1,6 +1,7 @@
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
 import 'package:cloud_car/ui/home/sort/citylist_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/preferred/preferred_car_detail.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -135,7 +136,7 @@ class _CarCollectionState extends State<CarCollection> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
+        child: ScreenWidget(pickString: '',
           callback: (String item) {
             if (kDebugMode) {
               print(item + '1231232');
@@ -155,7 +156,7 @@ class _CarCollectionState extends State<CarCollection> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
+        child: ScreenWidget(pickString: '',
           childAspectRatio: 144 / 56,
           callback: (String item) {},
           mainAxisSpacing: 10.w,

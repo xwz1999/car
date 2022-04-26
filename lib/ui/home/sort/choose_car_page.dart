@@ -2,6 +2,7 @@ import 'package:cloud_car/ui/home/sort/carlist_page.dart';
 
 
 import 'package:cloud_car/ui/home/sort/citylist_page.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';

@@ -16,6 +16,7 @@ class SortListWidget extends StatefulWidget {
   final double childAspectRatio;
   final Widget? rightWidget;
   final bool isGrid;
+  final String pickString;
 
   const SortListWidget({
     Key? key,
@@ -26,7 +27,7 @@ class SortListWidget extends StatefulWidget {
     required this.crossAxisSpacing,
     required this.childAspectRatio,
     required this.title,
-    this.rightWidget, this.isGrid = true,
+    this.rightWidget, this.isGrid = true, required this.pickString,
   }) : super(key: key);
 
   @override
@@ -71,22 +72,19 @@ class _SortListWidgetState extends State<SortListWidget> {
                   crossAxisCount: widget.crossAxisCount,
                   mainAxisSpacing: widget.mainAxisSpacing,
                   callback: (ChooseItem item, int index) {
-                    if (widget.itemList != null) {
-                      for (int i = 0; i < widget.itemList!.length; i++) {
-                        if (i != index) {
-                          widget.itemList![i].isChoose = false;
-                        } else {
-                          widget.itemList![i].isChoose =
-                              !widget.itemList![i].isChoose;
-                        }
-                      }
-                    }
-                    if (kDebugMode) {
-                      print(item.name);
-                    }
+                    // if (widget.itemList != null) {
+                    //   for (int i = 0; i < widget.itemList!.length; i++) {
+                    //     if (i != index) {
+                    //       widget.itemList![i].isChoose = false;
+                    //     } else {
+                    //       widget.itemList![i].isChoose =
+                    //           !widget.itemList![i].isChoose;
+                    //     }
+                    //   }
+                    // }
                     widget.callback(item);
                     setState(() {});
-                  },
+                  }, pickString: widget.pickString,
                 ),
             )
             : const SizedBox(),

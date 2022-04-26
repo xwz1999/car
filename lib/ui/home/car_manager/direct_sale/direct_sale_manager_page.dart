@@ -1,4 +1,8 @@
+import 'package:cloud_car/model/sort/sort_brand_model.dart';
+import 'package:cloud_car/model/sort/sort_car_model_model.dart';
+import 'package:cloud_car/model/sort/sort_series_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/direct_sale_page.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_widget.dart';
@@ -43,6 +47,13 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
   String title = '直卖车辆';
 
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
+      SearchParamModel(
+          series: SortSeriesModel.init,
+          brand: SortBrandModel.init,
+          car: SortCarModelModel.init,
+          returnType: 2));
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +70,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
+          pickString: '',
           childAspectRatio: 200 / 56,
           callback: (String item) {
             _dropDownHeaderItemStrings1 = [item];
@@ -199,10 +211,9 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
   _getSortList() {
     return SortListPage(
-      callback: (ChooseItem item) {
-        if (kDebugMode) {
-          print(item.name + '123123');
-        }
+      pickCar: _pickCar,
+      onConfirm: () {
+        Get.back();
       },
     );
   }

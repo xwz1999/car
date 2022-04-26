@@ -149,7 +149,7 @@ class _SalesOrderState extends State<SalesOrder> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
+        child: ScreenWidget(pickString: '',
           childAspectRatio: 200 / 56,
           callback: (String item) {
             _dropDownHeaderItemStrings1 = [item];

@@ -5,6 +5,7 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart'
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_result_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -20,7 +21,6 @@ import 'package:cloud_car/extensions/string_extension.dart';
 import '../../../model/sort/sort_brand_model.dart';
 import '../../../model/sort/sort_car_model_model.dart';
 import '../../../model/sort/sort_series_model.dart';
-import '../sort/carlist_page.dart';
 
 class CarValuationPage extends StatefulWidget {
   const CarValuationPage({Key? key}) : super(key: key);
