@@ -1,14 +1,13 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-
-import '../../../model/car_manager/car_list_model.dart';
 import '../../../widget/car_item_widget.dart';
 import '../car_valuation/car_func.dart';
 import '../func/car_map.dart';
@@ -59,8 +58,8 @@ class _AllCarViewState extends State<AllCarView>
       onRefresh: () async {
         _page = 1;
         _allCarList = await CarFunc.getCarList(_page, _size,
-            order: CarMap.carSortString
-                .getKeyFromValue(widget.sort)
+            order:           (CarMap.carSortString
+                .getKeyFromValue(widget.sort) as CarSort ).name
                 .toString()
                 .toSnake,
             searchParams: _params);
@@ -72,8 +71,9 @@ class _AllCarViewState extends State<AllCarView>
             await apiClient.requestList(API.car.getCarSelfLists, data: {
           'page': _page,
           'size': _size,
-          'order': CarMap.carSortString
-              .getKeyFromValue(widget.sort)
+          'order':
+          (CarMap.carSortString
+              .getKeyFromValue(widget.sort) as CarSort ).name
               .toString()
               .toSnake,
           'search': _params

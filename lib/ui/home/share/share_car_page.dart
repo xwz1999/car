@@ -1,6 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car_item_model.dart';
-import 'package:cloud_car/model/car_manager/car_list_model.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';

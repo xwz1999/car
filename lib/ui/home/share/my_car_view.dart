@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -7,7 +8,6 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../../../model/car_manager/car_list_model.dart';
 import '../../../widget/car_item_widget.dart';
 import '../car_valuation/car_func.dart';
 import 'package:cloud_car/extensions/map_extension.dart';

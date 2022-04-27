@@ -65,9 +65,6 @@ class _ScreenWidgetState extends State<ScreenWidget> {
               widget.itemList[i].isChoose = !widget.itemList[i].isChoose;
             }
           }
-          if (kDebugMode) {
-            print(item.name);
-          }
           widget.callback(item.name);
         }, pickString: widget.pickString,
       ),

@@ -1,10 +1,10 @@
 
-import 'package:cloud_car/model/car_manager/car_amount_model.dart';
-import 'package:cloud_car/model/car_manager/car_info_model.dart';
-import 'package:cloud_car/model/car_manager/car_list_model.dart';
-import 'package:cloud_car/model/car_manager/car_sale_contract_model.dart';
-import 'package:cloud_car/model/car_valuation/car_distinguish_model.dart';
-import 'package:cloud_car/model/car_manager/consignment_contact_model.dart';
+import 'package:cloud_car/model/car/car_amount_model.dart';
+import 'package:cloud_car/model/car/car_info_model.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
+import 'package:cloud_car/model/car/car_sale_contract_model.dart';
+import 'package:cloud_car/model/car/car_distinguish_model.dart';
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
 

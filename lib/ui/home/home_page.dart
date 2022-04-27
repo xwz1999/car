@@ -1,4 +1,4 @@
-import 'package:cloud_car/model/car_manager/car_list_model.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_func.dart';

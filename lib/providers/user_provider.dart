@@ -42,6 +42,9 @@ class UserProvider extends ChangeNotifier {
   Future updateUserInfo() async {
     var base = await apiClient.request(API.user.userInfo);
     if (base.code == 0) {
+      _userInfo = UserInfoModel(inviteCode: '', nickname: '', headImg: '', level: 1, store: StoreInfo(storeName: '', roleName: ''
+
+      ), data:ExtraData(inviteCount: 1, balance: '', assessCount: 1), );
       _userInfo = UserInfoModel.fromJson(base.data);
     } else {
       CloudToast.show(base.msg);

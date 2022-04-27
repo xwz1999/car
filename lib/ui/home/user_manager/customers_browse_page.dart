@@ -1,5 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/model/car_manager/customer_browse_list_model.dart';
+import 'package:cloud_car/model/car/customer_browse_list_model.dart';
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
