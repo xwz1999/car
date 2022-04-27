@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable, avoid_unnecessary_containers
 
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
@@ -19,7 +20,6 @@ import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -53,8 +53,7 @@ class _PreferredPageState extends State<PreferredPage>
   final int _size = 10;
   String _pickSort = '';
 
-  List<Widget> get listWidget =>
-      [
+  List<Widget> get listWidget => [
         CarListPage(
           pickCar: _pickCar,
           carCallback: () {
@@ -106,8 +105,7 @@ class _PreferredPageState extends State<PreferredPage>
         ),
       ];
 
-  Map<String, dynamic> get _params =>
-      {
+  Map<String, dynamic> get _params => {
         'brandId': _pickCar.value.brand.id,
         'seriesId': _pickCar.value.series.id,
         'minPrice': _pickCar.value.finalMinPrice,
@@ -176,15 +174,9 @@ class _PreferredPageState extends State<PreferredPage>
         children: [
           Container(
             color: Colors.transparent,
-            height: kToolbarHeight + MediaQuery
-                .of(context)
-                .padding
-                .top,
+            height: kToolbarHeight + MediaQuery.of(context).padding.top,
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(top: MediaQuery
-                .of(context)
-                .padding
-                .top),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -211,22 +203,19 @@ class _PreferredPageState extends State<PreferredPage>
                             onTap: () {},
                             child: SizedBox(
                                 child: Row(
-                                  children: [
-                                    Text(
-                                      '宁波',
-                                      style: Theme
-                                          .of(context)
-                                          .textTheme
-                                          .subtitle2,
-                                    ),
-                                    12.wb,
-                                    Image(
-                                      image: Assets.icons.noSelected,
-                                      width: 6.w,
-                                      height: 6.w,
-                                    )
-                                  ],
-                                )),
+                              children: [
+                                Text(
+                                  '宁波',
+                                  style: Theme.of(context).textTheme.subtitle2,
+                                ),
+                                12.wb,
+                                Image(
+                                  image: Assets.icons.noSelected,
+                                  width: 6.w,
+                                  height: 6.w,
+                                )
+                              ],
+                            )),
                           )
                         ],
                       ),
@@ -281,12 +270,12 @@ class _PreferredPageState extends State<PreferredPage>
                               // 焦点集中的时候颜色
                               borderRadius: BorderRadius.circular(36.w),
                               borderSide:
-                              const BorderSide(color: kForeGroundColor),
+                                  const BorderSide(color: kForeGroundColor),
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(36.w),
                                 borderSide:
-                                const BorderSide(color: kForeGroundColor)),
+                                    const BorderSide(color: kForeGroundColor)),
                           ),
                         ),
                       )
@@ -314,9 +303,9 @@ class _PreferredPageState extends State<PreferredPage>
                     end: Alignment.topCenter,
                     begin: Alignment.bottomCenter,
                     colors: [
-                      const Color(0xFFFFFFFF),
-                      const Color(0xFFFFFFFF).withOpacity(0)
-                    ])),
+                  const Color(0xFFFFFFFF),
+                  const Color(0xFFFFFFFF).withOpacity(0)
+                ])),
             child: Row(
               children: [
                 Padding(padding: EdgeInsets.symmetric(horizontal: 30.w)),
@@ -342,18 +331,17 @@ class _PreferredPageState extends State<PreferredPage>
             onRefresh: () async {
               _page = 1;
               _carList = await CarFunc.getCarList(_page, _size,
-                  order: CarMap.carSortString[_pickCar],
+                  order: CarMap.carSortString.getKeyFromValue(_pickSort),
                   searchParams: _params);
               setState(() {});
             },
             onLoad: () async {
               _page++;
               var baseList =
-              await apiClient.requestList(API.car.getCarLists, data: {
+                  await apiClient.requestList(API.car.getCarLists, data: {
                 'page': _page,
                 'size': _size,
-                'order':
-                CarMap.carSortString[_pickCar],
+                'order': CarMap.carSortString.getKeyFromValue(_pickSort),
                 'search': _params
               });
               if (baseList.nullSafetyTotal > _carList.length) {
@@ -401,10 +389,7 @@ class _PreferredPageState extends State<PreferredPage>
           8.hb,
           Text(
             title,
-            style: Theme
-                .of(context)
-                .textTheme
-                .bodyText1,
+            style: Theme.of(context).textTheme.bodyText1,
           )
         ],
       ),
@@ -412,19 +397,19 @@ class _PreferredPageState extends State<PreferredPage>
   }
 
   _myCar(Widget child) {
-    return Builder(builder: (context) {
-      return DropDownWidget(_dropDownHeaderItemStrings, listWidget,
-          height: 80.w,
-          bottomHeight: 400.w,
-          screenControl: screenControl,
-          headFontSize: 28.sp,
-          child: child,
-          screen: '筛选',
-          onTap: () {
-            screenControl.screenHide();
-            Scaffold.of(context).openEndDrawer();
-          });
-    },
+    return Builder(
+      builder: (context) {
+        return DropDownWidget(_dropDownHeaderItemStrings, listWidget,
+            height: 80.w,
+            bottomHeight: 400.w,
+            screenControl: screenControl,
+            headFontSize: 28.sp,
+            child: child,
+            screen: '筛选', onTap: () {
+          screenControl.screenHide();
+          Scaffold.of(context).openEndDrawer();
+        });
+      },
     );
   }
 

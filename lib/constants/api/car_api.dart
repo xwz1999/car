@@ -29,15 +29,6 @@ class _Car {
 
   ///车辆信息
   String get getCarIfo => '/car/self';
-
-  ///收藏列表 云云优选
-  String get getCollectLists => '/car/collect/lists';
-
-  ///添加到收藏 云云优选
-  String get addCollect => '/car/collect/add';
-
-  ///取消收藏 云云优选
-  String get cancelCollect => '/car/collect/cancel';
 }
 
 class _Collect {

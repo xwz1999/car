@@ -59,13 +59,6 @@ class _ScreenWidgetState extends State<ScreenWidget> {
         crossAxisCount: widget.crossAxisCount,
         mainAxisSpacing: widget.mainAxisSpacing,
         callback: (ChooseItem item, int index) {
-          for (int i = 0; i < widget.itemList.length; i++) {
-            if (i != index) {
-              widget.itemList[i].isChoose = false;
-            } else {
-              widget.itemList[i].isChoose = !widget.itemList[i].isChoose;
-            }
-          }
           widget.callback(item.name);
         },
         pickString: widget.pickString,

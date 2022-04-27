@@ -11,6 +11,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../widget/car_item_widget.dart';
 import '../func/car_map.dart';
+import 'package:cloud_car/extensions/map_extension.dart';
 
 class AllCarView extends StatefulWidget {
   final String sort;
@@ -57,9 +58,10 @@ class _AllCarViewState extends State<AllCarView>
       controller: widget.refreshController,
       header: MaterialHeader(),
       onRefresh: () async {
+        print(widget.pickCar.value.price);
         _page = 1;
         var list = await CarFunc.getCarList(_page, _size,
-            order: CarMap.carSortString[widget.sort], searchParams: _params);
+            order: CarMap.carSortString.getKeyFromValue(widget.sort), searchParams: _params);
         widget.allCarList.clear();
         widget.allCarList.addAll(list);
         setState(() {});
@@ -70,7 +72,7 @@ class _AllCarViewState extends State<AllCarView>
             await apiClient.requestList(API.car.getCarSelfLists, data: {
           'page': _page,
           'size': _size,
-          'order': CarMap.carSortString[widget.sort],
+          'order': CarMap.carSortString.getKeyFromValue(widget.sort),
           'search': _params
         });
         if (baseList.nullSafetyTotal > widget.allCarList.length) {

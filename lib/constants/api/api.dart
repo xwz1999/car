@@ -1,4 +1,3 @@
-import 'package:cloud_car/ui/user/user_order/dealer_consignment_order.dart/dealer_consignment_order_page.dart';
 
 import '../environment/environment.dart';
 

@@ -1,3 +1,4 @@
+import 'package:flustars/flustars.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 
@@ -17,7 +18,9 @@ class CollectCarModel extends Equatable {
 
   factory CollectCarModel.fromJson(Map<String, dynamic> json) =>
       _$CollectCarModelFromJson(json);
+  DateTime get createdAtDT => DateUtil.getDateTimeByMs(createdAt.toInt());
 
+  num get unitPrice => NumUtil.divide(num.parse(price), 10000);
   const CollectCarModel({
     required this.carId,
     required this.modelName,

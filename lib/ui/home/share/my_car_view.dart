@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
@@ -61,7 +62,7 @@ class _MyCarViewState extends State<MyCarView>
         var list = await CarFunc.getMyCarList(
             page: _page,
             size: _size,
-            order: CarMap.carSortString[widget.sort],
+            order: CarMap.carSortString.getKeyFromValue(widget.sort),
             searchParams: _params);
         widget.myCarList.clear();
         widget.myCarList.addAll(list);
@@ -73,7 +74,7 @@ class _MyCarViewState extends State<MyCarView>
             await apiClient.requestList(API.car.getCarSelfLists, data: {
           'page': _page,
           'size': _size,
-          'order': CarMap.carSortString[widget.sort],
+          'order':CarMap.carSortString.getKeyFromValue(widget.sort),
           'search': _params
         });
         if (baseList.nullSafetyTotal > widget.myCarList.length) {

@@ -6,9 +6,6 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/sort/sort_brand_model.dart';
-import '../../../model/sort/sort_car_model_model.dart';
-import '../../../model/sort/sort_series_model.dart';
 import '../../../widget/sort_list_widget.dart';
 
 class SortListPage extends StatefulWidget {
@@ -35,17 +32,11 @@ class _SortListPageState extends State<SortListPage> {
   List<ChooseItem> _carAge = [];
 
   String get _carName {
-    return _pickCar.value.series.name.isEmpty
+    return widget.pickCar.value.series.name.isEmpty
         ? '不限品牌'
-        : '${_pickCar.value.brand.name}-${_pickCar.value.series.name}';
+        : '${ widget.pickCar.value.brand.name}-${ widget.pickCar.value.series.name}';
   }
 
-  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
-      SearchParamModel(
-          series: SortSeriesModel.init,
-          brand: SortBrandModel.init,
-          car: SortCarModelModel.init,
-          returnType: 2));
 
   @override
   void initState() {
@@ -135,7 +126,7 @@ class _SortListPageState extends State<SortListPage> {
                       Get.back();
                       setState(() {});
                     },
-                    pickCar: _pickCar,
+                    pickCar:  widget.pickCar,
                   ));
             },
             child: Container(
@@ -175,7 +166,8 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            _pickCar.value.price = item.name;
+             widget.pickCar.value.price = item.name;
+            print( widget.pickCar.value.price.toString());
             setState(() {});
           },
           title: '展示价格',
@@ -186,7 +178,7 @@ class _SortListPageState extends State<SortListPage> {
               children: [
                 SortEditWidget(
                   callback: (String content) {
-                    _pickCar.value.editMinPrice = int.parse(content);
+                     widget.pickCar.value.editMinPrice = int.parse(content);
                   },
                 ),
                 5.wb,
@@ -198,7 +190,7 @@ class _SortListPageState extends State<SortListPage> {
                 5.wb,
                 SortEditWidget(
                   callback: (String content) {
-                    _pickCar.value.editMaxPrice = int.parse(content);
+                     widget.pickCar.value.editMaxPrice = int.parse(content);
                   },
                 ),
                 10.wb,
@@ -209,7 +201,7 @@ class _SortListPageState extends State<SortListPage> {
               ],
             ),
           ),
-          pickString: _pickCar.value.price,
+          pickString:  widget.pickCar.value.price,
         ),
         16.hb,
         SortListWidget(
@@ -219,7 +211,7 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            _pickCar.value.carAge = item.name;
+             widget.pickCar.value.carAge = item.name;
             setState(() {});
           },
           title: '首次上牌',
@@ -244,7 +236,7 @@ class _SortListPageState extends State<SortListPage> {
           //     ],
           //   ),
           // ),
-          pickString: _pickCar.value.carAge,
+          pickString:  widget.pickCar.value.carAge,
         ),
         16.hb,
         SortListWidget(
@@ -254,11 +246,11 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            _pickCar.value.struct = item.name;
+             widget.pickCar.value.struct = item.name;
             setState(() {});
           },
           title: '车身结构',
-          pickString: _pickCar.value.struct,
+          pickString:  widget.pickCar.value.struct,
         ),
         16.hb,
         SortListWidget(
@@ -268,11 +260,11 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            _pickCar.value.gear = item.name;
+             widget.pickCar.value.gear = item.name;
             setState(() {});
           },
           title: '变速箱类型',
-          pickString: _pickCar.value.gear,
+          pickString:  widget.pickCar.value.gear,
         ),
         16.hb,
         SortListWidget(
@@ -282,7 +274,7 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            _pickCar.value.mile = item.name;
+             widget.pickCar.value.mile = item.name;
             setState(() {});
           },
           title: '表显里程',
@@ -293,7 +285,7 @@ class _SortListPageState extends State<SortListPage> {
               children: [
                 SortEditWidget(
                   callback: (String content) {
-                    _pickCar.value.editMinMile = int.parse(content.trim());
+                     widget.pickCar.value.editMinMile = int.parse(content.trim());
                   },
                 ),
                 5.wb,
@@ -305,7 +297,7 @@ class _SortListPageState extends State<SortListPage> {
                 5.wb,
                 SortEditWidget(
                   callback: (String content) {
-                    _pickCar.value.editMaxMile = int.parse(content.trim());
+                     widget.pickCar.value.editMaxMile = int.parse(content.trim());
                   },
                 ),
                 10.wb,
@@ -316,7 +308,7 @@ class _SortListPageState extends State<SortListPage> {
               ],
             ),
           ),
-          pickString: _pickCar.value.mile,
+          pickString:  widget.pickCar.value.mile,
         ),
         16.hb,
         SortListWidget(
@@ -326,11 +318,11 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-            _pickCar.value.dischargeStandard = item.name;
+             widget.pickCar.value.dischargeStandard = item.name;
             setState(() {});
           },
           title: '排放标准',
-          pickString: _pickCar.value.dischargeStandard,
+          pickString:  widget.pickCar.value.dischargeStandard,
         ),
         56.hb,
         Row(
@@ -372,7 +364,7 @@ class _SortListPageState extends State<SortListPage> {
   _resetBtn() {
     return GestureDetector(
       onTap: () {
-        _pickCar.value = SearchParamModel.init(returnType: 2);
+         widget.pickCar.value = SearchParamModel.init(returnType: 2);
         setState(() {});
       },
       child: Container(
