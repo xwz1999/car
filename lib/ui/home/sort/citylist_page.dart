@@ -45,9 +45,9 @@ class _CityListPageState extends State<CityListPage> {
 
     hotLists = UserTool.cityProvider.hotCities;
 
-    hotLists.forEach((element) {
+    for (var element in hotLists) {
       hotCityList.add(CityModel(name: element.name,model:element));
-    });
+    }
 
 
 

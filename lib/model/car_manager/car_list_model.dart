@@ -24,7 +24,7 @@ class CarListModel extends Equatable {
   ///转手次数
   final int transfer;
 
-  ///是否收藏
+  ///是否收藏 0未收藏 1收藏
   final int collect;
 
   factory CarListModel.fromJson(Map<String, dynamic> json) =>

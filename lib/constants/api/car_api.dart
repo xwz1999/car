@@ -1,6 +1,8 @@
-part of'api.dart';
+part of 'api.dart';
 
 class _Car {
+  _Collect collect = _Collect();
+
   ///获取车辆品牌
   String get getCarBrand => '/car/brand/all';
 
@@ -38,8 +40,13 @@ class _Car {
   String get cancelCollect => '/car/collect/cancel';
 }
 
-class _Collect{
+class _Collect {
   ///收藏列表
   String get list => '/car/collect/lists';
-  ///
+
+  ///添加收藏
+  String get add => '/car/collect/add';
+
+  ///取消收藏
+  String get cancel => '/car/collect/cancel';
 }

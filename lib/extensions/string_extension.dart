@@ -28,6 +28,8 @@ extension ImageOnString on String? {
   int get minPrice {
     if (this == null || this!.isEmpty) {
       return 0;
+    } else if (this!.contains('不限')) {
+      return 0;
     } else if (this!.contains('以下')) {
       return 0;
     } else if (this!.contains('以上')) {
@@ -43,6 +45,8 @@ extension ImageOnString on String? {
   int get maxPrice {
     if (this == null || this!.isEmpty) {
       return 0;
+    } else if (this!.contains('不限')) {
+      return 0;
     } else if (this!.contains('以下')) {
       return int.parse(this!.substring(0, this!.length - 3)) * 10000;
     }
@@ -55,10 +59,10 @@ extension ImageOnString on String? {
   }
 
   int get maxMile {
-    if (this==null||this!.isEmpty) {
+    if (this == null || this!.isEmpty) {
       return 0;
-    }else {
-      return int.parse(this!.substring(0,this!.length-4));
+    } else {
+      return int.parse(this!.substring(0, this!.length - 4));
     }
   }
 }

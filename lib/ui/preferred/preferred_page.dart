@@ -1,19 +1,28 @@
 // ignore_for_file: unused_local_variable, avoid_unnecessary_containers
 
+import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/extensions/map_extension.dart';
+import 'package:cloud_car/extensions/string_extension.dart';
+import 'package:cloud_car/model/car_manager/car_list_model.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
+import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
-import 'package:cloud_car/ui/home/sort/citylist_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/preferred/preferred_allcar.dart';
 import 'package:cloud_car/ui/preferred/preferred_carcollection.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../model/sort/sort_brand_model.dart';
 import '../../model/sort/sort_car_model_model.dart';
@@ -28,50 +37,93 @@ class PreferredPage extends StatefulWidget {
 
 class _PreferredPageState extends State<PreferredPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
-  late List<String> _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
-  List<Widget> listWidget = [];
+  late List<String> _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
   List<ChooseItem> _priceList = [];
-  ScreenControl screenControlMy = ScreenControl();
+  ScreenControl screenControl = ScreenControl();
   List<ChooseItem> _sortList = [];
-  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
-      series: SortSeriesModel.init,
-      brand: SortBrandModel.init,
-      car: SortCarModelModel.init,
-      returnType: 2));
-  List carList = [
-    {
-      'url': Assets.images.carBanner,
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'time': '2020年10月',
-      'distance': '20.43万公里',
-      'standard': '国六',
-      'pice': '27.43',
-      'choose': false,
-    },
-    {
-      'url': Assets.images.carBanner,
-      'title': '奔驰CLS级',
-      'time': '2019年5月',
-      'distance': '123.61万公里',
-      'standard': '国六',
-      'pice': '52.68',
-      'choose': true,
-    },
-    {
-      'url': Assets.images.carBanner,
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'time': '2015年4月',
-      'distance': '452.55万公里',
-      'standard': '国六',
-      'pice': '31.22',
-      'choose': false,
-    },
-  ];
+  final EasyRefreshController _refreshController = EasyRefreshController();
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
+      SearchParamModel(
+          series: SortSeriesModel.init,
+          brand: SortBrandModel.init,
+          car: SortCarModelModel.init,
+          returnType: 2));
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<CarListModel> _carList = [];
+  int _page = 1;
+  final int _size = 10;
+  String _pickSort = '';
+
+  List<Widget> get listWidget => [
+        CarListPage(
+          pickCar: _pickCar,
+          carCallback: () {
+            screenControl.screenHide();
+            _refreshController.callRefresh();
+          },
+        ),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16.w)),
+              color: kForeGroundColor),
+          clipBehavior: Clip.antiAlias,
+          child: ScreenWidget(
+            pickString: _pickCar.value.price,
+            callback: (String item) {
+              screenControl.screenHide();
+              _pickCar.value.price = item;
+              _refreshController.callRefresh();
+            },
+            childAspectRatio: 144 / 56,
+            mainAxisSpacing: 10.w,
+            crossAxisSpacing: 24.w,
+            crossAxisCount: 4,
+            haveButton: true,
+            itemList: _priceList,
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16.w)),
+              color: kForeGroundColor),
+          clipBehavior: Clip.antiAlias,
+          child: ScreenWidget(
+            pickString: _pickSort,
+            childAspectRatio: 144 / 56,
+            callback: (String item) {
+              screenControl.screenHide();
+              _pickSort = item;
+              _refreshController.callRefresh();
+            },
+            mainAxisSpacing: 10.w,
+            crossAxisSpacing: 24.w,
+            crossAxisCount: 4,
+            haveButton: true,
+            itemList: _sortList,
+          ),
+        ),
+      ];
+
+  Map<String, dynamic> get _params => {
+        'brandId': _pickCar.value.brand.id,
+        'seriesId': _pickCar.value.series.id,
+        'minPrice': _pickCar.value.finalMinPrice,
+        'maxPrice': _pickCar.value.finalMaxPrice,
+        'minAge': _pickCar.value.minCarAge,
+        'maxAge': _pickCar.value.maxCarAge,
+        'struct': _pickCar.value.struct,
+        'gearType': _pickCar.value.gearType,
+        'minMileage': _pickCar.value.finalMinMile,
+        'maxMileage': _pickCar.value.finalMaxMile,
+        'dischargeStandard': _pickCar.value.dischargeStandard,
+      };
+
   @override
   void initState() {
     super.initState();
-    _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
+    _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
     _priceList = [
       ChooseItem(name: '不限'),
       ChooseItem(name: '4万以下'),
@@ -90,64 +142,11 @@ class _PreferredPageState extends State<PreferredPage>
       ChooseItem(name: '里程最少'),
       ChooseItem(name: '最近更新'),
     ];
-    listWidget = [
-      CityListPage(
-        cityCallback: (model) {
-          if (kDebugMode) {
-            print(model);
-          }
-          setState(() {});
-        },
-      ),
-      CarListPage(
-        carCallback: (){
-          screenControlMy.screenHide();
-          setState(() {
-
-          });
-        }, pickCar: _pickCar,
-      ),
-      Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16.w)),
-            color: kForeGroundColor),
-        clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(pickString: '',
-          callback: (String item) {
-            if (kDebugMode) {
-              print(item + '1231232');
-            }
-          },
-          childAspectRatio: 144 / 56,
-          mainAxisSpacing: 10.w,
-          crossAxisSpacing: 24.w,
-          crossAxisCount: 4,
-          haveButton: true,
-          itemList: _priceList,
-        ),
-      ),
-      Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16.w)),
-            color: kForeGroundColor),
-        clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(pickString: '',
-          childAspectRatio: 144 / 56,
-          callback: (String item) {},
-          mainAxisSpacing: 10.w,
-          crossAxisSpacing: 24.w,
-          crossAxisCount: 4,
-          haveButton: true,
-          itemList: _sortList,
-        ),
-      ),
-    ];
   }
 
   @override
   void dispose() {
+    _refreshController.dispose();
     super.dispose();
   }
 
@@ -310,17 +309,51 @@ class _PreferredPageState extends State<PreferredPage>
               ],
             ),
           ),
-          _myCar(),
         ],
       ),
       //extendBody: true,
       body: Expanded(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return get(carList[index]);
-          },
-          itemCount: carList.length,
-        ),
+        child: _myCar(EasyRefresh.custom(
+            firstRefresh: true,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            controller: _refreshController,
+            onRefresh: () async {
+              _page = 1;
+              _carList = await CarFunc.getCarList(_page, _size,
+                  order: CarMap.carSortString[_pickCar],
+                  searchParams: _params);
+              setState(() {});
+            },
+            onLoad: () async {
+              _page++;
+              var baseList =
+                  await apiClient.requestList(API.car.getCarLists, data: {
+                'page': _page,
+                'size': _size,
+                'order':
+                CarMap.carSortString[_pickCar],
+                'search': _params
+              });
+              if (baseList.nullSafetyTotal > _carList.length) {
+                _carList.addAll(baseList.nullSafetyList
+                    .map((e) => CarListModel.fromJson(e))
+                    .toList());
+                setState(() {});
+              } else {
+                _refreshController.finishLoad(noMore: true);
+              }
+            },
+            slivers: [
+              SliverToBoxAdapter(
+                child: 80.hb,
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return _carItem(_carList[index]);
+                }, childCount: _carList.length),
+              )
+            ])),
       ),
     );
   }
@@ -354,94 +387,100 @@ class _PreferredPageState extends State<PreferredPage>
     );
   }
 
-  _myCar() {
-    return DropDownWidget(
-      _dropDownHeaderItemStrings,
-      listWidget,
-      height: 80.r,
-      bottomHeight: 400.r,
-      screenControl: screenControlMy,
-      headFontSize: 28.sp,
-      child: const SizedBox(),
-      screen: '筛选',
-      onTap: () {
-        screenControlMy.screenHide();
-        _scaffoldKey.currentState?.openEndDrawer();
-        if (kDebugMode) {
-          print('筛选');
-        }
-      },
-    );
+  _myCar(Widget child) {
+    return DropDownWidget(_dropDownHeaderItemStrings, listWidget,
+        height: 80.w,
+        bottomHeight: 400.w,
+        screenControl: screenControl,
+        headFontSize: 28.sp,
+        child: child,
+        screen: '筛选', onTap: () {
+      screenControl.screenHide();
+      _scaffoldKey.currentState?.openEndDrawer();
+      if (kDebugMode) {
+        print('筛选');
+      }
+    });
   }
 
-  get(item) {
+  _carItem(CarListModel model) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.w),
           color: const Color(0xFFFFFFFF)),
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.w),
       // width: 702.w,
-      // height: 228.w,
-      margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+      height: 235.w,
+      margin: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.w),
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image(
-            image: item['url'],
+          CloudImageNetworkWidget.car(
             width: 235.w,
             height: 180.w,
+            urls: [model.mainPhoto],
           ),
-          // SizedBox(
-          //   width: 235.w,
-          //   height: 180.w,
-          //   child: Image.asset(
-          //     item['url'],
-          //     fit: BoxFit.fill,
-          //   ),
-          // ),
           24.wb,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 375.w,
-                child: Text(
-                  item['title'],
-                  style: TextStyle(
-                      color: BaseStyle.color111111,
-                      fontSize: BaseStyle.fontSize28),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 375.w,
+                  child: Text(
+                    model.modelName,
+                    maxLines: 2,
+                    style: TextStyle(
+                        color: BaseStyle.color111111,
+                        fontSize: BaseStyle.fontSize28),
+                  ),
                 ),
-              ),
-              16.hb,
-              getChip(item['time'], item['distance'], item['standard']),
-              20.hb,
-              Row(
-                children: [
-                  Text.rich(TextSpan(children: [
-                    TextSpan(
-                        text: item['pice'],
-                        style: TextStyle(
-                            color: const Color(0xFFFF3B02),
-                            fontSize: BaseStyle.fontSize36)),
-                    TextSpan(
-                        text: item['万'],
-                        style: TextStyle(
-                            color: const Color(0xFFFF3B02),
-                            fontSize: BaseStyle.fontSize32)),
-                  ])),
-                  230.wb,
-                  GestureDetector(
-                    child: SizedBox(
-                      width: 40.w,
-                      height: 40.w,
-                      child: Image.asset(item['choose']
-                          ? Assets.icons.alreadyCollected.path
-                          : Assets.icons.notCollect.path),
-                    ),
-                  )
-                ],
-              )
-            ],
+                16.hb,
+                getChip(
+                    DateUtil.formatDate(model.licensingDateDT,
+                        format: DateFormats.zh_y_mo),
+                    model.mileage.toString() + '万公里',
+                    model.downPayment),
+                20.hb,
+                Row(
+                  children: [
+                    Text.rich(TextSpan(children: [
+                      TextSpan(
+                          text: model.unitPrice.toString(),
+                          style: TextStyle(
+                              color: const Color(0xFFFF3B02),
+                              fontSize: BaseStyle.fontSize36)),
+                      TextSpan(
+                          text: '万',
+                          style: TextStyle(
+                              color: const Color(0xFFFF3B02),
+                              fontSize: BaseStyle.fontSize32)),
+                    ])),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () async {
+                        var re = await apiClient.request(
+                            model.collect == 0
+                                ? API.car.collect.add
+                                : API.car.collect.cancel,
+                            data: {'carId': model.id},
+                            showMessage: true);
+                        if (re.code == 0) {
+                          _refreshController.callRefresh();
+                        }
+                      },
+                      child: SizedBox(
+                        width: 40.w,
+                        height: 40.w,
+                        child: Image.asset(model.collect == 1
+                            ? Assets.icons.alreadyCollected.path
+                            : Assets.icons.notCollect.path),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           )
         ],
       ),
@@ -475,17 +514,17 @@ class _PreferredPageState extends State<PreferredPage>
           ),
         ),
         16.wb,
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.w),
-              color: const Color(0xFF4F5A74).withOpacity(0.08)),
-          child: Text(
-            standard,
-            style: TextStyle(
-                fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
-          ),
-        )
+        // Container(
+        //   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
+        //   decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(8.w),
+        //       color: const Color(0xFF4F5A74).withOpacity(0.08)),
+        //   child: Text(
+        //     standard,
+        //     style: TextStyle(
+        //         fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
+        //   ),
+        // )
       ],
     );
   }

@@ -63,10 +63,7 @@ class _MyCarViewState extends State<MyCarView>
         var list = await CarFunc.getMyCarList(
             page: _page,
             size: _size,
-            order: CarMap.carSortString
-                .getKeyFromValue(widget.sort)
-                .toString()
-                .toSnake,
+            order: CarMap.carSortString[widget.sort],
             searchParams: _params);
         widget.myCarList.clear();
         widget.myCarList.addAll(list);
@@ -78,10 +75,7 @@ class _MyCarViewState extends State<MyCarView>
             await apiClient.requestList(API.car.getCarSelfLists, data: {
           'page': _page,
           'size': _size,
-          'order': CarMap.carSortString
-              .getKeyFromValue(widget.sort)
-              .toString()
-              .toSnake,
+          'order': CarMap.carSortString[widget.sort],
           'search': _params
         });
         if (baseList.nullSafetyTotal > widget.myCarList.length) {
