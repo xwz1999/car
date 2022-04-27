@@ -2,33 +2,29 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../ui/home/car_manager/push_car_page.dart';
+
 class PublishCarInfoWidget extends StatefulWidget {
   final Color fontColor;
-  const PublishCarInfoWidget({Key? key, required this.fontColor}) : super(key: key);
+  final PublishCarInfo publishCarInfo;
+  const PublishCarInfoWidget({Key? key, required this.fontColor, required this.publishCarInfo}) : super(key: key);
 
   @override
   State<PublishCarInfoWidget> createState() => _PublishCarInfoWidgetState();
 }
 
 class _PublishCarInfoWidgetState extends State<PublishCarInfoWidget> {
-  String? carNum = 'LGJB3476524683243';
-  String? carShape = '奥迪A3';
-  String? carDate = '2020-03';
-  String? licenseNum = '浙B236Y';
-  String? engineNum = '647382';
-  String? carColor = '蓝色';
-  String? carRoute = '8.12';
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _showarea('车架号', carNum!,widget.fontColor),
-        _showarea('品牌车型', carShape!,widget.fontColor),
-        _showarea('首次上牌', carDate!,widget.fontColor),
-        _showarea('车牌号', licenseNum!,widget.fontColor),
-        _showarea('发动机号', engineNum!,widget.fontColor),
-        _showarea('车身颜色', carColor!,widget.fontColor),
+        _showarea('车架号', widget.publishCarInfo.viNum!,widget.fontColor),
+        _showarea('品牌车型', widget.publishCarInfo.carName!,widget.fontColor),
+        _showarea('首次上牌', widget.publishCarInfo.licensingDate!,widget.fontColor),
+        _showarea('车牌号', widget.publishCarInfo.carNum!,widget.fontColor),
+        _showarea('发动机号', widget.publishCarInfo.engineNum!,widget.fontColor),
+        _showarea('车身颜色', widget.publishCarInfo.carColor!,widget.fontColor),
         Container(
           padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
           color: Colors.transparent,
@@ -54,7 +50,8 @@ class _PublishCarInfoWidgetState extends State<PublishCarInfoWidget> {
                     .make(),
               ),
               Expanded(
-                child: carRoute!.text
+                child: widget.publishCarInfo.mileage!
+                    .text
                     .size(30.sp)
                     .normal
                     .textStyle(const TextStyle(decoration: TextDecoration.none))

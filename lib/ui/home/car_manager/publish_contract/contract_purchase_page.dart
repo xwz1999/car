@@ -1,4 +1,5 @@
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_owner_page.dart';
+import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -6,20 +7,14 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class ContractPurchase extends StatefulWidget {
-  const ContractPurchase({Key? key}) : super(key: key);
+  final PublishCarInfo publishCarInfo;
+  const ContractPurchase({Key? key, required this.publishCarInfo}) : super(key: key);
 
   @override
   State<ContractPurchase> createState() => _ContractPurchaseState();
 }
 
 class _ContractPurchaseState extends State<ContractPurchase> {
-  String? carNum = 'LGJB3476524683243';
-  String? carShape = '奥迪A3';
-  String? carDate = '2020-03';
-  String? licenseNum = '浙B236Y';
-  String? engineNum = '647382';
-  String? carColor = '蓝色';
-  String? carRoute = '8.12';
 
   final TextEditingController _searchController = TextEditingController();
 
@@ -45,33 +40,38 @@ class _ContractPurchaseState extends State<ContractPurchase> {
         decoration: const BoxDecoration(
           color: Color(0x99eeeeee),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
-            Container(
-              padding: EdgeInsets.all(30.w),
-              child: '采购信息'.text.size(32.sp).bold.color(Colors.black).make(),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 10.h, right: 30.w, left: 30.w),
-              color: Colors.white,
-              child: showPushCar(Colors.black.withOpacity(0.45)),
-            ),
-            30.heightBox,
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const ContractOwnerPage());
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(30.w),
+                  child: '采购信息'.text.size(32.sp).bold.color(Colors.black).make(),
                 ),
-                child: '下一步'.text.size(30.sp).color(Colors.white).make(),
-              ),
-            ).paddingOnly(left: 30.w,right: 30.w),
+                Container(
+                  padding: EdgeInsets.only(top: 10.h, right: 30.w, left: 30.w),
+                  color: Colors.white,
+                  child: showPushCar(Colors.black.withOpacity(0.45)),
+                ),
+                30.heightBox,
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => const ContractOwnerPage());
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    ),
+                    child: '下一步'.text.size(30.sp).color(Colors.white).make(),
+                  ),
+                ).paddingOnly(left: 30.w,right: 30.w,bottom: 30.h),
+              ],
+            ),
           ],
         ),
+
       ),
     );
   }
@@ -121,12 +121,12 @@ class _ContractPurchaseState extends State<ContractPurchase> {
   Column showPushCar(Color fontColor) {
     return Column(
       children: [
-        _showarea('车架号', carNum!, fontColor),
-        _showarea('品牌车型', carShape!, fontColor),
-        _showarea('首次上牌', carDate!, fontColor),
-        _showarea('车牌号', licenseNum!, fontColor),
-        _showarea('发动机号', engineNum!, fontColor),
-        _showarea('车身颜色', carColor!, fontColor),
+        _showarea('车架号', widget.publishCarInfo.viNum!, fontColor),
+        _showarea('品牌车型', widget.publishCarInfo.carName!, fontColor),
+        _showarea('首次上牌', widget.publishCarInfo.licensingDate!, fontColor),
+        _showarea('车牌号', widget.publishCarInfo.carNum!, fontColor),
+        _showarea('发动机号', widget.publishCarInfo.engineNum!, fontColor),
+        _showarea('车身颜色', widget.publishCarInfo.carColor!, fontColor),
         Container(
           padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
           color: Colors.transparent,
@@ -152,7 +152,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                     .make(),
               ),
               Expanded(
-                child: carRoute!.text
+                child: widget.publishCarInfo.mileage!.text
                     .size(30.sp)
                     .normal
                     .textStyle(const TextStyle(decoration: TextDecoration.none))

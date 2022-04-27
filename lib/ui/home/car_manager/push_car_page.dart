@@ -19,7 +19,6 @@ import '../../../widget/picker/cloud_image_picker.dart';
 import '../../../widget/sort_widget.dart';
 import '../car_valuation/car_func.dart';
 import '../car_valuation/car_valuation_page.dart';
-import '../sort/carlist_page.dart';
 import '../sort/choose_car_page.dart';
 import '../sort/search_param_model.dart';
 import 'direct_sale/edit_item_widget.dart';
@@ -39,11 +38,11 @@ class _PushCarPageState extends State<PushCarPage> {
       car: SortCarModelModel.init,
       returnType: 3));
   late CarDistinguishModel? carInfoModel;
-  final CarInfo _carInfo = CarInfo();
+  final PublishCarInfo _publishCarInfo = PublishCarInfo();
   final TextEditingController _viNumController = TextEditingController();
   DateTime? _firstDate;
   final TextEditingController _carNumController = TextEditingController();
-  final TextEditingController _versionController = TextEditingController();
+  final TextEditingController _engineController = TextEditingController();
   final TextEditingController _mileController = TextEditingController();
 
   List<ChooseItem> colorList = [
@@ -72,6 +71,10 @@ class _PushCarPageState extends State<PushCarPage> {
 
   @override
   void initState() {
+    _publishCarInfo.mileage=_mileController.text;
+    _publishCarInfo.viNum=_viNumController.text;
+    _publishCarInfo.engineNum=_engineController.text;
+    _publishCarInfo.carNum=_carNumController.text;
     super.initState();
   }
 
@@ -79,7 +82,7 @@ class _PushCarPageState extends State<PushCarPage> {
   void dispose() {
     _viNumController.dispose();
     _carNumController.dispose();
-    _versionController.dispose();
+    _engineController.dispose();
     _mileController.dispose();
     BotToast.closeAllLoading();
     super.dispose();
@@ -223,12 +226,11 @@ class _PushCarPageState extends State<PushCarPage> {
                                     carInfoModel = await CarFunc.carDistinguish(
                                         urls.imageWithHost);
                                     if (carInfoModel != null) {
-                                      _carInfo.name = carInfoModel!.cartype;
-
-                                      _carInfo.address = carInfoModel!.address;
-
-                                      _carInfo.licensingDate =
-                                          carInfoModel!.regdate;
+                                      _publishCarInfo.viNum=carInfoModel!.vin;
+                                      _publishCarInfo.carName = carInfoModel!.cartype;
+                                      _publishCarInfo.licensingDate =carInfoModel!.issuedate;
+                                      _publishCarInfo.carNum=carInfoModel!.lsnum;
+                                      _publishCarInfo.engineNum=carInfoModel!.engineno;
                                       setState(() {});
                                     }
                                   }
@@ -249,7 +251,7 @@ class _PushCarPageState extends State<PushCarPage> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                Get.to(() =>  EvainfoPage(carColor:_carInfo.color! ,firstDate: _carInfo.licensingDate!,mile: _mileController.text, carName: _carInfo.name!,));
+                                Get.to(() =>  EvainfoPage( publishCarInfo: _publishCarInfo,));
                               },
                               style: ButtonStyle(
                                 backgroundColor:
@@ -276,9 +278,9 @@ class _PushCarPageState extends State<PushCarPage> {
   }
 
   Container _rewardWidget() {
-    var vinum = _textarea('车架号', '请输入车架号', _viNumController);
-    var carnum = _textarea('车牌号', '请输入车牌号', _carNumController);
-    var version = _textarea('发动机号', '请输入发动机号', _versionController);
+    var vinum = _textarea('车架号',_publishCarInfo.viNum!, '请输入车架号', _viNumController,(text) => setState(() {_publishCarInfo.viNum=_viNumController.text;}));
+    var carnum = _textarea('车牌号',_publishCarInfo.carNum!, '请输入车牌号', _carNumController,(text) => setState(() {_publishCarInfo.carNum=_carNumController.text;}));
+    var version = _textarea('发动机号',_publishCarInfo.engineNum!, '请输入发动机号', _engineController,(text) => setState(() {_publishCarInfo.engineNum=_engineController.text;}));
     var mile = Container(
       color: Colors.transparent,
       child: Row(
@@ -296,7 +298,7 @@ class _PushCarPageState extends State<PushCarPage> {
           Expanded(
             child: TextField(
               textAlign: TextAlign.start,
-              onChanged: (text) => setState(() {}),
+              onChanged: (text) => setState(() {_publishCarInfo.mileage=_mileController.text;}),
               autofocus: false,
               controller: _mileController,
               decoration: InputDecoration(
@@ -332,24 +334,24 @@ class _PushCarPageState extends State<PushCarPage> {
                   await Get.to(() => ChooseCarPage(
                     callback: () {
                       Get.back();
-                      _carInfo.name = _pickCar.value.car.name;
+                      _publishCarInfo.carName = _pickCar.value.car.name;
                     },
                     pickCar: _pickCar,
                   ));
-                  setState(() {});
+                  setState(() {_publishCarInfo.carName = _pickCar.value.car.name;});
                 },
-            _carInfo.name,
+            _publishCarInfo.carName,
             '请输入具体车型',
           ),
           _function(
             '首次上牌',
                 () async {
               _firstDate = await CarDatePicker.monthPicker(DateTime.now());
-              _carInfo.licensingDate =
+              _publishCarInfo.licensingDate =
                   DateUtil.formatDate(_firstDate, format: 'yyyy-MM');
               setState(() {});
             },
-            _carInfo.licensingDate,
+            _publishCarInfo.licensingDate,
             '选择首次上牌时间',
           ),
           20.heightBox,
@@ -366,9 +368,10 @@ class _PushCarPageState extends State<PushCarPage> {
                         top: Radius.circular(16.w))),
                 builder: (context) {
                   return CarListPicker(
+                    carString: _publishCarInfo.carColor??'',
                     items: colorList, callback: (String content) {
                     Get.back();
-                    _carInfo.color = content;
+                    _publishCarInfo.carColor = content;
                     setState(() {
                     });
                   }, title: '车身颜色',
@@ -376,7 +379,7 @@ class _PushCarPageState extends State<PushCarPage> {
                 },
               );
             },
-            _carInfo.color,
+            _publishCarInfo.carColor,
             '请输入车身颜色',
           ),
           20.heightBox,
@@ -392,9 +395,10 @@ class _PushCarPageState extends State<PushCarPage> {
                 builder: (context) {
                   return CarListPicker(
                     isGrid: false,
+                    carString: _publishCarInfo.carSource??'',
                     items: typeList, callback: (String content) {
                     Get.back();
-                    _source = content;
+                    _publishCarInfo.carSource = content;
                     setState(() {
                     });
                   }, title: '车辆来源',
@@ -402,7 +406,7 @@ class _PushCarPageState extends State<PushCarPage> {
                 },
               );
             },
-            _source,
+            _publishCarInfo.carSource,
             '请选择车辆来源',
           ),
         ],
@@ -412,7 +416,9 @@ class _PushCarPageState extends State<PushCarPage> {
 
   _textarea(String title,
       String hint,
-      TextEditingController _contentController,) {
+      String content,
+      TextEditingController _contentController,
+      Function(String) callback) {
     return Container(
       color: Colors.transparent,
       child: Row(
@@ -429,7 +435,7 @@ class _PushCarPageState extends State<PushCarPage> {
           Expanded(
             child: TextField(
               textAlign: TextAlign.start,
-              onChanged: (text) => setState(() {}),
+              onChanged: callback,
               autofocus: false,
               controller: _contentController,
               decoration: InputDecoration(
@@ -482,4 +488,26 @@ class RadioModel {
 
   RadioModel(this.isSelected,
       this.buttonText,);
+}
+
+class PublishCarInfo{
+  String? viNum;//车架号
+  String? carName;//车型
+  String? licensingDate;//首次上牌时间
+  String? carNum;//车牌号
+  String? engineNum;//发动机号
+  String? carColor;//车身颜色
+  String? mileage;//表现里程
+  String? carSource;//车辆来源
+
+  PublishCarInfo({
+    this.viNum,
+    this.carName,
+    this.licensingDate,
+    this.carNum,
+    this.engineNum,
+    this.carColor,
+    this.mileage,
+    this.carSource,
+});
 }

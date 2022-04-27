@@ -1,5 +1,6 @@
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_purchase_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/select_customer_page.dart';
+import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,8 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class ContractBeginPage extends StatefulWidget {
-  const ContractBeginPage({Key? key}) : super(key: key);
+  final PublishCarInfo  publishCarInfo;
+  const ContractBeginPage({Key? key, required this.publishCarInfo}) : super(key: key);
 
   @override
   State<ContractBeginPage> createState() => _ContractBeginPageState();
@@ -16,6 +18,7 @@ class ContractBeginPage extends StatefulWidget {
 
 class _ContractBeginPageState extends State<ContractBeginPage> {
   String? customer = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +98,7 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => const ContractPurchase());
+                  Get.to(() => ContractPurchase(publishCarInfo: widget.publishCarInfo,));
                 },
                 style: ButtonStyle(
                   backgroundColor:

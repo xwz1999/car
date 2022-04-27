@@ -79,7 +79,6 @@ class SortWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            item.isChoose?Image.asset(Assets.icons.sortChoose.path,width: 35.w,height: 35.w,fit: BoxFit.fill,):const SizedBox(),
             pickString == item.name
                 ? Image.asset(
                     Assets.icons.sortChoose.path,
@@ -92,10 +91,12 @@ class SortWidget extends StatelessWidget {
             Text(
               item.name,
               style: TextStyle(
-                  fontWeight: item.isChoose?FontWeight.bold:FontWeight.normal,
                   color: pickString == item.name
                       ? kPrimaryColor
                       : BaseStyle.color333333,
+                  fontWeight: pickString == item.name
+                      ? FontWeight.bold
+                      : FontWeight.normal,
                   fontSize: BaseStyle.fontSize30),
             ),
             10.wb,
