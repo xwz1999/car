@@ -17,7 +17,8 @@ class SortListPage extends StatefulWidget {
 
   const SortListPage({
     Key? key,
-    required this.pickCar, required this.onConfirm,
+    required this.pickCar,
+    required this.onConfirm,
   }) : super(key: key);
 
   @override
@@ -326,6 +327,7 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisCount: 4,
           callback: (ChooseItem item) {
             _pickCar.value.dischargeStandard = item.name;
+            setState(() {});
           },
           title: '排放标准',
           pickString: _pickCar.value.dischargeStandard,

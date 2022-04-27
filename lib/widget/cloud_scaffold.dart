@@ -4,7 +4,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CloudScaffold extends StatelessWidget {
+class CloudScaffold extends StatelessWidget  {
   ///沉浸式带背景的APPBar
   ///path未背景图的path
   final Widget? body;
@@ -20,6 +20,7 @@ class CloudScaffold extends StatelessWidget {
   final List<Widget> actions;
   final Color? appBarBackColor;
   final PreferredSizeWidget? appBarBottom;
+  final Widget? endDrawer;
 
   const CloudScaffold({
     Key? key,
@@ -31,6 +32,7 @@ class CloudScaffold extends StatelessWidget {
     this.systemStyle = SystemStyle.initial,
     this.extendBody = false,
     this.path,
+    this.endDrawer,
   })  : normal = false,
         title = '',
         actions = const [],
@@ -47,6 +49,7 @@ class CloudScaffold extends StatelessWidget {
     this.extendBody = false,
     this.appbar,
     this.path,
+    this.endDrawer,
   })  : bodyColor = Colors.white,
         normal = false,
         title = '',
@@ -68,7 +71,8 @@ class CloudScaffold extends StatelessWidget {
       this.title,
       this.appBarBackColor = Colors.white,
       this.appBarBottom,
-      this.actions = const []})
+      this.actions = const [],
+      this.endDrawer})
       : normal = true,
         assert(title != null || appbar != null),
         super(key: key);
@@ -80,6 +84,7 @@ class CloudScaffold extends StatelessWidget {
         ? AnnotatedRegion<SystemUiOverlayStyle>(
             value: systemStyle,
             child: Scaffold(
+              endDrawer: endDrawer,
               backgroundColor: bodyColor,
               extendBodyBehindAppBar: extendBody,
               extendBody: extendBody,
@@ -107,6 +112,7 @@ class CloudScaffold extends StatelessWidget {
         : AnnotatedRegion<SystemUiOverlayStyle>(
             value: systemStyle,
             child: Scaffold(
+              endDrawer: endDrawer,
               backgroundColor: bodyColor,
               extendBodyBehindAppBar: extendBody,
               extendBody: extendBody,
