@@ -314,7 +314,7 @@ class _HomePageState extends State<HomePage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CloudImageNetworkWidget(
+          CloudImageNetworkWidget.car(
             width: 240.w,
             height: 180.w,
             urls: [model.mainPhoto],

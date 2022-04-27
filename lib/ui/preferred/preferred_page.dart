@@ -276,7 +276,6 @@ class _PreferredPageState extends State<PreferredPage>
                 12.wb,
                 GestureDetector(
                   onTap: () {
-                    // setState(() {});
                     Get.to(() => const CarCollection());
                   },
                   child: SizedBox(
