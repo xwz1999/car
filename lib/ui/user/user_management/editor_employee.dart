@@ -1,5 +1,4 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/user/interface/business_interface.dart';
 
 import 'package:cloud_car/ui/user/user_management/access_configuration.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure.dart';
@@ -9,6 +8,7 @@ import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
+import '../interface/business_func.dart';
 
 typedef TextCallback = Function(bool audit);
 
@@ -50,7 +50,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
   int sexId = 1;
   List blText = [];
 
-  late String zhi = '';
+  late bool zhi = false;
   @override
   void initState() {
     super.initState();

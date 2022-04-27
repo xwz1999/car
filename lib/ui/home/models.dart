@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:azlistview/azlistview.dart';
+import 'package:cloud_car/model/region/china_region_model.dart';
 import 'package:flutter/material.dart';
 import 'package:github_language_colors/github_language_colors.dart';
 
@@ -9,12 +10,14 @@ class CityModel extends ISuspensionBean {
   String name;
   String? tagIndex;
   String? namePinyin;
+  ChinaRegionModel? model;
 
   CityModel({
     this.id,
     required this.name,
     this.tagIndex,
     this.namePinyin,
+    this.model
   });
 
   CityModel.fromJson(Map<String, dynamic> json) : name = json['name'];

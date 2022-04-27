@@ -1,14 +1,21 @@
 // ignore_for_file: non_constant_identifier_names, unused_field
+import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/user/salelists_model.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/car_widget.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'backup/make_deal.dart';
 
 class SalesOrderPage extends StatefulWidget {
@@ -24,9 +31,12 @@ class SalesOrderPage extends StatefulWidget {
 }
 
 class _SalesOrderPageState extends State<SalesOrderPage> {
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [];
-
+  List<SalelistsModel> _SalesList = [];
+  int _page = 1;
+  final int _size = 10;
   List carList = [
     {
       'judge': false,
@@ -159,6 +169,12 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   }
 
   @override
+  void dispose() {
+    _easyRefreshController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -188,88 +204,190 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 },
               )),
           Expanded(
-            child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
-                  return getCar(carList[index]);
-                },
-                itemCount: carList.length),
+            child: EasyRefresh(
+              firstRefresh: true,
+              header: MaterialHeader(),
+              footer: MaterialFooter(),
+              controller: _easyRefreshController,
+              onRefresh: () async {
+                _SalesList =
+                    await OrderFunc.getSaleList(page: _page, size: _size);
+
+                setState(() {});
+              },
+              onLoad: () async {
+                _page++;
+                var baseList =
+                    await apiClient.requestList(API.order.saleLists, data: {
+                  'page': _page,
+                  'size': _size,
+                });
+                if (baseList.nullSafetyTotal > _SalesList.length) {
+                  _SalesList.addAll(baseList.nullSafetyList
+                      .map((e) => SalelistsModel.fromJson(e))
+                      .toList());
+                } else {
+                  _easyRefreshController.finishLoad(noMore: true);
+                }
+                setState(() {});
+              },
+              child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    return getSales(_SalesList[index]);
+                  },
+                  itemCount: carList.length),
+            ),
           ),
         ],
       ),
     );
   }
 
-  getCar(item) {
+  getSales(SalelistsModel model) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
       child: GestureDetector(
         onTap: () {
-          switch (item['judgename']) {
-            case '待预定':
+          switch (model.status) {
+            case 0:
+
+              ///交易取消
+              Get.to(() => const TransactionCancelled());
+              break;
+            case 1:
+
+              ///待预定
               Get.to(() => const Reservation(
                     stat: '待预定',
                     judge: false,
                   ));
               break;
-            case '已预定':
+            case 2:
+
+              ///已预定
               Get.to(() => const Reservation(
                     stat: '待预定',
                     judge: true,
                   ));
               break;
-            case '待检测':
+            case 3:
+
+              ///待检测
               Get.to(() => const Reservation(
                     stat: '待检测',
                     judge: true,
                   ));
               break;
-            case '支付首付':
-              switch (item['picename']) {
-                case '需付首付':
-                  Get.to(() => const Reservation(
-                        stat: '支付首付',
-                        judge: false,
-                      ));
-                  break;
-                case '已付首付':
-                  Get.to(() => const Reservation(
-                        stat: '支付首付',
-                        judge: true,
-                      ));
-                  break;
-              }
+            // case 4:
+            //   ///支付首付
+            //   switch () {
+            //     case '需付首付':
+            //       Get.to(() => const Reservation(
+            //             stat: '支付首付',
+            //             judge: false,
+            //           ));
+            //       break;
+            //     case '已付首付':
+            //       Get.to(() => const Reservation(
+            //             stat: '支付首付',
+            //             judge: true,
+            //           ));
+            //       break;
+            //   }
+            //   break;
+            // case '待过户':///待过户
+            //   Get.to(() => const Reservation(
+            //         stat: '待过户',
+            //         judge: true,
+            //       ));
+            //   break;
+            // case '支付尾款':///支付尾款
+            //   switch (item['picename']) {
+            //     case '需付尾款':
+            //       Get.to(() => const Reservation(
+            //             stat: '支付尾款',
+            //             judge: false,
+            //           ));
+            //       break;
+            //     case '已付尾款':
+            //       Get.to(() => const Reservation(
+            //             stat: '支付尾款',
+            //             judge: true,
+            //           ));
+            //       break;
+            //   }
+            //   break;
+            case 50:
 
-              break;
-            case '待过户':
-              Get.to(() => const Reservation(
-                    stat: '待过户',
-                    judge: true,
-                  ));
-              break;
-            case '支付尾款':
-              switch (item['picename']) {
-                case '需付尾款':
-                  Get.to(() => const Reservation(
-                        stat: '支付尾款',
-                        judge: false,
-                      ));
-                  break;
-                case '已付尾款':
-                  Get.to(() => const Reservation(
-                        stat: '支付尾款',
-                        judge: true,
-                      ));
-                  break;
-              }
-              break;
-            case '成交订单':
+              ///成交订单
               Get.to(() => const MakeDealData());
               break;
-            case '交易取消':
-              Get.to(() => const TransactionCancelled());
-              break;
           }
+          // switch (item['judgename']) {
+          //   case '待预定':
+          //     Get.to(() => const Reservation(
+          //           stat: '待预定',
+          //           judge: false,
+          //         ));
+          //     break;
+          //   case '已预定':
+          //     Get.to(() => const Reservation(
+          //           stat: '待预定',
+          //           judge: true,
+          //         ));
+          //     break;
+          //   case '待检测':
+          //     Get.to(() => const Reservation(
+          //           stat: '待检测',
+          //           judge: true,
+          //         ));
+          //     break;
+          //   case '支付首付':
+          //     switch (item['picename']) {
+          //       case '需付首付':
+          //         Get.to(() => const Reservation(
+          //               stat: '支付首付',
+          //               judge: false,
+          //             ));
+          //         break;
+          //       case '已付首付':
+          //         Get.to(() => const Reservation(
+          //               stat: '支付首付',
+          //               judge: true,
+          //             ));
+          //         break;
+          //     }
+          //     break;
+          //   case '待过户':
+          //     Get.to(() => const Reservation(
+          //           stat: '待过户',
+          //           judge: true,
+          //         ));
+          //     break;
+          //   case '支付尾款':
+          //     switch (item['picename']) {
+          //       case '需付尾款':
+          //         Get.to(() => const Reservation(
+          //               stat: '支付尾款',
+          //               judge: false,
+          //             ));
+          //         break;
+          //       case '已付尾款':
+          //         Get.to(() => const Reservation(
+          //               stat: '支付尾款',
+          //               judge: true,
+          //             ));
+          //         break;
+          //     }
+          //     break;
+          //   case '成交订单':
+          //     Get.to(() => const MakeDealData());
+          //     break;
+          //   case '交易取消':
+          //     Get.to(() => const TransactionCancelled());
+          //     break;
+          // }
         },
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
@@ -282,9 +400,10 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 Padding(
                   padding: EdgeInsets.only(left: 0.w),
                   child: Text(
-                    item['judgename'],
+                    _getText(model.status),
+                    //item['judgename'],
                     style: TextStyle(
-                        color: item['judgename'] != '交易取消'
+                        color: model.status != 50
                             ? const Color(0xFF027AFF)
                             : const Color(0xFF666666),
                         fontSize: BaseStyle.fontSize28),
@@ -296,7 +415,9 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                     SizedBox(
                       width: 196.w,
                       height: 150.w,
-                      child: Image.asset(item['url']),
+                      child: CloudImageNetworkWidget.car(
+                        urls: [model.mainPhoto],
+                      ),
                     ),
                     20.wb,
                     SizedBox(
@@ -304,16 +425,21 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(item['title'],
+                          Text(model.modelName,
                               style: TextStyle(
                                   fontSize: BaseStyle.fontSize28,
                                   color: BaseStyle.color111111)),
                           32.hb,
                           Padding(
-                            padding: EdgeInsets.only(right: 16.w),
-                            child: getText('过户0次', '2020年10月', '20.43万公里',
-                                item['judgename']),
-                          )
+                              padding: EdgeInsets.only(right: 16.w),
+                              child: getText(
+                                '过户0次',
+                                DateUtil.formatDateMs(
+                                    model.licensingDate.toInt() * 1000,
+                                    format: 'yyyy年MM月'),
+                                '${model.mileage}万公里',
+                                _getText(model.status),
+                              ))
                         ],
                       ),
                     ),
@@ -321,7 +447,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 ),
                 40.hb,
                 SizedBox(
-                    child: item['judge']
+                    child: model.status != 1 || model.status != 2
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -340,7 +466,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: '30.00',
+                                          text: model.amount,
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2),
@@ -354,7 +480,8 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   56.wb,
                                   SizedBox(
                                     child: Text(
-                                      item['picename'],
+                                      '定价',
+                                      // item['picename'],
                                       style: TextStyle(
                                           fontSize: BaseStyle.fontSize28,
                                           color: BaseStyle.color999999),
@@ -364,7 +491,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: item['pice'],
+                                          text: model.deposit, //item['pice'],
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2
@@ -385,8 +512,9 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                               ),
                               32.hb,
                               GestureDetector(
+                                //item['buttomname']
                                 onTap: () {
-                                  switch (item['buttomname']) {
+                                  switch (model.modelName) {
                                     case '成交订单':
                                       Get.to(() => const MakeDeal());
                                       break;
@@ -403,7 +531,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                         borderRadius:
                                             BorderRadius.circular(8.w)),
                                     child: Text(
-                                      item['buttomname'],
+                                      model.deposit, // item['buttomname'],
                                       style: TextStyle(
                                           color: kForeGroundColor,
                                           fontSize: BaseStyle.fontSize28),
@@ -411,7 +539,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                               )
                             ],
                           )
-                        : item['judgename'] != '交易取消'
+                        : model.status == 0
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -427,7 +555,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: '30.00',
+                                          text: model.balancePayment,
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2),
@@ -441,7 +569,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   56.wb,
                                   SizedBox(
                                     child: Text(
-                                      item['picename'],
+                                      _getText(model.status),
                                       style: TextStyle(
                                           fontSize: BaseStyle.fontSize28,
                                           color: BaseStyle.color999999),
@@ -451,7 +579,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: item['pice'],
+                                          text: model.deposit,
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2
@@ -485,7 +613,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: '30.00',
+                                          text: model.balancePayment,
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2),
@@ -573,5 +701,63 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
         //     ))
       ],
     );
+  }
+
+  _getText(int num) {
+    switch (num) {
+      case 0:
+        return '订单取消';
+        // ignore: dead_code
+        break;
+      case 1:
+        return '待签订';
+        // ignore: dead_code
+        break;
+      case 2:
+        return '已签订';
+        // ignore: dead_code
+        break;
+      case 3:
+        return '已支付定金';
+        // ignore: dead_code
+        break;
+      case 10:
+        return '申请检测';
+        // ignore: dead_code
+        break;
+      case 11:
+        return '上传检测报告';
+        // ignore: dead_code
+        break;
+      case 20:
+        return '首付审核';
+        // ignore: dead_code
+        break;
+      case 21:
+        return '首付审核通过';
+        // ignore: dead_code
+        break;
+      case 30:
+        return '过户';
+        // ignore: dead_code
+        break;
+      case 31:
+        return '过户完成';
+        // ignore: dead_code
+        break;
+      case 40:
+        return '尾款审核';
+        // ignore: dead_code
+        break;
+      case 41:
+        return '尾款审核通过';
+        // ignore: dead_code
+        break;
+      case 50:
+        return '交车';
+        // ignore: dead_code
+        break;
+      default:
+    }
   }
 }

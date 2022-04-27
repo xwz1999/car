@@ -9,20 +9,22 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../model/region/china_region_model.dart';
 
-class ChooseCarPage extends StatefulWidget {
+typedef CityCallback = Function(ChinaRegionModel model);
 
-  final VoidCallback callback;
+class ChooseCityPage extends StatefulWidget {
+
+  final CityCallback callback;
 
 
-  final ValueNotifier<SearchParamModel> pickCar;
-  const ChooseCarPage({Key? key, required this.callback,  required this.pickCar}) : super(key: key);
+  const ChooseCityPage({Key? key, required this.callback,}) : super(key: key);
 
   @override
-  _ChooseCarPageState createState() => _ChooseCarPageState();
+  _ChooseCityPageState createState() => _ChooseCityPageState();
 }
 
-class _ChooseCarPageState extends State<ChooseCarPage> {
+class _ChooseCityPageState extends State<ChooseCityPage> {
 
   @override
   void initState() {
@@ -43,7 +45,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
             isSpecial: true,
           ),
           backgroundColor: kForeGroundColor,
-          title:   Text("选择车型",
+          title:   Text('定位筛选',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 34.sp,
@@ -54,8 +56,9 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
         body:
-
-        CarListPage(carCallback: widget.callback, pickCar: widget.pickCar,),
+       CityListPage(cityCallback: (model){
+          widget.callback(model);
+        }),
     );
   }
 

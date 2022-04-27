@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/user/interface/business_interface.dart';
+import 'package:cloud_car/ui/user/interface/business_func.dart';
 
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
 
@@ -20,7 +20,7 @@ class AddStores extends StatefulWidget {
 
 late String storesName = '';
 late String storesAddress = '';
-late String zhi;
+late bool zhi = false;
 
 class _AddStoresState extends State<AddStores> {
   @override

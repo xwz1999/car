@@ -8,31 +8,30 @@ import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
-class OrderFunc{
-
-
+class OrderFunc {
   ///独立合伙人签订合同
   static Future<bool> getSign(String sign) async {
     BaseModel res =
-    await apiClient.request(API.user.sign.contractSign, data: {'sign': sign});
-    if (res.code==0) {
+        await apiClient.request(API.user.sign.partnerPay, data: {'sign': sign});
+    if (res.code == 0) {
       return true;
-    } else{
+    } else {
       CloudToast.show(res.msg);
       return false;
     }
-
   }
 
-///寄卖订单列表
+  ///寄卖订单列表
   static Future<List<ListsModel>> getLists() async {
     BaseListModel baseList =
-    await apiClient.requestList(API.order.consignmentLists, data: {});
-    if (baseList.code!=0) {
+        await apiClient.requestList(API.order.consignmentLists, data: {});
+    if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
-    }else{
-      return baseList.nullSafetyList.map((e) => ListsModel.fromJson(e)).toList();
+    } else {
+      return baseList.nullSafetyList
+          .map((e) => ListsModel.fromJson(e))
+          .toList();
     }
   }
 
@@ -59,21 +58,20 @@ class OrderFunc{
     Map<String, dynamic> report = {
       "paints": publishCarModel.report?.paints,
     };
-    BaseModel model = await apiClient
-        .request(API.order.consignmentPublish, data: {
-      'orderId':publishCarModel.orderId,
-      'photos':photos,
-      'baseInfo':baseInfo,
-      'report':report
+    BaseModel model =
+        await apiClient.request(API.order.consignmentPublish, data: {
+      'orderId': publishCarModel.orderId,
+      'photos': photos,
+      'baseInfo': baseInfo,
+      'report': report
     });
-    if (model.code==0) {
+    if (model.code == 0) {
       return true;
-    } else{
+    } else {
       CloudToast.show(model.msg);
       return false;
     }
   }
-
 
   ///添加车商寄卖订单
   static Future<bool> addDealerOrder(OrderDealerModel orderDealerModel) async {
@@ -97,44 +95,45 @@ class OrderFunc{
     };
 
     Map<String, dynamic> other = {
-
       "price": orderDealerModel.other?.price,
       "keyCount": orderDealerModel.other?.keyCount,
       "compulsoryInsurance": orderDealerModel.other?.compulsoryInsurance,
-      "compulsoryInsuranceDate": orderDealerModel.other?.compulsoryInsuranceDate,
+      "compulsoryInsuranceDate":
+          orderDealerModel.other?.compulsoryInsuranceDate,
       "commercialInsurance": orderDealerModel.other?.commercialInsurance,
-      "commercialInsuranceDate": orderDealerModel.other?.commercialInsuranceDate,
-      "commercialInsurancePrice": orderDealerModel.other?.commercialInsurancePrice,
+      "commercialInsuranceDate":
+          orderDealerModel.other?.commercialInsuranceDate,
+      "commercialInsurancePrice":
+          orderDealerModel.other?.commercialInsurancePrice,
     };
 
     Map<String, dynamic> report = {
       "paints": orderDealerModel.report?.paints,
     };
-    BaseModel model = await apiClient
-        .request(API.order.consignmentPublish, data: {
-      'priceId':orderDealerModel.priceId,
-      'photos':photos,
-      'baseInfo':baseInfo,
-      'report':report,
-      'other':other
+    BaseModel model =
+        await apiClient.request(API.order.consignmentPublish, data: {
+      'priceId': orderDealerModel.priceId,
+      'photos': photos,
+      'baseInfo': baseInfo,
+      'report': report,
+      'other': other
     });
-    if (model.code==0) {
+    if (model.code == 0) {
       return true;
-    } else{
+    } else {
       CloudToast.show(model.msg);
       return false;
     }
   }
 
-
   ///邀约
   static Future<bool> getAdd(
-      int customerId,
-      int carId,
-      String inviteAt,
-      String address,
-      String remark,
-      ) async {
+    int customerId,
+    int carId,
+    String inviteAt,
+    String address,
+    String remark,
+  ) async {
     BaseModel res = await apiClient.request(API.order.inviteAdd, data: {
       'customerId': customerId,
       'carId': carId,
@@ -142,54 +141,58 @@ class OrderFunc{
       'address': address,
       'remark': remark,
     });
-    if (res.code==0) {
+    if (res.code == 0) {
       return true;
-    } else{
+    } else {
       CloudToast.show(res.msg);
       return false;
     }
-
   }
 
   ///售车订单列表
-  static Future<List<SalelistsModel>> getSaleList() async {
+  static Future<List<SalelistsModel>> getSaleList(
+      {required int page, int size = 0}) async {
     BaseListModel baseList =
-    await apiClient.requestList(API.order.saleLists.saleLists, data: {});
-    if (baseList.code!=0) {
+        await apiClient.requestList(API.order.saleLists, data: {
+      'page': page,
+      'size': size,
+    });
+    if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
-    }else{
-      return baseList.nullSafetyList.map((e) => SalelistsModel.fromJson(e)).toList();
+    } else {
+      return baseList.nullSafetyList
+          .map((e) => SalelistsModel.fromJson(e))
+          .toList();
     }
   }
 
   //上传检车报告
   static Future<bool> getTestrepord(
-      int orderId,
-      String report,
-      ) async {
+    int orderId,
+    String report,
+  ) async {
     BaseModel res = await apiClient.request(API.order.saleTestrepord, data: {
       'orderId': orderId,
       'report': report,
     });
-    if (res.code==0) {
+    if (res.code == 0) {
       return true;
-    } else{
+    } else {
       CloudToast.show(res.msg);
       return false;
     }
-
   }
 
   ///过户
   static Future<bool> getTransfer(
-      int orderId,
-      String certificate,
-      String vehicleLicence,
-      String invoice,
-      String guaranteeSlip,
-      num commercialInsurancePrice,
-      ) async {
+    int orderId,
+    String certificate,
+    String vehicleLicence,
+    String invoice,
+    String guaranteeSlip,
+    num commercialInsurancePrice,
+  ) async {
     BaseModel res = await apiClient.request(API.order.scaleTransfer, data: {
       'orderId': orderId,
       'certificate': certificate,
@@ -198,13 +201,12 @@ class OrderFunc{
       'guaranteeSlip': guaranteeSlip,
       'commercialInsurancePrice': commercialInsurancePrice
     });
-    if (res.code==0) {
+    if (res.code == 0) {
       return true;
-    } else{
+    } else {
       CloudToast.show(res.msg);
       return false;
     }
-
   }
 
   ///完结订单
@@ -212,24 +214,23 @@ class OrderFunc{
     BaseModel res = await apiClient.request(API.order.saleFinal, data: {
       'orderId': orderId,
     });
-    if (res.code==0) {
+    if (res.code == 0) {
       return true;
-    } else{
+    } else {
       CloudToast.show(res.msg);
       return false;
     }
-
   }
 
   ///叫车订单->添加叫车订单
   static Future<bool> getCaradd(
-      int carId,
-      int customerId,
-      String phone,
-      String reserveTime,
-      String address,
-      String remark,
-      ) async {
+    int carId,
+    int customerId,
+    String phone,
+    String reserveTime,
+    String address,
+    String remark,
+  ) async {
     BaseModel res = await apiClient.request(API.order.carAdd, data: {
       'carId': carId,
       'customerId': customerId,
@@ -238,13 +239,12 @@ class OrderFunc{
       'address': address,
       'remark': remark
     });
-    if (res.code==0) {
+    if (res.code == 0) {
       return true;
-    } else{
+    } else {
       CloudToast.show(res.msg);
       return false;
     }
-
   }
 
   ///交车
@@ -252,14 +252,11 @@ class OrderFunc{
     BaseModel res = await apiClient.request(API.order.carFinal, data: {
       'orderId': orderId,
     });
-    if (res.code==0) {
+    if (res.code == 0) {
       return true;
-    } else{
+    } else {
       CloudToast.show(res.msg);
       return false;
     }
-
   }
-
-
 }

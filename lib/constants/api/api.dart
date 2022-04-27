@@ -1,3 +1,5 @@
+
+
 import '../environment/environment.dart';
 
 part 'user_api.dart';
@@ -48,12 +50,14 @@ class API {
   static _Task task = _Task();
   ///地区
   static _Region region = _Region();
-
+  ///用户手册
+  static _Broker broker = _Broker();
+  ///意见提交
+  static _Feedback feedback = _Feedback();
   //二级分类
   static _UserApi user = _UserApi();
-
 }
-
+  
 class _Task {
   ///客户邀约列表
   String get getInviteLists => '/task/invite/lists';
@@ -113,6 +117,28 @@ class _Contract {
   String get addSaleContract => '/contract/sale/add';
 }
 
+class _File {
+  ///图片上传
+  String get uploadImage => '/file/upload/image';
+
+  ///文件上传
+  String get uploadFile => '/file/upload/file';
+}
+
+class _Login {
+  ///手机号一键登录
+  String get phone => '/login/phone';
+
+  ///微信登录
+  String get weixin => '/login/wechat';
+
+  ///微信登录绑定账号
+  String get weixinBind => '/login/bind';
+
+  ///微信绑定手机号发送验证码
+  String get phoneCode => '/login/sms';
+}
+
 class _Order {
   ///寄卖订单->寄卖订单列表
   get consignmentLists => '/order/consignment/lists';
@@ -141,36 +167,9 @@ class _Order {
   ///交车
   get carFinal => '/order/call/car/final';
 
-
   ///添加车商寄卖订单
   get addConsignment => '/order/dealer/consignment/add';
-
 }
-
-
-
-class _File {
-  ///图片上传
-  String get uploadImage => '/file/upload/image';
-
-  ///文件上传
-  String get uploadFile => '/file/upload/file';
-}
-
-class _Login {
-  ///手机号一键登录
-  String get phone => '/login/phone';
-
-  ///微信登录
-  String get weixin => '/login/wechat';
-
-  ///微信登录绑定账号
-  String get weixinBind => '/login/bind';
-
-  ///微信绑定手机号发送验证码
-  String get phoneCode => '/login/sms';
-}
-
 
 class _Poster {
   ///海报列表
@@ -207,3 +206,16 @@ class _StoreManagement {
   get staffAdd => '/business/staff/add';
 }
 
+///用户手册
+class _Broker {
+  ///用户手册
+  get handbookAll => '/app/handbook/all';
+
+  ///详情
+  get handbookInfo => '/app/handbook/info';
+}
+
+///意见反馈
+class _Feedback {
+  get feedbackSubmit => '/app/feedback/submit';
+}

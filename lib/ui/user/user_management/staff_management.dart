@@ -1,6 +1,6 @@
 import 'package:cloud_car/model/user/storeall_model.dart';
 
-import 'package:cloud_car/ui/user/interface/business_interface.dart';
+import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/ui/user/user_management/Employee_details.dart';
 import 'package:cloud_car/ui/user/user_management/add_employee.dart';
 import 'package:cloud_car/ui/user/user_management/add_stores.dart';
@@ -10,7 +10,6 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -34,7 +33,6 @@ class _StaffManagementState extends State<StaffManagement> {
   @override
   void initState() {
     super.initState();
-
     _editingController = TextEditingController(text: searchText);
   }
 
@@ -49,6 +47,7 @@ class _StaffManagementState extends State<StaffManagement> {
     setState(() {});
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -90,46 +89,47 @@ class _StaffManagementState extends State<StaffManagement> {
           32.hb,
           Expanded(
               child: EasyRefresh(
-                  firstRefresh: true,
-                  header: MaterialHeader(),
-                  footer: MaterialFooter(),
-                  controller: _easyRefreshController,
-                  onRefresh: () async {
-                    _refresh();
-                  },
-                  child: Employees.isNotEmpty
-                      ?
-                      // Employees.isEmpty
-                      //     ? const SizedBox()
-                      //     : ListView.builder(
-                      //         itemBuilder: (context, index) {
-                      //           return _getList(Employees[index]);
-                      //         },
-                      //         itemCount: Employees.length,
-                      //       ),
-                      ListView.builder(
-                          itemBuilder: (context, index) {
-                            return _getList(Employees[index]);
-                          },
-                          itemCount: Employees.length,
-                        )
-                      : Column(
-                          children: [
-                            294.hb,
-                            Image.asset(
-                              Assets.icons.record.path,
-                              width: 328.w,
-                              height: 328.w,
-                            ),
-                            48.wb,
-                            Text(
-                              '暂无相关员工信息',
-                              style: TextStyle(
-                                  color: BaseStyle.color333333,
-                                  fontSize: BaseStyle.fontSize28),
-                            )
-                          ],
-                        ))),
+            firstRefresh: true,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            controller: _easyRefreshController,
+            onRefresh: () async {
+              _refresh();
+            },
+            child:
+                //Employees.isEmpty?
+                Employees.isEmpty
+                    ? const SizedBox()
+                    : ListView.builder(
+                        itemBuilder: (context, index) {
+                          return _getList(Employees[index]);
+                        },
+                        itemCount: Employees.length,
+                      ),
+            // ListView.builder(
+            //     itemBuilder: (context, index) {
+            //       return _getList(Employees[index]);
+            //     },
+            //     itemCount: Employees.length,
+            //   )
+            // : Column(
+            //     children: [
+            //       294.hb,
+            //       Image.asset(
+            //         Assets.icons.record.path,
+            //         width: 328.w,
+            //         height: 328.w,
+            //       ),
+            //       48.wb,
+            //       Text(
+            //         '暂无相关员工信息',
+            //         style: TextStyle(
+            //             color: BaseStyle.color333333,
+            //             fontSize: BaseStyle.fontSize28),
+            //       )
+            //     ],
+            //   )
+          )),
           _getButtom(),
           34.hb
         ],

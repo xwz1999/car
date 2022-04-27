@@ -92,11 +92,10 @@ class _PreferredPageState extends State<PreferredPage>
     ];
     listWidget = [
       CityListPage(
-        cityCallback: (String city) {
+        cityCallback: (model) {
           if (kDebugMode) {
-            print(city);
+            print(model);
           }
-          _dropDownHeaderItemStrings = [city, '品牌', '价格', '排序'];
           setState(() {});
         },
       ),

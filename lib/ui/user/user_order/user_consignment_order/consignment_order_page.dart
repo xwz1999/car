@@ -1,3 +1,5 @@
+import 'package:cloud_car/model/user/lists_model.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_rejected.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_signed.dart';
@@ -5,8 +7,10 @@ import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../../widget/car_widget.dart';
 
@@ -22,73 +26,10 @@ class ConsignmentOrderPage extends StatefulWidget {
 class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [];
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   ScreenControl screenControl = ScreenControl();
-  List carList = [
-    {
-      'judge': false,
-      'judgename': '待签订',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      //'picename': '需付定金',
-      //'pice': '1.00',
-      'buttomname': '',
-    },
-    {
-      'judge': true,
-      'judgename': '待发布',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      //'picename': '已付定金',
-      //'pice': '1.00',
-      'buttomname': '发布车辆',
-    },
-    {
-      'judge': false,
-      'judgename': '审核中',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      //'picename': '需付首付',
-      //'pice': '10.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '已驳回',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      //'picename': '已付首付',
-      //'pice': '10.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '在售',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      //'picename': '需付尾款',
-      //'pice': '19.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '已售',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      // 'picename': '支付尾款',
-      //'pice': '19.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '交易取消',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      //'picename': '',
-      //'pice': '',
-      'buttomname': '',
-    },
-  ];
+  List<ListsModel> carList = [];
   @override
   void initState() {
     super.initState();
@@ -120,6 +61,14 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
   }
 
   @override
+  void dispose() {
+    _easyRefreshController.dispose();
+    super.dispose();
+  }
+
+  // int _page = 1;
+  // final int _size = 10;
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -148,54 +97,64 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
                 }),
           ),
           16.hb,
-          Expanded(
-            child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
-                  return getCar(carList[index]);
-                },
-                itemCount: carList.length),
-          ),
+          EasyRefresh(
+              firstRefresh: true,
+              header: MaterialHeader(),
+              footer: MaterialFooter(),
+              controller: _easyRefreshController,
+              onRefresh: () async {
+                //_page = 1;
+                carList = await OrderFunc.getLists();
+                setState(() {});
+              },
+              child: Expanded(
+                child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      return getCar(carList[index]);
+                    },
+                    itemCount: carList.length),
+              )),
         ],
       ),
     );
   }
 
-  getCar(item) {
+  getCar(ListsModel item) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
       child: GestureDetector(
         onTap: () {
-          switch (item['judgename']) {
-            case '待签订':
+          switch (item.status) {
+            case 1:
               Get.to(() => const ConsignmentSigned(
                     stat: '待签订',
                   ));
               break;
-            case '待发布':
+            case 2:
               Get.to(() => const ConsignmentSigned(
                     stat: '待发布',
                   ));
               break;
-            case '审核中':
+            case 3:
               Get.to(() => const ConsignmentSigned(
                     stat: '审核中',
                   ));
               break;
-            case '已驳回':
+            case 4:
               Get.to(() => const ConsignmentRejected());
               break;
-            case '在售':
+            case 5:
               Get.to(() => const ConsignmentSigned(
                     stat: '在售',
                   ));
               break;
-            case '已售':
+            case 6:
               Get.to(() => const ConsignmentSigned(
                     stat: '已售',
                   ));
               break;
-            case '交易取消':
+            case 8:
               Get.to(() => const ConsignmentSigned(
                     stat: '交易取消',
                   ));
@@ -213,9 +172,9 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
                 Padding(
                   padding: EdgeInsets.only(left: 0.w),
                   child: Text(
-                    item['judgename'],
+                    ' item.',
                     style: TextStyle(
-                        color: getColor(item['judgename']),
+                        color: getColor(item.modeNamel),
                         fontSize: BaseStyle.fontSize28),
                   ),
                 ),
@@ -225,7 +184,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
                     SizedBox(
                       width: 196.w,
                       height: 150.w,
-                      child: Image.asset(item['url']),
+                      child: Image.asset(item.modeNamel),
                     ),
                     20.wb,
                     SizedBox(
@@ -233,14 +192,18 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(item['title'],
+                          Text(item.modeNamel,
                               style: TextStyle(
                                   fontSize: BaseStyle.fontSize28,
                                   color: BaseStyle.color111111)),
                           32.hb,
                           Padding(
                             padding: EdgeInsets.only(right: 16.w),
-                            child: getText('2020年10月', '20.43万公里'),
+                            child: getText(
+                                DateUtil.formatDateMs(
+                                    item.licensingDate.toInt() * 1000,
+                                    format: 'yyyy年MM月'),
+                                '${item.mileage}万公里'),
                           )
                         ],
                       ),
@@ -249,12 +212,12 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
                 ),
                 32.hb,
                 SizedBox(
-                    child: item['judge']
+                    child: item.mileage == 'asas'
                         ? Padding(
                             padding: EdgeInsets.only(left: 452.w),
                             child: GestureDetector(
                               onTap: () {
-                                switch (item['buttomname']) {
+                                switch (item.modeNamel) {
                                   case '成交订单':
                                     Get.to(() => const MakeDeal());
                                     break;
@@ -270,7 +233,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
                                       color: const Color(0xFF027AFF),
                                       borderRadius: BorderRadius.circular(8.w)),
                                   child: Text(
-                                    item['buttomname'],
+                                    item.modeNamel,
                                     style: TextStyle(
                                         color: kForeGroundColor,
                                         fontSize: BaseStyle.fontSize28),

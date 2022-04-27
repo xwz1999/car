@@ -6,7 +6,7 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_order_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_page.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -14,6 +14,7 @@ import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'backup/make_deal.dart';
 
 class SalesOrder extends StatefulWidget {
@@ -141,7 +142,9 @@ class _SalesOrderState extends State<SalesOrder> {
   @override
   void initState() {
     super.initState();
-
+    _dropDownHeaderItemStrings1 = [
+      '售卖订单',
+    ];
     listWidget = [
       Container(
         width: double.infinity,
@@ -162,9 +165,6 @@ class _SalesOrderState extends State<SalesOrder> {
           itemList: _sortList,
         ),
       ),
-    ];
-    _dropDownHeaderItemStrings1 = [
-      '售卖订单',
     ];
   }
 
@@ -205,22 +205,28 @@ class _SalesOrderState extends State<SalesOrder> {
 
   get() {
     switch (_dropDownHeaderItemStrings1.first) {
-      case '售卖车辆':
+      case '售卖订单':
         return SalesOrderPage(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });
         // ignore: dead_code
         break;
       case '个人寄卖':
-        return ConsignmentOrderPage(callBack: () {
-          _scaffoldKey.currentState?.openDrawer();
-        });
-        // ignore: dead_code
-        break;
-      case '租车订单':
         return RentalcarOrderPage(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });
+        // ConsignmentOrderPage(callBack: () {
+        //   _scaffoldKey.currentState?.openDrawer();
+        // });
+        // ignore: dead_code
+        break;
+      case '租车订单':
+        return ThatcarOrderPage(callBack: () {
+          _scaffoldKey.currentState?.openDrawer();
+        });
+        // RentalcarOrderPage(callBack: () {
+        //   _scaffoldKey.currentState?.openDrawer();
+        // });
         // ignore: dead_code
         break;
       case '叫车订单':
@@ -230,9 +236,12 @@ class _SalesOrderState extends State<SalesOrder> {
         // ignore: dead_code
         break;
       case '车商寄卖':
-        return ConsignmentOrderPage(callBack: () {
+        return RentalcarOrderPage(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });
+        // ConsignmentOrderPage(callBack: () {
+        //   _scaffoldKey.currentState?.openDrawer();
+        // });
         // ignore: dead_code
         break;
     }

@@ -5,6 +5,7 @@ import 'package:cloud_car/model/user/storeselect_moedl.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 class Business {
   ///组织架构
@@ -34,7 +35,7 @@ class Business {
   }
 
   ///添加门店
-  static Future<String> getStoreadd(
+  static Future<bool> getStoreadd(
     String name,
     String address,
   ) async {
@@ -43,12 +44,16 @@ class Business {
       'name': name,
       'address': address,
     });
-    if (res.data! == null) return '';
-    return (res.data! as String).toString();
+    if (res.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(res.msg);
+      return false;
+    }
   }
 
   ///添加员工
-  static Future<String> getStaffadd(
+  static Future<bool> getStaffadd(
     String name,
     int gender,
     String phone,
@@ -65,7 +70,12 @@ class Business {
       'roleId': roleId,
       'commission': commission
     });
-    if (res.data! == null) return '0';
-    return (res.data as String).toString();
+
+    if (res.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(res.msg);
+      return false;
+    }
   }
 }

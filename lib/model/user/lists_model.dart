@@ -15,7 +15,6 @@ class ListsModel extends Equatable {
 
   // ignore: prefer_const_constructors_in_immutables
 
-
   factory ListsModel.fromJson(Map<String, dynamic> json) =>
       _$ListsModelFromJson(json);
 

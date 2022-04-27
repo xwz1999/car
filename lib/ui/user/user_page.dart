@@ -1,8 +1,11 @@
+import 'package:cloud_car/model/user/user_info_model.dart';
+import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/home/home_page.dart';
-import 'package:cloud_car/ui/user/interface/user_interface.dart';
-import 'package:cloud_car/ui/user/product_manuals.dart';
+import 'package:cloud_car/ui/user/interface/user_func.dart';
+import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
+import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
 
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
 import 'package:cloud_car/ui/user/user_install/system_settings.dart';
@@ -33,18 +36,16 @@ class _UserPageState extends State<UserPage> {
 
   // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
-  String _assessment = ''; //评估
-//  int wallet=0,//钱包
-//  int invitation=0,//邀请
+
   @override
   void initState() {
     super.initState();
 
     ///动态appbar导致 refresh组件刷新判出现问题 首次刷新手动触发
-    Future.delayed(const Duration(milliseconds: 0), () async {
-      await _refresh();
-      setState(() {});
-    });
+    // Future.delayed(const Duration(milliseconds: 0), () async {
+    //   await _refresh();
+    //   setState(() {});
+    // });
     _KingCoinUserlist.add(
         KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
     _KingCoinUserlist.add(
@@ -166,7 +167,7 @@ class _UserPageState extends State<UserPage> {
         child: Column(
           children: [
             Text(
-              num,
+              title,
               style: TextStyle(
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize40,
@@ -174,12 +175,12 @@ class _UserPageState extends State<UserPage> {
             ),
             8.hb,
             Text(
-              title,
+              num,
               style: TextStyle(
                   color: BaseStyle.color999999,
                   fontSize: BaseStyle.fontSize24,
                   fontWeight: FontWeight.bold),
-            )
+            ),
           ],
         ),
       ),
@@ -314,7 +315,7 @@ class _UserPageState extends State<UserPage> {
           GestureDetector(
             onTap: () {
               //print("aaaaa:${re.data['count']}");
-              //Get.to(() => const BasicInformationPage());
+              Get.to(() => const BasicInformationPage());
             },
             child: Container(
               color: Colors.transparent,
@@ -355,11 +356,13 @@ class _UserPageState extends State<UserPage> {
           ),
           48.hb,
           Row(children: [
-            getText(_assessment, '评估'),
-            70.wb,
-            getText('', '钱包'),
-            70.wb,
-            getText('12', '邀请'),
+            // getText((UserTool.userProvider.userInfo.abi.assessCount).toString(),
+            //     '评估'),
+            // 70.wb,
+            // getText(UserTool.userProvider.userInfo.abi.balance, '钱包'),
+            // 70.wb,
+            // getText((UserTool.userProvider.userInfo.abi.inviteCount).toString(),
+            //     '邀请'),
           ]),
         ]));
   }
@@ -465,9 +468,5 @@ class _UserPageState extends State<UserPage> {
         ]),
       ),
     );
-  }
-
-  _refresh() async {
-    _assessment = await User.getWallet();
   }
 }
