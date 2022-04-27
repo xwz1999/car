@@ -10,11 +10,25 @@ class UserInfoModel {
   String nickname;
   String headImg;
   int level;
+  String phone;
+  int gender;
   ExtraData data;
   StoreInfo store;
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);
+
+  Map<int, String> get levelMap => {
+        1: '基础用户',
+        2: '独立合伙人',
+        3: '入驻商',
+      };
+
+  Map<int, String> get genderMap => {
+    1: '男',
+    2: '女',
+    0: '未知',
+  };
 
 //<editor-fold desc="Data Methods">
 
@@ -23,6 +37,8 @@ class UserInfoModel {
     required this.nickname,
     required this.headImg,
     required this.level,
+    required this.phone,
+    required this.gender,
     required this.data,
     required this.store,
   });
@@ -36,6 +52,8 @@ class UserInfoModel {
           nickname == other.nickname &&
           headImg == other.headImg &&
           level == other.level &&
+          phone == other.phone &&
+          gender == other.gender &&
           data == other.data &&
           store == other.store);
 
@@ -45,6 +63,8 @@ class UserInfoModel {
       nickname.hashCode ^
       headImg.hashCode ^
       level.hashCode ^
+      phone.hashCode ^
+      gender.hashCode ^
       data.hashCode ^
       store.hashCode;
 
@@ -55,6 +75,8 @@ class UserInfoModel {
         ' nickname: $nickname,' +
         ' headImg: $headImg,' +
         ' level: $level,' +
+        ' phone: $phone,' +
+        ' gender: $gender,' +
         ' data: $data,' +
         ' store: $store,' +
         '}';
@@ -65,6 +87,8 @@ class UserInfoModel {
     String? nickname,
     String? headImg,
     int? level,
+    String? phone,
+    int? gender,
     ExtraData? data,
     StoreInfo? store,
   }) {
@@ -73,6 +97,8 @@ class UserInfoModel {
       nickname: nickname ?? this.nickname,
       headImg: headImg ?? this.headImg,
       level: level ?? this.level,
+      phone: phone ?? this.phone,
+      gender: gender ?? this.gender,
       data: data ?? this.data,
       store: store ?? this.store,
     );

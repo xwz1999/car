@@ -70,7 +70,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
             shrinkWrap: true,
             padding: EdgeInsets.only(left: 32.w,right: 32.w),
             physics:const NeverScrollableScrollPhysics(),
-            itemCount: 5,
+            itemCount: 4,
             //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               //横轴元素个数
@@ -85,7 +85,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
               //Widget Function(BuildContext context, int index)
               return GestureDetector(
                 onTap: (){
-                    Get.to(()=>const UserManagerDetailPage());
+                    Get.to(()=> UserManagerDetailPage(type: index+1,));
 
                 },
                 child: const ManagerContainerItem(

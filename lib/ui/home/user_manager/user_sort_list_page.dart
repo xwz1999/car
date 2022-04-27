@@ -1,5 +1,6 @@
 
 import 'package:cloud_car/ui/home/sort/choose_item_page.dart';
+import 'package:cloud_car/ui/home/sort/search_customer_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_list_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
@@ -9,11 +10,12 @@ import 'package:flutter/material.dart';
 typedef ItemCallback = Function(ChooseItem item);
 
 class UserSortListPage extends StatefulWidget {
-  final ItemCallback callback;
+  final ValueNotifier<SearchCustomerParamModel> pickSort;
+  final VoidCallback onConfirm;
 
   const UserSortListPage({
     Key? key,
-    required this.callback,
+    required this.onConfirm, required this.pickSort,
   }) : super(key: key);
 
   @override
@@ -50,64 +52,78 @@ class _UserSortListPageState extends State<UserSortListPage> {
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 100.w),
           children: [
+            // SortListWidget(
+            //
+            //   childAspectRatio: 144 / 56,
+            //   mainAxisSpacing: 10.w,
+            //   crossAxisSpacing: 24.w,
+            //   crossAxisCount: 4,
+            //   callback: (ChooseItem item) {
+            //     widget.callback(item);
+            //   },
+            //   title: '门店',
+            //   rightWidget: GestureDetector(
+            //     onTap: (){
+            //       Get.to(()=>ChooseItemPage(callback: (String name) {
+            //         Get.back();
+            //
+            //       }, items: const [
+            //         '1','2','3'
+            //       ], name: '门店',));
+            //     },
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
+            //         10.wb,
+            //         Padding(
+            //           padding:  EdgeInsets.only(top: 5.w),
+            //           child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
+            //         )
+            //       ],
+            //     ),
+            //   ), pickString: '',
+            // ),
+            // 16.hb,
+            // SortListWidget(
+            //   childAspectRatio: 144 / 56,
+            //   mainAxisSpacing: 10.w,
+            //   crossAxisSpacing: 24.w,
+            //   crossAxisCount: 4,
+            //   callback: (ChooseItem item) {},
+            //   title: '销售',
+            //   rightWidget: GestureDetector(
+            //     onTap: (){
+            //
+            //     },
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
+            //         10.wb,
+            //         Padding(
+            //           padding:  EdgeInsets.only(top: 5.w),
+            //           child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
+            //         )
+            //       ],
+            //     ),
+            //   ), pickString: '',
+            // ),
+            //
+            // 16.hb,
             SortListWidget(
-
+              itemList: _gearbox,
               childAspectRatio: 144 / 56,
               mainAxisSpacing: 10.w,
               crossAxisSpacing: 24.w,
               crossAxisCount: 4,
               callback: (ChooseItem item) {
-                widget.callback(item);
+                widget.pickSort.value.isImportant = item.name;
+                setState(() {});
+                // widget.callback(item);
               },
-              title: '门店',
-              rightWidget: GestureDetector(
-                onTap: (){
-                  Get.to(()=>ChooseItemPage(callback: (String name) {
-                    Get.back();
-
-                  }, items: const [
-                    '1','2','3'
-                  ], name: '门店',));
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
-                    10.wb,
-                    Padding(
-                      padding:  EdgeInsets.only(top: 5.w),
-                      child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
-                    )
-                  ],
-                ),
-              ), pickString: '',
+              title: '重要客户', pickString:  widget.pickSort.value.isImportant,
             ),
-            16.hb,
-            SortListWidget(
-              childAspectRatio: 144 / 56,
-              mainAxisSpacing: 10.w,
-              crossAxisSpacing: 24.w,
-              crossAxisCount: 4,
-              callback: (ChooseItem item) {},
-              title: '销售',
-              rightWidget: GestureDetector(
-                onTap: (){
-
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
-                    10.wb,
-                    Padding(
-                      padding:  EdgeInsets.only(top: 5.w),
-                      child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
-                    )
-                  ],
-                ),
-              ), pickString: '',
-            ),
-
             16.hb,
             SortListWidget(
               itemList: _gearbox,
@@ -116,18 +132,8 @@ class _UserSortListPageState extends State<UserSortListPage> {
               crossAxisSpacing: 24.w,
               crossAxisCount: 4,
               callback: (ChooseItem item) {
-                widget.callback(item);
-              },
-              title: '重要客户', pickString: '',
-            ),
-            16.hb,
-            SortListWidget(
-              childAspectRatio: 144 / 56,
-              mainAxisSpacing: 10.w,
-              crossAxisSpacing: 24.w,
-              crossAxisCount: 4,
-              callback: (ChooseItem item) {
-                widget.callback(item);
+                widget.pickSort.value.isImportant = item.name;
+                setState(() {});
               },
               title: '跟进时间',
               rightWidget: GestureDetector(
@@ -155,7 +161,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
               crossAxisSpacing: 24.w,
               crossAxisCount: 4,
               callback: (ChooseItem item) {
-                widget.callback(item);
+
               },
               title: '注册时间',
               rightWidget: GestureDetector(

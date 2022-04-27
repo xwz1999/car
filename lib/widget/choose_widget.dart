@@ -2,11 +2,12 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class ChooseWidget extends StatefulWidget {
-  final List items;
+class ChooseWidget<T> extends StatefulWidget{
+  final T? item;
+  final List<T> items;
   final Function(String) callBack;
 
-  const ChooseWidget({Key? key, required this.items, required this.callBack})
+  const ChooseWidget({Key? key, required this.items, required this.callBack, required this.item})
       : super(key: key);
 
   @override
@@ -14,7 +15,7 @@ class ChooseWidget extends StatefulWidget {
 }
 
 class _ChooseWidgetState extends State<ChooseWidget> {
-  late int _isChoose = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class _ChooseWidgetState extends State<ChooseWidget> {
           (e, index) => Expanded(
               child: GestureDetector(
             onTap: () {
-              _isChoose = index;
+
               widget.callBack(e);
             },
             child: Container(
@@ -36,7 +37,7 @@ class _ChooseWidgetState extends State<ChooseWidget> {
                   e,
                   style: TextStyle(
                       fontSize: 28.sp,
-                      color: index == _isChoose
+                      color: e == widget.item
                           ? kPrimaryColor
                           : BaseStyle.color333333),
                 )),

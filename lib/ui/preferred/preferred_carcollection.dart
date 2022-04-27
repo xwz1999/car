@@ -10,6 +10,7 @@ import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../model/sort/sort_brand_model.dart';
 import '../../model/sort/sort_car_model_model.dart';
@@ -23,77 +24,23 @@ class CarCollection extends StatefulWidget {
 }
 
 class _CarCollectionState extends State<CarCollection> {
-  late List<String> _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
+  late List<String> _dropDownHeaderItemStrings = [ '品牌', '价格', '排序'];
   List<Widget> listWidget = [];
   ScreenControl screenControlMy = ScreenControl();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<ChooseItem> _sortList = [];
   List<ChooseItem> _priceList = [];
-  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
-      series: SortSeriesModel.init,
-      brand: SortBrandModel.init,
-      car: SortCarModelModel.init,
-      returnType: 2));
-  List carList = [
-    {
-      'url': Assets.images.carBanner,
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'time': '2020年10月',
-      'distance': '20.43万公里',
-      'standard': '国六',
-      'pice': '27.43',
-      'choose': false,
-    },
-    {
-      'url': Assets.images.carBanner,
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'time': '2020年10月',
-      'distance': '20.43万公里',
-      'standard': '国六',
-      'pice': '27.43',
-      'choose': true,
-    },
-    {
-      'url': Assets.images.carBanner,
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'time': '2020年10月',
-      'distance': '20.43万公里',
-      'standard': '国六',
-      'pice': '27.43',
-      'choose': false,
-    },
-    {
-      'url': Assets.images.carBanner,
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'time': '2020年10月',
-      'distance': '20.43万公里',
-      'standard': '国六',
-      'pice': '27.43',
-      'choose': false,
-    },
-    {
-      'url': Assets.images.carBanner,
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'time': '2020年10月',
-      'distance': '20.43万公里',
-      'standard': '国六',
-      'pice': '27.43',
-      'choose': true,
-    },
-    {
-      'url': Assets.images.carBanner,
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'time': '2020年10月',
-      'distance': '20.43万公里',
-      'standard': '国六',
-      'pice': '27.43',
-      'choose': false,
-    },
-  ];
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
+      SearchParamModel(
+          series: SortSeriesModel.init,
+          brand: SortBrandModel.init,
+          car: SortCarModelModel.init,
+          returnType: 2));
+
   @override
   void initState() {
     super.initState();
-    _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
+    _dropDownHeaderItemStrings = [ '品牌', '价格', '排序'];
     _priceList = [
       ChooseItem(name: '不限'),
       ChooseItem(name: '4万以下'),
@@ -113,14 +60,8 @@ class _CarCollectionState extends State<CarCollection> {
       ChooseItem(name: '最近更新'),
     ];
     listWidget = [
-      CityListPage(
-        cityCallback: (model) {
-
-          setState(() {});
-        },
-      ),
       CarListPage(
-        carCallback:(){
+        carCallback: () {
           screenControlMy.screenHide();
           setState(() {
 
@@ -183,9 +124,7 @@ class _CarCollectionState extends State<CarCollection> {
           Row(
             children: [
               GestureDetector(
-                  onTap: () {
-                    Get.to(() => const SearchPage());
-                  },
+                  onTap: () {},
                   child: Text(
                     '编辑',
                     style: TextStyle(
@@ -213,12 +152,7 @@ class _CarCollectionState extends State<CarCollection> {
             child: _myCar(),
           ),
           Expanded(
-              child: ListView.builder(
-            itemBuilder: (context, index) {
-              return get(carList[index]);
-            },
-            itemCount: carList.length,
-          ))
+              child: EasyRefresh.custom(slivers: []))
         ],
       ),
     );

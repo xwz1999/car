@@ -1,6 +1,8 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -8,21 +10,21 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../../../model/car_manager/car_list_model.dart';
 import '../../../widget/car_item_widget.dart';
-import '../car_valuation/car_func.dart';
 import '../func/car_map.dart';
 
 class AllCarView extends StatefulWidget {
   final String sort;
   final EasyRefreshController refreshController;
   final ValueNotifier<SearchParamModel> pickCar;
+  final List<CarListModel> allCarList;
 
   const AllCarView(
       {Key? key,
       required this.sort,
       required this.refreshController,
-      required this.pickCar})
+      required this.pickCar,
+      required this.allCarList})
       : super(key: key);
 
   @override
@@ -31,7 +33,6 @@ class AllCarView extends StatefulWidget {
 
 class _AllCarViewState extends State<AllCarView>
     with AutomaticKeepAliveClientMixin {
-  List<CarListModel> _allCarList = [];
   int _page = 1;
   final int _size = 10;
 
@@ -58,12 +59,14 @@ class _AllCarViewState extends State<AllCarView>
       header: MaterialHeader(),
       onRefresh: () async {
         _page = 1;
-        _allCarList = await CarFunc.getCarList(_page, _size,
+        var list = await CarFunc.getCarList(_page, _size,
             order: CarMap.carSortString
                 .getKeyFromValue(widget.sort)
                 .toString()
                 .toSnake,
             searchParams: _params);
+        widget.allCarList.clear();
+        widget.allCarList.addAll(list);
         setState(() {});
       },
       onLoad: () async {
@@ -78,8 +81,8 @@ class _AllCarViewState extends State<AllCarView>
               .toSnake,
           'search': _params
         });
-        if (baseList.nullSafetyTotal > _allCarList.length) {
-          _allCarList.addAll(baseList.nullSafetyList
+        if (baseList.nullSafetyTotal > widget.allCarList.length) {
+          widget.allCarList.addAll(baseList.nullSafetyList
               .map((e) => CarListModel.fromJson(e))
               .toList());
         } else {
@@ -95,7 +98,7 @@ class _AllCarViewState extends State<AllCarView>
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
-              var model = _allCarList[index];
+              var model = widget.allCarList[index];
               return CarItemWidget(
                 widgetPadding:
                     EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
@@ -109,7 +112,7 @@ class _AllCarViewState extends State<AllCarView>
                     NumUtil.divide(num.parse(model.price), 10000).toString() +
                         '万元',
               );
-            }, childCount: _allCarList.length),
+            }, childCount: widget.allCarList.length),
           ),
         )
       ],

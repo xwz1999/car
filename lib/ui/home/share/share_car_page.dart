@@ -1,6 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car_item_model.dart';
-import 'package:cloud_car/model/car_manager/car_list_model.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,69 +25,10 @@ class ShareCarPage extends StatefulWidget {
 class _ShareCarPageState extends State<ShareCarPage> {
   //选中的item
   final List<int> _selectIndex = [];
-  final List<CarItemModel> _chooseModels = [];
+  final List<CarListModel> _chooseModels = [];
 
-  List<CarItemModel> models = [
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-  ];
-
-  bool get _allSelect =>
-      _selectIndex.length == models.length && _selectIndex.isNotEmpty;
+  // bool get _allSelect =>
+  //     _selectIndex.length == widget.models.length && _selectIndex.isNotEmpty;
 
   @override
   void initState() {
@@ -116,7 +57,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
         child: ListView.separated(
           padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
           itemBuilder: (context, index) {
-            return _getItem(index, models[index]);
+            return _getItem(index, widget.models[index]);
           },
           separatorBuilder: (BuildContext context, int index) {
             return Container(
@@ -124,7 +65,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
               height: 16.w,
             );
           },
-          itemCount: models.length,
+          itemCount: widget.models.length,
         ),
       ),
       bottomNavigationBar: SizedBox(
@@ -134,60 +75,60 @@ class _ShareCarPageState extends State<ShareCarPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             50.wb,
-            GestureDetector(
-              onTap: () {
-                if (_allSelect) {
-                  _selectIndex.clear();
-                  _chooseModels.clear();
-                } else {
-                  _selectIndex.clear();
-                  _chooseModels.clear();
-                  _chooseModels.addAll(models);
-                  _selectIndex
-                      .addAll(List.generate(models.length, (index) => index));
-                }
-                setState(() {});
-              },
-              child: Container(
-                width: 50.w,
-                height: 60.w,
-                color: Colors.transparent,
-                alignment: Alignment.center,
-                child: Row(
-                  children: [
-                    Container(
-                      width: 44.w,
-                      height: 44.w,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: kPrimaryColor.withOpacity(_allSelect ? 1 : 0),
-                        borderRadius: BorderRadius.circular(22.w),
-                        border: Border.all(
-                          color: (_allSelect
-                              ? kPrimaryColor
-                              : const Color(0xFF979797)),
-                          width: 2.w,
-                        ),
-                      ),
-                      child: AnimatedOpacity(
-                          duration: const Duration(milliseconds: 500),
-                          opacity: _allSelect ? 1 : 0,
-                          child: Icon(
-                            CupertinoIcons.checkmark,
-                            color: Colors.white,
-                            size: 28.w,
-                          )),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            10.wb,
-            Text('全选',
-                style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: BaseStyle.fontSize28,
-                    fontWeight: FontWeight.bold)),
+            // GestureDetector(
+            //   onTap: () {
+            //     if (_allSelect) {
+            //       _selectIndex.clear();
+            //       _chooseModels.clear();
+            //     } else {
+            //       _selectIndex.clear();
+            //       _chooseModels.clear();
+            //       _chooseModels.addAll(models);
+            //       _selectIndex
+            //           .addAll(List.generate(models.length, (index) => index));
+            //     }
+            //     setState(() {});
+            //   },
+            //   child: Container(
+            //     width: 50.w,
+            //     height: 60.w,
+            //     color: Colors.transparent,
+            //     alignment: Alignment.center,
+            //     child: Row(
+            //       children: [
+            //         Container(
+            //           width: 44.w,
+            //           height: 44.w,
+            //           alignment: Alignment.center,
+            //           decoration: BoxDecoration(
+            //             color: kPrimaryColor.withOpacity(_allSelect ? 1 : 0),
+            //             borderRadius: BorderRadius.circular(22.w),
+            //             border: Border.all(
+            //               color: (_allSelect
+            //                   ? kPrimaryColor
+            //                   : const Color(0xFF979797)),
+            //               width: 2.w,
+            //             ),
+            //           ),
+            //           child: AnimatedOpacity(
+            //               duration: const Duration(milliseconds: 500),
+            //               opacity: _allSelect ? 1 : 0,
+            //               child: Icon(
+            //                 CupertinoIcons.checkmark,
+            //                 color: Colors.white,
+            //                 size: 28.w,
+            //               )),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // 10.wb,
+            // Text('全选',
+            //     style: TextStyle(
+            //         color: kPrimaryColor,
+            //         fontSize: BaseStyle.fontSize28,
+            //         fontWeight: FontWeight.bold)),
             8.wb,
             const Spacer(),
             GestureDetector(
@@ -204,7 +145,8 @@ class _ShareCarPageState extends State<ShareCarPage> {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15))),
                       builder: (BuildContext context) {
-                        return const ShareCarDetailPage(
+                        return  ShareCarDetailPage(
+                          model: _chooseModels,
                           isMore: false,
                         );
                       });
@@ -218,7 +160,8 @@ class _ShareCarPageState extends State<ShareCarPage> {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15))),
                       builder: (BuildContext context) {
-                        return const ShareCarDetailPage(
+                        return  ShareCarDetailPage(
+                          model: _chooseModels,
                           isMore: true,
                         );
                       });
@@ -251,7 +194,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
     );
   }
 
-  _getItem(int index, CarItemModel model) {
+  _getItem(int index, CarListModel model) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
@@ -265,6 +208,8 @@ class _ShareCarPageState extends State<ShareCarPage> {
                 _selectIndex.remove(index);
                 _chooseModels.remove(model);
               } else {
+                _selectIndex.clear();
+                _chooseModels.clear();
                 _selectIndex.add(index);
                 _chooseModels.add(model);
               }
