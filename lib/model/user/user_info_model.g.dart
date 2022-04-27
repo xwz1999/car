@@ -12,6 +12,8 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
       nickname: json['nickname'] as String,
       headImg: json['headImg'] as String,
       level: json['level'] as int,
+      phone: json['phone'] as String,
+      gender: json['gender'] as int,
       data: ExtraData.fromJson(json['data'] as Map<String, dynamic>),
       store: StoreInfo.fromJson(json['store'] as Map<String, dynamic>),
     );

@@ -1,15 +1,24 @@
+import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/model/car_manager/car_list_model.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/share_util.dart';
+import 'package:cloud_car/utils/user_tool.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cloud_car/extensions/string_extension.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 import 'edit_item_widget.dart';
 
 class ShareCarDetailPage extends StatefulWidget {
   final bool isMore;
+  final List<CarListModel> model;
 
   const ShareCarDetailPage({
     Key? key,
     required this.isMore,
+    required this.model,
   }) : super(key: key);
 
   @override
@@ -75,57 +84,83 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            Assets.icons.icShareLink.path,
-                            width: 96.w,
-                            height: 96.w,
-                          ),
-                          5.hb,
-                          Text(
-                            '复制链接',
-                            style: TextStyle(
-                                color: const Color(0xFF666666),
-                                fontSize: BaseStyle.fontSize24),
-                          )
-                        ],
+                      child: GestureDetector(
+                        onTap: () async {
+                          ShareUtil.copyToClipboard(
+                              widget.model.first.mainPhoto.imageWithHost);
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              Assets.icons.icShareLink.path,
+                              width: 96.w,
+                              height: 96.w,
+                            ),
+                            5.hb,
+                            Text(
+                              '复制链接',
+                              style: TextStyle(
+                                  color: const Color(0xFF666666),
+                                  fontSize: BaseStyle.fontSize24),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            Assets.icons.icShareWx.path,
-                            width: 96.w,
-                            height: 96.w,
-                          ),
-                          5.hb,
-                          Text(
-                            '微信',
-                            style: TextStyle(
-                                color: const Color(0xFF666666),
-                                fontSize: BaseStyle.fontSize24),
-                          )
-                        ],
+                      child: GestureDetector(
+                        onTap: () async {
+                          await ShareUtil.shareNetWorkImage(
+                              widget.model.first.mainPhoto);
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              Assets.icons.icShareWx.path,
+                              width: 96.w,
+                              height: 96.w,
+                            ),
+                            5.hb,
+                            Text(
+                              '微信',
+                              style: TextStyle(
+                                  color: const Color(0xFF666666),
+                                  fontSize: BaseStyle.fontSize24),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            Assets.icons.icShareWxCircle.path,
-                            width: 96.w,
-                            height: 96.w,
+                      child: GestureDetector(
+                        onTap: () async {
+                          ShareUtil.shareNetWorkImage(
+                              widget.model.first.mainPhoto,
+                              scene: fluwx.WeChatScene.TIMELINE);
+                        },
+                        child: GestureDetector(
+                          onTap: () {
+                            ShareUtil.shareNetWorkImage(
+                                widget.model.first.mainPhoto,
+                                scene: fluwx.WeChatScene.TIMELINE);
+                          },
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                Assets.icons.icShareWxCircle.path,
+                                width: 96.w,
+                                height: 96.w,
+                              ),
+                              5.hb,
+                              Text(
+                                '朋友圈',
+                                style: TextStyle(
+                                    color: const Color(0xFF666666),
+                                    fontSize: BaseStyle.fontSize24),
+                              )
+                            ],
                           ),
-                          5.hb,
-                          Text(
-                            '朋友圈',
-                            style: TextStyle(
-                                color: const Color(0xFF666666),
-                                fontSize: BaseStyle.fontSize24),
-                          )
-                        ],
+                        ),
                       ),
                     ),
                   ],
@@ -169,9 +204,14 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                           color: const Color(0xFF111111), fontSize: 32.sp),
                     ),
                     const Spacer(),
-                    Icon(
-                      CupertinoIcons.clear,
-                      size: 30.w,
+                    IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(
+                        CupertinoIcons.clear,
+                        size: 30.w,
+                      ),
                     ),
                     30.wb,
                   ],
@@ -192,8 +232,8 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                     decoration: BoxDecoration(
                         color: kForeGroundColor,
                         borderRadius: BorderRadius.all(Radius.circular(16.w))),
-                    child: Column(
-                      children: const [],
+                    child: CloudImageNetworkWidget.car(
+                      urls: [widget.model.first.mainPhoto],
                     ),
                   ),
                 ),
@@ -222,16 +262,16 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                           labelPadding: EdgeInsets.symmetric(
                               vertical: 10.w, horizontal: 40.w),
                           controller: _tabController,
-                          indicatorWeight: 3,
-                          labelColor: BaseStyle.color111111,
+                          labelColor: kPrimaryColor,
                           unselectedLabelColor: BaseStyle.color999999,
                           indicatorPadding: EdgeInsets.symmetric(
-                              horizontal: 30.w, vertical: 0.w),
+                              horizontal: 8.w, vertical: 0.w),
                           indicatorSize: TabBarIndicatorSize.label,
+                          indicatorWeight: 4.w,
+                          // indicator: BoxDecoration(borderRadius: BorderRadius.circular(2.w),color: kPrimaryColor,),
                           labelStyle: TextStyle(
-                            color: Colors.white.withOpacity(0.85),
-                          ),
-                          indicatorColor: kPrimaryColor,
+                              color: Colors.white.withOpacity(0.85),
+                              fontWeight: FontWeight.bold),
                           tabs: [
                             _tab(0, '标准版'),
                             _tab(1, '简洁版'),
@@ -248,13 +288,13 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                           children: [
                             EditItemWidget(
                               canEdit: false,
-                              text: '标准版',
+                              text: _copyWriting(0),
                               callback: (String text) {},
                               boolCallback: (bool isFocusNode) {},
                             ),
                             EditItemWidget(
                               canEdit: false,
-                              text: '简约版',
+                              text: _copyWriting(1),
                               callback: (String text) {},
                               boolCallback: (bool isFocusNode) {},
                             ),
@@ -279,6 +319,12 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                         children: [
                           32.wb,
                           GestureDetector(
+                            onTap: () async {
+                              var cancel = BotToast.showLoading();
+                              ShareUtil.saveNetImageToGallery(
+                                  widget.model.first.mainPhoto);
+                              cancel();
+                            },
                             child: Text(
                               '下载汽车详情图片',
                               style: TextStyle(
@@ -288,6 +334,10 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                           ),
                           const Spacer(),
                           GestureDetector(
+                            onTap: () {
+                              ShareUtil.copyToClipboard(
+                                  _copyWriting(_tabController.index));
+                            },
                             child: Text(
                               '复制文案',
                               style: TextStyle(
@@ -308,95 +358,131 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            Assets.icons.icShareLink.path,
-                            width: 96.w,
-                            height: 96.w,
-                          ),
-                          5.hb,
-                          Text(
-                            '复制链接',
-                            style: TextStyle(
-                                color: const Color(0xFF666666),
-                                fontSize: BaseStyle.fontSize24),
-                          )
-                        ],
+                      child: GestureDetector(
+                        onTap: () {
+                          ShareUtil.copyToClipboard(
+                              widget.model.first.mainPhoto.imageWithHost);
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              Assets.icons.icShareLink.path,
+                              width: 96.w,
+                              height: 96.w,
+                            ),
+                            5.hb,
+                            Text(
+                              '复制链接',
+                              style: TextStyle(
+                                  color: const Color(0xFF666666),
+                                  fontSize: BaseStyle.fontSize24),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            Assets.icons.icShareDowload.path,
-                            width: 96.w,
-                            height: 96.w,
-                          ),
-                          5.hb,
-                          Text(
-                            '保存图片',
-                            style: TextStyle(
-                                color: const Color(0xFF666666),
-                                fontSize: BaseStyle.fontSize24),
-                          )
-                        ],
+                      child: GestureDetector(
+                        onTap: () {
+                          ShareUtil.saveNetImageToGallery(
+                              widget.model.first.mainPhoto);
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              Assets.icons.icShareDowload.path,
+                              width: 96.w,
+                              height: 96.w,
+                            ),
+                            5.hb,
+                            Text(
+                              '保存图片',
+                              style: TextStyle(
+                                  color: const Color(0xFF666666),
+                                  fontSize: BaseStyle.fontSize24),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            Assets.icons.icShareWx.path,
-                            width: 96.w,
-                            height: 96.w,
-                          ),
-                          5.hb,
-                          Text(
-                            '微信',
-                            style: TextStyle(
-                                color: const Color(0xFF666666),
-                                fontSize: BaseStyle.fontSize24),
-                          )
-                        ],
+                      child: GestureDetector(
+                        onTap: () {
+                          ShareUtil.shareNetWorkImage(
+                              widget.model.first.mainPhoto);
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              Assets.icons.icShareWx.path,
+                              width: 96.w,
+                              height: 96.w,
+                            ),
+                            5.hb,
+                            Text(
+                              '微信',
+                              style: TextStyle(
+                                  color: const Color(0xFF666666),
+                                  fontSize: BaseStyle.fontSize24),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            Assets.icons.icShareWxCircle.path,
-                            width: 96.w,
-                            height: 96.w,
-                          ),
-                          5.hb,
-                          Text(
-                            '朋友圈',
-                            style: TextStyle(
-                                color: const Color(0xFF666666),
-                                fontSize: BaseStyle.fontSize24),
-                          )
-                        ],
+                      child: GestureDetector(
+                        onTap: () {
+                          ShareUtil.shareNetWorkImage(
+                              widget.model.first.mainPhoto,
+                              scene: fluwx.WeChatScene.TIMELINE);
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              Assets.icons.icShareWxCircle.path,
+                              width: 96.w,
+                              height: 96.w,
+                            ),
+                            5.hb,
+                            Text(
+                              '朋友圈',
+                              style: TextStyle(
+                                  color: const Color(0xFF666666),
+                                  fontSize: BaseStyle.fontSize24),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
                 40.hb,
-                Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 32.w),
-                  height: 72.w,
-                  decoration: BoxDecoration(
-                    color: kForeGroundColor,
+                Padding(
+                  padding: EdgeInsets.all(32.w),
+                  child: Material(
                     borderRadius: BorderRadius.all(Radius.circular(8.w)),
-                  ),
-                  child: Text(
-                    '取  消',
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize28,
-                        fontWeight: FontWeight.bold,
-                        color: BaseStyle.color333333),
+                    color: kForeGroundColor,
+                    child: InkWell(
+                      borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        height: 72.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                        ),
+                        child: Text(
+                          '取  消',
+                          style: TextStyle(
+                              fontSize: BaseStyle.fontSize28,
+                              fontWeight: FontWeight.bold,
+                              color: BaseStyle.color333333),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 60.hb,
@@ -404,6 +490,28 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
               ],
             ),
           );
+  }
+
+  String _copyWriting(int index) {
+    switch (index) {
+      case 0:
+        return '【车辆名称】${widget.model.first.modelName}\n'
+            '【上牌时间】${DateUtil.formatDate(widget.model.first.licensingDateDT, format: DateFormats.zh_y_mo)}\n'
+            '【行驶里程】${widget.model.first.mileage}万公里\n'
+            '【车辆排量】${widget.model.first.downPayment}T\n'
+            '【车辆价格】${widget.model.first.unitPrice}万\n'
+            '【联系方式】${UserTool.userProvider.userInfo.phone}\n'
+            '【诚信车商】云云问车\n'
+            '【车辆详情】${widget.model.first.mainPhoto.imageWithHost}';
+      case 1:
+        return '💥好车推荐💥\n${widget.model.first.modelName}，'
+            '仅售${NumUtil.divide(num.parse(widget.model.first.price), 10000)}，'
+            '${UserTool.userProvider.userInfo.nickname}24小时在线，等你来撩${UserTool.userProvider.userInfo.phone}';
+      case 2:
+        return _selfText;
+      default:
+        return '';
+    }
   }
 
   _tab(int index, String text) {

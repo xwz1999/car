@@ -1,3 +1,4 @@
+import 'package:cloud_car/model/car_manager/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/share/all_car_view.dart';
 import 'package:cloud_car/ui/home/share/my_car_view.dart';
@@ -35,6 +36,8 @@ class _ShareHomePageState extends State<ShareHomePage>
   ScreenControl screenControl = ScreenControl();
   final EasyRefreshController _myRefreshController = EasyRefreshController();
   final EasyRefreshController _allRefreshController = EasyRefreshController();
+  List<CarListModel> _myCarList = [];
+  List<CarListModel> _allCarList = [];
 
   // String _pickCity='';
 
@@ -97,12 +100,12 @@ class _ShareHomePageState extends State<ShareHomePage>
           pickString: _pickCar.value.price,
           callback: (String item) {
             screenControl.screenHide();
+            _pickCar.value.price = item;
             if (_tabController.index == 0) {
               _myRefreshController.callRefresh();
             } else {
               _allRefreshController.callRefresh();
             }
-            _pickCar.value.price = item;
           },
           childAspectRatio: 144 / 56,
           mainAxisSpacing: 10.w,
@@ -124,6 +127,11 @@ class _ShareHomePageState extends State<ShareHomePage>
           callback: (String item) {
             screenControl.screenHide();
             _pickSort = item;
+            if (_tabController.index == 0) {
+              _myRefreshController.callRefresh();
+            } else {
+              _allRefreshController.callRefresh();
+            }
           },
           mainAxisSpacing: 10.w,
           crossAxisSpacing: 24.w,
@@ -146,8 +154,8 @@ class _ShareHomePageState extends State<ShareHomePage>
   _customer() {
     return GestureDetector(
       onTap: () async {
-        Get.to(() => const ShareCarPage(
-              models: [],
+        Get.to(() =>  ShareCarPage(
+              models: _tabController.index==0?_myCarList:_allCarList,
             ));
       },
       child: Container(
@@ -235,9 +243,10 @@ class _ShareHomePageState extends State<ShareHomePage>
               MyCarView(
                 sort: _pickSort,
                 refreshController: _myRefreshController,
-                pickCar: _pickCar,
+                pickCar: _pickCar, myCarList: _myCarList,
               ),
               AllCarView(
+                allCarList: _allCarList,
                 pickCar: _pickCar,
                 sort: _pickSort,
                 refreshController: _allRefreshController,
