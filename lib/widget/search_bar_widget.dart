@@ -72,7 +72,10 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               },
               onTap: () {},
               onSubmitted: (_submitted) async {
-                if (TextUtils.isEmpty(_searchText)) return;
+                if (TextUtils.isEmpty(_searchText)) {
+
+                  widget.callback('');
+                  return;}
 
                 _contentFocusNode.unfocus();
                 _searchText = _searchText.trimLeft();

@@ -10,7 +10,7 @@ class SearchCustomerParamModel {
 
   String isImportant;
 
-  int? get important => CustomerMap.customerStatus[isImportant];
+  int? get important => CustomerMap.isImportant[isImportant];
 
   String createdDate;
 

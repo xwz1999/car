@@ -35,7 +35,7 @@ class CustomerMap {
     '7天以上': [
       DateUtil.formatDate(DateTime.now().add(const Duration(days: -7)),
           format: 'yyyy-MM-dd'),
-      DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd')
+      ''
     ],
   };
 
