@@ -82,6 +82,21 @@ class _Customer {
 
   ///浏览车辆列表
   String get browseLists => '/customer/browse/lists';
+
+  ///客户列表
+  String get customerLists => '/customer/lists';
+
+  ///客户统计
+  String get customerCount => '/customer/count';
+
+  ///客户详情
+  String get customerInfo => '/customer/info';
+
+  ///客户设为重要
+  String get customerImportant => '/customer/important';
+
+  ///客户取消重要
+  String get customerImportantCancel => '/customer/important/cancel';
 }
 
 class _Contract {

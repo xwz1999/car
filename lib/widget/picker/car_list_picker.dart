@@ -11,9 +11,9 @@ class CarListPicker extends StatefulWidget {
   final String confirmString;
   final String? title;
   final bool isGrid;
-
   ///是否是grid列表
   final List<ChooseItem> items;
+  final String carString;
 
   const CarListPicker(
       {Key? key,
@@ -21,7 +21,7 @@ class CarListPicker extends StatefulWidget {
       this.confirmString = '确认',
       this.title,
       this.isGrid = true,
-      required this.items})
+      required this.items, this.carString=''})
       : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class CarListPicker extends StatefulWidget {
 }
 
 class _CarListPickerState extends State<CarListPicker> {
-  late String _chooseItem = '';
+  late String _chooseItem = widget.carString;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class _CarListPickerState extends State<CarListPicker> {
             ],
           ),
           ScreenWidget(
-            pickString: '',
+            pickString: _chooseItem,
             isGrid: widget.isGrid,
             childAspectRatio: 72 / 28,
             callback: (String item) async{
