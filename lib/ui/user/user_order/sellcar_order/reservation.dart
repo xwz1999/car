@@ -39,7 +39,7 @@ class _ReservationState extends State<Reservation> {
   ];
   late bool judge = widget.judge;
   late Widget methods;
-  late int id = widget.orderId;
+  // late int id = ;
   late String audit = '3';
   // ignore: unused_field
   List<SaleInfo> _consignmentInfoList = [];
@@ -55,7 +55,7 @@ class _ReservationState extends State<Reservation> {
   }
 
   _refresh() async {
-    _consignmentInfoList = await OrderFunc.getSaleInfo(id);
+    _consignmentInfoList = await OrderFunc.getSaleInfo(widget.orderId);
     setState(() {});
   }
 

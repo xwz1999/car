@@ -1,6 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/order/Sale_info.dart';
-import 'package:cloud_car/model/order/consignment_info_model.dart';
+
 import 'package:cloud_car/model/order/order_dealer_model.dart';
 import 'package:cloud_car/model/order/publish_car_model.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
@@ -255,8 +255,7 @@ class OrderFunc {
     BaseModel res =
         await apiClient.request(API.order.saleInfo, data: {'orderId': orderId});
     if (res.code == 0) {
-      return (res.data as List)
-        .map((e) => SaleInfo.fromJson(e)).toList();
+      return (res.data as List).map((e) => SaleInfo.fromJson(e)).toList();
     } else {
       CloudToast.show(res.msg);
       return [];

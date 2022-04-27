@@ -1,6 +1,6 @@
 import 'package:cloud_car/widget/picker/car_picker_box.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarAllTimePickBody extends StatefulWidget {
@@ -41,39 +41,51 @@ class _CarAllTimePickBodyState extends State<CarAllTimePickBody> {
       List.generate(2, (index) => widget.initTime.year + index);
 
   List<int> get _months => List.generate(
-      _pickYear == DateTime.now().year ? (12-DateTime.now().month+1) : 12,
-      (index) =>  index + (_pickYear == DateTime.now().year? DateTime.now().month:1));
+      _pickYear == DateTime.now().year ? (12 - DateTime.now().month + 1) : 12,
+      (index) =>
+          index +
+          (_pickYear == DateTime.now().year ? DateTime.now().month : 1));
 
   List<int> get _days => List.generate(
       _pickMonth == DateTime.now().month && _pickYear == DateTime.now().year
-          ? (getDays(_pickMonth) -  DateTime.now().day+1)
+          ? (getDays(_pickMonth) - DateTime.now().day + 1)
           : getDays(_pickMonth),
-      (index) => index +  (_pickMonth == DateTime.now().month && _pickYear == DateTime.now().year
-          ? DateTime.now().day:1) );
+      (index) =>
+          index +
+          (_pickMonth == DateTime.now().month &&
+                  _pickYear == DateTime.now().year
+              ? DateTime.now().day
+              : 1));
 
   List<int> get _hours => List.generate(
       _pickDay == DateTime.now().day &&
               _pickMonth == DateTime.now().month &&
               _pickYear == DateTime.now().year
-          ? (24-DateTime.now().hour)
+          ? (24 - DateTime.now().hour)
           : 24,
-      (index) => index +(_pickDay == DateTime.now().day &&
-          _pickMonth == DateTime.now().month &&
-          _pickYear == DateTime.now().year
-          ?DateTime.now().hour:0) );
+      (index) =>
+          index +
+          (_pickDay == DateTime.now().day &&
+                  _pickMonth == DateTime.now().month &&
+                  _pickYear == DateTime.now().year
+              ? DateTime.now().hour
+              : 0));
 
   List<int> get _minute => List.generate(
       _pickHour == DateTime.now().hour &&
               _pickDay == DateTime.now().day &&
               _pickMonth == DateTime.now().month &&
               _pickYear == DateTime.now().year
-          ? (60-DateTime.now().minute)
+          ? (60 - DateTime.now().minute)
           : 60,
-      (index) => index + (_pickHour == DateTime.now().hour &&
-          _pickDay == DateTime.now().day &&
-          _pickMonth == DateTime.now().month &&
-          _pickYear == DateTime.now().year
-          ?  DateTime.now().minute:0)   );
+      (index) =>
+          index +
+          (_pickHour == DateTime.now().hour &&
+                  _pickDay == DateTime.now().day &&
+                  _pickMonth == DateTime.now().month &&
+                  _pickYear == DateTime.now().year
+              ? DateTime.now().minute
+              : 0));
 
   getDays(int month) {
     switch (month) {

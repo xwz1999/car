@@ -1,10 +1,9 @@
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_license_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../direct_sale/edit_item_widget.dart';
 
@@ -45,10 +44,12 @@ class _CarOwnerPageState extends State<CarOwnerPage> {
               children: [
                 Container(
                   padding: EdgeInsets.all(30.w),
-                  child: '车主信息'.text.size(32.sp).bold.color(Colors.black).make(),
+                  child:
+                      '车主信息'.text.size(32.sp).bold.color(Colors.black).make(),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 30.w, right: 30.w, bottom: 40.h),
+                  padding:
+                      EdgeInsets.only(left: 30.w, right: 30.w, bottom: 40.h),
                   color: Colors.white,
                   child: Column(
                     children: [
@@ -144,12 +145,11 @@ class _CarOwnerPageState extends State<CarOwnerPage> {
                     ),
                     child: '下一步'.text.size(30.sp).color(Colors.white).make(),
                   ),
-                ).paddingOnly(left: 30.w,right: 30.w,bottom: 30.h),
+                ).paddingOnly(left: 30.w, right: 30.w, bottom: 30.h),
               ],
             ),
           ],
         ),
-
       ),
     );
   }

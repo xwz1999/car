@@ -54,6 +54,7 @@ class _SplashPageState extends State<SplashPage> {
     UserTool.cityProvider.init();
   }
 
+  // ignore: unused_element
   Future<bool?> _showLoginVerify() async {
     return await showCupertinoDialog(
       barrierDismissible: false,

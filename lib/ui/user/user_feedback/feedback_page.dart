@@ -57,7 +57,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => ProblemFeedback());
+                        Get.to(() => const ProblemFeedback());
                       },
                       child: Column(
                         children: [

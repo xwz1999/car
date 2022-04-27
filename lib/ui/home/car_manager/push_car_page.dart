@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -17,7 +19,7 @@ import '../../../widget/picker/car_date_picker.dart';
 import '../../../widget/picker/car_list_picker.dart';
 import '../../../widget/picker/cloud_image_picker.dart';
 import '../../../widget/sort_widget.dart';
-import '../car_valuation/car_valuation_page.dart';
+
 import '../sort/choose_car_page.dart';
 import '../sort/search_param_model.dart';
 import 'direct_sale/edit_item_widget.dart';
@@ -31,11 +33,12 @@ class PushCarPage extends StatefulWidget {
 }
 
 class _PushCarPageState extends State<PushCarPage> {
-  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
-      series: SortSeriesModel.init,
-      brand: SortBrandModel.init,
-      car: SortCarModelModel.init,
-      returnType: 3));
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
+      SearchParamModel(
+          series: SortSeriesModel.init,
+          brand: SortBrandModel.init,
+          car: SortCarModelModel.init,
+          returnType: 3));
   late CarDistinguishModel? carInfoModel;
   final PublishCarInfo _publishCarInfo = PublishCarInfo();
   final TextEditingController _viNumController = TextEditingController();
@@ -70,10 +73,10 @@ class _PushCarPageState extends State<PushCarPage> {
 
   @override
   void initState() {
-    _publishCarInfo.mileage=_mileController.text;
-    _publishCarInfo.viNum=_viNumController.text;
-    _publishCarInfo.engineNum=_engineController.text;
-    _publishCarInfo.carNum=_carNumController.text;
+    _publishCarInfo.mileage = _mileController.text;
+    _publishCarInfo.viNum = _viNumController.text;
+    _publishCarInfo.engineNum = _engineController.text;
+    _publishCarInfo.carNum = _carNumController.text;
     super.initState();
   }
 
@@ -122,7 +125,7 @@ class _PushCarPageState extends State<PushCarPage> {
                           color: Colors.black,
                           image: DecorationImage(
                             image:
-                            AssetImage('assets/images/assessment_bg.png'),
+                                AssetImage('assets/images/assessment_bg.png'),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -208,28 +211,32 @@ class _PushCarPageState extends State<PushCarPage> {
                                 offset: Offset(0.0, -20.0), //阴影xy轴偏移量
                                 blurRadius: 15.0, //阴影模糊程度
                                 spreadRadius: 1.0 //阴影扩散程度
-                            )
+                                )
                           ]),
                       child: Column(
                         children: [
                           GestureDetector(
                             onTap: () async {
                               await CloudImagePicker.pickSingleImage(
-                                  title: '选择图片')
+                                      title: '选择图片')
                                   .then(
-                                    (value) async {
+                                (value) async {
                                   if (value != null) {
                                     File files = value;
                                     String urls =
-                                    await ApiClient().uploadImage(files);
+                                        await ApiClient().uploadImage(files);
                                     carInfoModel = await CarFunc.carDistinguish(
                                         urls.imageWithHost);
                                     if (carInfoModel != null) {
-                                      _publishCarInfo.viNum=carInfoModel!.vin;
-                                      _publishCarInfo.carName = carInfoModel!.cartype;
-                                      _publishCarInfo.licensingDate =carInfoModel!.issuedate;
-                                      _publishCarInfo.carNum=carInfoModel!.lsnum;
-                                      _publishCarInfo.engineNum=carInfoModel!.engineno;
+                                      _publishCarInfo.viNum = carInfoModel!.vin;
+                                      _publishCarInfo.carName =
+                                          carInfoModel!.cartype;
+                                      _publishCarInfo.licensingDate =
+                                          carInfoModel!.issuedate;
+                                      _publishCarInfo.carNum =
+                                          carInfoModel!.lsnum;
+                                      _publishCarInfo.engineNum =
+                                          carInfoModel!.engineno;
                                       setState(() {});
                                     }
                                   }
@@ -250,11 +257,13 @@ class _PushCarPageState extends State<PushCarPage> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                Get.to(() =>  EvainfoPage( publishCarInfo: _publishCarInfo,));
+                                Get.to(() => EvainfoPage(
+                                      publishCarInfo: _publishCarInfo,
+                                    ));
                               },
                               style: ButtonStyle(
                                 backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
+                                    MaterialStateProperty.all(Colors.blue),
                               ),
                               child: '下一步'
                                   .text
@@ -277,9 +286,30 @@ class _PushCarPageState extends State<PushCarPage> {
   }
 
   Container _rewardWidget() {
-    var vinum = _textarea('车架号',_publishCarInfo.viNum!, '请输入车架号', _viNumController,(text) => setState(() {_publishCarInfo.viNum=_viNumController.text;}));
-    var carnum = _textarea('车牌号',_publishCarInfo.carNum!, '请输入车牌号', _carNumController,(text) => setState(() {_publishCarInfo.carNum=_carNumController.text;}));
-    var version = _textarea('发动机号',_publishCarInfo.engineNum!, '请输入发动机号', _engineController,(text) => setState(() {_publishCarInfo.engineNum=_engineController.text;}));
+    var vinum = _textarea(
+        '车架号',
+        _publishCarInfo.viNum!,
+        '请输入车架号',
+        _viNumController,
+        (text) => setState(() {
+              _publishCarInfo.viNum = _viNumController.text;
+            }));
+    var carnum = _textarea(
+        '车牌号',
+        _publishCarInfo.carNum!,
+        '请输入车牌号',
+        _carNumController,
+        (text) => setState(() {
+              _publishCarInfo.carNum = _carNumController.text;
+            }));
+    var version = _textarea(
+        '发动机号',
+        _publishCarInfo.engineNum!,
+        '请输入发动机号',
+        _engineController,
+        (text) => setState(() {
+              _publishCarInfo.engineNum = _engineController.text;
+            }));
     var mile = Container(
       color: Colors.transparent,
       child: Row(
@@ -297,7 +327,9 @@ class _PushCarPageState extends State<PushCarPage> {
           Expanded(
             child: TextField(
               textAlign: TextAlign.start,
-              onChanged: (text) => setState(() {_publishCarInfo.mileage=_mileController.text;}),
+              onChanged: (text) => setState(() {
+                _publishCarInfo.mileage = _mileController.text;
+              }),
               autofocus: false,
               controller: _mileController,
               decoration: InputDecoration(
@@ -329,22 +361,24 @@ class _PushCarPageState extends State<PushCarPage> {
           vinum,
           _function(
             '品牌车型',
-                () async {
-                  await Get.to(() => ChooseCarPage(
+            () async {
+              await Get.to(() => ChooseCarPage(
                     callback: () {
                       Get.back();
                       _publishCarInfo.carName = _pickCar.value.car.name;
                     },
                     pickCar: _pickCar,
                   ));
-                  setState(() {_publishCarInfo.carName = _pickCar.value.car.name;});
-                },
+              setState(() {
+                _publishCarInfo.carName = _pickCar.value.car.name;
+              });
+            },
             _publishCarInfo.carName,
             '请输入具体车型',
           ),
           _function(
             '首次上牌',
-                () async {
+            () async {
               _firstDate = await CarDatePicker.monthPicker(DateTime.now());
               _publishCarInfo.licensingDate =
                   DateUtil.formatDate(_firstDate, format: 'yyyy-MM');
@@ -359,21 +393,22 @@ class _PushCarPageState extends State<PushCarPage> {
           version,
           _function(
             '车身颜色',
-                () async {
+            () async {
               await showModalBottomSheet(
                 context: context,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(16.w))),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
                   return CarListPicker(
-                    carString: _publishCarInfo.carColor??'',
-                    items: colorList, callback: (String content) {
-                    Get.back();
-                    _publishCarInfo.carColor = content;
-                    setState(() {
-                    });
-                  }, title: '车身颜色',
+                    carString: _publishCarInfo.carColor ?? '',
+                    items: colorList,
+                    callback: (String content) {
+                      Get.back();
+                      _publishCarInfo.carColor = content;
+                      setState(() {});
+                    },
+                    title: '车身颜色',
                   );
                 },
               );
@@ -385,22 +420,23 @@ class _PushCarPageState extends State<PushCarPage> {
           mile,
           _function(
             '车辆来源',
-                ()async {
+            () async {
               await showModalBottomSheet(
                 context: context,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(16.w))),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
                   return CarListPicker(
                     isGrid: false,
-                    carString: _publishCarInfo.carSource??'',
-                    items: typeList, callback: (String content) {
-                    Get.back();
-                    _publishCarInfo.carSource = content;
-                    setState(() {
-                    });
-                  }, title: '车辆来源',
+                    carString: _publishCarInfo.carSource ?? '',
+                    items: typeList,
+                    callback: (String content) {
+                      Get.back();
+                      _publishCarInfo.carSource = content;
+                      setState(() {});
+                    },
+                    title: '车辆来源',
                   );
                 },
               );
@@ -413,11 +449,8 @@ class _PushCarPageState extends State<PushCarPage> {
     );
   }
 
-  _textarea(String title,
-      String hint,
-      String content,
-      TextEditingController _contentController,
-      Function(String) callback) {
+  _textarea(String title, String hint, String content,
+      TextEditingController _contentController, Function(String) callback) {
     return Container(
       color: Colors.transparent,
       child: Row(
@@ -454,10 +487,12 @@ class _PushCarPageState extends State<PushCarPage> {
     );
   }
 
-  _function(String title,
-      VoidCallback onTap,
-      String? content,
-      String msg,) {
+  _function(
+    String title,
+    VoidCallback onTap,
+    String? content,
+    String msg,
+  ) {
     return GestureDetector(
       onTap: onTap,
       child: Material(
@@ -485,19 +520,21 @@ class RadioModel {
   bool? isSelected;
   String? buttonText;
 
-  RadioModel(this.isSelected,
-      this.buttonText,);
+  RadioModel(
+    this.isSelected,
+    this.buttonText,
+  );
 }
 
-class PublishCarInfo{
-  String? viNum;//车架号
-  String? carName;//车型
-  String? licensingDate;//首次上牌时间
-  String? carNum;//车牌号
-  String? engineNum;//发动机号
-  String? carColor;//车身颜色
-  String? mileage;//表现里程
-  String? carSource;//车辆来源
+class PublishCarInfo {
+  String? viNum; //车架号
+  String? carName; //车型
+  String? licensingDate; //首次上牌时间
+  String? carNum; //车牌号
+  String? engineNum; //发动机号
+  String? carColor; //车身颜色
+  String? mileage; //表现里程
+  String? carSource; //车辆来源
 
   PublishCarInfo({
     this.viNum,
@@ -508,5 +545,5 @@ class PublishCarInfo{
     this.carColor,
     this.mileage,
     this.carSource,
-});
+  });
 }

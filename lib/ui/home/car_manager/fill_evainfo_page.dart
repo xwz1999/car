@@ -1,16 +1,16 @@
 import 'package:cloud_car/ui/home/car_manager/check_pushcar_page.dart';
 import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
-import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/picker/car_list_picker.dart';
-import '../../../widget/picker/car_picker_box.dart';
+
 import '../../../widget/sort_widget.dart';
-import '../sort/choose_car_page.dart';
+
 import 'direct_sale/edit_item_widget.dart';
 
 class EvainfoPage extends StatefulWidget {
@@ -137,14 +137,13 @@ class _EvainfoPageState extends State<EvainfoPage> {
         decoration: const BoxDecoration(
           color: Color(0x99eeeeee),
         ),
-        child:ListView(
+        child: ListView(
           children: [
             Column(
               children: [
                 Container(
                   padding: EdgeInsets.all(30.w),
-                  child: widget.publishCarInfo.carNum!
-                      .text
+                  child: widget.publishCarInfo.carNum!.text
                       .size(32.sp)
                       .bold
                       .color(Colors.black)
@@ -234,7 +233,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                       ),
                       _function(
                         '过户次数',
-                            () async {
+                        () async {
                           await showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(
@@ -259,7 +258,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                       ),
                       _function(
                         '油漆面修复',
-                            () async {
+                        () async {
                           await showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(
@@ -284,7 +283,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                       ),
                       _function(
                         '钣金面修复',
-                            () async {
+                        () async {
                           await showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(
@@ -309,7 +308,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                       ),
                       _function(
                         '更换件情况',
-                            () async {
+                        () async {
                           await showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(
@@ -335,7 +334,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                       ),
                       _function(
                         '变速箱情况',
-                            () async {
+                        () async {
                           await showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(
@@ -361,7 +360,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                       ),
                       _function(
                         '重大事故',
-                            () async {
+                        () async {
                           await showModalBottomSheet(
                             context: context,
                             shape: RoundedRectangleBorder(
@@ -423,7 +422,8 @@ class _EvainfoPageState extends State<EvainfoPage> {
                               ),
                               Expanded(
                                 child: TextField(
-                                  controller: TextEditingController(text: _maintain),
+                                  controller:
+                                      TextEditingController(text: _maintain),
                                   enabled: false,
                                   keyboardType: TextInputType.text,
                                   onChanged: (text) {},
@@ -492,7 +492,8 @@ class _EvainfoPageState extends State<EvainfoPage> {
                               ),
                               Expanded(
                                 child: TextField(
-                                  controller: TextEditingController(text: _trueMeters),
+                                  controller:
+                                      TextEditingController(text: _trueMeters),
                                   enabled: false,
                                   keyboardType: TextInputType.text,
                                   onChanged: (text) {},
@@ -522,7 +523,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                             ],
                           ),
                         ),
-                      ).paddingOnly(top:50.h,left:20.w,right:35.w),
+                      ).paddingOnly(top: 50.h, left: 20.w, right: 35.w),
                     ],
                   ),
                 ),
@@ -531,19 +532,19 @@ class _EvainfoPageState extends State<EvainfoPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.to(() => CheckPushPage(publishCarInfo: widget.publishCarInfo));
+                      Get.to(() =>
+                          CheckPushPage(publishCarInfo: widget.publishCarInfo));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.blue),
                     ),
                     child: '马上估价'.text.size(30.sp).color(Colors.white).make(),
                   ),
-                ).paddingOnly( left: 40.w, right: 40.w,bottom: 30.h),
+                ).paddingOnly(left: 40.w, right: 40.w, bottom: 30.h),
               ],
             ),
           ],
-        ) ,
-
+        ),
       ),
     );
   }

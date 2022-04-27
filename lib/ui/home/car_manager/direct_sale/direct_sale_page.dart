@@ -1,7 +1,7 @@
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
-import 'package:cloud_car/widget/choose_widget.dart';
+
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
@@ -48,7 +48,8 @@ class _DirectSalePageState extends State<DirectSalePage> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(pickString: '',
+        child: ScreenWidget(
+          pickString: '',
           childAspectRatio: 144 / 56,
           callback: (String item) {
             if (kDebugMode) {

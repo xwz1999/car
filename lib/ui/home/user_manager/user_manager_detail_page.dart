@@ -52,12 +52,13 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
   String title = '客户统计';
   String? get status => CustomerMap.customerStatusByInt[widget.type];
 
-  late ValueNotifier<SearchCustomerParamModel> sortModel = ValueNotifier(SearchCustomerParamModel(
-      name: '',
-      customerStatus: status??'',
-      createdDate: '',
-      isImportant: '',
-      trailDate: '')) ;
+  late ValueNotifier<SearchCustomerParamModel> sortModel = ValueNotifier(
+      SearchCustomerParamModel(
+          name: '',
+          customerStatus: status ?? '',
+          createdDate: '',
+          isImportant: '',
+          trailDate: ''));
 
   Map<String, dynamic> get _params => {
         'name': sortModel.value.name,
@@ -68,8 +69,6 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
         'trailCreatedDateStart': sortModel.value.trailCreatedDateStart,
         'trailCreatedDateEnd': sortModel.value.trailCreatedDateEnd,
       };
-
-
 
   @override
   void initState() {
@@ -82,13 +81,9 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
       ChooseItem(name: '最近跟进'),
       ChooseItem(name: '最近注册'),
     ];
-
   }
 
-
-
-  List<Widget> get listWidgets =>
-       [
+  List<Widget> get listWidgets => [
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -100,7 +95,9 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
             childAspectRatio: 144 / 56,
             callback: (String item) {
               sort = item;
-              print(sort);
+              if (kDebugMode) {
+                print(sort);
+              }
               screenControl.screenHide();
               _refreshController.callRefresh();
               setState(() {});
@@ -169,11 +166,13 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                     _list = await CustomerFunc.getCustomerList(
                         page: _page,
                         size: 10,
-                        order: sort.isEmpty?null: (CustomerMap.customerSortString
-                            .getKeyFromValue(sort) as CustomerSort
-                    ).name
-                            .toString()
-                            .toSnake,
+                        order: sort.isEmpty
+                            ? null
+                            : (CustomerMap.customerSortString
+                                    .getKeyFromValue(sort) as CustomerSort)
+                                .name
+                                .toString()
+                                .toSnake,
                         searchParams: _params);
 
                     setState(() {});
@@ -185,8 +184,8 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                       'page': _page,
                       'size': 10,
                       'order': (CustomerMap.customerSortString
-                          .getKeyFromValue(sort) as CustomerSort
-                      ).name
+                              .getKeyFromValue(sort) as CustomerSort)
+                          .name
                           .toString()
                           .toSnake,
                       'search': _params
@@ -249,7 +248,8 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
 
   _getSortList() {
     return UserSortListPage(
-     onConfirm: () {  }, pickSort: sortModel,
+      onConfirm: () {},
+      pickSort: sortModel,
     );
   }
 

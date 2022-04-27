@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../direct_sale/edit_item_widget.dart';
 
@@ -49,7 +48,7 @@ class _CarLicensePageState extends State<CarLicensePage> {
               child: '牌证信息'.text.size(32.sp).bold.color(Colors.black).make(),
             ),
             Container(
-              padding: EdgeInsets.only(left:30.w,right: 30.w,bottom: 30.w),
+              padding: EdgeInsets.only(left: 30.w, right: 30.w, bottom: 30.w),
               color: Colors.white,
               child: Column(
                 children: [
@@ -70,8 +69,7 @@ class _CarLicensePageState extends State<CarLicensePage> {
                     endText: '把',
                   ),
                   Container(
-                    padding: EdgeInsets.only(
-                        top: 30.h,  left: 5.w, right: 30.w),
+                    padding: EdgeInsets.only(top: 30.h, left: 5.w, right: 30.w),
                     color: Colors.transparent,
                     child: Row(
                       children: [
@@ -81,7 +79,7 @@ class _CarLicensePageState extends State<CarLicensePage> {
                             .color(Colors.red)
                             .normal
                             .textStyle(const TextStyle(
-                            decoration: TextDecoration.none))
+                                decoration: TextDecoration.none))
                             .make()
                             .paddingOnly(top: 5),
                         10.wb,
@@ -92,7 +90,7 @@ class _CarLicensePageState extends State<CarLicensePage> {
                               .size(30.sp)
                               .normal
                               .textStyle(const TextStyle(
-                              decoration: TextDecoration.none))
+                                  decoration: TextDecoration.none))
                               .color(Colors.black.withOpacity(0.45))
                               .make(),
                         ),
@@ -115,13 +113,13 @@ class _CarLicensePageState extends State<CarLicensePage> {
                                             top: 6.w, right: 5.w),
                                         child: !_chooseTraffic
                                             ? const Icon(CupertinoIcons.circle,
-                                            size: 18,
-                                            color: Color(0xFFdddddd))
+                                                size: 18,
+                                                color: Color(0xFFdddddd))
                                             : const Icon(
-                                            CupertinoIcons
-                                                .checkmark_alt_circle_fill,
-                                            size: 18,
-                                            color: Colors.blue)),
+                                                CupertinoIcons
+                                                    .checkmark_alt_circle_fill,
+                                                size: 18,
+                                                color: Colors.blue)),
                                     RichText(
                                       text: TextSpan(
                                         text: "有",
@@ -150,13 +148,13 @@ class _CarLicensePageState extends State<CarLicensePage> {
                                             top: 6.w, right: 5.w),
                                         child: _chooseTraffic
                                             ? const Icon(CupertinoIcons.circle,
-                                            size: 18,
-                                            color: Color(0xFFdddddd))
+                                                size: 18,
+                                                color: Color(0xFFdddddd))
                                             : const Icon(
-                                            CupertinoIcons
-                                                .checkmark_alt_circle_fill,
-                                            size: 18,
-                                            color: Colors.blue)),
+                                                CupertinoIcons
+                                                    .checkmark_alt_circle_fill,
+                                                size: 18,
+                                                color: Colors.blue)),
                                     RichText(
                                       text: TextSpan(
                                         text: "无",
@@ -187,8 +185,7 @@ class _CarLicensePageState extends State<CarLicensePage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(
-                        top: 30.h, left: 5.w, right: 30.w),
+                    padding: EdgeInsets.only(top: 30.h, left: 5.w, right: 30.w),
                     color: Colors.transparent,
                     child: Row(
                       children: [
@@ -198,7 +195,7 @@ class _CarLicensePageState extends State<CarLicensePage> {
                             .color(Colors.red)
                             .normal
                             .textStyle(const TextStyle(
-                            decoration: TextDecoration.none))
+                                decoration: TextDecoration.none))
                             .make()
                             .paddingOnly(top: 5),
                         10.wb,
@@ -209,7 +206,7 @@ class _CarLicensePageState extends State<CarLicensePage> {
                               .size(30.sp)
                               .normal
                               .textStyle(const TextStyle(
-                              decoration: TextDecoration.none))
+                                  decoration: TextDecoration.none))
                               .color(Colors.black.withOpacity(0.45))
                               .make(),
                         ),
@@ -232,13 +229,13 @@ class _CarLicensePageState extends State<CarLicensePage> {
                                             top: 6.w, right: 5.w),
                                         child: !_chooseCommerce
                                             ? const Icon(CupertinoIcons.circle,
-                                            size: 18,
-                                            color: Color(0xFFdddddd))
+                                                size: 18,
+                                                color: Color(0xFFdddddd))
                                             : const Icon(
-                                            CupertinoIcons
-                                                .checkmark_alt_circle_fill,
-                                            size: 18,
-                                            color: Colors.blue)),
+                                                CupertinoIcons
+                                                    .checkmark_alt_circle_fill,
+                                                size: 18,
+                                                color: Colors.blue)),
                                     RichText(
                                       text: TextSpan(
                                         text: "有",
@@ -267,13 +264,13 @@ class _CarLicensePageState extends State<CarLicensePage> {
                                             top: 6.w, right: 5.w),
                                         child: _chooseCommerce
                                             ? const Icon(CupertinoIcons.circle,
-                                            size: 18,
-                                            color: Color(0xFFdddddd))
+                                                size: 18,
+                                                color: Color(0xFFdddddd))
                                             : const Icon(
-                                            CupertinoIcons
-                                                .checkmark_alt_circle_fill,
-                                            size: 18,
-                                            color: Colors.blue)),
+                                                CupertinoIcons
+                                                    .checkmark_alt_circle_fill,
+                                                size: 18,
+                                                color: Colors.blue)),
                                     RichText(
                                       text: TextSpan(
                                         text: "无",
@@ -326,7 +323,7 @@ class _CarLicensePageState extends State<CarLicensePage> {
                 ),
                 child: '下一步'.text.size(30.sp).color(Colors.white).make(),
               ),
-            ).paddingOnly(left: 30.w,right: 30.w,bottom: 30.h),
+            ).paddingOnly(left: 30.w, right: 30.w, bottom: 30.h),
           ],
         ),
       ),

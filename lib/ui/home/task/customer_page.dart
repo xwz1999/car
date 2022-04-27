@@ -2,8 +2,7 @@ import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/task_func.dart';
 import 'package:cloud_car/ui/home/task/customer_invite_item.dart';
 import 'package:cloud_car/ui/home/task/task_user_invite_page.dart';
-import 'package:cloud_car/ui/home/task/user_invite_page.dart';
-import 'package:cloud_car/ui/home/user_manager/user_info_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -18,10 +17,8 @@ class CustomerPage extends StatefulWidget {
 }
 
 class _CustomerPageState extends State<CustomerPage> {
-
   int _page = 1;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
-
 
   List<TaskInviteListModel> lists = [];
 
@@ -56,48 +53,48 @@ class _CustomerPageState extends State<CustomerPage> {
         child: Padding(
           padding: EdgeInsets.all(32.w),
           child: EasyRefresh(
-              firstRefresh: true,
-              header: MaterialHeader(),
-              footer: MaterialFooter(),
-              controller: _easyRefreshController,
-              onRefresh: () async {
-                _page = 1;
-                lists = await TaskFunc.getCarList(_page);
-                setState(() {});
-              },
-              onLoad: () async {
-                _page++;
-                await TaskFunc.getCarList(_page).then((value) {
-                  if(value.isEmpty){
-                    _easyRefreshController.finishLoad(noMore: true);
-                  }else{
-                    lists.addAll(value);
-                    setState(() {
-
-                    });
-                  }
-                });
-              },
-              child:
-              ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  // padding: EdgeInsets.only(top: 10.w),
-                  itemBuilder: (context, index) {
-                    return  GestureDetector(onTap: (){
-                      Get.to(()=> TaskUserInvitePage(model: lists[index],));
-                    }, child: CustomerInviteItem(model:lists[index]));
-                  },
-                  separatorBuilder: (_, __) {
-                    return SizedBox(
-                      height: 16.w,
-                    );
-                  },
-                  itemCount: lists.length),
+            firstRefresh: true,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            controller: _easyRefreshController,
+            onRefresh: () async {
+              _page = 1;
+              lists = await TaskFunc.getCarList(_page);
+              setState(() {});
+            },
+            onLoad: () async {
+              _page++;
+              await TaskFunc.getCarList(_page).then((value) {
+                if (value.isEmpty) {
+                  _easyRefreshController.finishLoad(noMore: true);
+                } else {
+                  lists.addAll(value);
+                  setState(() {});
+                }
+              });
+            },
+            child: ListView.separated(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                // padding: EdgeInsets.only(top: 10.w),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                      onTap: () {
+                        Get.to(() => TaskUserInvitePage(
+                              model: lists[index],
+                            ));
+                      },
+                      child: CustomerInviteItem(model: lists[index]));
+                },
+                separatorBuilder: (_, __) {
+                  return SizedBox(
+                    height: 16.w,
+                  );
+                },
+                itemCount: lists.length),
           ),
         ),
       ),
-
     );
   }
 }

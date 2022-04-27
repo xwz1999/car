@@ -1,9 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/model/car_item_model.dart';
+
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -15,7 +15,8 @@ typedef CarCallback = Function(String city);
 class ShareCarPage extends StatefulWidget {
   final List<CarListModel> models;
   const ShareCarPage({
-    Key? key, required this.models,
+    Key? key,
+    required this.models,
   }) : super(key: key);
 
   @override
@@ -145,7 +146,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15))),
                       builder: (BuildContext context) {
-                        return  ShareCarDetailPage(
+                        return ShareCarDetailPage(
                           model: _chooseModels,
                           isMore: false,
                         );
@@ -160,7 +161,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15))),
                       builder: (BuildContext context) {
-                        return  ShareCarDetailPage(
+                        return ShareCarDetailPage(
                           model: _chooseModels,
                           isMore: true,
                         );

@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:azlistview/azlistview.dart';
 import 'package:cloud_car/model/region/china_region_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:lpinyin/lpinyin.dart';
 
 import '../models.dart';
@@ -19,15 +17,13 @@ class CityListPage extends StatefulWidget {
 
   const CityListPage({Key? key, required this.cityCallback}) : super(key: key);
   @override
-  _CityListPageState createState() =>
-      _CityListPageState();
+  _CityListPageState createState() => _CityListPageState();
 }
 
 class _CityListPageState extends State<CityListPage> {
   List<CityModel> cityList = [];
   List<ChinaRegionModel> chinaLists = [];
   List<ChinaRegionModel> hotLists = [];
-
 
   double susItemHeight = 36;
   String imgFavorite = Assets.icons.barToTop.path;
@@ -42,22 +38,18 @@ class _CityListPageState extends State<CityListPage> {
   }
 
   void loadData() async {
-
     hotLists = UserTool.cityProvider.hotCities;
 
     for (var element in hotLists) {
-      hotCityList.add(CityModel(name: element.name,model:element));
+      hotCityList.add(CityModel(name: element.name, model: element));
     }
-
-
-
 
     //加载城市列表
     chinaLists = UserTool.cityProvider.regions;
 
-    chinaLists.forEach((element) {
-      cityList.add(CityModel(name: element.name,model:element));
-    });
+    for (var element in chinaLists) {
+      cityList.add(CityModel(name: element.name, model: element));
+    }
 
     _handleList(cityList);
   }
@@ -91,41 +83,36 @@ class _CityListPageState extends State<CityListPage> {
   }
 
   Widget _buildHeader() {
-
-    return
-
-      Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 32.w),
-        child: Column(
-          children: [
-            GridView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemCount: hotCityList.length,
-                //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 32.w),
+      child: Column(
+        children: [
+          GridView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemCount: hotCityList.length,
+              //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   //横轴元素个数
-                    crossAxisCount: 4,
-                    //纵轴间距
-                    mainAxisSpacing: 6,
-                    //横轴间距
-                    crossAxisSpacing: 10,
-                    //子组件宽高长度比例
-                    childAspectRatio: 152/56),
-                itemBuilder: (BuildContext context, int index) {
-                  //Widget Function(BuildContext context, int index)
-                  return _getCityView(
-                      hotCityList[index],isLocation: index==0);
-                }),
-          ],
-        ),
-      );
+                  crossAxisCount: 4,
+                  //纵轴间距
+                  mainAxisSpacing: 6,
+                  //横轴间距
+                  crossAxisSpacing: 10,
+                  //子组件宽高长度比例
+                  childAspectRatio: 152 / 56),
+              itemBuilder: (BuildContext context, int index) {
+                //Widget Function(BuildContext context, int index)
+                return _getCityView(hotCityList[index], isLocation: index == 0);
+              }),
+        ],
+      ),
+    );
   }
 
-
-  _getCityView(CityModel model,{bool isLocation = false}){
+  _getCityView(CityModel model, {bool isLocation = false}) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         widget.cityCallback(model.model!);
       },
       child: Container(
@@ -134,12 +121,15 @@ class _CityListPageState extends State<CityListPage> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(4.w),
-          border: Border.all(color: const Color(0xFFEEEEEE),width: 1.w),
+          border: Border.all(color: const Color(0xFFEEEEEE), width: 1.w),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(model.name,style: Theme.of(context).textTheme.subtitle2,)
+            Text(
+              model.name,
+              style: Theme.of(context).textTheme.subtitle2,
+            )
           ],
         ),
       ),
@@ -152,10 +142,11 @@ class _CityListPageState extends State<CityListPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding:  EdgeInsets.symmetric(vertical: 16.w,horizontal: 32.w),
-          child: Text("热门城市",style: TextStyle(
-            color: BaseStyle.color999999,fontSize: 24.sp
-          ),),
+          padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
+          child: Text(
+            "热门城市",
+            style: TextStyle(color: BaseStyle.color999999, fontSize: 24.sp),
+          ),
         ),
         Expanded(
           child: AzListView(
@@ -166,7 +157,6 @@ class _CityListPageState extends State<CityListPage> {
               CityModel model = cityList[index];
               return Utils.getListItem(context, model, (name, id) {
                 widget.cityCallback(model.model!);
-
               });
             },
             susItemHeight: susItemHeight,
@@ -180,7 +170,6 @@ class _CityListPageState extends State<CityListPage> {
             },
             indexBarData: SuspensionUtil.getTagIndexList(cityList),
             indexBarOptions: IndexBarOptions(
-
               needRebuild: true,
               color: Colors.transparent,
               downColor: const Color(0xFFEEEEEE),
@@ -192,12 +181,15 @@ class _CityListPageState extends State<CityListPage> {
                 ),
               ),
               selectTextStyle: const TextStyle(
-                  fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500),
-              selectItemDecoration:
-              const BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor),
+                  fontSize: 12,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500),
+              selectItemDecoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: kPrimaryColor),
               indexHintAlignment: Alignment.centerRight,
               indexHintChildAlignment: Alignment.center,
-              indexHintTextStyle: TextStyle(fontSize: 40.sp, color: Colors.black87),
+              indexHintTextStyle:
+                  TextStyle(fontSize: 40.sp, color: Colors.black87),
 
               indexHintOffset: const Offset(-10, 0),
               indexHintWidth: 100.w,

@@ -1,5 +1,3 @@
-
-import 'package:cloud_car/ui/home/sort/choose_item_page.dart';
 import 'package:cloud_car/ui/home/sort/search_customer_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_list_widget.dart';
@@ -15,7 +13,8 @@ class UserSortListPage extends StatefulWidget {
 
   const UserSortListPage({
     Key? key,
-    required this.onConfirm, required this.pickSort,
+    required this.onConfirm,
+    required this.pickSort,
   }) : super(key: key);
 
   @override
@@ -23,10 +22,7 @@ class UserSortListPage extends StatefulWidget {
 }
 
 class _UserSortListPageState extends State<UserSortListPage> {
-
-  List<ChooseItem> _gearbox  = [];
-
-
+  List<ChooseItem> _gearbox = [];
 
   @override
   void initState() {
@@ -36,7 +32,6 @@ class _UserSortListPageState extends State<UserSortListPage> {
       ChooseItem(name: '是'),
       ChooseItem(name: '否'),
     ];
-
   }
 
   @override
@@ -50,7 +45,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
       children: [
         ListView(
           shrinkWrap: true,
-          padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 100.w),
+          padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 100.w),
           children: [
             // SortListWidget(
             //
@@ -122,7 +117,8 @@ class _UserSortListPageState extends State<UserSortListPage> {
                 setState(() {});
                 // widget.callback(item);
               },
-              title: '重要客户', pickString:  widget.pickSort.value.isImportant,
+              title: '重要客户',
+              pickString: widget.pickSort.value.isImportant,
             ),
             16.hb,
             SortListWidget(
@@ -137,22 +133,27 @@ class _UserSortListPageState extends State<UserSortListPage> {
               },
               title: '跟进时间',
               rightWidget: GestureDetector(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
+                    Text(
+                      '请选择',
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                     10.wb,
                     Padding(
-                      padding:  EdgeInsets.only(top: 5.w),
-                      child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
+                      padding: EdgeInsets.only(top: 5.w),
+                      child: Icon(
+                        CupertinoIcons.chevron_forward,
+                        size: 40.w,
+                        color: BaseStyle.colordddddd,
+                      ),
                     )
                   ],
                 ),
-              ), pickString: '',
-
+              ),
+              pickString: '',
             ),
             16.hb,
             SortListWidget(
@@ -160,50 +161,51 @@ class _UserSortListPageState extends State<UserSortListPage> {
               mainAxisSpacing: 10.w,
               crossAxisSpacing: 24.w,
               crossAxisCount: 4,
-              callback: (ChooseItem item) {
-
-              },
+              callback: (ChooseItem item) {},
               title: '注册时间',
               rightWidget: GestureDetector(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
+                    Text(
+                      '请选择',
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                     10.wb,
                     Padding(
-                      padding:  EdgeInsets.only(top: 5.w),
-                      child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
+                      padding: EdgeInsets.only(top: 5.w),
+                      child: Icon(
+                        CupertinoIcons.chevron_forward,
+                        size: 40.w,
+                        color: BaseStyle.colordddddd,
+                      ),
                     )
                   ],
                 ),
-              ), pickString: '',
+              ),
+              pickString: '',
             ),
             16.hb,
-
-
           ],
         ),
-        Positioned(bottom: 40.w,left: 30.w,
-            child:       Row(
-          children: [
-            _resetBtn(),
-            40.wb,
-            _confirmBtn(),
-
-          ],
-        ))
+        Positioned(
+            bottom: 40.w,
+            left: 30.w,
+            child: Row(
+              children: [
+                _resetBtn(),
+                40.wb,
+                _confirmBtn(),
+              ],
+            ))
       ],
     );
   }
 
   _confirmBtn() {
     return GestureDetector(
-      onTap: () {
-
-      },
+      onTap: () {},
       child: Container(
         width: 300.w,
         padding: EdgeInsets.symmetric(vertical: 16.w),
@@ -228,9 +230,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
 
   _resetBtn() {
     return GestureDetector(
-      onTap: () {
-
-      },
+      onTap: () {},
       child: Container(
         width: 240.w,
         padding: EdgeInsets.symmetric(vertical: 16.w),
@@ -241,12 +241,10 @@ class _UserSortListPageState extends State<UserSortListPage> {
         ),
         child: Text(
           '重  置',
-          style: TextStyle(
-              color: kPrimaryColor, fontSize: BaseStyle.fontSize28),
+          style:
+              TextStyle(color: kPrimaryColor, fontSize: BaseStyle.fontSize28),
         ),
       ),
     );
   }
-
-
 }
