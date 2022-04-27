@@ -1,6 +1,3 @@
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_order_page.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_orders.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete_other.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid.dart';
@@ -86,7 +83,8 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(pickString: '',
+        child: ScreenWidget(
+          pickString: '',
           childAspectRatio: 200 / 56,
           callback: (String item) {
             if (kDebugMode) {

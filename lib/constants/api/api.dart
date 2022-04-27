@@ -1,4 +1,4 @@
-
+import 'package:cloud_car/ui/user/user_order/dealer_consignment_order.dart/dealer_consignment_order_page.dart';
 
 import '../environment/environment.dart';
 
@@ -32,32 +32,43 @@ class API {
   //根分类
   ///文件
   static _File file = _File();
+
   ///登陆
   static _Login login = _Login();
+
   ///门店管理
   static _StoreManagement storeManagement = _StoreManagement();
+
   ///订单
   static _Order order = _Order();
+
   ///海报
   static _Poster poster = _Poster();
+
   ///车辆
   static _Car car = _Car();
+
   ///合同
   static _Contract contract = _Contract();
+
   ///客户
   static _Customer customer = _Customer();
+
   ///任务
   static _Task task = _Task();
+
   ///地区
   static _Region region = _Region();
+
   ///用户手册
   static _Broker broker = _Broker();
+
   ///意见提交
   static _Feedback feedback = _Feedback();
   //二级分类
   static _UserApi user = _UserApi();
 }
-  
+
 class _Task {
   ///客户邀约列表
   String get getInviteLists => '/task/invite/lists';
@@ -169,6 +180,21 @@ class _Order {
 
   ///添加车商寄卖订单
   get addConsignment => '/order/dealer/consignment/add';
+
+  ///车商寄卖订单
+  get dealerConsignmentOrderPage => '/order/dealer/consignment/lists';
+
+  ///寄卖订单详情
+  get consignmentInfo => '/order/consignment/info';
+
+  ///发布车辆详情
+  get consignmentInfoCar => '/order/consignment/info/car';
+
+  ///发布车辆编辑
+  get consignmentPublishEdit => '/order/consignment/publish/edit';
+
+  ///售车订单详情
+  get saleInfo => '/order/sale/info';
 }
 
 class _Poster {
@@ -185,7 +211,6 @@ class _Region {
 
   ///微信绑定手机号发送验证码
   String get phoneCode => '/login/sms';
-
 }
 
 ///门店管理

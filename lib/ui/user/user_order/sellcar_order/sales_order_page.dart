@@ -6,8 +6,10 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
+
 import 'package:cloud_car/widget/car_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
@@ -37,107 +39,107 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   List<SalelistsModel> _SalesList = [];
   int _page = 1;
   final int _size = 10;
-  List carList = [
-    {
-      'judge': false,
-      'judgename': '待预定',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '需付定金',
-      'pice': '1.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '已预定',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付订单',
-      'pice': '1.00',
-      'buttomname': '',
-    },
-    {
-      'judge': true,
-      'judgename': '待检测',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付定金',
-      'pice': '1.00',
-      'buttomname': '上传报告',
-    },
-    {
-      'judge': false,
-      'judgename': '支付首付',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '需付首付',
-      'pice': '10.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '支付首付',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付首付',
-      'pice': '10.00',
-      'buttomname': '',
-    },
-    {
-      'judge': true,
-      'judgename': '待过户',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付首付',
-      'pice': '10.00',
-      'buttomname': '上传资料',
-    },
-    {
-      'judge': false,
-      'judgename': '支付尾款',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '需付尾款',
-      'pice': '19.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '支付尾款',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付尾款',
-      'pice': '19.00',
-      'buttomname': '',
-    },
-    {
-      'judge': true,
-      'judgename': '支付尾款',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付尾款',
-      'pice': '19.00',
-      'buttomname': '成交订单',
-    },
-    {
-      'judge': false,
-      'judgename': '成交订单',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付尾款',
-      'pice': '19.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '交易取消',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '',
-      'pice': '',
-      'buttomname': '',
-    },
-  ];
+  // List carList = [
+  //   {
+  //     'judge': false,
+  //     'judgename': '待预定',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '需付定金',
+  //     'pice': '1.00',
+  //     'buttomname': '',
+  //   },
+  //   {
+  //     'judge': false,
+  //     'judgename': '已预定',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '已付订单',
+  //     'pice': '1.00',
+  //     'buttomname': '',
+  //   },
+  //   {
+  //     'judge': true,
+  //     'judgename': '待检测',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '已付定金',
+  //     'pice': '1.00',
+  //     'buttomname': '上传报告',
+  //   },
+  //   {
+  //     'judge': false,
+  //     'judgename': '支付首付',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '需付首付',
+  //     'pice': '10.00',
+  //     'buttomname': '',
+  //   },
+  //   {
+  //     'judge': false,
+  //     'judgename': '支付首付',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '已付首付',
+  //     'pice': '10.00',
+  //     'buttomname': '',
+  //   },
+  //   {
+  //     'judge': true,
+  //     'judgename': '待过户',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '已付首付',
+  //     'pice': '10.00',
+  //     'buttomname': '上传资料',
+  //   },
+  //   {
+  //     'judge': false,
+  //     'judgename': '支付尾款',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '需付尾款',
+  //     'pice': '19.00',
+  //     'buttomname': '',
+  //   },
+  //   {
+  //     'judge': false,
+  //     'judgename': '支付尾款',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '已付尾款',
+  //     'pice': '19.00',
+  //     'buttomname': '',
+  //   },
+  //   {
+  //     'judge': true,
+  //     'judgename': '支付尾款',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '已付尾款',
+  //     'pice': '19.00',
+  //     'buttomname': '成交订单',
+  //   },
+  //   {
+  //     'judge': false,
+  //     'judgename': '成交订单',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '已付尾款',
+  //     'pice': '19.00',
+  //     'buttomname': '',
+  //   },
+  //   {
+  //     'judge': false,
+  //     'judgename': '交易取消',
+  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
+  //     'url': Assets.images.carBanner.path,
+  //     'picename': '',
+  //     'pice': '',
+  //     'buttomname': '',
+  //   },
+  //];
   @override
   void initState() {
     super.initState();
@@ -148,7 +150,8 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(pickString: '',
+        child: ScreenWidget(
+          pickString: '',
           childAspectRatio: 200 / 56,
           callback: (String item) {
             if (kDebugMode) {
@@ -210,6 +213,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
               footer: MaterialFooter(),
               controller: _easyRefreshController,
               onRefresh: () async {
+                _page = 1;
                 _SalesList =
                     await OrderFunc.getSaleList(page: _page, size: _size);
 
@@ -236,7 +240,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                   itemBuilder: (context, index) {
                     return getSales(_SalesList[index]);
                   },
-                  itemCount: carList.length),
+                  itemCount: _SalesList.length),
             ),
           ),
         ],
@@ -249,36 +253,32 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
       child: GestureDetector(
         onTap: () {
-          switch (model.status) {
-            case 0:
-
-              ///交易取消
-              Get.to(() => const TransactionCancelled());
-              break;
-            case 1:
-
-              ///待预定
-              Get.to(() => const Reservation(
-                    stat: '待预定',
-                    judge: false,
-                  ));
-              break;
-            case 2:
-
-              ///已预定
-              Get.to(() => const Reservation(
-                    stat: '待预定',
-                    judge: true,
-                  ));
-              break;
-            case 3:
-
-              ///待检测
-              Get.to(() => const Reservation(
-                    stat: '待检测',
-                    judge: true,
-                  ));
-              break;
+          switch (_getText(model.status)) {
+            // case 0:
+            //   ///交易取消
+            //   Get.to(() => const TransactionCancelled());
+            //   break;
+            // case 1:
+            //   ///待预定
+            //   Get.to(() => const Reservation(
+            //         stat: '待预定',
+            //         judge: false,
+            //       ));
+            //   break;
+            // case 2:
+            //   ///已预定
+            //   Get.to(() => const Reservation(
+            //         stat: '待预定',
+            //         judge: true,
+            //       ));
+            //   break;
+            // case 3:
+            //   ///待检测
+            //   Get.to(() => const Reservation(
+            //         stat: '待检测',
+            //         judge: true,
+            //       ));
+            //   break;
             // case 4:
             //   ///支付首付
             //   switch () {
@@ -318,76 +318,84 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
             //       break;
             //   }
             //   break;
-            case 50:
-
-              ///成交订单
-              Get.to(() => const MakeDealData());
+            //   case 50:
+            //     ///成交订单
+            //     Get.to(() => const MakeDealData());
+            //     break;
+            // }
+            case '待预定':
+              Get.to(() => Reservation(
+                    judge: false,
+                    orderId: model.id,
+                    status: _getText(model.status),
+                  ));
+              break;
+            case '已预定':
+              Get.to(() => Reservation(
+                    orderId: model.id,
+                    status: _getText(model.status),
+                    judge: true,
+                  ));
+              break;
+            case '待检测':
+              Get.to(() => Reservation(
+                    status: _getText(model.status),
+                    judge: true,
+                    orderId: model.id,
+                  ));
+              break;
+            case '支付首付':
+              switch (_getTextStatus(model.status)) {
+                case '需付首付':
+                  Get.to(() => Reservation(
+                        status: _getText(model.status),
+                        judge: false,
+                        orderId: model.id,
+                      ));
+                  break;
+                case '已付首付':
+                  Get.to(() => Reservation(
+                        status: _getText(model.status),
+                        judge: true,
+                        orderId: model.id,
+                      ));
+                  break;
+              }
+              break;
+            case '待过户':
+              Get.to(() => Reservation(
+                    status: _getText(model.status),
+                    judge: true,
+                    orderId: model.id,
+                  ));
+              break;
+            case '支付尾款':
+              switch (_getTextStatus(model.status)) {
+                case '需付尾款':
+                  Get.to(() => Reservation(
+                        orderId: model.id,
+                        judge: false,
+                        status: _getText(model.status),
+                      ));
+                  break;
+                case '已付尾款':
+                  Get.to(() => Reservation(
+                        status: _getText(model.status),
+                        judge: true,
+                        orderId: model.id,
+                      ));
+                  break;
+              }
+              break;
+            case '交易完成':
+              Get.to(() => MakeDealData(
+                    id: model.id,
+                  ));
+              break;
+            case '交易取消':
+              Get.to(() => const TransactionCancelled());
               break;
           }
-          // switch (item['judgename']) {
-          //   case '待预定':
-          //     Get.to(() => const Reservation(
-          //           stat: '待预定',
-          //           judge: false,
-          //         ));
-          //     break;
-          //   case '已预定':
-          //     Get.to(() => const Reservation(
-          //           stat: '待预定',
-          //           judge: true,
-          //         ));
-          //     break;
-          //   case '待检测':
-          //     Get.to(() => const Reservation(
-          //           stat: '待检测',
-          //           judge: true,
-          //         ));
-          //     break;
-          //   case '支付首付':
-          //     switch (item['picename']) {
-          //       case '需付首付':
-          //         Get.to(() => const Reservation(
-          //               stat: '支付首付',
-          //               judge: false,
-          //             ));
-          //         break;
-          //       case '已付首付':
-          //         Get.to(() => const Reservation(
-          //               stat: '支付首付',
-          //               judge: true,
-          //             ));
-          //         break;
-          //     }
-          //     break;
-          //   case '待过户':
-          //     Get.to(() => const Reservation(
-          //           stat: '待过户',
-          //           judge: true,
-          //         ));
-          //     break;
-          //   case '支付尾款':
-          //     switch (item['picename']) {
-          //       case '需付尾款':
-          //         Get.to(() => const Reservation(
-          //               stat: '支付尾款',
-          //               judge: false,
-          //             ));
-          //         break;
-          //       case '已付尾款':
-          //         Get.to(() => const Reservation(
-          //               stat: '支付尾款',
-          //               judge: true,
-          //             ));
-          //         break;
-          //     }
-          //     break;
-          //   case '成交订单':
-          //     Get.to(() => const MakeDealData());
-          //     break;
-          //   case '交易取消':
-          //     Get.to(() => const TransactionCancelled());
-          //     break;
-          // }
         },
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
@@ -397,13 +405,15 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                ///状态
                 Padding(
                   padding: EdgeInsets.only(left: 0.w),
                   child: Text(
-                    _getText(model.status),
+                    //StatusPage(num: model.status),
                     //item['judgename'],
+                    _getText(model.status),
                     style: TextStyle(
-                        color: model.status != 50
+                        color: model.status != 0
                             ? const Color(0xFF027AFF)
                             : const Color(0xFF666666),
                         fontSize: BaseStyle.fontSize28),
@@ -412,6 +422,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 // 24.hb,
                 Row(
                   children: [
+                    ///图片
                     SizedBox(
                       width: 196.w,
                       height: 150.w,
@@ -420,6 +431,8 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                       ),
                     ),
                     20.wb,
+
+                    ///右侧内容
                     SizedBox(
                       width: 406.w,
                       child: Column(
@@ -430,15 +443,17 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   fontSize: BaseStyle.fontSize28,
                                   color: BaseStyle.color111111)),
                           32.hb,
+
+                          ///标签
                           Padding(
                               padding: EdgeInsets.only(right: 16.w),
                               child: getText(
-                                '过户0次',
+                                '过户${model.amount}次',
                                 DateUtil.formatDateMs(
                                     model.licensingDate.toInt() * 1000,
                                     format: 'yyyy年MM月'),
                                 '${model.mileage}万公里',
-                                _getText(model.status),
+                                model.status,
                               ))
                         ],
                       ),
@@ -447,13 +462,16 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 ),
                 40.hb,
                 SizedBox(
-                    child: model.status != 1 || model.status != 2
+                    child: model.status == 10 &&
+                            model.status == 30 &&
+                            model.status == 40
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
+                                  ///汽车总价
                                   SizedBox(
                                     child: Text(
                                       '车辆总价',
@@ -480,7 +498,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   56.wb,
                                   SizedBox(
                                     child: Text(
-                                      '定价',
+                                      _getTextStatus(model.status),
                                       // item['picename'],
                                       style: TextStyle(
                                           fontSize: BaseStyle.fontSize28,
@@ -531,7 +549,8 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                         borderRadius:
                                             BorderRadius.circular(8.w)),
                                     child: Text(
-                                      model.deposit, // item['buttomname'],
+                                      _getBottonText(
+                                          model.status), // item['buttomname'],
                                       style: TextStyle(
                                           color: kForeGroundColor,
                                           fontSize: BaseStyle.fontSize28),
@@ -539,7 +558,9 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                               )
                             ],
                           )
-                        : model.status == 0
+                        : model.status != 0
+
+                            ///判断交易是否取消
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -569,7 +590,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   56.wb,
                                   SizedBox(
                                     child: Text(
-                                      _getText(model.status),
+                                      _getTextStatus(model.status),
                                       style: TextStyle(
                                           fontSize: BaseStyle.fontSize28,
                                           color: BaseStyle.color999999),
@@ -632,14 +653,14 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
     );
   }
 
-  getText(String num, String time, String distance, String conditions) {
+  getText(String num, String time, String distance, int conditions) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
           decoration: BoxDecoration(
-              color: conditions != '交易取消'
+              color: conditions != 0
                   ? const Color(0xFF027AFF).withOpacity(0.08)
                   : const Color(0xFF4F5A74).withOpacity(0.08),
               borderRadius: BorderRadius.circular(4.w)),
@@ -647,7 +668,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
             num,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize20,
-                color: conditions != '交易取消'
+                color: conditions != 0
                     ? const Color(0xFF027AFF)
                     : const Color(0xFF4F5A74)),
           ),
@@ -703,6 +724,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
     );
   }
 
+  ///状态文字
   _getText(int num) {
     switch (num) {
       case 0:
@@ -710,11 +732,15 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
         // ignore: dead_code
         break;
       case 1:
-        return '待签订';
+        return '待预定';
+
+        ///待签订
         // ignore: dead_code
         break;
       case 2:
-        return '已签订';
+        return '已预定';
+
+        ///已签订
         // ignore: dead_code
         break;
       case 3:
@@ -754,10 +780,73 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
         // ignore: dead_code
         break;
       case 50:
-        return '交车';
+        return '交易完成';
         // ignore: dead_code
         break;
       default:
     }
+  }
+}
+
+///状态文字是否支付
+_getTextStatus(int num) {
+  switch (num) {
+    case 1:
+      return '需付定金';
+      // ignore: dead_code
+      break;
+    case 2:
+      return '已付定金';
+      // ignore: dead_code
+      break;
+
+    case 11:
+      return '已付定金';
+      // ignore: dead_code
+      break;
+    case 20:
+      return '需付首付';
+      // ignore: dead_code
+      break;
+    case 21:
+      return '已付首付';
+      // ignore: dead_code
+      break;
+
+    case 31:
+      return '已付首付';
+      // ignore: dead_code
+      break;
+
+    case 40:
+      return '需付尾款';
+      // ignore: dead_code
+      break;
+    case 41:
+      return '已付尾款';
+      // ignore: dead_code
+      break;
+    case 50:
+      return '已付尾款';
+      // ignore: dead_code
+      break;
+  }
+}
+
+///状态按钮文字
+_getBottonText(int num) {
+  switch (num) {
+    case 10:
+      return '上传报告';
+      // ignore: dead_code
+      break;
+    case 30:
+      return '上传资料';
+      // ignore: dead_code
+      break;
+    case 40:
+      return '成交订单';
+      // ignore: dead_code
+      break;
   }
 }

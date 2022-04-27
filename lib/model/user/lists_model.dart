@@ -1,45 +1,37 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+
 part 'lists_model.g.dart';
 
 @JsonSerializable()
 class ListsModel extends Equatable {
   final int id;
-  final String oredrSn;
+  final String orderSn;
   final int status;
-  final String modeNamel;
+  final int auditStatus;
+  final String modeName;
   final int licensingDate;
-  final int mileage;
+  final String mileage;
   final String price;
-  final int createAt;
+  final int createdAt;
 
   // ignore: prefer_const_constructors_in_immutables
 
   factory ListsModel.fromJson(Map<String, dynamic> json) =>
       _$ListsModelFromJson(json);
 
-  @override
-  List<Object?> get props => [
-        {
-          id,
-          oredrSn,
-          status,
-          modeNamel,
-          licensingDate,
-          mileage,
-          price,
-          createAt
-        }
-      ];
-
   const ListsModel({
     required this.id,
-    required this.oredrSn,
+    required this.orderSn,
     required this.status,
-    required this.modeNamel,
+    required this.auditStatus,
+    required this.modeName,
     required this.licensingDate,
     required this.mileage,
     required this.price,
-    required this.createAt,
+    required this.createdAt,
   });
+  
+  @override
+  List<Object?> get props => [id,orderSn,status,auditStatus,modeName,licensingDate,mileage,price,createdAt,];
 }

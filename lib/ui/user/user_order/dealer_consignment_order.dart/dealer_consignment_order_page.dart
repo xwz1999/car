@@ -16,19 +16,21 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../../widget/car_widget.dart';
 
-class ConsignmentOrderPage extends StatefulWidget {
+class DealerConsignmentOrderPage extends StatefulWidget {
   final Function callBack;
-  const ConsignmentOrderPage({Key? key, required this.callBack})
+  const DealerConsignmentOrderPage({Key? key, required this.callBack})
       : super(key: key);
 
   @override
-  State<ConsignmentOrderPage> createState() => _ConsignmentOrderPageState();
+  State<DealerConsignmentOrderPage> createState() =>
+      _DealerConsignmentOrderPageState();
 }
 
-class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
+class _DealerConsignmentOrderPageState
+    extends State<DealerConsignmentOrderPage> {
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [];
-  List<ListsModel> _ConsignmentList = [];
+  List<ListsModel> _DealerConsignmentList = [];
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   int _page = 1;
   final int _size = 10;
@@ -84,16 +86,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
           SizedBox(
             height: 88.w,
             child: CarWidget(
-                items: const [
-                  '全部',
-                  '待签订',
-                  '待发布',
-                  '审核中',
-                  '已驳回',
-                  '在售',
-                  '已售',
-                  '交易取消'
-                ],
+                items: const ['全部', '审核中', '已驳回', '在售', '已售', '交易取消'],
                 callBack: (name) {
                   setState(() {});
                 }),
@@ -106,17 +99,17 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
               controller: _easyRefreshController,
               onRefresh: () async {
                 _page = 1;
-                _ConsignmentList =
-                    await OrderFunc.getLists(page: _page, size: _size);
+                _DealerConsignmentList =
+                    await OrderFunc.getDealerLists(page: _page, size: _size);
                 setState(() {});
               },
               onLoad: () async {
                 _page++;
                 var baseList = await apiClient.requestList(
-                    API.order.consignmentLists,
+                    API.order.dealerConsignmentOrderPage,
                     data: {'page': _page, 'size': _size});
-                if (baseList.nullSafetyTotal > _ConsignmentList.length) {
-                  _ConsignmentList.addAll(baseList.nullSafetyList
+                if (baseList.nullSafetyTotal > _DealerConsignmentList.length) {
+                  _DealerConsignmentList.addAll(baseList.nullSafetyList
                       .map((e) => ListsModel.fromJson(e))
                       .toList());
                 } else {
@@ -127,9 +120,9 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
               child: ListView.builder(
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
-                    return getCar(_ConsignmentList[index]);
+                    return getCar(_DealerConsignmentList[index]);
                   },
-                  itemCount: _ConsignmentList.length),
+                  itemCount: _DealerConsignmentList.length),
             ),
           ),
         ],
@@ -439,18 +432,6 @@ _getStatusText(int num) {
       return '交易取消';
 
       ///订单取消
-      // ignore: dead_code
-      break;
-    case 1:
-      return '待签订';
-
-      ///待签订
-      // ignore: dead_code
-      break;
-    case 2:
-      return '待发布';
-
-      ///待发布
       // ignore: dead_code
       break;
     case 3:

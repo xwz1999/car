@@ -14,6 +14,8 @@ class BaseModel<T> {
     this.data,
   });
 
+
+
   List<T> map(T Function(dynamic json) f) {
     if (data == null) return [];
     return (data! as List<T>).map(f).toList();
