@@ -1,3 +1,5 @@
+
+import 'package:cloud_car/ui/home/sort/choose_item_page.dart';
 import 'package:cloud_car/ui/home/sort/search_customer_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_list_widget.dart';
@@ -13,8 +15,7 @@ class UserSortListPage extends StatefulWidget {
 
   const UserSortListPage({
     Key? key,
-    required this.onConfirm,
-    required this.pickSort,
+    required this.onConfirm, required this.pickSort,
   }) : super(key: key);
 
   @override
@@ -22,7 +23,12 @@ class UserSortListPage extends StatefulWidget {
 }
 
 class _UserSortListPageState extends State<UserSortListPage> {
-  List<ChooseItem> _gearbox = [];
+
+  List<ChooseItem> _gearbox  = [];
+
+  List<ChooseItem> _followTime  = [];
+
+  List<ChooseItem> _registerTime  = [];
 
   @override
   void initState() {
@@ -31,6 +37,24 @@ class _UserSortListPageState extends State<UserSortListPage> {
     _gearbox = [
       ChooseItem(name: '是'),
       ChooseItem(name: '否'),
+    ];
+
+    _followTime = [
+      ChooseItem(name: '全部'),
+      ChooseItem(name: '今天'),
+      ChooseItem(name: '昨天'),
+      ChooseItem(name: '近3天'),
+      ChooseItem(name: '近5天'),
+      ChooseItem(name: '7天以上'),
+    ];
+
+    _registerTime = [
+      ChooseItem(name: '全部'),
+      ChooseItem(name: '今天'),
+      ChooseItem(name: '昨天'),
+      ChooseItem(name: '近3天'),
+      ChooseItem(name: '近5天'),
+      ChooseItem(name: '7天以上'),
     ];
   }
 
@@ -45,67 +69,8 @@ class _UserSortListPageState extends State<UserSortListPage> {
       children: [
         ListView(
           shrinkWrap: true,
-          padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 100.w),
+          padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 100.w),
           children: [
-            // SortListWidget(
-            //
-            //   childAspectRatio: 144 / 56,
-            //   mainAxisSpacing: 10.w,
-            //   crossAxisSpacing: 24.w,
-            //   crossAxisCount: 4,
-            //   callback: (ChooseItem item) {
-            //     widget.callback(item);
-            //   },
-            //   title: '门店',
-            //   rightWidget: GestureDetector(
-            //     onTap: (){
-            //       Get.to(()=>ChooseItemPage(callback: (String name) {
-            //         Get.back();
-            //
-            //       }, items: const [
-            //         '1','2','3'
-            //       ], name: '门店',));
-            //     },
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
-            //         10.wb,
-            //         Padding(
-            //           padding:  EdgeInsets.only(top: 5.w),
-            //           child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
-            //         )
-            //       ],
-            //     ),
-            //   ), pickString: '',
-            // ),
-            // 16.hb,
-            // SortListWidget(
-            //   childAspectRatio: 144 / 56,
-            //   mainAxisSpacing: 10.w,
-            //   crossAxisSpacing: 24.w,
-            //   crossAxisCount: 4,
-            //   callback: (ChooseItem item) {},
-            //   title: '销售',
-            //   rightWidget: GestureDetector(
-            //     onTap: (){
-            //
-            //     },
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         Text('请选择',style: Theme.of(context).textTheme.subtitle2,),
-            //         10.wb,
-            //         Padding(
-            //           padding:  EdgeInsets.only(top: 5.w),
-            //           child: Icon(CupertinoIcons.chevron_forward,size: 40.w,color: BaseStyle.colordddddd,),
-            //         )
-            //       ],
-            //     ),
-            //   ), pickString: '',
-            // ),
-            //
-            // 16.hb,
             SortListWidget(
               itemList: _gearbox,
               childAspectRatio: 144 / 56,
@@ -117,95 +82,58 @@ class _UserSortListPageState extends State<UserSortListPage> {
                 setState(() {});
                 // widget.callback(item);
               },
-              title: '重要客户',
-              pickString: widget.pickSort.value.isImportant,
+              title: '重要客户', pickString:  widget.pickSort.value.isImportant,
             ),
             16.hb,
             SortListWidget(
-              itemList: _gearbox,
+              itemList: _followTime,
               childAspectRatio: 144 / 56,
               mainAxisSpacing: 10.w,
               crossAxisSpacing: 24.w,
               crossAxisCount: 4,
               callback: (ChooseItem item) {
-                widget.pickSort.value.isImportant = item.name;
+                widget.pickSort.value.trailDate = item.name;
                 setState(() {});
               },
               title: '跟进时间',
-              rightWidget: GestureDetector(
-                onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '请选择',
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                    10.wb,
-                    Padding(
-                      padding: EdgeInsets.only(top: 5.w),
-                      child: Icon(
-                        CupertinoIcons.chevron_forward,
-                        size: 40.w,
-                        color: BaseStyle.colordddddd,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              pickString: '',
+              pickString: widget.pickSort.value.trailDate,
+
             ),
             16.hb,
             SortListWidget(
+              itemList: _registerTime,
               childAspectRatio: 144 / 56,
               mainAxisSpacing: 10.w,
               crossAxisSpacing: 24.w,
               crossAxisCount: 4,
-              callback: (ChooseItem item) {},
+              callback: (ChooseItem item) {
+                widget.pickSort.value.createdDate = item.name;
+                setState(() {});
+              },
               title: '注册时间',
-              rightWidget: GestureDetector(
-                onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '请选择',
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                    10.wb,
-                    Padding(
-                      padding: EdgeInsets.only(top: 5.w),
-                      child: Icon(
-                        CupertinoIcons.chevron_forward,
-                        size: 40.w,
-                        color: BaseStyle.colordddddd,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              pickString: '',
+               pickString: widget.pickSort.value.createdDate,
             ),
             16.hb,
+
+
           ],
         ),
-        Positioned(
-            bottom: 40.w,
-            left: 30.w,
-            child: Row(
-              children: [
-                _resetBtn(),
-                40.wb,
-                _confirmBtn(),
-              ],
-            ))
+        Positioned(bottom: 40.w,left: 30.w,
+            child:       Row(
+          children: [
+            _resetBtn(),
+            40.wb,
+            _confirmBtn(),
+
+          ],
+        ))
       ],
     );
   }
 
   _confirmBtn() {
     return GestureDetector(
-      onTap: () {},
+      onTap: widget.onConfirm,
       child: Container(
         width: 300.w,
         padding: EdgeInsets.symmetric(vertical: 16.w),
@@ -230,7 +158,14 @@ class _UserSortListPageState extends State<UserSortListPage> {
 
   _resetBtn() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        widget.pickSort.value.isImportant = '';
+        widget.pickSort.value.trailDate = '';
+        widget.pickSort.value.createdDate = '';
+        setState(() {
+
+        });
+      },
       child: Container(
         width: 240.w,
         padding: EdgeInsets.symmetric(vertical: 16.w),
@@ -241,10 +176,12 @@ class _UserSortListPageState extends State<UserSortListPage> {
         ),
         child: Text(
           '重  置',
-          style:
-              TextStyle(color: kPrimaryColor, fontSize: BaseStyle.fontSize28),
+          style: TextStyle(
+              color: kPrimaryColor, fontSize: BaseStyle.fontSize28),
         ),
       ),
     );
   }
+
+
 }

@@ -10,11 +10,14 @@ import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/choose_widget.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -52,13 +55,12 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
   String title = '客户统计';
   String? get status => CustomerMap.customerStatusByInt[widget.type];
 
-  late ValueNotifier<SearchCustomerParamModel> sortModel = ValueNotifier(
-      SearchCustomerParamModel(
-          name: '',
-          customerStatus: status ?? '',
-          createdDate: '',
-          isImportant: '',
-          trailDate: ''));
+  late ValueNotifier<SearchCustomerParamModel> sortModel = ValueNotifier(SearchCustomerParamModel(
+      name: '',
+      customerStatus: status??'',
+      createdDate: '',
+      isImportant: '',
+      trailDate: '')) ;
 
   Map<String, dynamic> get _params => {
         'name': sortModel.value.name,
@@ -69,6 +71,8 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
         'trailCreatedDateStart': sortModel.value.trailCreatedDateStart,
         'trailCreatedDateEnd': sortModel.value.trailCreatedDateEnd,
       };
+  bool _onLoad = true;
+
 
   @override
   void initState() {
@@ -81,9 +85,13 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
       ChooseItem(name: '最近跟进'),
       ChooseItem(name: '最近注册'),
     ];
+
   }
 
-  List<Widget> get listWidgets => [
+
+
+  List<Widget> get listWidgets =>
+       [
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -174,6 +182,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                                 .toString()
                                 .toSnake,
                         searchParams: _params);
+                    _onLoad = false;
 
                     setState(() {});
                   },
@@ -203,13 +212,17 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                     SliverToBoxAdapter(
                       child: 80.hb,
                     ),
-                    SliverPadding(
+                    _onLoad? SliverToBoxAdapter(
+                      child: 0.hb,
+                    ):
+                    _list.isEmpty? const SliverToBoxAdapter(child: NoDataWidget(text: '暂无相关车辆信息',paddingTop: 300,)): SliverPadding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 24.w, vertical: 20.w),
-                      sliver: SliverList(
+                      sliver:
+                      SliverList(
                         delegate: SliverChildBuilderDelegate((context, index) {
                           var model = _list[index];
-                          return _getItem(false);
+                          return _getItem(model);
                         }, childCount: _list.length),
                       ),
                     )
@@ -231,8 +244,15 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
 
   _getAppbar() {
     return SearchBarWidget(
-      callback: (String text) {},
-      tips: '请输入车辆名称',
+      callback: (String text) {
+        sortModel.value.name = text;
+        _refreshController.callRefresh();
+        setState(() {
+
+        });
+
+      },
+      tips: '请输入客户名称',
       title: Container(
         alignment: Alignment.center,
         child: Text(
@@ -248,14 +268,21 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
 
   _getSortList() {
     return UserSortListPage(
-      onConfirm: () {},
-      pickSort: sortModel,
+     onConfirm: () {
+       Get.back();
+       _refreshController.callRefresh();
+       setState(() {
+
+       });
+
+     }, pickSort: sortModel,
     );
   }
 
-  _getItem(bool isImport) {
+  _getItem(CustomerListModel model) {
     return GestureDetector(
       onTap: () {
+
         Get.to(() => const UserInfoPage());
       },
       child: Container(
@@ -263,12 +290,25 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
             borderRadius: BorderRadius.circular(16.w), color: kForeGroundColor),
         child: Stack(
           children: [
-            !isImport
+            model.isImportant==1
                 ? Positioned(
-                    child: Image.asset(
-                      Assets.images.importantUser.path,
-                      width: 130.w,
-                      fit: BoxFit.fitWidth,
+                    child: GestureDetector(
+                      onTap: () async{
+                        bool success = await CustomerFunc.cancelImportant(model.id);
+                        if(success){
+                          CloudToast.show('取消成功');
+                          _refreshController.callRefresh();
+
+                          setState(() {
+
+                          });
+                        }
+                      },
+                      child: Image.asset(
+                        Assets.images.importantUser.path,
+                        width: 130.w,
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
                     right: 0,
                     top: 0,
@@ -295,10 +335,20 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
-                    !isImport
+                    model.isImportant==1
                         ? const SizedBox()
                         : GestureDetector(
-                            onTap: () {},
+                            onTap: ()async {
+                              bool success = await CustomerFunc.setImportant(model.id);
+                              if(success){
+                                CloudToast.show('设置成功');
+                                _refreshController.callRefresh();
+                                setState(() {
+
+                                });
+                              }
+
+                            },
                             child: Text(
                               '设为重要',
                               style: TextStyle(
@@ -315,20 +365,23 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                   children: [
                     36.wb,
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         16.hb,
-                        _getText('车架号', 'GDL26173890989890'),
+                        _getText('最近跟进',  model.trailContent  ),
                         16.hb,
-                        _getText('车架号', 'GDL26173890989890'),
+                        _getText('跟进时间', DateUtil.formatDateMs(
+                            model.trailCreatedAt.toInt() * 1000,
+                            format: 'yyyy-MM-dd HH-mm-ss'),),
                         16.hb,
-                        _getText('车架号1', 'GDL26173890989890'),
+                        _getText('客户来源', '微信小程序'),
                         16.hb,
-                        _getText('车架号', 'GDL26173890989890'),
+                        _getText('注册时间', DateUtil.formatDateMs(
+                            model.createdAt.toInt() * 1000,
+                            format: 'yyyy-MM-dd HH-mm-ss'),),
                         16.hb,
-                        _getText('车架号', 'GDL26173890989890'),
+                        _getText('销售', model.brokerName),
                         16.hb,
-                        _getText('车架号', 'GDL26173890989890', isRed: true),
-                        20.hb,
                       ],
                     )
                   ],
@@ -343,6 +396,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
 
   _getText(String title, String content, {bool isRed = false}) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
           width: 120.w,
