@@ -185,13 +185,5 @@ class CarFunc {
       return false;
     }
   }
-<<<<<<< HEAD
 
-
-
-
-
-
-=======
->>>>>>> e2cb8e226335cf3a406974911829726a91f67838
 }
