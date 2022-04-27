@@ -33,6 +33,8 @@ class CarListModel extends Equatable {
   DateTime get licensingDateDT =>
       DateUtil.getDateTimeByMs(licensingDate.toInt() * 1000);
 
+  num get unitPrice => NumUtil.divide(num.parse(price), 10000);
+
   const CarListModel({
     required this.id,
     required this.modelName,

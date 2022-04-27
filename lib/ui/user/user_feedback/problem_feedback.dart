@@ -1,17 +1,36 @@
+import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/ui/user/interface/feedback_func.dart';
+import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:dotted_border/dotted_border.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class ProblemFeedback extends StatefulWidget {
-  const ProblemFeedback({Key? key}) : super(key: key);
+  final String title;
+  final String content;
+  final String phone;
+  final String img;
+
+  const ProblemFeedback(
+      {Key? key,
+      this.title = '问题反馈',
+      this.content = '',
+      this.img = '',
+      this.phone = ''})
+      : super(key: key);
 
   @override
   State<ProblemFeedback> createState() => _ProblemFeedbackState();
 }
 
 class _ProblemFeedbackState extends State<ProblemFeedback> {
+  late String content = widget.content;
+  late String img = widget.img;
+  late String phone = widget.phone;
+  late bool zhi = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +83,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
                         // _refreshController.callRefresh();
                       },
                       onChanged: (text) {
+                        content = text;
                         setState(() {});
                       },
 
@@ -98,6 +118,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
 
                         //padding: EdgeInsets.all(76.w),
                         child: GestureDetector(
+                          onTap: () {},
                           child: Stack(children: [
                             Align(
                               child: Container(
@@ -146,6 +167,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
                 // _refreshController.callRefresh();
               },
               onChanged: (text) {
+                phone = text;
                 setState(() {});
               },
               style: TextStyle(
@@ -165,39 +187,43 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
               ),
             ),
           ),
-          96.hb,
-          GestureDetector(
-            onTap: () {
-              //BotToast.showText(text: '验证码输入错误');
-              //Get.to(() => const NoWithddrawalPage());
+          const Spacer(),
+          CloudBottom(
+            ontap: () async {
+              if (zhi) {
+                Future.delayed(const Duration(milliseconds: 0), () async {
+                  await _refresh();
+                  Get.back();
+                  setState(() {});
+                });
+              } else {
+                BotToast.showText(text: '请输入内容');
+                // if (img.isEmail) {
+                //   BotToast.showText(text: '图片');
+                // } else {
+                //   if (phone.isEmail) {
+                //     BotToast.showText(text: '手机号');
+                //   } else {
+                //     BotToast.showText(text: '提交成功');
+                //     Future.delayed(const Duration(milliseconds: 0), () async {
+                //       await _refresh();
+                //       //Get.back();
+                //       setState(() {});
+                //     });
+                //   }
+                // }
+              }
             },
-            child: Container(
-              width: 686.w,
-              height: 72.w,
-              margin: EdgeInsets.only(left: 32.w),
-              padding: EdgeInsets.only(left: 318.w, top: 22.w),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.w),
-                  gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-              child: SizedBox(
-                width: 252.w,
-                height: 28.w,
-                child: Text(
-                  '提交',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(color: kForeGroundColor),
-                ),
-              ),
-            ),
+            text: '提 交',
           ),
-          500.hb,
+          32.hb,
         ],
       ),
     );
+  }
+
+  _refresh() async {
+    // ignore: unused_local_variable
+    zhi = await Feedbacks.getFeedback(widget.title, content, phone, img);
   }
 }

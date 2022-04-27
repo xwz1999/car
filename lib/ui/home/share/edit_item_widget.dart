@@ -24,13 +24,12 @@ class EditItemWidget extends StatefulWidget {
 }
 
 class EditItemWidgetState extends State<EditItemWidget> {
-  late TextEditingController controller;
+   TextEditingController controller=TextEditingController();
   late FocusNode focusNode;
   bool isKeyBord = false;
   @override
   void initState() {
     super.initState();
-    controller = TextEditingController(text: widget.text);
     focusNode = FocusNode();
     focusNode.addListener(() {
       if(focusNode.hasFocus){
@@ -46,9 +45,16 @@ class EditItemWidgetState extends State<EditItemWidget> {
   }
 
   @override
+  void didChangeDependencies() {
+    controller.text=widget.text;
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     controller.dispose();
+    focusNode.removeListener(() { });
     focusNode.dispose();
 
   }

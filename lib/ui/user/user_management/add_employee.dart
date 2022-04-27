@@ -1,5 +1,4 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/user/interface/business_interface.dart';
 
 import 'package:cloud_car/ui/user/user_management/access_configuration.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure.dart';
@@ -9,6 +8,7 @@ import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
+import '../interface/business_func.dart';
 
 class AddEmployee extends StatefulWidget {
   final String permissions1;
@@ -45,7 +45,7 @@ class _AddEmployeeState extends State<AddEmployee> {
   int sexId = 1;
   List blText = [];
 
-  late String zhi = '';
+  late bool zhi = false;
   @override
   void initState() {
     super.initState();
@@ -89,6 +89,17 @@ class _AddEmployeeState extends State<AddEmployee> {
           88.hb,
           CloudBottom(
             ontap: () async {
+              // if (zhi) {
+              //   BotToast.showText(text: '提交成功');
+              //   Get.back();
+              //   Future.delayed(const Duration(milliseconds: 0), () async {
+              //     await _refresh();
+              //     setState(() {});
+              //   });
+              //   //print("输出返回值：$zhi");
+              // } else {
+              //   BotToast.showText(text: '请输入内容');
+              // }
               if (nameText.isEmpty) {
                 BotToast.showText(text: '请输入姓名');
               } else {
@@ -120,7 +131,6 @@ class _AddEmployeeState extends State<AddEmployee> {
                               await _refresh();
                               setState(() {});
                             });
-
                             //print("输出返回值：$zhi");
                           }
                         }
@@ -129,7 +139,6 @@ class _AddEmployeeState extends State<AddEmployee> {
                   }
                 }
               }
-              ;
             },
             text: '提交',
           ),
