@@ -1,13 +1,19 @@
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car_manager/customer_browse_list_model.dart';
+import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
 
 class CustomersBrowsePage extends StatefulWidget {
-  final int id;
-  const CustomersBrowsePage({Key? key, required this.id}) : super(key: key);
+  final TaskInviteListModel model;
+  const CustomersBrowsePage({Key? key, required this.model}) : super(key: key);
 
   @override
   _CustomersBrowsePageState createState() => _CustomersBrowsePageState();
@@ -15,7 +21,7 @@ class CustomersBrowsePage extends StatefulWidget {
 
 class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
   List<CustomerBrowseListModel> _list = [];
-
+  bool _onLoad = true;
   int _page = 1;
 
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
@@ -32,25 +38,32 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
           controller: _easyRefreshController,
           onRefresh: () async {
             _page = 1;
-            _list = await CustomerFunc.getCustomerBrowseList(widget.id, _page);
 
+            _list = await CustomerFunc.getCustomerBrowseList(widget.model.customerId, _page);
+            _onLoad = false;
 
             setState(() {});
           },
           onLoad: () async {
             _page++;
-            await CustomerFunc.getCustomerBrowseList(widget.id, _page).then((value) {
-              if(value.isEmpty){
-                _easyRefreshController.finishLoad(noMore: true);
-              }else{
-                _list.addAll(value);
-                setState(() {
-
-                });
-              }
-            });
+            BaseListModel baseList = await apiClient.requestList(
+                API.customer.browseLists,data: {
+              'customerId':widget.model.customerId, 'page':_page,'size':10
+            }
+            );
+            if (baseList.nullSafetyTotal > _list.length) {
+              _list.addAll(baseList.nullSafetyList
+                  .map((e) => CustomerBrowseListModel.fromJson(e))
+                  .toList());
+            } else {
+              _easyRefreshController.finishLoad(noMore: true);
+            }
+            setState(() {});
           },
-          child: ListView.builder(
+          child:
+          _onLoad?const SizedBox():
+          _list.isEmpty?const NoDataWidget(text: '暂无客户轨迹信息',paddingTop: 300,):
+          ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.only(top: 32.w),
@@ -83,7 +96,7 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
                     width: 2.w,
                     height: 10.w,
                     decoration: BoxDecoration(
-                      color: !ing ? kPrimaryColor : BaseStyle.colorcccccc,
+                      color:  index == 1 ? kPrimaryColor : BaseStyle.colorcccccc,
                     ),
                   )
                       : const SizedBox(),
@@ -96,7 +109,7 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
                       borderRadius: BorderRadius.circular(10.w),
                     ),
                   ),
-                  index>_list.length-1?
+                  index!=_list.length-1?
                   Expanded(
                     child: Container(
                       width: 2.w,
@@ -175,13 +188,9 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
               aspectRatio: 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
-                child: url.contains('http')
-                    ? FadeInImage.assetNetwork(
-                  image: url,
-                  fit: BoxFit.cover,
-                  placeholder: '',
-                )
-                    : Image.asset(url),
+                child: CloudImageNetworkWidget.car(
+                  urls: [url],
+                ),
               ),
             ),
           ),

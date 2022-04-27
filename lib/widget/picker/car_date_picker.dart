@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'car_all_time_pick_body.dart';
 import 'car_custom_picker.dart';
 import 'car_month_pick_body.dart';
 
@@ -30,11 +31,21 @@ class CarDatePicker {
     ));
   }
 
+
   static Future<DateTime?> monthPicker(DateTime initDate) async {
     return await Get.bottomSheet(
         CarMonthPickBody(initTime: initDate)
     );
   }
+
+  ///选择年月日时分
+  static Future<DateTime?> allTimePicker(DateTime initDate) async {
+    return await Get.bottomSheet(
+        CarAllTimePickBody(initTime: initDate)
+    );
+  }
+
+
 }
 
 class _CarDatePicker extends StatefulWidget {

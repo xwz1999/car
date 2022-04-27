@@ -1,20 +1,29 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/model/car_item_model.dart';
+import 'package:cloud_car/model/car_manager/car_list_model.dart';
+import 'package:cloud_car/ui/home/car_valuation/car_func.dart';
 
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+
+import '../../../constants/api/api.dart';
 
 
-typedef CarCallback = Function(String city);
+typedef CarCallback = Function(String city,int carId);
 
 ///单选
 class ChooseCarPage extends StatefulWidget {
   final String title;
   final CarCallback callback;
+
 
   const ChooseCarPage({
     Key? key,
@@ -28,72 +37,22 @@ class ChooseCarPage extends StatefulWidget {
 class _ChooseCarPageState extends State<ChooseCarPage> {
   //选中的item
   final List<int> _selectIndex = [];
-  final List<CarItemModel> _chooseModels = [];
+
+  final List<CarListModel> _chooseModels = [];
 
   String _search = '';
 
-  List<CarItemModel> models = [
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
-    CarItemModel(
-      name: '奔驰CLE 插电混动 纯电动续航103km',
-      time: '2019年5月',
-      distance: '20.43万公里',
-      standard: '国六',
-      url: Assets.images.homeBg.path,
-      price: '27.43万',
-    ),
+  List<CarListModel> models = [
   ];
 
   late TextEditingController _editingController;
 
   late FocusNode _contentFocusNode;
+
+  bool _onLoad = true;
+
+  int _page = 1;
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   @override
   void initState() {
@@ -124,20 +83,46 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
           children: [
             _getAppbar() ?? const SizedBox(),
             Expanded(
-              child: ListView.separated(
-                padding:
-                    EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return _getItem(index, models[index]);
+              child:
+              EasyRefresh(
+                firstRefresh: true,
+                header: MaterialHeader(),
+                footer: MaterialFooter(),
+                controller: _easyRefreshController,
+                onRefresh: () async {
+                  _page = 1;
+                  models = await CarFunc.getCarList(_page,10);
+                  _onLoad = false;
+                  setState(() {});
                 },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Container(
-                    color: const Color(0xFFF6F6F6),
-                    height: 16.w,
-                  );
+                onLoad: () async {
+                  _page++;
+                 // models = await CarFunc.getCarList(_page);
+                  BaseListModel baseList=   await apiClient
+                      .requestList(API.car.getCarLists, data: {'page': _page, 'size': 10});
+
+                  if (baseList.nullSafetyTotal > models.length) {
+                    models.addAll(baseList.nullSafetyList
+                        .map((e) => CarListModel.fromJson(e))
+                        .toList());
+                  } else {
+                    _easyRefreshController.finishLoad(noMore: true);
+                  }
+                  setState(() {});
                 },
-                itemCount: models.length,
+                child:
+
+                _onLoad?const SizedBox():
+                models.isEmpty?const NoDataWidget(text: '暂无相关车辆信息',paddingTop: 300,):
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.only(top: 32.w),
+                  itemBuilder: (BuildContext context, int index) {
+                    return _getItem(index, models[index]);
+                  },
+                  itemCount: models.length,
+                ),
               ),
             ),
           ],
@@ -152,7 +137,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
               if (_selectIndex.isEmpty) {
                 BotToast.showText(text: '请先选择车辆');
               } else {
-                widget.callback(models[_selectIndex.first].name ?? '');
+                widget.callback(models[_selectIndex.first].modelName ,models[_selectIndex.first].id);
                 Get.back();
               }
             },
@@ -186,7 +171,6 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
   _getAppbar() {
     return SearchBarWidget(callback: (String text) {
       _search  = text;
-
     }, tips: '请输入车辆名称', title:Container(
       alignment: Alignment.center,
       child: Text(
@@ -197,28 +181,28 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
     ),);
   }
 
-  _getItem(int index, CarItemModel model) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-      // width: double.infinity,
-      height: 250.w,
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              if (_selectIndex.contains(index)) {
-                _selectIndex.remove(index);
-                _chooseModels.remove(model);
-              } else {
-                _selectIndex.clear();
-                _selectIndex.add(index);
-                _chooseModels.add(model);
-              }
-
-              setState(() {});
-            },
-            child: Container(
+  _getItem(int index, CarListModel model) {
+    return GestureDetector(
+      onTap: () {
+        if (_selectIndex.contains(index)) {
+          _selectIndex.remove(index);
+          _chooseModels.remove(model);
+        } else {
+          _selectIndex.clear();
+          _selectIndex.add(index);
+          _chooseModels.add(model);
+        }
+        setState(() {});
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+        margin: EdgeInsets.symmetric(horizontal: 32.w),
+        // width: double.infinity,
+        height: 250.w,
+        child: Row(
+          children: [
+            Container(
               color: Colors.transparent,
               height: 230.w,
               child: Container(
@@ -239,19 +223,23 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: CarItemWidget(
-              widgetPadding: EdgeInsets.zero,
-              name: '奔驰CLE 插电混动 纯电动续航103km',
-              time: '2019年5月',
-              distance: '20.43万公里',
-              standard: '国六',
-              url: Assets.images.homeBg.path,
-              price: '27.43万',
+            Expanded(
+              child: CarItemWidget(
+                widgetPadding:
+                EdgeInsets.symmetric(horizontal: 24.w),
+                name: model.modelName,
+                time: DateUtil.formatDateMs(
+                    model.licensingDate.toInt() * 1000,
+                    format: 'yyyy年MM月'),
+                distance: model.mileage + '万公里',
+                // standard: '国六',
+                url: model.mainPhoto,
+                price:
+                NumUtil.divide(num.parse(model.price), 10000).toString(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,14 +1,29 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/home/car_manager/fill_evainfo_page.dart';
+import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../model/car_valuation/car_distinguish_model.dart';
+import '../../../model/sort/sort_brand_model.dart';
+import '../../../model/sort/sort_car_model_model.dart';
+import '../../../model/sort/sort_series_model.dart';
+import '../../../utils/new_work/api_client.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/picker/car_date_picker.dart';
-import '../../../widget/picker/car_picker_box.dart';
+import '../../../widget/picker/car_list_picker.dart';
+import '../../../widget/picker/cloud_image_picker.dart';
+import '../../../widget/sort_widget.dart';
+import '../car_valuation/car_func.dart';
+import '../car_valuation/car_valuation_page.dart';
+import '../sort/carlist_page.dart';
+import '../sort/choose_car_page.dart';
+import '../sort/search_param_model.dart';
+import 'direct_sale/edit_item_widget.dart';
+import 'fill_evainfo_page.dart';
 
 class PushCarPage extends StatefulWidget {
   const PushCarPage({Key? key}) : super(key: key);
@@ -18,14 +33,42 @@ class PushCarPage extends StatefulWidget {
 }
 
 class _PushCarPageState extends State<PushCarPage> {
-  final TextEditingController _vinumController = TextEditingController();
-  final String? _brand = '';
-  DateTime? _firstdate;
-  final TextEditingController _carnummController = TextEditingController();
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
+      series: SortSeriesModel.init,
+      brand: SortBrandModel.init,
+      car: SortCarModelModel.init,
+      returnType: 3));
+  late CarDistinguishModel? carInfoModel;
+  final CarInfo _carInfo = CarInfo();
+  final TextEditingController _viNumController = TextEditingController();
+  DateTime? _firstDate;
+  final TextEditingController _carNumController = TextEditingController();
   final TextEditingController _versionController = TextEditingController();
   final TextEditingController _mileController = TextEditingController();
-  final String? _color = '';
-  final String? _source = '';
+
+  List<ChooseItem> colorList = [
+    ChooseItem(name: '蓝色'),
+    ChooseItem(name: '紫色'),
+    ChooseItem(name: '灰色'),
+    ChooseItem(name: '银色'),
+    ChooseItem(name: '米色'),
+    ChooseItem(name: '棕色'),
+    ChooseItem(name: '青色'),
+    ChooseItem(name: '黑色'),
+    ChooseItem(name: '金色'),
+    ChooseItem(name: '橙色'),
+    ChooseItem(name: '红色'),
+    ChooseItem(name: '白色'),
+    ChooseItem(name: '绿色'),
+    ChooseItem(name: '黄色'),
+    ChooseItem(name: '其他'),
+  ];
+  List<ChooseItem> typeList = [
+    ChooseItem(name: '车商'),
+    ChooseItem(name: '个人直卖'),
+  ];
+
+  String? _source;
 
   @override
   void initState() {
@@ -34,8 +77,8 @@ class _PushCarPageState extends State<PushCarPage> {
 
   @override
   void dispose() {
-    _vinumController.dispose();
-    _carnummController.dispose();
+    _viNumController.dispose();
+    _carNumController.dispose();
     _versionController.dispose();
     _mileController.dispose();
     BotToast.closeAllLoading();
@@ -77,7 +120,7 @@ class _PushCarPageState extends State<PushCarPage> {
                           color: Colors.black,
                           image: DecorationImage(
                             image:
-                                AssetImage('assets/images/assessment_bg.png'),
+                            AssetImage('assets/images/assessment_bg.png'),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -163,11 +206,36 @@ class _PushCarPageState extends State<PushCarPage> {
                                 offset: Offset(0.0, -20.0), //阴影xy轴偏移量
                                 blurRadius: 15.0, //阴影模糊程度
                                 spreadRadius: 1.0 //阴影扩散程度
-                                )
+                            )
                           ]),
                       child: Column(
                         children: [
                           GestureDetector(
+                            onTap: () async {
+                              await CloudImagePicker.pickSingleImage(
+                                  title: '选择图片')
+                                  .then(
+                                    (value) async {
+                                  if (value != null) {
+                                    File files = value;
+                                    String urls =
+                                    await ApiClient().uploadImage(files);
+                                    carInfoModel = await CarFunc.carDistinguish(
+                                        urls.imageWithHost);
+                                    if (carInfoModel != null) {
+                                      _carInfo.name = carInfoModel!.cartype;
+
+                                      _carInfo.address = carInfoModel!.address;
+
+                                      _carInfo.licensingDate =
+                                          carInfoModel!.regdate;
+                                      setState(() {});
+                                    }
+                                  }
+                                },
+                              );
+                              setState(() {});
+                            },
                             child: Stack(
                               children: [
                                 Image.asset(
@@ -181,11 +249,11 @@ class _PushCarPageState extends State<PushCarPage> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                Get.to(() => const EvainfoPage());
+                                Get.to(() =>  EvainfoPage(carColor:_carInfo.color! ,firstDate: _carInfo.licensingDate!,mile: _mileController.text, carName: _carInfo.name!,));
                               },
                               style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all(Colors.blue),
+                                MaterialStateProperty.all(Colors.blue),
                               ),
                               child: '下一步'
                                   .text
@@ -208,8 +276,8 @@ class _PushCarPageState extends State<PushCarPage> {
   }
 
   Container _rewardWidget() {
-    var vinum = _textarea('车架号', '请输入车架号', _carnummController);
-    var carnum = _textarea('车牌号', '请输入车牌号', _carnummController);
+    var vinum = _textarea('车架号', '请输入车架号', _viNumController);
+    var carnum = _textarea('车牌号', '请输入车牌号', _carNumController);
     var version = _textarea('发动机号', '请输入发动机号', _versionController);
     var mile = Container(
       color: Colors.transparent,
@@ -218,7 +286,7 @@ class _PushCarPageState extends State<PushCarPage> {
           '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
           10.wb,
           SizedBox(
-            width: 160.w,
+            width: 170.w,
             child: '表显里程'
                 .text
                 .size(30.sp)
@@ -247,47 +315,6 @@ class _PushCarPageState extends State<PushCarPage> {
         ],
       ),
     );
-    var firstdate = Row(
-      children: [
-        '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
-        10.wb,
-        SizedBox(
-          width: 160.w,
-          child: '预计时间'
-              .text
-              .size(30.sp)
-              .color(Colors.black.withOpacity(0.45))
-              .make(),
-        ),
-        Expanded(
-          child: GestureDetector(
-            onTap: () async {
-              _firstdate = await CarDatePicker.timePicker(DateTime.now());
-              setState(() {});
-            },
-            child: Material(
-              color: Colors.transparent,
-              child: (_firstdate == null
-                      ? '请选择首次上牌时间'
-                      : DateUtil.formatDate(_firstdate,
-                          format: DateFormats.zh_mo_d_h_m))
-                  .text
-                  .size(30.sp)
-                  .align(TextAlign.start)
-                  .color(Colors.black
-                      .withOpacity(_firstdate == null ? 0.25 : 0.85))
-                  .make(),
-            ),
-          ),
-        ),
-        24.wb,
-        Icon(
-          CupertinoIcons.chevron_right,
-          color: Colors.black.withOpacity(0.45),
-          size: 30.w,
-        ),
-      ],
-    );
 
     return Container(
       width: double.infinity,
@@ -297,50 +324,95 @@ class _PushCarPageState extends State<PushCarPage> {
       ),
       child: Column(
         children: [
-          40.w.heightBox,
+          20.heightBox,
           vinum,
-          40.w.heightBox,
           _function(
-            '选择品牌车型',
             '品牌车型',
-            () {},
-            _brand!,
+                () async {
+                  await Get.to(() => ChooseCarPage(
+                    callback: () {
+                      Get.back();
+                      _carInfo.name = _pickCar.value.car.name;
+                    },
+                    pickCar: _pickCar,
+                  ));
+                  setState(() {});
+                },
+            _carInfo.name,
             '请输入具体车型',
-            Container(),
           ),
-          40.w.heightBox,
-          firstdate,
-          40.w.heightBox,
-          carnum,
-          40.w.heightBox,
-          version,
-          40.w.heightBox,
           _function(
-            '选择车身颜色',
-            '车身颜色',
-            () {},
-            _color!,
-            '请输入车身颜色',
-            Wrap(
-              children: [
-                Container(),
-              ],
-            ),
+            '首次上牌',
+                () async {
+              _firstDate = await CarDatePicker.monthPicker(DateTime.now());
+              _carInfo.licensingDate =
+                  DateUtil.formatDate(_firstDate, format: 'yyyy-MM');
+              setState(() {});
+            },
+            _carInfo.licensingDate,
+            '选择首次上牌时间',
           ),
-          40.w.heightBox,
+          20.heightBox,
+          carnum,
+          20.heightBox,
+          version,
+          _function(
+            '车身颜色',
+                () async {
+              await showModalBottomSheet(
+                context: context,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(16.w))),
+                builder: (context) {
+                  return CarListPicker(
+                    items: colorList, callback: (String content) {
+                    Get.back();
+                    _carInfo.color = content;
+                    setState(() {
+                    });
+                  }, title: '车身颜色',
+                  );
+                },
+              );
+            },
+            _carInfo.color,
+            '请输入车身颜色',
+          ),
+          20.heightBox,
           mile,
-          40.w.heightBox,
-          _function('选择车辆来源', '车辆来源', () {}, _source!, '请选择车辆来源', Container()),
+          _function(
+            '车辆来源',
+                ()async {
+              await showModalBottomSheet(
+                context: context,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(16.w))),
+                builder: (context) {
+                  return CarListPicker(
+                    isGrid: false,
+                    items: typeList, callback: (String content) {
+                    Get.back();
+                    _source = content;
+                    setState(() {
+                    });
+                  }, title: '车辆来源',
+                  );
+                },
+              );
+            },
+            _source,
+            '请选择车辆来源',
+          ),
         ],
       ),
     );
   }
 
-  _textarea(
-    String title,
-    String hint,
-    TextEditingController _contentController,
-  ) {
+  _textarea(String title,
+      String hint,
+      TextEditingController _contentController,) {
     return Container(
       color: Colors.transparent,
       child: Row(
@@ -348,7 +420,7 @@ class _PushCarPageState extends State<PushCarPage> {
           '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
           10.wb,
           SizedBox(
-            width: 160.w,
+            width: 170.w,
             child: title.text
                 .size(30.sp)
                 .color(Colors.black.withOpacity(0.45))
@@ -377,55 +449,27 @@ class _PushCarPageState extends State<PushCarPage> {
     );
   }
 
-  _function(
-    String head,
-    String title,
-    VoidCallback onTap,
-    String content,
-    String msg,
-    Widget child,
-  ) {
+  _function(String title,
+      VoidCallback onTap,
+      String? content,
+      String msg,) {
     return GestureDetector(
-      onTap: () async {
-        await showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return CarPickerBox(
-              title: head,
-              onPressed: () {
-                Get.back();
-                setState(() {});
-              },
-              child: child,
-            );
-          },
-        );
-      },
+      onTap: onTap,
       child: Material(
         color: Colors.transparent,
-        child: Row(
-          children: [
-            '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
-            10.wb,
-            SizedBox(
-              width: 160.w,
-              child: title.text
-                  .size(30.sp)
-                  .color(Colors.black.withOpacity(0.45))
-                  .make(),
-            ),
-            (content.isEmpty ? msg : content)
-                .text
-                .size(30.sp)
-                .color(Colors.black.withOpacity(content.isEmpty ? 0.25 : 0.85))
-                .make(),
-            const Spacer(),
-            Icon(
-              CupertinoIcons.chevron_right,
-              color: Colors.black.withOpacity(0.45),
-              size: 28.w,
-            ),
-          ],
+        child: EditItemWidget(
+          title: title,
+          tips: msg,
+          value: content ?? '',
+          topIcon: true,
+          paddingStart: 32,
+          canChange: false,
+          callback: (String content) {},
+          endIcon: Image.asset(
+            Assets.icons.icGoto.path,
+            width: 32.w,
+            height: 32.w,
+          ),
         ),
       ),
     );
@@ -436,8 +480,6 @@ class RadioModel {
   bool? isSelected;
   String? buttonText;
 
-  RadioModel(
-    this.isSelected,
-    this.buttonText,
-  );
+  RadioModel(this.isSelected,
+      this.buttonText,);
 }

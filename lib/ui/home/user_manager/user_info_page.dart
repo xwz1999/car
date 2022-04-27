@@ -314,7 +314,7 @@ class _UserInfoPageState extends State<UserInfoPage>
               Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
                   child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
-                Get.to(() => const InviteDetailPage());
+                Get.to(() =>  InviteDetailPage(id: 1, phone: '', name: '',));
               })),
               Expanded(
                   child: _getBottom(Assets.icons.icContract.path, '发起合同', () {

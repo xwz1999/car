@@ -4,6 +4,7 @@ import 'package:cloud_car/ui/home/share/my_car_view.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_car_page.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -12,7 +13,6 @@ import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/custom_floating_action_button_location.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -94,6 +94,7 @@ class _ShareHomePageState extends State<ShareHomePage>
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
+          pickString: _pickCar.value.price,
           callback: (String item) {
             screenControl.screenHide();
             if (_tabController.index == 0) {
@@ -101,7 +102,7 @@ class _ShareHomePageState extends State<ShareHomePage>
             } else {
               _allRefreshController.callRefresh();
             }
-            _pickCar.value.price=item;
+            _pickCar.value.price = item;
           },
           childAspectRatio: 144 / 56,
           mainAxisSpacing: 10.w,
@@ -118,6 +119,7 @@ class _ShareHomePageState extends State<ShareHomePage>
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
+          pickString: _pickSort,
           childAspectRatio: 144 / 56,
           callback: (String item) {
             screenControl.screenHide();
@@ -254,9 +256,13 @@ class _ShareHomePageState extends State<ShareHomePage>
 
   _getSortList() {
     return SortListPage(
-      callback: (ChooseItem item) {
-        if (kDebugMode) {
-          print(item.name + '123123');
+      pickCar: _pickCar,
+      onConfirm: () {
+        Get.back();
+        if (_tabController.index == 0) {
+          _myRefreshController.callRefresh();
+        } else {
+          _allRefreshController.callRefresh();
         }
       },
     );

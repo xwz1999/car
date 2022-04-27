@@ -1,3 +1,4 @@
+import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
 import 'package:cloud_car/ui/home/user_manager/customers_browse_page.dart';
@@ -8,9 +9,9 @@ import 'package:flutter/material.dart';
 
 
 class UserInvitePage extends StatefulWidget {
-  final int id;
+  final TaskInviteListModel model;
   const UserInvitePage({
-    Key? key, required this.id,
+    Key? key, required this.model,
   }) : super(key: key);
 
   @override
@@ -206,7 +207,7 @@ class _UserInvitePageState extends State<UserInvitePage>
             child: TabBarView(
               controller: _tabController,
               children: [
-                CustomersBrowsePage(id: widget.id,),
+                CustomersBrowsePage(model: widget.model,),
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
@@ -296,7 +297,7 @@ class _UserInvitePageState extends State<UserInvitePage>
               Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
                   child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
-                Get.to(() => const InviteDetailPage());
+                Get.to(() =>  InviteDetailPage(id: widget.model.customerId, phone: '', name: widget.model.customerNickname,));
               })),
               Expanded(
                   child: _getBottom(Assets.icons.icContract.path, '发起合同', () {

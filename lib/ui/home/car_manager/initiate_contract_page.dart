@@ -67,7 +67,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
             children: [
               GestureDetector(
                 onTap: (){
-                  Get.to(()=>ChooseCarPage(title: '更换车辆', callback: (String city) {
+                  Get.to(()=>ChooseCarPage(title: '更换车辆', callback: (String city,int carId) {
 
                   },));
                 },

@@ -54,7 +54,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
+        child: ScreenWidget(pickString: '',
           childAspectRatio: 144 / 56,
           callback: (String item) {},
           mainAxisSpacing: 10.w,

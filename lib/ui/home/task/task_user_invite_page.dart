@@ -1,4 +1,5 @@
 
+import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
 import 'package:cloud_car/ui/home/user_manager/customers_browse_page.dart';
@@ -9,8 +10,8 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class TaskUserInvitePage extends StatefulWidget {
-  final int id;
-  const TaskUserInvitePage({Key? key, required this.id}) : super(key: key);
+  final TaskInviteListModel model;
+  const TaskUserInvitePage({Key? key, required this.model}) : super(key: key);
 
   @override
   _TaskUserInvitePageState createState() => _TaskUserInvitePageState();
@@ -44,7 +45,9 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>  with SingleTic
         title:  Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('李四'),
+            Text(widget.model.customerNickname,style: TextStyle(
+              fontSize: 36.sp,fontWeight: FontWeight.bold,color: const Color(0xFF111111)
+            ),),
           ],
         ),
         titleSpacing: 0,
@@ -127,8 +130,8 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>  with SingleTic
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  CustomersBrowsePage(id: widget.id,),
-                  CustomersTrajectoryPage(id: widget.id,),
+                  CustomersBrowsePage(model: widget.model,),
+                  CustomersTrajectoryPage(model: widget.model,),
                   ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
@@ -201,7 +204,7 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>  with SingleTic
               Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
                   child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
-                    Get.to(() => const InviteDetailPage());
+                    Get.to(() =>  InviteDetailPage(id: widget.model.customerId, phone:'', name:  widget.model.customerNickname,));
                   })),
               Expanded(
                   child: _getBottom(Assets.icons.icContract.path, '发起合同', () {

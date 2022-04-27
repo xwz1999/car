@@ -14,6 +14,7 @@ class ScreenWidget extends StatefulWidget {
   final double childAspectRatio;
   final bool haveButton;
   final bool isGrid;
+  final String pickString;
 
   const ScreenWidget(
       {Key? key,
@@ -24,7 +25,7 @@ class ScreenWidget extends StatefulWidget {
       required this.crossAxisSpacing,
       required this.childAspectRatio,
       this.haveButton = false,
-      this.isGrid = true})
+      this.isGrid = true, required this.pickString})
       : super(key: key);
 
   @override
@@ -68,7 +69,7 @@ class _ScreenWidgetState extends State<ScreenWidget> {
             print(item.name);
           }
           widget.callback(item.name);
-        },
+        }, pickString: widget.pickString,
       ),
     );
 

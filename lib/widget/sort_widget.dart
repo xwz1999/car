@@ -23,6 +23,7 @@ class SortWidget extends StatelessWidget {
   final double childAspectRatio;
   final bool haveButton;
   final bool isGrid;
+  final String pickString;
 
   const SortWidget(
       {Key? key,
@@ -33,7 +34,8 @@ class SortWidget extends StatelessWidget {
       required this.crossAxisSpacing,
       required this.childAspectRatio,
       this.haveButton = false,
-      this.isGrid = true})
+      this.isGrid = true,
+      required this.pickString})
       : super(key: key);
 
   @override
@@ -57,18 +59,19 @@ class SortWidget extends StatelessWidget {
               return _getItem(itemList[index], index);
             })
         : ListView.builder(
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            return _getListItem(itemList[index], index);
-          },
-          itemCount: itemList.length,
-        );
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return _getListItem(itemList[index], index);
+            },
+            itemCount: itemList.length,
+          );
   }
-
 
   _getListItem(ChooseItem item, int index) {
     return GestureDetector(
-      onTap:callback.call(item,index),
+      onTap: () {
+        callback(item, index);
+      },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20.w),
         color: Colors.transparent,
@@ -76,22 +79,32 @@ class SortWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            item.isChoose?Image.asset(Assets.icons.sortChoose.path,width: 30.w,height: 30.w,fit: BoxFit.fill,):const SizedBox(),
+            item.isChoose?Image.asset(Assets.icons.sortChoose.path,width: 35.w,height: 35.w,fit: BoxFit.fill,):const SizedBox(),
+            pickString == item.name
+                ? Image.asset(
+                    Assets.icons.sortChoose.path,
+                    width: 30.w,
+                    height: 30.w,
+                    fit: BoxFit.fill,
+                  )
+                : const SizedBox(),
             10.wb,
             Text(
               item.name,
               style: TextStyle(
-                  color: item.isChoose ? kPrimaryColor : BaseStyle.color333333,
-                  fontSize: BaseStyle.fontSize24),
+                  fontWeight: item.isChoose?FontWeight.bold:FontWeight.normal,
+                  color: pickString == item.name
+                      ? kPrimaryColor
+                      : BaseStyle.color333333,
+                  fontSize: BaseStyle.fontSize30),
             ),
             10.wb,
-            item.isChoose?30.wb:const SizedBox(),
+            pickString == item.name ? 30.wb : const SizedBox(),
           ],
         ),
       ),
     );
   }
-
 
   _getItem(ChooseItem item, int index) {
     return GestureDetector(
@@ -101,17 +114,19 @@ class SortWidget extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: item.isChoose
+            color: pickString == item.name
                 ? const Color(0x1A027AFF)
                 : const Color(0xFFF6F6F6),
             borderRadius: BorderRadius.circular(4.w),
-            border: !item.isChoose
+            border: !(pickString == item.name)
                 ? Border.all(color: Colors.transparent, width: 1.w)
                 : Border.all(color: const Color(0xFF027AFF), width: 1.w)),
         child: Text(
           item.name,
           style: TextStyle(
-              color: item.isChoose ? kPrimaryColor : BaseStyle.color333333,
+              color: pickString == item.name
+                  ? kPrimaryColor
+                  : BaseStyle.color333333,
               fontSize: BaseStyle.fontSize24),
         ),
       ),

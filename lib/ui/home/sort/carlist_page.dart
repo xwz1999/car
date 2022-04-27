@@ -2,6 +2,7 @@
 
 import 'package:azlistview/azlistview.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
+import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/utils.dart';
@@ -14,31 +15,6 @@ import '../../../model/sort/sort_series_model.dart';
 import '../models.dart';
 import 'choose_car_next_page.dart';
 
-class SearchParamModel {
-  SortBrandModel brand;
-  SortSeriesModel series;
-  SortCarModelModel car;
-
-  ///在哪个页面返回 1品牌 2车系
-  int returnType;
-
-  //*
-  //车价
-  String price;
-
-  SearchParamModel({
-    required this.brand,
-    required this.series,
-    required this.car,
-    this.returnType = 3,
-    this.price = '',
-  });
-
-  static SearchParamModel get init => SearchParamModel(
-      brand: SortBrandModel.init,
-      series: SortSeriesModel.init,
-      car: SortCarModelModel.init);
-}
 
 class CarListPage extends StatefulWidget {
   final VoidCallback carCallback;
