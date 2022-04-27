@@ -1,6 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 
 typedef ItemCallback = Function(String item);
@@ -25,7 +25,8 @@ class ScreenWidget extends StatefulWidget {
       required this.crossAxisSpacing,
       required this.childAspectRatio,
       this.haveButton = false,
-      this.isGrid = true, required this.pickString})
+      this.isGrid = true,
+      required this.pickString})
       : super(key: key);
 
   @override
@@ -66,7 +67,8 @@ class _ScreenWidgetState extends State<ScreenWidget> {
             }
           }
           widget.callback(item.name);
-        }, pickString: widget.pickString,
+        },
+        pickString: widget.pickString,
       ),
     );
 

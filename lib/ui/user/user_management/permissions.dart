@@ -14,7 +14,6 @@ class Permissions extends StatefulWidget {
 }
 
 class _PermissionsState extends State<Permissions> {
-  @override
   List<RoleallModel> permissions = [];
   @override
   void initState() {
@@ -74,7 +73,6 @@ class _PermissionsState extends State<Permissions> {
                   ],
                 ),
               );
-              ;
             },
             itemCount: permissions.length,
           ))

@@ -9,8 +9,6 @@ import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:cloud_car/extensions/map_extension.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 
 class MyCarView extends StatefulWidget {
   final String sort;

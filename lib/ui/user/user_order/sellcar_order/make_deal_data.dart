@@ -1,10 +1,15 @@
+import 'package:cloud_car/model/order/Sale_info.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
 class MakeDealData extends StatefulWidget {
-  const MakeDealData({Key? key}) : super(key: key);
+  final int id;
+  const MakeDealData({Key? key, required this.id}) : super(key: key);
 
   @override
   State<MakeDealData> createState() => _MakeDealDataState();
@@ -19,6 +24,22 @@ class _MakeDealDataState extends State<MakeDealData> {
     '尾款',
     '完成',
   ];
+  List<SaleInfo> _consignmentInfoList = [];
+  @override
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+      setState(() {});
+    });
+  }
+
+  _refresh() async {
+    _consignmentInfoList = await OrderFunc.getSaleInfo(widget.id);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,12 +136,21 @@ class _MakeDealDataState extends State<MakeDealData> {
                             width: 406.w,
                             child: Column(
                               children: [
-                                Text('奥迪Q3 2020款 35 TFSI 进取型SUV',
+                                Text(_consignmentInfoList.first.car.modelName,
                                     style: TextStyle(
                                         fontSize: BaseStyle.fontSize28,
                                         color: BaseStyle.color111111)),
                                 26.hb,
-                                getCaip('过户0次', '2020年10月', '20.43万公里')
+                                getCaip(
+                                  '过户${_consignmentInfoList.first.car.transfer}次',
+                                  DateUtil.formatDateMs(
+                                      _consignmentInfoList
+                                              .first.car.licensingDate
+                                              .toInt() *
+                                          1000,
+                                      format: 'yyyy年MM月'),
+                                  '${_consignmentInfoList.first.car.mileage}万公里',
+                                )
                               ],
                             ),
                           )
@@ -145,10 +175,19 @@ class _MakeDealDataState extends State<MakeDealData> {
                     padding: EdgeInsets.only(left: 0.w),
                     child: getTitle('合同信息'),
                   ),
-                  16.hb,
-                  _getText('合同编号', '98765323'),
-                  16.hb,
-                  _getText('签订时间', '2021-12-30 15:23:48')
+                  36.hb,
+                  _getText(
+                      '合同编号',
+                      (_consignmentInfoList.first.contract.contract)
+                          .toString()),
+                  36.hb,
+                  _getText(
+                    '签订时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfoList.first.contract.signAt.toInt() *
+                            1000,
+                        format: 'yyyy-MM-dd'),
+                  )
                 ],
               ),
             ),
@@ -206,15 +245,38 @@ class _MakeDealDataState extends State<MakeDealData> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getTitle('车辆检测报告'),
-                    _getPicture2('登记证书'),
-                    32.hb,
-                    _getPicture2('行驶证'),
-                    32.hb,
-                    _getPicture2('发票'),
-                    32.hb,
-                    _getPicture2('保单'),
-                    32.hb,
+                    getTitle("车辆检测报告"),
+                    36.hb,
+                    getPhoto(
+                      '登记证书',
+                      CloudImageNetworkWidget.car(
+                        urls: [_consignmentInfoList.first.means.certificate],
+                      ),
+                    ),
+                    36.hb,
+                    getPhoto(
+                      '行驶证',
+                      CloudImageNetworkWidget.car(
+                        urls: [_consignmentInfoList.first.means.vehicleLicense],
+                      ),
+                    ),
+                    36.hb,
+                    getPhoto(
+                      '发票',
+                      CloudImageNetworkWidget.car(
+                        urls: [_consignmentInfoList.first.means.invoice],
+                      ),
+                    ),
+                    36.hb,
+                    getPhoto(
+                      '保单',
+                      CloudImageNetworkWidget.car(
+                        urls: [_consignmentInfoList.first.means.guaranteeSlip],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 686.w,
+                    )
                   ],
                 )),
             36.hb,
@@ -253,6 +315,27 @@ class _MakeDealDataState extends State<MakeDealData> {
             color: Colors.red,
             width: 200.w,
             height: 150.w,
+          ),
+        )
+      ],
+    );
+  }
+
+//文字加图片样式
+  getPhoto(String title, CloudImageNetworkWidget url) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+        ),
+        GestureDetector(
+          child: SizedBox(
+            width: 200.w,
+            height: 150.w,
+            child: url,
           ),
         )
       ],
@@ -413,7 +496,7 @@ class _MakeDealDataState extends State<MakeDealData> {
             child: Row(
               children: [
                 32.wb,
-                _getCar('车辆定金', '10,000.00'),
+                _getCar('车辆定金', _consignmentInfoList.first.contract.deposit),
                 46.wb,
                 Container(
                   width: 1.w,
@@ -421,9 +504,11 @@ class _MakeDealDataState extends State<MakeDealData> {
                   color: BaseStyle.coloreeeeee,
                 ),
                 46.wb,
-                _getCar('车辆首付', '10,000.00'),
+                _getCar(
+                    '车辆首付', _consignmentInfoList.first.contract.downPayment),
                 46.wb,
-                _getCar('车辆尾款', '150,000.00'),
+                _getCar(
+                    '车辆尾款', _consignmentInfoList.first.contract.balancePayment),
               ],
             ))
       ],

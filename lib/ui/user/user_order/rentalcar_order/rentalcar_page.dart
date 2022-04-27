@@ -1,7 +1,7 @@
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_alsocar_order.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_order.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_transaction_cancelled_order.dart';
-import 'package:cloud_car/utils/drop_down_widget.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 
 import 'package:cloud_car/widget/car_widget.dart';
@@ -9,6 +9,7 @@ import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class RentalcarOrderPage extends StatefulWidget {
   final Function callBack;
@@ -22,7 +23,10 @@ class RentalcarOrderPage extends StatefulWidget {
 class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [];
-
+//List<> _RentalCarList=[];
+  int _page = 1;
+  final int _size = 10;
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
   //ScreenControl screenControl = ScreenControl();
   List carList = [
     {
@@ -69,7 +73,8 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(pickString: '',
+        child: ScreenWidget(
+          pickString: '',
           childAspectRatio: 200 / 56,
           callback: (String item) {
             if (kDebugMode) {
@@ -87,6 +92,12 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
         ),
       ),
     ];
+  }
+
+  @override
+  void dispose() {
+    _easyRefreshController.dispose();
+    super.dispose();
   }
 
   @override
@@ -116,13 +127,20 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
           ),
           16.hb,
           Expanded(
+              child: EasyRefresh(
+            firstRefresh: true,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            controller: _easyRefreshController,
+            onRefresh: () async {},
+            onLoad: () async {},
             child: ListView.builder(
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) {
                   return getCar(carList[index]);
                 },
                 itemCount: carList.length),
-          ),
+          )),
         ],
       ),
     );

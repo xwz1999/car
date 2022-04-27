@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -15,7 +14,10 @@ class InviteDetailPage extends StatefulWidget {
   final String name;
   final String phone;
   const InviteDetailPage({
-    Key? key, required this.id, required this.name, required this.phone,
+    Key? key,
+    required this.id,
+    required this.name,
+    required this.phone,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,6 @@ class InviteDetailPage extends StatefulWidget {
 }
 
 class _InviteDetailPageState extends State<InviteDetailPage> {
-
   late int _carId = -1;
 
   late String _inviteTime = '';
@@ -31,7 +32,6 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
   late String _address = '';
 
   late String _remark = '';
-
 
   late TextEditingController _editingController1;
   late TextEditingController _editingController2;
@@ -41,7 +41,8 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
 
   @override
   void initState() {
-    _editingController1 = TextEditingController(text: '${widget.name+'    '+widget.phone}');
+    _editingController1 =
+        TextEditingController(text: widget.name + '    ' + widget.phone);
     _editingController2 = TextEditingController();
     _editingController3 = TextEditingController();
     _editingController4 = TextEditingController();
@@ -133,7 +134,7 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                 GestureDetector(
                   onTap: () {
                     Get.to(() => ChooseCarPage(
-                          callback: (String city,int carId) {
+                          callback: (String city, int carId) {
                             _editingController2.text = city;
                             _carId = carId;
                             setState(() {});
@@ -194,9 +195,10 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: ()async{
+                  onTap: () async {
                     DateTime? _firstDate;
-                    _firstDate = await CarDatePicker.allTimePicker(DateTime.now());
+                    _firstDate =
+                        await CarDatePicker.allTimePicker(DateTime.now());
                     _editingController3.text = DateUtil.formatDate(_firstDate,
                         format: 'yyyy-MM-dd HH:mm:ss');
                     _inviteTime = DateUtil.formatDate(_firstDate,
@@ -220,7 +222,6 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                           enabled: false,
                           keyboardType: TextInputType.text,
                           onEditingComplete: () {
-
                             setState(() {});
                             // _refreshController.callRefresh();
                           },
@@ -272,7 +273,6 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                       child: TextField(
                         keyboardType: TextInputType.text,
                         onEditingComplete: () {
-
                           // _refreshController.callRefresh();
                         },
                         onChanged: (text) {
@@ -324,7 +324,6 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                         maxLines: 50,
                         keyboardType: TextInputType.text,
                         onEditingComplete: () {
-
                           // _refreshController.callRefresh();
                         },
                         onChanged: (text) {
@@ -357,21 +356,21 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
           ),
           72.hb,
           GestureDetector(
-            onTap: () async{
-              if(_carId!=-1&&_inviteTime.isNotEmpty&&_address.isNotEmpty){
-                 await OrderFunc.getAdd(widget.id, _carId, _inviteTime, _address, _remark).then((value){
-                  if(value){
+            onTap: () async {
+              if (_carId != -1 &&
+                  _inviteTime.isNotEmpty &&
+                  _address.isNotEmpty) {
+                await OrderFunc.getAdd(
+                        widget.id, _carId, _inviteTime, _address, _remark)
+                    .then((value) {
+                  if (value) {
                     Get.back();
                     CloudToast.show('邀约成功');
                   }
                 });
-
-              }
-              else{
+              } else {
                 CloudToast.show('请先完善邀约信息');
               }
-
-
             },
             child: Container(
               width: double.infinity,

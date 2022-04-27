@@ -65,41 +65,38 @@ class _UserInfoPageState extends State<UserInfoPage>
                         30.wb,
                         const Text('李四'),
                         const Spacer(),
-
-                        _isImportant?GestureDetector(
-                          onTap: (){
-                            _isImportant = false;
-                            setState(() {
-
-                            });
-                          },
-                          child: Image.asset(
-                            Assets.images.importantUser.path,
-                            width: 130.w,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ):
-                        GestureDetector(
-                          onTap: (){
-                            _isImportant = true;
-                            setState(() {
-
-                            });
-                          },
-                          child: Padding(
-                            padding:  EdgeInsets.only(right: 32.w),
-                            child: Text(
-                              '设为重要',
-                              style: TextStyle(
-                                  color: BaseStyle.color999999,
-                                  fontSize: BaseStyle.fontSize28,),
-                            ),
-                          ),
-                        ),
+                        _isImportant
+                            ? GestureDetector(
+                                onTap: () {
+                                  _isImportant = false;
+                                  setState(() {});
+                                },
+                                child: Image.asset(
+                                  Assets.images.importantUser.path,
+                                  width: 130.w,
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  _isImportant = true;
+                                  setState(() {});
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 32.w),
+                                  child: Text(
+                                    '设为重要',
+                                    style: TextStyle(
+                                      color: BaseStyle.color999999,
+                                      fontSize: BaseStyle.fontSize28,
+                                    ),
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),
-                  leading:Image.asset(
+                  leading: Image.asset(
                     Assets.images.importantUser.path,
                     width: 130.w,
                     fit: BoxFit.fitWidth,
@@ -314,7 +311,11 @@ class _UserInfoPageState extends State<UserInfoPage>
               Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
                   child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
-                Get.to(() =>  InviteDetailPage(id: 1, phone: '', name: '',));
+                Get.to(() => const InviteDetailPage(
+                      id: 1,
+                      phone: '',
+                      name: '',
+                    ));
               })),
               Expanded(
                   child: _getBottom(Assets.icons.icContract.path, '发起合同', () {

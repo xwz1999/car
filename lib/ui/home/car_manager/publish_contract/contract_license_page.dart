@@ -6,7 +6,6 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/picker/car_picker_box.dart';
-import 'contract_owner_page.dart';
 
 class ContractLicencePage extends StatefulWidget {
   const ContractLicencePage({Key? key}) : super(key: key);
@@ -16,13 +15,13 @@ class ContractLicencePage extends StatefulWidget {
 }
 
 class _ContractLicencePageState extends State<ContractLicencePage> {
-  final TextEditingController _transferController= TextEditingController();
-  final TextEditingController _keyController= TextEditingController();
-  final TextEditingController _businessController= TextEditingController();
-  final String? _compulsory= '';
+  final TextEditingController _transferController = TextEditingController();
+  final TextEditingController _keyController = TextEditingController();
+  final TextEditingController _businessController = TextEditingController();
+  final String? _compulsory = '';
   final String? _business = '';
-  final bool _businessCheck=false;
-  final bool _compulsoryCheck=false;
+  final bool _businessCheck = false;
+  final bool _compulsoryCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +69,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                 ),
                 child: '下一步'.text.size(30.sp).color(Colors.white).make(),
               ),
-            ).paddingOnly(left: 30.w,right: 30.w),
+            ).paddingOnly(left: 30.w, right: 30.w),
           ],
         ),
       ),
@@ -78,12 +77,12 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
   }
 
   _showArrow(
-      String head,
-      String title,
-      VoidCallback onTap,
-      String content,
-      Widget child,
-      ) {
+    String head,
+    String title,
+    VoidCallback onTap,
+    String content,
+    Widget child,
+  ) {
     return GestureDetector(
       onTap: () async {
         await showModalBottomSheet(
@@ -126,14 +125,14 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
             ),
           ],
         ),
-      ).paddingOnly(top: 15.h,bottom: 15.h),
+      ).paddingOnly(top: 15.h, bottom: 15.h),
     );
   }
 
   _showSelect(
-      bool select,
-      String title,
-      ){
+    bool select,
+    String title,
+  ) {
     return Container(
       padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
       color: Colors.transparent,
@@ -162,23 +161,19 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                       Container(
                           width: 50.w,
                           height: 50.w,
-                          padding: EdgeInsets.only(
-                              top: 6.w, right: 5.w),
+                          padding: EdgeInsets.only(top: 6.w, right: 5.w),
                           child: !select
                               ? const Icon(CupertinoIcons.circle,
-                              size: 18,
-                              color: Color(0xFFdddddd))
+                                  size: 18, color: Color(0xFFdddddd))
                               : const Icon(
-                              CupertinoIcons
-                                  .checkmark_alt_circle_fill,
-                              size: 18,
-                              color: Colors.blue)),
+                                  CupertinoIcons.checkmark_alt_circle_fill,
+                                  size: 18,
+                                  color: Colors.blue)),
                       RichText(
                         text: TextSpan(
                           text: "有",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30.sp),
+                          style:
+                              TextStyle(color: Colors.black, fontSize: 30.sp),
                         ),
                       ),
                     ],
@@ -197,23 +192,19 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                       Container(
                           width: 50.w,
                           height: 50.w,
-                          padding: EdgeInsets.only(
-                              top: 6.w, right: 5.w),
+                          padding: EdgeInsets.only(top: 6.w, right: 5.w),
                           child: select
                               ? const Icon(CupertinoIcons.circle,
-                              size: 18,
-                              color: Color(0xFFdddddd))
+                                  size: 18, color: Color(0xFFdddddd))
                               : const Icon(
-                              CupertinoIcons
-                                  .checkmark_alt_circle_fill,
-                              size: 18,
-                              color: Colors.blue)),
+                                  CupertinoIcons.checkmark_alt_circle_fill,
+                                  size: 18,
+                                  color: Colors.blue)),
                       RichText(
                         text: TextSpan(
                           text: "无",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30.sp),
+                          style:
+                              TextStyle(color: Colors.black, fontSize: 30.sp),
                         ),
                       ),
                     ],
@@ -228,10 +219,10 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
   }
 
   _showUnit(
-      String title,
-      TextEditingController _contentController,
-      String unit,
-      ) {
+    String title,
+    TextEditingController _contentController,
+    String unit,
+  ) {
     return Container(
       padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
       color: Colors.transparent,
@@ -277,9 +268,9 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
         _showUnit('过户次数', _transferController, '次'),
         _showUnit('钥匙数量', _keyController, '把'),
         _showSelect(_compulsoryCheck, '交强险'),
-        _showArrow('交强险到期时间', '交强险到期', () { }, _compulsory!, Container()),
+        _showArrow('交强险到期时间', '交强险到期', () {}, _compulsory!, Container()),
         _showSelect(_businessCheck, '商业险'),
-        _showArrow('商业险到期时间', '商业险到期', () { }, _business!, Container()),
+        _showArrow('商业险到期时间', '商业险到期', () {}, _business!, Container()),
         _showUnit('商业险金额', _businessController, '元'),
       ],
     );

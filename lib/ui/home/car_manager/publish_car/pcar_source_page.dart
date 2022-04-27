@@ -1,12 +1,11 @@
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_owner_page.dart';
-import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class CarSourcePage extends StatefulWidget {
@@ -17,7 +16,6 @@ class CarSourcePage extends StatefulWidget {
 }
 
 class _CarSourcePageState extends State<CarSourcePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,13 +46,31 @@ class _CarSourcePageState extends State<CarSourcePage> {
               child: '来源信息'.text.size(32.sp).bold.color(Colors.black).make(),
             ),
             Container(
-              padding: EdgeInsets.only(left: 30.w,right: 30.w,bottom: 40.h),
+              padding: EdgeInsets.only(left: 30.w, right: 30.w, bottom: 40.h),
               color: Colors.white,
               child: Column(
                 children: [
-                  EditItemWidget(topIcon:true,title: '车辆来源', value: '个人直买',canChange: false, callback: (String content) {},),
-                  EditItemWidget(topIcon:true,title: '上架人', value: '张三',canChange: false, callback: (String content) {},),
-                  EditItemWidget(topIcon:true,title: '门店', value: '云云问车',canChange: false, callback: (String content) {},),
+                  EditItemWidget(
+                    topIcon: true,
+                    title: '车辆来源',
+                    value: '个人直买',
+                    canChange: false,
+                    callback: (String content) {},
+                  ),
+                  EditItemWidget(
+                    topIcon: true,
+                    title: '上架人',
+                    value: '张三',
+                    canChange: false,
+                    callback: (String content) {},
+                  ),
+                  EditItemWidget(
+                    topIcon: true,
+                    title: '门店',
+                    value: '云云问车',
+                    canChange: false,
+                    callback: (String content) {},
+                  ),
                 ],
               ),
             ),
@@ -66,14 +82,9 @@ class _CarSourcePageState extends State<CarSourcePage> {
                   Get.to(() => const CarOwnerPage());
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                child: '下一步'
-                    .text
-                    .size(30.sp)
-                    .color(Colors.white)
-                    .make(),
+                child: '下一步'.text.size(30.sp).color(Colors.white).make(),
               ),
             ).paddingAll(30.h),
           ],

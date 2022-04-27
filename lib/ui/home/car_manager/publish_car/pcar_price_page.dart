@@ -1,9 +1,8 @@
 import 'package:cloud_car/utils/headers.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../direct_sale/edit_item_widget.dart';
 import '../publish_finish_page.dart';
@@ -16,8 +15,8 @@ class CarPricePage extends StatefulWidget {
 }
 
 class _CarPricePageState extends State<CarPricePage> {
-  TextEditingController showPriceController =TextEditingController();
-  TextEditingController evaPriceController =TextEditingController();
+  TextEditingController showPriceController = TextEditingController();
+  TextEditingController evaPriceController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,14 +78,9 @@ class _CarPricePageState extends State<CarPricePage> {
                   Get.to(() => const PublishFinishPage());
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                child: '下一步'
-                    .text
-                    .size(30.sp)
-                    .color(Colors.white)
-                    .make(),
+                child: '下一步'.text.size(30.sp).color(Colors.white).make(),
               ),
             ).paddingAll(30.h),
           ],

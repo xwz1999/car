@@ -65,7 +65,6 @@ class _EditorEmployeeState extends State<EditorEmployee> {
 
   @override
   Widget build(BuildContext context) {
-    late bool bl;
     return Scaffold(
       appBar: AppBar(
         leading: const CloudBackButton(
@@ -135,7 +134,6 @@ class _EditorEmployeeState extends State<EditorEmployee> {
                   }
                 }
               }
-              ;
             },
             text: '提交',
           ),

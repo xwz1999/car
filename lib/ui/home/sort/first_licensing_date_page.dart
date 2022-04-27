@@ -13,6 +13,7 @@ class FirstLicensingDatePage extends StatefulWidget {
 }
 
 class _FirstLicensingDatePageState extends State<FirstLicensingDatePage> {
+  // ignore: unused_field
   final Map<List<int>, String> _values = {
     [0, 0]: '全部',
     [0, 1]: '今年',

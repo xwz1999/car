@@ -1,12 +1,11 @@
 import 'package:cloud_car/utils/headers.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
-import '../../../../widget/choose_widget.dart';
+
 import '../../../../widget/picker/choose_car_picture.dart';
 
 class AddPicturePage extends StatefulWidget {
@@ -49,7 +48,9 @@ class _AddPicturePageState extends State<AddPicturePage> {
         ),
         child: Column(
           children: [
-            Divider(height: 1.h,),
+            Divider(
+              height: 1.h,
+            ),
             ChooseCarPicWidget(
               callBack: (name) {
                 setState(() {});

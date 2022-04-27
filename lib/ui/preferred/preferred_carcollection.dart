@@ -1,6 +1,5 @@
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
-import 'package:cloud_car/ui/home/sort/citylist_page.dart';
-import 'package:cloud_car/ui/home/search_page.dart';
+
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/preferred/preferred_car_detail.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
@@ -24,7 +23,7 @@ class CarCollection extends StatefulWidget {
 }
 
 class _CarCollectionState extends State<CarCollection> {
-  late List<String> _dropDownHeaderItemStrings = [ '品牌', '价格', '排序'];
+  late List<String> _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
   List<Widget> listWidget = [];
   ScreenControl screenControlMy = ScreenControl();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -40,7 +39,7 @@ class _CarCollectionState extends State<CarCollection> {
   @override
   void initState() {
     super.initState();
-    _dropDownHeaderItemStrings = [ '品牌', '价格', '排序'];
+    _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
     _priceList = [
       ChooseItem(name: '不限'),
       ChooseItem(name: '4万以下'),
@@ -63,10 +62,9 @@ class _CarCollectionState extends State<CarCollection> {
       CarListPage(
         carCallback: () {
           screenControlMy.screenHide();
-          setState(() {
-
-          });
-        }, pickCar: _pickCar,
+          setState(() {});
+        },
+        pickCar: _pickCar,
       ),
       Container(
         width: double.infinity,
@@ -74,7 +72,8 @@ class _CarCollectionState extends State<CarCollection> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(pickString: '',
+        child: ScreenWidget(
+          pickString: '',
           callback: (String item) {
             if (kDebugMode) {
               print(item + '1231232');
@@ -94,7 +93,8 @@ class _CarCollectionState extends State<CarCollection> {
             borderRadius: BorderRadius.all(Radius.circular(16.w)),
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(pickString: '',
+        child: ScreenWidget(
+          pickString: '',
           childAspectRatio: 144 / 56,
           callback: (String item) {},
           mainAxisSpacing: 10.w,
@@ -151,8 +151,7 @@ class _CarCollectionState extends State<CarCollection> {
                 color: const Color(0xFFFFFFFF)),
             child: _myCar(),
           ),
-          Expanded(
-              child: EasyRefresh.custom(slivers: []))
+          Expanded(child: EasyRefresh.custom(slivers: const []))
         ],
       ),
     );

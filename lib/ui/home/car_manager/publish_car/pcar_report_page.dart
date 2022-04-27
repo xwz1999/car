@@ -3,8 +3,6 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../../widget/button/cloud_back_button.dart';
-import '../direct_sale/edit_item_widget.dart';
-
 
 class CarReportPage extends StatefulWidget {
   const CarReportPage({Key? key}) : super(key: key);
@@ -51,13 +49,20 @@ class _CarReportPageState extends State<CarReportPage> {
                 children: [
                   Row(
                     children: [
-                      '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
+                      '*'
+                          .text
+                          .size(30.sp)
+                          .color(Colors.red)
+                          .make()
+                          .paddingOnly(top: 5),
                       10.wb,
-                      '漆面数据'.text
-                            .size(30.sp)
-                            .color(Colors.black.withOpacity(0.45))
-                            .make(),
-                      '(请上传JPG或PDF格式)'.text
+                      '漆面数据'
+                          .text
+                          .size(30.sp)
+                          .color(Colors.black.withOpacity(0.45))
+                          .make(),
+                      '(请上传JPG或PDF格式)'
+                          .text
                           .size(24.sp)
                           .color(Colors.black.withOpacity(0.45))
                           .make(),
@@ -65,8 +70,7 @@ class _CarReportPageState extends State<CarReportPage> {
                   ),
                   20.hb,
                   GestureDetector(
-                    onTap: () {
-                    },
+                    onTap: () {},
                     child: Material(
                       color: Colors.transparent,
                       child: Column(
@@ -96,14 +100,9 @@ class _CarReportPageState extends State<CarReportPage> {
                   Get.to(() => const CarSourcePage());
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                child: '下一步'
-                    .text
-                    .size(30.sp)
-                    .color(Colors.white)
-                    .make(),
+                child: '下一步'.text.size(30.sp).color(Colors.white).make(),
               ),
             ).paddingAll(30.h),
           ],

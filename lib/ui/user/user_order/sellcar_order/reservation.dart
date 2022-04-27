@@ -1,20 +1,28 @@
 // ignore_for_file: dead_code
 
+import 'package:cloud_car/model/order/Sale_info.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
+import 'package:flustars/flustars.dart';
 
 import 'package:flutter/material.dart';
 
 class Reservation extends StatefulWidget {
-  final String stat;
   final bool judge;
-
-  const Reservation({Key? key, required this.judge, required this.stat})
-      : super(key: key);
+  final int orderId;
+  final String status;
+  const Reservation({
+    Key? key,
+    required this.judge,
+    required this.orderId,
+    required this.status,
+  }) : super(key: key);
 
   @override
   State<Reservation> createState() => _ReservationState();
@@ -31,8 +39,26 @@ class _ReservationState extends State<Reservation> {
   ];
   late bool judge = widget.judge;
   late Widget methods;
-  late String stat = widget.stat;
+  // late int id = ;
   late String audit = '3';
+  // ignore: unused_field
+  List<SaleInfo> _consignmentInfoList = [];
+  @override
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+      setState(() {});
+    });
+  }
+
+  _refresh() async {
+    _consignmentInfoList = await OrderFunc.getSaleInfo(widget.orderId);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,68 +111,78 @@ class _ReservationState extends State<Reservation> {
                       36.hb,
                       _getText('客户姓名', '莉丝'),
                       36.hb,
-                      _getText('手机号', '18912345432')
+                      _getText('手机号', '111112112122')
                     ],
                   ),
                 ),
-                getContainer(
-                  GestureDetector(
-                    onTap: () {
-                      //Get.to(() => const Reservation(judge: null,));
-                    },
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          getTitle('车辆信息'),
-                          24.hb,
-                          Row(
-                            children: [
-                              SizedBox(
-                                child: Image.asset(
-                                  Assets.images.carBanner.path,
-                                  fit: BoxFit.fill,
-                                ),
-                                width: 196.w,
-                                height: 150.w,
-                              ),
-                              20.wb,
-                              SizedBox(
-                                width: 406.w,
-                                child: Column(
-                                  children: [
-                                    Text('奥迪Q3 2020款 35 TFSI 进取型SUV',
-                                        style: TextStyle(
-                                            fontSize: BaseStyle.fontSize28,
-                                            color: BaseStyle.color111111)),
-                                    26.hb,
-                                    getCaip('过户0次', '2020年10月', '20.43万公里')
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          40.hb,
-                          getList(),
-                        ]),
-                  ),
-                ),
-                getWidget(),
-                130.hb,
+                // getContainer(
+                //   GestureDetector(
+                //     onTap: () {
+                //       //Get.to(() => const Reservation(judge: null,));
+                //     },
+                //     child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           getTitle('车辆信息'),
+                //           24.hb,
+                //           Row(
+                //             children: [
+                //               SizedBox(
+                //                 child: CloudImageNetworkWidget.car(urls: [
+                //                   _consignmentInfoList.first.car.modelName,
+                //                 ]),
+                //                 width: 196.w,
+                //                 height: 150.w,
+                //               ),
+                //               20.wb,
+                //               SizedBox(
+                //                 width: 406.w,
+                //                 child: Column(
+                //                   children: [
+                //                     Text(
+                //                         _consignmentInfoList
+                //                             .first.car.modelName,
+                //                         style: TextStyle(
+                //                             fontSize: BaseStyle.fontSize28,
+                //                             color: BaseStyle.color111111)),
+                //                     26.hb,
+                //                     getCaip(
+                //                       '过户${_consignmentInfoList.first.car.transfer}次',
+                //                       DateUtil.formatDateMs(
+                //                           _consignmentInfoList
+                //                                   .first.car.licensingDate
+                //                                   .toInt() *
+                //                               1000,
+                //                           format: 'yyyy-MM-dd HH:mm:ss '),
+                //                       '${_consignmentInfoList.first.car.mileage}万公里',
+                //                     )
+                //                   ],
+                //                 ),
+                //               )
+                //             ],
+                //           ),
+                //           40.hb,
+                //           getList(),
+                //         ]),
+                //   ),
+                // ),
+                // getWidget(),
+                // 130.hb,
               ],
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: getPayPass(),
-            )
+            // Positioned(
+            //   left: 0,
+            //   right: 0,
+            //   bottom: 0,
+            //   child: getPayPass(),
+            // )
           ],
         ));
   }
 
 //判断页面
   getWidget() {
-    switch (stat) {
+    switch (widget.status) {
       case '待预定':
         return !judge
             ? getContainer(
@@ -158,7 +194,10 @@ class _ReservationState extends State<Reservation> {
                       child: getTitle('合同信息'),
                     ),
                     36.hb,
-                    _getText('合同编号', '98765323'),
+                    _getText(
+                        '合同编号',
+                        (_consignmentInfoList.first.contract.contract)
+                            .toString()),
                     36.hb,
                     _getText('签订时间', '——')
                   ],
@@ -175,9 +214,19 @@ class _ReservationState extends State<Reservation> {
                           child: getTitle('合同信息'),
                         ),
                         36.hb,
-                        _getText('合同编号', '98765323'),
+                        _getText(
+                            '合同编号',
+                            (_consignmentInfoList.first.contract.contract)
+                                .toString()),
                         36.hb,
-                        _getText('签订时间', '2021-12-30 15:23:48')
+                        _getText(
+                          '签订时间',
+                          DateUtil.formatDateMs(
+                              _consignmentInfoList.first.contract.signAt
+                                      .toInt() *
+                                  1000,
+                              format: 'yyyy-MM-dd HH:mm:ss'),
+                        )
                       ],
                     ),
                   ),
@@ -187,14 +236,22 @@ class _ReservationState extends State<Reservation> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 0.w),
-                          child: getTitle('支付信息'),
+                          child: getTitle('合同信息'),
                         ),
                         36.hb,
-                        _getText('定金支付', '¥10,000.00'),
+                        _getText(
+                            '合同编号',
+                            (_consignmentInfoList.first.contract.contract)
+                                .toString()),
                         36.hb,
-                        _getText('支付方式', '支付宝'),
-                        36.hb,
-                        _getText('支付时间', '2021-12-30 15:23:48'),
+                        _getText(
+                          '签订时间',
+                          DateUtil.formatDateMs(
+                              _consignmentInfoList.first.contract.signAt
+                                      .toInt() *
+                                  1000,
+                              format: 'yyyy-MM-dd HH:mm:ss'),
+                        )
                       ],
                     ),
                   )
@@ -213,9 +270,18 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('合同信息'),
                   ),
                   36.hb,
-                  _getText('合同编号', '98765323'),
+                  _getText(
+                      '合同编号',
+                      (_consignmentInfoList.first.contract.contract)
+                          .toString()),
                   36.hb,
-                  _getText('签订时间', '2021-12-30 15:23:48')
+                  _getText(
+                    '签订时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfoList.first.contract.signAt.toInt() *
+                            1000,
+                        format: 'yyyy-MM-dd'),
+                  )
                 ],
               ),
             ),
@@ -228,7 +294,8 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('支付信息'),
                   ),
                   36.hb,
-                  _getText('定金支付', '¥10,000.00'),
+                  _getText('定金支付',
+                      '¥${_consignmentInfoList.first.contract.deposit}'),
                   36.hb,
                   _getText('支付方式', '支付宝'),
                   36.hb,
@@ -252,9 +319,19 @@ class _ReservationState extends State<Reservation> {
                           child: getTitle('合同信息'),
                         ),
                         36.hb,
-                        _getText('合同编号', '98765323'),
+                        _getText(
+                            '合同编号',
+                            (_consignmentInfoList.first.contract.contract)
+                                .toString()),
                         36.hb,
-                        _getText('签订时间', '2021-12-30 15:23:48')
+                        _getText(
+                          '签订时间',
+                          DateUtil.formatDateMs(
+                              _consignmentInfoList.first.contract.signAt
+                                      .toInt() *
+                                  1000,
+                              format: 'yyyy-MM-dd HH:mm:ss'),
+                        )
                       ],
                     ),
                   ),
@@ -267,7 +344,8 @@ class _ReservationState extends State<Reservation> {
                           child: getTitle('支付信息'),
                         ),
                         36.hb,
-                        _getText('定金支付', '¥10,000.00'),
+                        _getText('定金支付',
+                            '¥${_consignmentInfoList.first.contract.deposit}'),
                         36.hb,
                         _getText('支付方式', '支付宝'),
                         36.hb,
@@ -280,10 +358,12 @@ class _ReservationState extends State<Reservation> {
                     children: [
                       getTitle('车辆检测报告'),
                       36.hb,
-                      Image(
-                        image: Assets.images.carBanner,
+                      SizedBox(
                         width: 200.w,
                         height: 150.w,
+                        child: CloudImageNetworkWidget.car(
+                          urls: [_consignmentInfoList.first.report.path],
+                        ),
                       ),
                       SizedBox(
                         width: 686.w,
@@ -306,9 +386,18 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('合同信息'),
                   ),
                   36.hb,
-                  _getText('合同编号', '98765323'),
+                  _getText(
+                      '合同编号',
+                      (_consignmentInfoList.first.contract.contract)
+                          .toString()),
                   36.hb,
-                  _getText('签订时间', '2021-12-30 15:23:48')
+                  _getText(
+                    '签订时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfoList.first.contract.signAt.toInt() *
+                            1000,
+                        format: 'yyyy-MM-dd HH:mm:ss'),
+                  )
                 ],
               ),
             ),
@@ -321,13 +410,15 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('支付信息'),
                   ),
                   36.hb,
-                  _getText('定金支付', '¥10,000.00'),
+                  _getText('定金支付',
+                      '¥${_consignmentInfoList.first.contract.deposit}'),
                   36.hb,
                   _getText('支付方式', '支付宝'),
                   36.hb,
                   _getText('支付时间', '2021-12-30 15:23:48'),
                   40.hb,
-                  _getText('首付支付', '¥100,000.00'),
+                  _getText('首付支付',
+                      '¥${_consignmentInfoList.first.contract.downPayment}'),
                   36.hb,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -339,10 +430,12 @@ class _ReservationState extends State<Reservation> {
                             fontSize: BaseStyle.fontSize28),
                       ),
                       16.hb,
-                      Image(
-                        image: Assets.images.carBanner,
+                      SizedBox(
                         width: 200.w,
                         height: 150.w,
+                        child: const CloudImageNetworkWidget.car(
+                          urls: [],
+                        ),
                       ),
                       SizedBox(
                         width: 686.w,
@@ -356,17 +449,13 @@ class _ReservationState extends State<Reservation> {
             getContainer(Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('车辆检测报告'),
-                ),
+                getTitle('车辆检测报告'),
                 36.hb,
                 SizedBox(
                   width: 200.w,
                   height: 150.w,
-                  child: Image.asset(
-                    Assets.images.carBanner.path,
-                    fit: BoxFit.fill,
+                  child: CloudImageNetworkWidget.car(
+                    urls: [_consignmentInfoList.first.report.path],
                   ),
                 ),
                 SizedBox(
@@ -381,20 +470,22 @@ class _ReservationState extends State<Reservation> {
         return !judge
             ? Column(
                 children: [
-                  getContainer(
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 0.w),
-                          child: getTitle('合同信息'),
-                        ),
-                        36.hb,
-                        _getText('合同编号', '98765323'),
-                        36.hb,
-                        _getText('签订时间', '2021-12-30 15:23:48')
-                      ],
-                    ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 0.w),
+                    child: getTitle('合同信息'),
+                  ),
+                  36.hb,
+                  _getText(
+                      '合同编号',
+                      (_consignmentInfoList.first.contract.contract)
+                          .toString()),
+                  36.hb,
+                  _getText(
+                    '签订时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfoList.first.contract.signAt.toInt() *
+                            1000,
+                        format: 'yyyy-MM-dd HH:mm:ss'),
                   ),
                   getContainer(
                     Column(
@@ -405,13 +496,15 @@ class _ReservationState extends State<Reservation> {
                           child: getTitle('支付信息'),
                         ),
                         36.hb,
-                        _getText('定金支付', '¥10,000.00'),
+                        _getText('定金支付',
+                            '¥${_consignmentInfoList.first.contract.deposit}'),
                         36.hb,
                         _getText('支付方式', '支付宝'),
                         36.hb,
                         _getText('支付时间', '2021-12-30 15:23:48'),
                         40.hb,
-                        _getText('首付支付', '¥100,000.00'),
+                        _getText('首付支付',
+                            '¥${_consignmentInfoList.first.contract.downPayment}'),
                         36.hb,
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -423,10 +516,12 @@ class _ReservationState extends State<Reservation> {
                                   fontSize: BaseStyle.fontSize28),
                             ),
                             16.hb,
-                            Image(
-                              image: Assets.images.carBanner,
+                            SizedBox(
                               width: 200.w,
                               height: 150.w,
+                              child: const CloudImageNetworkWidget.car(
+                                urls: [],
+                              ),
                             ),
                             SizedBox(
                               width: 686.w,
@@ -440,17 +535,13 @@ class _ReservationState extends State<Reservation> {
                   getContainer(Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 0.w),
-                        child: getTitle('车辆检测报告'),
-                      ),
+                      getTitle('车辆检测报告'),
                       36.hb,
                       SizedBox(
                         width: 200.w,
                         height: 150.w,
-                        child: Image.asset(
-                          Assets.images.carBanner.path,
-                          fit: BoxFit.fill,
+                        child: CloudImageNetworkWidget.car(
+                          urls: [_consignmentInfoList.first.report.path],
                         ),
                       ),
                       SizedBox(
@@ -463,13 +554,37 @@ class _ReservationState extends State<Reservation> {
                     children: [
                       getTitle("车辆检测报告"),
                       36.hb,
-                      getPhoto('登记证书', Assets.images.carBanner.path),
+                      getPhoto(
+                        '登记证书',
+                        CloudImageNetworkWidget.car(
+                          urls: [_consignmentInfoList.first.means.certificate],
+                        ),
+                      ),
                       36.hb,
-                      getPhoto('行驶证', Assets.images.carBanner.path),
+                      getPhoto(
+                        '行驶证',
+                        CloudImageNetworkWidget.car(
+                          urls: [
+                            _consignmentInfoList.first.means.vehicleLicense
+                          ],
+                        ),
+                      ),
                       36.hb,
-                      getPhoto('发票', Assets.images.carBanner.path),
+                      getPhoto(
+                        '发票',
+                        CloudImageNetworkWidget.car(
+                          urls: [_consignmentInfoList.first.means.invoice],
+                        ),
+                      ),
                       36.hb,
-                      getPhoto('保单', Assets.images.carBanner.path),
+                      getPhoto(
+                        '保单',
+                        CloudImageNetworkWidget.car(
+                          urls: [
+                            _consignmentInfoList.first.means.guaranteeSlip
+                          ],
+                        ),
+                      ),
                       SizedBox(
                         width: 686.w,
                       )
@@ -486,110 +601,155 @@ class _ReservationState extends State<Reservation> {
   getPayment() {
     switch (audit) {
       case '1':
-        return Column(
-          children: [
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('合同信息'),
-                  ),
-                  36.hb,
-                  _getText('合同编号', '98765323'),
-                  36.hb,
-                  _getText('签订时间', '2021-12-30 15:23:48')
-                ],
-              ),
-            ),
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('支付信息'),
-                  ),
-                  36.hb,
-                  _getText('定金支付', '¥10,000.00'),
-                  36.hb,
-                  _getText('支付方式', '支付宝'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                  40.hb,
-                  _getText('首付支付', '¥100,000.00'),
-                  36.hb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '支付凭证',
-                        style: TextStyle(
-                            color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28),
-                      ),
-                      16.hb,
-                      Image(
-                        image: Assets.images.carBanner,
-                        width: 200.w,
-                        height: 150.w,
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  ),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                  40.hb,
-                  getJudge(),
-                  36.hb,
-                  _getText('支付形式', '按揭支付'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                ],
-              ),
-            ),
-            getContainer(Column(
+        return Column(children: [
+          getContainer(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('车辆检测报告'),
+                  child: getTitle('合同信息'),
                 ),
                 36.hb,
-                SizedBox(
-                  width: 200.w,
-                  height: 150.w,
-                  child: Image.asset(
-                    Assets.images.carBanner.path,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                SizedBox(
-                  width: 686.w,
+                _getText('合同编号',
+                    (_consignmentInfoList.first.contract.contract).toString()),
+                36.hb,
+                _getText(
+                  '签订时间',
+                  DateUtil.formatDateMs(
+                      _consignmentInfoList.first.contract.signAt.toInt() * 1000,
+                      format: 'yyyy-MM-dd HH:mm:ss'),
                 )
               ],
-            )),
-            getContainer(Column(
+            ),
+          ),
+          getContainer(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getTitle("车辆检测报告"),
+                Padding(
+                  padding: EdgeInsets.only(left: 0.w),
+                  child: getTitle('支付信息'),
+                ),
                 36.hb,
-                getPhoto('登记证书', Assets.images.carBanner.path),
+                _getText(
+                    '定金支付', '¥${_consignmentInfoList.first.contract.deposit}'),
                 36.hb,
-                getPhoto('行驶证', Assets.images.carBanner.path),
+                _getText('支付方式', '支付宝'),
                 36.hb,
-                getPhoto('发票', Assets.images.carBanner.path),
+                _getText('支付时间', '2021-12-30 15:23:48'),
+                40.hb,
+                _getText('首付支付',
+                    '¥${_consignmentInfoList.first.contract.downPayment}'),
                 36.hb,
-                getPhoto('保单', Assets.images.carBanner.path),
-                SizedBox(
-                  width: 686.w,
-                )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '支付凭证',
+                      style: TextStyle(
+                          color: BaseStyle.color333333,
+                          fontSize: BaseStyle.fontSize28),
+                    ),
+                    16.hb,
+                    SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: const CloudImageNetworkWidget.car(
+                          urls: [],
+                        )),
+                    SizedBox(
+                      width: 686.w,
+                    )
+                  ],
+                ),
+                36.hb,
+                _getText('支付时间', '2021-12-30 15:23:48'),
+                40.hb,
+                getJudge(),
+                36.hb,
+                _getText('支付形式', '按揭支付'),
+                36.hb,
+                _getText('支付时间', '2021-12-30 15:23:48'),
               ],
-            ))
-          ],
-        );
+            ),
+          ),
+          getContainer(Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              getTitle('车辆检测报告'),
+              36.hb,
+              SizedBox(
+                width: 200.w,
+                height: 150.w,
+                child: CloudImageNetworkWidget.car(
+                  urls: [_consignmentInfoList.first.report.path],
+                ),
+              ),
+              SizedBox(
+                width: 686.w,
+              )
+            ],
+          )),
+          getContainer(Column(
+            children: [
+              getContainer(Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  getTitle('车辆检测报告'),
+                  36.hb,
+                  SizedBox(
+                    width: 200.w,
+                    height: 150.w,
+                    child: CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.report.path],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 686.w,
+                  )
+                ],
+              )),
+              getContainer(Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  getTitle("车辆检测报告"),
+                  36.hb,
+                  getPhoto(
+                    '登记证书',
+                    CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.means.certificate],
+                    ),
+                  ),
+                  36.hb,
+                  getPhoto(
+                    '行驶证',
+                    CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.means.vehicleLicense],
+                    ),
+                  ),
+                  36.hb,
+                  getPhoto(
+                    '发票',
+                    CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.means.invoice],
+                    ),
+                  ),
+                  36.hb,
+                  getPhoto(
+                    '保单',
+                    CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.means.guaranteeSlip],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 686.w,
+                  )
+                ],
+              ))
+            ],
+          ))
+        ]);
         break;
       case '2':
         return Column(
@@ -603,9 +763,18 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('合同信息'),
                   ),
                   36.hb,
-                  _getText('合同编号', '98765323'),
+                  _getText(
+                      '合同编号',
+                      (_consignmentInfoList.first.contract.contract)
+                          .toString()),
                   36.hb,
-                  _getText('签订时间', '2021-12-30 15:23:48')
+                  _getText(
+                    '签订时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfoList.first.contract.signAt.toInt() *
+                            1000,
+                        format: 'yyyy-MM-dd HH:mm:ss'),
+                  )
                 ],
               ),
             ),
@@ -618,13 +787,15 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('支付信息'),
                   ),
                   36.hb,
-                  _getText('定金支付', '¥10,000.00'),
+                  _getText('定金支付',
+                      '¥${_consignmentInfoList.first.contract.deposit}'),
                   36.hb,
                   _getText('支付方式', '支付宝'),
                   36.hb,
                   _getText('支付时间', '2021-12-30 15:23:48'),
                   40.hb,
-                  _getText('首付支付', '¥100,000.00'),
+                  _getText('首付支付',
+                      '¥${_consignmentInfoList.first.contract.downPayment}'),
                   36.hb,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -636,10 +807,12 @@ class _ReservationState extends State<Reservation> {
                             fontSize: BaseStyle.fontSize28),
                       ),
                       16.hb,
-                      Image(
-                        image: Assets.images.carBanner,
+                      SizedBox(
                         width: 200.w,
                         height: 150.w,
+                        child: const CloudImageNetworkWidget.car(
+                          urls: [],
+                        ),
                       ),
                       SizedBox(
                         width: 686.w,
@@ -660,17 +833,13 @@ class _ReservationState extends State<Reservation> {
             getContainer(Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('车辆检测报告'),
-                ),
+                getTitle('车辆检测报告'),
                 36.hb,
                 SizedBox(
                   width: 200.w,
                   height: 150.w,
-                  child: Image.asset(
-                    Assets.images.carBanner.path,
-                    fit: BoxFit.fill,
+                  child: CloudImageNetworkWidget.car(
+                    urls: [_consignmentInfoList.first.report.path],
                   ),
                 ),
                 SizedBox(
@@ -680,129 +849,221 @@ class _ReservationState extends State<Reservation> {
             )),
             getContainer(Column(
               children: [
-                getTitle("车辆检测报告"),
-                36.hb,
-                getPhoto('登记证书', Assets.images.carBanner.path),
-                36.hb,
-                getPhoto('行驶证', Assets.images.carBanner.path),
-                36.hb,
-                getPhoto('发票', Assets.images.carBanner.path),
-                36.hb,
-                getPhoto('保单', Assets.images.carBanner.path),
-                SizedBox(
-                  width: 686.w,
-                )
+                getContainer(Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    getTitle('车辆检测报告'),
+                    36.hb,
+                    SizedBox(
+                      width: 200.w,
+                      height: 150.w,
+                      child: CloudImageNetworkWidget.car(
+                        urls: [_consignmentInfoList.first.report.path],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 686.w,
+                    )
+                  ],
+                )),
+                getContainer(Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      getTitle("车辆检测报告"),
+                      36.hb,
+                      getPhoto(
+                        '登记证书',
+                        CloudImageNetworkWidget.car(
+                          urls: [_consignmentInfoList.first.means.certificate],
+                        ),
+                      ),
+                      36.hb,
+                      getPhoto(
+                        '行驶证',
+                        CloudImageNetworkWidget.car(
+                          urls: [
+                            _consignmentInfoList.first.means.vehicleLicense
+                          ],
+                        ),
+                      ),
+                      36.hb,
+                      getPhoto(
+                        '发票',
+                        CloudImageNetworkWidget.car(
+                          urls: [_consignmentInfoList.first.means.invoice],
+                        ),
+                      ),
+                      36.hb,
+                      getPhoto(
+                        '保单',
+                        CloudImageNetworkWidget.car(
+                          urls: [
+                            _consignmentInfoList.first.means.guaranteeSlip
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 686.w,
+                      )
+                    ]))
               ],
             ))
           ],
         );
         break;
       case '3':
-        return Column(
-          children: [
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('合同信息'),
-                  ),
-                  36.hb,
-                  _getText('合同编号', '98765323'),
-                  36.hb,
-                  _getText('签订时间', '2021-12-30 15:23:48')
-                ],
-              ),
-            ),
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('支付信息'),
-                  ),
-                  36.hb,
-                  _getText('定金支付', '¥10,000.00'),
-                  36.hb,
-                  _getText('支付方式', '支付宝'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                  40.hb,
-                  _getText('首付支付', '¥100,000.00'),
-                  36.hb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '支付凭证',
-                        style: TextStyle(
-                            color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28),
-                      ),
-                      16.hb,
-                      Image(
-                        image: Assets.images.carBanner,
-                        width: 200.w,
-                        height: 150.w,
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  ),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                  40.hb,
-                  _getText('尾款支付', '¥190,000.00'),
-                  36.hb,
-                  _getText('支付形式', '按揭支付'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                ],
-              ),
-            ),
-            getContainer(Column(
+        return Column(children: [
+          getContainer(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('车辆检测报告'),
+                  child: getTitle('合同信息'),
                 ),
                 36.hb,
-                SizedBox(
-                  width: 200.w,
-                  height: 150.w,
-                  child: Image.asset(
-                    Assets.images.carBanner.path,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                SizedBox(
-                  width: 686.w,
+                _getText('合同编号',
+                    (_consignmentInfoList.first.contract.contract).toString()),
+                36.hb,
+                _getText(
+                  '签订时间',
+                  DateUtil.formatDateMs(
+                      _consignmentInfoList.first.contract.signAt.toInt() * 1000,
+                      format: 'yyyy-MM-dd HH:mm:ss'),
                 )
               ],
-            )),
-            getContainer(Column(
+            ),
+          ),
+          getContainer(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getTitle("车辆检测报告"),
+                Padding(
+                  padding: EdgeInsets.only(left: 0.w),
+                  child: getTitle('支付信息'),
+                ),
                 36.hb,
-                getPhoto('登记证书', Assets.images.carBanner.path),
+                _getText(
+                    '定金支付', '¥${_consignmentInfoList.first.contract.deposit}'),
                 36.hb,
-                getPhoto('行驶证', Assets.images.carBanner.path),
+                _getText('支付方式', '支付宝'),
                 36.hb,
-                getPhoto('发票', Assets.images.carBanner.path),
+                _getText('支付时间', '2021-12-30 15:23:48'),
+                40.hb,
+                _getText('首付支付',
+                    '¥${_consignmentInfoList.first.contract.balancePayment}'),
                 36.hb,
-                getPhoto('保单', Assets.images.carBanner.path),
-                SizedBox(
-                  width: 686.w,
-                )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '支付凭证',
+                      style: TextStyle(
+                          color: BaseStyle.color333333,
+                          fontSize: BaseStyle.fontSize28),
+                    ),
+                    16.hb,
+                    SizedBox(
+                      width: 200.w,
+                      height: 150.w,
+                      child: const CloudImageNetworkWidget.car(
+                        urls: [],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 686.w,
+                    )
+                  ],
+                ),
+                36.hb,
+                _getText('支付时间', '2021-12-30 15:23:48'),
+                40.hb,
+                _getText('尾款支付',
+                    '¥${_consignmentInfoList.first.contract.balancePayment}'),
+                36.hb,
+                _getText('支付形式', '按揭支付'),
+                36.hb,
+                _getText('支付时间', '2021-12-30 15:23:48'),
               ],
-            ))
-          ],
-        );
+            ),
+          ),
+          getContainer(Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              getTitle('车辆检测报告'),
+              36.hb,
+              SizedBox(
+                width: 200.w,
+                height: 150.w,
+                child: CloudImageNetworkWidget.car(
+                  urls: [_consignmentInfoList.first.report.path],
+                ),
+              ),
+              SizedBox(
+                width: 686.w,
+              )
+            ],
+          )),
+          getContainer(Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              getContainer(Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  getTitle('车辆检测报告'),
+                  36.hb,
+                  SizedBox(
+                    width: 200.w,
+                    height: 150.w,
+                    child: CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.report.path],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 686.w,
+                  )
+                ],
+              )),
+              getContainer(Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  getTitle("车辆检测报告"),
+                  36.hb,
+                  getPhoto(
+                    '登记证书',
+                    CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.means.certificate],
+                    ),
+                  ),
+                  36.hb,
+                  getPhoto(
+                    '行驶证',
+                    CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.means.vehicleLicense],
+                    ),
+                  ),
+                  36.hb,
+                  getPhoto(
+                    '发票',
+                    CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.means.invoice],
+                    ),
+                  ),
+                  36.hb,
+                  getPhoto(
+                    '保单',
+                    CloudImageNetworkWidget.car(
+                      urls: [_consignmentInfoList.first.means.guaranteeSlip],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 686.w,
+                  )
+                ],
+              ))
+            ],
+          ))
+        ]);
         break;
     }
   }
@@ -829,7 +1090,7 @@ class _ReservationState extends State<Reservation> {
                       color: const Color(0xFF027AFF),
                       fontSize: BaseStyle.fontSize28)),
               TextSpan(
-                  text: ' 190,000.00',
+                  text: _consignmentInfoList.first.contract.downPayment,
                   style: TextStyle(
                       color: const Color(0xFF027AFF),
                       fontSize: BaseStyle.fontSize28)),
@@ -863,7 +1124,7 @@ class _ReservationState extends State<Reservation> {
                           color: const Color(0xFFE62222),
                           fontSize: BaseStyle.fontSize28)),
                   TextSpan(
-                      text: '190,000.00',
+                      text: _consignmentInfoList.first.contract.balancePayment,
                       style: TextStyle(
                           color: const Color(0xFFE62222),
                           fontSize: BaseStyle.fontSize28)),
@@ -916,9 +1177,18 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('合同信息'),
                   ),
                   36.hb,
-                  _getText('合同编号', '98765323'),
+                  _getText(
+                      '合同编号',
+                      (_consignmentInfoList.first.contract.contract)
+                          .toString()),
                   36.hb,
-                  _getText('签订时间', '2021-12-30 15:23:48')
+                  _getText(
+                    '签订时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfoList.first.contract.signAt.toInt() *
+                            1000,
+                        format: 'yyyy-MM-dd HH:mm:ss'),
+                  )
                 ],
               ),
             ),
@@ -931,11 +1201,18 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('支付信息'),
                   ),
                   36.hb,
-                  _getText('定金支付', '¥10,000.00'),
+                  _getText('定金支付',
+                      '¥${_consignmentInfoList.first.contract.deposit}'),
                   36.hb,
                   _getText('支付方式', '支付宝'),
                   36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
+                  _getText(
+                    '支付时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfoList.first.contract.signAt.toInt() *
+                            1000,
+                        format: 'yyyy-MM-dd HH:mm:ss'),
+                  ),
                   40.hb,
                   Row(
                     children: [
@@ -951,7 +1228,7 @@ class _ReservationState extends State<Reservation> {
                       Padding(
                         padding: EdgeInsets.only(left: 0.w),
                         child: Text(
-                          '¥100,000.00(审核中)',
+                          '¥${_consignmentInfoList.first.contract.downPayment}(审核中)',
                           style: TextStyle(
                               color: const Color(0xFF027AFF),
                               fontSize: BaseStyle.fontSize28),
@@ -973,9 +1250,8 @@ class _ReservationState extends State<Reservation> {
                       SizedBox(
                         width: 200.w,
                         height: 150.w,
-                        child: Image.asset(
-                          Assets.images.carBanner.path,
-                          fit: BoxFit.fill,
+                        child: const CloudImageNetworkWidget.car(
+                          urls: [],
                         ),
                       ),
                       SizedBox(
@@ -998,9 +1274,8 @@ class _ReservationState extends State<Reservation> {
                 SizedBox(
                   width: 200.w,
                   height: 150.w,
-                  child: Image.asset(
-                    Assets.images.carBanner.path,
-                    fit: BoxFit.fill,
+                  child: const CloudImageNetworkWidget.car(
+                    urls: [],
                   ),
                 ),
                 SizedBox(
@@ -1024,9 +1299,18 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('合同信息'),
                   ),
                   36.hb,
-                  _getText('合同编号', '98765323'),
+                  _getText(
+                      '合同编号',
+                      (_consignmentInfoList.first.contract.contract)
+                          .toString()),
                   36.hb,
-                  _getText('签订时间', '2021-12-30 15:23:48')
+                  _getText(
+                    '签订时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfoList.first.contract.signAt.toInt() *
+                            1000,
+                        format: 'yyyy-MM-dd HH:mm:ss'),
+                  )
                 ],
               ),
             ),
@@ -1039,7 +1323,8 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('支付信息'),
                   ),
                   36.hb,
-                  _getText('定金支付', '¥10,000.00'),
+                  _getText('定金支付',
+                      '¥${_consignmentInfoList.first.contract.deposit}'),
                   36.hb,
                   _getText('支付方式', '支付宝'),
                   36.hb,
@@ -1059,7 +1344,7 @@ class _ReservationState extends State<Reservation> {
                       Padding(
                         padding: EdgeInsets.only(left: 0.w),
                         child: Text(
-                          '¥100,000.00(审核驳回)',
+                          '¥${_consignmentInfoList.first.contract.downPayment}(审核驳回)',
                           style: TextStyle(
                               color: const Color(0xFFE62222),
                               fontSize: BaseStyle.fontSize28),
@@ -1101,10 +1386,12 @@ class _ReservationState extends State<Reservation> {
                             fontSize: BaseStyle.fontSize28),
                       ),
                       16.hb,
-                      Image(
-                        image: Assets.images.carBanner,
+                      SizedBox(
                         width: 200.w,
                         height: 150.w,
+                        child: const CloudImageNetworkWidget.car(
+                          urls: [],
+                        ),
                       ),
                       SizedBox(
                         width: 686.w,
@@ -1126,9 +1413,8 @@ class _ReservationState extends State<Reservation> {
                 SizedBox(
                   width: 200.w,
                   height: 150.w,
-                  child: Image.asset(
-                    Assets.images.carBanner.path,
-                    fit: BoxFit.fill,
+                  child: const CloudImageNetworkWidget.car(
+                    urls: [],
                   ),
                 ),
                 SizedBox(
@@ -1152,9 +1438,18 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('合同信息'),
                   ),
                   36.hb,
-                  _getText('合同编号', '98765323'),
+                  _getText(
+                      '合同编号',
+                      (_consignmentInfoList.first.contract.contract)
+                          .toString()),
                   36.hb,
-                  _getText('签订时间', '2021-12-30 15:23:48')
+                  _getText(
+                    '签订时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfoList.first.contract.signAt.toInt() *
+                            1000,
+                        format: 'yyyy-MM-dd HH:mm:ss'),
+                  )
                 ],
               ),
             ),
@@ -1167,13 +1462,15 @@ class _ReservationState extends State<Reservation> {
                     child: getTitle('支付信息'),
                   ),
                   36.hb,
-                  _getText('定金支付', '¥10,000.00'),
+                  _getText('定金支付',
+                      '¥${_consignmentInfoList.first.contract.deposit}'),
                   36.hb,
                   _getText('支付方式', '支付宝'),
                   36.hb,
                   _getText('支付时间', '2021-12-30 15:23:48'),
                   40.hb,
-                  _getText('首付支付', '¥100,000.00'),
+                  _getText('首付支付',
+                      '¥${_consignmentInfoList.first.contract.downPayment}'),
                   36.hb,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1185,10 +1482,12 @@ class _ReservationState extends State<Reservation> {
                             fontSize: BaseStyle.fontSize28),
                       ),
                       16.hb,
-                      Image(
-                        image: Assets.images.carBanner,
+                      SizedBox(
                         width: 200.w,
                         height: 150.w,
+                        child: const CloudImageNetworkWidget.car(
+                          urls: [],
+                        ),
                       ),
                       SizedBox(
                         width: 686.w,
@@ -1208,13 +1507,11 @@ class _ReservationState extends State<Reservation> {
                 ),
                 36.hb,
                 SizedBox(
-                  width: 200.w,
-                  height: 150.w,
-                  child: Image.asset(
-                    Assets.images.carBanner.path,
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                    width: 200.w,
+                    height: 150.w,
+                    child: const CloudImageNetworkWidget.car(
+                      urls: [],
+                    )),
                 SizedBox(
                   width: 686.w,
                 )
@@ -1223,6 +1520,7 @@ class _ReservationState extends State<Reservation> {
           ],
         );
 
+        // ignore: dead_code
         break;
     }
   }
@@ -1240,7 +1538,7 @@ class _ReservationState extends State<Reservation> {
 
 //支付是否成功
   getPayPass() {
-    switch (stat) {
+    switch (widget.status) {
       case '待预定':
         return judge
             ? const SizedBox()
@@ -1266,7 +1564,7 @@ class _ReservationState extends State<Reservation> {
                               fontSize: BaseStyle.fontSize28,
                               color: const Color(0xFFFF3B02))),
                       TextSpan(
-                          text: '10,000.00',
+                          text: _consignmentInfoList.first.contract.deposit,
                           style: TextStyle(
                               fontSize: BaseStyle.fontSize32,
                               color: const Color(0xFFFF3B02)))
@@ -1327,7 +1625,7 @@ class _ReservationState extends State<Reservation> {
                               fontSize: BaseStyle.fontSize28,
                               color: const Color(0xFFFF3B02))),
                       TextSpan(
-                          text: '100,000.00',
+                          text: _consignmentInfoList.first.contract.downPayment,
                           style: TextStyle(
                               fontSize: BaseStyle.fontSize32,
                               color: const Color(0xFFFF3B02)))
@@ -1389,7 +1687,7 @@ class _ReservationState extends State<Reservation> {
                           fontSize: BaseStyle.fontSize28,
                           color: const Color(0xFFFF3B02))),
                   TextSpan(
-                      text: '190,000.00',
+                      text: _consignmentInfoList.first.contract.balancePayment,
                       style: TextStyle(
                           fontSize: BaseStyle.fontSize32,
                           color: const Color(0xFFFF3B02)))
@@ -1406,7 +1704,7 @@ class _ReservationState extends State<Reservation> {
               margin: EdgeInsets.only(top: 16.w),
               child: GestureDetector(
                 onTap: () {
-                  Get.to(() => const MakeDealData());
+                  // Get.to(() => const MakeDealData());
                 },
                 child: Padding(
                   padding: EdgeInsets.only(left: 0.w),
@@ -1432,7 +1730,7 @@ class _ReservationState extends State<Reservation> {
   }
 
 //文字加图片样式
-  getPhoto(String title, String url) {
+  getPhoto(String title, CloudImageNetworkWidget url) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1445,7 +1743,7 @@ class _ReservationState extends State<Reservation> {
           child: SizedBox(
             width: 200.w,
             height: 150.w,
-            child: Image.asset(url),
+            child: url,
           ),
         )
       ],
@@ -1574,7 +1872,7 @@ class _ReservationState extends State<Reservation> {
                       .bodyText1
                       ?.copyWith(fontWeight: FontWeight.bold)),
               TextSpan(
-                  text: '300,000.00',
+                  text: _consignmentInfoList.first.contract.totalAmount,
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
@@ -1589,7 +1887,10 @@ class _ReservationState extends State<Reservation> {
             child: Row(
               children: [
                 32.wb,
-                _getCar('车辆定金', '10,000.00'),
+                _getCar(
+                    '车辆定金',
+                    //(_consignmentInfoList.first.contractSignAt).toString()),
+                    _consignmentInfoList.first.contract.deposit),
                 46.wb,
                 Container(
                   width: 1.w,
@@ -1597,9 +1898,11 @@ class _ReservationState extends State<Reservation> {
                   color: BaseStyle.coloreeeeee,
                 ),
                 46.wb,
-                _getCar('车辆首付', '10,000.00'),
+                _getCar(
+                    '车辆首付', _consignmentInfoList.first.contract.downPayment),
                 46.wb,
-                _getCar('车辆尾款', '150,000.00'),
+                _getCar(
+                    '车辆尾款', _consignmentInfoList.first.contract.balancePayment),
               ],
             ))
       ],

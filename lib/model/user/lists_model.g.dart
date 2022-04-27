@@ -8,11 +8,12 @@ part of 'lists_model.dart';
 
 ListsModel _$ListsModelFromJson(Map<String, dynamic> json) => ListsModel(
       id: json['id'] as int,
-      oredrSn: json['oredrSn'] as String,
+      orderSn: json['orderSn'] as String,
       status: json['status'] as int,
-      modeNamel: json['modeNamel'] as String,
+      auditStatus: json['auditStatus'] as int,
+      modeName: json['modeName'] as String,
       licensingDate: json['licensingDate'] as int,
-      mileage: json['mileage'] as int,
+      mileage: json['mileage'] as String,
       price: json['price'] as String,
-      createAt: json['createAt'] as int,
+      createdAt: json['createdAt'] as int,
     );

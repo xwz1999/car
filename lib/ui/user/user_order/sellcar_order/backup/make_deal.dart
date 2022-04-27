@@ -1,4 +1,3 @@
-import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -296,7 +295,7 @@ class _MakeDealState extends State<MakeDeal> {
                     top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const MakeDealData());
+                    //Get.to(() => const MakeDealData());
                   },
                   child: Padding(
                     padding: EdgeInsets.only(left: 0.w),

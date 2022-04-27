@@ -1,5 +1,3 @@
-
-
 import 'package:azlistview/azlistview.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
@@ -10,11 +8,8 @@ import 'package:flutter/material.dart';
 
 import 'package:lpinyin/lpinyin.dart';
 
-import '../../../model/sort/sort_car_model_model.dart';
-import '../../../model/sort/sort_series_model.dart';
 import '../models.dart';
 import 'choose_car_next_page.dart';
-
 
 class CarListPage extends StatefulWidget {
   final VoidCallback carCallback;
@@ -25,13 +20,12 @@ class CarListPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _CarListPageState createState() =>
-      _CarListPageState();
+  _CarListPageState createState() => _CarListPageState();
 }
 
 class _CarListPageState extends State<CarListPage> {
   List<CityModel> cityList = [];
-  List<SortBrandModel> brandList =[ ];
+  List<SortBrandModel> brandList = [];
   double susItemHeight = 36;
   String imgFavorite = Assets.icons.barToTop.path;
 
@@ -54,16 +48,14 @@ class _CarListPageState extends State<CarListPage> {
 
   void loadData() async {
     brandList = await SortFunc.getBrandList();
-    if(brandList.isNotEmpty){
+    if (brandList.isNotEmpty) {
       for (var v in brandList) {
-        cityList.add(CityModel(
-          name: v.name,id: v.id));
+        cityList.add(CityModel(name: v.name, id: v.id));
       }
       _handleList(cityList);
-
     }
 
-        //加载城市列表
+    //加载城市列表
     // rootBundle.loadString('assets/data/china.json').then((value) {
     //   cityList.clear();
     //   Map countyMap = json.decode(value);
@@ -73,7 +65,6 @@ class _CarListPageState extends State<CarListPage> {
     //   }
     //   _handleList(cityList);
     // });
-
   }
 
   void _handleList(List<CityModel> list) {
@@ -94,7 +85,6 @@ class _CarListPageState extends State<CarListPage> {
 
     // show sus tag.
     SuspensionUtil.setShowSuspensionStatus(cityList);
-
 
     setState(() {});
   }
@@ -137,7 +127,6 @@ class _CarListPageState extends State<CarListPage> {
   //     );
   // }
 
-
   // _getCityView(String name,{bool isLocation = false}){
   //   return Container(
   //     width: 54.w,
@@ -162,7 +151,6 @@ class _CarListPageState extends State<CarListPage> {
       color: kForeGroundColor,
       child: Column(
         children: [
-
           Expanded(
             child: AzListView(
               data: cityList,
@@ -184,8 +172,8 @@ class _CarListPageState extends State<CarListPage> {
                       ));
                 });
 
-                  // Utils.getListItem(context, model,
-                  //   susHeight: susItemHeight);
+                // Utils.getListItem(context, model,
+                //   susHeight: susItemHeight);
               },
               susItemHeight: susItemHeight,
               susItemBuilder: (BuildContext context, int index) {
@@ -198,7 +186,6 @@ class _CarListPageState extends State<CarListPage> {
               },
               indexBarData: SuspensionUtil.getTagIndexList(cityList),
               indexBarOptions: IndexBarOptions(
-
                 needRebuild: true,
                 color: Colors.transparent,
                 downColor: const Color(0xFFEEEEEE),
@@ -217,7 +204,8 @@ class _CarListPageState extends State<CarListPage> {
                     shape: BoxShape.circle, color: kPrimaryColor),
                 indexHintAlignment: Alignment.centerRight,
                 indexHintChildAlignment: Alignment.center,
-                indexHintTextStyle: TextStyle(fontSize: 40.sp, color: Colors.black87),
+                indexHintTextStyle:
+                    TextStyle(fontSize: 40.sp, color: Colors.black87),
 
                 indexHintOffset: const Offset(-10, 0),
                 indexHintWidth: 100.w,

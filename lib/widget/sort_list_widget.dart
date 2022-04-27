@@ -1,7 +1,6 @@
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 
 typedef ItemCallback = Function(ChooseItem item);
@@ -27,7 +26,9 @@ class SortListWidget extends StatefulWidget {
     required this.crossAxisSpacing,
     required this.childAspectRatio,
     required this.title,
-    this.rightWidget, this.isGrid = true, required this.pickString,
+    this.rightWidget,
+    this.isGrid = true,
+    required this.pickString,
   }) : super(key: key);
 
   @override
@@ -64,8 +65,8 @@ class _SortListWidgetState extends State<SortListWidget> {
         ),
         widget.itemList != null
             ? Padding(
-          padding:  EdgeInsets.only(top: 24.w),
-              child: SortWidget(
+                padding: EdgeInsets.only(top: 24.w),
+                child: SortWidget(
                   crossAxisSpacing: widget.mainAxisSpacing,
                   itemList: widget.itemList ?? [],
                   childAspectRatio: widget.childAspectRatio,
@@ -84,12 +85,12 @@ class _SortListWidgetState extends State<SortListWidget> {
                     // }
                     widget.callback(item);
                     setState(() {});
-                  }, pickString: widget.pickString,
+                  },
+                  pickString: widget.pickString,
                 ),
-            )
+              )
             : const SizedBox(),
         16.hb,
-
       ],
     );
   }

@@ -1,7 +1,5 @@
-import 'package:cloud_car/model/user/user_info_model.dart';
-import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/home/home_page.dart';
-import 'package:cloud_car/ui/user/interface/user_func.dart';
+
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
@@ -355,7 +353,7 @@ class _UserPageState extends State<UserPage> {
             ),
           ),
           48.hb,
-          Row(children: [
+          Row(children: const [
             // getText((UserTool.userProvider.userInfo.abi.assessCount).toString(),
             //     '评估'),
             // 70.wb,

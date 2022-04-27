@@ -1,6 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/extensions/map_extension.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
+
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
@@ -60,8 +59,7 @@ class _AllCarViewState extends State<AllCarView>
       onRefresh: () async {
         _page = 1;
         var list = await CarFunc.getCarList(_page, _size,
-            order: CarMap.carSortString[widget.sort],
-            searchParams: _params);
+            order: CarMap.carSortString[widget.sort], searchParams: _params);
         widget.allCarList.clear();
         widget.allCarList.addAll(list);
         setState(() {});

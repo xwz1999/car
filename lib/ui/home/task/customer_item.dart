@@ -1,26 +1,20 @@
-
-import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:flustars/flustars.dart';
+
 import 'package:flutter/material.dart';
-
-
 
 class CustomerItem extends StatelessWidget {
   // final int type;///1为客服付款 2为客户跟踪 3客户邀约
 
-
-  const CustomerItem({Key? key,  }) : super(key: key);
+  const CustomerItem({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-
-      padding: EdgeInsets.symmetric(vertical: 24.w,horizontal: 32.w),
-      decoration:  BoxDecoration(
-        color: kForeGroundColor,
-        borderRadius: BorderRadius.circular(8.w)
-      ),
+      padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+      decoration: BoxDecoration(
+          color: kForeGroundColor, borderRadius: BorderRadius.circular(8.w)),
       child: Column(
         children: [
           Row(
@@ -39,9 +33,9 @@ class CustomerItem extends StatelessWidget {
             children: [
               Text('客户名称',
                   style: TextStyle(
-                      color: BaseStyle.color666666,
-                      fontSize: BaseStyle.fontSize28,
-                      )),
+                    color: BaseStyle.color666666,
+                    fontSize: BaseStyle.fontSize28,
+                  )),
               48.wb,
               // Text(model.customerNickname,
               //     style: Theme.of(context).textTheme.subtitle2),
@@ -56,8 +50,7 @@ class CustomerItem extends StatelessWidget {
                     fontSize: BaseStyle.fontSize28,
                   )),
               48.wb,
-              Text('支付定金提醒',
-                  style: Theme.of(context).textTheme.subtitle2),
+              Text('支付定金提醒', style: Theme.of(context).textTheme.subtitle2),
             ],
           ),
           32.hb,
@@ -69,11 +62,11 @@ class CustomerItem extends StatelessWidget {
                     fontSize: BaseStyle.fontSize28,
                   )),
               48.wb,
-    //           Text(DateUtil.getDateTimeByMs(
-    // model.inviteAt.toInt() * 1000)
-    //     .year
-    //     .toString(),
-    //               style: Theme.of(context).textTheme.subtitle2),
+              //           Text(DateUtil.getDateTimeByMs(
+              // model.inviteAt.toInt() * 1000)
+              //     .year
+              //     .toString(),
+              //               style: Theme.of(context).textTheme.subtitle2),
             ],
           )
         ],
@@ -81,16 +74,12 @@ class CustomerItem extends StatelessWidget {
     );
   }
 
-
-
-
-  getState(String state ){
+  getState(String state) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.w,horizontal: 16.w),
+      padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
       decoration: BoxDecoration(
-        color:getContainerColor(state),
-        borderRadius: BorderRadius.circular(4.w)
-      ),
+          color: getContainerColor(state),
+          borderRadius: BorderRadius.circular(4.w)),
       child: Text(state,
           style: TextStyle(
               color: getTextColor(state),
@@ -99,8 +88,8 @@ class CustomerItem extends StatelessWidget {
     );
   }
 
-  getTextColor(String state ){
-    switch(state){
+  getTextColor(String state) {
+    switch (state) {
       case '未读':
         return const Color(0xFF027AFF);
       case '看车':
@@ -118,8 +107,8 @@ class CustomerItem extends StatelessWidget {
     }
   }
 
-  getContainerColor(String state ){
-    switch(state){
+  getContainerColor(String state) {
+    switch (state) {
       case '未读':
         return const Color(0xFFE5F1FF);
       case '看车':

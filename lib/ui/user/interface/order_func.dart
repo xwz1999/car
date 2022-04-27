@@ -1,4 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/order/Sale_info.dart';
+
 import 'package:cloud_car/model/order/order_dealer_model.dart';
 import 'package:cloud_car/model/order/publish_car_model.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
@@ -21,10 +23,52 @@ class OrderFunc {
     }
   }
 
+  ///个人寄卖详情
+  static Future<bool> getConsignmentInfo(int orderId) async {
+    BaseModel res = await apiClient
+        .request(API.order.consignmentInfo, data: {'orderId': orderId});
+    if (res.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(res.msg);
+      return false;
+    }
+  }
+
+  ///个人寄卖发布车辆详情
+  static Future<bool> getConsignmentInfoCar(int orderId) async {
+    BaseModel res = await apiClient
+        .request(API.order.consignmentInfoCar, data: {'orderId': orderId});
+    if (res.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(res.msg);
+      return false;
+    }
+  }
+
   ///寄卖订单列表
-  static Future<List<ListsModel>> getLists() async {
-    BaseListModel baseList =
-        await apiClient.requestList(API.order.consignmentLists, data: {});
+  static Future<List<ListsModel>> getLists(
+      {int size = 10, required int page}) async {
+    BaseListModel baseList = await apiClient.requestList(
+        API.order.consignmentLists,
+        data: {'size': size, 'page': page});
+    if (baseList.code != 0) {
+      CloudToast.show(baseList.msg);
+      return [];
+    } else {
+      return baseList.nullSafetyList
+          .map((e) => ListsModel.fromJson(e))
+          .toList();
+    }
+  }
+
+  ///车商寄卖订单列表
+  static Future<List<ListsModel>> getDealerLists(
+      {int size = 10, required int page}) async {
+    BaseListModel baseList = await apiClient.requestList(
+        API.order.dealerConsignmentOrderPage,
+        data: {'size': size, 'page': page});
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
@@ -64,6 +108,45 @@ class OrderFunc {
       'photos': photos,
       'baseInfo': baseInfo,
       'report': report
+    });
+    if (model.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(model.msg);
+      return false;
+    }
+  }
+
+  ///发布车辆编辑
+  static Future<bool> publishEdit(
+      ConsignmentPublishEdit consignmentPublishEdit) async {
+    Map<String, dynamic> photos = {
+      "carPhotos": consignmentPublishEdit.photos?.dataPhotos,
+      "interiorPhotos": consignmentPublishEdit.photos?.interiorPhotos,
+      "defectPhotos": consignmentPublishEdit.photos?.defectPhotos,
+      "dataPhotos": consignmentPublishEdit.photos?.dataPhotos,
+    };
+    Map<String, dynamic> baseInfo = {
+      "type": consignmentPublishEdit.baseInfo?.type,
+      "interiorColor": consignmentPublishEdit.baseInfo?.interiorColor,
+      "displacement": consignmentPublishEdit.baseInfo?.displacement,
+      "gearbox": consignmentPublishEdit.baseInfo?.gearbox,
+      "emissionStandard": consignmentPublishEdit.baseInfo?.emissionStandard,
+      "useCharacter": consignmentPublishEdit.baseInfo?.useCharacter,
+      "location": consignmentPublishEdit.baseInfo?.location,
+      "attribution": consignmentPublishEdit.baseInfo?.attribution,
+      "conditionIn": consignmentPublishEdit.baseInfo?.conditionIn,
+      "conditionOut": consignmentPublishEdit.baseInfo?.conditionOut,
+    };
+    Map<String, dynamic> report = {
+      "paints": consignmentPublishEdit.report?.paints,
+    };
+    BaseModel model =
+        await apiClient.request(API.order.consignmentPublishEdit, data: {
+      'orderId': consignmentPublishEdit.orderId,
+      'photos': photos,
+      'baseInfo': baseInfo,
+      'report': report,
     });
     if (model.code == 0) {
       return true;
@@ -151,7 +234,7 @@ class OrderFunc {
 
   ///售车订单列表
   static Future<List<SalelistsModel>> getSaleList(
-      {required int page, int size = 0}) async {
+      {required int page, int size = 10}) async {
     BaseListModel baseList =
         await apiClient.requestList(API.order.saleLists, data: {
       'page': page,
@@ -164,6 +247,18 @@ class OrderFunc {
       return baseList.nullSafetyList
           .map((e) => SalelistsModel.fromJson(e))
           .toList();
+    }
+  }
+
+  ///售车订单详情
+  static Future<List<SaleInfo>> getSaleInfo(int orderId) async {
+    BaseModel res =
+        await apiClient.request(API.order.saleInfo, data: {'orderId': orderId});
+    if (res.code == 0) {
+      return (res.data as List).map((e) => SaleInfo.fromJson(e)).toList();
+    } else {
+      CloudToast.show(res.msg);
+      return [];
     }
   }
 
