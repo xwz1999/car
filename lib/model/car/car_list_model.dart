@@ -24,7 +24,7 @@ class CarListModel extends Equatable {
   ///转手次数
   final int transfer;
 
-  ///是否收藏
+  ///是否收藏 0未收藏 1收藏
   final int collect;
 
   factory CarListModel.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +32,8 @@ class CarListModel extends Equatable {
 
   DateTime get licensingDateDT =>
       DateUtil.getDateTimeByMs(licensingDate.toInt() * 1000);
+
+  num get unitPrice => NumUtil.divide(num.parse(price), 10000);
 
   const CarListModel({
     required this.id,

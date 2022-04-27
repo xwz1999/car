@@ -1,14 +1,21 @@
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_report_page.dart';
+import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/picker/car_list_picker.dart';
 import 'package:cloud_car/widget/publish_car_info_widget.dart';
+import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/picker/car_picker_box.dart';
+import '../../../../widget/putup_widget.dart';
 
 class PublishCarInfoPage extends StatefulWidget {
-  const PublishCarInfoPage({Key? key}) : super(key: key);
+  final PublishCarInfo publishCarInfo;
+
+  const PublishCarInfoPage({Key? key, required this.publishCarInfo})
+      : super(key: key);
 
   @override
   State<PublishCarInfoPage> createState() => _PublishCarInfoPageState();
@@ -16,20 +23,41 @@ class PublishCarInfoPage extends StatefulWidget {
 
 class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
   final TextEditingController _displacementController =
-      TextEditingController(); //排量
+  TextEditingController(); //排量
   final TextEditingController _transmissionController =
-      TextEditingController(); //变速箱
+  TextEditingController(); //变速箱
   final TextEditingController _emissionController =
-      TextEditingController(); //排放标准
+  TextEditingController(); //排放标准
   final TextEditingController _carConditionInterController =
-      TextEditingController(); //排放标准
+  TextEditingController(); //排放标准
   final TextEditingController _carConditionOutController =
-      TextEditingController(); //排放标准
-  final String? _carType = '';
-  final String? _interColor = '';
-  final String? _purpose = '';
+  TextEditingController(); //排放标准
+  String? _carType = '';
+  String? _interColor = '';
+  String? _purpose = '';
   final String? _carPlace = '';
   final String? _location = '';
+  List<ChooseItem> carTypeList = [
+    ChooseItem(name: '二手车(中规)'),
+    ChooseItem(name: '二手车(平行进口)'),
+  ];
+  List<ChooseItem> interColorList = [
+    ChooseItem(name: '黑色'),
+    ChooseItem(name: '米黄色'),
+    ChooseItem(name: '米灰色'),
+    ChooseItem(name: '红色'),
+    ChooseItem(name: '棕色'),
+    ChooseItem(name: '米/黑'),
+    ChooseItem(name: '红/黑'),
+    ChooseItem(name: '米灰/黑'),
+    ChooseItem(name: '棕/黑'),
+    ChooseItem(name: '白/黑'),
+    ChooseItem(name: '其他'),
+  ];
+  List<ChooseItem> purposeList = [
+    ChooseItem(name: '运营'),
+    ChooseItem(name: '非运营'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +85,43 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
           children: [
             Container(
               padding: EdgeInsets.all(30.w),
-              child: '基本信息'.text.size(32.sp).bold.color(Colors.black).make(),
+              child: '基本信息'.text
+                  .size(32.sp)
+                  .bold
+                  .color(Colors.black)
+                  .make(),
             ),
             Container(
               color: Colors.white,
               padding: EdgeInsets.all(30.w),
               child: Column(
                 children: [
-                  const PublishCarInfoWidget(fontColor: Colors.black38),
-                  _publishChoose(true, '车辆类型', '请选择', '车辆类型', () {}, _carType!,
-                      Container()),
-                  _publishChoose(false, '内饰颜色', '请选择', '选择内饰颜色', () {},
-                      _interColor!, Container()),
+                  PublishCarInfoWidget(fontColor: Colors.black38,
+                    publishCarInfo: widget.publishCarInfo,),
+                  _publishChoose(style: false,
+                      necessary: true,
+                      title: '车辆类型',
+                      hint: '请选择',
+                      head: '车辆类型',
+                      value: _carType!,
+                      callback: (content) {
+                        Get.back();
+                        _carType = content;
+                        setState(() {});
+                      },
+                      typeList: carTypeList),
+                  _publishChoose(style: true,
+                      necessary: false,
+                      title: '内饰颜色',
+                      hint: '请选择',
+                      head: '选择内饰颜色',
+                      value: _interColor!,
+                      callback: (content) {
+                        Get.back();
+                        _interColor = content;
+                        setState(() {});
+                      },
+                      typeList: interColorList),
                   _publishController(
                       true, '排量', '请输入', _displacementController, 'L'),
                   _publishController(
@@ -85,8 +138,18 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                           .make(),
                     ],
                   ).paddingOnly(top: 15.h, bottom: 15.h),
-                  _publishChoose(true, '使用性质', '请选择', '使用性质', () {}, _purpose!,
-                      Container()),
+                  _publishChoose(style: false,
+                      necessary: true,
+                      title: '使用性质',
+                      hint: '请选择',
+                      head: '使用性质',
+                      value: _purpose!,
+                      callback: (content) {
+                        Get.back();
+                        _purpose = content;
+                        setState(() {});
+                      },
+                      typeList: purposeList),
                   _publishJumpPage(false, '车辆所在地', '请选择', () {}, _carPlace!),
                   _publishJumpPage(false, '车辆归属地', '请选择', () {}, _location!),
                   _publishTextField('车况（对内）', _carConditionInterController),
@@ -115,10 +178,8 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
     );
   }
 
-  _publishTextField(
-    String title,
-    TextEditingController _contentController,
-  ) {
+  _publishTextField(String title,
+      TextEditingController _contentController,) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -153,13 +214,11 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
     ).paddingOnly(top: 15.h, bottom: 15.h, left: 23.w, right: 23.w);
   }
 
-  _publishJumpPage(
-    bool necessary,
-    String title,
-    String hint,
-    VoidCallback onTap,
-    String content,
-  ) {
+  _publishJumpPage(bool necessary,
+      String title,
+      String hint,
+      VoidCallback onTap,
+      String content,) {
     return GestureDetector(
       onTap: () {},
       child: Material(
@@ -168,11 +227,11 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
           children: [
             necessary
                 ? '*'
-                    .text
-                    .size(30.sp)
-                    .color(Colors.red)
-                    .make()
-                    .paddingOnly(top: 5)
+                .text
+                .size(30.sp)
+                .color(Colors.red)
+                .make()
+                .paddingOnly(top: 5)
                 : 13.wb,
             10.wb,
             SizedBox(
@@ -199,13 +258,11 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
     ).paddingOnly(top: 15.h, bottom: 15.h);
   }
 
-  _publishController(
-    bool necessary,
-    String title,
-    String hint,
-    TextEditingController _contentController,
-    String unit,
-  ) {
+  _publishController(bool necessary,
+      String title,
+      String hint,
+      TextEditingController _contentController,
+      String unit,) {
     return Container(
       padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
       color: Colors.transparent,
@@ -213,11 +270,11 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
         children: [
           necessary
               ? '*'
-                  .text
-                  .size(30.sp)
-                  .color(Colors.red)
-                  .make()
-                  .paddingOnly(top: 5)
+              .text
+              .size(30.sp)
+              .color(Colors.red)
+              .make()
+              .paddingOnly(top: 5)
               : 13.wb,
           10.wb,
           SizedBox(
@@ -251,27 +308,30 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
     );
   }
 
-  _publishChoose(
-    bool necessary,
-    String title,
-    String hint,
-    String head,
-    VoidCallback onTap,
-    String content,
-    Widget child,
-  ) {
+  _publishChoose({
+    required bool style,
+    required bool necessary,
+    required String title,
+    required String hint,
+    required String head,
+    required String value,
+    required Function(String) callback,
+    required List<ChooseItem> typeList,
+  }) {
     return GestureDetector(
       onTap: () async {
         await showModalBottomSheet(
           context: context,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(16.w))),
           builder: (context) {
-            return CarPickerBox(
-              title: head,
-              onPressed: () {
-                Get.back();
-                setState(() {});
-              },
-              child: child,
+            return CarListPicker(
+              isGrid: style,
+              carString: value.isEmptyOrNull ? '' : value,
+              items: typeList,
+              callback: callback,
+              title: '车辆来源',
             );
           },
         );
@@ -282,11 +342,11 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
           children: [
             necessary
                 ? '*'
-                    .text
-                    .size(30.sp)
-                    .color(Colors.red)
-                    .make()
-                    .paddingOnly(top: 5)
+                .text
+                .size(30.sp)
+                .color(Colors.red)
+                .make()
+                .paddingOnly(top: 5)
                 : 13.wb,
             10.wb,
             SizedBox(
@@ -296,10 +356,10 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                   .color(Colors.black.withOpacity(0.45))
                   .make(),
             ),
-            (content.isEmpty ? hint : content)
+            (value.isEmpty ? hint : value)
                 .text
                 .size(30.sp)
-                .color(Colors.black.withOpacity(content.isEmpty ? 0.25 : 0.85))
+                .color(Colors.black.withOpacity(value.isEmpty ? 0.25 : 0.85))
                 .make(),
             const Spacer(),
             Icon(

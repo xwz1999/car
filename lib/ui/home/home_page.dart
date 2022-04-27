@@ -1,4 +1,4 @@
-import 'package:cloud_car/model/car_manager/car_list_model.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_func.dart';
@@ -8,6 +8,7 @@ import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/task/task_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/share_util.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -15,6 +16,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../../utils/user_tool.dart';
 import 'car_manager/car_manager_page.dart';
@@ -36,6 +38,9 @@ class _HomePageState extends State<HomePage>
   late final List<KingCoin> _kingCoinList = [];
 
   late EasyRefreshController _refreshController;
+
+  //网络图片转u8list
+  ScreenshotController screenshotController = ScreenshotController();
 
   //海报列表 默认显示前10个
   List<PosterListModel> _posterList = [];
@@ -131,7 +136,7 @@ class _HomePageState extends State<HomePage>
           header: MaterialHeader(),
           onRefresh: () async {
             _posterList = await PosterFunc.getPosterList(page: 1);
-            _shareCarList = await CarFunc.getMyCarList(1,'');
+            _shareCarList = await CarFunc.getMyCarList(page: 1);
             setState(() {});
           },
           child: ListView(
@@ -309,7 +314,7 @@ class _HomePageState extends State<HomePage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CloudImageNetworkWidget(
+          CloudImageNetworkWidget.car(
             width: 240.w,
             height: 180.w,
             urls: [model.mainPhoto],
@@ -356,10 +361,15 @@ class _HomePageState extends State<HomePage>
                           ]),
                     ),
                     const Spacer(),
-                    Image.asset(
-                      Assets.icons.homeShare.path,
-                      width: 28.w,
-                      height: 28.w,
+                    GestureDetector(
+                      onTap: () async {
+                       ShareUtil.shareNetWorkImage(model.mainPhoto);
+                      },
+                      child: Image.asset(
+                        Assets.icons.homeShare.path,
+                        width: 28.w,
+                        height: 28.w,
+                      ),
                     ),
                     16.wb,
                   ],

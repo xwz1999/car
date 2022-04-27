@@ -1,6 +1,7 @@
 import 'package:cloud_car/ui/home/car_manager/publish_car/add_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_info_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_finish_page.dart';
+import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class CarPicturePage extends StatefulWidget {
-  const CarPicturePage({Key? key}) : super(key: key);
+  final PublishCarInfo  publishCarInfo;
+  const CarPicturePage({Key? key, required this.publishCarInfo}) : super(key: key);
 
   @override
   State<CarPicturePage> createState() => _CarPicturePageState();
@@ -54,7 +56,7 @@ class _CarPicturePageState extends State<CarPicturePage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => const PublishCarInfoPage());
+                  Get.to(() => PublishCarInfoPage(publishCarInfo: widget.publishCarInfo,));
                 },
                 style: ButtonStyle(
                   backgroundColor:

@@ -1,5 +1,6 @@
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_begin_page.dart';
+import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 
 import 'package:flutter/material.dart';
@@ -9,14 +10,16 @@ import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/publish_car_info_widget.dart';
 
 class CheckPushPage extends StatefulWidget {
-  const CheckPushPage({Key? key}) : super(key: key);
+  final PublishCarInfo publishCarInfo;
+
+  const CheckPushPage({Key? key, required this.publishCarInfo})
+      : super(key: key);
 
   @override
   State<CheckPushPage> createState() => _CheckPushPageState();
 }
 
 class _CheckPushPageState extends State<CheckPushPage> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +30,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
         children: [
           Stack(
             children: [
-                Container(
+              Container(
                 height: 420.h,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -87,7 +90,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
               Padding(
                 padding: EdgeInsets.only(top: 410.h),
                 child: Container(
-                  padding: EdgeInsets.all(20.w),
+                  padding: EdgeInsets.all(30.w),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8.0),
@@ -95,44 +98,55 @@ class _CheckPushPageState extends State<CheckPushPage> {
                   width: double.infinity,
                   child: Column(
                     children: [
-                      const PublishCarInfoWidget(fontColor: Colors.black,),
+                       PublishCarInfoWidget(
+                        fontColor: Colors.black, publishCarInfo: widget.publishCarInfo,
+                      ),
                       30.heightBox,
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            Get.to(() => const ContractBeginPage());
+                            Get.to(() => ContractBeginPage(publishCarInfo: widget.publishCarInfo,));
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.blue),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.blue),
                           ),
-                          child: '发起合同'.text.size(30.sp).color(Colors.white).make(),
+                          child: '发起合同'
+                              .text
+                              .size(30.sp)
+                              .color(Colors.white)
+                              .make(),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          '已签订合同？'
-                              .text
-                              .color(Colors.black.withOpacity(0.45))
-                              .textStyle(const TextStyle(decoration: TextDecoration.none))
-                              .normal
-                              .size(20.sp)
-                              .make(),
-                          TextButton(
-                            onPressed: () {
-                              Get.to(() => const CarPicturePage());
-                            },
-                            child: '继续发布车辆'
-                                .text
-                                .color(Colors.blue)
-                                .textStyle(const TextStyle(decoration: TextDecoration.none))
-                                .normal
-                                .size(20.sp)
-                                .make(),
-                          ).paddingZero
-                        ],
-                      )
+                      widget.publishCarInfo.carSource=='个人直卖'
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                '已签订合同？'
+                                    .text
+                                    .color(Colors.black.withOpacity(0.45))
+                                    .textStyle(const TextStyle(
+                                        decoration: TextDecoration.none))
+                                    .normal
+                                    .size(20.sp)
+                                    .make(),
+                                TextButton(
+                                  onPressed: () {
+                                    Get.to(() => CarPicturePage(publishCarInfo: widget.publishCarInfo));
+                                  },
+                                  child: '继续发布车辆'
+                                      .text
+                                      .color(Colors.blue)
+                                      .textStyle(const TextStyle(
+                                          decoration: TextDecoration.none))
+                                      .normal
+                                      .size(20.sp)
+                                      .make(),
+                                ).paddingZero
+                              ],
+                            )
+                          : 1.heightBox,
                     ],
                   ),
                 ),

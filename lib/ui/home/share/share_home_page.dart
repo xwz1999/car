@@ -1,3 +1,5 @@
+
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/share/all_car_view.dart';
 import 'package:cloud_car/ui/home/share/my_car_view.dart';
@@ -31,10 +33,12 @@ class _ShareHomePageState extends State<ShareHomePage>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late List<String> _dropDownHeaderItemStrings;
   List<dynamic>? data;
-  List<Widget> listWidget = [];
+
   ScreenControl screenControl = ScreenControl();
   final EasyRefreshController _myRefreshController = EasyRefreshController();
   final EasyRefreshController _allRefreshController = EasyRefreshController();
+  final List<CarListModel> _myCarList = [];
+  final List<CarListModel> _allCarList = [];
 
   // String _pickCity='';
 
@@ -53,7 +57,70 @@ class _ShareHomePageState extends State<ShareHomePage>
 
   List<ChooseItem> _sortList = [];
 
-  late TabController _tabController;
+  late TabController _tabController;  List<Widget> get listWidget => [
+    CarListPage(
+      pickCar: _pickCar,
+      carCallback: () {
+        screenControl.screenHide();
+        if (_tabController.index == 0) {
+          _myRefreshController.callRefresh();
+        } else {
+          _allRefreshController.callRefresh();
+        }
+      },
+    ),
+    Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(16.w)),
+          color: kForeGroundColor),
+      clipBehavior: Clip.antiAlias,
+      child: ScreenWidget(
+        pickString: _pickCar.value.price,
+        callback: (String item) {
+          screenControl.screenHide();
+          _pickCar.value.price = item;
+          if (_tabController.index == 0) {
+            _myRefreshController.callRefresh();
+          } else {
+            _allRefreshController.callRefresh();
+          }
+        },
+        childAspectRatio: 144 / 56,
+        mainAxisSpacing: 10.w,
+        crossAxisSpacing: 24.w,
+        crossAxisCount: 4,
+        haveButton: true,
+        itemList: _priceList,
+      ),
+    ),
+    Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(16.w)),
+          color: kForeGroundColor),
+      clipBehavior: Clip.antiAlias,
+      child: ScreenWidget(
+        pickString: _pickSort,
+        childAspectRatio: 144 / 56,
+        callback: (String item) {
+          screenControl.screenHide();
+          _pickSort = item;
+          if (_tabController.index == 0) {
+            _myRefreshController.callRefresh();
+          } else {
+            _allRefreshController.callRefresh();
+          }
+        },
+        mainAxisSpacing: 10.w,
+        crossAxisSpacing: 24.w,
+        crossAxisCount: 4,
+        haveButton: true,
+        itemList: _sortList,
+      ),
+    ),
+  ];
+
 
   @override
   void initState() {
@@ -71,68 +138,9 @@ class _ShareHomePageState extends State<ShareHomePage>
       ChooseItem(name: '50万以上'),
     ];
 
-    _sortList = CarSort.values
-        .map((e) => ChooseItem(name: CarMap.carSortString[e]!))
+    _sortList = CarMap.carSortString.values
+        .map((e) => ChooseItem(name: e))
         .toList();
-
-    listWidget = [
-      CarListPage(
-        pickCar: _pickCar,
-        carCallback: () {
-          screenControl.screenHide();
-          if (_tabController.index == 0) {
-            _myRefreshController.callRefresh();
-          } else {
-            _allRefreshController.callRefresh();
-          }
-        },
-      ),
-      Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16.w)),
-            color: kForeGroundColor),
-        clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
-          pickString: _pickCar.value.price,
-          callback: (String item) {
-            screenControl.screenHide();
-            if (_tabController.index == 0) {
-              _myRefreshController.callRefresh();
-            } else {
-              _allRefreshController.callRefresh();
-            }
-            _pickCar.value.price = item;
-          },
-          childAspectRatio: 144 / 56,
-          mainAxisSpacing: 10.w,
-          crossAxisSpacing: 24.w,
-          crossAxisCount: 4,
-          haveButton: true,
-          itemList: _priceList,
-        ),
-      ),
-      Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16.w)),
-            color: kForeGroundColor),
-        clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
-          pickString: _pickSort,
-          childAspectRatio: 144 / 56,
-          callback: (String item) {
-            screenControl.screenHide();
-            _pickSort = item;
-          },
-          mainAxisSpacing: 10.w,
-          crossAxisSpacing: 24.w,
-          crossAxisCount: 4,
-          haveButton: true,
-          itemList: _sortList,
-        ),
-      ),
-    ];
   }
 
   @override
@@ -146,8 +154,8 @@ class _ShareHomePageState extends State<ShareHomePage>
   _customer() {
     return GestureDetector(
       onTap: () async {
-        Get.to(() => const ShareCarPage(
-              models: [],
+        Get.to(() => ShareCarPage(
+              models: _tabController.index == 0 ? _myCarList : _allCarList,
             ));
       },
       child: Container(
@@ -236,8 +244,10 @@ class _ShareHomePageState extends State<ShareHomePage>
                 sort: _pickSort,
                 refreshController: _myRefreshController,
                 pickCar: _pickCar,
+                myCarList: _myCarList,
               ),
               AllCarView(
+                allCarList: _allCarList,
                 pickCar: _pickCar,
                 sort: _pickSort,
                 refreshController: _allRefreshController,
@@ -247,8 +257,6 @@ class _ShareHomePageState extends State<ShareHomePage>
           ),
         ));
   }
-
-
 
   _tab(int index, String text) {
     return Text(text);

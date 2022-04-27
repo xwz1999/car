@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
+import '../../../tab_navigator.dart';
 import '../publish_finish_page.dart';
 
 class ContactCondition extends StatefulWidget {
@@ -96,7 +97,7 @@ class _ContactConditionState extends State<ContactCondition> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => const PublishFinishPage());
+                  Get.to(() => const TabNavigator());
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),

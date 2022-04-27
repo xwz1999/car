@@ -5,6 +5,8 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
+import '../direct_sale/edit_item_widget.dart';
+import '../publish_finish_page.dart';
 
 class CarPricePage extends StatefulWidget {
   const CarPricePage({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class CarPricePage extends StatefulWidget {
 }
 
 class _CarPricePageState extends State<CarPricePage> {
+  TextEditingController showPriceController =TextEditingController();
+  TextEditingController evaPriceController =TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +47,48 @@ class _CarPricePageState extends State<CarPricePage> {
               padding: EdgeInsets.all(30.w),
               child: '价格信息'.text.size(32.sp).bold.color(Colors.black).make(),
             ),
+            Container(
+              padding: EdgeInsets.only(left: 30.w, right: 30.w, bottom: 40.h),
+              color: Colors.white,
+              child: Column(
+                children: [
+                  EditItemWidget(
+                    topIcon: true,
+                    title: '展示价格',
+                    value: showPriceController.text,
+                    canChange: true,
+                    callback: (String content) {},
+                    endText: '万元',
+                  ),
+                  EditItemWidget(
+                    topIcon: true,
+                    title: '系统估价',
+                    value: evaPriceController.text,
+                    canChange: true,
+                    callback: (String content) {},
+                    endText: '万元',
+                  ),
+                ],
+              ),
+            ),
+            30.heightBox,
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.to(() => const PublishFinishPage());
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                  MaterialStateProperty.all(Colors.blue),
+                ),
+                child: '下一步'
+                    .text
+                    .size(30.sp)
+                    .color(Colors.white)
+                    .make(),
+              ),
+            ).paddingAll(30.h),
           ],
         ),
       ),

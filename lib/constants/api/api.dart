@@ -4,6 +4,8 @@ import '../environment/environment.dart';
 
 part 'user_api.dart';
 
+part 'car_api.dart';
+
 /// * user  用户接口
 /// * data 基础数据接口
 /// * product 产品接口
@@ -15,7 +17,7 @@ class API {
     if (DevEV.instance.dev) {
       return 'https://apiwenche.oa00.com';
     } else {
-      return 'https://apiwenche.oa00.com';
+      return 'https://api.yunyunwenche.com';
     }
   }
 
@@ -23,7 +25,7 @@ class API {
     if (DevEV.instance.dev) {
       return 'https://static.oa00.com/wenche';
     } else {
-      return 'https://static.oa00.com/wenche';
+      return 'https://static.yunyunwenche.com';
     }
   }
 
@@ -32,43 +34,32 @@ class API {
   //根分类
   ///文件
   static _File file = _File();
-
   ///登陆
   static _Login login = _Login();
-
   ///门店管理
   static _StoreManagement storeManagement = _StoreManagement();
-
   ///订单
   static _Order order = _Order();
-
   ///海报
   static _Poster poster = _Poster();
-
   ///车辆
   static _Car car = _Car();
-
   ///合同
   static _Contract contract = _Contract();
-
   ///客户
   static _Customer customer = _Customer();
-
   ///任务
   static _Task task = _Task();
-
   ///地区
   static _Region region = _Region();
-
   ///用户手册
   static _Broker broker = _Broker();
-
   ///意见提交
   static _Feedback feedback = _Feedback();
   //二级分类
   static _UserApi user = _UserApi();
 }
-
+  
 class _Task {
   ///客户邀约列表
   String get getInviteLists => '/task/invite/lists';
@@ -80,45 +71,23 @@ class _Customer {
 
   ///浏览车辆列表
   String get browseLists => '/customer/browse/lists';
+
+  ///客户列表
+  String get customerLists => '/customer/lists';
+
+  ///客户统计
+  String get customerCount => '/customer/count';
+
+  ///客户详情
+  String get customerInfo => '/customer/info';
+
+  ///客户设为重要
+  String get customerImportant => '/customer/important';
+
+  ///客户取消重要
+  String get customerImportantCancel => '/customer/important/cancel';
 }
 
-class _Car {
-  ///获取车辆品牌
-  String get getCarBrand => '/car/brand/all';
-
-  ///获取车辆品牌下车系
-  String get getCarSeries => '/car/series/all';
-
-  ///获取车辆车系下车型
-  String get getCarModel => '/car/model/all';
-
-  ///行驶证识别
-  String get getCarVehicle => '/car/cor/vehicle';
-
-  ///估算价格
-  String get estimatePrice => '/car/price/estimate';
-
-  ///费用计算
-  String get priceAmount => '/car/price/amount';
-
-  ///车辆列表  //分享
-  String get getCarLists => '/car/lists';
-
-  ///我的车辆列表  //分享
-  String get getCarSelfLists => '/car/self';
-
-  ///车辆信息
-  String get getCarIfo => '/car/self';
-
-  ///收藏列表 云云优选
-  String get getCollectLists => '/car/collect/lists';
-
-  ///添加到收藏 云云优选
-  String get addCollect => '/car/collect/add';
-
-  ///取消收藏 云云优选
-  String get cancelCollect => '/car/collect/cancel';
-}
 
 class _Contract {
   ///发起寄卖合同
@@ -211,6 +180,7 @@ class _Region {
 
   ///微信绑定手机号发送验证码
   String get phoneCode => '/login/sms';
+
 }
 
 ///门店管理

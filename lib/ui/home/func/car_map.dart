@@ -8,13 +8,13 @@ enum CarSort {
 }
 
 class CarMap {
-  static Map<CarSort, String> carSortString = {
-    CarSort.newCreate: '最新创建',
-    CarSort.maxPrice: '标价最高',
-    CarSort.minPrice: '标价最低',
-    CarSort.minAge: '车龄最低',
-    CarSort.minMileage: '里程最短',
-    CarSort.newUpdate: '最近更新',
+  static Map<String, String> carSortString = {
+    'new_create': '最新创建',
+    'max_price': '标价最高',
+    'min_price': '标价最低',
+    'min_age': '车龄最低',
+    'min_mileage': '里程最短',
+    'new_update': '最近更新',
   };
 
   static Map<String, List<int>> carAge = {
