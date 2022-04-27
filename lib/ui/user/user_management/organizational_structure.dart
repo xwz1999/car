@@ -45,6 +45,7 @@ class _StructurePageState extends State<StructurePage> {
     setState(() {});
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

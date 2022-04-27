@@ -100,7 +100,9 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
             childAspectRatio: 144 / 56,
             callback: (String item) {
               sort = item;
-              print(sort);
+              if (kDebugMode) {
+                print(sort);
+              }
               screenControl.screenHide();
               _refreshController.callRefresh();
               setState(() {});

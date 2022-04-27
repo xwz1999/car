@@ -29,6 +29,7 @@ class _PermissionsState extends State<Permissions> {
     setState(() {});
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
