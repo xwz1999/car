@@ -12,6 +12,7 @@ import 'package:cloud_car/widget/car_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -211,6 +212,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
               onRefresh: () async {
                 _SalesList =
                     await OrderFunc.getSaleList(page: _page, size: _size);
+
                 setState(() {});
               },
               onLoad: () async {
@@ -247,6 +249,81 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
       child: GestureDetector(
         onTap: () {
+          switch (model.status) {
+            case 0:
+
+              ///交易取消
+              Get.to(() => const TransactionCancelled());
+              break;
+            case 1:
+
+              ///待预定
+              Get.to(() => const Reservation(
+                    stat: '待预定',
+                    judge: false,
+                  ));
+              break;
+            case 2:
+
+              ///已预定
+              Get.to(() => const Reservation(
+                    stat: '待预定',
+                    judge: true,
+                  ));
+              break;
+            case 3:
+
+              ///待检测
+              Get.to(() => const Reservation(
+                    stat: '待检测',
+                    judge: true,
+                  ));
+              break;
+            // case 4:
+            //   ///支付首付
+            //   switch () {
+            //     case '需付首付':
+            //       Get.to(() => const Reservation(
+            //             stat: '支付首付',
+            //             judge: false,
+            //           ));
+            //       break;
+            //     case '已付首付':
+            //       Get.to(() => const Reservation(
+            //             stat: '支付首付',
+            //             judge: true,
+            //           ));
+            //       break;
+            //   }
+            //   break;
+            // case '待过户':///待过户
+            //   Get.to(() => const Reservation(
+            //         stat: '待过户',
+            //         judge: true,
+            //       ));
+            //   break;
+            // case '支付尾款':///支付尾款
+            //   switch (item['picename']) {
+            //     case '需付尾款':
+            //       Get.to(() => const Reservation(
+            //             stat: '支付尾款',
+            //             judge: false,
+            //           ));
+            //       break;
+            //     case '已付尾款':
+            //       Get.to(() => const Reservation(
+            //             stat: '支付尾款',
+            //             judge: true,
+            //           ));
+            //       break;
+            //   }
+            //   break;
+            case 50:
+
+              ///成交订单
+              Get.to(() => const MakeDealData());
+              break;
+          }
           // switch (item['judgename']) {
           //   case '待预定':
           //     Get.to(() => const Reservation(
@@ -281,7 +358,6 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
           //             ));
           //         break;
           //     }
-
           //     break;
           //   case '待过户':
           //     Get.to(() => const Reservation(
@@ -321,27 +397,28 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Padding(
-                //   padding: EdgeInsets.only(left: 0.w),
-                //   child: Text(
-                //     model.,
-                //     //item['judgename'],
-                //     style: TextStyle(
-                //         color: item['judgename'] != '交易取消'
-                //             ? const Color(0xFF027AFF)
-                //             : const Color(0xFF666666),
-                //         fontSize: BaseStyle.fontSize28),
-                //   ),
-                // ),
+                Padding(
+                  padding: EdgeInsets.only(left: 0.w),
+                  child: Text(
+                    _getText(model.status),
+                    //item['judgename'],
+                    style: TextStyle(
+                        color: model.status != 50
+                            ? const Color(0xFF027AFF)
+                            : const Color(0xFF666666),
+                        fontSize: BaseStyle.fontSize28),
+                  ),
+                ),
                 // 24.hb,
                 Row(
                   children: [
                     SizedBox(
-                        width: 196.w, height: 150.w, child: const SizedBox()
-                        // CloudImageNetworkWidget.(
-                        //   urls: [model.mainPhoto],
-                        // ),
-                        ),
+                      width: 196.w,
+                      height: 150.w,
+                      child: CloudImageNetworkWidget.car(
+                        urls: [model.mainPhoto],
+                      ),
+                    ),
                     20.wb,
                     SizedBox(
                       width: 406.w,
@@ -353,11 +430,16 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   fontSize: BaseStyle.fontSize28,
                                   color: BaseStyle.color111111)),
                           32.hb,
-                          // Padding(
-                          //   padding: EdgeInsets.only(right: 16.w),
-                          //   child: getText('过户0次', '2020年10月', '20.43万公里',
-                          //       item['judgename']),
-                          // )
+                          Padding(
+                              padding: EdgeInsets.only(right: 16.w),
+                              child: getText(
+                                '过户0次',
+                                DateUtil.formatDateMs(
+                                    model.licensingDate.toInt() * 1000,
+                                    format: 'yyyy年MM月'),
+                                '${model.mileage}万公里',
+                                _getText(model.status),
+                              ))
                         ],
                       ),
                     ),
@@ -365,178 +447,185 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 ),
                 40.hb,
                 SizedBox(
-                    child:
-                        // item['judge']
-                        //     ?
-                        Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          child: Text(
-                            '车辆总价',
-                            style: TextStyle(
-                                fontSize: BaseStyle.fontSize28,
-                                color: BaseStyle.color999999),
-                          ),
-                        ),
-                        16.wb,
-                        SizedBox(
-                          child: Text.rich(TextSpan(children: [
-                            TextSpan(
-                                text: '30.00',
-                                style: Theme.of(context).textTheme.subtitle2),
-                            TextSpan(
-                                text: '万',
-                                style: Theme.of(context).textTheme.subtitle2),
-                          ])),
-                        ),
-                        56.wb,
-                        SizedBox(
-                          child: Text(
-                            'ssasadd',
-                            // item['picename'],
-                            style: TextStyle(
-                                fontSize: BaseStyle.fontSize28,
-                                color: BaseStyle.color999999),
-                          ),
-                        ),
-                        16.wb,
-                        SizedBox(
-                          child: Text.rich(TextSpan(children: [
-                            TextSpan(
-                                text: 'sada', //item['pice'],
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2
-                                    ?.copyWith(color: const Color(0xFFFF3B02))),
-                            TextSpan(
-                                text: '万',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2
-                                    ?.copyWith(color: const Color(0xFFFF3B02))),
-                          ])),
-                        ),
-                      ],
-                    ),
-                    32.hb,
-                    GestureDetector(
-                      //item['buttomname']
-                      onTap: () {
-                        switch (model.modelName) {
-                          case '成交订单':
-                            Get.to(() => const MakeDeal());
-                            break;
-                          default:
-                        }
-                      },
-                      child: Container(
-                          width: 168.w,
-                          height: 68.w,
-                          padding: EdgeInsets.only(left: 28.w, top: 14.w),
-                          decoration: BoxDecoration(
-                              color: const Color(0xFF027AFF),
-                              borderRadius: BorderRadius.circular(8.w)),
-                          child: Text(
-                            'sddas', // item['buttomname'],
-                            style: TextStyle(
-                                color: kForeGroundColor,
-                                fontSize: BaseStyle.fontSize28),
-                          )),
-                    )
-                  ],
-                )
-                    // : item['judgename'] != '交易取消'
-                    //     ? Row(
-                    //         mainAxisAlignment: MainAxisAlignment.end,
-                    //         children: [
-                    //           SizedBox(
-                    //             child: Text(
-                    //               '车辆总价',
-                    //               style: TextStyle(
-                    //                   fontSize: BaseStyle.fontSize28,
-                    //                   color: BaseStyle.color999999),
-                    //             ),
-                    //           ),
-                    //           16.wb,
-                    //           SizedBox(
-                    //             child: Text.rich(TextSpan(children: [
-                    //               TextSpan(
-                    //                   text: '30.00',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2),
-                    //               TextSpan(
-                    //                   text: '万',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2),
-                    //             ])),
-                    //           ),
-                    //           56.wb,
-                    //           SizedBox(
-                    //             child: Text(
-                    //               item['picename'],
-                    //               style: TextStyle(
-                    //                   fontSize: BaseStyle.fontSize28,
-                    //                   color: BaseStyle.color999999),
-                    //             ),
-                    //           ),
-                    //           16.wb,
-                    //           SizedBox(
-                    //             child: Text.rich(TextSpan(children: [
-                    //               TextSpan(
-                    //                   text: item['pice'],
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2
-                    //                       ?.copyWith(
-                    //                           color:
-                    //                               const Color(0xFFFF3B02))),
-                    //               TextSpan(
-                    //                   text: '万',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2
-                    //                       ?.copyWith(
-                    //                           color:
-                    //                               const Color(0xFFFF3B02))),
-                    //             ])),
-                    //           ),
-                    //         ],
-                    //       )
-                    //     : Row(
-                    //         mainAxisAlignment: MainAxisAlignment.end,
-                    //         children: [
-                    //           SizedBox(
-                    //             child: Text(
-                    //               '车辆总价',
-                    //               style: TextStyle(
-                    //                   fontSize: BaseStyle.fontSize28,
-                    //                   color: BaseStyle.color999999),
-                    //             ),
-                    //           ),
-                    //           16.wb,
-                    //           SizedBox(
-                    //             child: Text.rich(TextSpan(children: [
-                    //               TextSpan(
-                    //                   text: '30.00',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2),
-                    //               TextSpan(
-                    //                   text: '万',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2),
-                    //             ])),
-                    //           ),
-                    //         ],
-                    //       )),
-                    )
+                    child: model.status != 1 || model.status != 2
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SizedBox(
+                                    child: Text(
+                                      '车辆总价',
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
+                                  ),
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: model.amount,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                    ])),
+                                  ),
+                                  56.wb,
+                                  SizedBox(
+                                    child: Text(
+                                      '定价',
+                                      // item['picename'],
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
+                                  ),
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: model.deposit, //item['pice'],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                  color:
+                                                      const Color(0xFFFF3B02))),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                  color:
+                                                      const Color(0xFFFF3B02))),
+                                    ])),
+                                  ),
+                                ],
+                              ),
+                              32.hb,
+                              GestureDetector(
+                                //item['buttomname']
+                                onTap: () {
+                                  switch (model.modelName) {
+                                    case '成交订单':
+                                      Get.to(() => const MakeDeal());
+                                      break;
+                                    default:
+                                  }
+                                },
+                                child: Container(
+                                    width: 168.w,
+                                    height: 68.w,
+                                    padding:
+                                        EdgeInsets.only(left: 28.w, top: 14.w),
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFF027AFF),
+                                        borderRadius:
+                                            BorderRadius.circular(8.w)),
+                                    child: Text(
+                                      model.deposit, // item['buttomname'],
+                                      style: TextStyle(
+                                          color: kForeGroundColor,
+                                          fontSize: BaseStyle.fontSize28),
+                                    )),
+                              )
+                            ],
+                          )
+                        : model.status == 0
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SizedBox(
+                                    child: Text(
+                                      '车辆总价',
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
+                                  ),
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: model.balancePayment,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                    ])),
+                                  ),
+                                  56.wb,
+                                  SizedBox(
+                                    child: Text(
+                                      _getText(model.status),
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
+                                  ),
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: model.deposit,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                  color:
+                                                      const Color(0xFFFF3B02))),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                  color:
+                                                      const Color(0xFFFF3B02))),
+                                    ])),
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SizedBox(
+                                    child: Text(
+                                      '车辆总价',
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
+                                  ),
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: model.balancePayment,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                    ])),
+                                  ),
+                                ],
+                              )),
               ],
             )),
       ),
@@ -612,5 +701,63 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
         //     ))
       ],
     );
+  }
+
+  _getText(int num) {
+    switch (num) {
+      case 0:
+        return '订单取消';
+        // ignore: dead_code
+        break;
+      case 1:
+        return '待签订';
+        // ignore: dead_code
+        break;
+      case 2:
+        return '已签订';
+        // ignore: dead_code
+        break;
+      case 3:
+        return '已支付定金';
+        // ignore: dead_code
+        break;
+      case 10:
+        return '申请检测';
+        // ignore: dead_code
+        break;
+      case 11:
+        return '上传检测报告';
+        // ignore: dead_code
+        break;
+      case 20:
+        return '首付审核';
+        // ignore: dead_code
+        break;
+      case 21:
+        return '首付审核通过';
+        // ignore: dead_code
+        break;
+      case 30:
+        return '过户';
+        // ignore: dead_code
+        break;
+      case 31:
+        return '过户完成';
+        // ignore: dead_code
+        break;
+      case 40:
+        return '尾款审核';
+        // ignore: dead_code
+        break;
+      case 41:
+        return '尾款审核通过';
+        // ignore: dead_code
+        break;
+      case 50:
+        return '交车';
+        // ignore: dead_code
+        break;
+      default:
+    }
   }
 }
