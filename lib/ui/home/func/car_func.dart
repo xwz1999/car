@@ -184,5 +184,5 @@ class CarFunc {
       CloudToast.show(model.msg);
       return false;
     }
-  }
-}
+
+}}
