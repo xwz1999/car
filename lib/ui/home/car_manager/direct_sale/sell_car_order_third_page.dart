@@ -8,7 +8,6 @@ import 'package:cloud_car/widget/car_item_widget.dart';
 
 import 'package:flutter/material.dart';
 
-
 typedef TextCallback = Function(String content);
 
 class SellCarOrderThirdPage extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/model/car_manager/car_list_model.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/share_util.dart';
 import 'package:cloud_car/utils/user_tool.dart';

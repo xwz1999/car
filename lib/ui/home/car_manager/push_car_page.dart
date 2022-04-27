@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
+import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import '../../../model/car_valuation/car_distinguish_model.dart';
 import '../../../model/sort/sort_brand_model.dart';
 import '../../../model/sort/sort_car_model_model.dart';
 import '../../../model/sort/sort_series_model.dart';
