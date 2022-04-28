@@ -48,6 +48,7 @@ class UserProvider extends ChangeNotifier {
       _userInfo = UserInfoModel.fromJson(base.data);
     } else {
       CloudToast.show(base.msg);
+      _userInfo = UserInfoModel.fail;
     }
     notifyListeners();
   }
