@@ -263,7 +263,7 @@ class _PushCarPageState extends State<PushCarPage> {
                                 if (!canTap) {
                                   return;
                                 }
-                                Get.to(() => EvainfoPage(
+                                Get.to(() => FillEvainfoPage(
                                       publishCarInfo: _publishCarInfo,
                                     ));
                               },

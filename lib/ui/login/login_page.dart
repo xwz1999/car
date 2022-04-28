@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   // String _operator = '';
   // String _phone = '';
   bool _chooseAgreement = false;
- late StreamSubscription _fluwxListenObjcet;
+  late StreamSubscription _fluwxListenObjcet;
   Map<String, String> simOperator = {
     'CM': '中国移动',
     'CU': '中国联通',
@@ -46,16 +46,27 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  /// 添加 loginAuthSyncApi 接口回调的监听
   void addJverifyListen() {
-    /// 添加 loginAuthSyncApi 接口回调的监听
-  Jverify().addLoginAuthCallBackListener((event) async {
+    Jverify().addLoginAuthCallBackListener((event) async {
       var _result = "监听获取返回数据：[${event.code}] message = ${event.message}";
       if (kDebugMode) {
         print(_result);
+        LoggerData.addData(_result);
       }
       if (event.code == 6000) {
-       await UserTool.userProvider.setToken(event.message);
-        Get.offAll(() => const TabNavigator());
+        var base = await apiClient.request(API.login.phone,
+            data: {'token': event.message, 'inviteCode': ''});
+        if (base.code == 0) {
+          if (kDebugMode) {
+            print('调用登陆接口返回手机号：  ${base.data}');
+          }
+
+          await UserTool.userProvider.setToken(base.data);
+          Get.offAll(() => const TabNavigator());
+        } else {
+          CloudToast.show(base.msg);
+        }
       } else {
         CloudToast.show(JverifyErrorCode.getmsg(event.code));
       }
@@ -63,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void addFluwxListen() {
-   _fluwxListenObjcet= fluwx.weChatResponseEventHandler
+    _fluwxListenObjcet = fluwx.weChatResponseEventHandler
         .distinct((a, b) => a == b)
         .listen((event) async {
       var res = event as fluwx.WeChatAuthResponse;
@@ -84,7 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                       token: wxLoginResponse.bindToken,
                     ));
               } else {
-               await UserTool.userProvider.setToken(wxLoginResponse.loginInfo.token);
+                await UserTool.userProvider
+                    .setToken(wxLoginResponse.loginInfo.token);
                 Get.offAll(() => const TabNavigator());
               }
             } else {
@@ -175,8 +187,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: MaterialButton(
                     onPressed: () async {
-
-
                       if (!_chooseAgreement) {
                         CloudToast.show('请阅读并同意用户协议和隐私政策');
                         return;
@@ -199,15 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         if (map['code'] == 2000) {
                           var token = map['message'];
-                          var base = await apiClient.request(API.login.phone,
-                              data: {'token': token, 'inviteCode': ''});
-                          if (base.code == 0) {
-                            if (kDebugMode) {
-                              print('调用登陆接口返回手机号：  ${base.data}');
-                            }
-                          } else {
-                            CloudToast.show(base.msg);
-                          }
+
                           await _authToken();
                         } else {
                           CloudToast.show('获取token失败');
