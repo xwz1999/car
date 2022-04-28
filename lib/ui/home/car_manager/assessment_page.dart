@@ -65,7 +65,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(
           childAspectRatio: 144 / 56,
-          callback: (String item) {},
+          callback: (String item,int value) {},
           mainAxisSpacing: 10.w,
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,

@@ -69,7 +69,7 @@ class _PreferredPageState extends State<PreferredPage>
           clipBehavior: Clip.antiAlias,
           child: ScreenWidget(
             pickString: _pickCar.value.price,
-            callback: (String item) {
+            callback: (String item,int value) {
               screenControl.screenHide();
               _pickCar.value.price = item;
               _refreshController.callRefresh();
@@ -91,7 +91,7 @@ class _PreferredPageState extends State<PreferredPage>
           child: ScreenWidget(
             pickString: _pickSort,
             childAspectRatio: 144 / 56,
-            callback: (String item) {
+            callback: (String item,int value) {
               screenControl.screenHide();
               _pickSort = item;
               _refreshController.callRefresh();

@@ -112,11 +112,13 @@ class _CheckPushPageState extends State<CheckPushPage> {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.blue),
                           ),
-                          child: '发起合同'
-                              .text
-                              .size(30.sp)
-                              .color(Colors.white)
-                              .make(),
+                          child:Text(
+                              widget.publishCarInfo.carSource=='个人直卖'?'发起合同':'发布车辆',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30.sp,
+                            ),
+                          ),
                         ),
                       ),
                       widget.publishCarInfo.carSource=='个人直卖'

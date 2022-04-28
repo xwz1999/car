@@ -101,7 +101,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                       hint: '请选择',
                       head: '车辆类型',
                       value: _carType!,
-                      callback: (content) {
+                      callback: (content,value) {
                         Get.back();
                         _carType = content;
                         setState(() {});
@@ -114,7 +114,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                       hint: '请选择',
                       head: '选择内饰颜色',
                       value: _interColor!,
-                      callback: (content) {
+                      callback: (content,value) {
                         Get.back();
                         _interColor = content;
                         setState(() {});
@@ -143,7 +143,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                       hint: '请选择',
                       head: '使用性质',
                       value: _purpose!,
-                      callback: (content) {
+                      callback: (content,value) {
                         Get.back();
                         _purpose = content;
                         setState(() {});
@@ -318,7 +318,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
     required String hint,
     required String head,
     required String value,
-    required Function(String) callback,
+    required Function(String,int) callback,
     required List<ChooseItem> typeList,
   }) {
     return GestureDetector(

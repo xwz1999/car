@@ -150,7 +150,7 @@ class _SalesOrderState extends State<SalesOrder> {
         child: ScreenWidget(
           pickString: '',
           childAspectRatio: 200 / 56,
-          callback: (String item) {
+          callback: (String item,int value) {
             _dropDownHeaderItemStrings1 = [item];
             screenControl1.screenHide();
             setState(() {});
