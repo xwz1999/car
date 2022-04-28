@@ -1,8 +1,13 @@
-//评估次数充值 62
-
+import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/pay/wx_pay_model.dart';
+import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/ui/user/success_failure_page.dart';
 
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/pay_util.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +16,11 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../widget/button/colud_check_radio.dart';
 
 class AssessmentPayPage extends StatefulWidget {
-  const AssessmentPayPage({Key? key}) : super(key: key);
+  final String price;
+  final int count;
+
+  const AssessmentPayPage({Key? key, required this.price, required this.count})
+      : super(key: key);
 
   @override
   _AssessmentPayPageState createState() => _AssessmentPayPageState();
@@ -19,104 +28,134 @@ class AssessmentPayPage extends StatefulWidget {
 
 class _AssessmentPayPageState extends State<AssessmentPayPage> {
   List<dynamic>? data;
-  // ignore: non_constant_identifier_names
-  // List listWidget = [];
-  // final List<int> _selectIndex1 = [];
-  //List<int> _selectIndex2 = [];
-  //List payList = ['微信支付', '支付宝支付'];
-  List payList = [
-    {'微信支付', Assets.icons.wxPay.path},
-    {'支付宝支付', Assets.icons.zfbPay.path}
-  ];
-  //List payList2 = ['支付宝支付'];
+
+  int _selectIndex = 0;
+
+  Map payWay = {
+    '微信支付': Assets.icons.wxPay.path,
+    '支付宝支付': Assets.icons.zfbPay.path
+  };
 
   @override
+  void initState() {
+    PayUtil().wxPayAddListener(
+        paySuccess: _paySuccess,
+        payError: (event) {
+          BotToast.closeAllLoading();
+        });
+    super.initState();
+  }
+
   @override
   void dispose() {
+    BotToast.closeAllLoading();
+    PayUtil().removeWxPayListener();
     super.dispose();
   }
 
   @override
-  // ignore: must_call_super
   Widget build(BuildContext context) {
-    //super.build(context);
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
+        leading: const CloudBackButton(
+          isSpecial: true,
         ),
-        extendBody: true,
-        //extendBodyBehindAppBar: true,
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32.w),
-          color: const Color.fromRGBO(246, 246, 246, 1),
-          child: Column(
-            children: [
-              //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-              // Text('data')
-              _getPice(),
-              56.hb,
-              // Container(
-              //   height: 500.w,
-              //   decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       borderRadius: BorderRadius.circular(16.w)),
-              //   child: Column(
-              //     children: [
-              //       SizedBox(
-              //         //height: 100.w,
-              //         child: getChooseList(
-              //             (String choices) => null, payList, _selectIndex1),
-              //       ),
-              //       // SizedBox(
-              //       //   height: 100.w,
-              //       //   child: getChooseList(
-              //       //       (String choices) => null, payList2, _selectIndex2),
-              //       // ),
-              //     ],
-              //   ),
-              // ),
-              // 500.hb,
-              Container(
-                width: double.infinity,
-                height: 72.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(8.w)),
-                child: SizedBox(
-                    child: GestureDetector(
-                  onTap: () {
-                    Get.to(() => SuccessFailure(
-                        conditions: true,
-                        headline: '评估次数',
-                        body: Text(
-                          '评估次数充值成功',
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                        bottom: CloudBottom(
-                          ontap: () {},
-                          text: '返回我的',
-                        )));
-                  },
-                  child: Text(
-                    '确认支付',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(color: kForeGroundColor),
-                  ),
-                )),
-              )
-            ],
+        title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
+      ),
+      extendBody: true,
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 32.w),
+        color: const Color.fromRGBO(246, 246, 246, 1),
+        child: Column(
+          children: [
+            _getPice(),
+            56.hb,
+            Container(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16.w)),
+              child: Column(
+                children: payWay.keys
+                    .toList()
+                    .mapIndexed((currentValue, index) => GestureDetector(
+                          onTap: () {
+                            _selectIndex = index;
+                            setState(() {});
+                          },
+                          child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 24.w, vertical: 40.w),
+                              color: Colors.white,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    child: Image.asset(
+                                      payWay[currentValue],
+                                      width: 40.w,
+                                      height: 40.w,
+                                    ),
+                                  ),
+                                  20.wb,
+                                  SizedBox(
+                                    width: 200.w,
+                                    child: Text(
+                                      currentValue,
+                                      style: TextStyle(
+                                          color: BaseStyle.color333333,
+                                          fontSize: BaseStyle.fontSize28),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  BeeCheckRadio(
+                                    value: index,
+                                    groupValue: [_selectIndex],
+                                  ),
+                                ],
+                              )),
+                        ))
+                    .toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: GestureDetector(
+        onTap: () async {
+          var cancel = CloudToast.loading;
+          switch (_selectIndex) {
+            case 0:
+              await _wxPayFunc();
+              break;
+            case 1:
+              await _aliPayFunc();
+          }
+        },
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            margin: EdgeInsets.only(
+                left: 32.w,
+                right: 32.w,
+                bottom: 32.w + MediaQuery.of(context).padding.bottom),
+            width: double.infinity,
+            height: 72.w,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: Colors.blue, borderRadius: BorderRadius.circular(8.w)),
+            child: Text(
+              '确认支付',
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  ?.copyWith(color: kForeGroundColor),
+            ),
           ),
-        ));
+        ),
+      ),
+    );
   }
-
-//
 
 //充值金额
   _getPice() {
@@ -137,7 +176,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
           14.wb,
           SizedBox(
             child: Text(
-              '20.00',
+              widget.price,
               style: Theme.of(context)
                   .textTheme
                   .headline6
@@ -149,122 +188,54 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
     );
   }
 
-//支付
-  // _getPay() {
-  //   return Container(
-  //     height: 500.w,
-  //     decoration: BoxDecoration(
-  //         color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
-  //     child: Column(
-  //       children: [
-  //         SizedBox(
-  //           height: 100.w,
-  //           child:
-  //               getChooseList((String choices) => null, payList, _selectIndex1),
-  //         ),
-  //         // SizedBox(
-  //         //   height: 100.w,
-  //         //   child: getChooseList(
-  //         //       (String choices) => null, payList2, _selectIndex2),
-  //         // ),
-  //       ],
-  //     ),
-  //   );
-  // }
-//支付判断
+  Future _wxPayFunc() async {
+    var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
+      'count': widget.count,
+      'payType': 2,
+    });
+    if (base.code == 0) {
+      var wxPayModel = WxPayModel.fromJson(base.data['content']);
+      await PayUtil().callWxPay(
+        payModel: wxPayModel,
+      );
+    } else {
+      CloudToast.show(base.msg);
+    }
+  }
 
-  getChooseList(Function(String) callBack, List models, List<int> choices) {
-    return ListView(
-      scrollDirection: Axis.vertical,
-      padding: EdgeInsets.only(top: 30.w),
-      shrinkWrap: true,
-      children: [
-        ...models
-            .mapIndexed((currentValue, index) => GestureDetector(
-                  onTap: () {
-                    if (choices.contains(index)) {
-                      choices.remove(index);
-                    } else {
-                      choices.clear();
-                      choices.add(index);
-                    }
-                    setState(() {});
-                  },
-                  child: Container(
-                      width: 686.w,
-                      height: 100.w,
-                      color: Colors.white,
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            child: Image.asset(models[index]),
-                          ),
-                          20.wb,
-                          SizedBox(
-                            width: 200.w,
-                            child: Text(
-                              currentValue,
-                              style: TextStyle(
-                                  color: BaseStyle.color333333,
-                                  fontSize: BaseStyle.fontSize28),
-                            ),
-                          ),
-                          200.wb,
-                          BeeCheckRadio(
-                            value: index,
-                            groupValue: choices,
-                          ),
-                        ],
-                      )),
-                ))
-            .toList(),
-      ],
+  Future _aliPayFunc() async {
+    var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
+      'count': widget.count,
+      'payType': 1,
+    });
+    if (base.code == 0) {
+      var re = await PayUtil().callAliPay(base.data['content']);
+      if (re) {
+        _paySuccess();
+      } else {
+        BotToast.closeAllLoading();
+      }
+    } else {
+      CloudToast.show(base.msg);
+    }
+  }
+
+  void _paySuccess() async {
+    Get.off(
+      () => SuccessFailure(
+        conditions: true,
+        headline: '评估次数',
+        body: Text(
+          '评估次数充值成功',
+          style: Theme.of(context).textTheme.subtitle1,
+        ),
+        bottom: CloudBottom(
+          ontap: () {
+            Get.offAll(const TabNavigator());
+          },
+          text: '返回首页',
+        ),
+      ),
     );
   }
-  // _getPayList(item) {
-  //   return Column(
-  //     children: [
-  //       ListTile(
-  //         leading: Image.asset(item['icon']),
-  //         title: Text(item['title']),
-  //         trailing: Radio(
-  //           //单选框的值
-  //           value: payList, //item['checked'],
-  //           //当前单选框的值
-  //           groupValue: grouoId,
-  //           //单选框的颜色
-  //           activeColor: Colors.blue,
-  //           onChanged: (value) {
-  //             setState(() {
-  //               item['checked'] = value;
-  //               // for (var i = 0; i < payList.length; i++) {
-  //               //   payList[i]['checked'] = false;
-  //               // }
-  //               // item['checked'] = true;
-  //             });
-  //           },
-  //         ),
-  //         // trailing: item['checked'] ? const Icon(Icons.check) : const Text(''),
-  //         // onTap: () {
-  //         //   setState(() {
-  //         //     for (var i = 0; i < payList.length; i++) {
-  //         //       payList[i]['checked'] = false;
-  //         //     }
-  //         //     item['checked'] = true;
-  //         //   });
-  //         // },
-  //       ),
-  //       const Divider()
-  //     ],
-  //   );
-  // }
-
 }
-
-
-// 
-// class Button {
-//   Button(Null Function() param0);
-// }
-
-// void column() {}

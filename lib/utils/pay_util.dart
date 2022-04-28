@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/environment/environment.dart';
 import 'package:cloud_car/model/pay/wx_pay_model.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -27,6 +29,12 @@ enum PAYTYPE {
 }
 
 class PayUtil {
+  static late final PayUtil _instance = PayUtil._();
+
+  factory PayUtil() => _instance;
+
+  PayUtil._();
+
   void resultSatus(String status) {
     switch (status) {
       case '8000':
@@ -57,7 +65,7 @@ class PayUtil {
 
   ///支付宝支付
   ///传入订单信息和确认订单请求地址
-  Future<bool> callAliPay(String order, String apiPath) async {
+  Future<bool> callAliPay(String order, {String? apiPath}) async {
     var install = await isAliPayInstalled();
     if (!install) {
       BotToast.showText(text: '未安装支付宝！');
@@ -75,9 +83,14 @@ class PayUtil {
     if (_resultStatus == '9000') {
       String _res = result['result'];
       PayModel _model = PayModel.fromJson(jsonDecode(_res));
-      bool _confirmResult = await _confirmPayResult(
-          apiPath, _model.aliPayTradeAppPayResponse.outTradeNo);
-      return _confirmResult;
+      if (apiPath != null) {
+        bool _confirmResult = await _confirmPayResult(
+            apiPath, _model.aliPayTradeAppPayResponse.outTradeNo);
+        return _confirmResult;
+      } else {
+        CloudToast.show('支付成功');
+        return true;
+      }
     } else {
       resultSatus(_resultStatus);
       return false;
@@ -114,9 +127,39 @@ class PayUtil {
 
   ///微信支付
 
-  Future wxPay(WxPayModel payModel, VoidCallback paySuccess,
-      VoidCallback? payError) async {
-    payWithWeChat(
+  StreamSubscription? _wxPayStream;
+
+  void wxPayAddListener(
+      {required VoidCallback paySuccess,
+      Function(BaseWeChatResponse)? payError}) {
+    _wxPayStream = weChatResponseEventHandler.listen((event) {
+      if (kDebugMode) {
+        print('errorCode:' +
+            event.errCode.toString() +
+            '    errorStr:' +
+            event.errStr.toString());
+      }
+      if (event.errCode == 0) {
+        paySuccess();
+      } else {
+        LoggerData.addData('errorCode:' +
+            event.errCode.toString() +
+            '    errorStr:' +
+            (event.errStr??'支付失败'));
+        CloudToast.show(event.errStr??'支付失败');
+        payError == null ? null : payError(event);
+      }
+    });
+  }
+
+  void removeWxPayListener() {
+    _wxPayStream?.cancel();
+  }
+
+  Future callWxPay({
+    required WxPayModel payModel,
+  }) async {
+    await payWithWeChat(
         appId: 'wx9bc3ffb23a749254',
         partnerId: payModel.partnerId,
         prepayId: payModel.prepayId,
@@ -124,26 +167,5 @@ class PayUtil {
         nonceStr: payModel.nonceStr,
         timeStamp: int.parse(payModel.timeStamp),
         sign: payModel.sign);
-    weChatResponseEventHandler.listen((event) {
-      if (kDebugMode) {
-        print('errorCode:' +
-            event.errCode.toString() +
-            'errorStr' +
-            event.errStr.toString());
-      }
-      if (event.errCode == 0) {
-        paySuccess();
-      } else {
-        payError == null
-            ? () {
-                LoggerData.addData('errorCode:' +
-                    event.errCode.toString() +
-                    'errorStr' +
-                    event.errStr.toString());
-                CloudToast.show(event.errStr.toString());
-              }
-            : payError();
-      }
-    });
   }
 }

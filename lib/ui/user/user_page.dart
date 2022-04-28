@@ -32,8 +32,12 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   List<dynamic>? data;
+
+  late final _KingCoinUserlist = [];
   late final _kingCoinUserList = [];
   final EasyRefreshController _refreshController = EasyRefreshController();
+
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   @override
   void initState() {
@@ -57,6 +61,7 @@ class _UserPageState extends State<UserPage> {
   @override
   void dispose() {
     _refreshController.dispose();
+    _easyRefreshController.dispose();
     super.dispose();
   }
 
@@ -89,7 +94,6 @@ class _UserPageState extends State<UserPage> {
           ],
         ),
       ),
-
       body: Expanded(
         child: Column(
           children: [
@@ -123,29 +127,25 @@ class _UserPageState extends State<UserPage> {
           ],
         ),
       ),
-      // body: Text(
-      //   '',
-      //   style: Theme.of(context).textTheme.bodyText1,
-      // ),
     );
   }
+
   //type：1 角色名 2 门店名
-  getCiap(String title,int type) {
+  getCiap(String title, int type) {
     return Offstage(
       offstage: title.trim().isEmpty,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.w),
-            color: type==1
+            color: type == 1
                 ? const Color(0xFFFF3B02).withOpacity(0.08)
                 : const Color(0xFF027AFF).withOpacity(0.08)),
         child: Text(
           title,
           style: TextStyle(
-              color: type==1
-                  ? const Color(0xFFFF3B02)
-                  : const Color(0xFF027AFF),
+              color:
+                  type == 1 ? const Color(0xFFFF3B02) : const Color(0xFF027AFF),
               fontSize: BaseStyle.fontSize20),
         ),
       ),
@@ -347,10 +347,10 @@ class _UserPageState extends State<UserPage> {
                       Row(
                         children: [
                           getCiap(
-                              UserTool.userProvider.userInfo.store.roleName,1),
+                              UserTool.userProvider.userInfo.store.roleName, 1),
                           16.wb,
                           getCiap(
-                              UserTool.userProvider.userInfo.store.storeName,2)
+                              UserTool.userProvider.userInfo.store.storeName, 2)
                         ],
                       )
                     ],

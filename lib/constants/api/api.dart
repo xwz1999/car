@@ -103,6 +103,12 @@ class _Contract {
 
   ///发起出售合同
   String get addSaleContract => '/contract/sale/add';
+
+  ///寄卖合同列表
+  String get consignmentList => '/contract/consignment/lists';
+
+  ///售出合同列表
+  String get soldList => '/contract/sale/lists';
 }
 
 class _File {

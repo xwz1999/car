@@ -33,6 +33,9 @@ class IndividualModel extends Equatable{
     required this.customer,
   });
     @override
+
+
+
     List<Object?> get props => [
         id,
         status,

@@ -6,11 +6,13 @@ typedef ItemCallback = Function(ChooseItems item, int index);
 class ChooseItems {
   String name;
   String pice;
+  int count;
   bool isChoose;
 
   ChooseItems({
     required this.name,
     required this.pice,
+    required this.count,
     this.isChoose = false,
   });
 }
@@ -24,6 +26,7 @@ class SortWidget extends StatelessWidget {
   final double crossAxisSpacing;
   final double childAspectRatio;
   final bool haveButton;
+  final ChooseItems? pickItem;
 
   const SortWidget(
       {Key? key,
@@ -33,7 +36,8 @@ class SortWidget extends StatelessWidget {
       required this.mainAxisSpacing,
       required this.crossAxisSpacing,
       required this.childAspectRatio,
-      this.haveButton = false})
+      this.haveButton = false,
+      required this.pickItem})
       : super(key: key);
 
   @override
@@ -65,11 +69,11 @@ class SortWidget extends StatelessWidget {
       child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: item.isChoose
+              color: pickItem ==item
                   ? const Color(0x1A027AFF)
                   : const Color(0xFFF6F6F6),
               borderRadius: BorderRadius.circular(4.w),
-              border: !item.isChoose
+              border: pickItem != item
                   ? Border.all(color: Colors.transparent, width: 1.w)
                   : Border.all(color: const Color(0xFF027AFF), width: 1.w)),
           child: Column(
@@ -78,15 +82,18 @@ class SortWidget extends StatelessWidget {
               Text(
                 item.name,
                 style: TextStyle(
-                    color:
-                        item.isChoose ? kPrimaryColor : BaseStyle.color333333,
+                    color: pickItem == item
+                        ? kPrimaryColor
+                        : BaseStyle.color333333,
                     fontSize: BaseStyle.fontSize28),
               ),
               Text(
-                item.pice,
+
+               "¥" +item.pice,
                 style: TextStyle(
-                    color:
-                        item.isChoose ? kPrimaryColor : BaseStyle.color333333,
+                    color: pickItem == item
+                        ? kPrimaryColor
+                        : BaseStyle.color333333,
                     fontSize: BaseStyle.fontSize28),
               ),
             ],
