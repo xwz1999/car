@@ -9,8 +9,8 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
 
 class CustomersTrajectoryPage extends StatefulWidget {
-  final TaskInviteListModel model;
-  const CustomersTrajectoryPage({Key? key, required this.model}) : super(key: key);
+  final int customerId;
+  const CustomersTrajectoryPage({Key? key, required this.customerId}) : super(key: key);
 
   @override
   _CustomersTrajectoryPageState createState() => _CustomersTrajectoryPageState();
@@ -20,42 +20,45 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
   List<CustomerTrailModel> _list = [];
 
   bool _onLoad = true;
-
+  final ScrollController _scrollController = ScrollController();
 
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
+
+  @override
+  void dispose() {
+    _easyRefreshController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32.w),
+    return  EasyRefresh(
+      firstRefresh: true,
+      header: MaterialHeader(),
+      footer: MaterialFooter(),
+      controller: _easyRefreshController,
+      scrollController: _scrollController,
+      onRefresh: () async {
+
+        _list = await CustomerFunc.getCustomerTrail(widget.customerId,);
+        _onLoad = false;
+        setState(() {});
+      },
+      //emptyWidget: const NoDataWidget(text: '暂无客户轨迹信息',),
       child:
 
+      _onLoad?const SizedBox():
+      _list.isEmpty?const NoDataWidget(text: '暂无客户轨迹信息',paddingTop: 300,):
+      ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
 
-      EasyRefresh(
-        firstRefresh: true,
-        header: MaterialHeader(),
-        footer: MaterialFooter(),
-        controller: _easyRefreshController,
-        onRefresh: () async {
-
-          _list = await CustomerFunc.getCustomerTrail(widget.model.id,);
-          _onLoad = false;
-          setState(() {});
+        itemBuilder: (BuildContext context, int index) {
+          return _getListItem(index, index < 1,_list[index]);
         },
-        //emptyWidget: const NoDataWidget(text: '暂无客户轨迹信息',),
-        child:
-
-        _onLoad?const SizedBox():
-        _list.isEmpty?const NoDataWidget(text: '暂无客户轨迹信息',paddingTop: 300,):
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.only(top: 32.w),
-          itemBuilder: (BuildContext context, int index) {
-            return _getListItem(index, index < 1,_list[index]);
-          },
-          itemCount: _list.length,
-        ),
+        itemCount: _list.length,
       ),
     );
 
@@ -64,6 +67,7 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
 
   _getListItem(int index, bool ing,CustomerTrailModel model) {
     return Container(
+
       width: double.infinity,
       color: Colors.white,
       child: IntrinsicHeight(
@@ -77,14 +81,14 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
                   index != 0
                       ? Container(
                     width: 2.w,
-                    height: 10.w,
+                    height: 25.w,
                     decoration: BoxDecoration(
                       color:  index == 1 ? kPrimaryColor : BaseStyle.colorcccccc,
                     ),
                   )
                       : const SizedBox(),
                   Container(
-                    margin: EdgeInsets.only(top: index != 0 ? 0 : 10.w),
+                    margin: EdgeInsets.only(top: index != 0 ? 00.w : 30.w),
                     width: 20.w,
                     height: 20.w,
                     decoration: BoxDecoration(
@@ -110,6 +114,7 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                20.hb,
                 Row(
                   children:  [
                     Text(model.type,style: TextStyle(

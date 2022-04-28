@@ -79,7 +79,7 @@ class Customer extends Equatable {
     factory Customer.fromJson(Map<String, dynamic> json) =>
         _$CustomerFromJson(json);
 
-    Customer({
+    const Customer({
         required this.id,
         required this.nickname,
         required this.mobile,

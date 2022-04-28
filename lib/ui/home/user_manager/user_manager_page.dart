@@ -37,6 +37,13 @@ class _UserManagerPageState extends State<UserManagerPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    _easyRefreshController.callRefresh();
+    super.didChangeDependencies();
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

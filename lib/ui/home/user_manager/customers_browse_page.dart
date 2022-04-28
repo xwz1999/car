@@ -12,8 +12,8 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
 
 class CustomersBrowsePage extends StatefulWidget {
-  final TaskInviteListModel model;
-  const CustomersBrowsePage({Key? key, required this.model}) : super(key: key);
+  final int customerId;
+  const CustomersBrowsePage({Key? key, required this.customerId}) : super(key: key);
 
   @override
   _CustomersBrowsePageState createState() => _CustomersBrowsePageState();
@@ -24,7 +24,18 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
   bool _onLoad = true;
   int _page = 1;
 
+  final ScrollController _scrollController = ScrollController();
+
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
+
+
+  @override
+  void dispose() {
+    _easyRefreshController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +46,12 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
           firstRefresh: true,
           header: MaterialHeader(),
           footer: MaterialFooter(),
+          scrollController: _scrollController,
           controller: _easyRefreshController,
           onRefresh: () async {
             _page = 1;
 
-            _list = await CustomerFunc.getCustomerBrowseList(widget.model.customerId, _page);
+            _list = await CustomerFunc.getCustomerBrowseList(widget.customerId, _page);
             _onLoad = false;
 
             setState(() {});
@@ -48,7 +60,7 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
             _page++;
             BaseListModel baseList = await apiClient.requestList(
                 API.customer.browseLists,data: {
-              'customerId':widget.model.customerId, 'page':_page,'size':10
+              'customerId':widget.customerId, 'page':_page,'size':10
             }
             );
             if (baseList.nullSafetyTotal > _list.length) {

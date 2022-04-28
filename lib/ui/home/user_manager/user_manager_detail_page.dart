@@ -53,16 +53,19 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
   List<CustomerListModel> _list = [];
 
   String title = '客户统计';
+
   String? get status => CustomerMap.customerStatusByInt[widget.type];
 
-  late ValueNotifier<SearchCustomerParamModel> sortModel = ValueNotifier(SearchCustomerParamModel(
-      name: '',
-      customerStatus: status??'',
-      createdDate: '',
-      isImportant: '',
-      trailDate: '')) ;
+  late ValueNotifier<SearchCustomerParamModel> sortModel = ValueNotifier(
+      SearchCustomerParamModel(
+          name: '',
+          customerStatus: status ?? '',
+          createdDate: '',
+          isImportant: '',
+          trailDate: ''));
 
-  Map<String, dynamic> get _params => {
+  Map<String, dynamic> get _params =>
+      {
         'name': sortModel.value.name,
         'status': sortModel.value.status,
         'important': sortModel.value.important,
@@ -85,13 +88,11 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
       ChooseItem(name: '最近跟进'),
       ChooseItem(name: '最近注册'),
     ];
-
   }
 
 
-
   List<Widget> get listWidgets =>
-       [
+      [
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -101,7 +102,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
           child: ScreenWidget(
             pickString: sort,
             childAspectRatio: 144 / 56,
-            callback: (String item,int value) {
+            callback: (String item, int value) {
               sort = item;
               if (kDebugMode) {
                 print(sort);
@@ -177,11 +178,24 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                         order: sort.isEmpty
                             ? null
                             : (CustomerMap.customerSortString
-                                    .getKeyFromValue(sort) as CustomerSort)
-                                .name
-                                .toString()
-                                .toSnake,
+                            .getKeyFromValue(sort) as CustomerSort)
+                            .name
+                            .toString()
+                            .toSnake,
                         searchParams: _params);
+
+                    _list = [
+                      const CustomerListModel(gender: 1,
+                          createdAt: 2,
+                          brokerName: '111',
+                          trailCreatedAt: 3,
+                          nickname: '111',
+                          trailContent: '111',
+                          id: 1,
+                          isImportant: 1),
+                    ];
+
+
                     _onLoad = false;
 
                     setState(() {});
@@ -193,7 +207,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                       'page': _page,
                       'size': 10,
                       'order': (CustomerMap.customerSortString
-                              .getKeyFromValue(sort) as CustomerSort)
+                          .getKeyFromValue(sort) as CustomerSort)
                           .name
                           .toString()
                           .toSnake,
@@ -212,10 +226,13 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                     SliverToBoxAdapter(
                       child: 80.hb,
                     ),
-                    _onLoad? SliverToBoxAdapter(
+                    _onLoad ? SliverToBoxAdapter(
                       child: 0.hb,
-                    ):
-                    _list.isEmpty? const SliverToBoxAdapter(child: NoDataWidget(text: '暂无相关车辆信息',paddingTop: 300,)): SliverPadding(
+                    ) :
+                    _list.isEmpty
+                        ? const SliverToBoxAdapter(
+                        child: NoDataWidget(text: '暂无相关车辆信息', paddingTop: 300,))
+                        : SliverPadding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 24.w, vertical: 20.w),
                       sliver:
@@ -250,7 +267,6 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
         setState(() {
 
         });
-
       },
       tips: '请输入客户名称',
       title: Container(
@@ -268,51 +284,53 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
 
   _getSortList() {
     return UserSortListPage(
-     onConfirm: () {
-       Get.back();
-       _refreshController.callRefresh();
-       setState(() {
+      onConfirm: () {
+        Get.back();
+        _refreshController.callRefresh();
+        setState(() {
 
-       });
-
-     }, pickSort: sortModel,
+        });
+      }, pickSort: sortModel,
     );
   }
 
   _getItem(CustomerListModel model) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
 
-        Get.to(() =>  UserInfoPage(customerId: model.id,));
+       bool isSuccess =  await Get.to(() => UserInfoPage(customerId: model.id, model: model,));
+       if(isSuccess){
+         _refreshController.callRefresh();
+       }
       },
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.w), color: kForeGroundColor),
         child: Stack(
           children: [
-            model.isImportant==1
+            model.isImportant == 1
                 ? Positioned(
-                    child: GestureDetector(
-                      onTap: () async{
-                        bool success = await CustomerFunc.cancelImportant(model.id);
-                        if(success){
-                          CloudToast.show('取消成功');
-                          _refreshController.callRefresh();
+              child: GestureDetector(
+                onTap: () async {
+                  bool success = await CustomerFunc.cancelImportant(model.id);
+                  if (success) {
+                    CloudToast.show('取消成功');
+                    _refreshController.callRefresh();
 
-                          setState(() {
+                    setState(() {
 
-                          });
-                        }
-                      },
-                      child: Image.asset(
-                        Assets.images.importantUser.path,
-                        width: 130.w,
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                    right: 0,
-                    top: 0,
-                  )
+                    });
+                  }
+                },
+                child: Image.asset(
+                  Assets.images.importantUser.path,
+                  width: 130.w,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              right: 0,
+              top: 0,
+            )
                 : const SizedBox(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -321,42 +339,43 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                 Row(
                   children: [
                     36.wb,
+
                     Image.asset(
-                      Assets.icons.icUser.path,
+                      model.gender==0? Assets.icons.icUser.path:Assets.icons.icUserWoman.path,
                       width: 32.w,
                       height: 32.w,
                     ),
                     5.wb,
                     Text(
-                      '李四',
+                      model.nickname,
                       style: TextStyle(
                           fontSize: 32.sp,
                           color: BaseStyle.color333333,
                           fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
-                    model.isImportant==1
+                    model.isImportant == 1
                         ? const SizedBox()
                         : GestureDetector(
-                            onTap: ()async {
-                              bool success = await CustomerFunc.setImportant(model.id);
-                              if(success){
-                                CloudToast.show('设置成功');
-                                _refreshController.callRefresh();
-                                setState(() {
+                      onTap: () async {
+                        bool success = await CustomerFunc.setImportant(
+                            model.id);
+                        if (success) {
+                          CloudToast.show('设置成功');
+                          _refreshController.callRefresh();
+                          setState(() {
 
-                                });
-                              }
-
-                            },
-                            child: Text(
-                              '设为重要',
-                              style: TextStyle(
-                                fontSize: 24.sp,
-                                color: BaseStyle.color999999,
-                              ),
-                            ),
-                          ),
+                          });
+                        }
+                      },
+                      child: Text(
+                        '设为重要',
+                        style: TextStyle(
+                          fontSize: 24.sp,
+                          color: BaseStyle.color999999,
+                        ),
+                      ),
+                    ),
                     24.wb,
                   ],
                 ),
@@ -368,13 +387,13 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         16.hb,
-                        _getText('最近跟进',  model.trailContent  ),
+                        _getText('最近跟进', model.trailContent),
                         16.hb,
                         _getText('跟进时间', DateUtil.formatDateMs(
                             model.trailCreatedAt.toInt() * 1000,
                             format: 'yyyy-MM-dd HH-mm-ss'),),
-                        16.hb,
-                        _getText('客户来源', '微信小程序'),
+                        // 16.hb,
+                        // _getText('客户来源', '微信小程序'),
                         16.hb,
                         _getText('注册时间', DateUtil.formatDateMs(
                             model.createdAt.toInt() * 1000,

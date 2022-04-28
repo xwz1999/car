@@ -110,6 +110,28 @@ class CarFunc {
     }
   }
 
+
+
+  ///快速估价
+  static Future<String> getQuickAmount(CarInfo carModel) async {
+    BaseModel model = await apiClient.request(API.car.fastEstimatePrice, data: {
+      'modelId': carModel.modelId,
+      'licensePlate': carModel.licensePlate,
+      'color': carModel.color,
+      'licensingDate': carModel.licensingDate,
+      'Mileage': carModel.mileage,
+    });
+    if (model.code == 0) {
+      return model.data['price'];
+    } else {
+      CloudToast.show(model.msg);
+      return '';
+    }
+  }
+
+
+
+
   ///估算价格
   static Future<String> getEstimatePrice(CarInfo carInfo) async {
     BaseModel model = await apiClient.request(API.car.estimatePrice, data: {

@@ -18,6 +18,10 @@ class _Car {
   ///估算价格
   String get estimatePrice => '/car/price/estimate';
 
+
+  ///快速估算价格
+  String get fastEstimatePrice => '/car/price/fast/estimate';
+
   ///费用计算
   String get priceAmount => '/car/price/amount';
 
@@ -29,6 +33,8 @@ class _Car {
 
   ///车辆信息
   String get getCarIfo => '/car/self';
+
+
 }
 
 class _Collect {

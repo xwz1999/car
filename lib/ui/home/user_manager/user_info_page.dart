@@ -1,16 +1,26 @@
+import 'package:cloud_car/model/customer/customer_detail_model.dart';
+import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
+import 'package:cloud_car/ui/home/func/customer_func.dart';
+import 'package:cloud_car/ui/home/user_manager/customers_browse_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/alert.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:flustars/flustars.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../../utils/user_tool.dart';
+import 'customers_trajectory_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserInfoPage extends StatefulWidget {
   final int customerId;
+  final CustomerListModel model;
+
   const UserInfoPage({
-    Key? key, required this.customerId,
+    Key? key,
+    required this.customerId,
+    required this.model,
   }) : super(key: key);
 
   @override
@@ -20,13 +30,24 @@ class UserInfoPage extends StatefulWidget {
 class _UserInfoPageState extends State<UserInfoPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  bool _isImportant = false;
+  int _isImportant = 2;
+  late CustomerDetailModel detailModel = CustomerDetailModel.empty();
 
   @override
   void initState() {
-    _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
+    _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
+    _isImportant = widget.model.isImportant;
+
+    Future.delayed(const Duration(milliseconds: 0), () {
+      _refresh();
+    });
 
     super.initState();
+  }
+
+  _refresh() async {
+    detailModel = await CustomerFunc.getCustomerDetailModel(widget.customerId);
+    setState(() {});
   }
 
   @override
@@ -62,15 +83,33 @@ class _UserInfoPageState extends State<UserInfoPage>
                     height: kToolbarHeight + MediaQuery.of(context).padding.top,
                     child: Row(
                       children: [
-                        const CloudBackButton(),
+                        IconButton(
+                          onPressed: () {
+                            Get.back(result: true);
+                          },
+                          icon: const Icon(
+                            CupertinoIcons.chevron_back,
+                            color: Color(0xFF111111),
+                          ),
+                        ),
                         30.wb,
-                        const Text('李四'),
+                        Text(
+                          widget.model.nickname,
+                          style: TextStyle(
+                              color: const Color(0xFF111111), fontSize: 36.w),
+                        ),
                         const Spacer(),
-                        _isImportant
+                        _isImportant == 1
                             ? GestureDetector(
-                                onTap: () {
-                                  _isImportant = false;
-                                  setState(() {});
+                                onTap: () async {
+                                  bool success =
+                                      await CustomerFunc.cancelImportant(
+                                          widget.customerId);
+                                  if (success) {
+                                    _isImportant = 2;
+                                    CloudToast.show('取消成功');
+                                    setState(() {});
+                                  }
                                 },
                                 child: Image.asset(
                                   Assets.images.importantUser.path,
@@ -79,9 +118,15 @@ class _UserInfoPageState extends State<UserInfoPage>
                                 ),
                               )
                             : GestureDetector(
-                                onTap: () {
-                                  _isImportant = true;
-                                  setState(() {});
+                                onTap: () async {
+                                  bool success =
+                                      await CustomerFunc.setImportant(
+                                          widget.customerId);
+                                  if (success) {
+                                    _isImportant = 1;
+                                    CloudToast.show('设置成功');
+                                    setState(() {});
+                                  }
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 32.w),
@@ -137,19 +182,28 @@ class _UserInfoPageState extends State<UserInfoPage>
                                       fontWeight: FontWeight.bold),
                                 ),
                                 16.hb,
-                                _getText('手机号', '11209381209380'),
+                                _getText('手机号', detailModel.mobile),
+                                // 16.hb,
+                                // _getText('微信号', detailModel.),
                                 16.hb,
-                                _getText('微信号', '1122133'),
+                                _getText(
+                                    '跟进时间',
+                                    DateUtil.formatDateMs(
+                                        detailModel.trailCreatedAt.toInt() *
+                                            1000,
+                                        format: 'yyyy-MM-dd HH-mm-ss')),
+                                // 16.hb,
+                                // _getText('客户来源', '微信小程序'),
                                 16.hb,
-                                _getText('跟进时间', '2021-01-01 12：22：00'),
-                                16.hb,
-                                _getText('客户来源', '微信小程序'),
-                                16.hb,
-                                _getText('注册时间', '2021-01-01 12：22：00'),
+                                _getText(
+                                    '注册时间',
+                                    DateUtil.formatDateMs(
+                                        detailModel.createdAt.toInt() * 1000,
+                                        format: 'yyyy-MM-dd HH-mm-ss')),
                                 16.hb,
                                 _getText(
                                   '销售',
-                                  UserTool.userProvider.userInfo.nickname,
+                                  detailModel.brokerName,
                                 ),
                               ],
                             ),
@@ -186,7 +240,6 @@ class _UserInfoPageState extends State<UserInfoPage>
                           tabs: [
                             _tab(0, '浏览车辆'),
                             _tab(1, '客户轨迹'),
-                            _tab(2, '相关资料')
                           ]),
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -202,64 +255,11 @@ class _UserInfoPageState extends State<UserInfoPage>
             child: TabBarView(
               controller: _tabController,
               children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        index == 0
-                            ? Container(
-                                width: double.infinity,
-                                height: 40.w,
-                                color: Colors.white,
-                              )
-                            : const SizedBox(),
-                        _getListItem(index, index < 2),
-                      ],
-                    );
-                  },
-                  itemCount: 5,
+                CustomersBrowsePage(
+                  customerId: widget.customerId,
                 ),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        index == 0
-                            ? Container(
-                                width: double.infinity,
-                                height: 40.w,
-                                color: Colors.white,
-                              )
-                            : const SizedBox(),
-                        _getListItem(index, index < 2),
-                      ],
-                    );
-                  },
-                  itemCount: 5,
-                ),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        index == 0
-                            ? Container(
-                                width: double.infinity,
-                                height: 40.w,
-                                color: Colors.white,
-                              )
-                            : const SizedBox(),
-                        _getListItem(index, index < 2),
-                      ],
-                    );
-                  },
-                  itemCount: 5,
+                CustomersTrajectoryPage(
+                  customerId: widget.customerId,
                 ),
               ],
             ),
@@ -285,7 +285,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                                 fontSize: BaseStyle.fontSize28),
                             children: [
                               TextSpan(
-                                text: '[1289038123093]',
+                                text: detailModel.mobile,
                                 style: TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: BaseStyle.fontSize28),
@@ -304,24 +304,29 @@ class _UserInfoPageState extends State<UserInfoPage>
                       },
                       deleteListener: () {
                         Alert.dismiss(context);
+                        launch("tel:${detailModel.mobile}");
                       },
                       title: '呼出提示',
                       deleteItem: '确定',
                     ));
               })),
-              Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
+              // Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
-                  child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
-                Get.to(() => const InviteDetailPage(
-                      id: 1,
-                      phone: '',
-                      name: '',
-                    ));
-              })),
+                child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
+                  Get.to(
+                    () => InviteDetailPage(
+                      id: detailModel.id,
+                      phone: detailModel.mobile,
+                      name: detailModel.nickname,
+                    ),
+                  );
+                }),
+              ),
               Expanded(
-                  child: _getBottom(Assets.icons.icContract.path, '发起合同', () {
-                Get.to(() => const InitiateContractPage());
-              })),
+                child: _getBottom(Assets.icons.icContract.path, '发起合同', () {
+                  Get.to(() => const InitiateContractPage());
+                }),
+              ),
             ],
           ),
         ));
