@@ -18,6 +18,20 @@ class UserInfoModel {
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);
 
+  static UserInfoModel get fail => UserInfoModel(
+      inviteCode: '',
+      nickname: '',
+      headImg: '',
+      level: 0,
+      phone: '',
+      gender: 0,
+      data: const ExtraData(
+        assessCount: 0,
+        inviteCount: 0,
+        balance: '',
+      ),
+      store: const StoreInfo(storeName: '', roleName: ''));
+
   Map<int, String> get levelMap => {
         1: '基础用户',
         2: '独立合伙人',
@@ -25,10 +39,10 @@ class UserInfoModel {
       };
 
   Map<int, String> get genderMap => {
-    1: '男',
-    2: '女',
-    0: '未知',
-  };
+        1: '男',
+        2: '女',
+        0: '未知',
+      };
 
 //<editor-fold desc="Data Methods">
 

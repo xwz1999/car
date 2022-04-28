@@ -128,7 +128,7 @@ class _AllCarState extends State<AllCar> {
             color: kForeGroundColor),
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(pickString: '',
-          callback: (String item) {
+          callback: (String item,int value) {
             if (kDebugMode) {
               print(item + '1231232');
             }
@@ -149,7 +149,7 @@ class _AllCarState extends State<AllCar> {
         clipBehavior: Clip.antiAlias,
         child: ScreenWidget(pickString: '',
           childAspectRatio: 144 / 56,
-          callback: (String item) {},
+          callback: (String item,int value) {},
           mainAxisSpacing: 10.w,
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,

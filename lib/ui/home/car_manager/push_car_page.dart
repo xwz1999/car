@@ -260,6 +260,9 @@ class _PushCarPageState extends State<PushCarPage> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
+                                if (!canTap) {
+                                  return;
+                                }
                                 Get.to(() => EvainfoPage(
                                       publishCarInfo: _publishCarInfo,
                                     ));
@@ -291,65 +294,35 @@ class _PushCarPageState extends State<PushCarPage> {
   Container _rewardWidget() {
     var vinum = _textarea(
         '车架号',
-        _publishCarInfo.viNum!,
         '请输入车架号',
+        _publishCarInfo.viNum!,
         _viNumController,
         (text) => setState(() {
               _publishCarInfo.viNum = _viNumController.text;
             }));
     var carnum = _textarea(
         '车牌号',
-        _publishCarInfo.carNum!,
         '请输入车牌号',
+        _publishCarInfo.carNum!,
         _carNumController,
         (text) => setState(() {
               _publishCarInfo.carNum = _carNumController.text;
             }));
     var version = _textarea(
         '发动机号',
-        _publishCarInfo.engineNum!,
         '请输入发动机号',
+        _publishCarInfo.engineNum!,
         _engineController,
         (text) => setState(() {
               _publishCarInfo.engineNum = _engineController.text;
             }));
-    var mile = Container(
-      color: Colors.transparent,
-      child: Row(
-        children: [
-          '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
-          10.wb,
-          SizedBox(
-            width: 170.w,
-            child: '表显里程'
-                .text
-                .size(30.sp)
-                .color(Colors.black.withOpacity(0.45))
-                .make(),
-          ),
-          Expanded(
-            child: TextField(
-              textAlign: TextAlign.start,
-              onChanged: (text) => setState(() {
-                _publishCarInfo.mileage = _mileController.text;
-              }),
-              autofocus: false,
-              controller: _mileController,
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.zero,
-                  isDense: true,
-                  border: InputBorder.none,
-                  hintText: '请输入行驶里程',
-                  hintStyle: TextStyle(
-                    fontSize: 30.sp,
-                    color: Colors.black.withOpacity(0.25),
-                  )),
-            ),
-          ),
-          24.wb,
-          '万公里'.text.size(30.sp).color(Colors.black.withOpacity(0.8)).make(),
-        ],
-      ),
+    var mile = EditItemWidget(
+      topIcon: true,
+      title: '表现里程',
+      value: '',
+      canChange: true,
+      callback: (String content) {_publishCarInfo.mileage = content;},
+      endText: '万公里',
     );
 
     return Container(
@@ -406,7 +379,7 @@ class _PushCarPageState extends State<PushCarPage> {
                   return CarListPicker(
                     carString: _publishCarInfo.carColor ?? '',
                     items: colorList,
-                    callback: (String content) {
+                    callback: (String content, int value) {
                       Get.back();
                       _publishCarInfo.carColor = content;
                       setState(() {});
@@ -419,7 +392,6 @@ class _PushCarPageState extends State<PushCarPage> {
             _publishCarInfo.carColor,
             '请输入车身颜色',
           ),
-          20.heightBox,
           mile,
           _function(
             '车辆来源',
@@ -434,7 +406,7 @@ class _PushCarPageState extends State<PushCarPage> {
                     isGrid: false,
                     carString: _publishCarInfo.carSource ?? '',
                     items: typeList,
-                    callback: (String content) {
+                    callback: (String content, int value) {
                       Get.back();
                       _publishCarInfo.carSource = content;
                       setState(() {});
@@ -474,20 +446,58 @@ class _PushCarPageState extends State<PushCarPage> {
               autofocus: false,
               controller: _contentController,
               decoration: InputDecoration(
-                  contentPadding: EdgeInsets.zero,
-                  isDense: true,
-                  border: InputBorder.none,
-                  hintText: hint,
-                  hintStyle: TextStyle(
-                    fontSize: 30.sp,
-                    color: Colors.black.withOpacity(0.25),
-                  )),
+                contentPadding: EdgeInsets.zero,
+                isDense: true,
+                border: InputBorder.none,
+                hintText: hint,
+                hintStyle: const TextStyle(
+                    color: Color(0xFFcccccc),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+              ),
             ),
           ),
           24.wb,
         ],
       ),
     );
+  }
+
+  bool get canTap {
+    if (_publishCarInfo.viNum.isEmptyOrNull) {
+      BotToast.showText(text: '请输入车架号');
+      return false;
+    }
+    if (_publishCarInfo.carName.isEmptyOrNull) {
+      BotToast.showText(text: '请选择车型');
+      return false;
+    }
+    if (_publishCarInfo.licensingDate.isEmptyOrNull) {
+      BotToast.showText(text: '请选择首次上牌时间');
+      return false;
+    }
+    if (_publishCarInfo.carNum.isEmptyOrNull) {
+      BotToast.showText(text: '请输入车牌号');
+      return false;
+    }
+
+    if (_publishCarInfo.engineNum.isEmptyOrNull) {
+      BotToast.showText(text: '请输入发动机号');
+      return false;
+    }
+    if (_publishCarInfo.carColor.isEmptyOrNull) {
+      BotToast.showText(text: '请选择车身颜色');
+      return false;
+    }
+    if (_publishCarInfo.mileage.isEmptyOrNull) {
+      BotToast.showText(text: '请输入行驶里程');
+      return false;
+    }
+    if (_publishCarInfo.carSource.isEmptyOrNull) {
+      BotToast.showText(text: '请选择车辆来源');
+      return false;
+    }
+    return true;
   }
 
   _function(
