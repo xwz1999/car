@@ -51,7 +51,7 @@ class _DirectSalePageState extends State<DirectSalePage> {
         child: ScreenWidget(
           pickString: '',
           childAspectRatio: 144 / 56,
-          callback: (String item) {
+          callback: (String item,int value) {
             if (kDebugMode) {
               print(item);
             }

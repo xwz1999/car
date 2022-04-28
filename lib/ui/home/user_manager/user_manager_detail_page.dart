@@ -101,7 +101,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
           child: ScreenWidget(
             pickString: sort,
             childAspectRatio: 144 / 56,
-            callback: (String item) {
+            callback: (String item,int value) {
               sort = item;
               if (kDebugMode) {
                 print(sort);

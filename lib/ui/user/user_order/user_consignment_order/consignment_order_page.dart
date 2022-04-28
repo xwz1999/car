@@ -46,7 +46,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
         child: ScreenWidget(
           pickString: '',
           childAspectRatio: 200 / 56,
-          callback: (String item) {
+          callback: (String item,int value) {
             if (kDebugMode) {
               print(item);
             }

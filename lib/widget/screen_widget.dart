@@ -3,7 +3,7 @@ import 'package:cloud_car/widget/sort_widget.dart';
 
 import 'package:flutter/material.dart';
 
-typedef ItemCallback = Function(String item);
+typedef ItemCallback = Function(String item,int num);
 
 class ScreenWidget extends StatefulWidget {
   final List<ChooseItem> itemList;
@@ -59,7 +59,7 @@ class _ScreenWidgetState extends State<ScreenWidget> {
         crossAxisCount: widget.crossAxisCount,
         mainAxisSpacing: widget.mainAxisSpacing,
         callback: (ChooseItem item, int index) {
-          widget.callback(item.name);
+          widget.callback(item.name,index);
         },
         pickString: widget.pickString,
       ),

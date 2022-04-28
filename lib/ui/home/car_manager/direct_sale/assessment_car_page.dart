@@ -50,7 +50,7 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> {
          clipBehavior: Clip.antiAlias,
          child: ScreenWidget(
            childAspectRatio: 144 / 56,
-           callback: (String item) {
+           callback: (String item,int value) {
              if (kDebugMode) {
                print(item);
              }

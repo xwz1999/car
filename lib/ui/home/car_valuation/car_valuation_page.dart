@@ -305,7 +305,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
                   builder: (context) {
                     return CarListPicker(
                       items: colorList,
-                      callback: (String content) {
+                      callback: (String content,int value) {
                         Get.back();
                         _carInfo.color = content;
                         setState(() {});

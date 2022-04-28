@@ -1,7 +1,10 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/home/car_manager/check_pushcar_page.dart';
 import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
 
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/putup_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -11,6 +14,7 @@ import '../../../widget/picker/car_list_picker.dart';
 
 import '../../../widget/sort_widget.dart';
 
+import '../car_valuation/car_valuation_page.dart';
 import 'direct_sale/edit_item_widget.dart';
 
 class EvainfoPage extends StatefulWidget {
@@ -26,6 +30,7 @@ class EvainfoPage extends StatefulWidget {
 }
 
 class _EvainfoPageState extends State<EvainfoPage> {
+  final CarInfo _carInfo = CarInfo();
   String? _transfer = ''; //过户次数
   String? _paint = ''; //油漆面
   String? _metal = ''; //钣金面
@@ -107,6 +112,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
 
   @override
   void initState() {
+    BotToast.showText(text: '请选择选项内容');
     super.initState();
   }
 
@@ -140,10 +146,11 @@ class _EvainfoPageState extends State<EvainfoPage> {
         child: ListView(
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: EdgeInsets.all(30.w),
-                  child: widget.publishCarInfo.carNum!.text
+                  child: widget.publishCarInfo.carName!.text
                       .size(32.sp)
                       .bold
                       .color(Colors.black)
@@ -243,9 +250,11 @@ class _EvainfoPageState extends State<EvainfoPage> {
                               return CarListPicker(
                                 carString: _transfer ?? '',
                                 items: transferList,
-                                callback: (String content) {
+                                callback: (String content,int value) {
                                   Get.back();
                                   _transfer = content;
+                                  _carInfo.transfer=value;
+                                  BotToast.showText(text: value.toString());
                                   setState(() {});
                                 },
                                 title: '过户次数',
@@ -268,9 +277,10 @@ class _EvainfoPageState extends State<EvainfoPage> {
                               return CarListPicker(
                                 carString: _paint ?? '',
                                 items: paintList,
-                                callback: (String content) {
+                                callback: (String content,int value) {
                                   Get.back();
                                   _paint = content;
+                                  _carInfo.paint=value;
                                   setState(() {});
                                 },
                                 title: '油漆面修复',
@@ -293,9 +303,10 @@ class _EvainfoPageState extends State<EvainfoPage> {
                               return CarListPicker(
                                 carString: _metal ?? '',
                                 items: paintList,
-                                callback: (String content) {
+                                callback: (String content,int value) {
                                   Get.back();
                                   _metal = content;
+                                  _carInfo.plate=value;
                                   setState(() {});
                                 },
                                 title: '钣金面修复',
@@ -319,9 +330,10 @@ class _EvainfoPageState extends State<EvainfoPage> {
                                 isGrid: false,
                                 carString: _replace ?? '',
                                 items: replaceList,
-                                callback: (String content) {
+                                callback: (String content,int value) {
                                   Get.back();
                                   _replace = content;
+
                                   setState(() {});
                                 },
                                 title: '更换件情况',
@@ -345,7 +357,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                                 isGrid: false,
                                 carString: _transmission ?? '',
                                 items: fixList,
-                                callback: (String content) {
+                                callback: (String content,int value) {
                                   Get.back();
                                   _transmission = content;
                                   setState(() {});
@@ -371,7 +383,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                                 isGrid: false,
                                 carString: _accident ?? '',
                                 items: accidentList,
-                                callback: (String content) {
+                                callback: (String content,int value) {
                                   Get.back();
                                   _accident = content;
                                   setState(() {});
@@ -396,7 +408,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                                 isGrid: false,
                                 carString: _maintain ?? '',
                                 items: maintainList,
-                                callback: (String content) {
+                                callback: (String content,int value) {
                                   Get.back();
                                   _maintain = content;
                                   setState(() {});
@@ -466,7 +478,7 @@ class _EvainfoPageState extends State<EvainfoPage> {
                                 isGrid: false,
                                 carString: _trueMeters ?? '',
                                 items: maintainList,
-                                callback: (String content) {
+                                callback: (String content,int value) {
                                   Get.back();
                                   _trueMeters = content;
                                   setState(() {});
@@ -531,7 +543,8 @@ class _EvainfoPageState extends State<EvainfoPage> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async{
+                      var list = await CarFunc.getEstimatePrice(_carInfo);
                       Get.to(() =>
                           CheckPushPage(publishCarInfo: widget.publishCarInfo));
                     },
@@ -577,3 +590,4 @@ class _EvainfoPageState extends State<EvainfoPage> {
     );
   }
 }
+
