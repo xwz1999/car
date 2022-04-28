@@ -8,7 +8,7 @@ part 'car_api.dart';
 /// * data 基础数据接口
 /// * product 产品接口
 class API {
-  static const tokenKey = 'ansuex-user-token';
+  static const tokenKey = 'Broker-Token';
 
   ///HOST
   static String get host {

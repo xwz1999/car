@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
         print(_result);
       }
       if (event.code == 6000) {
-        UserTool.userProvider.setToken(event.message);
+       await UserTool.userProvider.setToken(event.message);
         Get.offAll(() => const TabNavigator());
       } else {
         CloudToast.show(JverifyErrorCode.getmsg(event.code));
@@ -216,8 +216,6 @@ class _LoginPageState extends State<LoginPage> {
                         CloudToast.show('当前网络不支持认证');
                       }
                       cancel();
-                      Get.to(() => const TabNavigator());
-                      await UserTool.userProvider.updateUserInfo();
                     },
                     elevation: 0,
                     height: 72.w,

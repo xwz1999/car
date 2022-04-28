@@ -41,7 +41,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
   }
 
   _refresh() async {
-    _individualList = (await OrderFunc.getConsignmentInfo(widget.id))!;
+    // _individualList = (await OrderFunc.getConsignmentInfo(widget.id))!;
   }
 
   @override
