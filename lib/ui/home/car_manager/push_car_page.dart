@@ -319,7 +319,7 @@ class _PushCarPageState extends State<PushCarPage> {
     var mile = EditItemWidget(
       topIcon: true,
       title: '表现里程',
-      value: '',
+      value: _publishCarInfo.mileage.toString(),
       canChange: true,
       callback: (String content) {_publishCarInfo.mileage = content;},
       endText: '万公里',
