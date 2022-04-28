@@ -79,6 +79,9 @@ class ScreenControl {
     rotateState = rotateState.map((e) => false).toList();
   }
 
+  void disPose(){
+    animateController.dispose();
+  }
 }
 
 

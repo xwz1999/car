@@ -148,6 +148,7 @@ class _ShareHomePageState extends State<ShareHomePage>
     _tabController.dispose();
     _allRefreshController.dispose();
     _myRefreshController.dispose();
+    screenControl.disPose();
     super.dispose();
   }
 
