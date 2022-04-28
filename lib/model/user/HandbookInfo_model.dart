@@ -1,17 +1,18 @@
+// ignore_for_file: file_names
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 part 'HandbookInfo_model.g.dart';
 
-
 @JsonSerializable()
-class HandbookInfoModel extends Equatable{
+class HandbookInfoModel extends Equatable {
   final int id;
   final String name;
   final String content;
   final int createdAt;
   final int updateAt;
-    factory HandbookInfoModel.fromJson(Map<String, dynamic> json) =>_$HandbookInfoModelFromJson(json);
-
+  factory HandbookInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$HandbookInfoModelFromJson(json);
 
   const HandbookInfoModel({
     required this.id,
@@ -21,5 +22,5 @@ class HandbookInfoModel extends Equatable{
     required this.updateAt,
   });
   @override
-  List<Object?> get props => [id,name,content,createdAt,updateAt];
+  List<Object?> get props => [id, name, content, createdAt, updateAt];
 }

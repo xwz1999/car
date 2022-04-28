@@ -7,6 +7,7 @@ import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -145,9 +146,11 @@ class _PushCarPageState extends State<PushCarPage> {
                                       ),
                                     ).paddingOnly(top: 10.w),
                                     20.wb,
-                                    const Text(
-                                      '49',
-                                      style: TextStyle(
+                                    Text(
+                                      (UserTool.userProvider.userInfo.data
+                                              .assessCount)
+                                          .toString(),
+                                      style: const TextStyle(
                                         fontSize: 30,
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,

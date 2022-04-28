@@ -4,6 +4,8 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart';
+import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_rejected.dart';
+import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_signed.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
@@ -142,41 +144,60 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
       child: GestureDetector(
         onTap: () {
-          // switch (item.status) {
-          //   case 1:
-          //     Get.to(() => const ConsignmentSigned(
-          //           stat: '待签订',
-          //         ));
-          //     break;
-          //   case 2:
-          //     Get.to(() => const ConsignmentSigned(
-          //           stat: '待发布',
-          //         ));
-          //     break;
-          //   case 3:
-          //     Get.to(() => const ConsignmentSigned(
-          //           stat: '审核中',
-          //         ));
-          //     break;
-          //   case 4:
-          //     Get.to(() => const ConsignmentRejected());
-          //     break;
-          //   case 5:
-          //     Get.to(() => const ConsignmentSigned(
-          //           stat: '在售',
-          //         ));
-          //     break;
-          //   case 6:
-          //     Get.to(() => const ConsignmentSigned(
-          //           stat: '已售',
-          //         ));
-          //     break;
-          //   case 8:
-          //     Get.to(() => const ConsignmentSigned(
-          //           stat: '交易取消',
-          //         ));
-          //     break;
-          // }
+          switch (model.status) {
+            case 1:
+              Get.to(() => ConsignmentSigned(
+                    stat: '待签订',
+                    statusNum: _getStatusNum(model.status),
+                    id: model.id,
+                  ));
+              break;
+            case 2:
+              Get.to(() => ConsignmentSigned(
+                    id: model.id,
+                    stat: '待发布',
+                    statusNum: _getStatusNum(model.status),
+                  ));
+              break;
+            case 3:
+              Get.to(() => ConsignmentSigned(
+                    id: model.id,
+                    stat: '审核中',
+                    statusNum: _getStatusNum(model.status),
+                  ));
+              break;
+            // case 4:
+            //   Get.to(() => const ConsignmentRejected());
+            //   break;
+            case 4:
+              Get.to(() => ConsignmentSigned(
+                    id: model.id,
+                    stat: '在售',
+                    statusNum: _getStatusNum(model.status),
+                  ));
+              break;
+            case 5:
+              Get.to(() => ConsignmentSigned(
+                    id: model.id,
+                    stat: '已售',
+                    statusNum: _getStatusNum(model.status),
+                  ));
+              break;
+            case 7:
+              Get.to(() => ConsignmentSigned(
+                    id: model.id,
+                    stat: '成交',
+                    statusNum: _getStatusNum(model.status),
+                  ));
+              break;
+            case 0:
+              Get.to(() => ConsignmentSigned(
+                    id: model.id,
+                    stat: '交易取消',
+                    statusNum: _getStatusNum(model.status),
+                  ));
+              break;
+          }
         },
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
@@ -485,4 +506,41 @@ _getStatusText(int num) {
       break;
   }
 }
-///
+
+///状态表示进度
+_getStatusNum(int num) {
+  switch (num) {
+    case 0:
+      return 4;
+      // ignore: dead_code
+      break;
+    case 1:
+      return 1;
+      // ignore: dead_code
+      break;
+    case 2:
+      return 2;
+      // ignore: dead_code
+      break;
+    case 3:
+      return 3;
+      // ignore: dead_code
+      break;
+    case 4:
+      return 3;
+      // ignore: dead_code
+      break;
+    case 5:
+      return 4;
+      // ignore: dead_code
+      break;
+    case 6:
+      return 5;
+      // ignore: dead_code
+      break;
+    case 7:
+      return 6;
+      // ignore: dead_code
+      break;
+  }
+}

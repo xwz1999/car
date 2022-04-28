@@ -46,10 +46,11 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
                   height: 120.w,
                   color: Colors.white,
+                  //padding: e,
                   child: ProgressBar(
                     length: 6,
                     num: 3,
-                    direction: 'qw',
+                    direction: false,
                     HW: 96,
                     texts: [
                       text('预定'),

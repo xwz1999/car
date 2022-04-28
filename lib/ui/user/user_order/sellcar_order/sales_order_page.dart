@@ -328,10 +328,12 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                     judge: false,
                     orderId: model.id,
                     status: _getText(model.status),
+                    statusNum: _getStatusNum(model.status),
                   ));
               break;
             case '已预定':
               Get.to(() => Reservation(
+                    statusNum: _getStatusNum(model.status),
                     orderId: model.id,
                     status: _getText(model.status),
                     judge: true,
@@ -339,6 +341,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
               break;
             case '待检测':
               Get.to(() => Reservation(
+                    statusNum: _getStatusNum(model.status),
                     status: _getText(model.status),
                     judge: true,
                     orderId: model.id,
@@ -348,6 +351,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
               switch (_getTextStatus(model.status)) {
                 case '需付首付':
                   Get.to(() => Reservation(
+                        statusNum: _getStatusNum(model.status),
                         status: _getText(model.status),
                         judge: false,
                         orderId: model.id,
@@ -355,6 +359,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                   break;
                 case '已付首付':
                   Get.to(() => Reservation(
+                        statusNum: _getStatusNum(model.status),
                         status: _getText(model.status),
                         judge: true,
                         orderId: model.id,
@@ -364,6 +369,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
               break;
             case '待过户':
               Get.to(() => Reservation(
+                    statusNum: _getStatusNum(model.status),
                     status: _getText(model.status),
                     judge: true,
                     orderId: model.id,
@@ -373,6 +379,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
               switch (_getTextStatus(model.status)) {
                 case '需付尾款':
                   Get.to(() => Reservation(
+                        statusNum: _getStatusNum(5),
                         orderId: model.id,
                         judge: false,
                         status: _getText(model.status),
@@ -380,6 +387,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                   break;
                 case '已付尾款':
                   Get.to(() => Reservation(
+                        statusNum: _getStatusNum(5),
                         status: _getText(model.status),
                         judge: true,
                         orderId: model.id,
@@ -390,6 +398,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
             case '交易完成':
               Get.to(() => MakeDealData(
                     id: model.id,
+                    statusNum: _getStatusNum(model.status),
                   ));
               break;
             case '交易取消':
@@ -846,6 +855,60 @@ _getBottonText(int num) {
       break;
     case 40:
       return '成交订单';
+      // ignore: dead_code
+      break;
+  }
+}
+
+///状态数值
+_getStatusNum(int num) {
+  switch (num) {
+    case 0:
+      return 3;
+      // ignore: dead_code
+      break;
+    case 1:
+      return 1;
+      // ignore: dead_code
+      break;
+    case 2:
+      return 2;
+      // ignore: dead_code
+      break;
+    case 10:
+      return 2;
+      // ignore: dead_code
+      break;
+    case 11:
+      return 2;
+      // ignore: dead_code
+      break;
+    case 20:
+      return 3;
+      // ignore: dead_code
+      break;
+    case 21:
+      return 3;
+      // ignore: dead_code
+      break;
+    case 30:
+      return 4;
+      // ignore: dead_code
+      break;
+    case 31:
+      return 4;
+      // ignore: dead_code
+      break;
+    case 40:
+      return 5;
+      // ignore: dead_code
+      break;
+    case 41:
+      return 5;
+      // ignore: dead_code
+      break;
+    case 50:
+      return 6;
       // ignore: dead_code
       break;
   }

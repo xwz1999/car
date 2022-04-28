@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
@@ -16,18 +18,17 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../constants/api/api.dart';
 
-
-typedef CarCallback = Function(String city,int carId);
+typedef CarCallback = Function(String city, int carId);
 
 ///单选
 class ChooseCarPage extends StatefulWidget {
   final String title;
   final CarCallback callback;
 
-
   const ChooseCarPage({
     Key? key,
-    required this.callback, required this.title,
+    required this.callback,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -42,8 +43,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
 
   String _search = '';
 
-  List<CarListModel> models = [
-  ];
+  List<CarListModel> models = [];
 
   late TextEditingController _editingController;
 
@@ -83,23 +83,23 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
           children: [
             _getAppbar() ?? const SizedBox(),
             Expanded(
-              child:
-              EasyRefresh(
+              child: EasyRefresh(
                 firstRefresh: true,
                 header: MaterialHeader(),
                 footer: MaterialFooter(),
                 controller: _easyRefreshController,
                 onRefresh: () async {
                   _page = 1;
-                  models = await CarFunc.getCarList(_page,10);
+                  models = await CarFunc.getCarList(_page, 10);
                   _onLoad = false;
                   setState(() {});
                 },
                 onLoad: () async {
                   _page++;
-                 // models = await CarFunc.getCarList(_page);
-                  BaseListModel baseList=   await apiClient
-                      .requestList(API.car.getCarLists, data: {'page': _page, 'size': 10});
+                  // models = await CarFunc.getCarList(_page);
+                  BaseListModel baseList = await apiClient.requestList(
+                      API.car.getCarLists,
+                      data: {'page': _page, 'size': 10});
 
                   if (baseList.nullSafetyTotal > models.length) {
                     models.addAll(baseList.nullSafetyList
@@ -110,19 +110,22 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
                   }
                   setState(() {});
                 },
-                child:
-
-                _onLoad?const SizedBox():
-                models.isEmpty?const NoDataWidget(text: '暂无相关车辆信息',paddingTop: 300,):
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.only(top: 32.w),
-                  itemBuilder: (BuildContext context, int index) {
-                    return _getItem(index, models[index]);
-                  },
-                  itemCount: models.length,
-                ),
+                child: _onLoad
+                    ? const SizedBox()
+                    : models.isEmpty
+                        ? const NoDataWidget(
+                            text: '暂无相关车辆信息',
+                            paddingTop: 300,
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.only(top: 32.w),
+                            itemBuilder: (BuildContext context, int index) {
+                              return _getItem(index, models[index]);
+                            },
+                            itemCount: models.length,
+                          ),
               ),
             ),
           ],
@@ -137,7 +140,8 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
               if (_selectIndex.isEmpty) {
                 BotToast.showText(text: '请先选择车辆');
               } else {
-                widget.callback(models[_selectIndex.first].modelName ,models[_selectIndex.first].id);
+                widget.callback(models[_selectIndex.first].modelName,
+                    models[_selectIndex.first].id);
                 Get.back();
               }
             },
@@ -165,20 +169,23 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
         ),
       ),
     );
-
   }
 
   _getAppbar() {
-    return SearchBarWidget(callback: (String text) {
-      _search  = text;
-    }, tips: '请输入车辆名称', title:Container(
-      alignment: Alignment.center,
-      child: Text(
-        widget.title,
-        style: TextStyle(
-            color: const Color(0xFF111111), fontSize: BaseStyle.fontSize36),
+    return SearchBarWidget(
+      callback: (String text) {
+        _search = text;
+      },
+      tips: '请输入车辆名称',
+      title: Container(
+        alignment: Alignment.center,
+        child: Text(
+          widget.title,
+          style: TextStyle(
+              color: const Color(0xFF111111), fontSize: BaseStyle.fontSize36),
+        ),
       ),
-    ),);
+    );
   }
 
   _getItem(int index, CarListModel model) {
@@ -225,17 +232,14 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
             ),
             Expanded(
               child: CarItemWidget(
-                widgetPadding:
-                EdgeInsets.symmetric(horizontal: 24.w),
+                widgetPadding: EdgeInsets.symmetric(horizontal: 24.w),
                 name: model.modelName,
-                time: DateUtil.formatDateMs(
-                    model.licensingDate.toInt() * 1000,
+                time: DateUtil.formatDateMs(model.licensingDate.toInt() * 1000,
                     format: 'yyyy年MM月'),
                 distance: model.mileage + '万公里',
                 // standard: '国六',
                 url: model.mainPhoto,
-                price:
-                NumUtil.divide(num.parse(model.price), 10000).toString(),
+                price: NumUtil.divide(num.parse(model.price), 10000).toString(),
               ),
             ),
           ],

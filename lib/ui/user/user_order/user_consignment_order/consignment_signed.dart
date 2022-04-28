@@ -1,7 +1,11 @@
 // ignore_for_file: dead_code
 
+import 'package:cloud_car/model/order/Individual_consignment_info_model.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/backup/consignment_audit.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
+import 'package:flustars/flustars.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,7 +14,11 @@ import '../../../../widget/button/cloud_back_button.dart';
 
 class ConsignmentSigned extends StatefulWidget {
   final String stat;
-  const ConsignmentSigned({Key? key, required this.stat}) : super(key: key);
+  final int statusNum;
+  final int id;
+  const ConsignmentSigned(
+      {Key? key, required this.stat, required this.statusNum, required this.id})
+      : super(key: key);
 
   @override
   State<ConsignmentSigned> createState() => _ConsignmentSignedState();
@@ -20,6 +28,22 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
   late String stat = widget.stat;
   late Widget methods;
   late bool bl = true;
+  // getConsignmentInfo
+  late IndividualConsignmentInfoModel _individualList;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+      setState(() {});
+    });
+  }
+
+  _refresh() async {
+    _individualList = (await OrderFunc.getConsignmentInfo(widget.id))!;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +72,8 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                 color: Colors.white,
                 child: ProgressBar(
                   length: 6,
-                  num: 3,
-                  direction: 'qw',
+                  num: widget.statusNum,
+                  direction: false,
                   HW: 96,
                   texts: [
                     text('预定'),
@@ -73,11 +97,11 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                   children: [
                     getTitle('客户信息'),
                     36.hb,
-                    _getText('客户姓名', '莉丝'),
+                    _getText('客户姓名', _individualList.customer.nickname),
                     36.hb,
                     _getText(
                       '手机号',
-                      '18912345432',
+                      _individualList.customer.mobile,
                     )
                   ],
                 ),
@@ -106,9 +130,8 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                             SizedBox(
                               width: 196.w,
                               height: 150.w,
-                              child: Image.asset(
-                                Assets.images.carBanner.path,
-                                fit: BoxFit.fill,
+                              child: CloudImageNetworkWidget.car(
+                                urls: [_individualList.car.mainPhoto],
                               ),
                             ),
                             20.wb,
@@ -117,14 +140,20 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('奥迪Q3 2020款 35 TFSI 进取型SUV',
+                                  Text(_individualList.car.modelName,
                                       style: TextStyle(
                                           fontSize: BaseStyle.fontSize28,
                                           color: BaseStyle.color111111)),
                                   32.hb,
                                   Padding(
                                     padding: EdgeInsets.only(right: 16.w),
-                                    child: getText('2020年10月', '20.43万公里'),
+                                    child: getText(
+                                        DateUtil.formatDateMs(
+                                            _individualList.car.licensingDate
+                                                    .toInt() *
+                                                1000,
+                                            format: 'yyyy年MM'),
+                                        '${_individualList.car.mileage}万公里'),
                                   )
                                 ],
                               ),
@@ -258,21 +287,21 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                           child: getTitle('出售信息'),
                         ),
                         36.hb,
-                        _getText('购车客户', '李四'),
+                        _getText('购车客户', _individualList.customer.nickname),
                         36.hb,
                         _getText(
                           '手机号',
-                          '18935263526',
+                          _individualList.customer.mobile,
                         ),
                         36.hb,
                         _getText(
                           '出售价格',
-                          '¥300,000.00',
+                          '¥${_individualList.saleAmount}',
                         ),
                         36.hb,
                         _getText(
                           '出售时间',
-                          '2021-12-30 12:00:00',
+                          '',
                         ),
                       ],
                     ),

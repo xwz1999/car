@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/model/car/car_amount_model.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/model/car/car_info_model.dart';
@@ -12,6 +11,7 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+
 class CarFunc {
   ///获取⻋辆品牌
   static Future<List<SortBrandModel>> getBrandList() async {
@@ -27,6 +27,7 @@ class CarFunc {
           .toList();
     }
   }
+
   ///⾏驶证 识别
   static Future<CarDistinguishModel?> carDistinguish(String path) async {
     BaseModel model = await apiClient.request(API.car.getCarVehicle, data: {
@@ -39,12 +40,18 @@ class CarFunc {
       return null;
     }
   }
+
   ///获取⻋辆列表
   static Future<List<CarListModel>> getCarList(int page, int size,
-      {String? order,Map<String,dynamic>? searchParams}) async {
-    var data = {'page': page, 'size': size,'order':order,'search':searchParams};
-    BaseListModel baseList = await apiClient
-        .requestList(API.car.getCarLists, data: data);
+      {String? order, Map<String, dynamic>? searchParams}) async {
+    var data = {
+      'page': page,
+      'size': size,
+      'order': order,
+      'search': searchParams
+    };
+    BaseListModel baseList =
+        await apiClient.requestList(API.car.getCarLists, data: data);
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
@@ -54,11 +61,19 @@ class CarFunc {
           .toList();
     }
   }
+
   ///获取我的⻋辆列表 new_create=最新创建 max_price=标价最⾼ min_price=标价最低 min_age=⻋龄最短 min_mileage=⾥程最少 new_update=最近更新
   static Future<List<CarListModel>> getMyCarList(
-      {required int page, int size = 10, String? order,Map<String,dynamic>? searchParams}) async {
-    var baseList = await apiClient.requestList(API.car.getCarSelfLists,
-        data: {'page': page, 'size': size, 'order': order,'search':searchParams});
+      {required int page,
+      int size = 10,
+      String? order,
+      Map<String, dynamic>? searchParams}) async {
+    var baseList = await apiClient.requestList(API.car.getCarSelfLists, data: {
+      'page': page,
+      'size': size,
+      'order': order,
+      'search': searchParams
+    });
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
@@ -68,6 +83,7 @@ class CarFunc {
           .toList();
     }
   }
+
   ///⻋辆详情
   static Future<CarInfoModel?> getCarInfo(int carId) async {
     BaseModel model = await apiClient.request(API.car.getCarIfo, data: {
@@ -80,6 +96,7 @@ class CarFunc {
       return null;
     }
   }
+
   ///费⽤计算
   static Future<CarAmountModel?> getCarAmount(num amount) async {
     BaseModel model = await apiClient.request(API.car.priceAmount, data: {
@@ -92,6 +109,7 @@ class CarFunc {
       return null;
     }
   }
+
   ///估算价格
   static Future<String> getEstimatePrice(CarInfo carInfo) async {
     BaseModel model = await apiClient.request(API.car.estimatePrice, data: {
@@ -119,6 +137,7 @@ class CarFunc {
       return '0';
     }
   }
+
   ///发起寄卖合同
   static Future<bool> addConsignment(
       ConsignmentContractModel contractModel) async {
@@ -133,7 +152,7 @@ class CarFunc {
       "photo": contractModel.masterInfo?.photo,
     };
     BaseModel model =
-    await apiClient.request(API.contract.addSaleContract, data: {
+        await apiClient.request(API.contract.addSaleContract, data: {
       'priceId': contractModel.priceId,
       'customerId': contractModel.customerId,
       'price': contractModel.price,
@@ -160,10 +179,11 @@ class CarFunc {
       return false;
     }
   }
+
   ///发起出售合同
   static Future<bool> addSale(CarSaleContractModel saleModel) async {
     BaseModel model =
-    await apiClient.request(API.contract.addSaleContract, data: {
+        await apiClient.request(API.contract.addSaleContract, data: {
       'carId': saleModel.carId,
       'customerId': saleModel.customerId,
       'phone': saleModel.phone,
@@ -184,5 +204,5 @@ class CarFunc {
       CloudToast.show(model.msg);
       return false;
     }
-
-}}
+  }
+}

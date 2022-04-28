@@ -165,7 +165,7 @@ class _UserPageState extends State<UserPage> {
         child: Column(
           children: [
             Text(
-              title,
+              num,
               style: TextStyle(
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize40,
@@ -173,7 +173,7 @@ class _UserPageState extends State<UserPage> {
             ),
             8.hb,
             Text(
-              num,
+              title,
               style: TextStyle(
                   color: BaseStyle.color999999,
                   fontSize: BaseStyle.fontSize24,
@@ -353,14 +353,16 @@ class _UserPageState extends State<UserPage> {
             ),
           ),
           48.hb,
-          Row(children: const [
-            // getText((UserTool.userProvider.userInfo.abi.assessCount).toString(),
-            //     '评估'),
-            // 70.wb,
-            // getText(UserTool.userProvider.userInfo.abi.balance, '钱包'),
-            // 70.wb,
-            // getText((UserTool.userProvider.userInfo.abi.inviteCount).toString(),
-            //     '邀请'),
+          Row(children: [
+            getText(
+                (UserTool.userProvider.userInfo.data.assessCount).toString(),
+                '评估'),
+            70.wb,
+            getText(UserTool.userProvider.userInfo.data.balance, '钱包'),
+            70.wb,
+            getText(
+                (UserTool.userProvider.userInfo.data.inviteCount).toString(),
+                '邀请'),
           ]),
         ]));
   }

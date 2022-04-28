@@ -1,6 +1,7 @@
 import 'package:cloud_car/ui/user/interface/user_func.dart';
 import 'package:cloud_car/ui/user/user_assessment/pay_num_changes.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
@@ -123,7 +124,8 @@ class _AssessmentNumPageState extends State<AssessmentNumPage> {
                   ),
                   24.wb,
                   Text(
-                    _assessment,
+                    (UserTool.userProvider.userInfo.data.assessCount)
+                        .toString(),
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         fontSize: 42.sp,
                         color: const Color(0xFF027AFF),

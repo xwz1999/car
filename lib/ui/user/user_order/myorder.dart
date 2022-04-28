@@ -2,6 +2,7 @@ import 'package:cloud_car/ui/user/user_order/sales_orders.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../home/manager_container_item.dart';
 
@@ -14,7 +15,7 @@ class MyOrderPage extends StatefulWidget {
 
 class _MyOrderPageState extends State<MyOrderPage> {
   List<dynamic>? data;
-
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
   @override
   void initState() {
     super.initState();
@@ -23,6 +24,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
   @override
   void dispose() {
     super.dispose();
+    _easyRefreshController.dispose();
   }
 
   @override

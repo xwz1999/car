@@ -1,5 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/order/Sale_info.dart';
+import 'package:cloud_car/model/order/individual_consignment_info_model.dart';
 
 import 'package:cloud_car/model/order/order_dealer_model.dart';
 import 'package:cloud_car/model/order/publish_car_model.dart';
@@ -24,14 +25,15 @@ class OrderFunc {
   }
 
   ///个人寄卖详情
-  static Future<bool> getConsignmentInfo(int orderId) async {
+  static Future<IndividualConsignmentInfoModel?> getConsignmentInfo(
+      int orderId) async {
     BaseModel res = await apiClient
         .request(API.order.consignmentInfo, data: {'orderId': orderId});
     if (res.code == 0) {
-      return true;
+      return IndividualConsignmentInfoModel.fromJson(res.data);
     } else {
       CloudToast.show(res.msg);
-      return false;
+      return null;
     }
   }
 
@@ -251,14 +253,14 @@ class OrderFunc {
   }
 
   ///售车订单详情
-  static Future<List<SaleInfo>> getSaleInfo(int orderId) async {
+  static Future<SaleInfo?> getSaleInfo(int orderId) async {
     BaseModel res =
         await apiClient.request(API.order.saleInfo, data: {'orderId': orderId});
     if (res.code == 0) {
-      return (res.data as List).map((e) => SaleInfo.fromJson(e)).toList();
+      return SaleInfo.fromJson(res.data);
     } else {
       CloudToast.show(res.msg);
-      return [];
+      return null;
     }
   }
 

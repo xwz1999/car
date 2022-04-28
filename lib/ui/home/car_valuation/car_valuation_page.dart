@@ -9,6 +9,7 @@ import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/picker/car_date_picker.dart';
 import 'package:cloud_car/widget/picker/car_list_picker.dart';
@@ -34,11 +35,12 @@ class _CarValuationPageState extends State<CarValuationPage> {
   final CarInfo _carInfo = CarInfo();
   DateTime? _firstDate;
   late CarDistinguishModel? carInfoModel;
-  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(SearchParamModel(
-      series: SortSeriesModel.init,
-      brand: SortBrandModel.init,
-      car: SortCarModelModel.init,
-      returnType: 3));
+  final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
+      SearchParamModel(
+          series: SortSeriesModel.init,
+          brand: SortBrandModel.init,
+          car: SortCarModelModel.init,
+          returnType: 3));
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
     ChooseItem(name: '紫色'),
@@ -126,9 +128,10 @@ class _CarValuationPageState extends State<CarValuationPage> {
                         ),
                       ),
                       20.wb,
-                      const Text(
-                        '49',
-                        style: TextStyle(
+                      Text(
+                        (UserTool.userProvider.userInfo.data.assessCount)
+                            .toString(),
+                        style: const TextStyle(
                           fontSize: 30,
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,

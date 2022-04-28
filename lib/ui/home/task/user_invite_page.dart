@@ -7,11 +7,11 @@ import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-
 class UserInvitePage extends StatefulWidget {
   final TaskInviteListModel model;
   const UserInvitePage({
-    Key? key, required this.model,
+    Key? key,
+    required this.model,
   }) : super(key: key);
 
   @override
@@ -67,41 +67,38 @@ class _UserInvitePageState extends State<UserInvitePage>
                         30.wb,
                         const Text('李四'),
                         const Spacer(),
-
-                        _isImportant?GestureDetector(
-                          onTap: (){
-                            _isImportant = false;
-                            setState(() {
-
-                            });
-                          },
-                          child: Image.asset(
-                            Assets.images.importantUser.path,
-                            width: 130.w,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ):
-                        GestureDetector(
-                          onTap: (){
-                            _isImportant = true;
-                            setState(() {
-
-                            });
-                          },
-                          child: Padding(
-                            padding:  EdgeInsets.only(right: 32.w),
-                            child: Text(
-                              '设为重要',
-                              style: TextStyle(
-                                  color: BaseStyle.color999999,
-                                  fontSize: BaseStyle.fontSize28,),
-                            ),
-                          ),
-                        ),
+                        _isImportant
+                            ? GestureDetector(
+                                onTap: () {
+                                  _isImportant = false;
+                                  setState(() {});
+                                },
+                                child: Image.asset(
+                                  Assets.images.importantUser.path,
+                                  width: 130.w,
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  _isImportant = true;
+                                  setState(() {});
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 32.w),
+                                  child: Text(
+                                    '设为重要',
+                                    style: TextStyle(
+                                      color: BaseStyle.color999999,
+                                      fontSize: BaseStyle.fontSize28,
+                                    ),
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),
-                  leading:Image.asset(
+                  leading: Image.asset(
                     Assets.images.importantUser.path,
                     width: 130.w,
                     fit: BoxFit.fitWidth,
@@ -207,7 +204,9 @@ class _UserInvitePageState extends State<UserInvitePage>
             child: TabBarView(
               controller: _tabController,
               children: [
-                CustomersBrowsePage(model: widget.model,),
+                CustomersBrowsePage(
+                  model: widget.model,
+                ),
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
@@ -297,7 +296,11 @@ class _UserInvitePageState extends State<UserInvitePage>
               Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
                   child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
-                Get.to(() =>  InviteDetailPage(id: widget.model.customerId, phone: '', name: widget.model.customerNickname,));
+                Get.to(() => InviteDetailPage(
+                      id: widget.model.customerId,
+                      phone: '',
+                      name: widget.model.customerNickname,
+                    ));
               })),
               Expanded(
                   child: _getBottom(Assets.icons.icContract.path, '发起合同', () {
@@ -332,28 +335,6 @@ class _UserInvitePageState extends State<UserInvitePage>
 
   _tab(int index, String text) {
     return Text(text);
-  }
-
-  _getText(String title, String content, {bool isRed = false}) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 120.w,
-          child: Text(
-            title,
-            style: TextStyle(fontSize: 28.sp, color: BaseStyle.color666666),
-          ),
-        ),
-        20.wb,
-        Text(
-          content,
-          style: TextStyle(
-            fontSize: 28.sp,
-            color: isRed ? const Color(0xFFFF3B02) : BaseStyle.color333333,
-          ),
-        ),
-      ],
-    );
   }
 
   _getListItem(int index, bool ing) {

@@ -4,7 +4,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
 class ProgressBar extends StatefulWidget {
-  final String direction;
+  final bool direction;
   //final int index;
   final int num;
   final int length;
@@ -12,7 +12,9 @@ class ProgressBar extends StatefulWidget {
   final List<dynamic> texts;
   const ProgressBar(
       {Key? key,
-      this.direction = "vertical",
+      this.direction = true,
+
+      ///true垂直 false水平
       required this.texts,
       //required this.index,
       required this.length,
@@ -34,7 +36,7 @@ class _ProgressBarState extends State<ProgressBar> {
       padding: EdgeInsets.only(left: 32.w),
       height: 750.w,
       width: 750.w,
-      child: widget.direction == 'vertical'
+      child: widget.direction
           ? ListView.builder(
               itemBuilder: (context, index) {
                 late bool ing = index < widget.num;
