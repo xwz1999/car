@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/car/customer_browse_list_model.dart';
 import 'package:cloud_car/model/car/customer_trail_model.dart';
+import 'package:cloud_car/model/customer/customer_detail_model.dart';
 import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/model/customer/customer_statistics_model.dart';
 
@@ -128,6 +129,29 @@ class CustomerFunc {
     } else {
       CloudToast.show(model.msg);
       return false;
+    }
+  }
+
+
+
+  ///获取客户详情
+
+  static Future<CustomerDetailModel?> getCustomerDetailModel(int customerId) async {
+    BaseModel model =
+    await apiClient.request(API.customer.customerInfo,data: {
+      'customerId':customerId
+    });
+
+    if (model.code != 0) {
+      CloudToast.show(model.msg);
+      return const CustomerDetailModel();
+    } else {
+      if (model.data != null) {
+        return CustomerDetailModel.fromJson(model.data);
+        ;
+      } else {
+        return const CustomerDetailModel();
+      }
     }
   }
 
