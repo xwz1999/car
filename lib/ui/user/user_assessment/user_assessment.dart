@@ -1,13 +1,14 @@
-import 'package:cloud_car/ui/user/interface/user_func.dart';
+
 import 'package:cloud_car/ui/user/user_assessment/pay_num_changes.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
-import 'package:cloud_car/widget/recharge_widget.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_easyrefresh/easy_refresh.dart';
+
+import 'assessment_pay.dart';
 
 class AssessmentNumPage extends StatefulWidget {
   const AssessmentNumPage({Key? key}) : super(key: key);
@@ -17,30 +18,20 @@ class AssessmentNumPage extends StatefulWidget {
 }
 
 class _AssessmentNumPageState extends State<AssessmentNumPage> {
-  List<dynamic>? data;
-  // ignore: non_constant_identifier_names
-  // List listWidget = [];
-  String _assessment = '';
-  //评估次数充值
-
+  ChooseItems? _chooseItem;
   final List<ChooseItems> _piceList = [
-    ChooseItems(name: '充值10次', pice: '¥10.00'),
-    ChooseItems(name: '充值20次', pice: '¥20.00'),
-    ChooseItems(name: '充值30次', pice: '¥30.00'),
-    ChooseItems(name: '充值50次', pice: '¥50.00'),
-    ChooseItems(name: '充值100次', pice: '¥100.00'),
-    ChooseItems(name: '自定义', pice: '充值次数'),
+    ChooseItems(name: '充值10次', pice: '10.00', count: 10),
+    ChooseItems(name: '充值20次', pice: '20.00', count: 20),
+    ChooseItems(name: '充值30次', pice: '30.00', count: 30),
+    ChooseItems(name: '充值50次', pice: '50.00', count: 50),
+    ChooseItems(name: '充值100次', pice: '100.00', count: 100),
+    ChooseItems(name: '充值500次', pice: '500.00', count: 500),
+    // ChooseItems(name: '自定义', pice: '充值次数'),
   ];
 
   @override
   void initState() {
     super.initState();
-
-    ///动态appbar导致 refresh组件刷新判出现问题 首次刷新手动触发
-    Future.delayed(const Duration(milliseconds: 0), () async {
-      await _refresh();
-      setState(() {});
-    });
   }
 
   @override
@@ -49,51 +40,50 @@ class _AssessmentNumPageState extends State<AssessmentNumPage> {
   }
 
   @override
-  // ignore: must_call_super
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          actions: [
-            Column(
-              children: [
-                SizedBox(
-                  height: 45.w,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => const PayChangesPage());
-                  },
-                  child: Text(
-                    '次数变更',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(color: const Color(0xFF027AFF)),
-                  ),
-                ),
-              ],
-            ),
-            30.wb,
-          ],
-          title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
+        leading: const CloudBackButton(
+          isSpecial: true,
         ),
-        //extendBody: true,
-        //extendBodyBehindAppBar: true,
-        body: Stack(
-          children: [
-            Container(
-              width: 750.w,
-              height: 1495.w,
-              color: const Color.fromRGBO(246, 246, 246, 1),
-            ),
-            Positioned(left: 32.w, top: 32.w, right: 32.w, child: _getNum()),
-            Positioned(top: 172.w, child: _getPice())
-          ],
-        ));
+        actions: [
+          Column(
+            children: [
+              SizedBox(
+                height: 45.w,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const PayChangesPage());
+                },
+                child: Text(
+                  '次数变更',
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle2
+                      ?.copyWith(color: const Color(0xFF027AFF)),
+                ),
+              ),
+            ],
+          ),
+          30.wb,
+        ],
+        title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
+      ),
+      body: Stack(
+        children: [
+          Container(
+            width: 750.w,
+            height: 1495.w,
+            color: const Color.fromRGBO(246, 246, 246, 1),
+          ),
+          Positioned(left: 32.w, top: 32.w, right: 32.w, child: _getNum()),
+          Positioned(top: 172.w, child: _getPice())
+        ],
+      ),
+      bottomNavigationBar: _confirmBtn(),
+    );
   }
 
 //评估次数
@@ -156,7 +146,6 @@ class _AssessmentNumPageState extends State<AssessmentNumPage> {
 //
   _getPice() {
     return Container(
-        //padding: EdgeInsets.only(top: 348.w),
         width: 750.w,
         height: 1350.w,
         decoration: BoxDecoration(
@@ -165,106 +154,84 @@ class _AssessmentNumPageState extends State<AssessmentNumPage> {
         ),
         child: Column(
           children: [
-            //Padding(padding: EdgeInsets.symmetric(vertical: 16.w)),
             Container(
               padding: EdgeInsets.only(top: 42.w, right: 576.w),
               child: Text(
                 '展示价格',
                 style: Theme.of(context).textTheme.subtitle2,
               ),
-            ), // Padding(padding: EdgeInsets.only(left: 32.w,)),
-            //         Text(
-            //   '展示价格',
-            //   style: TextStyle(fontSize: 28.sp, color: Colors.black),
-            // )
-            // Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-
-            // 24.hb,
+            ),
+            24.hb,
             Container(
               width: double.infinity,
-              //height: 400.w,
-              //padding: EdgeInsets.only(top),
-              decoration: const BoxDecoration(
-                  //scolor: Colors.red
-                  ),
+              decoration: const BoxDecoration(),
               clipBehavior: Clip.antiAlias,
-              child: RechargeWidget(
-                childAspectRatio: 216 / 98,
-                callback: (String item) {},
-                mainAxisSpacing: 20.w,
-                crossAxisCount: 3,
-                crossAxisSpacing: 24.w,
-                haveButton: true,
-                itemList: _piceList,
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 32.w,
+                      right: 32.w,
+                    ),
+                    child: SortWidget(
+                      crossAxisSpacing: 24.w,
+                      itemList: _piceList,
+                      childAspectRatio: 216 / 98,
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 20.w,
+                      callback: (item, index) {
+                        _chooseItem = item;
+                        setState(() {});
+                      },
+                      pickItem: _chooseItem,
+                    ),
+                  ),
+                  762.hb,
+                  //40.hb,
+                ],
               ),
             )
-            // SizedBox(
-            //   height: 600.w,
-            //   // width: ,
-            //   child: GridView.count(
-            //     crossAxisCount: 3,
-            //     mainAxisSpacing: 32.w,
-            //     crossAxisSpacing: 20.w,
-            //     padding: EdgeInsets.symmetric(horizontal: 32.w),
-            //     childAspectRatio: 1 / 0.5,
-            //     children: [
-            //       Container(
-            //         decoration: BoxDecoration(
-            //             color: const Color.fromRGBO(2, 122, 255, 0.1),
-            //             border: Border.all(
-            //                 color: const Color.fromRGBO(2, 122, 255, 1),
-            //                 width: 1.w)),
-            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
-            //         child: Column(
-            //           children: const [Flexible(child: Text('充值10次 ¥10.00'))],
-            //         ),
-            //       ),
-            //       Container(
-            //         width: 108.w,
-            //         height: 48.w,
-            //         color: const Color.fromRGBO(246, 246, 246, 1),
-            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
-            //         child: Column(
-            //           children: const [Flexible(child: Text('充值20次 ¥20.00'))],
-            //         ),
-            //       ),
-            //       Container(
-            //         color: const Color.fromRGBO(246, 246, 246, 1),
-            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
-            //         child: Column(
-            //           children: const [Flexible(child: Text('充值30次 ¥30.00'))],
-            //         ),
-            //       ),
-            //       Container(
-            //         color: const Color.fromRGBO(246, 246, 246, 1),
-            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
-            //         child: Column(
-            //           children: const [Flexible(child: Text('充值50次 ¥50.00'))],
-            //         ),
-            //       ),
-            //       Container(
-            //         color: const Color.fromRGBO(246, 246, 246, 1),
-            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
-            //         child: Column(
-            //           children: const [Flexible(child: Text('充值100次 ¥100.00'))],
-            //         ),
-            //       ),
-            //       Container(
-            //         color: const Color.fromRGBO(246, 246, 246, 1),
-            //         padding: EdgeInsets.only(top: 16.w, left: 40.w),
-            //         child: Column(
-            //           children: const [Flexible(child: Text('自定义 充值次数'))],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // ElevatedButton(onPressed: () {}, child: const Text('data'))
           ],
         ));
   }
 
-  _refresh() async {
-    _assessment = await User.getWallet();
+  _confirmBtn() {
+    return GestureDetector(
+      onTap: () {
+        if (_chooseItem != null) {
+          Get.to(() => AssessmentPayPage(
+                price: _chooseItem!.pice,
+                count: _chooseItem!.count,
+              ));
+        } else {
+          CloudToast.show('请先选择一个充值类型');
+          return;
+        }
+      },
+      child: Material(
+        child: Container(
+          width: double.infinity,
+          height: 72.w,
+          padding: EdgeInsets.symmetric(vertical: 16.w),
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 32.w, right: 32.w,bottom: 32.w+MediaQuery.of(context).padding.bottom),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: <Color>[
+                Color(0xFF0593FF),
+                Color(0xFF027AFF),
+              ],
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(8.w)),
+          ),
+          child: Text(
+            '充值',
+            style: TextStyle(
+                color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
+          ),
+        ),
+      ),
+    );
   }
 }

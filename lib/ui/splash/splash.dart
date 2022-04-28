@@ -49,9 +49,11 @@ class _SplashPageState extends State<SplashPage> {
     //     await HiveStore.appBox?.put('agreement', true);
     //   }
     // }
-
+    ///Providers 初始化
     //初始化省市区版本
     UserTool.cityProvider.init();
+    //获取包信息
+    UserTool.appProvider.init();
   }
 
   // ignore: unused_element

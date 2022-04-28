@@ -4,6 +4,8 @@ import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/car_sale_contract_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/model/contract/ConsignmentList_model.dart';
+
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -157,6 +159,36 @@ class CarFunc {
     } else {
       CloudToast.show(model.msg);
       return '0';
+    }
+  }
+
+  ///寄卖合同列表
+  static Future<List<ConsignmentListModel>> getConsignmentList(
+      {required int page, int size = 10}) async {
+    BaseListModel res = await apiClient.requestList(
+        API.contract.consignmentList,
+        data: {'size': size, 'page': page});
+    if (res.code == 0) {
+      return res.nullSafetyList
+          .map((e) => ConsignmentListModel.fromJson(e))
+          .toList();
+    } else {
+      return [];
+    }
+  }
+
+  ///出售合同列表
+  static Future<List<ConsignmentListModel>> getSaleList(
+      {required int page, int size = 10}) async {
+    BaseListModel res = await apiClient.requestList(
+        API.contract.consignmentList,
+        data: {'size': size, 'page': page});
+    if (res.code == 0) {
+      return res.nullSafetyList
+          .map((e) => ConsignmentListModel.fromJson(e))
+          .toList();
+    } else {
+      return [];
     }
   }
 

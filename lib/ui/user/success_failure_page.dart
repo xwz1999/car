@@ -8,6 +8,7 @@ class SuccessFailure extends StatefulWidget {
   final String headline;
   final Widget body;
   final Widget bottom;
+
   const SuccessFailure(
       {Key? key,
       required this.conditions,
@@ -29,55 +30,56 @@ class _SuccessFailureState extends State<SuccessFailure> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          title: Text(
-            headline,
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          backgroundColor: kForeGroundColor,
+      appBar: AppBar(
+        leading: const CloudBackButton(
+          isSpecial: true,
         ),
-        body: conditions
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 112,
+        title: Text(
+          headline,
+          style: Theme.of(context).textTheme.headline4,
+        ),
+        backgroundColor: kForeGroundColor,
+      ),
+      body: conditions
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 112,
+                ),
+                SizedBox(
+                  width: 202.w,
+                  height: 200.w,
+                  child: Image.asset(
+                    Assets.icons.successful.path,
+                    fit: BoxFit.fill,
                   ),
-                  SizedBox(
-                    width: 202.w,
-                    height: 200.w,
-                    child: Image.asset(
-                      Assets.icons.successful.path,
-                      fit: BoxFit.fill,
-                    ),
+                ),
+                32.hb,
+                body,
+                72.hb,
+                bottom,
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                206.hb,
+                SizedBox(
+                  width: 200.w,
+                  height: 200.w,
+                  child: Image.asset(
+                    Assets.icons.cancellationAccount.path,
+                    fit: BoxFit.fill,
                   ),
-                  32.hb,
-                  body,
-                  72.hb,
-                  bottom,
-                ],
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  206.hb,
-                  SizedBox(
-                    width: 200.w,
-                    height: 200.w,
-                    child: Image.asset(
-                      Assets.icons.cancellationAccount.path,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  32.hb,
-                  body,
-                  const Spacer(),
-                  bottom,
-                  32.hb,
-                ],
-              ));
+                ),
+                32.hb,
+                body,
+                const Spacer(),
+                bottom,
+                32.hb,
+              ],
+            ),
+    );
   }
 }

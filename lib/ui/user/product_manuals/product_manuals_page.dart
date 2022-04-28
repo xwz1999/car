@@ -169,7 +169,7 @@ class _ProductManualsState extends State<ProductManuals> {
                       onTap: () {
                         Get.to(() => HandbookInfo(
                               //manualsBack: (int id) {},
-                              id: e.id,
+                          itemId: e.id,
                               name: e.name,
                             ));
                       },

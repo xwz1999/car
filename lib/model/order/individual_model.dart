@@ -33,6 +33,9 @@ class IndividualModel extends Equatable{
     required this.customer,
   });
     @override
+
+
+
     List<Object?> get props => [
         id,
         status,
@@ -58,7 +61,7 @@ class Car extends Equatable {
     final String price;
     factory Car.fromJson(Map<String, dynamic> json) => _$CarFromJson(json);
 
-    Car({
+    const Car({
         required this.id,
         required this.mainPhoto,
         required this.modelName,

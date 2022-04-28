@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/providers/app_provider.dart';
 import 'package:cloud_car/providers/city_provider.dart';
 
 import 'package:cloud_car/providers/user_provider.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(create: (context) => UserProvider()),
             ChangeNotifierProvider(create: (context) => CityProvider()),
+            ChangeNotifierProvider(create: (context) => AppProvider()),
           ],
           child: GetMaterialApp(
             onGenerateTitle: (context) => '云云问车',
