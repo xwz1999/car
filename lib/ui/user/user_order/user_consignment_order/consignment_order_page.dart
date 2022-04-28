@@ -4,7 +4,6 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_rejected.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_signed.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -48,7 +47,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
         child: ScreenWidget(
           pickString: '',
           childAspectRatio: 200 / 56,
-          callback: (String item,int value) {
+          callback: (String item, int value) {
             if (kDebugMode) {
               print(item);
             }
