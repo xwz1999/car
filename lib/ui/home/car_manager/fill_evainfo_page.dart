@@ -17,19 +17,19 @@ import '../../../widget/sort_widget.dart';
 import '../car_valuation/car_valuation_page.dart';
 import 'direct_sale/edit_item_widget.dart';
 
-class EvainfoPage extends StatefulWidget {
+class FillEvainfoPage extends StatefulWidget {
   final PublishCarInfo publishCarInfo;
 
-  const EvainfoPage({
+  const FillEvainfoPage({
     Key? key,
     required this.publishCarInfo,
   }) : super(key: key);
 
   @override
-  State<EvainfoPage> createState() => _EvainfoPageState();
+  State<FillEvainfoPage> createState() => _FillEvainfoPageState();
 }
 
-class _EvainfoPageState extends State<EvainfoPage> {
+class _FillEvainfoPageState extends State<FillEvainfoPage> {
   final CarInfo _carInfo = CarInfo();
   String? _transfer = ''; //过户次数
   String? _paint = ''; //油漆面
