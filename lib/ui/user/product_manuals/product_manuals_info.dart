@@ -12,14 +12,14 @@ import 'package:flutter/material.dart';
 class HandbookInfo extends StatefulWidget {
   //final ManualsBack manualsBack;
   final String name;
-  final int id;
+  final int itemId;
   // final String text;
   // final String startTime;
   // final String endTime;
   const HandbookInfo({
     Key? key,
     //required this.manualsBack,
-    required this.id,
+    required this.itemId,
     required this.name,
     // required this.endTime,
     // required this.startTime,
@@ -33,28 +33,26 @@ class HandbookInfo extends StatefulWidget {
 class _HandbookInfoState extends State<HandbookInfo> {
   late HandbookInfoModel manualsList;
   late String name;
-  late int manualsId;
   // late String startTime;
   // late String endTime;
   late String text;
 
-  @override
+
   @override
   void initState() {
     super.initState();
-    name = widget.name;
-
     // startTime = widget.startTime;
     // endTime = widget.endTime;
     //text = widget.text;
-    Future.delayed(const Duration(milliseconds: 0), () {
-      product();
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await product();
+      setState(() {});
     });
-    super.initState();
+
   }
 
   product() async {
-    manualsList = (await Handbook.getHandbookInfo(widget.id))!;
+    manualsList = (await Handbook.getHandbookInfo(widget.itemId))!;
     setState(() {});
   }
 
@@ -70,7 +68,7 @@ class _HandbookInfoState extends State<HandbookInfo> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              name,
+              manualsList.name,
               style: TextStyle(
                 color: const Color(0xFF333333),
                 fontSize: 32.sp,
@@ -81,7 +79,10 @@ class _HandbookInfoState extends State<HandbookInfo> {
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
-      body: getItem(manualsList),
+      body:SizedBox()
+
+
+      //getItem(manualsList),
     );
   }
 

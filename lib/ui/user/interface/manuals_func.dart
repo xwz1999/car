@@ -14,11 +14,14 @@ class Handbook {
 
   ///用户详情
   static Future<HandbookInfoModel?> getHandbookInfo(
-    int manualsId,
+    int itemId,
   ) async {
     BaseModel res = await apiClient
-        .request(API.broker.handbookInfo, data: {'itemId': manualsId});
-    if ((res.data as List).isEmpty) return null;
-    return HandbookInfoModel.fromJson(res.data);
+        .request(API.broker.handbookInfo, data: {'itemId': itemId});
+    if (res.data == 0) {
+      return HandbookInfoModel.fromJson(res.data);
+    } else {
+      return null;
+    }
   }
 }

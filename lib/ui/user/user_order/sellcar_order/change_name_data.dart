@@ -116,7 +116,9 @@ class _ChangeNameDataState extends State<ChangeNameData> {
     );
   }
 
-  getText(String title) {
+  getText(
+    String title,
+  ) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16.w),
       child: Row(
