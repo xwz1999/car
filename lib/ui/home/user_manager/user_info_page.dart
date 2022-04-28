@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 import '../../../utils/user_tool.dart';
 
 class UserInfoPage extends StatefulWidget {
+  final int customerId;
   const UserInfoPage({
-    Key? key,
+    Key? key, required this.customerId,
   }) : super(key: key);
 
   @override
