@@ -59,10 +59,11 @@ class _LoginPageState extends State<LoginPage> {
             data: {'token': event.message, 'inviteCode': ''});
         if (base.code == 0) {
           if (kDebugMode) {
-            print('调用登陆接口返回手机号：  ${base.data}');
+            print('极光一键登录：  ${base.data}');
           }
 
-          await UserTool.userProvider.setToken(base.data);
+
+          await UserTool.userProvider.setToken(base.data['token']);
           Get.offAll(() => const TabNavigator());
         } else {
           CloudToast.show(base.msg);
