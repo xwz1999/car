@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage>
   List<dynamic>? data;
   late final List<KingCoin> _kingCoinList = [];
 
-  late EasyRefreshController _refreshController;
+  late final EasyRefreshController _refreshController=EasyRefreshController();
 
   //网络图片转u8list
   ScreenshotController screenshotController = ScreenshotController();
@@ -134,6 +134,7 @@ class _HomePageState extends State<HomePage>
         child: EasyRefresh(
           firstRefresh: true,
           header: MaterialHeader(),
+          controller: _refreshController,
           onRefresh: () async {
             _posterList = await PosterFunc.getPosterList(page: 1);
             _shareCarList = await CarFunc.getMyCarList(page: 1);

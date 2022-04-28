@@ -47,7 +47,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
 
   @override
   void didUpdateWidget(covariant EditItemWidget oldWidget) {
-    _editingController = TextEditingController(text: widget.value);
+    _editingController.text= widget.value;
     super.didUpdateWidget(oldWidget);
   }
 

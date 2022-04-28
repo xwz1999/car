@@ -1,7 +1,6 @@
 import 'package:cloud_car/ui/user/user_recommended/share_detail_customer.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../utils/user_tool.dart';
 
@@ -17,8 +16,6 @@ class _RecommendedPageState extends State<RecommendedPage>
   List<dynamic>? data;
   late TabController _tabController;
 
-  late EasyRefreshController _refreshController;
-
   @override
   void initState() {
     super.initState();
@@ -27,7 +24,6 @@ class _RecommendedPageState extends State<RecommendedPage>
 
   @override
   void dispose() {
-    _refreshController.dispose();
     super.dispose();
   }
 
@@ -225,7 +221,10 @@ class _RecommendedPageState extends State<RecommendedPage>
                                           16.hb,
                                           _getText('联系方式', '18912345432'),
                                           16.hb,
-                                          _getText('销售', UserTool.userProvider.userInfo.nickname),
+                                          _getText(
+                                              '销售',
+                                              UserTool.userProvider.userInfo
+                                                  .nickname),
                                           24.hb,
                                         ],
                                       ),
@@ -311,7 +310,10 @@ class _RecommendedPageState extends State<RecommendedPage>
                                           16.hb,
                                           _getText('联系方式', '18912345432'),
                                           16.hb,
-                                          _getText('销售', UserTool.userProvider.userInfo.nickname),
+                                          _getText(
+                                              '销售',
+                                              UserTool.userProvider.userInfo
+                                                  .nickname),
                                           24.hb,
                                         ],
                                       )

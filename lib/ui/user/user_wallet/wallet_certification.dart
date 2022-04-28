@@ -22,18 +22,6 @@ class WalletCertificationPage extends StatefulWidget {
 
 class _WalletCertificationPageState extends State<WalletCertificationPage> {
   List<dynamic>? data;
-  // ignore: non_constant_identifier_names
-  //评估次数
-
-  // ignore: unused_field
-  final List<ChooseItems> _priceList = [
-    ChooseItems(name: '充值10次', pice: '¥10.00'),
-    ChooseItems(name: '充值20次', pice: '¥20.00'),
-    ChooseItems(name: '充值30次', pice: '¥30.00'),
-    ChooseItems(name: '充值50次', pice: '¥50.00'),
-    ChooseItems(name: '充值100次', pice: '¥100.00'),
-    ChooseItems(name: '自定义', pice: '充值次数'),
-  ];
 
   @override
   @override

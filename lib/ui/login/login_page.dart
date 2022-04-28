@@ -62,7 +62,6 @@ class _LoginPageState extends State<LoginPage> {
             print('极光一键登录：  ${base.data}');
           }
 
-
           await UserTool.userProvider.setToken(base.data['token']);
           Get.offAll(() => const TabNavigator());
         } else {
