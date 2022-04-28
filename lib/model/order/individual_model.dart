@@ -58,7 +58,7 @@ class Car extends Equatable {
     final String price;
     factory Car.fromJson(Map<String, dynamic> json) => _$CarFromJson(json);
 
-    Car({
+    const Car({
         required this.id,
         required this.mainPhoto,
         required this.modelName,
@@ -79,7 +79,7 @@ class Customer extends Equatable {
     factory Customer.fromJson(Map<String, dynamic> json) =>
         _$CustomerFromJson(json);
 
-    Customer({
+    const Customer({
         required this.id,
         required this.nickname,
         required this.mobile,

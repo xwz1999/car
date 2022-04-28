@@ -1,3 +1,4 @@
+import 'package:cloud_car/providers/app_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/city_provider.dart';
@@ -9,4 +10,7 @@ class UserTool {
       Provider.of<UserProvider>(Get.context!, listen: false);
   static CityProvider cityProvider =
   Provider.of<CityProvider>(Get.context!, listen: false);
+
+  static AppProvider appProvider =
+  Provider.of<AppProvider>(Get.context!, listen: false);
 }

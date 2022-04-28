@@ -18,6 +18,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../utils/user_tool.dart';
 import '../../widget/cloud_avatar_widget.dart';
@@ -31,38 +32,31 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   List<dynamic>? data;
-  // ignore: non_constant_identifier_names
-
-  // ignore: non_constant_identifier_names
-  late final _KingCoinUserlist = [];
+  late final _kingCoinUserList = [];
+  final EasyRefreshController _refreshController = EasyRefreshController();
 
   @override
   void initState() {
     super.initState();
-
-    ///动态appbar导致 refresh组件刷新判出现问题 首次刷新手动触发
-    // Future.delayed(const Duration(milliseconds: 0), () async {
-    //   await _refresh();
-    //   setState(() {});
-    // });
-    _KingCoinUserlist.add(
-        KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
-    _KingCoinUserlist.add(
-        KingCoin(name: '员工管理', url: Assets.icons.userstaffmangement.path));
-    _KingCoinUserlist.add(
-        KingCoin(name: '查看合同', url: Assets.icons.userviewContract.path));
-    _KingCoinUserlist.add(
-        KingCoin(name: '产品手册', url: Assets.icons.userproduct.path));
-    _KingCoinUserlist.add(
-        KingCoin(name: '意见反馈', url: Assets.icons.userfeedback.path));
-    _KingCoinUserlist.add(
-        KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
-    _KingCoinUserlist.add(
-        KingCoin(name: '我的邀约', url: Assets.icons.userInvitation.path));
+    _kingCoinUserList
+        .add(KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
+    _kingCoinUserList
+        .add(KingCoin(name: '员工管理', url: Assets.icons.userstaffmangement.path));
+    _kingCoinUserList
+        .add(KingCoin(name: '查看合同', url: Assets.icons.userviewContract.path));
+    _kingCoinUserList
+        .add(KingCoin(name: '产品手册', url: Assets.icons.userproduct.path));
+    _kingCoinUserList
+        .add(KingCoin(name: '意见反馈', url: Assets.icons.userfeedback.path));
+    _kingCoinUserList
+        .add(KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
+    _kingCoinUserList
+        .add(KingCoin(name: '我的邀约', url: Assets.icons.userInvitation.path));
   }
 
   @override
   void dispose() {
+    _refreshController.dispose();
     super.dispose();
   }
 
@@ -97,51 +91,63 @@ class _UserPageState extends State<UserPage> {
       ),
 
       body: Expanded(
-          child: Column(
-        children: [
-          ListView(
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 32.w),
-            children: [
-              //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-              _shareUser(),
-              32.hb,
-              _getBanner(),
-              24.hb,
-              _share(),
-            ],
-          ),
-          const Spacer(),
-          Text("云云问车 1.0",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1
-                  ?.copyWith(color: const Color(0xFFCCCCCC))),
-          64.hb,
-        ],
-      )),
+        child: Column(
+          children: [
+            Expanded(
+              child: EasyRefresh(
+                  firstRefresh: false,
+                  header: MaterialHeader(),
+                  onRefresh: () async {
+                    await UserTool.userProvider.updateUserInfo();
+                    setState(() {});
+                  },
+                  child: ListView(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(horizontal: 32.w),
+                    children: [
+                      //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+                      _shareUser(),
+                      32.hb,
+                      _getBanner(),
+                      24.hb,
+                      _share(),
+                    ],
+                  )),
+            ),
+            Text("云云问车 ${UserTool.appProvider.packageInfo.version}",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(color: const Color(0xFFCCCCCC))),
+            64.hb,
+          ],
+        ),
+      ),
       // body: Text(
       //   '',
       //   style: Theme.of(context).textTheme.bodyText1,
       // ),
     );
   }
-
-  getCiap(String title) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.w),
-          color: title == '销售'
-              ? const Color(0xFFFF3B02).withOpacity(0.08)
-              : const Color(0xFF027AFF).withOpacity(0.08)),
-      child: Text(
-        title,
-        style: TextStyle(
-            color: title == '销售'
-                ? const Color(0xFFFF3B02)
-                : const Color(0xFF027AFF),
-            fontSize: BaseStyle.fontSize20),
+  //type：1 角色名 2 门店名
+  getCiap(String title,int type) {
+    return Offstage(
+      offstage: title.trim().isEmpty,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.w),
+            color: type==1
+                ? const Color(0xFFFF3B02).withOpacity(0.08)
+                : const Color(0xFF027AFF).withOpacity(0.08)),
+        child: Text(
+          title,
+          style: TextStyle(
+              color: type==1
+                  ? const Color(0xFFFF3B02)
+                  : const Color(0xFF027AFF),
+              fontSize: BaseStyle.fontSize20),
+        ),
       ),
     );
   }
@@ -339,7 +345,13 @@ class _UserPageState extends State<UserPage> {
                       ),
                       const Padding(padding: EdgeInsets.only(top: 5)),
                       Row(
-                        children: [getCiap('销售'), 16.wb, getCiap('云云问车')],
+                        children: [
+                          getCiap(
+                              UserTool.userProvider.userInfo.store.roleName,1),
+                          16.wb,
+                          getCiap(
+                              UserTool.userProvider.userInfo.store.storeName,2)
+                        ],
                       )
                     ],
                   ),
@@ -409,7 +421,7 @@ class _UserPageState extends State<UserPage> {
       padding: EdgeInsets.zero,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: _KingCoinUserlist.length,
+      itemCount: _kingCoinUserList.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         //横轴元素个数
         crossAxisCount: 4,
@@ -422,7 +434,7 @@ class _UserPageState extends State<UserPage> {
       ),
       itemBuilder: (BuildContext context, int index) {
         return _kingCoinzItem(
-            _KingCoinUserlist[index].name, _KingCoinUserlist[index].url);
+            _kingCoinUserList[index].name, _kingCoinUserList[index].url);
       },
     );
   }
