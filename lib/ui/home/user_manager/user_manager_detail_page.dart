@@ -283,7 +283,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
     return GestureDetector(
       onTap: () {
 
-        Get.to(() => const UserInfoPage());
+        Get.to(() =>  UserInfoPage(customerId: model.id,));
       },
       child: Container(
         decoration: BoxDecoration(
