@@ -12,6 +12,7 @@ import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
+import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
 
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -153,7 +154,7 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const AssessmentNumPage());
             break;
           case '钱包':
-            Get.to(() => const AssessmentNumPage());
+            Get.to(() => const WalletCertificationPage());
             break;
           case '邀请':
             Get.to(() => const AssessmentNumPage());

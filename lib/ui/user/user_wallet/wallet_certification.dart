@@ -1,7 +1,9 @@
 //import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/ui/user/interface/user_func.dart';
 import 'package:cloud_car/ui/user/user_wallet/Immediate_withdrawal.dart';
 import 'package:cloud_car/ui/user/user_wallet/Withdrawal_record.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 //import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom.dart';
@@ -155,7 +157,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
                           color: const Color(0xFFFE8029),
                           fontWeight: FontWeight.bold)),
                   10.wb,
-                  Text('100,000.00',
+                  Text(UserTool.userProvider.userInfo.data.balance,
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           color: const Color(0xFFFE8029),
                           fontWeight: FontWeight.bold,

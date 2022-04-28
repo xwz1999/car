@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-part of 'Individual_consignment_info_model.dart';
+
+part of 'individual_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-IndividualConsignmentInfoModel _$IndividualConsignmentInfoModelFromJson(
-        Map<String, dynamic> json) =>
-    IndividualConsignmentInfoModel(
+IndividualModel _$IndividualModelFromJson(Map<String, dynamic> json) =>
+    IndividualModel(
       id: json['id'] as int,
       status: json['status'] as int,
       car: Car.fromJson(json['car'] as Map<String, dynamic>),
