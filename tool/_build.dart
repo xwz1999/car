@@ -10,7 +10,7 @@ buildApk() async {
       'apk',
       '--target-platform=android-arm64',
       '--dart-define',
-      'BUILD_TYPE=PRODUCT',
+      'ENV=release',
     ],
   );
 
@@ -34,7 +34,7 @@ buildApkDev() async {
       'apk',
       '--target-platform=android-arm64',
       '--dart-define',
-      'BUILD_TYPE=Dev',
+      'ENV=dev',
     ],
   );
   String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
@@ -56,7 +56,21 @@ buildIos() async {
       'build',
       'ios',
       '--dart-define',
-      'BUILD_TYPE=PRODUCT',
+      'ENV=release',
+    ],
+  );
+}
+
+@Task('打包iOS项目')
+buildIosDev() async {
+  await runAsync(
+    'fvm',
+    arguments: [
+      'flutter',
+      'build',
+      'ios',
+      '--dart-define',
+      'ENV=dev',
     ],
   );
 }
