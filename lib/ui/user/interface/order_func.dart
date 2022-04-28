@@ -1,6 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/order/Sale_info.dart';
-import 'package:cloud_car/model/order/individual_consignment_info_model.dart';
+import 'package:cloud_car/model/order/individual_model.dart';
 
 import 'package:cloud_car/model/order/order_dealer_model.dart';
 import 'package:cloud_car/model/order/publish_car_model.dart';
@@ -25,12 +25,11 @@ class OrderFunc {
   }
 
   ///个人寄卖详情
-  static Future<IndividualConsignmentInfoModel?> getConsignmentInfo(
-      int orderId) async {
+  static Future<IndividualModel?> getConsignmentInfo(int orderId) async {
     BaseModel res = await apiClient
         .request(API.order.consignmentInfo, data: {'orderId': orderId});
     if (res.code == 0) {
-      return IndividualConsignmentInfoModel.fromJson(res.data);
+      return IndividualModel.fromJson(res.data);
     } else {
       CloudToast.show(res.msg);
       return null;
