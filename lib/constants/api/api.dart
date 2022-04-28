@@ -69,7 +69,6 @@ class API {
   //二级分类
   static _UserApi user = _UserApi();
 }
-
 class _Task {
   ///客户邀约列表
   String get getInviteLists => '/task/invite/lists';
