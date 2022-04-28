@@ -78,14 +78,10 @@ class _CarValuationPageState extends State<CarValuationPage> {
       body: ListView(
         shrinkWrap: true,
         children: [
-          Column(
+          Stack(
             children: [
-              Stack(
-                children: [
-                  _topImage(),
-                  _bottomEdit(),
-                ],
-              ),
+              _topImage(),
+              _bottomEdit(),
             ],
           ),
         ],
@@ -252,30 +248,17 @@ class _CarValuationPageState extends State<CarValuationPage> {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () async {
-                await Get.to(() => ChooseCityPage(
-                      callback: (model) {
-                        _carInfo.address = model.name;
-                      },
-                    ));
-                setState(() {});
-              },
-              child: EditItemWidget(
-                title: '车牌所在地',
-                callback: (String content) {},
-                value: _carInfo.address ?? '',
-                tips: '请选择车牌所在地',
-                topIcon: false,
-                paddingStart: 32,
-                canChange: false,
-                endIcon: Image.asset(
-                  Assets.icons.icGoto.path,
-                  width: 32.w,
-                  height: 32.w,
-                ),
-              ),
+            EditItemWidget(
+              title: '车牌号',
+              callback: (String content) {},
+              value: _carInfo.licensePlate ?? '',
+              tips: '请输入车牌号',
+              topIcon: false,
+              paddingStart: 32,
+              canChange: true,
             ),
+
+
             GestureDetector(
               onTap: () async {
                 _firstDate = await CarDatePicker.monthPicker(DateTime.now());
@@ -298,6 +281,8 @@ class _CarValuationPageState extends State<CarValuationPage> {
                 ),
               ),
             ),
+
+
             GestureDetector(
               onTap: () async {
                 await showModalBottomSheet(
@@ -335,12 +320,13 @@ class _CarValuationPageState extends State<CarValuationPage> {
             ),
             EditItemWidget(
               title: '行驶里程',
-              callback: (String content) {},
+              callback: (String content) {
+                _carInfo.mileage = content;
+              },
               value: _carInfo.mileage ?? '',
               tips: '请输入行驶里程',
               topIcon: false,
               paddingStart: 32,
-              canChange: false,
               endText: '万公里',
             ),
             100.hb,
@@ -348,10 +334,16 @@ class _CarValuationPageState extends State<CarValuationPage> {
               padding: EdgeInsets.symmetric(horizontal: 32.w),
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => CarValuationResultPage(
+                onPressed: () async {
+                    String price = await CarFunc.getQuickAmount(_carInfo);
+                    if(price.isNotEmpty){
+                      _carInfo.price = price;
+                      Get.to(() => CarValuationResultPage(
                         carInfo: _carInfo,
                       ));
+                    }
+
+
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -396,6 +388,9 @@ class CarInfo {
   String? engineNo;
   int? source;
   int? shamMileage;
+
+
+  String? price;///最终估价 传进去
 
   CarInfo({
     this.name,

@@ -205,7 +205,7 @@ class _UserInvitePageState extends State<UserInvitePage>
               controller: _tabController,
               children: [
                 CustomersBrowsePage(
-                  model: widget.model,
+                  customerId: widget.model.customerId,
                 ),
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),

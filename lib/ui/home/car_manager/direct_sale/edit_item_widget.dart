@@ -47,7 +47,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
 
   @override
   void didUpdateWidget(covariant EditItemWidget oldWidget) {
-    _editingController.text= widget.value;
+    _editingController.text =  widget.value;
     super.didUpdateWidget(oldWidget);
   }
 
@@ -94,11 +94,13 @@ class _EditItemWidgetState extends State<EditItemWidget> {
               enabled: widget.canChange,
               keyboardType: TextInputType.text,
               onSubmitted: (text) {
-                widget.callback(text);
-                setState(() {});
+
                 // _refreshController.callRefresh();
               },
-              onChanged: (text) {},
+              onChanged: (text) {
+                widget.callback(text);
+                setState(() {});
+              },
               style: TextStyle(
                 color:  BaseStyle.color333333,
                 fontSize: BaseStyle.fontSize28,

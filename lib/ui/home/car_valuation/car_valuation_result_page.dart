@@ -4,6 +4,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:flustars/flustars.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -144,7 +145,7 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '13.57',
+                        widget.carInfo.price==null?'':NumUtil.divide(num.parse(widget.carInfo.price!), 10000).toString(),
                               style: TextStyle(
                                   color: const Color(0xFFFF3B02),
                                   fontSize: 112.w,
@@ -349,7 +350,7 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
           ),
           24.hb,
           Text(
-            '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
+           widget.carInfo.name??'',
             style: TextStyle(
               color: const Color(0xFF111111),
               fontSize: 32.w,
@@ -365,7 +366,7 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '宁波',
+                    widget.carInfo.licensePlate??'',
                     style: TextStyle(
                       color: const Color(0xFF333333),
                       fontSize: 28.w,
@@ -381,7 +382,7 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
                       ),
                       12.wb,
                       Text(
-                        '所在地',
+                        '牌照',
                         style: TextStyle(
                           color: const Color(0xFF999999),
                           fontSize: 24.w,
@@ -405,7 +406,7 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '2012-01',
+                    widget.carInfo.licensingDate??'',
                     style: TextStyle(
                       color: const Color(0xFF333333),
                       fontSize: 28.w,
@@ -445,7 +446,7 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '10.9万公里',
+                    '${widget.carInfo.mileage??0}万公里',
                     style: TextStyle(
                       color: const Color(0xFF333333),
                       fontSize: 28.w,

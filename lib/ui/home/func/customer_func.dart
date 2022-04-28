@@ -136,7 +136,7 @@ class CustomerFunc {
 
   ///获取客户详情
 
-  static Future<CustomerDetailModel?> getCustomerDetailModel(int customerId) async {
+  static Future<CustomerDetailModel> getCustomerDetailModel(int customerId) async {
     BaseModel model =
     await apiClient.request(API.customer.customerInfo,data: {
       'customerId':customerId
@@ -144,12 +144,12 @@ class CustomerFunc {
 
     if (model.code != 0) {
       CloudToast.show(model.msg);
-      return null;
+      return CustomerDetailModel.empty();
     } else {
       if (model.data != null) {
         return CustomerDetailModel.fromJson(model.data);
       } else {
-        return null;
+        return CustomerDetailModel.empty();
       }
     }
   }

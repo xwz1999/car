@@ -4,6 +4,7 @@ import 'package:cloud_car/ui/home/task/customer_invite_item.dart';
 import 'package:cloud_car/ui/home/task/task_user_invite_page.dart';
 
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -21,6 +22,7 @@ class _CustomerPageState extends State<CustomerPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   List<TaskInviteListModel> lists = [];
+  bool _onLoad = true;
 
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _CustomerPageState extends State<CustomerPage> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('客户付款',
+        title: Text('客户邀约提醒',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
@@ -60,6 +62,7 @@ class _CustomerPageState extends State<CustomerPage> {
             onRefresh: () async {
               _page = 1;
               lists = await TaskFunc.getCarList(_page);
+              _onLoad = false;
               setState(() {});
             },
             onLoad: () async {
@@ -73,7 +76,8 @@ class _CustomerPageState extends State<CustomerPage> {
                 }
               });
             },
-            child: ListView.separated(
+            child:      _onLoad?const SizedBox():
+            lists.isEmpty?const NoDataWidget(text: '暂无客户邀约提醒',paddingTop: 300,):ListView.separated(
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 // padding: EdgeInsets.only(top: 10.w),
