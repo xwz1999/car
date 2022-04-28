@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_car/ui/home/home_page.dart';
 
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
@@ -18,6 +20,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../utils/user_tool.dart';
 import '../../widget/cloud_avatar_widget.dart';
@@ -31,11 +34,10 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   List<dynamic>? data;
-  // ignore: non_constant_identifier_names
 
-  // ignore: non_constant_identifier_names
   late final _KingCoinUserlist = [];
 
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
   @override
   void initState() {
     super.initState();
@@ -63,6 +65,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void dispose() {
+    _easyRefreshController.dispose();
     super.dispose();
   }
 
@@ -95,30 +98,32 @@ class _UserPageState extends State<UserPage> {
           ],
         ),
       ),
-
       body: Expanded(
-          child: Column(
-        children: [
-          ListView(
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 32.w),
-            children: [
-              //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
-              _shareUser(),
-              32.hb,
-              _getBanner(),
-              24.hb,
-              _share(),
-            ],
-          ),
-          const Spacer(),
-          Text("云云问车 1.0",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1
-                  ?.copyWith(color: const Color(0xFFCCCCCC))),
-          64.hb,
-        ],
+          child: EasyRefresh(
+        firstRefresh: true,
+        header: MaterialHeader(),
+        controller: _easyRefreshController,
+        child: ListView(
+          shrinkWrap: true,
+          padding: EdgeInsets.symmetric(horizontal: 32.w),
+          children: [
+            //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
+            _shareUser(),
+            32.hb,
+            _getBanner(),
+            24.hb,
+            _share(),
+            150.hb,
+            Padding(
+              padding: EdgeInsets.only(left: 258.w),
+              child: Text("云云问车 1.0",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: const Color(0xFFCCCCCC))),
+            )
+          ],
+        ),
       )),
       // body: Text(
       //   '',
