@@ -144,13 +144,12 @@ class CustomerFunc {
 
     if (model.code != 0) {
       CloudToast.show(model.msg);
-      return const CustomerDetailModel();
+      return null;
     } else {
       if (model.data != null) {
         return CustomerDetailModel.fromJson(model.data);
-        ;
       } else {
-        return const CustomerDetailModel();
+        return null;
       }
     }
   }

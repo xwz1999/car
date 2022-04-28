@@ -29,8 +29,7 @@ class CustomerDetailModel extends Equatable {
     required this.trailCreatedAt,
     required this.createdAt,
   });
-  
+
   @override
   List<Object?> get props => [id,mobile,nickname,gender,isImportant,brokerName,trailContent,trailCreatedAt,createdAt,];
-  
 }
