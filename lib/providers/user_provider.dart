@@ -14,7 +14,8 @@ class UserProvider extends ChangeNotifier {
     if (HiveStore.appBox?.containsKey('token') ?? false) {
       final token = HiveStore.appBox?.get('token') as String;
       _isLogin = true;
-      await setToken(token);
+      apiClient.setToken(token);
+      await updateUserInfo();
       return true;
     } else {
       _isLogin = false;
@@ -22,16 +23,12 @@ class UserProvider extends ChangeNotifier {
     }
   }
   Future setToken(String token, {User? user}) async {
+
     apiClient.setToken(token);
     HiveStore.appBox!.put('token', token);
-    if (user != null) {
-      userInfo.nickname = user.nickname;
-      userInfo.headImg = user.headImg;
-      userInfo.level = user.level;
-    }else{
       //每次打开app更新用户信息
       await updateUserInfo();
-    }
+
   }
   Future logout() async {
     // await apiClient.request(API.user.signOut);
