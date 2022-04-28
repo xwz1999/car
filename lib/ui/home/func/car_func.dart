@@ -4,6 +4,8 @@ import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/car_sale_contract_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/model/contract/ConsignmentList_model.dart';
+import 'package:cloud_car/model/contract/SaleList_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -137,6 +139,28 @@ class CarFunc {
       return '0';
     }
   }
+
+  ///寄卖合同列表
+  // static Future<ConsignmentListModel> getConsignmentList(int keyword) async {
+  //   BaseListModel res = await apiClient
+  //       .requestList(API.contract.consignmentList, data: {'keyword': keyword});
+  //   if (res.code == 0) {
+  //     return;
+  //   } else {
+  //     return null;
+  //   }
+  // }
+
+  ///出售合同列表
+  // static Future<SaleListModel> getSaleList(int keyword) async {
+  //   BaseListModel res = await apiClient
+  //       .requestList(API.contract.consignmentList, data: {'keyword': keyword});
+  //   if (res.code == 0) {
+  //     return;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   ///发起寄卖合同
   static Future<bool> addConsignment(

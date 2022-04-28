@@ -31,7 +31,7 @@ class HandbookInfo extends StatefulWidget {
 }
 
 class _HandbookInfoState extends State<HandbookInfo> {
-  List<HandbookInfoModel> manualsList = [];
+  late HandbookInfoModel manualsList;
   late String name;
   late int manualsId;
   // late String startTime;
@@ -43,7 +43,7 @@ class _HandbookInfoState extends State<HandbookInfo> {
   void initState() {
     super.initState();
     name = widget.name;
-    manualsId = widget.id;
+
     // startTime = widget.startTime;
     // endTime = widget.endTime;
     //text = widget.text;
@@ -54,7 +54,7 @@ class _HandbookInfoState extends State<HandbookInfo> {
   }
 
   product() async {
-    manualsList = await Handbook.getHandbookInfo(manualsId);
+    manualsList = (await Handbook.getHandbookInfo(widget.id))!;
     setState(() {});
   }
 
@@ -81,7 +81,7 @@ class _HandbookInfoState extends State<HandbookInfo> {
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
-      body: manualsList.isEmpty ? const SizedBox() : getItem(manualsList.first),
+      body: getItem(manualsList),
     );
   }
 

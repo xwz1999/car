@@ -133,43 +133,10 @@ class _ChangeNameDataState extends State<ChangeNameData> {
             ),
           ),
           32.wb,
-          DottedBorder(
-              dashPattern: const [16, 8],
-              strokeWidth: 4.w,
-              color: const Color(0xFFDDDDDD),
-              radius: Radius.circular(8.w),
-              child: SizedBox(
-                width: 200.w,
-                height: 150.w,
-
-                //padding: EdgeInsets.all(76.w),
-                child: GestureDetector(
-                  child: Stack(children: [
-                    Align(
-                      child: Container(
-                        width: 48.w,
-                        height: 2.w,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 4.w),
-                            color: const Color(0xFFDDDDDD),
-                            borderRadius: BorderRadius.circular(1.4.w)),
-                      ),
-                    ),
-                    Positioned(
-                      left: 100.w,
-                      top: 48.w,
-                      child: Container(
-                        width: 2.w,
-                        height: 48.w,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 4.w),
-                            color: const Color(0xFFDDDDDD),
-                            borderRadius: BorderRadius.circular(1.4.w)),
-                      ),
-                    )
-                  ]),
-                ),
-              ))
+          GestureDetector(
+            onTap: () {},
+            child: SizedBox(child: Image.asset(Assets.images.addcar.path)),
+          )
         ],
       ),
     );
