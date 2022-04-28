@@ -53,38 +53,38 @@ class DropDownWidget extends StatefulWidget {
 }
 
 class ScreenControl {
+  
+  late AnimationController animateController;
+  late Animation<double> curve;
+//按钮旋转状态
+  List<bool> rotateState = [];
   //自动
   void autoDisplay() {
-    if (_controller.isDismissed) {
-      _controller.forward();
+    if (animateController.isDismissed) {
+      animateController.forward();
     } else {
-      _controller.reverse();
+      animateController.reverse();
       rotateState = rotateState.map((e) => false).toList();
     }
   }
 
   //显示
   void screenShow() {
-    _controller.forward();
+    animateController.forward();
   }
 
   //隐藏
   void screenHide() {
-    _controller.reverse();
-
+    animateController.reverse();
     rotateState = rotateState.map((e) => false).toList();
   }
+
 }
 
-late AnimationController _controller;
-late Animation<double> curve;
-//按钮旋转状态
-List<bool> rotateState = [];
 
 class _DropDownWidgetState extends State<DropDownWidget>
     with SingleTickerProviderStateMixin {
   int tabIndex = 0;
-  final ScreenControl _screenControl = ScreenControl();
   bool showBottom = false;
 
   @override
@@ -92,28 +92,27 @@ class _DropDownWidgetState extends State<DropDownWidget>
     super.initState();
     widget.bottomHeight;
     //展开隐藏控制器，动画初始化
-    _controller = AnimationController(
+    widget.screenControl.animateController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200));
-    curve = CurvedAnimation(parent: _controller, curve: Curves.decelerate);
-    curve = Tween(begin: 0.0, end: widget.bottomHeight).animate(curve)
+    widget.screenControl.curve = CurvedAnimation(parent: widget.screenControl.animateController, curve: Curves.decelerate);
+    widget.screenControl.curve = Tween(begin: 0.0, end: widget.bottomHeight).animate(widget.screenControl.curve)
       ..addListener(() {
         setState(() {
-          if (curve.value > 0) {
+          if (widget.screenControl.curve.value > 0) {
             showBottom = true;
           } else {
             showBottom = false;
           }
         });
       });
-    rotateState = [];
+    widget.screenControl.rotateState = [];
     widget.titles.toList().forEach((element) {
-      rotateState.add(false);
+      widget.screenControl.rotateState.add(false);
     });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -156,21 +155,21 @@ class _DropDownWidgetState extends State<DropDownWidget>
               getRoState(i),
               () {
                 if (kDebugMode) {
-                  print("click${rotateState.length}");
+                  print("click${widget.screenControl.rotateState.length}");
                 }
                 setState(() {
                   tabIndex = i;
-                  for (int j = 0; j < rotateState.length; j++) {
+                  for (int j = 0; j < widget.screenControl.rotateState.length; j++) {
                     if (i == j) {
-                      if (rotateState[j]) {
-                        rotateState = rotateState.map((e) => false).toList();
+                      if (widget.screenControl.rotateState[j]) {
+                        widget.screenControl.rotateState = widget.screenControl.rotateState.map((e) => false).toList();
 
-                        _controller.reverse();
+                        widget.screenControl.animateController.reverse();
                       } else {
-                        rotateState = rotateState.map((e) => false).toList();
-                        rotateState[j] = !rotateState[j];
+                        widget.screenControl.rotateState = widget.screenControl.rotateState.map((e) => false).toList();
+                        widget.screenControl.rotateState[j] = !widget.screenControl.rotateState[j];
 
-                        _controller.forward();
+                        widget.screenControl.animateController.forward();
                       }
                     }
                   }
@@ -220,7 +219,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
       height: showBottom ? double.infinity : 0.0,
       child: GestureDetector(
         onTap: () {
-          _screenControl.screenHide();
+          widget.screenControl.screenHide();
         },
         child: getBottomIndex(),
       ),
@@ -228,10 +227,10 @@ class _DropDownWidgetState extends State<DropDownWidget>
   }
 
   bool getRoState(int i) {
-    if (rotateState.isEmpty || rotateState.length < i + 1) {
+    if (widget.screenControl.rotateState.isEmpty || widget.screenControl.rotateState.length < i + 1) {
       return false;
     }
-    return rotateState[i];
+    return widget.screenControl.rotateState[i];
   }
 
   Widget getBottomIndex() {

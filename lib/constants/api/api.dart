@@ -1,4 +1,3 @@
-
 import '../environment/environment.dart';
 
 part 'user_api.dart';
@@ -33,32 +32,44 @@ class API {
   //根分类
   ///文件
   static _File file = _File();
+
   ///登陆
   static _Login login = _Login();
+
   ///门店管理
   static _StoreManagement storeManagement = _StoreManagement();
+
   ///订单
   static _Order order = _Order();
+
   ///海报
   static _Poster poster = _Poster();
+
   ///车辆
   static _Car car = _Car();
+
   ///合同
   static _Contract contract = _Contract();
+
   ///客户
   static _Customer customer = _Customer();
+
   ///任务
   static _Task task = _Task();
+
   ///地区
   static _Region region = _Region();
+
   ///用户手册
   static _Broker broker = _Broker();
+
   ///意见提交
   static _Feedback feedback = _Feedback();
+
   //二级分类
   static _UserApi user = _UserApi();
 }
-  
+
 class _Task {
   ///客户邀约列表
   String get getInviteLists => '/task/invite/lists';
@@ -86,7 +97,6 @@ class _Customer {
   ///客户取消重要
   String get customerImportantCancel => '/customer/important/cancel';
 }
-
 
 class _Contract {
   ///发起寄卖合同
@@ -116,6 +126,9 @@ class _Login {
 
   ///微信绑定手机号发送验证码
   String get phoneCode => '/login/sms';
+
+  ///退出登陆
+  String get logout => '/login/logout';
 }
 
 class _Order {
@@ -179,7 +192,6 @@ class _Region {
 
   ///微信绑定手机号发送验证码
   String get phoneCode => '/login/sms';
-
 }
 
 ///门店管理

@@ -1,8 +1,12 @@
+import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/ui/login/login_page.dart';
 import 'package:cloud_car/ui/user/user_install/Bank_card.dart';
 import 'package:cloud_car/ui/user/user_install/cancellation.dart';
 import 'package:cloud_car/ui/user/user_install/enterprise_information.dart';
 import 'package:cloud_car/ui/user/user_install/real_name.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -87,12 +91,20 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
 //按钮
   _getBottom() {
     return GestureDetector(
+      onTap: ()async{
+       var base = await apiClient.request(API.login.logout,showMessage: true);
+        if (base.code==0) {
+
+          UserTool.userProvider.logout();
+          Get.offAll(const LoginPage());
+        }
+      },
       child: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.symmetric(vertical: 28.w),
           color: Colors.white,
           child: Text(
-            '退出登录',
+            '退出登陆',
             style: Theme.of(context)
                 .textTheme
                 .subtitle2
