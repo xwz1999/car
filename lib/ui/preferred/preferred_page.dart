@@ -146,6 +146,7 @@ class _PreferredPageState extends State<PreferredPage>
   @override
   void dispose() {
     _refreshController.dispose();
+    screenControl.disPose();
     super.dispose();
   }
 

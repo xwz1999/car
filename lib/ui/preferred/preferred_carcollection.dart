@@ -147,6 +147,7 @@ class _CarCollectionState extends State<CarCollection> {
   @override
   void dispose() {
     _refreshController.dispose();
+    screenControl.disPose();
     super.dispose();
   }
 
