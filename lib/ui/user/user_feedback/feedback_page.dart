@@ -22,7 +22,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('产品手册',
+        title: Text('意见反馈',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
@@ -57,7 +57,11 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const ProblemFeedback());
+                        Get.to(() => const ProblemFeedback(
+                              isTitle: true,
+                              title1: '问题描述',
+                              text: '请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题',
+                            ));
                       },
                       child: Column(
                         children: [
@@ -149,7 +153,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                   Icons.keyboard_arrow_right,
                                 )),
                             onTap: () {
-                              Get.to(() => const CreateOrder());
+                              Get.to(() => const ProblemFeedback(
+                                    title1: '怎么创建订单',
+                                    text: '请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题',
+                                  ));
                             },
                           ),
                           ListTile(
@@ -163,7 +170,12 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                 child: const Icon(
                                   Icons.keyboard_arrow_right,
                                 )),
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const ProblemFeedback(
+                                    title1: '订单成交后在哪里查看合同',
+                                    text: '请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题',
+                                  ));
+                            },
                           ),
                           ListTile(
                             title: Text(
@@ -176,7 +188,12 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                 child: const Icon(
                                   Icons.keyboard_arrow_right,
                                 )),
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const ProblemFeedback(
+                                    title1: '问题描述',
+                                    text: '请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题',
+                                  ));
+                            },
                           ),
                           ListTile(
                             title: Text(
@@ -189,7 +206,12 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                 child: const Icon(
                                   Icons.keyboard_arrow_right,
                                 )),
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const ProblemFeedback(
+                                    title1: '问题描述',
+                                    text: '请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题',
+                                  ));
+                            },
                           ),
                           ListTile(
                             title: Text(
@@ -202,7 +224,12 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                 child: const Icon(
                                   Icons.keyboard_arrow_right,
                                 )),
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => const ProblemFeedback(
+                                    title1: '问题描述',
+                                    text: '请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题',
+                                  ));
+                            },
                           ),
                         ]).toList(),
                   ),

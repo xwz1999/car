@@ -1,7 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/interface/feedback_func.dart';
 import 'package:cloud_car/widget/button/cloud_bottom.dart';
-import 'package:dotted_border/dotted_border.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,14 +12,19 @@ class ProblemFeedback extends StatefulWidget {
   final String content;
   final String phone;
   final String img;
-
-  const ProblemFeedback(
-      {Key? key,
-      this.title = '问题反馈',
-      this.content = '',
-      this.img = '',
-      this.phone = ''})
-      : super(key: key);
+  final String title1;
+  final String text;
+  final bool isTitle;
+  const ProblemFeedback({
+    Key? key,
+    this.title = '问题反馈',
+    this.content = '',
+    this.img = '',
+    this.phone = '',
+    required this.title1,
+    required this.text,
+    this.isTitle = false,
+  }) : super(key: key);
 
   @override
   State<ProblemFeedback> createState() => _ProblemFeedbackState();
@@ -34,28 +38,26 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
-        ),
-        title: Text('问题反馈',
-            style: TextStyle(
-                color: BaseStyle.color111111,
-                fontSize: BaseStyle.fontSize36,
-                fontWeight: FontWeight.bold)),
-        backgroundColor: kForeGroundColor,
+        appBar: AppBar(
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          title: Text(widget.isTitle ? '问题反馈' : '',
+              style: TextStyle(
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize36,
+                  fontWeight: FontWeight.bold)),
+          backgroundColor: kForeGroundColor,
 
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
-      ),
-      backgroundColor: bodyColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+          //leading:  Container(width: 10.w, child: const CloudBackButton()),
+        ),
+        backgroundColor: bodyColor,
+        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           32.hb,
           Padding(
             padding: EdgeInsets.only(left: 32.w),
             child: Text(
-              '问题描述',
+              widget.title1,
               style: TextStyle(
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize28,
@@ -64,89 +66,56 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
           ),
           24.hb,
           Container(
-              height: 520.w,
-              color: kForeGroundColor,
-              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    // padding:
-                    //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
-                    height: 120.w,
-                    child: TextField(
-                      maxLines: 50,
-                      keyboardType: TextInputType.text,
-                      onEditingComplete: () {
-                        setState(() {});
-                        // _refreshController.callRefresh();
-                      },
-                      onChanged: (text) {
-                        content = text;
-                        setState(() {});
-                      },
+            height: 520.w,
+            color: kForeGroundColor,
+            padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  // padding:
+                  //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
+                  height: 200.w,
+                  child: TextField(
+                    maxLines: 50,
+                    keyboardType: TextInputType.text,
+                    onEditingComplete: () {
+                      setState(() {});
+                      // _refreshController.callRefresh();
+                    },
+                    onChanged: (text) {
+                      content = text;
+                      setState(() {});
+                    },
 
-                      style: TextStyle(
-                        color: BaseStyle.color333333,
-                        fontSize: BaseStyle.fontSize28,
-                      ),
-                      // controller: _editingController5,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        filled: true,
-                        isDense: true,
-                        fillColor: Colors.white,
-                        hintText: "请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题",
-                        hintStyle: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w300),
-                        border: InputBorder.none,
-                      ),
+                    style: TextStyle(
+                      color: BaseStyle.color333333,
+                      fontSize: BaseStyle.fontSize28,
+                    ),
+                    // controller: _editingController5,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.zero,
+                      filled: true,
+                      isDense: true,
+                      fillColor: Colors.white,
+                      hintText: widget.text,
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300),
+                      border: InputBorder.none,
                     ),
                   ),
-                  158.hb,
-                  DottedBorder(
-                      dashPattern: const [16, 8],
-                      strokeWidth: 4.w,
-                      color: const Color(0xFFDDDDDD),
-                      radius: Radius.circular(8.w),
-                      child: SizedBox(
-                        width: 169.w,
-                        height: 120.w,
-
-                        //padding: EdgeInsets.all(76.w),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Stack(children: [
-                            Align(
-                              child: Container(
-                                width: 48.w,
-                                height: 2.w,
-                                decoration: BoxDecoration(
-                                    border: Border.all(width: 4.w),
-                                    color: const Color(0xFFDDDDDD),
-                                    borderRadius: BorderRadius.circular(1.4.w)),
-                              ),
-                            ),
-                            Positioned(
-                              left: 85.w,
-                              top: 36.w,
-                              child: Container(
-                                width: 2.w,
-                                height: 48.w,
-                                decoration: BoxDecoration(
-                                    border: Border.all(width: 4.w),
-                                    color: const Color(0xFFDDDDDD),
-                                    borderRadius: BorderRadius.circular(1.4.w)),
-                              ),
-                            )
-                          ]),
-                        ),
-                      ))
-                ],
-              )),
+                ),
+                SizedBox(
+                  width: 200.w,
+                  height: 120,
+                  child: Image.asset(Assets.images.addcar.path),
+                ),
+              ],
+            ),
+          ),
           32.hb,
           Padding(
             padding: EdgeInsets.only(left: 32.w),
@@ -187,7 +156,6 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
               ),
             ),
           ),
-          const Spacer(),
           CloudBottom(
             ontap: () async {
               if (zhi) {
@@ -217,9 +185,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
             text: '提 交',
           ),
           32.hb,
-        ],
-      ),
-    );
+        ]));
   }
 
   _refresh() async {

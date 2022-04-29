@@ -59,7 +59,7 @@ class TitleDropDownWidget extends StatefulWidget {
     this.title,
     this.tips,
     this.isSearch = true,
-    this.isNotSearch = true,
+    this.isNotSearch = false,
   }) : super(key: key);
 
   @override
@@ -320,10 +320,12 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
             : widget.isSearch!
                 ? Container(
                     width: 750.w,
-                    height: 180.w,
+                    height: widget.isNotSearch ? 200.w : 88.w,
                     color: Colors.white,
                     child: Padding(
-                      padding: EdgeInsets.only(top: 0.w),
+                      padding: EdgeInsets.only(
+                          top: widget.isNotSearch ? 30.w : 10.w,
+                          right: widget.isNotSearch ? 38.w : 0.w),
                       child: Row(
                         children: [
                           widget.leftWidget != null

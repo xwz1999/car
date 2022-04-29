@@ -86,7 +86,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
         child: ScreenWidget(
           pickString: '',
           childAspectRatio: 200 / 56,
-          callback: (String item,int value) {
+          callback: (String item, int value) {
             if (kDebugMode) {
               print(item);
             }
@@ -113,7 +113,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
         child: Column(
           children: [
             const SizedBox(
-              height: kToolbarHeight,
+              height: kToolbarHeight + 10,
             ),
             SizedBox(
               height: 88.w,

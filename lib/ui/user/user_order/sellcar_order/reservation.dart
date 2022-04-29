@@ -36,7 +36,35 @@ class _ReservationState extends State<Reservation> {
   // late int id = ;
   late String audit = '3';
   // ignore: unused_field
-  late SaleInfo _consignmentInfoList;
+  late SaleInfo _consignmentInfoList = const SaleInfo(
+      id: 0,
+      car: Car(
+          licensingDate: 0,
+          carId: 0,
+          mainPhoto: '',
+          mileage: '',
+          modelName: '',
+          transfer: 0),
+      contract: Contract(
+        amount: '',
+        deposit: '',
+        balancePayment: '',
+        contract: 0,
+        downPayment: '',
+        serviceFee: '',
+        signAt: 0,
+        totalAmount: '',
+      ),
+      deposit: Deposit(amount: '', createdAt: 0, payType: ''),
+      downPayment: DownPayment(
+        amount: '',
+        createdAt: 0,
+        proof: '',
+      ),
+      balancePayment: BalancePayment(amount: '', createdAt: 0, proof: ''),
+      report: Report(path: '', reportId: 0),
+      means: Means(
+          certificate: '', guaranteeSlip: '', invoice: '', vehicleLicense: ''));
   @override
   @override
   void initState() {

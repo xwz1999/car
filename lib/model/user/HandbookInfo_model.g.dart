@@ -12,5 +12,5 @@ HandbookInfoModel _$HandbookInfoModelFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       content: json['content'] as String,
       createdAt: json['createdAt'] as int,
-      updateAt: json['updateAt'] as int,
+      updatedAt: json['updatedAt'] as int,
     );
