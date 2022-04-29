@@ -80,7 +80,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
       child: Column(
         children: [
           const SizedBox(
-            height: kToolbarHeight,
+            height: kToolbarHeight + 10,
           ),
           SizedBox(
             height: 88.w,

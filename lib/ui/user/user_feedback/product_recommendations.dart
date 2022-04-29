@@ -42,8 +42,8 @@ class _RecommendationsState extends State<Recommendations> {
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: bodyColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           32.hb,
           Padding(
@@ -94,7 +94,7 @@ class _RecommendationsState extends State<Recommendations> {
           ),
           24.hb,
           Container(
-              height: 336.w,
+              height: 435.w,
               color: kForeGroundColor,
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
               child: Column(
@@ -106,7 +106,6 @@ class _RecommendationsState extends State<Recommendations> {
                     //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
                     height: 120.w,
                     child: TextField(
-                      maxLines: 50,
                       keyboardType: TextInputType.text,
                       onEditingComplete: () {
                         setState(() {});
@@ -136,43 +135,11 @@ class _RecommendationsState extends State<Recommendations> {
                     ),
                   ),
                   //108.hb,
-                  DottedBorder(
-                      dashPattern: const [16, 8],
-                      strokeWidth: 4.w,
-                      color: const Color(0xFFDDDDDD),
-                      radius: Radius.circular(8.w),
-                      child: SizedBox(
-                        width: 169.w,
-                        height: 120.w,
-
-                        //padding: EdgeInsets.all(76.w),
-                        child: GestureDetector(
-                          child: Stack(children: [
-                            Align(
-                              child: Container(
-                                width: 48.w,
-                                height: 2.w,
-                                decoration: BoxDecoration(
-                                    border: Border.all(width: 4.w),
-                                    color: const Color(0xFFDDDDDD),
-                                    borderRadius: BorderRadius.circular(1.4.w)),
-                              ),
-                            ),
-                            Positioned(
-                              left: 85.w,
-                              top: 36.w,
-                              child: Container(
-                                width: 2.w,
-                                height: 48.w,
-                                decoration: BoxDecoration(
-                                    border: Border.all(width: 4.w),
-                                    color: const Color(0xFFDDDDDD),
-                                    borderRadius: BorderRadius.circular(1.4.w)),
-                              ),
-                            )
-                          ]),
-                        ),
-                      ))
+                  SizedBox(
+                    width: 200.w,
+                    height: 120,
+                    child: Image.asset(Assets.images.addcar.path),
+                  ),
                 ],
               )),
           32.hb,

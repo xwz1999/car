@@ -1,6 +1,7 @@
 import 'package:cloud_car/model/contract/ConsignmentList_model.dart';
 import 'package:cloud_car/ui/user/user_look_contract/comsignment.view.dart';
 import 'package:cloud_car/ui/user/user_look_contract/sale.dart';
+import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -18,10 +19,19 @@ class ConsignmentContract extends StatefulWidget {
 class _ConsignmentContractState extends State<ConsignmentContract>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late EasyRefreshController _refreshController;
   final EasyRefreshController _consignmentRefreshController =
       EasyRefreshController();
   final EasyRefreshController _saleRefreshController = EasyRefreshController();
-  final List<ConsignmentListModel> _ConsignmentList = [];
+  final List<ConsignmentListModel> _ConsignmentList = [
+    // const ConsignmentListModel(
+    //     id: 6,
+    //     contractSn: "202204240001",
+    //     modelName: "2013款 奥迪A4L 30 TFSI 手动 舒适型",
+    //     customerName: "守护自己的云",
+    //     status: 1,
+    //     signAt: -62135596800)
+  ];
   final List<ConsignmentListModel> _SaleList = [];
   @override
   @override
@@ -42,15 +52,55 @@ class _ConsignmentContractState extends State<ConsignmentContract>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 88.w,
-          backgroundColor: kForeGroundColor,
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          title: PreferredSize(
-              preferredSize: Size.fromHeight(1.w),
-              child: SizedBox(
+        // appBar: AppBar(
+
+        // )
+
+        // AppBar(
+        //   toolbarHeight: 88.w,
+        //   backgroundColor: kForeGroundColor,
+        //   leading: const CloudBackButton(
+        //     isSpecial: true,
+        //   ),
+        //   title: PreferredSize(
+        //       preferredSize: Size.fromHeight(1.w),
+        //       child: SizedBox(
+        //         child:
+        // TabBar(
+        //             // indicator:
+        //             //     BoxDecoration(borderRadius: BorderRadius.circular(4.w)),
+        //             indicatorColor: const Color(0xFF027AFF),
+        //             indicatorPadding: EdgeInsets.only(top: 16.w),
+        //             //indicatorWeight: 3,
+        //             indicatorSize: TabBarIndicatorSize.label,
+        //             isScrollable: true,
+        //             controller: _tabController,
+        //             tabs: [_tab(0, '寄卖合同'), _tab(1, '售车合同')]),
+        //       )),
+        //   actions: [
+        //     GestureDetector(
+        //       onTap: () {
+        //         Get.to(() => const SearchPage());
+        //       },
+        //       child: Image.asset(Assets.icons.mainSearch.path,
+        //           height: 48.w, width: 48.w),
+        //     ),
+        //   ],
+        // ),
+        backgroundColor: bodyColor,
+        //extendBody: true,
+        extendBodyBehindAppBar: true,
+        body: Column(
+          children: [
+            SearchBarWidget(
+              callback: (String text) {
+                //sortModel.value.name = text;
+                _refreshController.callRefresh();
+                setState(() {});
+              },
+              tips: '请输入客户名称',
+              title: Container(
+                alignment: Alignment.center,
                 child: TabBar(
                     // indicator:
                     //     BoxDecoration(borderRadius: BorderRadius.circular(4.w)),
@@ -61,31 +111,22 @@ class _ConsignmentContractState extends State<ConsignmentContract>
                     isScrollable: true,
                     controller: _tabController,
                     tabs: [_tab(0, '寄卖合同'), _tab(1, '售车合同')]),
-              )),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Get.to(() => const SearchPage());
-              },
-              child: Image.asset(Assets.icons.mainSearch.path,
-                  height: 48.w, width: 48.w),
+              ),
             ),
-          ],
-        ),
-        backgroundColor: bodyColor,
-        //extendBody: true,
-        extendBodyBehindAppBar: true,
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            ConsignmentView(
-              ConsignmentList: _ConsignmentList,
-              refreshController: _consignmentRefreshController,
-            ),
-            SaleView(
-              SaleList: _SaleList,
-              refreshController: _saleRefreshController,
-            ),
+            Expanded(
+                child: TabBarView(
+              controller: _tabController,
+              children: [
+                ConsignmentView(
+                  ConsignmentList: _ConsignmentList,
+                  refreshController: _consignmentRefreshController,
+                ),
+                SaleView(
+                  SaleList: _SaleList,
+                  refreshController: _saleRefreshController,
+                ),
+              ],
+            ))
           ],
         ));
   }

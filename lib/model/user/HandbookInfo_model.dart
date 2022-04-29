@@ -10,7 +10,7 @@ class HandbookInfoModel extends Equatable {
   final String name;
   final String content;
   final int createdAt;
-  final int updateAt;
+  final int updatedAt;
   factory HandbookInfoModel.fromJson(Map<String, dynamic> json) =>
       _$HandbookInfoModelFromJson(json);
 
@@ -19,8 +19,8 @@ class HandbookInfoModel extends Equatable {
     required this.name,
     required this.content,
     required this.createdAt,
-    required this.updateAt,
+    required this.updatedAt,
   });
   @override
-  List<Object?> get props => [id, name, content, createdAt, updateAt];
+  List<Object?> get props => [id, name, content, createdAt, updatedAt];
 }

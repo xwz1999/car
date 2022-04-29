@@ -150,7 +150,7 @@ class _SalesOrderState extends State<SalesOrder> {
         child: ScreenWidget(
           pickString: '',
           childAspectRatio: 200 / 56,
-          callback: (String item,int value) {
+          callback: (String item, int value) {
             _dropDownHeaderItemStrings1 = [item];
             screenControl1.screenHide();
             setState(() {});
@@ -187,9 +187,10 @@ class _SalesOrderState extends State<SalesOrder> {
                         _dropDownHeaderItemStrings1, listWidget,
 
                         isSearch: true,
-                        height: kToolbarHeight,
+                        height: kToolbarHeight + 10,
                         bottomHeight: 24.w,
                         headFontSize: 36.sp,
+                        isNotSearch: true,
                         leftWidget: const CloudBackButton(
                           isSpecial: true,
                         ),

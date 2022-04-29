@@ -71,14 +71,12 @@ class _ProductManualsState extends State<ProductManuals> {
             onRefresh: () async {
               _refresh();
             },
-            child: productManuals.isEmpty
-                ? const SizedBox()
-                : ListView.builder(
-                    itemBuilder: (context, index) {
-                      return _getList(productManuals[index]);
-                    },
-                    itemCount: productManuals.length,
-                  ),
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return _getList(productManuals[index]);
+              },
+              itemCount: productManuals.length,
+            ),
           ))
         ],
       ),
@@ -169,7 +167,7 @@ class _ProductManualsState extends State<ProductManuals> {
                       onTap: () {
                         Get.to(() => HandbookInfo(
                               //manualsBack: (int id) {},
-                          itemId: e.id,
+                              itemId: e.id,
                               name: e.name,
                             ));
                       },
