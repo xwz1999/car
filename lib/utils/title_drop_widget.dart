@@ -258,7 +258,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                               ),
                         _show ? const Spacer() : const SizedBox(),
                         widget.isNotSearch
-                            ? const SizedBox()
+                            ?48.wb
                             : _show
                                 ? GestureDetector(
                                     onTap: () {

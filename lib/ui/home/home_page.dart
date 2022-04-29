@@ -20,7 +20,7 @@ import 'package:screenshot/screenshot.dart';
 
 import '../../utils/user_tool.dart';
 import 'car_manager/car_manager_page.dart';
-import 'car_manager/push_car_page.dart';
+import 'car_manager/publish_car/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
 import 'func/car_func.dart';
 import 'home_title.dart';

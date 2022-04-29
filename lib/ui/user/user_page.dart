@@ -147,13 +147,13 @@ class _UserPageState extends State<UserPage> {
       onTap: () {
         switch (title) {
           case '评估':
-            Get.to(() => const AssessmentNumPage());
+            Get.to(() => const UserAssessmentPage());
             break;
           case '钱包':
             Get.to(() => const WalletCertificationPage());
             break;
           case '邀请':
-            Get.to(() => const AssessmentNumPage());
+            Get.to(() => const UserAssessmentPage());
             break;
         }
       },

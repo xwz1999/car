@@ -1,5 +1,5 @@
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_owner_page.dart';
-import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';

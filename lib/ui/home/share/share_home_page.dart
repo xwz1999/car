@@ -256,7 +256,8 @@ class _ShareHomePageState extends State<ShareHomePage>
             ],
             // children: [_myCar(), _allCar()],
           ),
-        ));
+        )
+    );
   }
 
   _tab(int index, String text) {
