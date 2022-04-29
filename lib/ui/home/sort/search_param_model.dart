@@ -10,6 +10,9 @@ class SearchParamModel {
   SortSeriesModel series;
   SortCarModelModel car;
 
+
+  String? keyWords;///搜索值
+
   ///在哪个页面返回 1品牌 2车系
   int returnType;
 
@@ -83,7 +86,8 @@ class SearchParamModel {
     this.gear='',
     this.struct='',
     this.carAge='',
-    this.dischargeStandard=''
+    this.dischargeStandard='',
+    this.keyWords = '',
   });
 
   static SearchParamModel init({int? returnType}) => SearchParamModel(

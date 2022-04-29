@@ -121,7 +121,7 @@ class CarFunc {
       'licensePlate': carModel.licensePlate,
       'color': carModel.color,
       'licensingDate': carModel.licensingDate,
-      'Mileage': carModel.mileage,
+      'mileage': carModel.mileage,
     });
     if (model.code == 0) {
       return model.data['price'];

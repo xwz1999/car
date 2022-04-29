@@ -228,6 +228,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
                       callback: () {
                         Get.back();
                         _carInfo.name = _pickCar.value.car.name;
+                        _carInfo.modelId = _pickCar.value.car.id;
                       },
                       pickCar: _pickCar,
                     ));
@@ -250,7 +251,10 @@ class _CarValuationPageState extends State<CarValuationPage> {
             ),
             EditItemWidget(
               title: '车牌号',
-              callback: (String content) {},
+              callback: (String content) {
+                _carInfo.licensePlate = content;
+
+              },
               value: _carInfo.licensePlate ?? '',
               tips: '请输入车牌号',
               topIcon: false,
@@ -261,10 +265,13 @@ class _CarValuationPageState extends State<CarValuationPage> {
 
             GestureDetector(
               onTap: () async {
-                _firstDate = await CarDatePicker.monthPicker(DateTime.now());
+                _firstDate = await CarDatePicker.pick(DateTime.now());
                 _carInfo.licensingDate =
-                    DateUtil.formatDate(_firstDate, format: 'yyyy-MM');
-                setState(() {});
+                    DateUtil.formatDate(_firstDate, format: 'yyyy-MM-dd');
+                setState(() {
+
+                });
+
               },
               child: EditItemWidget(
                 title: '首次上牌',
@@ -296,7 +303,9 @@ class _CarValuationPageState extends State<CarValuationPage> {
                       callback: (String content,int value) {
                         Get.back();
                         _carInfo.color = content;
-                        setState(() {});
+                        setState(() {
+
+                        });
                       },
                       title: '车身颜色',
                     );
@@ -305,7 +314,9 @@ class _CarValuationPageState extends State<CarValuationPage> {
               },
               child: EditItemWidget(
                 title: '车身颜色',
-                callback: (String content) {},
+                callback: (String content) {
+
+                },
                 value: _carInfo.color ?? '',
                 tips: '请选择车身颜色',
                 topIcon: false,
