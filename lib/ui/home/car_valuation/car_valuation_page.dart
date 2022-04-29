@@ -157,7 +157,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const AssessmentNumPage());
+                  Get.to(() =>  const UserAssessmentPage());
                 },
                 child: Container(
                   width: 120.w,
