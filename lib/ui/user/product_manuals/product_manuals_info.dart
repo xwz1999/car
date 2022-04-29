@@ -31,27 +31,26 @@ class HandbookInfo extends StatefulWidget {
 }
 
 class _HandbookInfoState extends State<HandbookInfo> {
-  late HandbookInfoModel manualsList;
+  late HandbookInfoModel manualsList = const HandbookInfoModel(
+      id: 0, name: '', updatedAt: 0, content: '', createdAt: 0);
   late String name;
   // late String startTime;
   // late String endTime;
   late String text;
 
-
   @override
   void initState() {
-    super.initState();
     // startTime = widget.startTime;
     // endTime = widget.endTime;
     //text = widget.text;
-    Future.delayed(const Duration(milliseconds: 0), () async {
-      await product();
+    Future.delayed(const Duration(milliseconds: 0), () {
+      _refresh();
       setState(() {});
     });
-
+    super.initState();
   }
 
-  product() async {
+  _refresh() async {
     manualsList = (await Handbook.getHandbookInfo(widget.itemId))!;
     setState(() {});
   }
@@ -79,21 +78,21 @@ class _HandbookInfoState extends State<HandbookInfo> {
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
-      body:SizedBox()
-
-
-      //getItem(manualsList),
+      body:
+          //SizedBox()
+          getItem(manualsList),
     );
   }
 
   getItem(HandbookInfoModel model) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        GestureDetector(
-          onTap: () {
-            //widget.manualsBack(model.id);
-          },
-        ),
+        // GestureDetector(
+        //   onTap: () {
+        //     //widget.manualsBack(model.id);
+        //   },
+        // ),
         Text(
           model.content,
           style: Theme.of(context).textTheme.subtitle1,
@@ -104,7 +103,7 @@ class _HandbookInfoState extends State<HandbookInfo> {
           style: Theme.of(context).textTheme.subtitle1,
         ),
         Text(
-          DateUtil.formatDateMs(model.updateAt.toInt() * 1000,
+          DateUtil.formatDateMs(model.updatedAt.toInt() * 1000,
               format: 'yyyy-MM-dd'),
           style: Theme.of(context).textTheme.subtitle1,
         ),

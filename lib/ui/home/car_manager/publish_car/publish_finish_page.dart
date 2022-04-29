@@ -1,8 +1,8 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
-import '../../../widget/button/cloud_back_button.dart';
-import '../../tab_navigator.dart';
+import '../../../../widget/button/cloud_back_button.dart';
+import '../../../tab_navigator.dart';
 
 class PublishFinishPage extends StatefulWidget {
   const PublishFinishPage({Key? key}) : super(key: key);

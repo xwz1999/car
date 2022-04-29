@@ -33,11 +33,8 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   List<dynamic>? data;
 
-  late final _KingCoinUserlist = [];
   late final _kingCoinUserList = [];
   final EasyRefreshController _refreshController = EasyRefreshController();
-
-  final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   @override
   void initState() {
@@ -61,7 +58,7 @@ class _UserPageState extends State<UserPage> {
   @override
   void dispose() {
     _refreshController.dispose();
-    _easyRefreshController.dispose();
+
     super.dispose();
   }
 
@@ -77,21 +74,14 @@ class _UserPageState extends State<UserPage> {
         //height: kToolbarHeight + MediaQuery.of(context).padding.top,
         //height: 334.w,
         alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: 32.w),
         margin: EdgeInsets.only(top: 78.w, bottom: 78.w),
-        child: Row(
-          children: [
-            Padding(
-                padding: EdgeInsets.only(
-              left: 670.w,
-            )),
-            GestureDetector(
-              onTap: () {
-                Get.to(() => const SystemSettingPage());
-              },
-              child: Image.asset(Assets.icons.userSetUp.path,
-                  height: 48.w, width: 48.w),
-            ),
-          ],
+        child: GestureDetector(
+          onTap: () {
+            Get.to(() => const SystemSettingPage());
+          },
+          child: Image.asset(Assets.icons.userSetUp.path,
+              height: 48.w, width: 48.w),
         ),
       ),
       body: Expanded(
@@ -157,13 +147,13 @@ class _UserPageState extends State<UserPage> {
       onTap: () {
         switch (title) {
           case '评估':
-            Get.to(() => const AssessmentNumPage());
+            Get.to(() => const UserAssessmentPage());
             break;
           case '钱包':
             Get.to(() => const WalletCertificationPage());
             break;
           case '邀请':
-            Get.to(() => const AssessmentNumPage());
+            Get.to(() => const UserAssessmentPage());
             break;
         }
       },

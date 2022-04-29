@@ -33,7 +33,6 @@ class EditItemWidget extends StatefulWidget {
 class _EditItemWidgetState extends State<EditItemWidget> {
   late TextEditingController _editingController;
   late double paddingTop = 0;
-
   @override
   void initState() {
     if(widget.paddingTop==0){
@@ -47,14 +46,15 @@ class _EditItemWidgetState extends State<EditItemWidget> {
 
   @override
   void didUpdateWidget(covariant EditItemWidget oldWidget) {
-    _editingController.text =  widget.value;
+    if (!widget.canChange) {
+        _editingController.text=widget.value;
+    }
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   void dispose() {
     _editingController.dispose();
-
     super.dispose();
   }
 
@@ -98,10 +98,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                 // _refreshController.callRefresh();
               },
               onChanged: (text) {
-
-                widget.callback( text.trim());
-
-                setState(() {});
+                widget.callback(text);
               },
               style: TextStyle(
                 color:  BaseStyle.color333333,

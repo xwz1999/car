@@ -5,6 +5,7 @@ import 'package:cloud_car/model/user/History_model.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 class User {
   ///获取剩余评估次数
@@ -28,13 +29,18 @@ class User {
   /// }
 
   ///评估记录
-  static Future<List<HistoryModel>> getHistory() async {
-    BaseListModel res =
-        await apiClient.requestList(API.user.wallet.assessHistory);
+  static Future<List<HistoryModel>> getHistory(
+      {required int page, int size = 10}) async {
+    BaseListModel res = await apiClient.requestList(
+        API.user.wallet.assessHistory,
+        data: {'page': page, 'size': size});
 
-    /// ignore: unrelated_type_equality_checks
-    if (res.data!.list == 0) return [];
-    return res.data!.list!.map((e) => HistoryModel.fromJson(e)).toList();
+    if (res.code == 0) {
+      return res.nullSafetyList.map((e) => HistoryModel.fromJson(e)).toList();
+    } else {
+      CloudToast.show(res.msg);
+      return [];
+    }
   }
 
   ///支付宝实名认证

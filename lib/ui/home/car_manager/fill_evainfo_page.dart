@@ -1,6 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/home/car_manager/check_pushcar_page.dart';
-import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 
 import 'package:cloud_car/utils/headers.dart';

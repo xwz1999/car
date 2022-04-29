@@ -3,6 +3,7 @@ import 'package:cloud_car/model/user/HandbookInfo_model.dart';
 import 'package:cloud_car/model/user/Handbook_model.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 class Handbook {
   ///用户手册
@@ -18,9 +19,10 @@ class Handbook {
   ) async {
     BaseModel res = await apiClient
         .request(API.broker.handbookInfo, data: {'itemId': itemId});
-    if (res.data == 0) {
+    if (res.code == 0) {
       return HandbookInfoModel.fromJson(res.data);
     } else {
+      CloudToast.show(res.msg);
       return null;
     }
   }

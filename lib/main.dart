@@ -35,24 +35,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        //点击输入框外部隐藏键盘⌨️
-        //只能响应点击非手势识别的组件
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus &&
-            currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus!.unfocus();
-        }
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => CityProvider()),
+        ChangeNotifierProvider(create: (context) => AppProvider()),
+      ],
       child: ScreenUtilInit(
         designSize: const Size(750, 1334),
-        builder: (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (context) => UserProvider()),
-            ChangeNotifierProvider(create: (context) => CityProvider()),
-            ChangeNotifierProvider(create: (context) => AppProvider()),
-          ],
+        builder: (context) => GestureDetector(
+          onTap: () {
+            //点击输入框外部隐藏键盘⌨️
+            //只能响应点击非手势识别的组件
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus &&
+                currentFocus.focusedChild != null) {
+              FocusManager.instance.primaryFocus!.unfocus();
+            }
+          },
           child: GetMaterialApp(
             onGenerateTitle: (context) => '云云问车',
             debugShowCheckedModeBanner: false,
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
               ScreenUtil.setContext(context);
               return MediaQuery(
                 //设置文字大小不随系统设置改变
-                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                data: MediaQueryData.fromWindow(WidgetsBinding.instance!.window).copyWith(textScaleFactor: 1.0),
                 child: BotToastInit().call(context, child),
               );
             },
@@ -77,3 +77,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

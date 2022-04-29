@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 
 import 'assessment_pay.dart';
 
-class AssessmentNumPage extends StatefulWidget {
-  const AssessmentNumPage({Key? key}) : super(key: key);
+class UserAssessmentPage extends StatefulWidget {
+  const UserAssessmentPage({Key? key}) : super(key: key);
 
   @override
-  _AssessmentNumPageState createState() => _AssessmentNumPageState();
+  _UserAssessmentPageState createState() => _UserAssessmentPageState();
 }
 
-class _AssessmentNumPageState extends State<AssessmentNumPage> {
+class _UserAssessmentPageState extends State<UserAssessmentPage> {
   ChooseItems? _chooseItem;
   final List<ChooseItems> _piceList = [
     ChooseItems(name: '充值10次', pice: '10.00', count: 10),

@@ -1,5 +1,5 @@
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_report_page.dart';
-import 'package:cloud_car/ui/home/car_manager/push_car_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/picker/car_list_picker.dart';
 import 'package:cloud_car/widget/publish_car_info_widget.dart';

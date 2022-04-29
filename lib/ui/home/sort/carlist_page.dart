@@ -53,6 +53,7 @@ class _CarListPageState extends State<CarListPage> {
         cityList.add(CityModel(name: v.name, id: v.id));
       }
       _handleList(cityList);
+      setState(() {});
     }
 
     //加载城市列表

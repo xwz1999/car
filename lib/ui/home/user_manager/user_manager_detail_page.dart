@@ -64,8 +64,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
           isImportant: '',
           trailDate: ''));
 
-  Map<String, dynamic> get _params =>
-      {
+  Map<String, dynamic> get _params => {
         'name': sortModel.value.name,
         'status': sortModel.value.status,
         'important': sortModel.value.important,
@@ -75,7 +74,6 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
         'trailCreatedDateEnd': sortModel.value.trailCreatedDateEnd,
       };
   bool _onLoad = true;
-
 
   @override
   void initState() {
@@ -90,9 +88,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
     ];
   }
 
-
-  List<Widget> get listWidgets =>
-      [
+  List<Widget> get listWidgets => [
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -178,14 +174,15 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                         order: sort.isEmpty
                             ? null
                             : (CustomerMap.customerSortString
-                            .getKeyFromValue(sort) as CustomerSort)
-                            .name
-                            .toString()
-                            .toSnake,
+                                    .getKeyFromValue(sort) as CustomerSort)
+                                .name
+                                .toString()
+                                .toSnake,
                         searchParams: _params);
 
                     _list = [
-                      const CustomerListModel(gender: 1,
+                      const CustomerListModel(
+                          gender: 1,
                           createdAt: 2,
                           brokerName: '111',
                           trailCreatedAt: 3,
@@ -194,7 +191,6 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                           id: 1,
                           isImportant: 1),
                     ];
-
 
                     _onLoad = false;
 
@@ -207,7 +203,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                       'page': _page,
                       'size': 10,
                       'order': (CustomerMap.customerSortString
-                          .getKeyFromValue(sort) as CustomerSort)
+                              .getKeyFromValue(sort) as CustomerSort)
                           .name
                           .toString()
                           .toSnake,
@@ -226,23 +222,27 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                     SliverToBoxAdapter(
                       child: 80.hb,
                     ),
-                    _onLoad ? SliverToBoxAdapter(
-                      child: 0.hb,
-                    ) :
-                    _list.isEmpty
-                        ? const SliverToBoxAdapter(
-                        child: NoDataWidget(text: '暂无相关车辆信息', paddingTop: 300,))
-                        : SliverPadding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 24.w, vertical: 20.w),
-                      sliver:
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                          var model = _list[index];
-                          return _getItem(model);
-                        }, childCount: _list.length),
-                      ),
-                    )
+                    _onLoad
+                        ? SliverToBoxAdapter(
+                            child: 0.hb,
+                          )
+                        : _list.isEmpty
+                            ? const SliverToBoxAdapter(
+                                child: NoDataWidget(
+                                text: '暂无相关车辆信息',
+                                paddingTop: 300,
+                              ))
+                            : SliverPadding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24.w, vertical: 20.w),
+                                sliver: SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                      (context, index) {
+                                    var model = _list[index];
+                                    return _getItem(model);
+                                  }, childCount: _list.length),
+                                ),
+                              )
                   ],
                 ),
                 screen: '筛选',
@@ -264,9 +264,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
       callback: (String text) {
         sortModel.value.name = text;
         _refreshController.callRefresh();
-        setState(() {
-
-        });
+        setState(() {});
       },
       tips: '请输入客户名称',
       title: Container(
@@ -287,21 +285,22 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
       onConfirm: () {
         Get.back();
         _refreshController.callRefresh();
-        setState(() {
-
-        });
-      }, pickSort: sortModel,
+        setState(() {});
+      },
+      pickSort: sortModel,
     );
   }
 
   _getItem(CustomerListModel model) {
     return GestureDetector(
       onTap: () async {
-
-       bool isSuccess =  await Get.to(() => UserInfoPage(customerId: model.id, model: model,));
-       if(isSuccess){
-         _refreshController.callRefresh();
-       }
+        bool isSuccess = await Get.to(() => UserInfoPage(
+              customerId: model.id,
+              model: model,
+            ));
+        if (isSuccess) {
+          _refreshController.callRefresh();
+        }
       },
       child: Container(
         decoration: BoxDecoration(
@@ -310,27 +309,26 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
           children: [
             model.isImportant == 1
                 ? Positioned(
-              child: GestureDetector(
-                onTap: () async {
-                  bool success = await CustomerFunc.cancelImportant(model.id);
-                  if (success) {
-                    CloudToast.show('取消成功');
-                    _refreshController.callRefresh();
+                    child: GestureDetector(
+                      onTap: () async {
+                        bool success =
+                            await CustomerFunc.cancelImportant(model.id);
+                        if (success) {
+                          CloudToast.show('取消成功');
+                          _refreshController.callRefresh();
 
-                    setState(() {
-
-                    });
-                  }
-                },
-                child: Image.asset(
-                  Assets.images.importantUser.path,
-                  width: 130.w,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              right: 0,
-              top: 0,
-            )
+                          setState(() {});
+                        }
+                      },
+                      child: Image.asset(
+                        Assets.images.importantUser.path,
+                        width: 130.w,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                    right: 0,
+                    top: 0,
+                  )
                 : const SizedBox(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -339,9 +337,10 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                 Row(
                   children: [
                     36.wb,
-
                     Image.asset(
-                      model.gender==0? Assets.icons.icUser.path:Assets.icons.icUserWoman.path,
+                      model.gender == 0
+                          ? Assets.icons.icUser.path
+                          : Assets.icons.icUserWoman.path,
                       width: 32.w,
                       height: 32.w,
                     ),
@@ -357,25 +356,23 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                     model.isImportant == 1
                         ? const SizedBox()
                         : GestureDetector(
-                      onTap: () async {
-                        bool success = await CustomerFunc.setImportant(
-                            model.id);
-                        if (success) {
-                          CloudToast.show('设置成功');
-                          _refreshController.callRefresh();
-                          setState(() {
-
-                          });
-                        }
-                      },
-                      child: Text(
-                        '设为重要',
-                        style: TextStyle(
-                          fontSize: 24.sp,
-                          color: BaseStyle.color999999,
-                        ),
-                      ),
-                    ),
+                            onTap: () async {
+                              bool success =
+                                  await CustomerFunc.setImportant(model.id);
+                              if (success) {
+                                CloudToast.show('设置成功');
+                                _refreshController.callRefresh();
+                                setState(() {});
+                              }
+                            },
+                            child: Text(
+                              '设为重要',
+                              style: TextStyle(
+                                fontSize: 24.sp,
+                                color: BaseStyle.color999999,
+                              ),
+                            ),
+                          ),
                     24.wb,
                   ],
                 ),
@@ -389,15 +386,20 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                         16.hb,
                         _getText('最近跟进', model.trailContent),
                         16.hb,
-                        _getText('跟进时间', DateUtil.formatDateMs(
-                            model.trailCreatedAt.toInt() * 1000,
-                            format: 'yyyy-MM-dd HH-mm-ss'),),
+                        _getText(
+                          '跟进时间',
+                          DateUtil.formatDateMs(
+                              model.trailCreatedAt.toInt() * 1000,
+                              format: 'yyyy-MM-dd HH-mm-ss'),
+                        ),
                         // 16.hb,
                         // _getText('客户来源', '微信小程序'),
                         16.hb,
-                        _getText('注册时间', DateUtil.formatDateMs(
-                            model.createdAt.toInt() * 1000,
-                            format: 'yyyy-MM-dd HH-mm-ss'),),
+                        _getText(
+                          '注册时间',
+                          DateUtil.formatDateMs(model.createdAt.toInt() * 1000,
+                              format: 'yyyy-MM-dd HH-mm-ss'),
+                        ),
                         16.hb,
                         _getText('销售', model.brokerName),
                         16.hb,
