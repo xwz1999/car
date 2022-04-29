@@ -159,7 +159,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             child: Image.asset(Assets.icons.mainSearch.path,
                 height: 48.w, width: 48.w),
           ),
-          20.wb,
+          25.wb,
         ],
       ),
     );
