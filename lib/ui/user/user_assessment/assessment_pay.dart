@@ -8,6 +8,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/pay_util.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom.dart';
 import 'package:flutter/material.dart';
@@ -198,6 +199,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
       await PayUtil().callWxPay(
         payModel: wxPayModel,
       );
+
     } else {
       CloudToast.show(base.msg);
     }
@@ -230,7 +232,8 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
           style: Theme.of(context).textTheme.subtitle1,
         ),
         bottom: CloudBottom(
-          ontap: () {
+          ontap: ()async {
+            await UserTool.userProvider.updateUserInfo();
             Get.offAll(const TabNavigator());
           },
           text: '返回首页',
