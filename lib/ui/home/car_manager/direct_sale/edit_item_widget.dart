@@ -98,7 +98,9 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                 // _refreshController.callRefresh();
               },
               onChanged: (text) {
-                widget.callback(text);
+
+                widget.callback( text.trim());
+
                 setState(() {});
               },
               style: TextStyle(

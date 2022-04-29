@@ -68,10 +68,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               focusNode: _contentFocusNode,
               onChanged: (text) {
                 _searchText = text;
-                setState(() {});
-              },
-              onTap: () {},
-              onSubmitted: (_submitted) async {
                 if (TextUtils.isEmpty(_searchText)) {
 
                   widget.callback('');
@@ -84,6 +80,10 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 widget.callback(_searchText);
 
                 setState(() {});
+              },
+              onTap: () {},
+              onSubmitted: (_submitted) async {
+
               },
               style: TextStyle(
                 textBaseline: TextBaseline.ideographic,
@@ -159,7 +159,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             child: Image.asset(Assets.icons.mainSearch.path,
                 height: 48.w, width: 48.w),
           ),
-          20.wb,
+          25.wb,
         ],
       ),
     );
