@@ -3,28 +3,31 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
+import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flustars/flustars.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
-import '../../../model/sort/sort_brand_model.dart';
-import '../../../model/sort/sort_car_model_model.dart';
-import '../../../model/sort/sort_series_model.dart';
-import '../../../utils/new_work/api_client.dart';
-import '../../../widget/button/cloud_back_button.dart';
-import '../../../widget/picker/car_date_picker.dart';
-import '../../../widget/picker/car_list_picker.dart';
-import '../../../widget/picker/cloud_image_picker.dart';
-import '../../../widget/sort_widget.dart';
+import '../../../../model/sort/sort_brand_model.dart';
+import '../../../../model/sort/sort_car_model_model.dart';
+import '../../../../model/sort/sort_series_model.dart';
+import '../../../../utils/new_work/api_client.dart';
+import '../../../../widget/button/cloud_back_button.dart';
+import '../../../../widget/picker/car_date_picker.dart';
+import '../../../../widget/picker/car_list_picker.dart';
+import '../../../../widget/picker/cloud_image_picker.dart';
+import '../../../../widget/sort_widget.dart';
 
-import '../sort/choose_car_page.dart';
-import '../sort/search_param_model.dart';
-import 'direct_sale/edit_item_widget.dart';
-import 'fill_evainfo_page.dart';
+import '../../sort/choose_car_page.dart';
+import '../../sort/search_param_model.dart';
+import '../direct_sale/edit_item_widget.dart';
+import '../fill_evainfo_page.dart';
 
 class PushCarPage extends StatefulWidget {
   const PushCarPage({Key? key}) : super(key: key);
@@ -180,6 +183,9 @@ class _PushCarPageState extends State<PushCarPage> {
                             ),
                             150.wb,
                             GestureDetector(
+                              onTap: (){
+                                Get.to(()=>const UserAssessmentPage());
+                              },
                               child: Container(
                                 width: 120.w,
                                 height: 58.w,
@@ -476,8 +482,9 @@ class _PushCarPageState extends State<PushCarPage> {
       BotToast.showText(text: '请选择首次上牌时间');
       return false;
     }
-    if (_publishCarInfo.carNum.isEmptyOrNull) {
-      BotToast.showText(text: '请输入车牌号');
+
+    if (!RegexUtil.matches(licensePlateReg, _publishCarInfo.carNum??'')) {
+      BotToast.showText(text: '请输入正确的车牌号');
       return false;
     }
 

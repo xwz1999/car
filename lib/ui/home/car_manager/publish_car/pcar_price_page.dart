@@ -5,7 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
 import '../direct_sale/edit_item_widget.dart';
-import '../publish_finish_page.dart';
+import 'publish_finish_page.dart';
 
 class CarPricePage extends StatefulWidget {
   const CarPricePage({Key? key}) : super(key: key);

@@ -46,6 +46,9 @@ class _EditItemWidgetState extends State<EditItemWidget> {
 
   @override
   void didUpdateWidget(covariant EditItemWidget oldWidget) {
+    if (!widget.canChange) {
+        _editingController.text=widget.value;
+    }
     super.didUpdateWidget(oldWidget);
   }
 
