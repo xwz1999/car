@@ -2,7 +2,7 @@
 
 import 'package:cloud_car/ui/user/user_install/validation.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -61,9 +61,9 @@ class _CancellationPageState extends State<CancellationPage> {
                 ],
               ),
               const Spacer(),
-              CloudBottom(
+              CloudBottomButton(
                   text: '我了解风险,下一步',
-                  ontap: () {
+                  onTap: () {
                     Get.to(() => const ValidationPage());
                   }),
               32.hb,

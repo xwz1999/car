@@ -1,6 +1,6 @@
 import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/user_tool.dart';
@@ -97,9 +97,9 @@ class _NoWithddrawalPageState extends State<NoWithddrawalPage> {
                   ),
                 ),
                 const Spacer(),
-                CloudBottom(
+                CloudBottomButton(
                   text: '我了解分险,下一步',
-                  ontap: () {
+                  onTap: () {
                     Get.to(() => SuccessFailure(
                           conditions: false,
                           headline: '注销账号',
@@ -120,9 +120,9 @@ class _NoWithddrawalPageState extends State<NoWithddrawalPage> {
                           ]),
                           bottom: Column(
                             children: [
-                              CloudBottom(
+                              CloudBottomButton(
                                 text: '注销',
-                                ontap: () {},
+                                onTap: () {},
                               ),
                               Text(
                                 '若您仍选择注销,则视为放弃上述内容',

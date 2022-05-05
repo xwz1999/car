@@ -5,7 +5,7 @@ import 'package:cloud_car/ui/user/interface/business_func.dart';
 
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
 
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
@@ -55,8 +55,8 @@ class _AddStoresState extends State<AddStores> {
           32.hb,
           _real(),
           72.hb,
-          CloudBottom(
-            ontap: () async {
+          CloudBottomButton(
+            onTap: () async {
               if (storesName.isEmpty) {
                 BotToast.showText(text: '请填写门店名称');
               } else {
@@ -79,7 +79,7 @@ class _AddStoresState extends State<AddStores> {
   }
 
   _refresh() async {
-    zhi = await Business.getStoreadd(storesName, storesAddress);
+    zhi = await BusinessFunc.getStoreadd(storesName, storesAddress);
   }
 }
 

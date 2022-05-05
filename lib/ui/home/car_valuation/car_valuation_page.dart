@@ -7,6 +7,7 @@ import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
+import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/user_tool.dart';
@@ -155,7 +156,9 @@ class _CarValuationPageState extends State<CarValuationPage> {
               ),
               const Spacer(),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => const UserAssessmentPage());
+                },
                 child: Container(
                   width: 120.w,
                   height: 58.w,
@@ -229,6 +232,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
                         Get.back();
                         _carInfo.name = _pickCar.value.car.name;
                         _carInfo.modelId = _pickCar.value.car.id;
+                        _carInfo.brand = _pickCar.value.brand.name;
                       },
                       pickCar: _pickCar,
                     ));
@@ -385,6 +389,8 @@ class CarInfo {
   String? engineNo;
   int? source;
   int? shamMileage;
+
+  String? brand;
 
   String? price;
 

@@ -24,7 +24,7 @@ class _PermissionsState extends State<Permissions> {
   }
 
   void _refresh() async {
-    permissions = await Business.getRoleall();
+    permissions = await BusinessFunc.getRoleall();
     setState(() {});
   }
 

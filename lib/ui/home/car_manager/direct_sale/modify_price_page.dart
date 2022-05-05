@@ -4,7 +4,7 @@ import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 ///调价页面
 class ModifyPricePage extends StatefulWidget {
@@ -108,8 +108,8 @@ class _ModifyPricePageState extends State<ModifyPricePage>  with SingleTickerPro
                                 '提交成功，等待平台审核',
                                 style: Theme.of(context).textTheme.subtitle1,
                               ),
-                              bottom: CloudBottom(
-                                ontap: () {
+                              bottom: CloudBottomButton(
+                                onTap: () {
                                   Get.back();
                                 },
                                 text: '返回汽车详情',

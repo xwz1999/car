@@ -3,7 +3,7 @@
 import 'package:cloud_car/model/configuration_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -274,8 +274,8 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
               ),
             ),
             const Spacer(),
-            CloudBottom(
-              ontap: () {},
+            CloudBottomButton(
+              onTap: () {},
               text: '提交',
             ),
             96.hb,

@@ -51,7 +51,7 @@ class _HandbookInfoState extends State<HandbookInfo> {
   }
 
   _refresh() async {
-    manualsList = (await Manuals.getHandbookInfo(widget.itemId))!;
+    manualsList = (await ManualsFunc.getHandbookInfo(widget.itemId))!;
     setState(() {});
   }
 

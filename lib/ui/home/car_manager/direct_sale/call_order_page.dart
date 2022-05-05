@@ -4,7 +4,7 @@ import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,8 +76,8 @@ class _CallOrderPageState extends State<CallOrderPage> {
                   '发起成功，点击下方联系车务',
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
-                bottom: CloudBottom(
-                  ontap: () {
+                bottom: CloudBottomButton(
+                  onTap: () {
                     Alert.show(
                         context,
                         NormalContentDialog(

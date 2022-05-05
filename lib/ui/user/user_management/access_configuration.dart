@@ -37,7 +37,7 @@ class _AccessConfigurationState extends State<AccessConfiguration> {
   }
 
   _refresh() async {
-    permissions = await Business.getRoleall();
+    permissions = await BusinessFunc.getRoleall();
     setState(() {});
   }
 

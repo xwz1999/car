@@ -2,7 +2,7 @@ import 'package:cloud_car/ui/user/success_failure_page.dart';
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 
 class ContractPayPage extends StatefulWidget {
@@ -74,8 +74,8 @@ class _ContractPayPageState extends State<ContractPayPage> {
                           '合同签订成功',
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        bottom: CloudBottom(
-                          ontap: () {
+                        bottom: CloudBottomButton(
+                          onTap: () {
 
                           },
                           text: '返回支付',
