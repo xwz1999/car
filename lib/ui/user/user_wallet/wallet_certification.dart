@@ -1,5 +1,5 @@
 //import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/ui/user/interface/user_func.dart';
+
 import 'package:cloud_car/ui/user/user_wallet/Immediate_withdrawal.dart';
 import 'package:cloud_car/ui/user/user_wallet/Withdrawal_record.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -7,7 +7,7 @@ import 'package:cloud_car/utils/user_tool.dart';
 //import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom.dart';
-import 'package:cloud_car/widget/putup_widget.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../widget/alert.dart';

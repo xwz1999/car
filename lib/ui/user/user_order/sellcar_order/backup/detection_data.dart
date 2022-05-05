@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:dotted_border/dotted_border.dart';
+
 import 'package:flutter/material.dart';
 
 class DetectionData extends StatefulWidget {
@@ -47,8 +47,10 @@ class _DetectionDataState extends State<DetectionData> {
                   ),
                   GestureDetector(
                     onTap: () {},
-                    child:
-                        SizedBox(child: Image.asset(Assets.images.addcar.path)),
+                    child: SizedBox(
+                        width: 200.w,
+                        height: 120.w,
+                        child: Image.asset(Assets.images.addcar.path)),
                   )
                 ],
               ),

@@ -6,22 +6,15 @@ import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/title_drop_head_widget.dart';
-import 'package:cloud_car/utils/title_drop_widget.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/car_widget.dart';
-import 'package:cloud_car/widget/choose_widget.dart';
+
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
-import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-
-import 'assessment_car_page.dart';
 
 class DirectSaleManagerPage extends StatefulWidget {
   const DirectSaleManagerPage({Key? key}) : super(key: key);
@@ -47,7 +40,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   ScreenControl screenControl = ScreenControl();
   String _pickSort = '';
 
@@ -59,7 +51,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   // ];
 
   String title = '直卖车辆';
-
 
   List<Widget> listWidget = [];
   List<ChooseItem> _sortList = [];
@@ -75,10 +66,9 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   void initState() {
     super.initState();
 
-     _dropDownHeaderItemStrings1 = [
+    _dropDownHeaderItemStrings1 = [
       '排序',
- ];
-
+    ];
 
     _sortList = [
       ChooseItem(name: '最近创建'),
@@ -99,7 +89,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
         child: ScreenWidget(
           pickString: _pickSort,
           childAspectRatio: 144 / 56,
-          callback: (String item,int value) {
+          callback: (String item, int value) {
             screenControl.screenHide();
             _pickSort = item;
             refreshController.callRefresh();
@@ -162,30 +152,28 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           extendBody: true,
           body: Stack(
             children: [
-
               Padding(
-                padding:  EdgeInsets.only(top: kToolbarHeight + MediaQuery.of(context).padding.top),
-                child: DropDownWidget(
-                  _dropDownHeaderItemStrings1,
-                  listWidget,
-                  height: 80.w,
-                  bottomHeight: 400.w,
-                  screenControl: screenControl,
-                  headFontSize: 28.sp,
-                  screen: '筛选',
-                  onTap: () {
-                    screenControl.screenHide();
-                    _scaffoldKey.currentState?.openEndDrawer();
-                  },
-                  child:     DirectSalePage(
-                    callBack: () {
-                      _scaffoldKey.currentState?.openEndDrawer();
-                    }, pickCar: _pickCar, refreshController: refreshController, sort: _pickSort,
-                  )
-                ),
+                padding: EdgeInsets.only(
+                    top: kToolbarHeight + MediaQuery.of(context).padding.top),
+                child: DropDownWidget(_dropDownHeaderItemStrings1, listWidget,
+                    height: 80.w,
+                    bottomHeight: 400.w,
+                    screenControl: screenControl,
+                    headFontSize: 28.sp,
+                    screen: '筛选', onTap: () {
+                  screenControl.screenHide();
+                  _scaffoldKey.currentState?.openEndDrawer();
+                },
+                    child: DirectSalePage(
+                      callBack: () {
+                        _scaffoldKey.currentState?.openEndDrawer();
+                      },
+                      pickCar: _pickCar,
+                      refreshController: refreshController,
+                      sort: _pickSort,
+                    )),
               ),
               _getAppbar(),
-
             ],
           ),
           endDrawer: CustomDrawer(
@@ -194,7 +182,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
               callback: (bool isOpened) {},
               child: _getSortList())),
     );
-
   }
 
   _getAppbar() {
@@ -202,9 +189,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
       callback: (String text) {
         _pickCar.value.keyWords = text;
         refreshController.callRefresh();
-        setState(() {
-
-        });
+        setState(() {});
       },
       tips: '请输入车辆名称名称',
       title: Container(

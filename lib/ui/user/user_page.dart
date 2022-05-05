@@ -55,6 +55,7 @@ class _UserPageState extends State<UserPage> {
         .add(KingCoin(name: '我的邀约', url: Assets.icons.userInvitation.path));
   }
 
+  late bool bl = true;
   @override
   void dispose() {
     _refreshController.dispose();
@@ -202,28 +203,29 @@ class _UserPageState extends State<UserPage> {
             child: Stack(
               children: [
                 Container(
-                  width: 112.w,
-                  height: 46.w,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        Assets.images.bubble.path,
+                    width: 112.w,
+                    height: 46.w,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                          Assets.images.bubble.path,
+                        ),
+                        fit: BoxFit.fill,
                       ),
-                      fit: BoxFit.fill,
                     ),
-                  ),
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 8.w),
-                    child: Text(
-                      "首月6折",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(color: kForeGroundColor),
-                    ),
-                  ),
-                )
+                    alignment: Alignment.center,
+                    child: bl
+                        ? Padding(
+                            padding: EdgeInsets.only(bottom: 8.w),
+                            child: Text(
+                              "首月6折",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(color: kForeGroundColor),
+                            ),
+                          )
+                        : const SizedBox())
               ],
             ),
           ),
@@ -261,7 +263,7 @@ class _UserPageState extends State<UserPage> {
                 ),
               ),
               16.wb,
-              Text("开通即享5项权益",
+              Text(bl ? "开通即享5项权益" : '您已享受5项权益',
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
@@ -282,7 +284,7 @@ class _UserPageState extends State<UserPage> {
                   borderRadius: BorderRadius.circular(30.w),
                   color: Colors.white),
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
-              child: Text("立即开通",
+              child: Text(bl ? "立即开通" : '立即续费',
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
                       color: const Color(0xFF027AFF),
                       fontWeight: FontWeight.bold)

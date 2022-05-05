@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/contract/ConsignmentList_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';

@@ -41,9 +41,10 @@ class _ProgressBarState extends State<ProgressBar> {
               itemBuilder: (context, index) {
                 late bool ing = index < widget.num;
                 return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                        height: (widget.HW + 20).w,
+                        height: (widget.HW + 30).w,
                         child: Column(
                           children: [
                             // index != 0

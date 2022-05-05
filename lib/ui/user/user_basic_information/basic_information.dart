@@ -23,7 +23,9 @@ class BasicInformationPage extends StatefulWidget {
 
 class _BasicInformationPageState extends State<BasicInformationPage> {
   int sexId = 1;
-  late String genderText = '男';
+  late String genderText =
+      UserTool.userProvider.userInfo.gender == 0 ? '女' : '男';
+
   final picker = ImagePicker();
   late File imagePath = File('path');
   Future getImage() async {
@@ -267,6 +269,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                   ),
                                   210.wb,
                                   GestureDetector(
+                                    onTap: () => {Get.back(), setState(() {})},
                                     child: SizedBox(
                                       child: Text(
                                         '确认',
@@ -430,7 +433,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        sexId = 2;
+                                        sexId = 0;
                                         dialogSetState(() {});
                                       },
                                       child: Container(
@@ -440,7 +443,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                         color: Colors.white,
                                         child: Text('女',
                                             style: TextStyle(
-                                                color: sexId == 2
+                                                color: sexId == 0
                                                     ? const Color(0xFF027AFF)
                                                     : const Color(0xFF330000),
                                                 fontSize:
@@ -463,7 +466,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                     Text('手机号', style: Theme.of(context).textTheme.bodyText1),
                 trailing: SizedBox(
                   child: Text(
-                    '18912345432',
+                    UserTool.userProvider.userInfo.phone,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1

@@ -5,7 +5,7 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart'
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_result_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
-import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
+
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -253,7 +253,6 @@ class _CarValuationPageState extends State<CarValuationPage> {
               title: '车牌号',
               callback: (String content) {
                 _carInfo.licensePlate = content;
-
               },
               value: _carInfo.licensePlate ?? '',
               tips: '请输入车牌号',
@@ -261,17 +260,12 @@ class _CarValuationPageState extends State<CarValuationPage> {
               paddingStart: 32,
               canChange: true,
             ),
-
-
             GestureDetector(
               onTap: () async {
                 _firstDate = await CarDatePicker.pick(DateTime.now());
                 _carInfo.licensingDate =
                     DateUtil.formatDate(_firstDate, format: 'yyyy-MM-dd');
-                setState(() {
-
-                });
-
+                setState(() {});
               },
               child: EditItemWidget(
                 title: '首次上牌',
@@ -288,8 +282,6 @@ class _CarValuationPageState extends State<CarValuationPage> {
                 ),
               ),
             ),
-
-
             GestureDetector(
               onTap: () async {
                 await showModalBottomSheet(
@@ -300,12 +292,10 @@ class _CarValuationPageState extends State<CarValuationPage> {
                   builder: (context) {
                     return CarListPicker(
                       items: colorList,
-                      callback: (String content,int value) {
+                      callback: (String content, int value) {
                         Get.back();
                         _carInfo.color = content;
-                        setState(() {
-
-                        });
+                        setState(() {});
                       },
                       title: '车身颜色',
                     );
@@ -314,9 +304,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               },
               child: EditItemWidget(
                 title: '车身颜色',
-                callback: (String content) {
-
-                },
+                callback: (String content) {},
                 value: _carInfo.color ?? '',
                 tips: '请选择车身颜色',
                 topIcon: false,
@@ -346,15 +334,13 @@ class _CarValuationPageState extends State<CarValuationPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
-                    String price = await CarFunc.getQuickAmount(_carInfo);
-                    if(price.isNotEmpty){
-                      _carInfo.price = price;
-                      Get.to(() => CarValuationResultPage(
-                        carInfo: _carInfo,
-                      ));
-                    }
-
-
+                  String price = await CarFunc.getQuickAmount(_carInfo);
+                  if (price.isNotEmpty) {
+                    _carInfo.price = price;
+                    Get.to(() => CarValuationResultPage(
+                          carInfo: _carInfo,
+                        ));
+                  }
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -400,8 +386,9 @@ class CarInfo {
   int? source;
   int? shamMileage;
 
+  String? price;
 
-  String? price;///最终估价 传进去
+  ///最终估价 传进去
 
   CarInfo({
     this.name,

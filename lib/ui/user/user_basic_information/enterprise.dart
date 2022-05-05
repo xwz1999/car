@@ -1,4 +1,5 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -30,7 +31,6 @@ class _EnterprisePageState extends State<EnterprisePage> {
       extendBody: true,
       body: Container(
         color: bodyColor,
-
         margin: EdgeInsets.only(top: 16.w),
         child: Container(
           color: Colors.white,
@@ -56,7 +56,7 @@ class _EnterprisePageState extends State<EnterprisePage> {
                   '门店',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                trailing: Text('门店1',
+                trailing: Text(UserTool.userProvider.userInfo.store.storeName,
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2
@@ -69,14 +69,14 @@ class _EnterprisePageState extends State<EnterprisePage> {
                   '部门',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                trailing: Text('销售部',
+                trailing: Text(UserTool.userProvider.userInfo.store.roleName,
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2
                         ?.copyWith(color: BaseStyle.color999999)),
               ),
               Padding(
-                padding:  EdgeInsets.only(left: 32.w),
+                padding: EdgeInsets.only(left: 32.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -94,7 +94,6 @@ class _EnterprisePageState extends State<EnterprisePage> {
                   ],
                 ),
               )
-
             ]).toList(),
           ),
         ),

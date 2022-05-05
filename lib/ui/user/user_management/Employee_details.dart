@@ -1,4 +1,4 @@
-// ignore_for_file: dead_code
+// ignore_for_file: dead_code, file_names
 
 import 'package:bot_toast/bot_toast.dart';
 
@@ -311,7 +311,6 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
         Positioned(left: 534.w, top: 12.w, child: getAudit())
       ],
     );
-    ;
   }
 
 //文字样式

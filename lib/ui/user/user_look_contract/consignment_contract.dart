@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_car/model/contract/ConsignmentList_model.dart';
 import 'package:cloud_car/ui/user/user_look_contract/comsignment.view.dart';
 import 'package:cloud_car/ui/user/user_look_contract/sale.dart';
@@ -6,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../utils/headers.dart';
-import '../../../widget/button/cloud_back_button.dart';
-import '../../home/search_page.dart';
 
 class ConsignmentContract extends StatefulWidget {
   const ConsignmentContract({Key? key}) : super(key: key);

@@ -1,3 +1,4 @@
+import 'package:cloud_car/ui/user/user_order/myorder.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_shop_contract.dart';
 import 'package:cloud_car/ui/user/user_recommended/user_recommended.dart';
 import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
@@ -172,7 +173,9 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
           ],
         ),
         CloudBottom(
-          ontap: () {},
+          ontap: () {
+            Get.to(() => const PartnerShopContractPage());
+          },
           text: '确认协议并续费¥1500.00',
         )
       ]),
@@ -393,6 +396,9 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                           )),
                     ),
                     GestureDetector(
+                      onTap: () {
+                        Get.to(() => const MyOrderPage());
+                      },
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.w),

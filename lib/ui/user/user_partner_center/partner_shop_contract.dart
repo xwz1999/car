@@ -162,19 +162,22 @@ class _PartnerShopContractPageState extends State<PartnerShopContractPage>
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1
-                                  ?.copyWith(color: const Color(0xFF111111)),
+                                  ?.copyWith(
+                                      color: const Color(0xFF111111),
+                                      fontWeight: FontWeight.bold),
                             ),
-                            248.wb,
-                            SizedBox(
-                              width: 19.8.w,
-                              height: 19.8.w,
-                              child: GestureDetector(
-                                child: const Icon(
-                                  Icons.clear,
-                                  color: Color(0xFFCCCCCC),
-                                ),
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: const Icon(
+                                Icons.clear,
+                                color: Color(0xFFCCCCCC),
+                                size: 20,
                               ),
-                            )
+                            ),
+                            32.wb,
                           ],
                         ),
                         40.hb,
@@ -189,29 +192,17 @@ class _PartnerShopContractPageState extends State<PartnerShopContractPage>
                             offstage: false,
                             child: Container(
                                 padding:
-                                    EdgeInsets.only(left: 180.w, top: 140.w),
+                                    EdgeInsets.only(left: 240.w, top: 140.w),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 2.w, vertical: 2.w),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            width: 24.5.w,
-                                            height: 24.5.w,
-                                            child: Image.asset(
-                                              Assets.icons.icFavorite1.path,
-                                              fit: BoxFit.fill,
-                                              color: const Color(0xFF979797),
-                                            ),
-                                          ),
-                                          Divider(
-                                            indent: 2.w,
-                                            endIndent: 2.w,
-                                            color: const Color(0xFF979797),
-                                          )
-                                        ],
+                                    SizedBox(
+                                      width: 19.8.w,
+                                      height: 19.8.w,
+                                      child: Image.asset(
+                                        Assets.icons.pan.path,
+                                        fit: BoxFit.fill,
+                                        color: const Color(0xFF979797),
                                       ),
                                     ),
                                     Text(

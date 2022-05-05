@@ -76,26 +76,32 @@ class _CustomerPageState extends State<CustomerPage> {
                 }
               });
             },
-            child:      _onLoad?const SizedBox():
-            lists.isEmpty?const NoDataWidget(text: '暂无客户邀约提醒',paddingTop: 300,):ListView.separated(
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                // padding: EdgeInsets.only(top: 10.w),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(() => TaskUserInvitePage(
-                              model: lists[index],
-                            ));
-                      },
-                      child: CustomerInviteItem(model: lists[index]));
-                },
-                separatorBuilder: (_, __) {
-                  return SizedBox(
-                    height: 16.w,
-                  );
-                },
-                itemCount: lists.length),
+            child: _onLoad
+                ? const SizedBox()
+                : lists.isEmpty
+                    ? const NoDataWidget(
+                        text: '暂无客户邀约提醒',
+                        paddingTop: 300,
+                      )
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        // padding: EdgeInsets.only(top: 10.w),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              onTap: () {
+                                Get.to(() => TaskUserInvitePage(
+                                      model: lists[index],
+                                    ));
+                              },
+                              child: CustomerInviteItem(model: lists[index]));
+                        },
+                        separatorBuilder: (_, __) {
+                          return SizedBox(
+                            height: 16.w,
+                          );
+                        },
+                        itemCount: lists.length),
           ),
         ),
       ),

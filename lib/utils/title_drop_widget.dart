@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/text_utils.dart';
 import 'package:cloud_car/utils/title_drop_down_head_widget.dart';
@@ -258,7 +260,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                               ),
                         _show ? const Spacer() : const SizedBox(),
                         widget.isNotSearch
-                            ?48.wb
+                            ? 48.wb
                             : _show
                                 ? GestureDetector(
                                     onTap: () {

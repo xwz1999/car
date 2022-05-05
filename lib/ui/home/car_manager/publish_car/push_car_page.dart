@@ -11,7 +11,7 @@ import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../../model/sort/sort_brand_model.dart';
@@ -183,8 +183,8 @@ class _PushCarPageState extends State<PushCarPage> {
                             ),
                             150.wb,
                             GestureDetector(
-                              onTap: (){
-                                Get.to(()=>const UserAssessmentPage());
+                              onTap: () {
+                                Get.to(() => const UserAssessmentPage());
                               },
                               child: Container(
                                 width: 120.w,
@@ -327,7 +327,9 @@ class _PushCarPageState extends State<PushCarPage> {
       title: '表现里程',
       value: _publishCarInfo.mileage.toString(),
       canChange: true,
-      callback: (String content) {_publishCarInfo.mileage = content;},
+      callback: (String content) {
+        _publishCarInfo.mileage = content;
+      },
       endText: '万公里',
     );
 
@@ -483,7 +485,7 @@ class _PushCarPageState extends State<PushCarPage> {
       return false;
     }
 
-    if (!RegexUtil.matches(licensePlateReg, _publishCarInfo.carNum??'')) {
+    if (!RegexUtil.matches(licensePlateReg, _publishCarInfo.carNum ?? '')) {
       BotToast.showText(text: '请输入正确的车牌号');
       return false;
     }

@@ -341,6 +341,9 @@ class $AssetsIconsGen {
   AssetGenImage get notCollect =>
       const AssetGenImage('assets/icons/not_collect.png');
 
+  /// File path: assets/icons/pan.png
+  AssetGenImage get pan => const AssetGenImage('assets/icons/pan.png');
+
   /// File path: assets/icons/payment.png
   AssetGenImage get payment => const AssetGenImage('assets/icons/payment.png');
 

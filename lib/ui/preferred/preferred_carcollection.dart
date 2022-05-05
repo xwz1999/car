@@ -1,13 +1,15 @@
+// ignore_for_file: unused_field, avoid_print
+
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
-import 'package:cloud_car/model/car/car_list_model.dart';
+
 import 'package:cloud_car/model/preferred/collect_car_model.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
 
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
-import 'package:cloud_car/ui/preferred/preferred_car_detail.dart';
+
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -17,7 +19,7 @@ import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -51,8 +53,7 @@ class _CarCollectionState extends State<CarCollection> {
   ScreenControl screenControl = ScreenControl();
   final EasyRefreshController _refreshController = EasyRefreshController();
 
-  List<Widget> get listWidget =>
-      [
+  List<Widget> get listWidget => [
         CarListPage(
           pickCar: _pickCar,
           carCallback: () {
@@ -68,7 +69,7 @@ class _CarCollectionState extends State<CarCollection> {
           clipBehavior: Clip.antiAlias,
           child: ScreenWidget(
             pickString: _pickCar.value.price,
-            callback: (String item,int value) {
+            callback: (String item, int value) {
               screenControl.screenHide();
               _pickCar.value.price = item;
               _refreshController.callRefresh();
@@ -90,7 +91,7 @@ class _CarCollectionState extends State<CarCollection> {
           child: ScreenWidget(
             pickString: _pickSort,
             childAspectRatio: 144 / 56,
-            callback: (String item,int value) {
+            callback: (String item, int value) {
               screenControl.screenHide();
               _pickSort = item;
               _refreshController.callRefresh();
@@ -104,8 +105,7 @@ class _CarCollectionState extends State<CarCollection> {
         ),
       ];
 
-  Map<String, dynamic> get _params =>
-      {
+  Map<String, dynamic> get _params => {
         'brandId': _pickCar.value.brand.id,
         'seriesId': _pickCar.value.series.id,
         'minPrice': _pickCar.value.finalMinPrice,
@@ -118,7 +118,6 @@ class _CarCollectionState extends State<CarCollection> {
         'maxMileage': _pickCar.value.finalMaxMile,
         'dischargeStandard': _pickCar.value.dischargeStandard,
       };
-
 
   @override
   void initState() {
@@ -192,9 +191,7 @@ class _CarCollectionState extends State<CarCollection> {
             onConfirm: () {
               Get.back();
 
-              setState(() {
-
-              });
+              setState(() {});
               _refreshController.callRefresh();
             },
           )),
@@ -207,28 +204,32 @@ class _CarCollectionState extends State<CarCollection> {
           onRefresh: () async {
             print(_params);
             _page = 1;
-            var baseList = await apiClient.requestList(
-                API.car.collect.list, data: { 'page': _page,
+            var baseList =
+                await apiClient.requestList(API.car.collect.list, data: {
+              'page': _page,
               'size': _size,
-              'order':
-              CarMap.carSortString.getKeyFromValue(_pickSort),
-              'search': _params});
-            _carList=baseList.nullSafetyList.map((e) => CollectCarModel.fromJson(e)).toList();
+              'order': CarMap.carSortString.getKeyFromValue(_pickSort),
+              'search': _params
+            });
+            _carList = baseList.nullSafetyList
+                .map((e) => CollectCarModel.fromJson(e))
+                .toList();
 
             setState(() {});
           },
           onLoad: () async {
             _page++;
             var baseList =
-            await apiClient.requestList(API.car.getCarLists, data: {
+                await apiClient.requestList(API.car.getCarLists, data: {
               'page': _page,
               'size': _size,
-              'order':
-              CarMap.carSortString.getKeyFromValue(_pickSort),
+              'order': CarMap.carSortString.getKeyFromValue(_pickSort),
               'search': _params
             });
             if (baseList.nullSafetyTotal > _carList.length) {
-              _carList.addAll(baseList.nullSafetyList.map((e) => CollectCarModel.fromJson(e)).toList());
+              _carList.addAll(baseList.nullSafetyList
+                  .map((e) => CollectCarModel.fromJson(e))
+                  .toList());
               setState(() {});
             } else {
               _refreshController.finishLoad(noMore: true);
@@ -248,19 +249,19 @@ class _CarCollectionState extends State<CarCollection> {
   }
 
   _myCar(Widget child) {
-    return Builder(builder: (context) {
-      return DropDownWidget(_dropDownHeaderItemStrings, listWidget,
-          height: 80.w,
-          bottomHeight: 400.w,
-          screenControl: screenControl,
-          headFontSize: 28.sp,
-          child: child,
-          screen: '筛选',
-          onTap: () {
-            screenControl.screenHide();
-            Scaffold.of(context).openEndDrawer();
-          });
-    },
+    return Builder(
+      builder: (context) {
+        return DropDownWidget(_dropDownHeaderItemStrings, listWidget,
+            height: 80.w,
+            bottomHeight: 400.w,
+            screenControl: screenControl,
+            headFontSize: 28.sp,
+            child: child,
+            screen: '筛选', onTap: () {
+          screenControl.screenHide();
+          Scaffold.of(context).openEndDrawer();
+        });
+      },
     );
   }
 

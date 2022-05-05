@@ -5,7 +5,7 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
+//import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 
 class ShareDetailCustomerPage extends StatefulWidget {
@@ -20,34 +20,6 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
 
-  // ignore: non_constant_identifier_names
-
-  // a() {
-  //   //绘制多边形
-  //   const red = Colors.red;
-  //   const blue = Colors.blue;
-  //   @override
-  //   void paint(Canvas canvas, Size size) {x
-  //     final paint = Paint();
-  //     final rect = Rect.fromLTRB(
-  //         0.0, 0.0, size.width, size.height); //定义绘制区域大小，为custompaint中的size属性
-  //     //************ */
-  //     canvas.clipRect(rect); //只绘制给定额度区域中的内容
-  //     paint.color = blue;
-  //     canvas.drawRect(rect, paint); //绘制矩形区域
-  //     paint.color = red;
-  //     canvas.drawCircle(Offset.zero, size.height, paint); //绘制圆形
-  //     //final rect =Rect.fromLTRB(left, top, right, bottom)
-  //   }
-
-  //   @override
-  //   bool shouldRepaint(CustomPainter oldDelegate) {
-  //     return false;
-  //   }
-  //   // void dispose() {
-  //   //   super.dispose();
-  //   // }
-  // }
   final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
@@ -124,32 +96,38 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
                     right: 32.w,
                     child: GestureDetector(
                       onTap: () async {
-                        var permission = await Permission.storage.isGranted;
-                        if (!permission) {
-                          await Permission.storage.request();
-                          var permissionTwice =
-                              await Permission.storage.isGranted;
-                          if (!permissionTwice) {
-                            CloudToast.show('权限未授予');
-                            return;
-                          }
-                        }
+                        // var permission = await Permission.storage.isGranted;
+                        // if (!permission) {
+                        //   await Permission.storage.request();
+                        //   var permissionTwice =
+                        //       await Permission.storage.isGranted;
+                        //   if (!permissionTwice) {
+                        //     CloudToast.show('权限未授予');
+                        //     return;
+                        //   }
+                        // }
                         var u8List = await _screenshotController.capture(
                             delay: const Duration(milliseconds: 10));
-                        if (u8List != null) {
-                          var re = await ImageGallerySaver.saveImage(
-                            u8List,
-                            quality: 100,
-                          );
-                          if (re['isSuccess']) {
-                            CloudToast.show('海报已保存到${re['filePath']}',
-                                align: Alignment.center);
-                          } else {
-                            CloudToast.show('保存海报失败');
-                          }
-                        } else {
-                          CloudToast.show('海报生成失败');
-                        }
+                        var re = await ImageGallerySaver.saveImage(
+                          u8List!,
+                          quality: 100,
+                        );
+                        CloudToast.show('海报已保存到${re['filePath']}',
+                            align: Alignment.center);
+                        // if (u8List != null) {
+                        //   var re = await ImageGallerySaver.saveImage(
+                        //     u8List,
+                        //     quality: 100,
+                        //   );
+                        //   if (re['isSuccess']) {
+                        //     // CloudToast.show('海报已保存到${re['filePath']}',
+                        //     //     align: Alignment.center);
+                        //   } else {
+                        //     CloudToast.show('保存海报失败');
+                        //   }
+                        // } else {
+                        //   CloudToast.show('海报生成失败');
+                        // }
                       },
                       child: Container(
                         width: 72.w,

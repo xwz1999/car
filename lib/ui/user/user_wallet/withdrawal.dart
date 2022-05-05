@@ -79,18 +79,15 @@ class _WithdrawalState extends State<Withdrawal> {
                       color: BaseStyle.color999999,
                       fontSize: BaseStyle.fontSize24),
                 ),
-                Row(
-                  children: [
-                    ProgressBar(
-                      //direction: 'level',
-                      length: 2,
-                      num: 2,
-                      HW: 200,
-                      texts: [
-                        getText('提交转出提醒', widget.time),
-                        getText('到账时间', widget.time)
-                      ],
-                    )
+                76.hb,
+                ProgressBar(
+                  //direction: 'level',
+                  length: 2,
+                  num: 2,
+                  HW: 200,
+                  texts: [
+                    getText('提交转出提醒', widget.time),
+                    getText('到账时间', widget.time)
                   ],
                 )
               ],
@@ -103,6 +100,7 @@ class _WithdrawalState extends State<Withdrawal> {
 
   getText(String title, String time) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
