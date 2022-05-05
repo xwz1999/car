@@ -43,7 +43,7 @@ class _StaffManagementState extends State<StaffManagement> {
   }
 
   _refresh() async {
-    Employees = await Business.getStoreall();
+    Employees = await BusinessFunc.getStoreall();
     setState(() {});
   }
 

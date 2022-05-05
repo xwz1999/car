@@ -3,7 +3,7 @@
 import 'package:bot_toast/bot_toast.dart';
 
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 
 
 import 'package:flutter/cupertino.dart';
@@ -66,9 +66,9 @@ class _RealNamePageState extends State<RealNamePage> {
             16.hb,
             _real(),
             72.hb,
-            CloudBottom(
+            CloudBottomButton(
                 text: '提交',
-                ontap: () {
+                onTap: () {
                   if (_getSure) {
                   } else {
                     BotToast.showText(text: '请同意实名认证协议');

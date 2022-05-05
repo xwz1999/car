@@ -7,7 +7,7 @@ import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
-class Business {
+class BusinessFunc {
   ///组织架构
   static Future<List<StoreallModel>> getStoreall() async {
     BaseModel res =

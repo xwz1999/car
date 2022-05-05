@@ -3,7 +3,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_management/access_configuration.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 
 import 'package:flutter/material.dart';
 import '../../../utils/headers.dart';
@@ -91,8 +91,8 @@ class _EditorEmployeeState extends State<EditorEmployee> {
           24.hb,
           getpermissions(),
           88.hb,
-          CloudBottom(
-            ontap: () async {
+          CloudBottomButton(
+            onTap: () async {
               if (nameText.isEmpty) {
                 BotToast.showText(text: '请输入姓名');
               } else {
@@ -419,7 +419,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
   }
 
   _refresh() async {
-    zhi = await Business.getStaffadd(nameText, genderText == '女' ? 1 : 2,
+    zhi = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
         phoneText, storeid, roleId, commissionText);
   }
 }

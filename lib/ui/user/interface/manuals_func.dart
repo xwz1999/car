@@ -5,7 +5,7 @@ import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
-class Handbook {
+class ManualsFunc {
   ///用户手册
   static Future<List<HandbookModel>> getHandbookAll() async {
     BaseModel res = await apiClient.request(API.broker.handbookAll, data: {});

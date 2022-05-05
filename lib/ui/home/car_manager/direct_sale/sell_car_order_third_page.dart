@@ -3,7 +3,7 @@ import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
 
 import 'package:flutter/material.dart';
@@ -263,8 +263,8 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                                   '合同发起成功',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
-                                bottom: CloudBottom(
-                                  ontap: () {
+                                bottom: CloudBottomButton(
+                                  onTap: () {
                                     Get.back();
                                     Get.back();
                                     Get.back();

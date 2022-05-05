@@ -6,7 +6,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 //import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -75,9 +75,9 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
               16.hb,
               _balance(),
               const Spacer(),
-              CloudBottom(
+              CloudBottomButton(
                   text: '提现',
-                  ontap: () {
+                  onTap: () {
                     setState(() {
                       Alert.show(
                           context,

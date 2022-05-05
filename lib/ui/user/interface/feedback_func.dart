@@ -3,7 +3,7 @@ import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
-class Feedbacks {
+class FeedbackFunc {
   //意见反馈=》提交意见
   static Future<bool> getFeedback(
       String title, String content, String phone, String img) async {

@@ -33,7 +33,7 @@ class _ProductManualsState extends State<ProductManuals> {
   }
 
   _refresh() async {
-    productManuals = await Handbook.getHandbookAll();
+    productManuals = await ManualsFunc.getHandbookAll();
     setState(() {});
   }
 

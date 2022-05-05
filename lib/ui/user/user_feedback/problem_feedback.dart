@@ -1,6 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/interface/feedback_func.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 
 import 'package:flutter/material.dart';
 
@@ -156,8 +156,8 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
               ),
             ),
           ),
-          CloudBottom(
-            ontap: () async {
+          CloudBottomButton(
+            onTap: () async {
               if (zhi) {
                 Future.delayed(const Duration(milliseconds: 0), () async {
                   await _refresh();
@@ -190,6 +190,6 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
 
   _refresh() async {
     // ignore: unused_local_variable
-    zhi = await Feedbacks.getFeedback(widget.title, content, phone, img);
+    zhi = await FeedbackFunc.getFeedback(widget.title, content, phone, img);
   }
 }

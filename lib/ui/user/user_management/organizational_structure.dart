@@ -41,7 +41,7 @@ class _StructurePageState extends State<StructurePage> {
   }
 
   _refresh() async {
-    moddels = await Business.getStoreall();
+    moddels = await BusinessFunc.getStoreall();
     setState(() {});
   }
 

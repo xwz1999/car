@@ -5,7 +5,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/button/cloud_bottom.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -171,8 +171,8 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
             conditions ? const SizedBox() : _getBubbles(),
           ],
         ),
-        CloudBottom(
-          ontap: () {},
+        CloudBottomButton(
+          onTap: () {},
           text: '确认协议并续费¥1500.00',
         )
       ]),
