@@ -18,7 +18,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../constants/api/api.dart';
 
-typedef CarCallback = Function(String city, int carId);
+typedef CarCallback = Function(CarListModel model);
 
 ///单选
 class ChooseCarPage extends StatefulWidget {
@@ -140,8 +140,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
               if (_selectIndex.isEmpty) {
                 BotToast.showText(text: '请先选择车辆');
               } else {
-                widget.callback(models[_selectIndex.first].modelName,
-                    models[_selectIndex.first].id);
+                widget.callback(models[_selectIndex.first],);
                 Get.back();
               }
             },

@@ -71,7 +71,7 @@ class _MyCarViewState extends State<MyCarView>
       onLoad: () async {
         _page++;
         var baseList =
-            await apiClient.requestList(API.car.getCarSelfLists, data: {
+            await apiClient.requestList(API.car.getCarLists, data: {
           'page': _page,
           'size': _size,
           'order':CarMap.carSortString.getKeyFromValue(widget.sort),

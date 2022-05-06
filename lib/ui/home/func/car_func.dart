@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/car/car_amount_model.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
+import 'package:cloud_car/model/car/car_evaluation_model.dart';
 import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/car_sale_contract_model.dart';
@@ -63,6 +64,33 @@ class CarFunc {
           .toList();
     }
   }
+
+
+  ///获取评估列表
+  static Future<List<CarEvaluationModel>> getCarEvaluationList(int page, int size,
+      {String? keyWords}) async {
+    var data = {
+      'page': page,
+      'size': size,
+      'modelName': keyWords,
+    };
+    BaseListModel baseList =
+    await apiClient.requestList(API.car.getCarEvaluationList, data: data);
+    if (baseList.code != 0) {
+      CloudToast.show(baseList.msg);
+      return [];
+    } else {
+      return baseList.nullSafetyList
+          .map((e) => CarEvaluationModel.fromJson(e))
+          .toList();
+    }
+  }
+
+
+
+
+
+
 
   ///获取我的⻋辆列表 new_create=最新创建 max_price=标价最⾼ min_price=标价最低 min_age=⻋龄最短 min_mileage=⾥程最少 new_update=最近更新
   static Future<List<CarListModel>> getMyCarList(
@@ -206,7 +234,7 @@ class CarFunc {
       "photo": contractModel.masterInfo?.photo,
     };
     BaseModel model =
-        await apiClient.request(API.contract.addSaleContract, data: {
+        await apiClient.request(API.contract.addConsignment, data: {
       'priceId': contractModel.priceId,
       'customerId': contractModel.customerId,
       'price': contractModel.price,
