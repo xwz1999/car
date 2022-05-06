@@ -3,7 +3,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
-import 'package:dotted_border/dotted_border.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -52,9 +52,9 @@ class _AddCardPageState extends State<AddCardPage> {
             56.hb,
             _getBody(),
             72.hb,
-            CloudBottom(
+            CloudBottomButton(
                 text: '确认',
-                ontap: () {
+                onTap: () {
                   BotToast.showText(text: '绑定成功');
                 })
           ],
