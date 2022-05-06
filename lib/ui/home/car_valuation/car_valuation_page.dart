@@ -377,31 +377,44 @@ class CarInfo {
   String? name;
   String? address;
 
+  ///车型id
   int? modelId;
 
-  ///车型id
+  ///牌照
   String? licensePlate;
 
-  ///牌照
+  ///上牌照时间
   String? licensingDate;
 
-  ///上牌照时间
+  ///里程
   String? mileage;
 
-  ///里程
   String? color;
+  ///过户次数
   int? transfer;
 
-  ///过户次数
+  ///油漆面
   int? paint;
+  ///钣金面
   int? plate;
+  ///更换件
+  int? hasParts;
   List<int>? parts;
+  ///变速箱
+  int? hasSituation;
   int? engine;
+  ///重大事故
+  int? hasAccident;
   List<int>? accidents;
+  ///4s保养
   int? maintain;
+  ///车架号
   String? vin;
+  ///发动机号
   String? engineNo;
+  ///车辆来源
   int? source;
+  ///真实公里数
   int? shamMileage;
 
   String? brand;
