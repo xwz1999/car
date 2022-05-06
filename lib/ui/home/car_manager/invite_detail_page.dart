@@ -1,3 +1,4 @@
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -134,9 +135,9 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                 GestureDetector(
                   onTap: () {
                     Get.to(() => ChooseCarPage(
-                          callback: (String city, int carId) {
-                            _editingController2.text = city;
-                            _carId = carId;
+                          callback: (CarListModel model) {
+                            _editingController2.text = model.modelName;
+                            _carId = model.id;
                             setState(() {});
                           },
                           title: '选择预定车辆',

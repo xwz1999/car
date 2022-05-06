@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
 
+
+
+///客户轨迹
 class CustomersTrajectoryPage extends StatefulWidget {
   final int customerId;
   const CustomersTrajectoryPage({Key? key, required this.customerId}) : super(key: key);

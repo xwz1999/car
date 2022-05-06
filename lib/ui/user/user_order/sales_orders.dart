@@ -33,107 +33,6 @@ class _SalesOrderState extends State<SalesOrder> {
   ];
   late String title = '售车订单';
 
-  List carList = [
-    {
-      'judge': false,
-      'judgename': '待预定',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '需付定金',
-      'pice': '1.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '已预定',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付订单',
-      'pice': '1.00',
-      'buttomname': '',
-    },
-    {
-      'judge': true,
-      'judgename': '待检测',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付定金',
-      'pice': '1.00',
-      'buttomname': '上传报告',
-    },
-    {
-      'judge': false,
-      'judgename': '支付首付',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '需付首付',
-      'pice': '10.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '支付首付',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付首付',
-      'pice': '10.00',
-      'buttomname': '',
-    },
-    {
-      'judge': true,
-      'judgename': '待过户',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付首付',
-      'pice': '10.00',
-      'buttomname': '上传资料',
-    },
-    {
-      'judge': false,
-      'judgename': '支付尾款',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '需付尾款',
-      'pice': '19.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '支付尾款',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付尾款',
-      'pice': '19.00',
-      'buttomname': '',
-    },
-    {
-      'judge': true,
-      'judgename': '支付尾款',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付尾款',
-      'pice': '19.00',
-      'buttomname': '成交订单',
-    },
-    {
-      'judge': false,
-      'judgename': '成交订单',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '已付尾款',
-      'pice': '19.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '交易取消',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'picename': '',
-      'pice': '',
-      'buttomname': '',
-    },
-  ];
   @override
   void initState() {
     super.initState();
@@ -186,11 +85,10 @@ class _SalesOrderState extends State<SalesOrder> {
                     child: TitleDropDownWidget(
                         _dropDownHeaderItemStrings1, listWidget,
 
-                        isSearch: true,
+                        isSearch: false,
                         height: kToolbarHeight + 10,
                         bottomHeight: 24.w,
                         headFontSize: 36.sp,
-                        isNotSearch: true,
                         leftWidget: const CloudBackButton(
                           isSpecial: true,
                         ),

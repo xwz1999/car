@@ -6,7 +6,6 @@ import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/title_drop_head_widget.dart';
 import 'package:cloud_car/utils/title_drop_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/car_widget.dart';
@@ -35,9 +34,8 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
   // List<dynamic>? data;
   //
-  // List<Widget> listWidget1 = [];
-  //
-  // TitleHeadScreenControl screenControl1 = TitleHeadScreenControl();
+
+  TitleScreenControl screenControl = TitleScreenControl();
   final EasyRefreshController refreshController = EasyRefreshController();
 
   late String city;
@@ -47,21 +45,8 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
-  ScreenControl screenControl = ScreenControl();
-  String _pickSort = '';
-
-  //
-  // final List<ChooseItem> _sortList1 = [
-  //   ChooseItem(name: '直卖车辆'),
-  //   ChooseItem(name: '收购车辆'),
-  //   ChooseItem(name: '评估车辆'),
-  // ];
-
   String title = '直卖车辆';
 
-
-  List<Widget> listWidget = [];
   List<ChooseItem> _sortList = [];
 
   final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
@@ -75,72 +60,41 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   void initState() {
     super.initState();
 
-     _dropDownHeaderItemStrings1 = [
-      '排序',
- ];
-
-
     _sortList = [
-      ChooseItem(name: '最近创建'),
-      ChooseItem(name: '标价最高'),
-      ChooseItem(name: '标价最低'),
-      ChooseItem(name: '车龄最短'),
-      ChooseItem(name: '里程最少'),
-      ChooseItem(name: '最近更新'),
+      ChooseItem(name: '直卖车辆'),
+      ChooseItem(name: '收购车辆'),
+      ChooseItem(name: '评估车辆'),
     ];
 
-    listWidget = [
-      Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16.w)),
-            color: kForeGroundColor),
-        clipBehavior: Clip.antiAlias,
-        child: ScreenWidget(
-          pickString: _pickSort,
-          childAspectRatio: 144 / 56,
-          callback: (String item,int value) {
-            screenControl.screenHide();
-            _pickSort = item;
-            refreshController.callRefresh();
-            setState(() {});
-          },
-          mainAxisSpacing: 10.w,
-          crossAxisSpacing: 24.w,
-          crossAxisCount: 4,
-          haveButton: true,
-          itemList: _sortList,
-        ),
-      ),
+    _dropDownHeaderItemStrings1 = [
+      '直卖车辆',
     ];
-
-    // _dropDownHeaderItemStrings1 = [
-    //   '直卖车辆',
-    // ];
-    //
-    // listWidget1 = [
-    //   Container(
-    //     width: double.infinity,
-    //     decoration: BoxDecoration(
-    //         borderRadius: BorderRadius.all(Radius.circular(16.w)),
-    //         color: kForeGroundColor),
-    //     clipBehavior: Clip.antiAlias,
-    //     child: ScreenWidget(
-    //       pickString: '',
-    //       childAspectRatio: 200 / 56,
-    //       callback: (String item,int value) {
-    //         _dropDownHeaderItemStrings1 = [item];
-    //         screenControl1.screenHide();
-    //         setState(() {});
-    //       },
-    //       mainAxisSpacing: 0.w,
-    //       crossAxisSpacing: 44.w,
-    //       crossAxisCount: 3,
-    //       itemList: _sortList1,
-    //     ),
-    //   ),
-    // ];
   }
+
+  List<Widget> get listWidget => [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16.w)),
+              color: kForeGroundColor),
+          clipBehavior: Clip.antiAlias,
+          child: ScreenWidget(
+            pickString: _dropDownHeaderItemStrings1.first,
+            childAspectRatio: 200 / 56,
+            callback: (String item, int value) {
+              screenControl.screenHide();
+              _dropDownHeaderItemStrings1.first = item;
+              refreshController.callRefresh();
+              setState(() {});
+            },
+            mainAxisSpacing: 10.w,
+            crossAxisSpacing: 24.w,
+            crossAxisCount: 3,
+            haveButton: true,
+            itemList: _sortList,
+          ),
+        ),
+      ];
 
   @override
   void dispose() {
@@ -160,63 +114,44 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           backgroundColor: bodyColor,
           extendBodyBehindAppBar: true,
           extendBody: true,
-          body: Stack(
-            children: [
+          body: Container(
+              color: bodyColor,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TitleDropDownWidget(
+                        _dropDownHeaderItemStrings1, listWidget,
+                        height: kToolbarHeight + 10,
+                        bottomHeight: 24.w,
+                        screenControl: screenControl,
+                        headFontSize: 36.sp,
+                        isSearch: true,
+                        callback: (text) {
+                          _pickCar.value.keyWords = text;
+                          refreshController.callRefresh();
+                          setState(() {});
+                        },
+                        leftWidget: const CloudBackButton(
+                          isSpecial: true,
+                        ),
+                        // screen: '筛选',
+                        onTap: () {
+                          screenControl.screenHide();
+                          _scaffoldKey.currentState?.openEndDrawer();
+                        },
+                        child: DirectSalePage(
 
-              Padding(
-                padding:  EdgeInsets.only(top: kToolbarHeight + MediaQuery.of(context).padding.top),
-                child: DropDownWidget(
-                  _dropDownHeaderItemStrings1,
-                  listWidget,
-                  height: 80.w,
-                  bottomHeight: 400.w,
-                  screenControl: screenControl,
-                  headFontSize: 28.sp,
-                  screen: '筛选',
-                  onTap: () {
-                    screenControl.screenHide();
-                    _scaffoldKey.currentState?.openEndDrawer();
-                  },
-                  child:     DirectSalePage(
-                    callBack: () {
-                      _scaffoldKey.currentState?.openEndDrawer();
-                    }, pickCar: _pickCar, refreshController: refreshController, sort: _pickSort,
+                          pickCar: _pickCar,
+                          refreshController: refreshController,
+                        )),
                   )
-                ),
-              ),
-              _getAppbar(),
-
-            ],
-          ),
+                ],
+              )),
           endDrawer: CustomDrawer(
               widthPercent: 0.86,
               backgroundColor: Colors.white,
               callback: (bool isOpened) {},
               child: _getSortList())),
-    );
-
-  }
-
-  _getAppbar() {
-    return SearchBarWidget(
-      callback: (String text) {
-        _pickCar.value.keyWords = text;
-        refreshController.callRefresh();
-        setState(() {
-
-        });
-      },
-      tips: '请输入车辆名称名称',
-      title: Container(
-        alignment: Alignment.center,
-        child: Text(
-          '直卖车辆',
-          style: TextStyle(
-              color: const Color(0xFF111111),
-              fontSize: BaseStyle.fontSize36,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
     );
   }
 
@@ -262,80 +197,3 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
     );
   }
 }
-
-
-//Stack(
-//
-//               children: [
-//
-//                 Column(
-//                   children: [
-//                     ///目前不需要标题筛选所以先隐藏
-//                     // ChooseWidget(
-//                     //   callBack: (name) {
-//                     //
-//                     //     setState(() {});
-//                     //   },
-//                     //   items: const [
-//                     //     '在售',
-//                     //     '已预定',
-//                     //     '已售',
-//                     //     '退库',
-//                     //     '待审核',
-//                     //     '已驳回'
-//                     //   ],
-//                     //   item: '在售',
-//                     // ),
-//                     // _dropDownHeaderItemStrings1.first == '直卖车辆' ||
-//                     //     _dropDownHeaderItemStrings1.first == '收购车辆'
-//                     //     ? DirectSalePage(
-//                     //   callBack: () {
-//                     //     _scaffoldKey.currentState?.openEndDrawer();
-//                     //   },
-//                     //   type:
-//                     //   _dropDownHeaderItemStrings1 == ['直卖车辆'] ? 1 : 2,
-//                     // )
-//                     //     : AssessmentCarPage(callBack: () {
-//                     //   _scaffoldKey.currentState?.openEndDrawer();
-//                     // }),
-//                     _getAppbar(),
-//                     DropDownWidget(
-//                       _dropDownHeaderItemStrings1,
-//                       listWidget,
-//                       height: 80.w,
-//                       bottomHeight: 400.w,
-//                       screenControl: screenControl,
-//                       headFontSize: 28.sp,
-//                       screen: '筛选',
-//                       onTap: () {
-//                         screenControl.screenHide();
-//                         _scaffoldKey.currentState?.openEndDrawer();
-//                       },
-//                       child:     DirectSalePage(
-//                         callBack: () {
-//                           _scaffoldKey.currentState?.openEndDrawer();
-//                         }, pickCar: _pickCar, refreshController: refreshController, sort: _pickSort,
-//                       )
-//                     )
-//
-//                   ],
-//                 ),
-//
-//                 ///目前不需要标题筛选所以先隐藏
-//                 // TitleDropHeadWidget(
-//                 //   _dropDownHeaderItemStrings1,
-//                 //   listWidget1,
-//                 //   height: kToolbarHeight,
-//                 //   bottomHeight: 24.w,
-//                 //   screenControl: screenControl1,
-//                 //   headFontSize: 36.sp,
-//                 //   leftWidget: const CloudBackButton(),
-//                 //   isSearch: true,
-//                 //   isNotSearch: false,
-//                 //   callback: (text) {},
-//                 //
-//                 //   tips: '请输入车辆名称',
-//                 // ),
-//
-//               ],
-//             ),

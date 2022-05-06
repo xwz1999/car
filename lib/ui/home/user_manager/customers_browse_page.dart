@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
 
+///浏览车辆
 class CustomersBrowsePage extends StatefulWidget {
   final int customerId;
   const CustomersBrowsePage({Key? key, required this.customerId}) : super(key: key);
@@ -39,53 +40,47 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 32.w),
-        child: EasyRefresh(
-          firstRefresh: true,
-          header: MaterialHeader(),
-          footer: MaterialFooter(),
-          scrollController: _scrollController,
-          controller: _easyRefreshController,
-          onRefresh: () async {
-            _page = 1;
+    return  EasyRefresh(
+      firstRefresh: true,
+      header: MaterialHeader(),
+      footer: MaterialFooter(),
+      scrollController: _scrollController,
+      controller: _easyRefreshController,
+      onRefresh: () async {
+        _page = 1;
 
-            _list = await CustomerFunc.getCustomerBrowseList(widget.customerId, _page);
-            _onLoad = false;
+      _list = await CustomerFunc.getCustomerBrowseList(widget.customerId, _page);
+      _onLoad = false;
 
-            setState(() {});
-          },
-          onLoad: () async {
-            _page++;
-            BaseListModel baseList = await apiClient.requestList(
-                API.customer.browseLists,data: {
-              'customerId':widget.customerId, 'page':_page,'size':10
-            }
-            );
-            if (baseList.nullSafetyTotal > _list.length) {
-              _list.addAll(baseList.nullSafetyList
-                  .map((e) => CustomerBrowseListModel.fromJson(e))
-                  .toList());
-            } else {
-              _easyRefreshController.finishLoad(noMore: true);
-            }
-            setState(() {});
-          },
-          child:
-          _onLoad?const SizedBox():
-          _list.isEmpty?const NoDataWidget(text: '暂无客户轨迹信息',paddingTop: 300,):
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.only(top: 32.w),
-            itemBuilder: (BuildContext context, int index) {
-              return _getListItem(index, index < 1,_list[index]);
-            },
-            itemCount: _list.length,
-          ),
-        ),
-      ),
+      setState(() {});
+    },
+    onLoad: () async {
+      _page++;
+      BaseListModel baseList = await apiClient.requestList(
+          API.customer.browseLists,data: {
+        'customerId':widget.customerId, 'page':_page,'size':10
+      }
+      );
+      if (baseList.nullSafetyTotal > _list.length) {
+        _list.addAll(baseList.nullSafetyList
+            .map((e) => CustomerBrowseListModel.fromJson(e))
+            .toList());
+      } else {
+        _easyRefreshController.finishLoad(noMore: true);
+      }
+      setState(() {});
+    },
+    child:
+    _onLoad?const SizedBox():
+    _list.isEmpty?const NoDataWidget(text: '暂无客户轨迹信息',paddingTop: 300,):
+    ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return _getListItem(index, index < 1,_list[index]);
+      },
+      itemCount: _list.length,
+    ),
     );
 
 
@@ -113,7 +108,7 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
                   )
                       : const SizedBox(),
                   Container(
-                    margin: EdgeInsets.only(top: index != 0 ? 0 : 10.w),
+                    margin: EdgeInsets.only(top: index != 0 ? 0 : 30.w),
                     width: 20.w,
                     height: 20.w,
                     decoration: BoxDecoration(
@@ -139,6 +134,7 @@ class _CustomersBrowsePageState extends State<CustomersBrowsePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                20.hb,
                 Row(
                   children:  [
                     Text('浏览车辆',style: TextStyle(

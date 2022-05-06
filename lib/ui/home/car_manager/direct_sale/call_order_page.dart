@@ -1,4 +1,5 @@
 
+import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/choose_customer_page.dart';
 import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -205,8 +206,8 @@ class _CallOrderPageState extends State<CallOrderPage> {
                 24.hb,
                 GestureDetector(
                   onTap: (){
-                    Get.to(()=> ChooseCustomerPage(callback: (String city) {
-                      _editingController2.text = city;
+                    Get.to(()=> ChooseCustomerPage(callback: (CustomerListModel model) {
+                      _editingController2.text = model.nickname;
                       setState(() {
 
                       });

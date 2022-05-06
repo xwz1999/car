@@ -1,11 +1,17 @@
 
+import 'package:cloud_car/model/car/car_amount_model.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/choose_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_second_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_contract/initiate_contract_model.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
+import 'package:flustars/flustars.dart';
 
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -19,14 +25,12 @@ class InitiateContractPage extends StatefulWidget {
 
 class _InitiateContractPageState extends State<InitiateContractPage> {
 
-  final List<int> _selectIndex1 = [];
+  final ValueNotifier<InitiateContractModel> _contractModel = ValueNotifier(
+      InitiateContractModel());
 
-  final List<int> _selectIndex2 = [];
+  CarListModel? carModel;
 
-  final List<String> _models1 = ['全款', '按揭'];
-
-
-  final List<String> _models2 = ['本地', '外迁'];
+  CarAmountModel? carAmountModel;
 
   @override
   void initState() {
@@ -62,12 +66,17 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
         padding: EdgeInsets.zero,
         children: [
           16.hb,
-          Row(
+          carModel!=null?  Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
                 onTap: (){
-                  Get.to(()=>ChooseCarPage(title: '更换车辆', callback: (String city,int carId) {
+                  Get.to(()=>ChooseCarPage(title: '更换车辆', callback: (CarListModel model) {
+                    carModel = model;
+                    _contractModel.value.carModel = model;
+                    setState(() {
+
+                    });
 
                   },));
                 },
@@ -84,10 +93,10 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
 
 
             ],
-          ),
+          ):const SizedBox(),
 
 
-          Padding(
+          carModel!=null?Padding(
             padding:  EdgeInsets.all(24.w),
             child: Container(
               width: double.infinity,
@@ -100,22 +109,52 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
 
                   CarItemWidget(
                     widgetPadding: EdgeInsets.zero,
-                    name: '奔驰CLE 插电混动 纯电动续航103km',
-                    time: '2019年5月',
-                    distance: '20.43万公里',
-                    standard: '国六',
-                    url:Assets.images.carBanner.path,
-                    price: '27.43万',
-                  ),
-
+                    name: carModel!.modelName,
+                    time:  DateUtil.formatDateMs(carModel!.licensingDate.toInt() * 1000,
+                        format: 'yyyy年MM月'),
+                    distance:  carModel!.mileage + '万公里',
+                    //standard: '国六',
+                    url:carModel!.mainPhoto,
+                    price:  NumUtil.divide(num.parse(carModel!.price), 10000).toString(),
+                  )
                 ],
+              ),
+            ),
+          ): Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Container(
+              width: double.infinity,
+
+              color: kForeGroundColor,
+              padding: EdgeInsets.only(left: 24.w,right: 24.w,top: 24.w,bottom: 24.w),
+              child: GestureDetector(
+                onTap: (){
+                  Get.to(()=>ChooseCarPage(title: '选择车辆', callback: (CarListModel model) async {
+                    carModel = model;
+                    _contractModel.value.carModel =model;
+                    carAmountModel = await CarFunc.getCarAmount(num.parse(model.price));
+
+                    _contractModel.value.carAmountModel = carAmountModel;
+
+                    _contractModel.value.origin = '微信小程序';
+
+                    setState(() {
+                    });
+                  },));
+                },
+                child: Container(
+
+                  child: const Text('请先选择车辆'),
+                  color: Colors.white,
+
+                ),
               ),
             ),
           ),
 
           Padding(
             padding:  EdgeInsets.only(left: 24.w,top: 12.w),
-            child: Text('上门地址信息',
+            child: Text('销售信息',
               style: Theme.of(context)
                   .textTheme
                   .subtitle1?.copyWith(
@@ -136,9 +175,11 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                   paddingTop: 30.w,
 
                   title: '成交价',
-                  value: '',
+                  value: carModel==null?'':carModel!.price,
                   callback: (String content) {},
                   endText: '元',
+                  canChange: false,
+                  tips: '',
 
                 ),
 
@@ -146,18 +187,22 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
 
                   title: '定金',
                   topIcon: false,
-                  value: '',
+                  value: carAmountModel==null? '':carAmountModel!.deposit,
                   callback: (String content) {},
                   endText: '元',
+                  canChange: false,
+                  tips: '',
 
                 ),
                 EditItemWidget(
 
                   title: '首付',
                   topIcon: false,
-                  value: '',
+                  value: carAmountModel==null? '':carAmountModel!.downPayment,
                   callback: (String content) {},
                   endText: '元',
+                  canChange: false,
+                  tips: '',
 
                 ),
 
@@ -165,9 +210,11 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
 
                   title: '尾款',
                   topIcon: false,
-                  value: '',
+                  value: carAmountModel==null? '':carAmountModel!.balancePayment,
+                  tips: '',
                   callback: (String content) {},
                   endText: '元',
+                  canChange: false,
 
                 ),
 
@@ -175,78 +222,79 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
 
                   title: '服务费比列',
                   canChange: false,
-                  value: '2%',
+                  value: carAmountModel==null? '':(double.parse(carAmountModel!.serviceFeeRate)  * 100).toString()+'%' ,
                   callback: (String content) {},
                   endText: '元',
 
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 40.w),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.w),
-                        child: Text(
-                          '*  ',
-                          style: TextStyle(
-                            fontSize: 28.sp,
-                            color: const Color(0xFFE62222),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 170.w,
-                        child: Text(
-                          '付款方式',
-                          style: TextStyle(
-                            fontSize: 28.sp,
-                            color: const Color(0xFF999999),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 50.w,
-                        child: getChooseList(
-                                (String choice) {}, _models1, _selectIndex1),
-                      ),
-                    ],
-                  ),
-                ),
 
-                Padding(
-                  padding: EdgeInsets.only(top: 40.w),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.w),
-                        child: Text(
-                          '*  ',
-                          style: TextStyle(
-                            fontSize: 28.sp,
-                            color: const Color(0xFFE62222),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 170.w,
-                        child: Text(
-                          '过户方式',
-                          style: TextStyle(
-                            fontSize: 28.sp,
-                            color: const Color(0xFF999999),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 50.w,
-                        child: getChooseList(
-                                (String choice) {}, _models2, _selectIndex2),
-                      ),
-                    ],
-                  ),
                 ),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 40.w),
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       Padding(
+                //         padding: EdgeInsets.only(top: 10.w),
+                //         child: Text(
+                //           '*  ',
+                //           style: TextStyle(
+                //             fontSize: 28.sp,
+                //             color: const Color(0xFFE62222),
+                //           ),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         width: 170.w,
+                //         child: Text(
+                //           '付款方式',
+                //           style: TextStyle(
+                //             fontSize: 28.sp,
+                //             color: const Color(0xFF999999),
+                //           ),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         height: 50.w,
+                //         child: getChooseList(
+                //                 (String choice) {}, _models1, _selectIndex1),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                //
+                // Padding(
+                //   padding: EdgeInsets.only(top: 40.w),
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       Padding(
+                //         padding: EdgeInsets.only(top: 10.w),
+                //         child: Text(
+                //           '*  ',
+                //           style: TextStyle(
+                //             fontSize: 28.sp,
+                //             color: const Color(0xFFE62222),
+                //           ),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         width: 170.w,
+                //         child: Text(
+                //           '过户方式',
+                //           style: TextStyle(
+                //             fontSize: 28.sp,
+                //             color: const Color(0xFF999999),
+                //           ),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         height: 50.w,
+                //         child: getChooseList(
+                //                 (String choice) {}, _models2, _selectIndex2),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 30.hb,
 
               ],
@@ -263,7 +311,11 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
             child:
             GestureDetector(
               onTap: (){
-                Get.to(()=>const SellCarOrderSecondPage());
+                if(carModel==null){
+                  CloudToast.show('请先选择车辆');
+                }else{
+                  Get.to(()=> SellCarOrderSecondPage(contractModel: _contractModel,));
+                }
 
               },
               child:Container(

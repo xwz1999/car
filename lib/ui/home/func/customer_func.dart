@@ -52,7 +52,7 @@ class CustomerFunc {
     }
   }
 
-  ///获取客户轨迹
+  ///获取客户liebiao
   static Future<List<CustomerListModel>> getCustomerList(
       {required int page,
       int size = 10,

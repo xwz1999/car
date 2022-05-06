@@ -72,7 +72,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                   elevation: 0,
                   toolbarHeight:
                       MediaQuery.of(context).padding.top + kToolbarHeight,
-                  expandedHeight: 740.w,
+                  expandedHeight: 700.w,
                   leadingWidth: 0,
                   titleSpacing: 0,
                   title: Container(
@@ -192,8 +192,8 @@ class _UserInfoPageState extends State<UserInfoPage>
                                         detailModel.trailCreatedAt.toInt() *
                                             1000,
                                         format: 'yyyy-MM-dd HH-mm-ss')),
-                                // 16.hb,
-                                // _getText('客户来源', '微信小程序'),
+                                16.hb,
+                                _getText('客户来源', '微信小程序'),
                                 16.hb,
                                 _getText(
                                     '注册时间',

@@ -1,14 +1,25 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car_item_model.dart';
+import 'package:cloud_car/model/customer/customer_list_model.dart';
+import 'package:cloud_car/model/order/consignment_info_model.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
+import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
+import 'package:cloud_car/widget/search_bar_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../../utils/user_tool.dart';
 
 
-typedef CarCallback = Function(String city);
+typedef CarCallback = Function(CustomerListModel model);
 
 
 ///单选
@@ -25,68 +36,20 @@ class ChooseCustomerPage extends StatefulWidget {
 class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
   //选中的item
    final List<int> _selectIndex = [];
-   final List<CarItemModel> _chooseModels = [];
+   final List<CustomerListModel> _chooseModels = [];
 
-   List<CarItemModel> models = [
-     CarItemModel(
-       name: '奔驰CLE 插电混动 纯电动续航103km',
-       time: '2019年5月',
-       distance: '20.43万公里',
-       standard: '国六',
-       url: Assets.images.homeBg.path,
-       price: '27.43万',
-     ),
-     CarItemModel(
-       name: '奔驰CLE 插电混动 纯电动续航103km',
-       time: '2019年5月',
-       distance: '20.43万公里',
-       standard: '国六',
-       url: Assets.images.homeBg.path,
-       price: '27.43万',
-     ),
-     CarItemModel(
-       name: '奔驰CLE 插电混动 纯电动续航103km',
-       time: '2019年5月',
-       distance: '20.43万公里',
-       standard: '国六',
-       url: Assets.images.homeBg.path,
-       price: '27.43万',
-     ),
-     CarItemModel(
-       name: '奔驰CLE 插电混动 纯电动续航103km',
-       time: '2019年5月',
-       distance: '20.43万公里',
-       standard: '国六',
-       url: Assets.images.homeBg.path,
-       price: '27.43万',
-     ),
-     CarItemModel(
-       name: '奔驰CLE 插电混动 纯电动续航103km',
-       time: '2019年5月',
-       distance: '20.43万公里',
-       standard: '国六',
-       url: Assets.images.homeBg.path,
-       price: '27.43万',
-     ),
-     CarItemModel(
-       name: '奔驰CLE 插电混动 纯电动续航103km',
-       time: '2019年5月',
-       distance: '20.43万公里',
-       standard: '国六',
-       url: Assets.images.homeBg.path,
-       price: '27.43万',
-     ),
-     CarItemModel(
-       name: '奔驰CLE 插电混动 纯电动续航103km',
-       time: '2019年5月',
-       distance: '20.43万公里',
-       standard: '国六',
-       url: Assets.images.homeBg.path,
-       price: '27.43万',
-     ),
-   ];
+   String _search = '';
+
+   List<CustomerListModel> _list = [];
 
 
+   Map<String, dynamic> get _params => {
+     'name': _search,
+   };
+   bool _onLoad = true;
+
+   int _page = 1;
+   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   @override
   void initState() {
     super.initState();
@@ -96,35 +59,64 @@ class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
-        ),
-        backgroundColor: kForeGroundColor,
-        title: Text('选择客户',
-            style: TextStyle(
-                color: BaseStyle.color111111,
-                fontSize: BaseStyle.fontSize36,
-                fontWeight: FontWeight.bold)),
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
-
-      ),
       backgroundColor: const Color(0xFFF6F6F6),
       extendBody: true,
-      body: SafeArea(
-        child: ListView.separated(
-          padding: EdgeInsets.only(left: 24.w,right: 24.w,top: 20.w),
-          itemBuilder: (context, index) {
-            return _getCustom(index,models[index]);
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-              color: const Color(0xFFF6F6F6),
-              height: 16.w,
-            );
-          },
-          itemCount: models.length,
-        ),
+      body: Column(
+
+        children: [
+          _getAppbar() ?? const SizedBox(),
+          Expanded(
+            child: EasyRefresh(
+              firstRefresh: true,
+              header: MaterialHeader(),
+              footer: MaterialFooter(),
+              controller: _easyRefreshController,
+              onRefresh: () async {
+                _page = 1;
+                _list = await CustomerFunc.getCustomerList( page: _page, size: 10,searchParams: _params);
+                _onLoad = false;
+                setState(() {});
+              },
+              onLoad: () async {
+                _page++;
+                BaseListModel baseList = await apiClient.requestList(
+                    API.customer.customerLists,
+                    data: {'page': _page, 'size': 10,'search': _params});
+
+                if (baseList.nullSafetyTotal > _list.length) {
+                  _list.addAll(baseList.nullSafetyList
+                      .map((e) => CustomerListModel.fromJson(e))
+                      .toList());
+                } else {
+                  _easyRefreshController.finishLoad(noMore: true);
+                }
+                setState(() {});
+              },
+              child: _onLoad
+                  ? const SizedBox()
+                  : _list.isEmpty
+                  ? const NoDataWidget(
+                text: '暂无相关车辆信息',
+                paddingTop: 300,
+              )
+                  :    ListView.separated(
+                padding: EdgeInsets.only(left: 24.w,right: 24.w,top: 20.w),
+                itemBuilder: (context, index) {
+                  return _getCustom(index,_list[index]);
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Container(
+                    color: const Color(0xFFF6F6F6),
+                    height: 16.w,
+                  );
+                },
+                itemCount: _list.length,
+              ),
+            ),
+          ),
+
+
+        ],
       ),
       bottomNavigationBar: Container(
         width: double.infinity,
@@ -137,7 +129,7 @@ class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
                 if(_selectIndex.isEmpty){
                   BotToast.showText(text: '请先选择车辆');
                 }else{
-                  widget.callback(UserTool.userProvider.userInfo.nickname);
+                  widget.callback(_list[_selectIndex.first]);
                   Get.back();
                 }
 
@@ -168,7 +160,26 @@ class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
   }
 
 
-  _getCustom(int index,CarItemModel model){
+   _getAppbar() {
+     return SearchBarWidget(
+       callback: (String text) {
+         _search = text;
+         _easyRefreshController.callRefresh();
+         setState(() {});
+       },
+       tips: '请输入客户名称',
+       title: Container(
+         alignment: Alignment.center,
+         child: Text(
+           '选择客户',
+           style: TextStyle(
+               color: const Color(0xFF111111), fontSize: BaseStyle.fontSize36),
+         ),
+       ),
+     );
+   }
+
+  _getCustom(int index,CustomerListModel model){
     return GestureDetector(
       onTap: (){
 
@@ -195,7 +206,7 @@ class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
              children: [
                Image.asset(Assets.icons.icUser.path,width: 40.w,height: 40.w,),
                8.wb,
-               Text('李四',style: TextStyle(
+               Text(model.nickname,style: TextStyle(
                  fontSize: 32.sp,color: const Color(0xFF333333),fontWeight: FontWeight.bold
                ),),
                const Spacer(),
@@ -216,11 +227,14 @@ class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
                ),
              ],
            ),
-           getContentItem('最近跟进','客户浏览车辆信息'),
-           getContentItem('跟进时间','2021-12-01 12:22:12'),
+           getContentItem('最近跟进',model.trailContent),
+           getContentItem('跟进时间',                          DateUtil.formatDateMs(
+               model.trailCreatedAt.toInt() * 1000,
+               format: 'yyyy-MM-dd HH-mm-ss'),),
            getContentItem('客户来源','微信小程序'),
-           getContentItem('注册时间','2021-10-12 14:23:56'),
-           getContentItem('销售',UserTool.userProvider.userInfo.nickname),
+           getContentItem('注册时间',   DateUtil.formatDateMs(model.createdAt.toInt() * 1000,
+               format: 'yyyy-MM-dd HH-mm-ss'),),
+           getContentItem('销售',model.brokerName),
          ],
        ),
       ),
