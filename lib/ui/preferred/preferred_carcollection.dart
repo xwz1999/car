@@ -1,13 +1,10 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
-import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/preferred/collect_car_model.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
-
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
-import 'package:cloud_car/ui/preferred/preferred_car_detail.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';

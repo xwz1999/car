@@ -28,7 +28,7 @@ class DirectSalePage extends StatefulWidget {
   _DirectSalePageState createState() => _DirectSalePageState();
 }
 
-class _DirectSalePageState extends State<DirectSalePage> {
+class _DirectSalePageState extends State<DirectSalePage> with AutomaticKeepAliveClientMixin {
   bool _onLoad = true;
   late List<CarListModel> carList = [];
   ScreenControl screenControl = ScreenControl();
@@ -122,7 +122,8 @@ class _DirectSalePageState extends State<DirectSalePage> {
             item: '',
           ),
 
-          Expanded(child: DropDownWidget(
+          Expanded(
+              child: DropDownWidget(
             _dropDownHeaderItemStrings,
             listWidgets,
             height: 76.w,
@@ -219,4 +220,8 @@ class _DirectSalePageState extends State<DirectSalePage> {
       );
 
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

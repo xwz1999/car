@@ -1,5 +1,6 @@
-import '../constants/api/api.dart';
 import 'package:lpinyin/lpinyin.dart';
+
+import '../constants/api/api.dart';
 
 extension ImageOnString on String? {
   String get imageWithHost => '${API.imageHost}/$this';

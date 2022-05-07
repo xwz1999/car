@@ -1,10 +1,8 @@
 import 'package:cloud_car/ui/home/home_page.dart';
-
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
-
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
 import 'package:cloud_car/ui/user/user_install/system_settings.dart';
 import 'package:cloud_car/ui/user/user_invitation/user_invitation.dart';
@@ -14,7 +12,6 @@ import 'package:cloud_car/ui/user/user_order/myorder.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
 import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,11 +1,8 @@
 
 
 import 'package:bot_toast/bot_toast.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

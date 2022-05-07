@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../utils/headers.dart';
-import '../../../widget/button/cloud_back_button.dart';
-import '../../home/search_page.dart';
 
 class ConsignmentContract extends StatefulWidget {
   const ConsignmentContract({Key? key}) : super(key: key);

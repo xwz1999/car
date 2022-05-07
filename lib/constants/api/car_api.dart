@@ -36,10 +36,7 @@ class _Car {
 
 
   ///估价列表
-  String get getCarEvaluationList => 'car/price/lists';
-
-
-
+  String get getCarEvaluationList => '/car/price/lists';
 
 }
 

@@ -1,8 +1,10 @@
 import 'dart:io';
+
+import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../gen/assets.gen.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 
 ///图片点击放大预览
 class CloudImagePreview extends StatefulWidget {

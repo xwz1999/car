@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_adjacent_string_concatenation
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'user_info_model.g.dart';
 

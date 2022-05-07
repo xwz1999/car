@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
-
 import 'contract_license_page.dart';
 
 class ContractOwnerPage extends StatefulWidget {

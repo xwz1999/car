@@ -6,7 +6,6 @@ import 'package:cloud_car/ui/user/user_basic_information/enterprise.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

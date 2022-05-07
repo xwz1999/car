@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/constants/environment/environment.dart';
 import 'package:cloud_car/model/pay/wx_pay_model.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';

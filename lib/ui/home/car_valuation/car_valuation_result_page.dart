@@ -2,15 +2,13 @@
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
-
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flustars/flustars.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:screenshot/screenshot.dart';
 
-import 'package:fluwx/fluwx.dart' as fluwx;
 import 'car_valuation_page.dart';
 
 class CarValuationResultPage extends StatefulWidget {

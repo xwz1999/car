@@ -1,7 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/text_utils.dart';
 import 'package:cloud_car/utils/title_drop_down_head_widget.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -143,10 +142,11 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
         widget.isSearch!
             ? Container(
                 width: 750.w,
-                height: 200.w,
+                height: kToolbarHeight + MediaQuery.of(context).padding.top,
                 color: Colors.white,
+                alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 20.w),
+                  padding: EdgeInsets.only(bottom: 10.w),
                   child: Row(
                     children: [
                       widget.leftWidget != null
@@ -165,14 +165,19 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                                 focusNode: _contentFocusNode,
                                 onChanged: (text) {
                                   _searchText = text;
+                                  if (TextUtils.isEmpty(_searchText)) {
+                                    widget.callback!('');
+                                    return;
+                                  }
                                   setState(() {});
                                 },
                                 onTap: () {},
                                 onSubmitted: (_submitted) async {
-                                  if (TextUtils.isEmpty(_searchText)) {
 
+                                  if (TextUtils.isEmpty(_searchText)) {
                                     widget.callback!('');
-                                    return;}
+                                    return;
+                                  }
                                   _contentFocusNode.unfocus();
                                   _searchText = _searchText.trimLeft();
                                   _searchText = _searchText.trimRight();
@@ -205,6 +210,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                                           onTap: () {
                                             _searchText = '';
                                             _editingController.text = '';
+                                            widget.callback!('');
                                             setState(() {});
                                           },
                                           child: Container(
@@ -279,10 +285,11 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
               )
             : Container(
                 width: 750.w,
-                height: 200.w,
+                height: kToolbarHeight + MediaQuery.of(context).padding.top,
                 color: Colors.white,
+                alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 10.w),
+                  padding: EdgeInsets.only(bottom: 10.w),
                   child: Row(
                     children: [
                       widget.leftWidget != null
@@ -302,7 +309,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                           ),
                         ),
                       ),
-                     80.wb,
+                      80.wb,
                     ],
                   ),
                 ),
