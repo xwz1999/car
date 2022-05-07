@@ -19,7 +19,6 @@ class ConsignmentInfoModel extends Equatable {
   factory ConsignmentInfoModel.fromJson(Map<String, dynamic> json) =>
       _$ConsignmentInfoModelFromJson(json);
 
-
   @override
   List<Object?> get props => [
         id,
@@ -31,8 +30,8 @@ class ConsignmentInfoModel extends Equatable {
         saleAt,
         paymentAmount,
         customer,
-    paymentProof,
-    paymentCreatedAt
+        paymentProof,
+        paymentCreatedAt
       ];
 
   const ConsignmentInfoModel({

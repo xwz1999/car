@@ -4,6 +4,7 @@ import 'package:cloud_car/model/order/Sale_info.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data.dart';
+import 'package:cloud_car/utils/drop_down_body.dart';
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -1829,61 +1830,6 @@ class _ReservationState extends State<Reservation> {
     );
   }
 
-//车辆信息下拉
-  getList() {
-    return ExpansionTile(
-      //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
-      //leading: Icon(Icons.),
-      collapsedBackgroundColor: kForeGroundColor,
-
-      title: Row(
-        children: [
-          getTitle('车辆总价'),
-          185.wb,
-          SizedBox(
-            child: Text.rich(TextSpan(children: [
-              TextSpan(
-                  text: '¥',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-              TextSpan(
-                  text: _consignmentInfoList.contract.totalAmount,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-            ])),
-          ),
-        ],
-      ),
-      children: [
-        Container(
-            color: kForeGroundColor,
-            child: Row(
-              children: [
-                32.wb,
-                _getCar(
-                    '车辆定金',
-                    //(_consignmentInfoList.contractSignAt).toString()),
-                    _consignmentInfoList.contract.deposit),
-                46.wb,
-                Container(
-                  width: 1.w,
-                  height: 72.w,
-                  color: BaseStyle.coloreeeeee,
-                ),
-                46.wb,
-                _getCar('车辆首付', _consignmentInfoList.contract.downPayment),
-                46.wb,
-                _getCar('车辆尾款', _consignmentInfoList.contract.balancePayment),
-              ],
-            ))
-      ],
-    );
-  }
-
 //车辆信息底部文字样式
   _getCar(String title, String text) {
     return SizedBox(
@@ -1915,6 +1861,106 @@ class _ReservationState extends State<Reservation> {
       ),
     );
   }
+
+//车辆信息下拉
+  getList() {
+    return DropDown(
+      title: getTitle('车辆总价'),
+      text: SizedBox(
+          child: Text.rich(TextSpan(children: [
+        TextSpan(
+            text: '¥',
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(fontWeight: FontWeight.bold)),
+        TextSpan(
+            text: _consignmentInfoList.contract.totalAmount,
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2
+                ?.copyWith(fontWeight: FontWeight.bold)),
+      ]))),
+      widget: Container(
+          padding: EdgeInsets.only(left: 32.w, top: 16.w),
+          child: Row(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _getCar(
+                  '车辆定金',
+                  //(_consignmentInfoList.contractSignAt).toString()),
+                  _consignmentInfoList.contract.deposit),
+              36.wb,
+              Container(
+                width: 1.w,
+                height: 72.w,
+                color: BaseStyle.coloreeeeee,
+              ),
+              36.wb,
+              _getCar('车辆首付', _consignmentInfoList.contract.downPayment),
+              46.wb,
+              Container(
+                width: 1.w,
+                height: 72.w,
+                color: BaseStyle.coloreeeeee,
+              ),
+              36.wb,
+              _getCar('车辆尾款', _consignmentInfoList.contract.balancePayment),
+            ],
+          )),
+    );
+  }
+//     ExpansionTile(
+//       //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
+//       //leading: Icon(Icons.),
+//       collapsedBackgroundColor: kForeGroundColor,
+//       title: Row(
+//         children: [
+//           getTitle('车辆总价'),
+//           185.wb,
+//           SizedBox(
+//             child: Text.rich(TextSpan(children: [
+//               TextSpan(
+//                   text: '¥',
+//                   style: Theme.of(context)
+//                       .textTheme
+//                       .bodyText1
+//                       ?.copyWith(fontWeight: FontWeight.bold)),
+//               TextSpan(
+//                   text: _consignmentInfoList.contract.totalAmount,
+//                   style: Theme.of(context)
+//                       .textTheme
+//                       .subtitle2
+//                       ?.copyWith(fontWeight: FontWeight.bold)),
+//             ])),
+//           ),
+//         ],
+//       ),
+//       children: [
+//         Container(
+//             color: kForeGroundColor,
+//             child: Row(
+//               children: [
+//                 32.wb,
+//                 _getCar(
+//                     '车辆定金',
+//                     //(_consignmentInfoList.contractSignAt).toString()),
+//                     _consignmentInfoList.contract.deposit),
+//                 46.wb,
+//                 Container(
+//                   width: 1.w,
+//                   height: 72.w,
+//                   color: BaseStyle.coloreeeeee,
+//                 ),
+//                 46.wb,
+//                 _getCar('车辆首付', _consignmentInfoList.contract.downPayment),
+//                 46.wb,
+//                 _getCar('车辆尾款', _consignmentInfoList.contract.balancePayment),
+//               ],
+//             ))
+//       ],
+//     );
+//   }
 
   text(String text) {
     return Text(

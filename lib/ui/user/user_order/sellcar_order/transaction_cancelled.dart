@@ -44,6 +44,7 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
               height: 120.w,
               color: Colors.white,
               child: ProgressBar(
+                cancel: false,
                 length: 6,
                 num: 3,
                 direction: false,

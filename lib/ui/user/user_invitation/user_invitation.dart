@@ -1,7 +1,6 @@
 import 'package:cloud_car/ui/home/task/customer_item.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
 
@@ -15,7 +14,7 @@ class UserInvitation extends StatefulWidget {
 class _UserInvitationState extends State<UserInvitation>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final EasyRefreshController _easyRefreshController = EasyRefreshController();
+
   List<dynamic>? data;
 
   @override

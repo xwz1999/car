@@ -55,6 +55,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/back.png
   AssetGenImage get back => const AssetGenImage('assets/icons/back.png');
 
+  /// File path: assets/icons/bank1.png
+  AssetGenImage get bank1 => const AssetGenImage('assets/icons/bank1.png');
+
+  /// File path: assets/icons/bank2.png
+  AssetGenImage get bank2 => const AssetGenImage('assets/icons/bank2.png');
+
   /// File path: assets/icons/bar_bubble_gray.png
   AssetGenImage get barBubbleGray =>
       const AssetGenImage('assets/icons/bar_bubble_gray.png');

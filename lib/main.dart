@@ -66,7 +66,8 @@ class MyApp extends StatelessWidget {
               ScreenUtil.setContext(context);
               return MediaQuery(
                 //设置文字大小不随系统设置改变
-                data: MediaQueryData.fromWindow(WidgetsBinding.instance!.window).copyWith(textScaleFactor: 1.0),
+                data: MediaQueryData.fromWindow(WidgetsBinding.instance!.window)
+                    .copyWith(textScaleFactor: 1.0),
                 child: BotToastInit().call(context, child),
               );
             },
@@ -77,4 +78,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

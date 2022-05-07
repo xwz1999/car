@@ -104,7 +104,8 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   #生成类重载==运算符和toString方法
   equatable: ^2.0.3
-
+  # 测试单元
+  test: ^1.21.1
 
 flutter:
 
