@@ -10,6 +10,9 @@ import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
+import 'package:cloud_car/widget/picker/car_picker_box.dart';
+import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
+import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -68,10 +71,13 @@ class _PushCarPageState extends State<PushCarPage> {
     ChooseItem(name: '黄色'),
     ChooseItem(name: '其他'),
   ];
-  List<ChooseItem> typeList = [
-    ChooseItem(name: '车商'),
-    ChooseItem(name: '个人直卖'),
-  ];
+  final Map<int, String> _sourceType = {
+    1: '车商',
+    2: '个人直卖',
+  };
+
+  List<ChooseItem> get typeList =>
+      _sourceType.values.map((e) => ChooseItem(name: e)).toList();
 
   String? _source;
 
@@ -183,8 +189,8 @@ class _PushCarPageState extends State<PushCarPage> {
                             ),
                             150.wb,
                             GestureDetector(
-                              onTap: (){
-                                Get.to(()=>const UserAssessmentPage());
+                              onTap: () {
+                                Get.to(() => const UserAssessmentPage());
                               },
                               child: Container(
                                 width: 120.w,
@@ -327,7 +333,9 @@ class _PushCarPageState extends State<PushCarPage> {
       title: '表现里程',
       value: _publishCarInfo.mileage.toString(),
       canChange: true,
-      callback: (String content) {_publishCarInfo.mileage = content;},
+      callback: (String content) {
+        _publishCarInfo.mileage = content;
+      },
       endText: '万公里',
     );
 
@@ -348,12 +356,11 @@ class _PushCarPageState extends State<PushCarPage> {
                     callback: () {
                       Get.back();
                       _publishCarInfo.carName = _pickCar.value.car.name;
+                      _publishCarInfo.carModelId = _pickCar.value.car.id;
                     },
                     pickCar: _pickCar,
                   ));
-              setState(() {
-                _publishCarInfo.carName = _pickCar.value.car.name;
-              });
+              setState(() {});
             },
             _publishCarInfo.carName,
             '请输入具体车型',
@@ -382,16 +389,14 @@ class _PushCarPageState extends State<PushCarPage> {
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
-                  return CarListPicker(
-                    carString: _publishCarInfo.carColor ?? '',
-                    items: colorList,
-                    callback: (String content, int value) {
-                      Get.back();
-                      _publishCarInfo.carColor = content;
-                      setState(() {});
-                    },
-                    title: '车身颜色',
-                  );
+                  return CloudGridPickerWidget(
+                      title: '车身颜色',
+                      items: colorList.map((e) => e.name).toList(),
+                      onConfirm: (strList, indexList) {
+                        _publishCarInfo.carColor = strList.first;
+                        Get.back();
+                        setState(() {});
+                      });
                 },
               );
             },
@@ -408,21 +413,19 @@ class _PushCarPageState extends State<PushCarPage> {
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
-                  return CarListPicker(
-                    isGrid: false,
-                    carString: _publishCarInfo.carSource ?? '',
-                    items: typeList,
-                    callback: (String content, int value) {
-                      Get.back();
-                      _publishCarInfo.carSource = content;
-                      setState(() {});
-                    },
-                    title: '车辆来源',
-                  );
+                  return CloudListPickerWidget(
+                      title: '车辆来源',
+                      items: _sourceType.values.toList(),
+                      onConfirm: (str, index) {
+                        _publishCarInfo.carSource =
+                            _sourceType.keys.toList()[index];
+                        Get.back();
+                        setState(() {});
+                      });
                 },
               );
             },
-            _publishCarInfo.carSource,
+            _sourceType[_publishCarInfo.carSource] ?? '',
             '请选择车辆来源',
           ),
         ],
@@ -483,7 +486,7 @@ class _PushCarPageState extends State<PushCarPage> {
       return false;
     }
 
-    if (!RegexUtil.matches(licensePlateReg, _publishCarInfo.carNum??'')) {
+    if (!RegexUtil.matches(licensePlateReg, _publishCarInfo.carNum ?? '')) {
       BotToast.showText(text: '请输入正确的车牌号');
       return false;
     }
@@ -500,7 +503,7 @@ class _PushCarPageState extends State<PushCarPage> {
       BotToast.showText(text: '请输入行驶里程');
       return false;
     }
-    if (_publishCarInfo.carSource.isEmptyOrNull) {
+    if (_publishCarInfo.carSource == null) {
       BotToast.showText(text: '请选择车辆来源');
       return false;
     }
@@ -547,14 +550,30 @@ class RadioModel {
 }
 
 class PublishCarInfo {
-  String? viNum; //车架号
-  String? carName; //车型
-  String? licensingDate; //首次上牌时间
-  String? carNum; //车牌号
-  String? engineNum; //发动机号
-  String? carColor; //车身颜色
-  String? mileage; //表现里程
-  String? carSource; //车辆来源
+  ///车架号
+  String? viNum;
+
+  ///车型
+  String? carName;
+  int? carModelId;
+
+  ///首次上牌时间
+  String? licensingDate;
+
+  ///车牌号
+  String? carNum;
+
+  ///发动机号
+  String? engineNum;
+
+  ///车身颜色
+  String? carColor;
+
+  ///表现里程
+  String? mileage;
+
+  ///车辆来源 1.车商 2.个人直卖 3.收购
+  int? carSource;
 
   PublishCarInfo({
     this.viNum,
@@ -565,5 +584,6 @@ class PublishCarInfo {
     this.carColor,
     this.mileage,
     this.carSource,
+    this.carModelId,
   });
 }

@@ -112,7 +112,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                                 MaterialStateProperty.all(Colors.blue),
                           ),
                           child:Text(
-                              widget.publishCarInfo.carSource=='个人直卖'?'发起合同':'发布车辆',
+                              widget.publishCarInfo.carSource==2?'发起合同':'发布车辆',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 30.sp,
@@ -120,7 +120,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                           ),
                         ),
                       ),
-                      widget.publishCarInfo.carSource=='个人直卖'
+                      widget.publishCarInfo.carSource==2
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

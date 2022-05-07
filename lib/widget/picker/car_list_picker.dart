@@ -10,8 +10,8 @@ class CarListPicker extends StatefulWidget {
   final TextCallback callback;
   final String confirmString;
   final String? title;
-  final bool isGrid;
   ///是否是grid列表
+  final bool isGrid;
   final List<ChooseItem> items;
   final String carString;
 
