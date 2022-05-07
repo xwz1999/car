@@ -14,6 +14,7 @@ class EditItemWidget extends StatefulWidget {
   final String tips;
   final double paddingStart;
   final Widget? endIcon;
+  final double? titleWidth;
 
 
   const EditItemWidget(
@@ -23,7 +24,7 @@ class EditItemWidget extends StatefulWidget {
       this.canChange = true,
       required this.callback,
       this.endText = '',
-      this.topIcon = true, this.paddingTop=0, this.tips = '请输入', this.paddingStart = 28, this.endIcon,})
+      this.topIcon = true, this.paddingTop=0, this.tips = '请输入', this.paddingStart = 28, this.endIcon, this.titleWidth,})
       : super(key: key);
 
   @override
@@ -80,7 +81,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
            ),
          ),
           SizedBox(
-            width: 170.w,
+            width: widget.titleWidth?? 170.w,
             child: Text(
               widget.title,
               style: TextStyle(

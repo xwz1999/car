@@ -6,10 +6,8 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
-
 import 'package:cloud_car/widget/car_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
@@ -18,6 +16,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+
 import 'backup/make_deal.dart';
 
 class SalesOrderPage extends StatefulWidget {
@@ -39,107 +38,6 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   List<SalelistsModel> _SalesList = [];
   int _page = 1;
   final int _size = 10;
-  // List carList = [
-  //   {
-  //     'judge': false,
-  //     'judgename': '待预定',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '需付定金',
-  //     'pice': '1.00',
-  //     'buttomname': '',
-  //   },
-  //   {
-  //     'judge': false,
-  //     'judgename': '已预定',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '已付订单',
-  //     'pice': '1.00',
-  //     'buttomname': '',
-  //   },
-  //   {
-  //     'judge': true,
-  //     'judgename': '待检测',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '已付定金',
-  //     'pice': '1.00',
-  //     'buttomname': '上传报告',
-  //   },
-  //   {
-  //     'judge': false,
-  //     'judgename': '支付首付',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '需付首付',
-  //     'pice': '10.00',
-  //     'buttomname': '',
-  //   },
-  //   {
-  //     'judge': false,
-  //     'judgename': '支付首付',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '已付首付',
-  //     'pice': '10.00',
-  //     'buttomname': '',
-  //   },
-  //   {
-  //     'judge': true,
-  //     'judgename': '待过户',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '已付首付',
-  //     'pice': '10.00',
-  //     'buttomname': '上传资料',
-  //   },
-  //   {
-  //     'judge': false,
-  //     'judgename': '支付尾款',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '需付尾款',
-  //     'pice': '19.00',
-  //     'buttomname': '',
-  //   },
-  //   {
-  //     'judge': false,
-  //     'judgename': '支付尾款',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '已付尾款',
-  //     'pice': '19.00',
-  //     'buttomname': '',
-  //   },
-  //   {
-  //     'judge': true,
-  //     'judgename': '支付尾款',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '已付尾款',
-  //     'pice': '19.00',
-  //     'buttomname': '成交订单',
-  //   },
-  //   {
-  //     'judge': false,
-  //     'judgename': '成交订单',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '已付尾款',
-  //     'pice': '19.00',
-  //     'buttomname': '',
-  //   },
-  //   {
-  //     'judge': false,
-  //     'judgename': '交易取消',
-  //     'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-  //     'url': Assets.images.carBanner.path,
-  //     'picename': '',
-  //     'pice': '',
-  //     'buttomname': '',
-  //   },
-  //];
   @override
   void initState() {
     super.initState();

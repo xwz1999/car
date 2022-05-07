@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:flutter/foundation.dart';
+
 import '../constants/api/api.dart';
 import '../model/user/user_info_model.dart';
 import '../utils/hive_store.dart';
@@ -28,8 +29,8 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future setToken(String token, {User? user}) async {
-    apiClient.setToken(token);
-    await HiveStore.appBox!.put('token', token);
+    apiClient.setToken('AcNW62LYYoiwBx9KAE3aWYifHhVM3ULqnHMuQ0llmOKdXBYgBzJCNZIKwhdpTjHx');
+    await HiveStore.appBox!.put('token', 'AcNW62LYYoiwBx9KAE3aWYifHhVM3ULqnHMuQ0llmOKdXBYgBzJCNZIKwhdpTjHx');
     _isLogin = true;
     //每次打开app更新用户信息
     await updateUserInfo();

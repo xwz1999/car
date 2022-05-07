@@ -1,19 +1,21 @@
+import 'package:equatable/equatable.dart';
 // ignore_for_file: file_names
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:equatable/equatable.dart';
+
+
 part 'ConsignmentList_model.g.dart';
 
 @JsonSerializable()
-class ConsignmentListModel extends Equatable {
+class ConsignmentListModel extends Equatable{
   final int id;
   final String contractSn;
   final String modelName;
   final String customerName;
   final int status;
   final num signAt;
-  factory ConsignmentListModel.fromJson(Map<String, dynamic> json) =>
-      _$ConsignmentListModelFromJson(json);
+    factory ConsignmentListModel.fromJson(Map<String, dynamic> json) =>_$ConsignmentListModelFromJson(json);
+
 
   const ConsignmentListModel({
     required this.id,
@@ -24,11 +26,5 @@ class ConsignmentListModel extends Equatable {
     required this.signAt,
   });
   @override
-  List<Object?> get props => [
-        contractSn,
-        modelName,
-        customerName,
-        status,
-        signAt,
-      ];
+  List<Object?> get props => [contractSn,modelName,customerName,status,signAt,];
 }

@@ -1,3 +1,4 @@
+
 import 'package:cloud_car/ui/home/sort/search_customer_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/sort_list_widget.dart';
@@ -13,8 +14,7 @@ class UserSortListPage extends StatefulWidget {
 
   const UserSortListPage({
     Key? key,
-    required this.onConfirm,
-    required this.pickSort,
+    required this.onConfirm, required this.pickSort,
   }) : super(key: key);
 
   @override
@@ -22,11 +22,12 @@ class UserSortListPage extends StatefulWidget {
 }
 
 class _UserSortListPageState extends State<UserSortListPage> {
-  List<ChooseItem> _gearbox = [];
 
-  List<ChooseItem> _followTime = [];
+  List<ChooseItem> _gearbox  = [];
 
-  List<ChooseItem> _registerTime = [];
+  List<ChooseItem> _followTime  = [];
+
+  List<ChooseItem> _registerTime  = [];
 
   @override
   void initState() {
@@ -67,7 +68,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
       children: [
         ListView(
           shrinkWrap: true,
-          padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 100.w),
+          padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 100.w),
           children: [
             SortListWidget(
               itemList: _gearbox,
@@ -80,8 +81,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
                 setState(() {});
                 // widget.callback(item);
               },
-              title: '重要客户',
-              pickString: widget.pickSort.value.isImportant,
+              title: '重要客户', pickString:  widget.pickSort.value.isImportant,
             ),
             16.hb,
             SortListWidget(
@@ -96,6 +96,7 @@ class _UserSortListPageState extends State<UserSortListPage> {
               },
               title: '跟进时间',
               pickString: widget.pickSort.value.trailDate,
+
             ),
             16.hb,
             SortListWidget(
@@ -109,21 +110,22 @@ class _UserSortListPageState extends State<UserSortListPage> {
                 setState(() {});
               },
               title: '注册时间',
-              pickString: widget.pickSort.value.createdDate,
+               pickString: widget.pickSort.value.createdDate,
             ),
             16.hb,
+
+
           ],
         ),
-        Positioned(
-            bottom: 40.w,
-            left: 30.w,
-            child: Row(
-              children: [
-                _resetBtn(),
-                40.wb,
-                _confirmBtn(),
-              ],
-            ))
+        Positioned(bottom: 40.w,left: 30.w,
+            child:       Row(
+          children: [
+            _resetBtn(),
+            40.wb,
+            _confirmBtn(),
+
+          ],
+        ))
       ],
     );
   }
@@ -159,7 +161,9 @@ class _UserSortListPageState extends State<UserSortListPage> {
         widget.pickSort.value.isImportant = '';
         widget.pickSort.value.trailDate = '';
         widget.pickSort.value.createdDate = '';
-        setState(() {});
+        setState(() {
+
+        });
       },
       child: Container(
         width: 240.w,
@@ -171,10 +175,12 @@ class _UserSortListPageState extends State<UserSortListPage> {
         ),
         child: Text(
           '重  置',
-          style:
-              TextStyle(color: kPrimaryColor, fontSize: BaseStyle.fontSize28),
+          style: TextStyle(
+              color: kPrimaryColor, fontSize: BaseStyle.fontSize28),
         ),
       ),
     );
   }
+
+
 }

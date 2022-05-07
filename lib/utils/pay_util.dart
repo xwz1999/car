@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bot_toast/bot_toast.dart';
-
 import 'package:cloud_car/model/pay/wx_pay_model.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -145,8 +144,8 @@ class PayUtil {
         LoggerData.addData('errorCode:' +
             event.errCode.toString() +
             '    errorStr:' +
-            (event.errStr ?? '支付失败'));
-        CloudToast.show(event.errStr ?? '支付失败');
+            (event.errStr??'支付失败'));
+        CloudToast.show(event.errStr??'支付失败');
         payError == null ? null : payError(event);
       }
     });

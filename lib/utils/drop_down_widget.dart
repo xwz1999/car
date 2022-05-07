@@ -201,8 +201,6 @@ class _DropDownWidgetState extends State<DropDownWidget>
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.only(bottomRight: Radius.circular(16.w)),
                     color: Colors.white),
                 padding: EdgeInsets.only(left: 5.r, right: 5.r),
                 child:

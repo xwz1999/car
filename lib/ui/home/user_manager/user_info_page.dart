@@ -12,8 +12,9 @@ import 'package:cloud_car/widget/alert.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'customers_trajectory_page.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'customers_trajectory_page.dart';
 
 class UserInfoPage extends StatefulWidget {
   final int customerId;
@@ -74,7 +75,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                   elevation: 0,
                   toolbarHeight:
                       MediaQuery.of(context).padding.top + kToolbarHeight,
-                  expandedHeight: 740.w,
+                  expandedHeight: 700.w,
                   leadingWidth: 0,
                   titleSpacing: 0,
                   title: Container(
@@ -194,8 +195,8 @@ class _UserInfoPageState extends State<UserInfoPage>
                                         detailModel.trailCreatedAt.toInt() *
                                             1000,
                                         format: 'yyyy-MM-dd HH-mm-ss')),
-                                // 16.hb,
-                                // _getText('客户来源', '微信小程序'),
+                                16.hb,
+                                _getText('客户来源', '微信小程序'),
                                 16.hb,
                                 _getText(
                                     '注册时间',

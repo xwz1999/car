@@ -1,9 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
-
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';

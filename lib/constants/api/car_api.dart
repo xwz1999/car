@@ -32,8 +32,11 @@ class _Car {
   String get getCarSelfLists => '/car/self';
 
   ///车辆信息
-  String get getCarIfo => '/car/self';
+  String get getCarIfo => '/car/info';
 
+
+  ///估价列表
+  String get getCarEvaluationList => '/car/price/lists';
 
 }
 

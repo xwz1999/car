@@ -1,14 +1,12 @@
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/customer_browse_list_model.dart';
 import 'package:cloud_car/model/car/customer_trail_model.dart';
 import 'package:cloud_car/model/customer/customer_detail_model.dart';
 import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/model/customer/customer_statistics_model.dart';
-
 import 'package:cloud_car/utils/new_work/api_client.dart';
-import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
-
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 class CustomerFunc {
@@ -52,7 +50,7 @@ class CustomerFunc {
     }
   }
 
-  ///获取客户轨迹
+  ///获取客户liebiao
   static Future<List<CustomerListModel>> getCustomerList(
       {required int page,
       int size = 10,

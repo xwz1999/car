@@ -1,4 +1,3 @@
-import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/History_model.dart';
 import 'package:cloud_car/ui/user/interface/user_func.dart';
 
@@ -122,6 +121,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
     return GestureDetector(
         onTap: (() {
           num++;
+
           setState(() {});
         }),
         child: Column(
@@ -223,6 +223,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
           ],
         ));
     //leading: Icon(Icons.list),
+
     // ListTile(
     //   //minVerticalPadding: ,
     //   title: Text(

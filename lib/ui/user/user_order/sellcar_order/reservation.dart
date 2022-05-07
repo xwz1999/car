@@ -2,8 +2,8 @@
 
 import 'package:cloud_car/model/order/Sale_info.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 
 import 'package:cloud_car/utils/headers.dart';
@@ -11,7 +11,6 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flustars/flustars.dart';
-
 import 'package:flutter/material.dart';
 
 class Reservation extends StatefulWidget {

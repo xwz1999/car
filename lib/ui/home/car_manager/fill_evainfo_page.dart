@@ -6,6 +6,8 @@ import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
+import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -31,44 +33,57 @@ class FillEvainfoPage extends StatefulWidget {
 }
 
 class _FillEvainfoPageState extends State<FillEvainfoPage> {
-  final CarInfo _carInfo = CarInfo();
-  String? _transfer = ''; //过户次数
-  String? _paint = ''; //油漆面
-  String? _metal = ''; //钣金面
-  String? _replace = ''; //更换件
-  String? _transmission = ''; //变速箱
-  String? _accident = ''; //重大事故
-  String? _maintain = ''; //4s保养
-  String? _trueMeters = ''; //真实公里数
+  final CarInfo _carInfo = CarInfo(
+    plate: -1,
+    paint: -1,
+    transfer: -1,
+  );
 
-  List<ChooseItem> transferList = [
-    ChooseItem(name: '无过户'),
-    ChooseItem(name: '1次'),
-    ChooseItem(name: '2次'),
-    ChooseItem(name: '3次'),
-    ChooseItem(name: '4次'),
-    ChooseItem(name: '5次'),
-    ChooseItem(name: '6次'),
-    ChooseItem(name: '7次'),
-    ChooseItem(name: '8次'),
-    ChooseItem(name: '9次'),
-    ChooseItem(name: '10次'),
-    ChooseItem(name: '10次以上'),
-  ];
-  List<ChooseItem> paintList = [
-    ChooseItem(name: '0个面'),
-    ChooseItem(name: '1个面'),
-    ChooseItem(name: '2个面'),
-    ChooseItem(name: '3个面'),
-    ChooseItem(name: '4个面'),
-    ChooseItem(name: '5个面'),
-    ChooseItem(name: '6个面'),
-    ChooseItem(name: '7个面'),
-    ChooseItem(name: '8个面'),
-    ChooseItem(name: '9个面'),
-    ChooseItem(name: '10个面'),
-    ChooseItem(name: '10个面以上'),
-  ];
+  // String? _transfer = ''; //过户次数
+  // String? _paint = ''; //油漆面
+  // String? _metal = ''; //钣金面
+  // String? _replace = ''; //更换件
+  // String? _transmission = ''; //变速箱
+  // String? _accident = ''; //重大事故
+  // String? _maintain = ''; //4s保养
+  // String? _trueMeters = ''; //真实公里数
+
+  final Map<int?, String> _transferListMap = {
+    0: '无过户',
+    1: '1次',
+    2: '2次',
+    3: '3次',
+    4: '4次',
+    5: '5次',
+    6: '6次',
+    7: '7次',
+    8: '8次',
+    9: '9次',
+    10: '10次',
+    null: '10次以上'
+  };
+
+  List<ChooseItem> get transferList =>
+      _transferListMap.values.map((e) => ChooseItem(name: e)).toList();
+
+  final Map<int?, String> _paintListMap = {
+    0: '0个面',
+    1: '1个面',
+    2: '2个面',
+    3: '3个面',
+    4: '4个面',
+    5: '5个面',
+    6: '6个面',
+    7: '7个面',
+    8: '8个面',
+    9: '9个面',
+    10: '10个面',
+    null: '10个面以上',
+  };
+
+  List<ChooseItem> get paintList =>
+      _paintListMap.values.map((e) => ChooseItem(name: e)).toList();
+
   List<ChooseItem> replaceList = [
     ChooseItem(name: '有更换'),
     ChooseItem(name: '无更换'),
@@ -92,9 +107,10 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
     ChooseItem(name: '无维修'),
   ];
   List<ChooseItem> maintainList = [
-    ChooseItem(name: '是'),
-    ChooseItem(name: '否'),
+    ChooseItem(name: '未按时保养'),
+    ChooseItem(name: '按时保养'),
   ];
+  List<String> shamMileage = ['有修改', '未修改'];
   List<ChooseItem> accidentDetailList = [
     ChooseItem(name: '四梁六柱发生修复'),
     ChooseItem(name: '后翼子板切割'),
@@ -113,7 +129,14 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
 
   @override
   void initState() {
-    BotToast.showText(text: '请选择选项内容');
+    _carInfo.name = widget.publishCarInfo.carName;
+    _carInfo.modelId = widget.publishCarInfo.carModelId;
+    _carInfo.color = widget.publishCarInfo.carColor;
+    _carInfo.mileage = widget.publishCarInfo.mileage;
+    _carInfo.licensingDate = widget.publishCarInfo.licensingDate;
+    _carInfo.licensePlate = widget.publishCarInfo.carNum;
+    _carInfo.engineNo = widget.publishCarInfo.engineNum;
+    _carInfo.source = widget.publishCarInfo.carSource;
     super.initState();
   }
 
@@ -159,7 +182,6 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                 ),
                 Container(
                   width: double.infinity,
-                  height: 1000.h,
                   padding: EdgeInsets.only(left: 24.w, right: 24.w),
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -249,13 +271,13 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                                     top: Radius.circular(16.w))),
                             builder: (context) {
                               return CarListPicker(
-                                carString: _transfer ?? '',
+                                carString:
+                                    _transferListMap[_carInfo.transfer] ?? '',
                                 items: transferList,
                                 callback: (String content, int value) {
                                   Get.back();
-                                  _transfer = content;
-                                  _carInfo.transfer = value;
-                                  BotToast.showText(text: value.toString());
+                                  _carInfo.transfer =
+                                      _transferListMap.keys.toList()[value];
                                   setState(() {});
                                 },
                                 title: '过户次数',
@@ -263,7 +285,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                             },
                           );
                         },
-                        _transfer,
+                        _transferListMap[_carInfo.transfer] ?? '',
                         '请选择',
                       ),
                       _function(
@@ -276,11 +298,12 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                                     top: Radius.circular(16.w))),
                             builder: (context) {
                               return CarListPicker(
-                                carString: _paint ?? '',
+                                carString: _paintListMap[_carInfo.paint] ?? '',
                                 items: paintList,
                                 callback: (String content, int value) {
                                   Get.back();
-                                  _paint = content;
+                                  _carInfo.paint =
+                                      _paintListMap.keys.toList()[value];
                                   _carInfo.paint = value;
                                   setState(() {});
                                 },
@@ -289,7 +312,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                             },
                           );
                         },
-                        _paint,
+                        _paintListMap[_carInfo.paint] ?? '',
                         '请选择',
                       ),
                       _function(
@@ -302,12 +325,12 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                                     top: Radius.circular(16.w))),
                             builder: (context) {
                               return CarListPicker(
-                                carString: _metal ?? '',
+                                carString: _paintListMap[_carInfo.plate] ?? "",
                                 items: paintList,
                                 callback: (String content, int value) {
                                   Get.back();
-                                  _metal = content;
-                                  _carInfo.plate = value;
+                                  _carInfo.plate =
+                                      _paintListMap.keys.toList()[value];
                                   setState(() {});
                                 },
                                 title: '钣金面修复',
@@ -315,7 +338,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                             },
                           );
                         },
-                        _metal,
+                        _paintListMap[_carInfo.plate] ?? "",
                         '请选择',
                       ),
                       _function(
@@ -327,22 +350,34 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(16.w))),
                             builder: (context) {
-                              return CarListPicker(
-                                isGrid: false,
-                                carString: _replace ?? '',
-                                items: replaceList,
-                                callback: (String content, int value) {
+                              return CloudListPickerWidget(
+                                title: '更换件情况',
+                                items: replaceList.map((e) => e.name).toList(),
+                                onConfirm: (String content, int value) {
                                   Get.back();
-                                  _replace = content;
-
+                                  _carInfo.hasParts = value;
+                                  if (value == 0) {
+                                    Get.bottomSheet(CloudGridPickerWidget.multi(
+                                        title: '更换件情况',
+                                        items: replaceDetailList
+                                            .map((e) => e.name)
+                                            .toList(),
+                                        onConfirm: (strList, indexList) {
+                                          Get.back();
+                                          _carInfo.parts = indexList
+                                              .map((e) => e + 1)
+                                              .toList();
+                                        }));
+                                  }
                                   setState(() {});
                                 },
-                                title: '更换件情况',
                               );
                             },
                           );
                         },
-                        _replace,
+                        _carInfo.hasParts != null
+                            ? replaceList[_carInfo.hasParts!].name
+                            : '',
                         '请选择',
                       ),
                       _function(
@@ -354,21 +389,35 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(16.w))),
                             builder: (context) {
-                              return CarListPicker(
-                                isGrid: false,
-                                carString: _transmission ?? '',
-                                items: fixList,
-                                callback: (String content, int value) {
-                                  Get.back();
-                                  _transmission = content;
-                                  setState(() {});
-                                },
+                              return CloudListPickerWidget(
                                 title: '变速箱情况',
+                                items: fixList.map((e) => e.name).toList(),
+                                onConfirm: (str, index) {
+                                  Get.back();
+                                  _carInfo.hasSituation = index;
+                                  if (index == 0) {
+                                    Get.bottomSheet(
+                                      CloudListPickerWidget(
+                                        title: '变速箱情况',
+                                        items: haveFixList
+                                            .map((e) => e.name)
+                                            .toList(),
+                                        onConfirm: (str, index) {
+                                          Get.back();
+                                          _carInfo.engine = index + 1;
+                                          setState(() {});
+                                        },
+                                      ),
+                                    );
+                                  }
+                                },
                               );
                             },
                           );
                         },
-                        _transmission,
+                        _carInfo.engine != null
+                            ? haveFixList[_carInfo.engine!].name
+                            : '',
                         '请选择',
                       ),
                       _function(
@@ -380,163 +429,78 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(16.w))),
                             builder: (context) {
-                              return CarListPicker(
-                                isGrid: false,
-                                carString: _accident ?? '',
-                                items: accidentList,
-                                callback: (String content, int value) {
-                                  Get.back();
-                                  _accident = content;
-                                  setState(() {});
-                                },
-                                title: '重大事故',
-                              );
+                              return CloudListPickerWidget(
+                                  title: '重大事故',
+                                  items:
+                                      accidentList.map((e) => e.name).toList(),
+                                  onConfirm: (str, index) {
+                                    Get.back();
+                                    _carInfo.hasAccident = index;
+                                    if (index == 0) {
+                                      Get.bottomSheet(CloudListPickerWidget(
+                                          title: '重大事故',
+                                          items: accidentDetailList
+                                              .map((e) => e.name)
+                                              .toList(),
+                                          onConfirm: (str, index) {
+                                            _carInfo.accidents = [];
+                                            _carInfo.accidents!.add(index + 1);
+                                          }));
+                                    }
+                                  });
                             },
                           );
                         },
-                        _accident,
+                        _carInfo.hasAccident != null ? '' : '',
                         '请选择',
                       ),
-                      GestureDetector(
-                        onTap: () async {
-                          await showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(16.w))),
-                            builder: (context) {
-                              return CarListPicker(
-                                isGrid: false,
-                                carString: _maintain ?? '',
-                                items: maintainList,
-                                callback: (String content, int value) {
-                                  Get.back();
-                                  _maintain = content;
-                                  setState(() {});
-                                },
+                      _function('全程4s按时保养', () async {
+                        await showModalBottomSheet(
+                          context: context,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(16.w))),
+                          builder: (context) {
+                            return CloudListPickerWidget(
                                 title: '全程4s按时保养',
-                              );
-                            },
-                          );
-                        },
-                        child: Material(
-                          color: Colors.transparent,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 220.w,
-                                child: Text(
-                                  '全程4s按时保养',
-                                  style: TextStyle(
-                                    color: BaseStyle.color999999,
-                                    fontSize: BaseStyle.fontSize28,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: TextField(
-                                  controller:
-                                      TextEditingController(text: _maintain),
-                                  enabled: false,
-                                  keyboardType: TextInputType.text,
-                                  onChanged: (text) {},
-                                  style: TextStyle(
-                                    color: BaseStyle.color333333,
-                                    fontSize: BaseStyle.fontSize28,
-                                  ),
-                                  decoration: const InputDecoration(
-                                    //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
-                                    filled: true,
-                                    isCollapsed: true,
-                                    fillColor: Colors.white,
-                                    hintText: '请选择',
-                                    hintStyle: TextStyle(
-                                        color: Color(0xFFcccccc),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w300),
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                              Image.asset(
-                                Assets.icons.icGoto.path,
-                                width: 32.w,
-                                height: 32.w,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ).paddingOnly(top: 50.h, left: 20.w, right: 35.w),
-                      GestureDetector(
-                        onTap: () async {
-                          await showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(16.w))),
-                            builder: (context) {
-                              return CarListPicker(
-                                isGrid: false,
-                                carString: _trueMeters ?? '',
-                                items: maintainList,
-                                callback: (String content, int value) {
+                                items: maintainList.map((e) => e.name).toList(),
+                                onConfirm: (str, index) {
+                                  _carInfo.maintain = index;
                                   Get.back();
-                                  _trueMeters = content;
                                   setState(() {});
-                                },
+                                });
+                          },
+                        );
+                      },
+                          _carInfo.maintain != null
+                              ? maintainList[_carInfo.maintain!].name
+                              : '',
+                          '请选择',
+                          titleWidth: 220.w),
+                      _function('有无更改真实公里数', () async {
+                        await showModalBottomSheet(
+                          context: context,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(16.w))),
+                          builder: (context) {
+                            return CloudListPickerWidget(
                                 title: '有无更改真实公里数',
-                              );
-                            },
-                          );
-                        },
-                        child: Material(
-                          color: Colors.transparent,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 280.w,
-                                child: Text(
-                                  '有无更改真实公里数',
-                                  style: TextStyle(
-                                    color: BaseStyle.color999999,
-                                    fontSize: BaseStyle.fontSize28,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: TextField(
-                                  controller:
-                                      TextEditingController(text: _trueMeters),
-                                  enabled: false,
-                                  keyboardType: TextInputType.text,
-                                  onChanged: (text) {},
-                                  style: TextStyle(
-                                    color: BaseStyle.color333333,
-                                    fontSize: BaseStyle.fontSize28,
-                                  ),
-                                  decoration: const InputDecoration(
-                                    //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
-                                    filled: true,
-                                    isCollapsed: true,
-                                    fillColor: Colors.white,
-                                    hintText: '请选择',
-                                    hintStyle: TextStyle(
-                                        color: Color(0xFFcccccc),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w300),
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                              Image.asset(
-                                Assets.icons.icGoto.path,
-                                width: 32.w,
-                                height: 32.w,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ).paddingOnly(top: 50.h, left: 20.w, right: 35.w),
+                                items: shamMileage,
+                                onConfirm: (str, index) {
+                                  _carInfo.shamMileage = index + 1;
+                                  Get.back();
+                                  setState(() {});
+                                });
+                          },
+                        );
+                      },
+                          _carInfo.shamMileage != null
+                              ? shamMileage[_carInfo.shamMileage!]
+                              : '',
+                          '请选择',
+                          titleWidth: 280.w),
+                      30.hb,
                     ],
                   ),
                 ),
@@ -545,7 +509,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
-                      var list = await CarFunc.getEstimatePrice(_carInfo);
+                      var price = await CarFunc.getEstimatePrice(_carInfo);
                       Get.to(() =>
                           CheckPushPage(publishCarInfo: widget.publishCarInfo));
                     },
@@ -563,18 +527,15 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
     );
   }
 
-  _function(
-    String title,
-    VoidCallback onTap,
-    String? content,
-    String msg,
-  ) {
+  _function(String title, VoidCallback onTap, String? content, String msg,
+      {double? titleWidth}) {
     return GestureDetector(
       onTap: onTap,
       child: Material(
         color: Colors.transparent,
         child: EditItemWidget(
           title: title,
+          titleWidth: titleWidth,
           tips: msg,
           value: content ?? '',
           topIcon: false,
@@ -591,3 +552,4 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
     );
   }
 }
+

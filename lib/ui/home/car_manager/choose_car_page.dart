@@ -3,7 +3,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
@@ -18,7 +17,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../constants/api/api.dart';
 
-typedef CarCallback = Function(String city, int carId);
+typedef CarCallback = Function(CarListModel model);
 
 ///单选
 class ChooseCarPage extends StatefulWidget {
@@ -140,8 +139,7 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
               if (_selectIndex.isEmpty) {
                 BotToast.showText(text: '请先选择车辆');
               } else {
-                widget.callback(models[_selectIndex.first].modelName,
-                    models[_selectIndex.first].id);
+                widget.callback(models[_selectIndex.first],);
                 Get.back();
               }
             },

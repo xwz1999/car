@@ -3,7 +3,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
-
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -174,10 +173,7 @@ class _AddCardPageState extends State<AddCardPage> {
               ),
               GestureDetector(
                 onTap: () {},
-                child: SizedBox(
-                    width: 200.w,
-                    height: 120.w,
-                    child: Image.asset(Assets.images.addcar.path)),
+                child: SizedBox(child: Image.asset(Assets.images.addcar.path)),
               )
             ],
           ),

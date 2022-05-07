@@ -1,6 +1,6 @@
+import 'package:equatable/equatable.dart';
 import 'package:flustars/flustars.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:equatable/equatable.dart';
 
 part 'collect_car_model.g.dart';
 

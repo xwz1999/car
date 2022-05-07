@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../base/base_style.dart';
@@ -10,13 +9,14 @@ class CarPickerBox extends StatelessWidget {
   final String confirmString;
   final String? title;
   final Widget child;
+  final double? height;
 
   const CarPickerBox(
       {Key? key,
       this.onPressed,
       this.confirmString = '确定',
       this.title,
-      required this.child,})
+      required this.child,  this.height,})
       : super(key: key);
 
   _buildButton({
@@ -42,7 +42,7 @@ class CarPickerBox extends StatelessWidget {
     return Material(
       color: kForeGroundColor,
       child: SizedBox(
-        height: 650.w,
+        height:height?? 650.w,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/func/customer_func.dart';
@@ -8,7 +9,6 @@ import 'package:cloud_car/ui/home/user_manager/user_info_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/choose_widget.dart';
@@ -180,18 +180,6 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                                 .toSnake,
                         searchParams: _params);
 
-                    _list = [
-                      const CustomerListModel(
-                          gender: 1,
-                          createdAt: 2,
-                          brokerName: '111',
-                          trailCreatedAt: 3,
-                          nickname: '111',
-                          trailContent: '111',
-                          id: 1,
-                          isImportant: 1),
-                    ];
-
                     _onLoad = false;
 
                     setState(() {});
@@ -229,7 +217,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                         : _list.isEmpty
                             ? const SliverToBoxAdapter(
                                 child: NoDataWidget(
-                                text: '暂无相关车辆信息',
+                                text: '暂无客户信息',
                                 paddingTop: 300,
                               ))
                             : SliverPadding(
@@ -392,8 +380,8 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                               model.trailCreatedAt.toInt() * 1000,
                               format: 'yyyy-MM-dd HH-mm-ss'),
                         ),
-                        // 16.hb,
-                        // _getText('客户来源', '微信小程序'),
+                        16.hb,
+                        _getText('客户来源', '微信小程序'),
                         16.hb,
                         _getText(
                           '注册时间',
