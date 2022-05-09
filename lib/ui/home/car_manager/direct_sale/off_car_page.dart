@@ -53,12 +53,14 @@ class _OffCarPageState extends State<OffCarPage>  with SingleTickerProviderState
           padding:  EdgeInsets.only(right: 32.w),
           child: Column(
             children: [
-              EditItemWidget(
-                title: '展示价格',
-                value: '27.65',
-                callback: (String content) {},
-                endText: '万元',
-                tips: '请输入退款理由',
+              Padding(
+                padding:  EdgeInsets.only(left: 32.w),
+                child: EditItemWidget(
+                  title: '退库理由',
+                  value: '',
+                  callback: (String content) {},
+                  tips: '请输入退库理由',
+                ),
               ),
 
               Column(

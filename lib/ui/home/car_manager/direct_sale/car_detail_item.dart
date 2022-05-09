@@ -1,9 +1,14 @@
 
+import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
 class CarDetailItem extends StatelessWidget {
-  const CarDetailItem({Key? key}) : super(key: key);
+  final CarInfoModel carInfoModel;
+
+
+  const CarDetailItem({Key? key, required this.carInfoModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +23,12 @@ class CarDetailItem extends StatelessWidget {
           getItem1('基本信息'),
           48.hb,
           getItem2('参数配置'),
-          48.hb,
-          getItem3('价格信息'),
-          48.hb,
-          getItem4('评估采购信息'),
-          48.hb,
-          getItem5('车主信息'),
+          // 48.hb,
+          // getItem3('价格信息'),
+          // 48.hb,
+          // getItem4('评估采购信息'),
+          // 48.hb,
+          // getItem5('车主信息'),
           48.hb,
           getItem6('牌证信息'),
           48.hb,
@@ -39,21 +44,22 @@ class CarDetailItem extends StatelessWidget {
         Text(title,style: TextStyle(
           fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
         ),),
-        getContentItem('车架号','LGJ83476524683243'),
+        getContentItem('车架号',''),
         getContentItem('车辆类型','二手车(中规)'),
-        getContentItem('品牌车型','奥迪A3 2020款 Sportback 35 TFSI 进取运动型'),
-        getContentItem('表显里程','3.0万公里'),
-        getContentItem('首次上牌','2020-03'),
-        getContentItem('车身颜色','白色'),
-        getContentItem('车牌号','浙B562T8'),
+        getContentItem('品牌车型',carInfoModel.modelName),
+        getContentItem('表显里程','${carInfoModel.mileage}万公里'),
+        getContentItem('首次上牌',DateUtil.formatDateMs(carInfoModel.licensingDate.toInt() * 1000,
+            format: 'yyyy-MM')),
+        getContentItem('车身颜色',carInfoModel.color),
+        getContentItem('车牌号',''),
         getContentItem('车商编号',''),
-        getContentItem('车辆编号','893627'),
-        getContentItem('内饰颜色','黑色'),
-        getContentItem('使用性质','非运营'),
-        getContentItem('车辆所在地','浙江 宁波'),
+        getContentItem('车辆编号',''),
+        getContentItem('内饰颜色',''),
+        getContentItem('使用性质',carInfoModel.useCharacter),
+        getContentItem('车辆所在地',carInfoModel.locationCity),
         getContentItem('车辆归属地',''),
-        getContentItem('车况(对内)','见检测报告'),
-        getContentItem('车况(对外)','一手车车况极品，真实公里数'),
+        getContentItem('车况(对内)',carInfoModel.condition),
+        getContentItem('车况(对外)',carInfoModel.condition),
 
       ],
     );
@@ -66,12 +72,12 @@ class CarDetailItem extends StatelessWidget {
         Text(title,style: TextStyle(
             fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
         ),),
-        getContentItem('排量','1.40L'),
-        getContentItem('变速箱类型','干式双离合变速箱(DCT)'),
-        getContentItem('燃料形式','汽油'),
-        getContentItem('车身结构','两厢车'),
-        getContentItem('座位数','5个'),
-        getContentItem('排放标准','国六'),
+        getContentItem('排量','${carInfoModel.liter}L'),
+        getContentItem('变速箱类型',''),
+        getContentItem('燃料形式',''),
+        getContentItem('车身结构',''),
+        getContentItem('座位数',''),
+        getContentItem('排放标准',carInfoModel.dischargeStandard),
 
       ],
     );
@@ -85,8 +91,8 @@ class CarDetailItem extends StatelessWidget {
         Text(title,style: TextStyle(
             fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
         ),),
-        getContentItem('展示价格','27.43万元'),
-        getContentItem('系统估价','26.12万元'),
+        getContentItem('展示价格',carInfoModel.price),
+        getContentItem('系统估价',carInfoModel.lastPrice),
 
       ],
     );
@@ -134,12 +140,13 @@ class CarDetailItem extends StatelessWidget {
         Text(title,style: TextStyle(
             fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
         ),),
-        getContentItem('过户次数','1次'),
-        getContentItem('钥匙数量','2把'),
-        getContentItem('交强险','无'),
-        getContentItem('交强险到期',''),
-        getContentItem('商业险','无'),
-        getContentItem('商业险到期',''),
+        getContentItem('过户次数',''),
+        getContentItem('钥匙数量','${carInfoModel.keyCount}把'),
+        getContentItem('交强险',carInfoModel.compulsoryInsurance==1?'有':'无'),
+        getContentItem('交强险到期',DateUtil.formatDateMs(carInfoModel.licensingDate.toInt() * 1000,
+            format: 'yyyy-MM')),
+        // getContentItem('商业险','无'),
+        // getContentItem('商业险到期',''),
       ],
     );
   }

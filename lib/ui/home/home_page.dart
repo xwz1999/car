@@ -76,8 +76,6 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-    //徒步
     return CloudScaffold(
       path: Assets.images.homeBg.path,
       bodyColor: bgColor,

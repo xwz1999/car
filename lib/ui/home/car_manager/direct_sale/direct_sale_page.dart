@@ -203,12 +203,13 @@ class _DirectSalePageState extends State<DirectSalePage> with AutomaticKeepAlive
                         var model = carList[index];
                         return GestureDetector(
                           onTap: () async{
-                            carInfoModel = await CarFunc.getCarInfo(model.id);
-                            if(carInfoModel!=null){
-                              Get.to(()=> CarsDetailPage(isSelf: model.isSelf!=1?false:true,carInfoModel: carInfoModel!,));
-                            }else{
-                              CloudToast.show('车辆详情获取失败');
-                            }
+                            Get.to(()=> CarsDetailPage(isSelf: model.isSelf!=1?false:true,carListModel: model,));
+                            // carInfoModel = await CarFunc.getCarInfo(model.id);
+                            // if(carInfoModel!=null){
+                            //   Get.to(()=> CarsDetailPage(isSelf: model.isSelf!=1?false:true,carId: ,));
+                            // }else{
+                            //   CloudToast.show('车辆详情获取失败');
+                            // }
 
 
 

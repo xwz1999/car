@@ -305,7 +305,7 @@ class _UserInfoPageState extends State<UserInfoPage>
                       },
                       deleteListener: () {
                         Alert.dismiss(context);
-                        launch("tel:${detailModel.mobile}");
+                        launchUrl(Uri(scheme: 'tel', path: detailModel.mobile));
                       },
                       title: '呼出提示',
                       deleteItem: '确定',

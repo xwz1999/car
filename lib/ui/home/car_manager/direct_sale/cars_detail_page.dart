@@ -1,27 +1,33 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_info_model.dart';
+import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/off_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.dart';
+import 'package:cloud_car/ui/home/car_manager/initiate_contract_page.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
+import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
 import 'modify_price_page.dart';
 
 class CarsDetailPage extends StatefulWidget {
   final bool isSelf;
-  final CarInfoModel carInfoModel;
+  final CarListModel carListModel;
   const CarsDetailPage({
-    Key? key, required this.carInfoModel, required this.isSelf,
+    Key? key, required this.carListModel, required this.isSelf,
   }) : super(key: key);
 
   @override
@@ -32,6 +38,8 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
+
+  final List<CarListModel> _chooseModels = [];
   ///滚动监听设置
   late ScrollController _scrollController;
 
@@ -40,12 +48,10 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   List tabs = [];
   CarInfoModel? carInfoModel;
 
-  final EasyRefreshController _refreshController = EasyRefreshController();
-
   @override
   void initState() {
     ///自己发布的 tab2个 否则1个
-    tabs = ['车辆详情', '车辆轨迹'];
+    tabs = ['车辆详情', ];//'车辆轨迹'
     _tabController =
         TabController(initialIndex: 0, length: tabs.length, vsync: this);
 
@@ -61,13 +67,24 @@ class _CarsDetailPageState extends State<CarsDetailPage>
         setState(() {});
       }
     });
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+
+    });
+
+    _chooseModels.add(widget.carListModel);
+
   }
 
+
+  _refresh()async{
+    carInfoModel = await CarFunc.getCarInfo(widget.carListModel.id);
+    setState(() {});
+  }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _refreshController.dispose();
     super.dispose();
   }
 
@@ -76,178 +93,191 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     return CloudScaffold(
       path: Assets.images.noticeBg.path,
       extendBody: true,
-      body: Expanded(
-        child: EasyRefresh(
-          firstRefresh: true,
-          header: MaterialHeader(),
-          footer: MaterialFooter(),
-          child: NestedScrollView(
-            controller: _scrollController,
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-              return [
-                SliverAppBar(
-                    pinned: true,
-                    stretch: true,
-                    expandedHeight: 1150.w,
-                    elevation: 0,
-                    backgroundColor:
-                        headerWhite ? Colors.white : Colors.transparent,
-                    systemOverlayStyle: SystemUiOverlayStyle.light,
-                    snap: false,
-                    centerTitle: false,
-                    title: headerWhite
-                        ?  Text(
-                            widget.carInfoModel.modelName??'',
-                            style:  TextStyle(
-                              color: const Color(0xFF333333),
-                              fontWeight: FontWeight.w700,
-                              fontSize: 36.sp,
-                            ),
-                          )
-                        : const Text(''),
-                    leading: const CloudBackButton(),
-                    actions: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => const CallOrderPage());
-                        },
-                        child: Image.asset(Assets.icons.carDetail.path,
-                            height: 48.w, width: 48.w),
-                      ),
-                      24.wb,
+      body:  Expanded(
+        child: carInfoModel==null?const SizedBox(): NestedScrollView(
+          controller: _scrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                  pinned: true,
+                  stretch: true,
+                  expandedHeight: 1150.w,
+                  elevation: 0,
+                  backgroundColor:
+                      headerWhite ? Colors.white : Colors.transparent,
+                  systemOverlayStyle: SystemUiOverlayStyle.light,
+                  snap: false,
+                  centerTitle: false,
+                  title: headerWhite
+                      ?  Text(
+                          carInfoModel?.modelName??'',
+                          style:  TextStyle(
+                            color: const Color(0xFF333333),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 36.sp,
+                          ),
+                        )
+                      : const Text(''),
+                  leading: const CloudBackButton(),
+                  actions: [
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => CallOrderPage(carListModel: widget.carListModel,));
+                      },
+                      child: Image.asset(Assets.icons.carDetail.path,
+                          height: 48.w, width: 48.w),
+                    ),
+                    24.wb,
 
-                      ///收藏按钮 自己发布的车辆没有该按钮
-                      !widget.isSelf?
-                      GestureDetector(
-                        onTap: () async{
-                          var re = await apiClient.request(
-                              carInfoModel?.collect == 0
-                                  ? API.car.collect.add
-                                  : API.car.collect.cancel,
-                              data: {'carId': carInfoModel?.id},
-                              showMessage: true);
-                          if (re.code == 0) {
-                            _refreshController.callRefresh();
-                          }
-                        },
-                        child:  Image.asset(carInfoModel?.collect == 1
-                            ? Assets.icons.alreadyCollected.path
-                            : Assets.icons.notCollect.path),
-                      ):const SizedBox(),
-                      24.wb,
-                      GestureDetector(
-                        onTap: () {},
-                        child: Image.asset(Assets.icons.icShare.path,
-                            color: Colors.black, height: 40.w, width: 40.w),
-                      ),
-                      16.wb,
-                    ],
-                    flexibleSpace: FlexibleSpaceBar(
-                      //centerTitle: true,
-                      background: Container(
-                        alignment: Alignment.center,
-                        width: double.infinity,
-                        color: Colors.transparent,
-                        //
-                        //height: double.infinity,
+                    ///收藏按钮 自己发布的车辆没有该按钮
+                    !widget.isSelf?
+                    GestureDetector(
+                      onTap: () async{
+                        var re = await apiClient.request(
+                            carInfoModel?.collect == 0
+                                ? API.car.collect.add
+                                : API.car.collect.cancel,
+                            data: {'carId': carInfoModel?.id},
+                            showMessage: true);
+                        if (re.code == 0) {
 
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            135.hb,
-                            Container(
-                              decoration: BoxDecoration(
-                                color: headerWhite
-                                    ? Colors.white
-                                    : Colors.transparent,
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 32.w, vertical: 24.w),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _title(),
-                                  32.hb,
-                                  _label(),
-                                  18.hb,
-                                  _information(),
-                                  30.hb,
-                                  _shuffling(),
-                                  32.hb,
-                                  _informations(),
-                                ],
-                              ),
+                        }
+                      },
+                      child:  Image.asset(carInfoModel?.collect == 1
+                          ? Assets.icons.alreadyCollected.path
+                          : Assets.icons.notCollect.path),
+                    ):const SizedBox(),
+                    24.wb,
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            isDismissible: true,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15))),
+                            builder: (BuildContext context) {
+                              return ShareCarDetailPage(
+                                model: _chooseModels,
+                                isMore: false,
+                              );
+                            });
+
+                      },
+                      child: Image.asset(Assets.icons.icShare.path,
+                          color: Colors.black, height: 40.w, width: 40.w),
+                    ),
+                    16.wb,
+                  ],
+                  flexibleSpace: FlexibleSpaceBar(
+                    //centerTitle: true,
+                    background: Container(
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      color: Colors.transparent,
+                      //
+                      //height: double.infinity,
+
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          135.hb,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: headerWhite
+                                  ? Colors.white
+                                  : Colors.transparent,
                             ),
-                            50.hb,
-                          ],
-                        ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 32.w, vertical: 24.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _title(),
+                                32.hb,
+                                _label(),
+                                18.hb,
+                                _information(),
+                                30.hb,
+                                _shuffling(),
+                                32.hb,
+                                _informations(),
+                              ],
+                            ),
+                          ),
+                          50.hb,
+                        ],
                       ),
                     ),
-                    bottom: PreferredSize(
-                      preferredSize: Size.fromHeight(kToolbarHeight - 10.w),
-                      child: Container(
-                        height: kToolbarHeight - 10.w,
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        child: TabBar(
-                            onTap: (index) {
-                              setState(() {});
-                            },
-                            isScrollable: true,
-                            labelPadding: EdgeInsets.symmetric(
-                                vertical: 10.w, horizontal: 40.w),
-                            controller: _tabController,
-                            indicatorWeight: 3,
-                            labelColor: kPrimaryColor,
-                            unselectedLabelColor: BaseStyle.color333333,
-                            indicatorPadding: EdgeInsets.symmetric(
-                                horizontal: 30.w, vertical: 0.w),
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            labelStyle: TextStyle(
-                              color: Colors.white.withOpacity(0.85),
-                            ),
-                            indicator: const BoxDecoration(),
-                            indicatorColor: kPrimaryColor,
-                            tabs: [
-                              _tab(0, tabs[0]),
-                              _tab(1, tabs[1]),
-                            ]),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: BaseStyle.colordddddd, width: 2.w))),
-                      ),
-                    )),
-              ];
-            },
-            body: Padding(
-              padding: EdgeInsets.only(bottom: 120.w),
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  const CarDetailItem(),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          index == 0
-                              ? Container(
-                                  width: double.infinity,
-                                  height: 40.w,
-                                  color: Colors.white,
-                                )
-                              : const SizedBox(),
-                          _getListItem(index, index < 2),
-                        ],
-                      );
-                    },
-                    itemCount: 5,
                   ),
-                ],
-              ),
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(kToolbarHeight - 10.w),
+                    child: Container(
+                      height: kToolbarHeight - 10.w,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: TabBar(
+                          onTap: (index) {
+                            setState(() {});
+                          },
+                          isScrollable: true,
+                          labelPadding: EdgeInsets.symmetric(
+                              vertical: 10.w, horizontal: 40.w),
+                          controller: _tabController,
+                          indicatorWeight: 3,
+                          labelColor: kPrimaryColor,
+                          unselectedLabelColor: BaseStyle.color333333,
+                          indicatorPadding: EdgeInsets.symmetric(
+                              horizontal: 30.w, vertical: 0.w),
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          labelStyle: TextStyle(
+                            color: Colors.white.withOpacity(0.85),
+                          ),
+                          indicator: const BoxDecoration(),
+                          indicatorColor: kPrimaryColor,
+                          tabs: [
+                            _tab(0, tabs[0]),
+                            // _tab(1, tabs[1]),
+                          ]),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: BaseStyle.colordddddd, width: 2.w))),
+                    ),
+                  )),
+            ];
+          },
+          body: Padding(
+            padding: EdgeInsets.only(bottom: 120.w),
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                CarDetailItem(carInfoModel: carInfoModel!,),
+
+                // ListView.builder(
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   padding: EdgeInsets.zero,
+                //   shrinkWrap: true,
+                //   itemBuilder: (BuildContext context, int index) {
+                //     return Column(
+                //       children: [
+                //         index == 0
+                //             ? Container(
+                //                 width: double.infinity,
+                //                 height: 40.w,
+                //                 color: Colors.white,
+                //               )
+                //             : const SizedBox(),
+                //         _getListItem(index, index < 2),
+                //       ],
+                //     );
+                //   },
+                //   itemCount: 5,
+                // ),
+              ],
             ),
           ),
         ),
@@ -286,6 +316,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     return Container(
       width: double.infinity,
       color: Colors.white,
+      height: 380.w,
       child: Row(
         children: [
           Container(
@@ -454,7 +485,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       children: [
         Flexible(
             child: Text(
-          '奥迪A3 2020款 Sportback 35 TFSI 进取运动型',
+              carInfoModel?.modelName??'',
           style: Theme.of(context)
               .textTheme
               .headline6
@@ -476,11 +507,12 @@ class _CarsDetailPageState extends State<CarsDetailPage>
               16.wb,
               _noRelease('在厅'),
               16.wb,
-              _textview('2020年10月'),
+              _textview(DateUtil.formatDateMs(carInfoModel!.licensingDate.toInt() * 1000,
+                  format: 'yyyy-MM')),
               16.wb,
-              _textview('20.43万公里'),
+              _textview('${carInfoModel?.mileage}万公里'),
               16.wb,
-              _textview('国六'),
+              _textview(carInfoModel?.dischargeStandard??""),
             ],
           ),
         ),
@@ -495,7 +527,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       children: [
         Text.rich(TextSpan(children: [
           TextSpan(
-              text: '27.43',
+              text: carInfoModel!.price,
               style: TextStyle(
                   color: const Color(0xFFFF3B02),
                   fontSize: BaseStyle.fontSize40)),
@@ -548,7 +580,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '26.12万',
+                      '${carInfoModel!.price}万',
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                     Row(
@@ -592,7 +624,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                     Row(
                       children: [
                         Text(
-                          '黑色',
+                          carInfoModel!.color,
                           style: Theme.of(context).textTheme.subtitle2,
                         ),
                       ],
@@ -633,7 +665,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                   children: [
                     Padding(padding: EdgeInsets.symmetric(horizontal: 68.w)),
                     Text(
-                      '893627',
+                      '-',
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                     Row(
@@ -681,20 +713,21 @@ class _CarsDetailPageState extends State<CarsDetailPage>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-              child: _getBottom(Assets.icons.noEditor.path, '编辑', () {
+              child: _getBottom(Assets.icons.editor.path, '编辑', () {
             Get.to(() => const EditCarPage());
           })),
           Expanded(
-              child: _getBottom(Assets.icons.noTransmission.path, '调价', () {
+              child: _getBottom(Assets.icons.transmission.path, '调价', () {
                 Get.to(() => const ModifyPricePage());
 
               })),
           Expanded(
               child: _getBottom(Assets.icons.upload.path, '出售', () {
-            Get.to(() => const SellCarOrderPage());
+                  Get.to(() => SellCarOrderPage(carModel: widget.carListModel,));
+                //Get.to(() => const InitiateContractPage());
           })),
           Expanded(
-              child: _getBottom(Assets.icons.noDownload.path, '下架/退库', () {
+              child: _getBottom(Assets.icons.download.path, '下架/退库', () {
             Get.to(() => const OffCarPage());
           })),
         ],
@@ -771,7 +804,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
 //图片样式
   _bannerStyle() {
     return Swiper(
-      itemCount: 4,
+      itemCount:  carInfoModel!.carPhotos.length,
       //横向
       scrollDirection: Axis.horizontal,
       //布局构建
@@ -780,10 +813,11 @@ class _CarsDetailPageState extends State<CarsDetailPage>
         //   'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
         //   fit: BoxFit.fill,
         // );
-        return Image.asset(
-          Assets.images.carBanner.path,
-          fit: BoxFit.fill,
-        );
+        return
+          CloudImageNetworkWidget.car(
+            urls: [carInfoModel!.carPhotos[index].imageWithHost],
+          );
+
       },
       //自动翻页
       autoplay: true,
