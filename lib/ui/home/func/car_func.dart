@@ -13,6 +13,7 @@ import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:flustars/flustars.dart';
 
 class CarFunc {
   ///获取⻋辆品牌
@@ -167,7 +168,7 @@ class CarFunc {
       'modelId': carInfo.modelId,
       'licensePlate': carInfo.licensePlate,
       'color': carInfo.color,
-      'licensingDate': carInfo.licensingDate,
+      'licensingDate': DateUtil.formatDate(carInfo.licensingDate,format: DateFormats.y_mo_d),
       'Mileage': carInfo.mileage,
       'Transfer': carInfo.transfer,
       'Paint': carInfo.paint,
@@ -185,7 +186,7 @@ class CarFunc {
       return model.data['price'];
     } else {
       CloudToast.show(model.msg);
-      return '0';
+      return '-1';
     }
   }
 

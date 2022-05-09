@@ -123,7 +123,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
       children: [
         _showarea('车架号', widget.publishCarInfo.viNum!, fontColor),
         _showarea('品牌车型', widget.publishCarInfo.carName!, fontColor),
-        _showarea('首次上牌', widget.publishCarInfo.licensingDate!, fontColor),
+        _showarea('首次上牌', widget.publishCarInfo.licensingDateStr, fontColor),
         _showarea('车牌号', widget.publishCarInfo.carNum!, fontColor),
         _showarea('发动机号', widget.publishCarInfo.engineNum!, fontColor),
         _showarea('车身颜色', widget.publishCarInfo.carColor!, fontColor),

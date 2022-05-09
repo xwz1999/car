@@ -9,6 +9,7 @@ import '../../../../widget/button/cloud_back_button.dart';
 
 class CarPicturePage extends StatefulWidget {
   final PublishCarInfo publishCarInfo;
+
   const CarPicturePage({Key? key, required this.publishCarInfo})
       : super(key: key);
 
@@ -53,9 +54,11 @@ class _CarPicturePageState extends State<CarPicturePage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => PublishCarInfoPage(
-                        publishCarInfo: widget.publishCarInfo,
-                      ));
+                  Get.to(
+                    () => PublishCarInfoPage(
+                      publishCarInfo: widget.publishCarInfo,
+                    ),
+                  );
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),

@@ -247,7 +247,7 @@ class _PushCarPageState extends State<PushCarPage> {
                                       _publishCarInfo.carName =
                                           carInfoModel!.cartype;
                                       _publishCarInfo.licensingDate =
-                                          carInfoModel!.issuedate;
+                                          DateUtil.getDateTime(carInfoModel!.issuedate);
                                       _publishCarInfo.carNum =
                                           carInfoModel!.lsnum;
                                       _publishCarInfo.engineNum =
@@ -369,11 +369,10 @@ class _PushCarPageState extends State<PushCarPage> {
             '首次上牌',
             () async {
               _firstDate = await CarDatePicker.monthPicker(DateTime.now());
-              _publishCarInfo.licensingDate =
-                  DateUtil.formatDate(_firstDate, format: 'yyyy-MM');
+              _publishCarInfo.licensingDate = _firstDate;
               setState(() {});
             },
-            _publishCarInfo.licensingDate,
+            _publishCarInfo.licensingDateStr,
             '选择首次上牌时间',
           ),
           20.heightBox,
@@ -481,7 +480,7 @@ class _PushCarPageState extends State<PushCarPage> {
       BotToast.showText(text: '请选择车型');
       return false;
     }
-    if (_publishCarInfo.licensingDate.isEmptyOrNull) {
+    if (_publishCarInfo.licensingDate==null) {
       BotToast.showText(text: '请选择首次上牌时间');
       return false;
     }
@@ -558,7 +557,8 @@ class PublishCarInfo {
   int? carModelId;
 
   ///首次上牌时间
-  String? licensingDate;
+  DateTime? licensingDate;
+  String get licensingDateStr => DateUtil.formatDate(licensingDate,format: 'yyyy-MM');
 
   ///车牌号
   String? carNum;
