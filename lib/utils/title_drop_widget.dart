@@ -221,7 +221,8 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                                                 Assets.icons.icClose.path,
                                                 width: 32.w,
                                                 height: 32.w,
-                                              )),
+                                              )
+                                          ),
                                         )
                                       : const SizedBox(),
                                   enabledBorder: UnderlineInputBorder(

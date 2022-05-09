@@ -1,21 +1,27 @@
+import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/off_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
 import 'modify_price_page.dart';
 
 class CarsDetailPage extends StatefulWidget {
+  final bool isSelf;
+  final CarInfoModel carInfoModel;
   const CarsDetailPage({
-    Key? key,
+    Key? key, required this.carInfoModel, required this.isSelf,
   }) : super(key: key);
 
   @override
@@ -32,6 +38,9 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   ///头部背景布局 true滚动一定的高度 false 滚动高度为0
   bool headerWhite = false;
   List tabs = [];
+  CarInfoModel? carInfoModel;
+
+  final EasyRefreshController _refreshController = EasyRefreshController();
 
   @override
   void initState() {
@@ -54,9 +63,11 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     });
   }
 
+
   @override
   void dispose() {
     _tabController.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 
@@ -66,160 +77,177 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       path: Assets.images.noticeBg.path,
       extendBody: true,
       body: Expanded(
-        child: NestedScrollView(
-          controller: _scrollController,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                  pinned: true,
-                  stretch: true,
-                  expandedHeight: 1150.w,
-                  elevation: 0,
-                  backgroundColor:
-                      headerWhite ? Colors.white : Colors.transparent,
-                  systemOverlayStyle: SystemUiOverlayStyle.light,
-                  snap: false,
-                  centerTitle: false,
-                  title: headerWhite
-                      ? const Text(
-                          '奥迪A3 2020款',
-                          style: TextStyle(
-                            color: Color(0xFF333333),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
-                          ),
-                        )
-                      : const Text(''),
-                  leading: const CloudBackButton(),
-                  actions: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(() => const CallOrderPage());
-                      },
-                      child: Image.asset(Assets.icons.carDetail.path,
-                          height: 48.w, width: 48.w),
-                    ),
-                    24.wb,
-
-                    ///收藏按钮 自己发布的车辆没有该按钮
-                    GestureDetector(
-                      onTap: () {},
-                      child: Image.asset(Assets.icons.collection.path,
-                          height: 48.w, width: 48.w),
-                    ),
-                    24.wb,
-                    GestureDetector(
-                      onTap: () {},
-                      child: Image.asset(Assets.icons.icShare.path,
-                          color: Colors.black, height: 40.w, width: 40.w),
-                    ),
-                    16.wb,
-                  ],
-                  flexibleSpace: FlexibleSpaceBar(
-                    //centerTitle: true,
-                    background: Container(
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      color: Colors.transparent,
-                      //
-                      //height: double.infinity,
-
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          135.hb,
-                          Container(
-                            decoration: BoxDecoration(
-                              color: headerWhite
-                                  ? Colors.white
-                                  : Colors.transparent,
+        child: EasyRefresh(
+          firstRefresh: true,
+          header: MaterialHeader(),
+          footer: MaterialFooter(),
+          child: NestedScrollView(
+            controller: _scrollController,
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                SliverAppBar(
+                    pinned: true,
+                    stretch: true,
+                    expandedHeight: 1150.w,
+                    elevation: 0,
+                    backgroundColor:
+                        headerWhite ? Colors.white : Colors.transparent,
+                    systemOverlayStyle: SystemUiOverlayStyle.light,
+                    snap: false,
+                    centerTitle: false,
+                    title: headerWhite
+                        ?  Text(
+                            widget.carInfoModel.modelName??'',
+                            style:  TextStyle(
+                              color: const Color(0xFF333333),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 36.sp,
                             ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 32.w, vertical: 24.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _title(),
-                                32.hb,
-                                _label(),
-                                18.hb,
-                                _information(),
-                                30.hb,
-                                _shuffling(),
-                                32.hb,
-                                _informations(),
-                              ],
+                          )
+                        : const Text(''),
+                    leading: const CloudBackButton(),
+                    actions: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => const CallOrderPage());
+                        },
+                        child: Image.asset(Assets.icons.carDetail.path,
+                            height: 48.w, width: 48.w),
+                      ),
+                      24.wb,
+
+                      ///收藏按钮 自己发布的车辆没有该按钮
+                      !widget.isSelf?
+                      GestureDetector(
+                        onTap: () async{
+                          var re = await apiClient.request(
+                              carInfoModel?.collect == 0
+                                  ? API.car.collect.add
+                                  : API.car.collect.cancel,
+                              data: {'carId': carInfoModel?.id},
+                              showMessage: true);
+                          if (re.code == 0) {
+                            _refreshController.callRefresh();
+                          }
+                        },
+                        child:  Image.asset(carInfoModel?.collect == 1
+                            ? Assets.icons.alreadyCollected.path
+                            : Assets.icons.notCollect.path),
+                      ):const SizedBox(),
+                      24.wb,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Image.asset(Assets.icons.icShare.path,
+                            color: Colors.black, height: 40.w, width: 40.w),
+                      ),
+                      16.wb,
+                    ],
+                    flexibleSpace: FlexibleSpaceBar(
+                      //centerTitle: true,
+                      background: Container(
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        color: Colors.transparent,
+                        //
+                        //height: double.infinity,
+
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            135.hb,
+                            Container(
+                              decoration: BoxDecoration(
+                                color: headerWhite
+                                    ? Colors.white
+                                    : Colors.transparent,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 32.w, vertical: 24.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _title(),
+                                  32.hb,
+                                  _label(),
+                                  18.hb,
+                                  _information(),
+                                  30.hb,
+                                  _shuffling(),
+                                  32.hb,
+                                  _informations(),
+                                ],
+                              ),
                             ),
-                          ),
-                          50.hb,
-                        ],
+                            50.hb,
+                          ],
+                        ),
                       ),
                     ),
+                    bottom: PreferredSize(
+                      preferredSize: Size.fromHeight(kToolbarHeight - 10.w),
+                      child: Container(
+                        height: kToolbarHeight - 10.w,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: TabBar(
+                            onTap: (index) {
+                              setState(() {});
+                            },
+                            isScrollable: true,
+                            labelPadding: EdgeInsets.symmetric(
+                                vertical: 10.w, horizontal: 40.w),
+                            controller: _tabController,
+                            indicatorWeight: 3,
+                            labelColor: kPrimaryColor,
+                            unselectedLabelColor: BaseStyle.color333333,
+                            indicatorPadding: EdgeInsets.symmetric(
+                                horizontal: 30.w, vertical: 0.w),
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            labelStyle: TextStyle(
+                              color: Colors.white.withOpacity(0.85),
+                            ),
+                            indicator: const BoxDecoration(),
+                            indicatorColor: kPrimaryColor,
+                            tabs: [
+                              _tab(0, tabs[0]),
+                              _tab(1, tabs[1]),
+                            ]),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: BaseStyle.colordddddd, width: 2.w))),
+                      ),
+                    )),
+              ];
+            },
+            body: Padding(
+              padding: EdgeInsets.only(bottom: 120.w),
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  const CarDetailItem(),
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        children: [
+                          index == 0
+                              ? Container(
+                                  width: double.infinity,
+                                  height: 40.w,
+                                  color: Colors.white,
+                                )
+                              : const SizedBox(),
+                          _getListItem(index, index < 2),
+                        ],
+                      );
+                    },
+                    itemCount: 5,
                   ),
-                  bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(kToolbarHeight - 10.w),
-                    child: Container(
-                      height: kToolbarHeight - 10.w,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: TabBar(
-                          onTap: (index) {
-                            setState(() {});
-                          },
-                          isScrollable: true,
-                          labelPadding: EdgeInsets.symmetric(
-                              vertical: 10.w, horizontal: 40.w),
-                          controller: _tabController,
-                          indicatorWeight: 3,
-                          labelColor: kPrimaryColor,
-                          unselectedLabelColor: BaseStyle.color333333,
-                          indicatorPadding: EdgeInsets.symmetric(
-                              horizontal: 30.w, vertical: 0.w),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          labelStyle: TextStyle(
-                            color: Colors.white.withOpacity(0.85),
-                          ),
-                          indicator: const BoxDecoration(),
-                          indicatorColor: kPrimaryColor,
-                          tabs: [
-                            _tab(0, tabs[0]),
-                            _tab(1, tabs[1]),
-                          ]),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border(
-                              bottom: BorderSide(
-                                  color: BaseStyle.colordddddd, width: 2.w))),
-                    ),
-                  )),
-            ];
-          },
-          body: Padding(
-            padding: EdgeInsets.only(bottom: 120.w),
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                const CarDetailItem(),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        index == 0
-                            ? Container(
-                                width: double.infinity,
-                                height: 40.w,
-                                color: Colors.white,
-                              )
-                            : const SizedBox(),
-                        _getListItem(index, index < 2),
-                      ],
-                    );
-                  },
-                  itemCount: 5,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
