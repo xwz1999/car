@@ -3,6 +3,7 @@
 import 'package:cloud_car/model/contract/ConsignmentList_model.dart';
 import 'package:cloud_car/ui/user/user_look_contract/comsignment.view.dart';
 import 'package:cloud_car/ui/user/user_look_contract/sale.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -53,9 +54,7 @@ class _ConsignmentContractState extends State<ConsignmentContract>
     super.build(context);
     return Scaffold(
         // appBar: AppBar(
-
         // )
-
         // AppBar(
         //   toolbarHeight: 88.w,
         //   backgroundColor: kForeGroundColor,
@@ -117,14 +116,24 @@ class _ConsignmentContractState extends State<ConsignmentContract>
                 child: TabBarView(
               controller: _tabController,
               children: [
-                ConsignmentView(
-                  ConsignmentList: _ConsignmentList,
-                  refreshController: _consignmentRefreshController,
-                ),
-                SaleView(
-                  SaleList: _SaleList,
-                  refreshController: _saleRefreshController,
-                ),
+                _ConsignmentList.isEmpty
+                    ? const NoDataWidget(
+                        text: '暂无客户信息',
+                        paddingTop: 0,
+                      )
+                    : ConsignmentView(
+                        ConsignmentList: _ConsignmentList,
+                        refreshController: _consignmentRefreshController,
+                      ),
+                _SaleList.isEmpty
+                    ? const NoDataWidget(
+                        text: '暂无客户信息',
+                        paddingTop: 0,
+                      )
+                    : SaleView(
+                        SaleList: _SaleList,
+                        refreshController: _saleRefreshController,
+                      ),
               ],
             ))
           ],

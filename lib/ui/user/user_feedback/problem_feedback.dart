@@ -1,6 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/interface/feedback_func.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
@@ -35,6 +38,16 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
   late String phone = widget.phone;
   late bool zhi = false;
   @override
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  _refresh() async {
+    // ignore: unused_local_variable
+    zhi = await FeedbackFunc.getFeedback(widget.title, content, phone, img);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -107,10 +120,23 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 200.w,
-                  height: 120,
-                  child: Image.asset(Assets.images.addcar.path),
+                GestureDetector(
+                  onTap: () async {
+                    await CloudImagePicker.pickSingleImage(title: '选择图片').then(
+                      (value) async {
+                        if (value != null) {
+                          File files = value;
+                          String urls = await ApiClient().uploadImage(files);
+                        }
+                      },
+                    );
+                    setState(() {});
+                  },
+                  child: SizedBox(
+                    width: 200.w,
+                    height: 120,
+                    child: Image.asset(Assets.images.addcar.path),
+                  ),
                 ),
               ],
             ),
@@ -161,6 +187,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
                 Future.delayed(const Duration(milliseconds: 0), () async {
                   await _refresh();
                   Get.back();
+                  print('标题${widget.title}+文本 ${content}+手机 ${phone}+图片${img}');
                   setState(() {});
                 });
               } else {
@@ -185,10 +212,5 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
           ),
           32.hb,
         ]));
-  }
-
-  _refresh() async {
-    // ignore: unused_local_variable
-    zhi = await FeedbackFunc.getFeedback(widget.title, content, phone, img);
   }
 }

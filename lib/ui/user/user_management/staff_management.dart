@@ -5,6 +5,7 @@ import 'package:cloud_car/ui/user/user_management/add_employee.dart';
 import 'package:cloud_car/ui/user/user_management/add_stores.dart';
 import 'package:cloud_car/ui/user/user_management/permissions.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -97,7 +98,10 @@ class _StaffManagementState extends State<StaffManagement> {
             child:
                 //Employees.isEmpty?
                 Employees.isEmpty
-                    ? const SizedBox()
+                    ? const NoDataWidget(
+                        text: '暂无客户信息',
+                        paddingTop: 0,
+                      )
                     : ListView.builder(
                         itemBuilder: (context, index) {
                           return _getList(Employees[index]);

@@ -20,10 +20,10 @@ class _RecommendationsState extends State<Recommendations> {
   final List<int> _selectIndex = [];
   final List<ConfigurationModel> _chooseModels = []; //
   List<ConfigurationModel> moddels = [
-    ConfigurationModel(title: '销售员', subtitle: '能够查看全店的车，并进行客户跟进、销售下单'),
-    ConfigurationModel(title: '评估师/车务', subtitle: '负责录入车辆信息、编辑店里的车辆'),
-    ConfigurationModel(title: '销售/车务', subtitle: '可以录入车辆信息、编辑车辆，并进行客户跟进、销售下单'),
-    ConfigurationModel(title: '店长', subtitle: '能够管理店内的客户、车辆、订单'),
+    ConfigurationModel(title: '性能体检', subtitle: '白屏、卡顿、闪退、图片不显示'),
+    ConfigurationModel(title: '功能异常', subtitle: '现有功能无法正常使用'),
+    ConfigurationModel(title: '产品意见', subtitle: '用的不开心，建议提出来'),
+    ConfigurationModel(title: '其他反馈', subtitle: ''),
   ];
   @override
   Widget build(BuildContext context) {
@@ -250,14 +250,14 @@ class _RecommendationsState extends State<Recommendations> {
               SizedBox(
                 width: 138.w,
                 child: Text(
-                  '性能体验',
+                  (model.title).toString(),
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 0.w),
                 child: Text(
-                  '白屏、卡顿、闪退、图片不显示',
+                  (model.subtitle).toString(),
                   style: TextStyle(
                       color: BaseStyle.color999999,
                       fontSize: BaseStyle.fontSize24),
