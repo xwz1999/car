@@ -153,7 +153,7 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
   getItem(CarEvaluationModel model){
      return GestureDetector(
        onTap: (){
-         Get.to(()=>const CarsDetailPage());
+         // Get.to(()=>  CarsDetailPage(isSelf: null,));
        },
        child: Container(
          margin: EdgeInsets.only(bottom: 16.w),

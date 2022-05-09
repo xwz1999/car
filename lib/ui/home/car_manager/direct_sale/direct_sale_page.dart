@@ -1,5 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
+import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:cloud_car/widget/choose_widget.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
@@ -15,6 +17,8 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+
+import 'cars_detail_page.dart';
 
 class DirectSalePage extends StatefulWidget {
   final EasyRefreshController refreshController;
@@ -56,6 +60,8 @@ class _DirectSalePageState extends State<DirectSalePage> with AutomaticKeepAlive
 
   int _page = 1;
   final int _size = 10;
+
+  CarInfoModel? carInfoModel;
 
   @override
   void initState() {
@@ -196,7 +202,15 @@ class _DirectSalePageState extends State<DirectSalePage> with AutomaticKeepAlive
                       delegate: SliverChildBuilderDelegate((context, index) {
                         var model = carList[index];
                         return GestureDetector(
-                          onTap: (){
+                          onTap: () async{
+                            carInfoModel = await CarFunc.getCarInfo(model.id);
+                            if(carInfoModel!=null){
+                              Get.to(()=> CarsDetailPage(isSelf: model.isSelf!=1?false:true,carInfoModel: carInfoModel!,));
+                            }else{
+                              CloudToast.show('车辆详情获取失败');
+                            }
+
+
 
                           },
                           child: CarItemWidget(
