@@ -406,7 +406,7 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.carInfo.licensingDate??'',
+                    widget.carInfo.licensingDateStr,
                     style: TextStyle(
                       color: const Color(0xFF333333),
                       fontSize: 28.w,
