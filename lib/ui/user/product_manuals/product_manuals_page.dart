@@ -1,7 +1,6 @@
 import 'package:cloud_car/model/user/Handbook_model.dart';
 import 'package:cloud_car/ui/user/interface/manuals_func.dart';
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_info.dart';
-
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

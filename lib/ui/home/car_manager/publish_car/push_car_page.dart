@@ -17,6 +17,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
+
 import '../../../../model/sort/sort_brand_model.dart';
 import '../../../../model/sort/sort_car_model_model.dart';
 import '../../../../model/sort/sort_series_model.dart';
@@ -26,7 +27,6 @@ import '../../../../widget/picker/car_date_picker.dart';
 import '../../../../widget/picker/car_list_picker.dart';
 import '../../../../widget/picker/cloud_image_picker.dart';
 import '../../../../widget/sort_widget.dart';
-
 import '../../sort/choose_car_page.dart';
 import '../../sort/search_param_model.dart';
 import '../direct_sale/edit_item_widget.dart';

@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_result_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
-import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -19,7 +19,6 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 
 import '../../../model/sort/sort_brand_model.dart';
 import '../../../model/sort/sort_car_model_model.dart';

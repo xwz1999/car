@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/share_util.dart';
@@ -7,8 +8,8 @@ import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
+
 import 'edit_item_widget.dart';
 
 class ShareCarDetailPage extends StatefulWidget {

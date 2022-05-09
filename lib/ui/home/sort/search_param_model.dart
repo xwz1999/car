@@ -1,7 +1,7 @@
+import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/sort/sort_car_model_model.dart';
 import 'package:cloud_car/model/sort/sort_series_model.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 
 import '../func/car_map.dart';
 

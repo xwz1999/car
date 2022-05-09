@@ -1,6 +1,6 @@
+import 'package:equatable/equatable.dart';
 import 'package:flustars/flustars.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:equatable/equatable.dart';
 
 part 'car_list_model.g.dart';
 
@@ -27,6 +27,8 @@ class CarListModel extends Equatable {
   ///是否收藏 0未收藏 1收藏
   final int collect;
 
+  final int? isSelf;
+
   factory CarListModel.fromJson(Map<String, dynamic> json) =>
       _$CarListModelFromJson(json);
 
@@ -35,7 +37,7 @@ class CarListModel extends Equatable {
 
   num get unitPrice => NumUtil.divide(num.parse(price), 10000);
 
-  const CarListModel({
+  const CarListModel( {
     required this.id,
     required this.modelName,
     required this.type,
@@ -46,6 +48,7 @@ class CarListModel extends Equatable {
     required this.mileage,
     required this.transfer,
     required this.collect,
+    this.isSelf,
   });
 
   @override
@@ -59,5 +62,6 @@ class CarListModel extends Equatable {
         mileage,
         transfer,
         collect,
+        isSelf
       ];
 }

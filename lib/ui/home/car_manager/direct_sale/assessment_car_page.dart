@@ -3,15 +3,11 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/car_evaluation_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/cars_detail_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
-import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
-import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
-import 'package:cloud_car/widget/screen_widget.dart';
-import 'package:cloud_car/widget/sort_widget.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -27,7 +23,7 @@ class AssessmentCarPage extends StatefulWidget {
   _AssessmentCarPageState createState() => _AssessmentCarPageState();
 }
 
-class _AssessmentCarPageState extends State<AssessmentCarPage> {
+class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKeepAliveClientMixin {
 
    String? get _modelName => widget.pickCar.value.keyWords;
 
@@ -51,7 +47,7 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> {
     return  Column(
       children: [
         const SizedBox(
-          height:  kToolbarHeight ,
+          height:  kToolbarHeight +20 ,
         ),
         Expanded(
           child:
@@ -126,7 +122,7 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> {
             },
             slivers: [
               SliverToBoxAdapter(
-                child: 80.hb,
+                child: 10.hb,
               ),
               _onLoad
                   ? const  SliverToBoxAdapter(
@@ -157,9 +153,10 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> {
   getItem(CarEvaluationModel model){
      return GestureDetector(
        onTap: (){
-         Get.to(()=>const CarsDetailPage());
+         // Get.to(()=>  CarsDetailPage(isSelf: null,));
        },
        child: Container(
+         margin: EdgeInsets.only(bottom: 16.w),
          padding: EdgeInsets.symmetric(vertical: 24.w,horizontal: 32.w),
          decoration: BoxDecoration(
            color: Colors.white,
@@ -191,7 +188,8 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> {
              getText('车架号',model.vin),
 
              16.hb,
-             getText('首次上牌','2020-01'),
+             getText('首次上牌',DateUtil.formatDateMs(model.licensingDate.toInt() * 1000,
+                 format: 'yyyy-MM')),
              16.hb,
              getText('车牌号',model.licensePlate),
              16.hb,
@@ -199,9 +197,9 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> {
              16.hb,
              getText('车身颜色',model.color),
              16.hb,
-             getText('显表里程','3.0万公里'),
+             getText('显表里程',model.mileage + '万公里'),
              16.hb,
-             getText('系统估计','8.80万元',isRed: true),
+             getText('系统估计',model.price+'万元',isRed: true),
 
            ],
          ),
@@ -239,6 +237,10 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> {
        ],
      );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
   
   
   

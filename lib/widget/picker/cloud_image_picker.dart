@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:cloud_car/extensions/num_ext.dart';
 
+import 'package:cloud_car/extensions/num_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';

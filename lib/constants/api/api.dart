@@ -1,8 +1,7 @@
 import '../environment/environment.dart';
 
-part 'user_api.dart';
-
 part 'car_api.dart';
+part 'user_api.dart';
 
 /// * user  用户接口
 /// * data 基础数据接口

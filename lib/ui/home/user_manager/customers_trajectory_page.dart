@@ -1,12 +1,11 @@
 import 'package:cloud_car/model/car/customer_trail_model.dart';
-import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flustars/flustars.dart';
 
 
 

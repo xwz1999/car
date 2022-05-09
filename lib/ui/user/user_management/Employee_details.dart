@@ -1,12 +1,10 @@
 // ignore_for_file: dead_code
 
 import 'package:bot_toast/bot_toast.dart';
-
 import 'package:cloud_car/ui/user/user_management/editor_employee.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 
 class EmployeeDetails extends StatefulWidget {

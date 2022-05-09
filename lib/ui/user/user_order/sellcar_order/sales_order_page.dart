@@ -6,10 +6,8 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/make_deal.dart
 import 'package:cloud_car/ui/user/user_order/sellcar_order/make_deal_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/transaction_cancelled.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
-
 import 'package:cloud_car/widget/car_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
@@ -18,6 +16,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+
 import 'backup/make_deal.dart';
 
 class SalesOrderPage extends StatefulWidget {

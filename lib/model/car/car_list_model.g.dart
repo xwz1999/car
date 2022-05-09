@@ -17,4 +17,5 @@ CarListModel _$CarListModelFromJson(Map<String, dynamic> json) => CarListModel(
       mileage: json['mileage'] as String,
       transfer: json['transfer'] as int,
       collect: json['collect'] as int,
+      isSelf: json['isSelf'] as int?,
     );

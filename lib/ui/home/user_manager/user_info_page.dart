@@ -10,8 +10,9 @@ import 'package:cloud_car/widget/alert.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'customers_trajectory_page.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'customers_trajectory_page.dart';
 
 class UserInfoPage extends StatefulWidget {
   final int customerId;

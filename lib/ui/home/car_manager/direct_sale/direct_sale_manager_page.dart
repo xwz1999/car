@@ -4,18 +4,12 @@ import 'package:cloud_car/model/sort/sort_series_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/direct_sale_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
-import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/car_widget.dart';
-import 'package:cloud_car/widget/choose_widget.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
-import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
-import 'package:flutter/foundation.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -37,6 +31,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
   TitleScreenControl screenControl = TitleScreenControl();
   final EasyRefreshController refreshController = EasyRefreshController();
+  final EasyRefreshController asRefreshController = EasyRefreshController();
 
   late String city;
   late String brand;
@@ -62,7 +57,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
     _sortList = [
       ChooseItem(name: '直卖车辆'),
-      ChooseItem(name: '收购车辆'),
+      // ChooseItem(name: '收购车辆'),
       ChooseItem(name: '评估车辆'),
     ];
 
@@ -84,8 +79,16 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
             callback: (String item, int value) {
               screenControl.screenHide();
               _dropDownHeaderItemStrings1.first = item;
-              refreshController.callRefresh();
+
+
+
+
+
+              _dropDownHeaderItemStrings1.first != '直卖车辆'
+                  ? refreshController.callRefresh()
+                  : asRefreshController.callRefresh();
               setState(() {});
+
             },
             mainAxisSpacing: 10.w,
             crossAxisSpacing: 24.w,
@@ -100,6 +103,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   void dispose() {
     super.dispose();
     refreshController.dispose();
+    asRefreshController.dispose();
   }
 
   @override
@@ -121,15 +125,21 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                   Expanded(
                     child: TitleDropDownWidget(
                         _dropDownHeaderItemStrings1, listWidget,
-                        height: kToolbarHeight + 10,
-                        bottomHeight: 24.w,
+                        height: kToolbarHeight + 20.w,
+                        bottomHeight: 30.w,
                         screenControl: screenControl,
                         headFontSize: 36.sp,
                         isSearch: true,
                         callback: (text) {
                           _pickCar.value.keyWords = text;
-                          refreshController.callRefresh();
+                          print(_dropDownHeaderItemStrings1.first);
+
+                          _dropDownHeaderItemStrings1.first == '直卖车辆'
+                              ? refreshController.callRefresh()
+                              : asRefreshController.callRefresh();
                           setState(() {});
+
+
                         },
                         leftWidget: const CloudBackButton(
                           isSpecial: true,
@@ -139,11 +149,15 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                           screenControl.screenHide();
                           _scaffoldKey.currentState?.openEndDrawer();
                         },
-                        child: DirectSalePage(
-
-                          pickCar: _pickCar,
-                          refreshController: refreshController,
-                        )),
+                        child: _dropDownHeaderItemStrings1.first == '直卖车辆'
+                            ? DirectSalePage(
+                                pickCar: _pickCar,
+                                refreshController: refreshController,
+                              )
+                            : AssessmentCarPage(
+                                refreshController: asRefreshController,
+                                pickCar: _pickCar,
+                              )),
                   )
                 ],
               )),

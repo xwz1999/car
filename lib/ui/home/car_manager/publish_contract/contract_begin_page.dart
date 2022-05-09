@@ -1,6 +1,6 @@
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_purchase_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/select_customer_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
