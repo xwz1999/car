@@ -84,7 +84,7 @@ class _SalesOrderState extends State<SalesOrder> {
                 Expanded(
                     child: TitleDropDownWidget(
                         _dropDownHeaderItemStrings1, listWidget,
-
+                        isNotSearch: false,
                         isSearch: false,
                         height: kToolbarHeight + 10,
                         bottomHeight: 24.w,

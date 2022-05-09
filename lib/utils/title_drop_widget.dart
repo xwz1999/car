@@ -466,7 +466,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                   )
                 : Container(
                     width: 750.w,
-                    height: 100.w,
+                    height: 200.w,
                     color: kForeGroundColor,
                     child: Padding(
                       padding: EdgeInsets.only(top: 10.w),
@@ -475,6 +475,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                           widget.leftWidget != null
                               ? widget.leftWidget!
                               : const SizedBox(),
+                          30.wb,
                           Expanded(
                             child: Container(
                               alignment: Alignment.center,
