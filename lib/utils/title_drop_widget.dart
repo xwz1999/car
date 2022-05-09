@@ -61,7 +61,7 @@ class TitleDropDownWidget extends StatefulWidget {
     this.title,
     this.tips,
     this.isSearch = true,
-    this.isNotSearch = false,
+    this.isNotSearch = true,
   }) : super(key: key);
 
   @override
@@ -467,7 +467,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                 : Container(
                     width: 750.w,
                     height: 100.w,
-                    color: Colors.red,
+                    color: kForeGroundColor,
                     child: Padding(
                       padding: EdgeInsets.only(top: 10.w),
                       child: Row(
