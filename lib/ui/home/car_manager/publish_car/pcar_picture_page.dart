@@ -1,7 +1,9 @@
-import 'package:cloud_car/ui/home/car_manager/publish_car/add_picture_page.dart';
+import 'package:cloud_car/model/car/inner_model/car_manage_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_info_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:cloud_car/widget/car_manage_photos/car_manage_photo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -9,6 +11,7 @@ import '../../../../widget/button/cloud_back_button.dart';
 
 class CarPicturePage extends StatefulWidget {
   final PublishCarInfo publishCarInfo;
+
   const CarPicturePage({Key? key, required this.publishCarInfo})
       : super(key: key);
 
@@ -17,6 +20,9 @@ class CarPicturePage extends StatefulWidget {
 }
 
 class _CarPicturePageState extends State<CarPicturePage> {
+  final CarManagePhotoModel _photos = const CarManagePhotoModel(
+      carPhotos: [], interiorPhotos: [], defectPhotos: [], dataPhotos: []);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,68 +39,22 @@ class _CarPicturePageState extends State<CarPicturePage> {
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-        child: Wrap(
-          spacing: 30.w,
-          runSpacing: 30.w,
-          alignment: WrapAlignment.start,
-          children: [
-            _addCarPicture('车辆照片', 0),
-            _addCarPicture('内饰照片', 1),
-            _addCarPicture('缺陷照片', 2),
-            _addCarPicture('资料照片', 3),
-            30.heightBox,
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => PublishCarInfoPage(
-                        publishCarInfo: widget.publishCarInfo,
-                      ));
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                ),
-                child: '下一步'.text.size(30.sp).color(Colors.white).make(),
-              ),
-            ),
-          ],
-        ).paddingAll(30.w),
-      ),
-    );
-  }
-
-  _addCarPicture(
-    String bottom,
-    int page,
-  ) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => AddPicturePage(
-              pageNum: page,
-            ));
-      },
-      child: Material(
-        color: Colors.transparent,
+      body: Padding(
+        padding: EdgeInsets.all(30.w),
         child: Column(
           children: [
-            Container(
-              width: 210.w,
-              height: 158.w,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: Assets.images.addcar,
-                ),
-              ),
-            ),
-            10.hb,
-            bottom.text.size(30.sp).bold.make(),
+            Expanded(child: CarManagePhotoWidget(model: _photos)),
+            30.hb,
+            CloudBottomButton(
+              onTap: () {
+                Get.to(
+                  () => PublishCarInfoPage(
+                    publishCarInfo: widget.publishCarInfo,
+                  ),
+                );
+              },
+              text: '下一步',
+            )
           ],
         ),
       ),

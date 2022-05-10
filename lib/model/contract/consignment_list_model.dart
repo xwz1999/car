@@ -1,10 +1,8 @@
 import 'package:equatable/equatable.dart';
-// ignore_for_file: file_names
-
 import 'package:json_annotation/json_annotation.dart';
 
+part 'consignment_list_model.g.dart';
 
-part 'ConsignmentList_model.g.dart';
 
 @JsonSerializable()
 class ConsignmentListModel extends Equatable{

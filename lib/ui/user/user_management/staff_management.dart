@@ -1,6 +1,6 @@
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
-import 'package:cloud_car/ui/user/user_management/Employee_details.dart';
+import 'package:cloud_car/ui/user/user_management/employee_details.dart';
 import 'package:cloud_car/ui/user/user_management/add_employee.dart';
 import 'package:cloud_car/ui/user/user_management/add_stores.dart';
 import 'package:cloud_car/ui/user/user_management/permissions.dart';

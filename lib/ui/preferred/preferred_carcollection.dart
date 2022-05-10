@@ -14,7 +14,6 @@ import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -32,7 +31,8 @@ class CarCollection extends StatefulWidget {
 class _CarCollectionState extends State<CarCollection> {
   late List<String> _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
   ScreenControl screenControlMy = ScreenControl();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   List<ChooseItem> _sortList = [];
   List<ChooseItem> _priceList = [];
   final ValueNotifier<SearchParamModel> _pickCar = ValueNotifier(
@@ -202,7 +202,7 @@ class _CarCollectionState extends State<CarCollection> {
           footer: MaterialFooter(),
           controller: _refreshController,
           onRefresh: () async {
-            print(_params);
+
             _page = 1;
             var baseList = await apiClient.requestList(
                 API.car.collect.list, data: { 'page': _page,

@@ -214,7 +214,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
 
                         _carInfo.address = carInfoModel!.address;
 
-                        _carInfo.licensingDate = carInfoModel!.regdate;
+                        _carInfo.licensingDate = DateUtil.getDateTime(carInfoModel!.regdate);
                         setState(() {});
                       }
                     }
@@ -269,8 +269,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
             GestureDetector(
               onTap: () async {
                 _firstDate = await CarDatePicker.pick(DateTime.now());
-                _carInfo.licensingDate =
-                    DateUtil.formatDate(_firstDate, format: 'yyyy-MM-dd');
+                _carInfo.licensingDate =_firstDate;
                 setState(() {
 
                 });
@@ -279,7 +278,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               child: EditItemWidget(
                 title: '首次上牌',
                 callback: (String content) {},
-                value: _carInfo.licensingDate ?? '',
+                value: _carInfo.licensingDateStr,
                 tips: '请选择首次上牌时间',
                 topIcon: false,
                 paddingStart: 32,
@@ -383,7 +382,8 @@ class CarInfo {
   String? licensePlate;
 
   ///上牌照时间
-  String? licensingDate;
+  DateTime? licensingDate;
+  String get licensingDateStr => DateUtil.formatDate(licensingDate,format: 'yyyy-MM');
 
   ///里程
   String? mileage;

@@ -73,16 +73,21 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   widget.callback('');
                   return;}
 
-                _contentFocusNode.unfocus();
-                _searchText = _searchText.trimLeft();
-                _searchText = _searchText.trimRight();
-
-                widget.callback(_searchText);
 
                 setState(() {});
               },
               onTap: () {},
               onSubmitted: (_submitted) async {
+                if (TextUtils.isEmpty(_searchText)) {
+
+                  widget.callback('');
+                  return;}
+
+                _contentFocusNode.unfocus();
+                _searchText = _searchText.trimLeft();
+                _searchText = _searchText.trimRight();
+
+                widget.callback(_searchText);
 
               },
               style: TextStyle(
@@ -109,6 +114,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   onTap: (){
                     _searchText  = '';
                     _editingController.text = '';
+                    widget.callback('');
                     setState(() {
 
                     });

@@ -10,11 +10,9 @@ import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
-import 'package:cloud_car/widget/picker/car_picker_box.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:flustars/flustars.dart';
-
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -24,7 +22,6 @@ import '../../../../model/sort/sort_series_model.dart';
 import '../../../../utils/new_work/api_client.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/picker/car_date_picker.dart';
-import '../../../../widget/picker/car_list_picker.dart';
 import '../../../../widget/picker/cloud_image_picker.dart';
 import '../../../../widget/sort_widget.dart';
 import '../../sort/choose_car_page.dart';
@@ -247,7 +244,7 @@ class _PushCarPageState extends State<PushCarPage> {
                                       _publishCarInfo.carName =
                                           carInfoModel!.cartype;
                                       _publishCarInfo.licensingDate =
-                                          carInfoModel!.issuedate;
+                                          DateUtil.getDateTime(carInfoModel!.issuedate);
                                       _publishCarInfo.carNum =
                                           carInfoModel!.lsnum;
                                       _publishCarInfo.engineNum =
@@ -369,11 +366,11 @@ class _PushCarPageState extends State<PushCarPage> {
             '首次上牌',
             () async {
               _firstDate = await CarDatePicker.monthPicker(DateTime.now());
-              _publishCarInfo.licensingDate =
-                  DateUtil.formatDate(_firstDate, format: 'yyyy-MM');
+              _publishCarInfo.licensingDate = _firstDate;
+              FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
             },
-            _publishCarInfo.licensingDate,
+            _publishCarInfo.licensingDateStr,
             '选择首次上牌时间',
           ),
           20.heightBox,
@@ -395,6 +392,7 @@ class _PushCarPageState extends State<PushCarPage> {
                       onConfirm: (strList, indexList) {
                         _publishCarInfo.carColor = strList.first;
                         Get.back();
+                        FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {});
                       });
                 },
@@ -420,6 +418,7 @@ class _PushCarPageState extends State<PushCarPage> {
                         _publishCarInfo.carSource =
                             _sourceType.keys.toList()[index];
                         Get.back();
+                        FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {});
                       });
                 },
@@ -481,7 +480,7 @@ class _PushCarPageState extends State<PushCarPage> {
       BotToast.showText(text: '请选择车型');
       return false;
     }
-    if (_publishCarInfo.licensingDate.isEmptyOrNull) {
+    if (_publishCarInfo.licensingDate==null) {
       BotToast.showText(text: '请选择首次上牌时间');
       return false;
     }
@@ -558,7 +557,8 @@ class PublishCarInfo {
   int? carModelId;
 
   ///首次上牌时间
-  String? licensingDate;
+  DateTime? licensingDate;
+  String get licensingDateStr => DateUtil.formatDate(licensingDate,format: 'yyyy-MM');
 
   ///车牌号
   String? carNum;

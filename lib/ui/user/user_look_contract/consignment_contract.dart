@@ -1,9 +1,6 @@
-// ignore_for_file: non_constant_identifier_names
-
-import 'package:cloud_car/model/contract/ConsignmentList_model.dart';
+import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/user/user_look_contract/comsignment.view.dart';
 import 'package:cloud_car/ui/user/user_look_contract/sale.dart';
-import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -24,16 +21,9 @@ class _ConsignmentContractState extends State<ConsignmentContract>
   final EasyRefreshController _consignmentRefreshController =
       EasyRefreshController();
   final EasyRefreshController _saleRefreshController = EasyRefreshController();
-  final List<ConsignmentListModel> _ConsignmentList = [
-    // const ConsignmentListModel(
-    //     id: 6,
-    //     contractSn: "202204240001",
-    //     modelName: "2013款 奥迪A4L 30 TFSI 手动 舒适型",
-    //     customerName: "守护自己的云",
-    //     status: 1,
-    //     signAt: -62135596800)
+  final List<ConsignmentListModel> _consignmentList = [
   ];
-  final List<ConsignmentListModel> _SaleList = [];
+  final List<ConsignmentListModel> _saleList = [];
   @override
   @override
   void initState() {
@@ -54,7 +44,9 @@ class _ConsignmentContractState extends State<ConsignmentContract>
     super.build(context);
     return Scaffold(
         // appBar: AppBar(
+
         // )
+
         // AppBar(
         //   toolbarHeight: 88.w,
         //   backgroundColor: kForeGroundColor,
@@ -117,11 +109,11 @@ class _ConsignmentContractState extends State<ConsignmentContract>
               controller: _tabController,
               children: [
                 ConsignmentView(
-                  ConsignmentList: _ConsignmentList,
+                  consignmentList: _consignmentList,
                   refreshController: _consignmentRefreshController,
                 ),
                 SaleView(
-                  SaleList: _SaleList,
+                  saleList: _saleList,
                   refreshController: _saleRefreshController,
                 ),
               ],

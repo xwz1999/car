@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../utils/text_utils.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class ValidationPage extends StatefulWidget {
@@ -22,9 +21,9 @@ class ValidationPage extends StatefulWidget {
 class _ValidationPageState extends State<ValidationPage> {
   List<dynamic>? data;
   bool _getCodeEnable = false;
-  late Timer _timer;
-  String _countDownStr = "发送验证码";
-  int _countDownNum = 59;
+  // late Timer _timer;
+  final String _countDownStr = "发送验证码";
+  // int _countDownNum = 59;
   late TextEditingController _phoneController;
   late TextEditingController _smsCodeController;
   late FocusNode _phoneFocusNode;
@@ -292,34 +291,34 @@ class _ValidationPageState extends State<ValidationPage> {
     );
   }
 
-  _verifyLoginEnable() {
-    if (!TextUtils.verifyPhone(_phoneController.text)) {
-      setState(() {});
-      return false;
-    }
-    return _smsCodeController.text.length == 4;
-  }
-
-  _beginCountDown() {
-    ///开始倒计时
-    setState(() {
-      _getCodeEnable = false;
-      _countDownStr = "重新获取($_countDownNum)";
-    });
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        if (_countDownNum == 0) {
-          _countDownNum = 59;
-          _countDownStr = "获取验证码";
-          _getCodeEnable = true;
-          _timer.cancel();
-          return;
-        }
-        _countDownStr = "重新获取(${_countDownNum--})";
-      });
-    });
-  }
+  // _verifyLoginEnable() {
+  //   if (!TextUtils.verifyPhone(_phoneController.text)) {
+  //     setState(() {});
+  //     return false;
+  //   }
+  //   return _smsCodeController.text.length == 4;
+  // }
+  //
+  // _beginCountDown() {
+  //   ///开始倒计时
+  //   setState(() {
+  //     _getCodeEnable = false;
+  //     _countDownStr = "重新获取($_countDownNum)";
+  //   });
+  //   _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+  //     if (!mounted) {
+  //       return;
+  //     }
+  //     setState(() {
+  //       if (_countDownNum == 0) {
+  //         _countDownNum = 59;
+  //         _countDownStr = "获取验证码";
+  //         _getCodeEnable = true;
+  //         _timer.cancel();
+  //         return;
+  //       }
+  //       _countDownStr = "重新获取(${_countDownNum--})";
+  //     });
+  //   });
+  // }
 }

@@ -10,8 +10,10 @@ import '../../../widget/publish_car_info_widget.dart';
 
 class CheckPushPage extends StatefulWidget {
   final PublishCarInfo publishCarInfo;
+  final num price;
 
-  const CheckPushPage({Key? key, required this.publishCarInfo})
+  const CheckPushPage(
+      {Key? key, required this.publishCarInfo, required this.price})
       : super(key: key);
 
   @override
@@ -59,28 +61,24 @@ class _CheckPushPageState extends State<CheckPushPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Wrap(
-                          children: [
-                            const Text(
-                              '系统估值',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                              ),
-                            ).paddingOnly(top: 10.w),
-                            20.wb,
-                            const Text(
-                              '13.57',
-                              style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            5.wb,
-                            '万'.text.color(Colors.red).bold.size(41.sp).make(),
-                          ],
+                        const Text(
+                          '系统估值',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
+                        ).paddingOnly(top: 10.w),
+                        20.wb,
+                        Text(
+                          (widget.price / 10000).toString(),
+                          style: const TextStyle(
+                            fontSize: 30,
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                        5.wb,
+                        '万'.text.color(Colors.red).bold.size(41.sp).make(),
                       ],
                     ),
                   ),
@@ -97,22 +95,32 @@ class _CheckPushPageState extends State<CheckPushPage> {
                   width: double.infinity,
                   child: Column(
                     children: [
-                       PublishCarInfoWidget(
-                        fontColor: Colors.black, publishCarInfo: widget.publishCarInfo,
+                      PublishCarInfoWidget(
+                        fontColor: Colors.black,
+                        publishCarInfo: widget.publishCarInfo,
                       ),
                       30.heightBox,
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            Get.to(() => ContractBeginPage(publishCarInfo: widget.publishCarInfo,));
+                            if (widget.publishCarInfo.carSource == 1) {
+                              Get.to(() => CarPicturePage(
+                                  publishCarInfo: widget.publishCarInfo));
+                            } else {
+                              Get.to(() => ContractBeginPage(
+                                    publishCarInfo: widget.publishCarInfo,
+                                  ));
+                            }
                           },
                           style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.blue),
                           ),
-                          child:Text(
-                              widget.publishCarInfo.carSource==2?'发起合同':'发布车辆',
+                          child: Text(
+                            widget.publishCarInfo.carSource == 2
+                                ? '发起合同'
+                                : '发布车辆',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 30.sp,
@@ -120,7 +128,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                           ),
                         ),
                       ),
-                      widget.publishCarInfo.carSource==2
+                      widget.publishCarInfo.carSource == 2
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -134,7 +142,8 @@ class _CheckPushPageState extends State<CheckPushPage> {
                                     .make(),
                                 TextButton(
                                   onPressed: () {
-                                    Get.to(() => CarPicturePage(publishCarInfo: widget.publishCarInfo));
+                                    Get.to(() => CarPicturePage(
+                                        publishCarInfo: widget.publishCarInfo));
                                   },
                                   child: '继续发布车辆'
                                       .text

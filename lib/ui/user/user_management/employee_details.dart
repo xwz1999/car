@@ -1,5 +1,3 @@
-// ignore_for_file: dead_code, file_names
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_management/editor_employee.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -229,15 +227,13 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
             ),
           ],
         );
-
-        break;
       case '评估师/车务':
         return Text(
           '负责录入车辆信息、编辑店里的车辆',
           style: TextStyle(
               color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
         );
-        break;
+
       case '销售/车务':
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,14 +264,14 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
             ),
           ],
         );
-        break;
+
       case '店长':
         return Text(
           '能够管理店内的客户、车辆、订单',
           style: TextStyle(
               color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
         );
-        break;
+
     }
   }
 

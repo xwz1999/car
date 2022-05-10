@@ -54,7 +54,18 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
-        body: Stack(
+        body:
+        // Column(
+        //   children: [
+        //     _topInfo(),
+        //
+        //   ],
+        // )
+
+
+
+
+        Stack(
           children: [
             Container(
               width: 750.w,
@@ -65,7 +76,25 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
             Positioned(top: 238.w, child: _getInterests()),
             Positioned(left: 32.w, top: 66.w, right: 32.w, child: _shareUser()),
           ],
-        ));
+        )
+
+
+
+    );
+  }
+
+
+  _topInfo(){
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 32.w),
+      height: 328.w,
+      decoration: BoxDecoration(
+        image: DecorationImage(image:  AssetImage(
+            Assets.images.partnerCenterBg.path,
+        ),fit: BoxFit.fill)
+      ),
+    );
   }
 
 //底部按钮

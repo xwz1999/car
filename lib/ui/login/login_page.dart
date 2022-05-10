@@ -208,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                           print('极光认证获取token数据返回： ${map.toString()}');
                         }
                         if (map['code'] == 2000) {
-                          var token = map['message'];
+                          // var token = map['message'];
 
                           await _authToken();
                         } else {

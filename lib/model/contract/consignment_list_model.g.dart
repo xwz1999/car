@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ConsignmentList_model.dart';
+part of 'consignment_list_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

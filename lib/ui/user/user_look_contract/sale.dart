@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/model/contract/ConsignmentList_model.dart';
+import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -12,12 +12,12 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class SaleView extends StatefulWidget {
   final EasyRefreshController refreshController;
-  final List<ConsignmentListModel> SaleList;
+  final List<ConsignmentListModel> saleList;
 
   const SaleView({
     Key? key,
     required this.refreshController,
-    required this.SaleList,
+    required this.saleList,
   }) : super(key: key);
 
   @override
@@ -39,8 +39,8 @@ class _SaleViewState extends State<SaleView>
         onRefresh: () async {
           _page = 1;
           var list = await CarFunc.getSaleList(page: _page, size: _size);
-          widget.SaleList.clear();
-          widget.SaleList.addAll(list);
+          widget.saleList.clear();
+          widget.saleList.addAll(list);
           setState(() {});
         },
         onLoad: () async {
@@ -48,8 +48,8 @@ class _SaleViewState extends State<SaleView>
           var baseList = await apiClient.requestList(
               API.contract.consignmentList,
               data: {'size': _size, 'page': _page});
-          if (baseList.nullSafetyTotal > widget.SaleList.length) {
-            widget.SaleList.addAll(baseList.nullSafetyList
+          if (baseList.nullSafetyTotal > widget.saleList.length) {
+            widget.saleList.addAll(baseList.nullSafetyList
                 .map((e) => ConsignmentListModel.fromJson(e))
                 .toList());
           } else {
@@ -65,7 +65,7 @@ class _SaleViewState extends State<SaleView>
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
             sliver: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
-              var model = widget.SaleList[index];
+              var model = widget.saleList[index];
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 96.w),
                 child: _getCard(
@@ -79,7 +79,7 @@ class _SaleViewState extends State<SaleView>
                           format: 'yyyy-MM-dd'),
                 ),
               );
-            }, childCount: widget.SaleList.length)),
+            }, childCount: widget.saleList.length)),
           ),
         ]);
   }

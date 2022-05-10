@@ -61,7 +61,6 @@ class _AddEmployeeState extends State<AddEmployee> {
 
   @override
   Widget build(BuildContext context) {
-    late bool bl;
     return Scaffold(
       appBar: AppBar(
         leading: const CloudBackButton(

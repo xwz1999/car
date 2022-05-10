@@ -1,22 +1,16 @@
-// ignore_for_file: unused_local_variable
-
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/home/car_manager/check_pushcar_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
-
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
-
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/picker/car_list_picker.dart';
-
 import '../../../widget/sort_widget.dart';
-
 import '../car_valuation/car_valuation_page.dart';
 import 'direct_sale/edit_item_widget.dart';
 
@@ -110,22 +104,28 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
     ChooseItem(name: '未按时保养'),
     ChooseItem(name: '按时保养'),
   ];
-  List<String> shamMileage = ['有修改', '未修改'];
-  List<ChooseItem> accidentDetailList = [
-    ChooseItem(name: '四梁六柱发生修复'),
-    ChooseItem(name: '后翼子板切割'),
-    ChooseItem(name: '纵梁修复'),
-    ChooseItem(name: '安全气囊弹出'),
-  ];
+  Map<int, String> shamMileageType = {
+    1: '有修改',
+    2: '未修改',
+  };
+
+  List<String> get shamMileage => shamMileageType.values.toList();
+  Map<int, String> accidentDetailType = {
+    1: '四梁六柱发生修复',
+    2: '后翼子板切割',
+    3: '纵梁修复',
+    4: '安全气囊弹出',
+  };
+
+  List<String> get accidentDetailList => accidentDetailType.values.toList();
   List<ChooseItem> accidentList = [
     ChooseItem(name: '有重大事故'),
     ChooseItem(name: '无重大事故'),
   ];
-  List<ChooseItem> haveFixList = [
-    ChooseItem(name: '轻微渗油'),
-    ChooseItem(name: '严重渗油'),
-    ChooseItem(name: '发动机解体维修'),
-  ];
+
+  Map<int, String> fixType = {1: '轻微渗油', 2: '严重渗油', 3: '发动机解体维修'};
+
+  List<String> get haveFixList => fixType.values.toList();
 
   @override
   void initState() {
@@ -137,6 +137,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
     _carInfo.licensePlate = widget.publishCarInfo.carNum;
     _carInfo.engineNo = widget.publishCarInfo.engineNum;
     _carInfo.source = widget.publishCarInfo.carSource;
+    _carInfo.vin = widget.publishCarInfo.viNum;
     super.initState();
   }
 
@@ -227,7 +228,8 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                                   .make(),
                             ),
                             Expanded(
-                                child: widget.publishCarInfo.licensingDate!.text
+                                child: widget
+                                    .publishCarInfo.licensingDateStr.text
                                     .size(30.sp)
                                     .color(Colors.black)
                                     .make()),
@@ -376,7 +378,9 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                           );
                         },
                         _carInfo.hasParts != null
-                            ? replaceList[_carInfo.hasParts!].name
+                            ? _carInfo.hasParts == 1
+                                ? replaceList[_carInfo.hasParts!].name
+                                : replaceList[_carInfo.hasParts!].name
                             : '',
                         '请选择',
                       ),
@@ -392,31 +396,33 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                               return CloudListPickerWidget(
                                 title: '变速箱情况',
                                 items: fixList.map((e) => e.name).toList(),
-                                onConfirm: (str, index) {
+                                onConfirm: (str, index) async{
                                   Get.back();
                                   _carInfo.hasSituation = index;
                                   if (index == 0) {
-                                    Get.bottomSheet(
+                                  await  Get.bottomSheet(
                                       CloudListPickerWidget(
                                         title: '变速箱情况',
-                                        items: haveFixList
-                                            .map((e) => e.name)
-                                            .toList(),
+                                        items: haveFixList,
                                         onConfirm: (str, index) {
                                           Get.back();
-                                          _carInfo.engine = index + 1;
-                                          setState(() {});
+                                          _carInfo.engine =
+                                              fixType.keys.toList()[index];
                                         },
                                       ),
                                     );
                                   }
+
+                                  setState(() {});
                                 },
                               );
                             },
                           );
                         },
-                        _carInfo.engine != null
-                            ? haveFixList[_carInfo.engine!].name
+                        _carInfo.hasSituation != null
+                            ? _carInfo.hasSituation == 1
+                                ? fixList[_carInfo.hasSituation!].name
+                                : fixType[_carInfo.engine]
                             : '',
                         '请选择',
                       ),
@@ -433,25 +439,32 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                                   title: '重大事故',
                                   items:
                                       accidentList.map((e) => e.name).toList(),
-                                  onConfirm: (str, index) {
+                                  onConfirm: (str, index) async{
                                     Get.back();
                                     _carInfo.hasAccident = index;
                                     if (index == 0) {
-                                      Get.bottomSheet(CloudListPickerWidget(
+                                    await  Get.bottomSheet(CloudListPickerWidget(
                                           title: '重大事故',
-                                          items: accidentDetailList
-                                              .map((e) => e.name)
-                                              .toList(),
+                                          items: accidentDetailList,
                                           onConfirm: (str, index) {
                                             _carInfo.accidents = [];
-                                            _carInfo.accidents!.add(index + 1);
+                                            _carInfo.accidents!.add(
+                                                accidentDetailType.keys
+                                                    .toList()[index]);
+                                            Get.back();
                                           }));
                                     }
+
+                                    setState(() {});
                                   });
                             },
                           );
                         },
-                        _carInfo.hasAccident != null ? '' : '',
+                        _carInfo.hasAccident != null
+                            ? _carInfo.hasAccident == 1
+                                ? accidentList[_carInfo.hasAccident!].name
+                                : accidentDetailType[_carInfo.accidents!.first]
+                            : '',
                         '请选择',
                       ),
                       _function('全程4s按时保养', () async {
@@ -496,7 +509,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                         );
                       },
                           _carInfo.shamMileage != null
-                              ? shamMileage[_carInfo.shamMileage!]
+                              ? shamMileageType[_carInfo.shamMileage!]
                               : '',
                           '请选择',
                           titleWidth: 280.w),
@@ -509,9 +522,15 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
-                      var price = await CarFunc.getEstimatePrice(_carInfo);
-                      Get.to(() =>
-                          CheckPushPage(publishCarInfo: widget.publishCarInfo));
+                      var cancel = CloudToast.loading;
+                      var price =
+                          num.parse(await CarFunc.getEstimatePrice(_carInfo));
+                      if (price != -1) {
+                        Get.to(() => CheckPushPage(
+                          price: price,
+                            publishCarInfo: widget.publishCarInfo));
+                      }
+                      cancel();
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -552,4 +571,3 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
     );
   }
 }
-

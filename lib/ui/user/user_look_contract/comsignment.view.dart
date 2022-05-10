@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/model/contract/ConsignmentList_model.dart';
+import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -11,12 +11,12 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class ConsignmentView extends StatefulWidget {
   final EasyRefreshController refreshController;
-  final List<ConsignmentListModel> ConsignmentList;
+  final List<ConsignmentListModel> consignmentList;
   // final int id;
   const ConsignmentView({
     Key? key,
     required this.refreshController,
-    required this.ConsignmentList,
+    required this.consignmentList,
     //required this.id
   }) : super(key: key);
 
@@ -39,8 +39,8 @@ class _ConsignmentViewState extends State<ConsignmentView>
         onRefresh: () async {
           _page = 1;
           var list = await CarFunc.getConsignmentList(page: _page, size: _size);
-          widget.ConsignmentList.clear();
-          widget.ConsignmentList.addAll(list);
+          widget.consignmentList.clear();
+          widget.consignmentList.addAll(list);
           setState(() {});
         },
         onLoad: () async {
@@ -48,8 +48,8 @@ class _ConsignmentViewState extends State<ConsignmentView>
           var baseList = await apiClient.requestList(
               API.contract.consignmentList,
               data: {'size': _size, 'page': _page});
-          if (baseList.nullSafetyTotal > widget.ConsignmentList.length) {
-            widget.ConsignmentList.addAll(baseList.nullSafetyList
+          if (baseList.nullSafetyTotal > widget.consignmentList.length) {
+            widget.consignmentList.addAll(baseList.nullSafetyList
                 .map((e) => ConsignmentListModel.fromJson(e))
                 .toList());
           } else {
@@ -65,7 +65,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
             sliver: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
-              var model = widget.ConsignmentList[index];
+              var model = widget.consignmentList[index];
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 96.w),
                 child: _getCard(
@@ -79,7 +79,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
                           format: 'yyyy-MM-dd'),
                 ),
               );
-            }, childCount: widget.ConsignmentList.length)),
+            }, childCount: widget.consignmentList.length)),
           ),
         ]);
   }
