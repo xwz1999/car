@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'ConsignmentList_model.g.dart';
+part 'consignment_list_model.g.dart';
 
 
 @JsonSerializable()

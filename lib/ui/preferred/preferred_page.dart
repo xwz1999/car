@@ -3,6 +3,7 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/cars_detail_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/sort/carlist_page.dart';
@@ -152,7 +153,6 @@ class _PreferredPageState extends State<PreferredPage>
 
   @override
   Widget build(BuildContext context) {
-    late int num = 2;
     super.build(context);
     return CloudScaffold(
       path: Assets.images.homeBg.path,
@@ -246,11 +246,11 @@ class _PreferredPageState extends State<PreferredPage>
                           ),
                           //controller: _editingController,
                           decoration: InputDecoration(
-                            //contentPadding: EdgeInsets.only(left: 20.w, top: 5.w),
+                            contentPadding: EdgeInsets.only(top: 0.w),
 
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: "请输入客户名称",
+                            hintText: "请输入车辆名称",
                             hintStyle: TextStyle(
                                 color: Colors.grey.shade500,
                                 fontSize: 14,
@@ -324,7 +324,9 @@ class _PreferredPageState extends State<PreferredPage>
       ),
       //extendBody: true,
       body: Expanded(
-        child: _myCar(EasyRefresh.custom(
+        child: _myCar(
+
+            EasyRefresh.custom(
             firstRefresh: true,
             header: MaterialHeader(),
             footer: MaterialFooter(),
@@ -373,7 +375,16 @@ class _PreferredPageState extends State<PreferredPage>
       onTap: () {
         switch (title) {
           case '全部车源':
-            Get.to(() => const AllCar());
+            Get.to(() => AllCar(title: title,));
+            break;
+          case '直卖车':
+            Get.to(() => AllCar(title: title,));
+            break;
+          case '最新上架':
+            Get.to(() => AllCar(title: title,));
+            break;
+          case '4s认证车':
+            Get.to(() => AllCar(title: title,));
             break;
         }
       },
@@ -415,85 +426,91 @@ class _PreferredPageState extends State<PreferredPage>
   }
 
   _carItem(CarListModel model) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.w),
-          color: const Color(0xFFFFFFFF)),
-      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.w),
-      // width: 702.w,
-      height: 235.w,
-      margin: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.w),
-      child: Row(
-        //mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CloudImageNetworkWidget.car(
-            width: 235.w,
-            height: 180.w,
-            urls: [model.mainPhoto],
-          ),
-          24.wb,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 375.w,
-                  child: Text(
-                    model.modelName,
-                    maxLines: 2,
-                    style: TextStyle(
-                        color: BaseStyle.color111111,
-                        fontSize: BaseStyle.fontSize28),
-                  ),
-                ),
-                16.hb,
-                getChip(
-                    DateUtil.formatDate(model.licensingDateDT,
-                        format: DateFormats.zh_y_mo),
-                    model.mileage.toString() + '万公里',
-                    model.downPayment),
-                20.hb,
-                Row(
-                  children: [
-                    Text.rich(TextSpan(children: [
-                      TextSpan(
-                          text: model.unitPrice.toString(),
-                          style: TextStyle(
-                              color: const Color(0xFFFF3B02),
-                              fontSize: BaseStyle.fontSize36)),
-                      TextSpan(
-                          text: '万',
-                          style: TextStyle(
-                              color: const Color(0xFFFF3B02),
-                              fontSize: BaseStyle.fontSize32)),
-                    ])),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () async {
-                        var re = await apiClient.request(
-                            model.collect == 0
-                                ? API.car.collect.add
-                                : API.car.collect.cancel,
-                            data: {'carId': model.id},
-                            showMessage: true);
-                        if (re.code == 0) {
-                          _refreshController.callRefresh();
-                        }
-                      },
-                      child: SizedBox(
-                        width: 40.w,
-                        height: 40.w,
-                        child: Image.asset(model.collect == 1
-                            ? Assets.icons.alreadyCollected.path
-                            : Assets.icons.notCollect.path),
-                      ),
-                    )
-                  ],
-                )
-              ],
+    return GestureDetector(
+      onTap: (){
+          Get.to(()=>CarsDetailPage(carListModel: model, isSelf: model.isSelf==1,));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.w),
+            color: const Color(0xFFFFFFFF)),
+
+        padding: EdgeInsets.only(left: 24.w, right: 24.w,top: 16.w),
+        // width: 702.w,
+        height: 235.w,
+        margin: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.w),
+        child: Row(
+          //mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CloudImageNetworkWidget.car(
+              width: 235.w,
+              height: 180.w,
+              urls: [model.mainPhoto],
             ),
-          )
-        ],
+            24.wb,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 375.w,
+                    child: Text(
+                      model.modelName,
+                      maxLines: 2,
+                      style: TextStyle(
+                          color: BaseStyle.color111111,
+                          fontSize: BaseStyle.fontSize28),
+                    ),
+                  ),
+                  16.hb,
+                  getChip(
+                      DateUtil.formatDate(model.licensingDateDT,
+                          format: DateFormats.zh_y_mo),
+                      model.mileage.toString() + '万公里',
+                      model.downPayment),
+                  20.hb,
+                  Row(
+                    children: [
+                      Text.rich(TextSpan(children: [
+                        TextSpan(
+                            text: model.unitPrice.toString(),
+                            style: TextStyle(
+                                color: const Color(0xFFFF3B02),
+                                fontSize: BaseStyle.fontSize36)),
+                        TextSpan(
+                            text: '万',
+                            style: TextStyle(
+                                color: const Color(0xFFFF3B02),
+                                fontSize: BaseStyle.fontSize32)),
+                      ])),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () async {
+                          var re = await apiClient.request(
+                              model.collect == 0
+                                  ? API.car.collect.add
+                                  : API.car.collect.cancel,
+                              data: {'carId': model.id},
+                              showMessage: true);
+                          if (re.code == 0) {
+                            _refreshController.callRefresh();
+                          }
+                        },
+                        child: SizedBox(
+                          width: 40.w,
+                          height: 40.w,
+                          child: Image.asset(model.collect == 1
+                              ? Assets.icons.alreadyCollected.path
+                              : Assets.icons.notCollect.path),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

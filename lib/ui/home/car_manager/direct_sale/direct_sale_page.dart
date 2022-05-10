@@ -8,7 +8,6 @@ import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
-import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:cloud_car/widget/choose_widget.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
@@ -107,6 +106,7 @@ class _DirectSalePageState extends State<DirectSalePage> with AutomaticKeepAlive
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return
       Column(
         children: [

@@ -1,7 +1,6 @@
 
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/car_evaluation_model.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/cars_detail_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -44,6 +43,7 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return  Column(
       children: [
         const SizedBox(
@@ -51,38 +51,6 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
         ),
         Expanded(
           child:
-          // DropDownWidget(
-          //   _dropDownHeaderItemStrings,
-          //   listWidget,
-          //   height: 76.w,
-          //   bottomHeight: 24.w,
-          //   screenControl: screenControl,
-          //   headFontSize: 28.sp,
-          //   child: Container(
-          //     margin: EdgeInsets.only(top: 80.w),
-          //     child: ListView.separated(
-          //       shrinkWrap: true,
-          //       padding:
-          //       EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
-          //       itemBuilder: (context, index) {
-          //         return getItem();
-          //       },
-          //       separatorBuilder: (BuildContext context, int index) {
-          //         return Container(
-          //           color: const Color(0xFFF6F6F6),
-          //           height: 16.w,
-          //         );
-          //       },
-          //       itemCount: 10,
-          //     ),
-          //   ),
-          //   screen: '筛选',
-          //   onTap:
-          //       () {
-          //     screenControl.screenHide();
-          //     widget.callBack();
-          //   },
-          // ),
 
           EasyRefresh.custom(
             firstRefresh: true,

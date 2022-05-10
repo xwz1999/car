@@ -323,7 +323,7 @@ class _HomePageState extends State<HomePage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                24.hb,
+                20.hb,
                 Text(
                   model.modelName,
                   style: TextStyle(
@@ -342,7 +342,7 @@ class _HomePageState extends State<HomePage>
                     _getTextView('${model.mileage}万公里'),
                   ],
                 ),
-                16.hb,
+                14.hb,
                 Row(
                   children: [
                     RichText(
@@ -373,7 +373,7 @@ class _HomePageState extends State<HomePage>
                     16.wb,
                   ],
                 ),
-                24.hb,
+                20.hb,
               ],
             ),
           )

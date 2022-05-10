@@ -44,7 +44,6 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
 
   late String search = '';
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final EasyRefreshController _refreshController = EasyRefreshController();
   int _page = 1;
 
@@ -124,7 +123,6 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
         endDrawer: CustomDrawer(
             widthPercent: 0.86,
             backgroundColor: Colors.white,
@@ -161,7 +159,8 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                 bottomHeight: 400.w,
                 screenControl: screenControl,
                 headFontSize: 28.sp,
-                child: EasyRefresh.custom(
+                child:
+                EasyRefresh.custom(
                   firstRefresh: true,
                   controller: _refreshController,
                   header: MaterialHeader(),
@@ -236,10 +235,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                 screen: '筛选',
                 onTap: () {
                   screenControl.screenHide();
-                  _scaffoldKey.currentState?.openEndDrawer();
-                  if (kDebugMode) {
-                    print('筛选');
-                  }
+                  Scaffold.of(context).openEndDrawer();
                 },
               ),
             )
