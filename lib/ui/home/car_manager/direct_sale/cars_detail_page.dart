@@ -21,7 +21,9 @@ class CarsDetailPage extends StatefulWidget {
   final bool isSelf;
   final CarInfoModel carInfoModel;
   const CarsDetailPage({
-    Key? key, required this.carInfoModel, required this.isSelf,
+    Key? key,
+    required this.carInfoModel,
+    required this.isSelf,
   }) : super(key: key);
 
   @override
@@ -63,7 +65,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     });
   }
 
-
   @override
   void dispose() {
     _tabController.dispose();
@@ -83,7 +84,8 @@ class _CarsDetailPageState extends State<CarsDetailPage>
           footer: MaterialFooter(),
           child: NestedScrollView(
             controller: _scrollController,
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 SliverAppBar(
                     pinned: true,
@@ -96,9 +98,9 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                     snap: false,
                     centerTitle: false,
                     title: headerWhite
-                        ?  Text(
-                            widget.carInfoModel.modelName??'',
-                            style:  TextStyle(
+                        ? Text(
+                            widget.carInfoModel.modelName,
+                            style: TextStyle(
                               color: const Color(0xFF333333),
                               fontWeight: FontWeight.w700,
                               fontSize: 36.sp,
@@ -117,23 +119,24 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                       24.wb,
 
                       ///收藏按钮 自己发布的车辆没有该按钮
-                      !widget.isSelf?
-                      GestureDetector(
-                        onTap: () async{
-                          var re = await apiClient.request(
-                              carInfoModel?.collect == 0
-                                  ? API.car.collect.add
-                                  : API.car.collect.cancel,
-                              data: {'carId': carInfoModel?.id},
-                              showMessage: true);
-                          if (re.code == 0) {
-                            _refreshController.callRefresh();
-                          }
-                        },
-                        child:  Image.asset(carInfoModel?.collect == 1
-                            ? Assets.icons.alreadyCollected.path
-                            : Assets.icons.notCollect.path),
-                      ):const SizedBox(),
+                      !widget.isSelf
+                          ? GestureDetector(
+                              onTap: () async {
+                                var re = await apiClient.request(
+                                    carInfoModel?.collect == 0
+                                        ? API.car.collect.add
+                                        : API.car.collect.cancel,
+                                    data: {'carId': carInfoModel?.id},
+                                    showMessage: true);
+                                if (re.code == 0) {
+                                  _refreshController.callRefresh();
+                                }
+                              },
+                              child: Image.asset(carInfoModel?.collect == 1
+                                  ? Assets.icons.alreadyCollected.path
+                                  : Assets.icons.notCollect.path),
+                            )
+                          : const SizedBox(),
                       24.wb,
                       GestureDetector(
                         onTap: () {},
@@ -670,7 +673,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
     // ]),
   }
 
-
   ///自己发布的车辆可以编辑、调价、出售、下架。其他销售看见我发布的车辆详情时，只有出售操作。no去掉
 
   _bottom() {
@@ -686,9 +688,8 @@ class _CarsDetailPageState extends State<CarsDetailPage>
           })),
           Expanded(
               child: _getBottom(Assets.icons.noTransmission.path, '调价', () {
-                Get.to(() => const ModifyPricePage());
-
-              })),
+            Get.to(() => const ModifyPricePage());
+          })),
           Expanded(
               child: _getBottom(Assets.icons.upload.path, '出售', () {
             Get.to(() => const SellCarOrderPage());

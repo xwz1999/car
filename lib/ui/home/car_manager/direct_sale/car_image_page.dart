@@ -7,7 +7,9 @@ import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widge
 import 'package:flutter/material.dart';
 
 class CarImageItem extends StatefulWidget {
-  const CarImageItem({Key? key}) : super(key: key);
+  const CarImageItem({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CarImageItemState createState() => _CarImageItemState();

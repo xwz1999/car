@@ -1,7 +1,10 @@
 // ignore_for_file: file_names
 
 import 'package:cloud_car/model/configuration_model.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/user/user_feedback/vehicles_release.dart';
+
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 
 import 'package:flutter/material.dart';
 
@@ -94,7 +97,7 @@ class _RecommendationsState extends State<Recommendations> {
           ),
           24.hb,
           Container(
-              height: 435.w,
+              // height: 520.w,
               color: kForeGroundColor,
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
               child: Column(
@@ -104,17 +107,18 @@ class _RecommendationsState extends State<Recommendations> {
                     width: double.infinity,
                     // padding:
                     //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
-                    height: 120.w,
+                    height: 200.w,
                     child: TextField(
+                      maxLines: 50,
                       keyboardType: TextInputType.text,
                       onEditingComplete: () {
                         setState(() {});
                         // _refreshController.callRefresh();
                       },
                       onChanged: (text) {
+                        //var content = text;
                         setState(() {});
                       },
-
                       style: TextStyle(
                         color: BaseStyle.color333333,
                         fontSize: BaseStyle.fontSize28,
@@ -125,23 +129,18 @@ class _RecommendationsState extends State<Recommendations> {
                         filled: true,
                         isDense: true,
                         fillColor: Colors.white,
-                        hintText: "请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题",
+                        hintText: '请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题',
                         hintStyle: TextStyle(
                             color: Colors.grey.shade500,
-                            fontSize: 10,
+                            fontSize: 14,
                             fontWeight: FontWeight.w300),
                         border: InputBorder.none,
                       ),
                     ),
                   ),
-                  //108.hb,
-                  SizedBox(
-                    width: 200.w,
-                    height: 120,
-                    child: Image.asset(Assets.images.addcar.path),
-                  ),
                 ],
               )),
+          const CarImageItem(),
           32.hb,
           Padding(
             padding: EdgeInsets.only(left: 32.w),
@@ -182,34 +181,11 @@ class _RecommendationsState extends State<Recommendations> {
             ),
           ),
           96.hb,
-          GestureDetector(
+          CloudBottomButton(
             onTap: () {
-              //BotToast.showText(text: '验证码输入错误');
               Get.to(() => const VehiclesRelease());
             },
-            child: Container(
-              width: 686.w,
-              height: 72.w,
-              margin: EdgeInsets.only(left: 32.w),
-              padding: EdgeInsets.only(left: 318.w, top: 22.w),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.w),
-                  gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-              child: SizedBox(
-                width: 252.w,
-                height: 28.w,
-                child: Text(
-                  '提交',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(color: const Color(0xffffffff)),
-                ),
-              ),
-            ),
+            text: '提交',
           ),
           32.hb,
         ],

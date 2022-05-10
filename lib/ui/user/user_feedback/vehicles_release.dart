@@ -1,3 +1,4 @@
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
@@ -48,35 +49,10 @@ class _VehiclesReleaseState extends State<VehiclesRelease> {
             ),
           ),
           72.hb,
-          GestureDetector(
-            onTap: () {
-              //BotToast.showText(text: '验证码输入错误');
-              //Get.to(() => const NoWithddrawalPage());
-            },
-            child: Container(
-              width: 686.w,
-              height: 72.w,
-              margin: EdgeInsets.only(left: 32.w),
-              padding: EdgeInsets.only(left: 266.w, top: 22.w),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.w),
-                  gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-              child: SizedBox(
-                width: 252.w,
-                height: 28.w,
-                child: Text(
-                  '返回我的',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(color: kForeGroundColor),
-                ),
-              ),
-            ),
-          ),
+          CloudBottomButton(
+            onTap: () {},
+            text: '返回我的',
+          )
         ],
       ),
     );

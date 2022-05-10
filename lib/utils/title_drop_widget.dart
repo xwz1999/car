@@ -56,6 +56,7 @@ class TitleDropDownWidget extends StatefulWidget {
     this.title,
     this.tips,
     this.isSearch = true,
+        //bool isNotSearch,
   }) : super(key: key);
 
   @override

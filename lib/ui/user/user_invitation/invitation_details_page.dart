@@ -1,29 +1,29 @@
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
-import 'package:cloud_car/ui/home/user_manager/customers_browse_page.dart';
-import 'package:cloud_car/ui/home/user_manager/customers_trajectory_page.dart';
+import 'package:cloud_car/ui/user/user_invitation/invitation_details_lists.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-class TaskUserInvitePage extends StatefulWidget {
+class InvitaionDetailsPage extends StatefulWidget {
   final TaskInviteListModel model;
-  const TaskUserInvitePage({Key? key, required this.model}) : super(key: key);
+
+  const InvitaionDetailsPage({Key? key, required this.model}) : super(key: key);
 
   @override
-  _TaskUserInvitePageState createState() => _TaskUserInvitePageState();
+  _InvitaionDetailsPageState createState() => _InvitaionDetailsPageState();
 }
 
-class _TaskUserInvitePageState extends State<TaskUserInvitePage>
+class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isImportant = false;
 
   @override
   void initState() {
-    _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
+    _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
 
     super.initState();
   }
@@ -113,11 +113,7 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>
                   ),
                   indicator: const BoxDecoration(),
                   indicatorColor: kPrimaryColor,
-                  tabs: [
-                    _tab(0, '浏览车辆'),
-                    _tab(1, '客户轨迹'),
-                    // _tab(2, '相关资料')
-                  ]),
+                  tabs: [_tab(0, '浏览车辆'), _tab(1, '客户轨迹'), _tab(2, '相关资料')]),
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border(
@@ -131,11 +127,17 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    CustomersBrowsePage(
+                    InvitationDetailsList(
                       customerId: widget.model.customerId,
+                      type: widget.model.type + 1,
                     ),
-                    CustomersTrajectoryPage(
+                    InvitationDetailsList(
                       customerId: widget.model.customerId,
+                      type: widget.model.type + 1,
+                    ),
+                    InvitationDetailsList(
+                      customerId: widget.model.customerId,
+                      type: widget.model.type + 1,
                     ),
                   ],
                 ),
@@ -189,7 +191,7 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>
               })),
               Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
-                  child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
+                  child: _getBottom(Assets.icons.icInvite.path, '修改邀约', () {
                 Get.to(() => InviteDetailPage(
                       id: widget.model.customerId,
                       phone: '',

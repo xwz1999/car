@@ -18,6 +18,7 @@ class CustomerPage extends StatefulWidget {
 
 class _CustomerPageState extends State<CustomerPage> {
   int _page = 1;
+  int _size = 10;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   List<TaskInviteListModel> lists = [];
@@ -60,13 +61,13 @@ class _CustomerPageState extends State<CustomerPage> {
             controller: _easyRefreshController,
             onRefresh: () async {
               _page = 1;
-              lists = await TaskFunc.getCarList(_page);
+              lists = await TaskFunc.getCarList(page: _page, size: _size);
               _onLoad = false;
               setState(() {});
             },
             onLoad: () async {
               _page++;
-              await TaskFunc.getCarList(_page).then((value) {
+              await TaskFunc.getCarList(page: _page, size: _size).then((value) {
                 if (value.isEmpty) {
                   _easyRefreshController.finishLoad(noMore: true);
                 } else {

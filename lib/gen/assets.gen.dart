@@ -305,6 +305,9 @@ class $AssetsIconsGen {
   AssetGenImage get mainSearch =>
       const AssetGenImage('assets/icons/main_search.png');
 
+  /// File path: assets/icons/map.png
+  AssetGenImage get map => const AssetGenImage('assets/icons/map.png');
+
   /// File path: assets/icons/merchantsbankhead.png
   AssetGenImage get merchantsbankhead =>
       const AssetGenImage('assets/icons/merchantsbankhead.png');

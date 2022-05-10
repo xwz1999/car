@@ -1,4 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/extensions/string_extension.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/user/interface/feedback_func.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
@@ -37,7 +39,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
   late String img = widget.img;
   late String phone = widget.phone;
   late bool zhi = false;
-  @override
+
   @override
   void initState() {
     super.initState();
@@ -48,6 +50,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
     zhi = await FeedbackFunc.getFeedback(widget.title, content, phone, img);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -64,8 +67,8 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          32.hb,
+        body: ListView(children: [
+          24.hb,
           Padding(
             padding: EdgeInsets.only(left: 32.w),
             child: Text(
@@ -78,72 +81,53 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
           ),
           24.hb,
           Container(
-            height: 520.w,
+            // height: 520.w,
             color: kForeGroundColor,
             padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  // padding:
-                  //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
-                  height: 200.w,
-                  child: TextField(
-                    maxLines: 50,
-                    keyboardType: TextInputType.text,
-                    onEditingComplete: () {
-                      setState(() {});
-                      // _refreshController.callRefresh();
-                    },
-                    onChanged: (text) {
-                      content = text;
-                      setState(() {});
-                    },
-
-                    style: TextStyle(
-                      color: BaseStyle.color333333,
-                      fontSize: BaseStyle.fontSize28,
-                    ),
-                    // controller: _editingController5,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      filled: true,
-                      isDense: true,
-                      fillColor: Colors.white,
-                      hintText: widget.text,
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300),
-                      border: InputBorder.none,
-                    ),
-                  ),
+            child: SizedBox(
+              width: double.infinity,
+              // padding:
+              //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
+              height: 200.w,
+              child: TextField(
+                maxLines: 50,
+                keyboardType: TextInputType.text,
+                onEditingComplete: () {
+                  setState(() {});
+                  // _refreshController.callRefresh();
+                },
+                onChanged: (text) {
+                  content = text;
+                  setState(() {});
+                },
+                style: TextStyle(
+                  color: BaseStyle.color333333,
+                  fontSize: BaseStyle.fontSize28,
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    await CloudImagePicker.pickSingleImage(title: '选择图片').then(
-                      (value) async {
-                        if (value != null) {
-                          File files = value;
-                          String urls = await ApiClient().uploadImage(files);
-                        }
-                      },
-                    );
-                    setState(() {});
-                  },
-                  child: SizedBox(
-                    width: 200.w,
-                    height: 120,
-                    child: Image.asset(Assets.images.addcar.path),
-                  ),
+                // controller: _editingController5,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.zero,
+                  filled: true,
+                  isDense: true,
+                  fillColor: Colors.white,
+                  hintText: widget.text,
+                  hintStyle: TextStyle(
+                      color: Colors.grey.shade500,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  border: InputBorder.none,
                 ),
-              ],
+              ),
             ),
           ),
-          32.hb,
+          const CarImageItem(
+              //isPadding: false,
+              ),
+          24.hb,
           Padding(
-            padding: EdgeInsets.only(left: 32.w),
+            padding: EdgeInsets.only(
+              left: 32.w,
+            ),
             child: Text(
               '联系方式',
               style: TextStyle(
@@ -153,7 +137,8 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
             ),
           ),
           24.hb,
-          Expanded(
+          SizedBox(
+            height: 200.w,
             child: TextField(
               keyboardType: TextInputType.text,
               onEditingComplete: () {
@@ -187,10 +172,11 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
                 Future.delayed(const Duration(milliseconds: 0), () async {
                   await _refresh();
                   Get.back();
-                  print('标题${widget.title}+文本 ${content}+手机 ${phone}+图片${img}');
                   setState(() {});
                 });
               } else {
+                // ignore: avoid_print
+                print('标题${widget.title}+文本 $content+手机 $phone+图片$img');
                 BotToast.showText(text: '请输入内容');
                 // if (img.isEmail) {
                 //   BotToast.showText(text: '图片');

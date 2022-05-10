@@ -116,24 +116,14 @@ class _ConsignmentContractState extends State<ConsignmentContract>
                 child: TabBarView(
               controller: _tabController,
               children: [
-                _ConsignmentList.isEmpty
-                    ? const NoDataWidget(
-                        text: '暂无客户信息',
-                        paddingTop: 0,
-                      )
-                    : ConsignmentView(
-                        ConsignmentList: _ConsignmentList,
-                        refreshController: _consignmentRefreshController,
-                      ),
-                _SaleList.isEmpty
-                    ? const NoDataWidget(
-                        text: '暂无客户信息',
-                        paddingTop: 0,
-                      )
-                    : SaleView(
-                        SaleList: _SaleList,
-                        refreshController: _saleRefreshController,
-                      ),
+                ConsignmentView(
+                  ConsignmentList: _ConsignmentList,
+                  refreshController: _consignmentRefreshController,
+                ),
+                SaleView(
+                  SaleList: _SaleList,
+                  refreshController: _saleRefreshController,
+                ),
               ],
             ))
           ],
