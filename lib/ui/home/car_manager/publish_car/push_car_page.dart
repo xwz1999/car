@@ -367,6 +367,7 @@ class _PushCarPageState extends State<PushCarPage> {
             () async {
               _firstDate = await CarDatePicker.monthPicker(DateTime.now());
               _publishCarInfo.licensingDate = _firstDate;
+              FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
             },
             _publishCarInfo.licensingDateStr,
@@ -391,6 +392,7 @@ class _PushCarPageState extends State<PushCarPage> {
                       onConfirm: (strList, indexList) {
                         _publishCarInfo.carColor = strList.first;
                         Get.back();
+                        FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {});
                       });
                 },
@@ -416,6 +418,7 @@ class _PushCarPageState extends State<PushCarPage> {
                         _publishCarInfo.carSource =
                             _sourceType.keys.toList()[index];
                         Get.back();
+                        FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {});
                       });
                 },

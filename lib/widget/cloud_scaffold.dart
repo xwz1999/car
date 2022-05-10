@@ -4,7 +4,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CloudScaffold extends StatelessWidget  {
+class CloudScaffold extends StatelessWidget {
   ///沉浸式带背景的APPBar
   ///path未背景图的path
   final Widget? body;
@@ -122,6 +122,7 @@ class CloudScaffold extends StatelessWidget  {
                 child: title == null
                     ? appbar!
                     : AppBar(
+                        bottom: appBarBottom,
                         backgroundColor:
                             extendBody ? Colors.transparent : appBarBackColor,
                         leading: const CloudBackButton(),
