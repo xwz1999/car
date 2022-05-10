@@ -29,8 +29,8 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future setToken(String token, {User? user}) async {
-    apiClient.setToken('BKzReABAmS328thuWbqf1ZlGOraCrLUjU94L6y2ftxk3Gv8KOCrFAn9xCz2DrkSv');
-    await HiveStore.appBox!.put('token', 'BKzReABAmS328thuWbqf1ZlGOraCrLUjU94L6y2ftxk3Gv8KOCrFAn9xCz2DrkSv');
+    apiClient.setToken(token);
+    await HiveStore.appBox!.put('token', token);
     _isLogin = true;
     //每次打开app更新用户信息
     await updateUserInfo();
