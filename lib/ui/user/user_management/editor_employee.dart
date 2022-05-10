@@ -118,7 +118,6 @@ class _EditorEmployeeState extends State<EditorEmployee> {
                           } else {
                             BotToast.showText(text: '提交成功');
                             widget.callback(false);
-                            print(widget.callback);
                             Get.back();
                             Future.delayed(const Duration(milliseconds: 0),
                                 () async {

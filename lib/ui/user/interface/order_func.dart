@@ -318,7 +318,7 @@ class OrderFunc {
   }
 
   ///叫车订单->添加叫车订单
-  static Future<bool> getCaradd(
+  static Future<bool> getCarAdd(
     int carId,
     int customerId,
     String phone,
@@ -343,7 +343,7 @@ class OrderFunc {
   }
 
   ///交车
-  static Future<bool> getCarfinal(int orderId) async {
+  static Future<bool> getCarFinal(int orderId) async {
     BaseModel res = await apiClient.request(API.order.carFinal, data: {
       'orderId': orderId,
     });

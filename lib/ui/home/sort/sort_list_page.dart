@@ -167,7 +167,7 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisCount: 4,
           callback: (ChooseItem item) {
              widget.pickCar.value.price = item.name;
-            print( widget.pickCar.value.price.toString());
+
             setState(() {});
           },
           title: '展示价格',

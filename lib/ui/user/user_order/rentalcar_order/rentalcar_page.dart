@@ -22,8 +22,8 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [];
 //List<> _RentalCarList=[];
-  int _page = 1;
-  final int _size = 10;
+//   int _page = 1;
+//   final int _size = 10;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   //ScreenControl screenControl = ScreenControl();
   List carList = [

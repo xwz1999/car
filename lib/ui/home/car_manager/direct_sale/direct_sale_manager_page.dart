@@ -132,7 +132,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                         isSearch: true,
                         callback: (text) {
                           _pickCar.value.keyWords = text;
-                          print(_dropDownHeaderItemStrings1.first);
 
                           _dropDownHeaderItemStrings1.first == '直卖车辆'
                               ? refreshController.callRefresh()

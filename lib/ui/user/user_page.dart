@@ -72,7 +72,7 @@ class _UserPageState extends State<UserPage> {
         //height: 334.w,
         alignment: Alignment.centerRight,
         padding: EdgeInsets.only(right: 32.w),
-        margin: EdgeInsets.only(top: 78.w, bottom: 78.w),
+        margin: EdgeInsets.only(top: 78.w,),
         child: GestureDetector(
           onTap: () {
             Get.to(() => const SystemSettingPage());
@@ -96,6 +96,7 @@ class _UserPageState extends State<UserPage> {
                     shrinkWrap: true,
                     padding: EdgeInsets.symmetric(horizontal: 32.w),
                     children: [
+                      60.hb,
                       //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
                       _shareUser(),
                       32.hb,
