@@ -97,7 +97,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                     centerTitle: false,
                     title: headerWhite
                         ?  Text(
-                            widget.carInfoModel.modelName??'',
+                            widget.carInfoModel.modelName,
                             style:  TextStyle(
                               color: const Color(0xFF333333),
                               fontWeight: FontWeight.w700,
