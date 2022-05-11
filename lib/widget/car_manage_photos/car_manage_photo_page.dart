@@ -20,7 +20,7 @@ class CarManagePhotoPage extends StatefulWidget {
 }
 
 class _CarManagePhotoPageState extends State<CarManagePhotoPage>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController _tabController;
   List<dynamic> _carPhotos = [];
   List<dynamic> _interiorPhotos = [];
@@ -90,6 +90,7 @@ class _CarManagePhotoPageState extends State<CarManagePhotoPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return CloudScaffold.normal(
       title: '车辆图片管理',
       actions: [
@@ -117,24 +118,17 @@ class _CarManagePhotoPageState extends State<CarManagePhotoPage>
           indicatorColor: Colors.transparent,
           tabs: widget.tabs.map((e) => Tab(text: e)).toList()),
       body: TabBarView(controller: _tabController, children: [
-        _getView(
-          0,
-        ),
-        _getView(
-          1,
-        ),
-        _getView(
-          2,
-        ),
-        _getView(
-          3,
-        ),
+        _getView(0,_carPhotos),
+        _getView(1,_interiorPhotos),
+        _getView(2,_defectPhotos),
+        _getView(3,_dataPhotos),
       ]),
     );
   }
 
   Widget _getView(
     int index,
+      List<dynamic> list,
   ) {
     return Padding(
       padding: EdgeInsets.all(30.w),
@@ -146,7 +140,9 @@ class _CarManagePhotoPageState extends State<CarManagePhotoPage>
             style: TextStyle(color: const Color(0xFF999999), fontSize: 28.sp),
           ),
           30.hb,
-          MultiImagePickWidget(onChanged: (files) {
+          MultiImagePickWidget(
+              photos: list,
+              onChanged: (files) {
             switch (index) {
               case 0:
                 _carPhotos = files;
@@ -167,4 +163,7 @@ class _CarManagePhotoPageState extends State<CarManagePhotoPage>
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
