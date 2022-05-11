@@ -72,6 +72,7 @@ class CarManagePhotoWidget extends StatelessWidget {
                         child: Container(
                           width: 66.w,
                           height: 36.w,
+                          alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.5),
                             borderRadius: BorderRadius.only(
