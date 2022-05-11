@@ -2,6 +2,8 @@
 import 'dart:io';
 
 // Package imports:
+import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_image_preview.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -15,10 +17,11 @@ import '../../../gen/assets.gen.dart';
 class MultiImagePickWidget extends StatefulWidget {
   final double? width;
   final double? height;
-  final Function(List<File> files) onChanged;
+  final Function(List<dynamic> files) onChanged;
   final String description;
   final int? maxCount;
   final double? spacing;
+  final List<dynamic> photos;
 
   const MultiImagePickWidget(
       {Key? key,
@@ -27,7 +30,8 @@ class MultiImagePickWidget extends StatefulWidget {
       required this.onChanged,
       this.description = '上传照片',
       this.maxCount,
-      this.spacing})
+      this.spacing,
+      this.photos = const []})
       : super(key: key);
 
   @override
@@ -35,7 +39,15 @@ class MultiImagePickWidget extends StatefulWidget {
 }
 
 class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
-  final List<File> _files = [];
+  List<dynamic> _files = [];
+
+  @override
+  void initState() {
+    if (widget.photos.isNotEmpty) {
+      _files = widget.photos;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +63,11 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
               widget.maxCount != null && _files.length >= widget.maxCount!,
           child: GestureDetector(
             onTap: () async {
-              await CloudImagePicker.pickMultiAndSingleImage(title: '选择图片').then(
-                (value) {
-                  _files.addAll(value);
-                },
-              );
+              var value =
+                  await CloudImagePicker.pickMultiAndSingleImage(title: '选择图片');
+              for (var item in value) {
+                _files.add(item);
+              }
               widget.onChanged(_files);
               setState(() {});
             },
@@ -66,8 +78,8 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
               dashPattern: const [6, 3],
               radius: Radius.circular(8.w),
               child: SizedBox(
-                width: widget.width!=null?widget.width!-10.w:160.w,
-                height: widget.height!=null?widget.height!-10.w:160.w,
+                width: widget.width != null ? widget.width! - 10.w : 160.w,
+                height: widget.height != null ? widget.height! - 10.w : 160.w,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,7 +105,7 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
     );
   }
 
-  Widget showImage(File file, int index) {
+  Widget showImage(dynamic file, int index) {
     return Draggable(
       data: index,
       childWhenDragging: Container(
@@ -105,18 +117,13 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
             color: Colors.black.withOpacity(0.03)),
       ),
       feedback: Container(
-        width:( widget.width ?? 160.w)*0.8,
-        height:( widget.height ?? 160.w)*0.8,
+        width: (widget.width ?? 160.w) * 0.8,
+        height: (widget.height ?? 160.w) * 0.8,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.w),
             color: Colors.black.withOpacity(0.03)),
-        child: Image.file(
-          file,
-          fit: BoxFit.fill,
-          width: widget.width ?? 100.w,
-          height: widget.height ?? 100.w,
-        ),
+        child: image(file),
       ),
       child: DragTarget(
         onWillAccept: (acceptIndex) => true,
@@ -130,8 +137,49 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
         builder: (context, cdata, rdata) {
           return Stack(children: [
             GestureDetector(
+              onLongPress: () async {
+                await Get.bottomSheet(CupertinoActionSheet(
+                  actions: [
+                    CupertinoActionSheetAction(
+                      onPressed: () async {
+                        var value =
+                           await CloudImagePicker.pickSingleImage(title: '选择图片');
+                        _files.removeAt(index);
+                        _files.insert(index, value);
+                        Get.back();
+                        setState(() {});
+                      },
+                      child: Text(
+                        '替换',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28.sp),
+                      ),
+                    ),
+                    CupertinoActionSheetAction(
+                      onPressed: () {
+                        _files.removeAt(index);
+                        Get.back();
+                        setState(() {});
+                      },
+                      child: Text(
+                        '删除',
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28.sp),
+                      ),
+                    )
+                  ],
+                ));
+              },
               onTap: () async {
-                await CloudImagePreview.toFile(file: file);
+                if (file.runtimeType == String) {
+                  await CloudImagePreview.toPath(path: file);
+                } else {
+                  await CloudImagePreview.toFile(file: file);
+                }
               },
               child: Container(
                 width: widget.width ?? 160.w,
@@ -140,38 +188,48 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16.w),
                     color: Colors.black.withOpacity(0.03)),
-                child: Image.file(
-                  file,
-                  fit: BoxFit.fill,
-                  width: widget.width ?? 100.w,
-                  height: widget.height ?? 100.w,
-                ),
+                child: image(file),
               ),
             ),
-            Positioned(
-              top: 0.w,
-              right: 0.w,
-              child: Container(
-                width: 40.w,
-                height: 40.w,
-                child: Icon(
-                  CupertinoIcons.xmark,
-                  size: 20.w,
-                  color: Colors.white,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.w),
-                  color: const Color(0xFF000000),
-                ),
-              ).onTap(() {
-                _files.remove(file);
-                widget.onChanged(_files);
-                setState(() {});
-              }),
-            )
+            // Positioned(
+            //   top: 0.w,
+            //   right: 0.w,
+            //   child: Container(
+            //     width: 40.w,
+            //     height: 40.w,
+            //     child: Icon(
+            //       CupertinoIcons.xmark,
+            //       size: 20.w,
+            //       color: Colors.white,
+            //     ),
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(20.w),
+            //       color: const Color(0xFF000000),
+            //     ),
+            //   ).onTap(() {
+            //     _files.remove(file);
+            //     widget.onChanged(_files);
+            //     setState(() {});
+            //   }),
+            // )
           ]);
         },
       ),
     );
+  }
+
+  Widget image(dynamic file) {
+    return file.runtimeType == String
+        ? CloudImageNetworkWidget(
+            width: widget.width ?? 100.w,
+            height: widget.height ?? 100.w,
+            urls: [file],
+          )
+        : Image.file(
+            file,
+            fit: BoxFit.fill,
+            width: widget.width ?? 100.w,
+            height: widget.height ?? 100.w,
+          );
   }
 }

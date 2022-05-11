@@ -32,6 +32,8 @@ class CarManagePhotoWidget extends StatelessWidget {
         Get.to(
           CarManagePhotoPage(
             tabs: _titles,
+            model: model,
+            initIndex: index,
           ),
         );
       },

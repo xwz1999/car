@@ -26,7 +26,9 @@ class _CarImageItemState extends State<CarImageItem> {
           height: 160.w,
           spacing: 15.w,
           onChanged: (files) {
-            _files = files;
+            for (var item in files) {
+              _files.add(item);
+            }
           }),
       // GridView.builder(
       //     physics: const NeverScrollableScrollPhysics(),

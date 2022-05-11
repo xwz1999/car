@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/const_data.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
@@ -236,15 +235,16 @@ class _PushCarPageState extends State<PushCarPage> {
                                   if (value != null) {
                                     File files = value;
                                     String urls =
-                                        await ApiClient().uploadImage(files);
-                                    carInfoModel = await CarFunc.carDistinguish(
-                                        urls.imageWithHost);
+                                        await apiClient.uploadImage(files);
+                                    carInfoModel =
+                                        await CarFunc.carDistinguish(urls);
                                     if (carInfoModel != null) {
                                       _publishCarInfo.viNum = carInfoModel!.vin;
                                       _publishCarInfo.carName =
                                           carInfoModel!.cartype;
                                       _publishCarInfo.licensingDate =
-                                          DateUtil.getDateTime(carInfoModel!.issuedate);
+                                          DateUtil.getDateTime(
+                                              carInfoModel!.issuedate);
                                       _publishCarInfo.carNum =
                                           carInfoModel!.lsnum;
                                       _publishCarInfo.engineNum =
@@ -480,7 +480,7 @@ class _PushCarPageState extends State<PushCarPage> {
       BotToast.showText(text: '请选择车型');
       return false;
     }
-    if (_publishCarInfo.licensingDate==null) {
+    if (_publishCarInfo.licensingDate == null) {
       BotToast.showText(text: '请选择首次上牌时间');
       return false;
     }
@@ -558,7 +558,9 @@ class PublishCarInfo {
 
   ///首次上牌时间
   DateTime? licensingDate;
-  String get licensingDateStr => DateUtil.formatDate(licensingDate,format: 'yyyy-MM');
+
+  String get licensingDateStr =>
+      DateUtil.formatDate(licensingDate, format: 'yyyy-MM');
 
   ///车牌号
   String? carNum;
