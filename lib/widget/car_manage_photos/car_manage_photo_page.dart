@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_car/model/car/inner_model/car_manage_photo_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -24,10 +22,10 @@ class CarManagePhotoPage extends StatefulWidget {
 class _CarManagePhotoPageState extends State<CarManagePhotoPage>
     with TickerProviderStateMixin {
   late TabController _tabController;
-   List<dynamic> _carPhotos = [];
-   List<dynamic> _interiorPhotos = [];
-   List<dynamic> _defectPhotos = [];
-   List<dynamic> _dataPhotos = [];
+  List<dynamic> _carPhotos = [];
+  List<dynamic> _interiorPhotos = [];
+  List<dynamic> _defectPhotos = [];
+  List<dynamic> _dataPhotos = [];
 
   @override
   void initState() {
@@ -35,13 +33,18 @@ class _CarManagePhotoPageState extends State<CarManagePhotoPage>
         length: widget.tabs.length,
         vsync: this,
         initialIndex: widget.initIndex);
-    _carPhotos = widget.model.carPhotos;
-
-    _carPhotos = widget.model.dataPhotos;
-
-    _carPhotos = widget.model.defectPhotos;
-
-    _carPhotos = widget.model.interiorPhotos;
+    for (var item in widget.model.carPhotos) {
+      _carPhotos.add(item);
+    }
+    for (var item in widget.model.interiorPhotos) {
+      _interiorPhotos.add(item);
+    }
+    for (var item in widget.model.defectPhotos) {
+      _defectPhotos.add(item);
+    }
+    for (var item in widget.model.dataPhotos) {
+      _dataPhotos.add(item);
+    }
 
     super.initState();
   }
@@ -114,15 +117,25 @@ class _CarManagePhotoPageState extends State<CarManagePhotoPage>
           indicatorColor: Colors.transparent,
           tabs: widget.tabs.map((e) => Tab(text: e)).toList()),
       body: TabBarView(controller: _tabController, children: [
-        _getView(0, _carPhotos),
-        _getView(1, _interiorPhotos),
-        _getView(2, _defectPhotos),
-        _getView(3, _dataPhotos),
+        _getView(
+          0,
+        ),
+        _getView(
+          1,
+        ),
+        _getView(
+          2,
+        ),
+        _getView(
+          3,
+        ),
       ]),
     );
   }
 
-  Widget _getView(int index, List<dynamic> list) {
+  Widget _getView(
+    int index,
+  ) {
     return Padding(
       padding: EdgeInsets.all(30.w),
       child: Column(

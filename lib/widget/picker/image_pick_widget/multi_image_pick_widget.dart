@@ -1,5 +1,5 @@
 // Dart imports:
-import 'dart:io';
+
 
 // Package imports:
 import 'package:cloud_car/utils/headers.dart';
@@ -9,10 +9,8 @@ import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../gen/assets.gen.dart';
 
 class MultiImagePickWidget extends StatefulWidget {
   final double? width;

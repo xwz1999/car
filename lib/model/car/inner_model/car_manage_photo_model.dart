@@ -12,7 +12,7 @@ class CarManagePhotoModel {
   factory CarManagePhotoModel.fromJson(Map<String, dynamic> json) =>
       _$CarManagePhotoModelFromJson(json);
 
- static CarManagePhotoModel get init =>  CarManagePhotoModel(
+  static CarManagePhotoModel get init => CarManagePhotoModel(
       carPhotos: [], interiorPhotos: [], defectPhotos: [], dataPhotos: []);
 
 //<editor-fold desc="Data Methods">
@@ -43,11 +43,11 @@ class CarManagePhotoModel {
 
   @override
   String toString() {
-    return 'CarManagePhotoModel{' +
-        ' carPhotos: $carPhotos,' +
-        ' interiorPhotos: $interiorPhotos,' +
-        ' defectPhotos: $defectPhotos,' +
-        ' dataPhotos: $dataPhotos,' +
+    return 'CarManagePhotoModel{'
+        ' carPhotos: $carPhotos,'
+        ' interiorPhotos: $interiorPhotos,'
+        ' defectPhotos: $defectPhotos,'
+        ' dataPhotos: $dataPhotos,'
         '}';
   }
 

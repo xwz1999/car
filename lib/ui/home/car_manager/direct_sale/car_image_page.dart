@@ -14,7 +14,7 @@ class CarImageItem extends StatefulWidget {
 }
 
 class _CarImageItemState extends State<CarImageItem> {
-  List<File> _files = [];
+  final List<File> _files = [];
 
   @override
   Widget build(BuildContext context) {
