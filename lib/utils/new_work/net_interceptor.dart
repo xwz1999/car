@@ -17,7 +17,7 @@ class NetworkInterceptor extends Interceptor {
       //登录超时
       case 100000:
         await userProvider.logout();
-        CloudToast.show('登陆超时');
+        CloudToast.show(response.data['msg']);
         await Get.offAll(() => const LoginPage());
         break;
       default:
