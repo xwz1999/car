@@ -90,7 +90,7 @@ class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
                   ? const SizedBox()
                   : _list.isEmpty
                   ? const NoDataWidget(
-                text: '暂无相关车辆信息',
+                text: '未找到相关客户',
                 paddingTop: 300,
               )
                   :    ListView.separated(
@@ -121,7 +121,7 @@ class _ChooseCustomerPageState extends State<ChooseCustomerPage> {
             GestureDetector(
               onTap: (){
                 if(_selectIndex.isEmpty){
-                  BotToast.showText(text: '请先选择车辆');
+                  BotToast.showText(text: '请先选择客户');
                 }else{
                   widget.callback(_list[_selectIndex.first]);
                   Get.back();

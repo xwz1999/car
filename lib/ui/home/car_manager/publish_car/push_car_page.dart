@@ -236,7 +236,7 @@ class _PushCarPageState extends State<PushCarPage> {
                                   if (value != null) {
                                     File files = value;
                                     String urls =
-                                        await ApiClient().uploadImage(files);
+                                        await apiClient.uploadImage(files);
                                     carInfoModel = await CarFunc.carDistinguish(
                                         urls.imageWithHost);
                                     if (carInfoModel != null) {
@@ -264,6 +264,7 @@ class _PushCarPageState extends State<PushCarPage> {
                             ),
                           ),
                           _rewardWidget(),
+
                           100.w.heightBox,
                           SizedBox(
                             width: double.infinity,
@@ -354,6 +355,7 @@ class _PushCarPageState extends State<PushCarPage> {
                       Get.back();
                       _publishCarInfo.carName = _pickCar.value.car.name;
                       _publishCarInfo.carModelId = _pickCar.value.car.id;
+                      FocusManager.instance.primaryFocus?.unfocus();
                     },
                     pickCar: _pickCar,
                   ));

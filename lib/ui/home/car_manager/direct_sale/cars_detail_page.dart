@@ -49,9 +49,13 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   bool headerWhite = false;
   List tabs = [];
   CarInfoModel? carInfoModel;
+  int collect = 0;
 
   @override
   void initState() {
+
+
+
     ///自己发布的 tab2个 否则1个
     tabs = [
       '车辆详情',
@@ -80,6 +84,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
 
   _refresh() async {
     carInfoModel = await CarFunc.getCarInfo(widget.carListModel.id);
+    collect = carInfoModel!.collect;
     setState(() {});
   }
 
@@ -140,16 +145,21 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                               ? GestureDetector(
                                   onTap: () async {
                                     var re = await apiClient.request(
-                                        carInfoModel?.collect == 0
+                                        collect == 0
                                             ? API.car.collect.add
                                             : API.car.collect.cancel,
                                         data: {'carId': carInfoModel?.id},
                                         showMessage: true);
-                                    if (re.code == 0) {}
+                                    if (re.code == 0) {
+                                      collect==0?collect=1:collect=0;
+                                      setState(() {
+
+                                      });
+                                    }
                                   },
-                                  child: Image.asset(carInfoModel?.collect == 1
+                                  child: Image.asset(collect == 1
                                       ? Assets.icons.alreadyCollected.path
-                                      : Assets.icons.notCollect.path),
+                                      : Assets.icons.collection.path, height: 48.w, width: 48.w),
                                 )
                               : const SizedBox(),
                           24.wb,

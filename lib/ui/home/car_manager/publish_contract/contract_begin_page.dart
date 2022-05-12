@@ -1,7 +1,10 @@
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/model/customer/customer_list_model.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/choose_customer_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_purchase_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_contract/select_customer_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -9,15 +12,18 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class ContractBeginPage extends StatefulWidget {
-  final PublishCarInfo  publishCarInfo;
-  const ContractBeginPage({Key? key, required this.publishCarInfo}) : super(key: key);
+  final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
+  const ContractBeginPage({Key? key, required this.consignmentContractModel}) : super(key: key);
 
   @override
   State<ContractBeginPage> createState() => _ContractBeginPageState();
 }
 
 class _ContractBeginPageState extends State<ContractBeginPage> {
-  String? customer = '';
+
+  // ///寄卖合同model
+  // final ValueNotifier<ConsignmentContractModel> consignmentContractModel = ValueNotifier(
+  //     ConsignmentContractModel(masterInfo: MasterInfo()));
 
 
   @override
@@ -54,7 +60,19 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
               color: Colors.white,
               child:GestureDetector(
                 onTap: () {
-                  Get.to(() => const SelectCustomerPage());
+
+
+                  Get.to(() => ChooseCustomerPage(
+                    callback: (CustomerListModel model) {
+                      widget.consignmentContractModel.value.customerName = model.nickname;
+                      widget.consignmentContractModel.value.customerId = model.id;
+                      print(widget.consignmentContractModel.value.customerId);
+                      setState(() {});
+                    },
+                  ));
+
+
+
                 },
                 child: Material(
                   color: Colors.transparent,
@@ -75,11 +93,11 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
                             .color(Colors.black.withOpacity(0.45))
                             .make(),
                       ),
-                      (customer!.isEmpty ? '请选择卖车客户' : customer!)
+                      (widget.consignmentContractModel.value.customerName!.isEmpty ? '请选择卖车客户' : widget.consignmentContractModel.value.customerName!)
                           .text
                           .size(30.sp)
                           .color(Colors.black
-                          .withOpacity(customer!.isEmpty ? 0.25 : 0.85))
+                          .withOpacity(widget.consignmentContractModel.value.customerName!.isEmpty ? 0.25 : 0.85))
                           .make(),
                       const Spacer(),
                       Icon(
@@ -98,7 +116,10 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => ContractPurchase(publishCarInfo: widget.publishCarInfo,));
+                  if(widget.consignmentContractModel.value.customerId==null){
+                    CloudToast.show('请先选择客户');
+                  }
+                  Get.to(() => ContractPurchase(consignmentContractModel:  widget.consignmentContractModel,));
                 },
                 style: ButtonStyle(
                   backgroundColor:

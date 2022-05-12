@@ -1,3 +1,4 @@
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/car/inner_model/car_manage_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_info_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
@@ -10,9 +11,9 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class CarPicturePage extends StatefulWidget {
-  final PublishCarInfo publishCarInfo;
+  final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
 
-  const CarPicturePage({Key? key, required this.publishCarInfo})
+  const CarPicturePage({Key? key, required this.consignmentContractModel})
       : super(key: key);
 
   @override
@@ -49,7 +50,7 @@ class _CarPicturePageState extends State<CarPicturePage> {
               onTap: () {
                 Get.to(
                   () => PublishCarInfoPage(
-                    publishCarInfo: widget.publishCarInfo,
+                      consignmentContractModel:  widget.consignmentContractModel
                   ),
                 );
               },
