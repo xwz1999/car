@@ -127,6 +127,11 @@ class _AssessmentPageState extends State<AssessmentPage> {
                 bottomHeight: 400.w,
                 screenControl: screenControl,
                 headFontSize: 28.sp,
+                screen: '筛选',
+                onTap: () {
+                  screenControl.screenHide();
+                  _scaffoldKey.currentState?.openEndDrawer();
+                },
                 child: Container(
                   margin: EdgeInsets.only(top: 80.w),
                   child: ListView.separated(
@@ -145,11 +150,6 @@ class _AssessmentPageState extends State<AssessmentPage> {
                     itemCount: 10,
                   ),
                 ),
-                screen: '筛选',
-                onTap: () {
-                  screenControl.screenHide();
-                  _scaffoldKey.currentState?.openEndDrawer();
-                },
               ),
             )
           ],

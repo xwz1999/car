@@ -165,9 +165,9 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
              16.hb,
              getText('车身颜色',model.color),
              16.hb,
-             getText('显表里程',model.mileage + '万公里'),
+             getText('显表里程','${model.mileage}万公里'),
              16.hb,
-             getText('系统估计',model.price+'万元',isRed: true),
+             getText('系统估计','${model.price}万元',isRed: true),
 
            ],
          ),

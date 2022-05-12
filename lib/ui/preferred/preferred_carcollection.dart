@@ -251,12 +251,12 @@ class _CarCollectionState extends State<CarCollection> {
           bottomHeight: 400.w,
           screenControl: screenControl,
           headFontSize: 28.sp,
-          child: child,
           screen: '筛选',
           onTap: () {
             screenControl.screenHide();
             Scaffold.of(context).openEndDrawer();
-          });
+          },
+          child: child);
     },
     );
   }
@@ -297,7 +297,7 @@ class _CarCollectionState extends State<CarCollection> {
                 getChip(
                     DateUtil.formatDate(model.createdAtDT,
                         format: DateFormats.zh_y_mo),
-                    model.mileage.toString() + '万公里',
+                    '${model.mileage}万公里',
                     model.downPayment),
                 20.hb,
                 Row(

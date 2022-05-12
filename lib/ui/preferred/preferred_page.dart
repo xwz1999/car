@@ -416,11 +416,11 @@ class _PreferredPageState extends State<PreferredPage>
             bottomHeight: 400.w,
             screenControl: screenControl,
             headFontSize: 28.sp,
-            child: child,
             screen: '筛选', onTap: () {
           screenControl.screenHide();
           Scaffold.of(context).openEndDrawer();
-        });
+        },
+            child: child);
       },
     );
   }
@@ -466,7 +466,7 @@ class _PreferredPageState extends State<PreferredPage>
                   getChip(
                       DateUtil.formatDate(model.licensingDateDT,
                           format: DateFormats.zh_y_mo),
-                      model.mileage.toString() + '万公里',
+                      '${model.mileage}万公里',
                       model.downPayment),
                   20.hb,
                   Row(

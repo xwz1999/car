@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
-import '../../../tab_navigator.dart';
 
 class ContactCondition extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
@@ -20,9 +19,6 @@ class ContactCondition extends StatefulWidget {
 }
 
 class _ContactConditionState extends State<ContactCondition> {
-  final TextEditingController _appearanceController = TextEditingController();
-  final TextEditingController _interiorController = TextEditingController();
-  final TextEditingController _statusController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,46 +147,46 @@ class _ContactConditionState extends State<ContactCondition> {
     );
   }
 
-  _showDescription(
-    String title,
-    TextEditingController _contentController,
-  ) {
-    return Container(
-      padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-      color: Colors.transparent,
-      child: Row(
-        children: [
-          '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
-          10.wb,
-          SizedBox(
-            width: 160.w,
-            child: title.text
-                .size(28.sp)
-                .normal
-                .textStyle(const TextStyle(decoration: TextDecoration.none))
-                .color(Colors.black.withOpacity(0.45))
-                .make(),
-          ),
-          Expanded(
-            child: TextField(
-              textAlign: TextAlign.start,
-              onChanged: (text) => setState(() {}),
-              autofocus: false,
-              controller: _contentController,
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.zero,
-                  isDense: true,
-                  border: InputBorder.none,
-                  hintText: '请输入',
-                  hintStyle: TextStyle(
-                    fontSize: 30.sp,
-                    color: Colors.black.withOpacity(0.25),
-                  )),
-            ),
-          ),
-          24.wb,
-        ],
-      ),
-    );
-  }
+  // _showDescription(
+  //   String title,
+  //   TextEditingController contentController,
+  // ) {
+  //   return Container(
+  //     padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
+  //     color: Colors.transparent,
+  //     child: Row(
+  //       children: [
+  //         '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
+  //         10.wb,
+  //         SizedBox(
+  //           width: 160.w,
+  //           child: title.text
+  //               .size(28.sp)
+  //               .normal
+  //               .textStyle(const TextStyle(decoration: TextDecoration.none))
+  //               .color(Colors.black.withOpacity(0.45))
+  //               .make(),
+  //         ),
+  //         Expanded(
+  //           child: TextField(
+  //             textAlign: TextAlign.start,
+  //             onChanged: (text) => setState(() {}),
+  //             autofocus: false,
+  //             controller: contentController,
+  //             decoration: InputDecoration(
+  //                 contentPadding: EdgeInsets.zero,
+  //                 isDense: true,
+  //                 border: InputBorder.none,
+  //                 hintText: '请输入',
+  //                 hintStyle: TextStyle(
+  //                   fontSize: 30.sp,
+  //                   color: Colors.black.withOpacity(0.25),
+  //                 )),
+  //           ),
+  //         ),
+  //         24.wb,
+  //       ],
+  //     ),
+  //   );
+  // }
 }

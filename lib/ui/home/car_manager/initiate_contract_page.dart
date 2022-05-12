@@ -111,7 +111,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                     name: carModel!.modelName,
                     time:  DateUtil.formatDateMs(carModel!.licensingDate.toInt() * 1000,
                         format: 'yyyy年MM月'),
-                    distance:  carModel!.mileage + '万公里',
+                    distance:  '${carModel!.mileage}万公里',
                     //standard: '国六',
                     url:carModel!.mainPhoto,
                     price:  NumUtil.divide(num.parse(carModel!.price), 10000).toString(),
@@ -143,8 +143,9 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                 },
                 child: Container(
 
-                  child: const Text('请先选择车辆'),
                   color: Colors.white,
+
+                  child: const Text('请先选择车辆'),
 
                 ),
               ),
@@ -221,7 +222,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
 
                   title: '服务费比列',
                   canChange: false,
-                  value: carAmountModel==null? '':(double.parse(carAmountModel!.serviceFeeRate)  * 100).toString()+'%' ,
+                  value: carAmountModel==null? '':'${double.parse(carAmountModel!.serviceFeeRate)  * 100}%' ,
                   callback: (String content) {},
                   endText: '元',
 

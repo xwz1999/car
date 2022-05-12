@@ -186,20 +186,20 @@ class _DropDownPageState extends State<DropDownPage> {
           bottomHeight: 400.r,
           screenControl: screenControl,
           headFontSize: 16.sp,
+          screen: '筛选',
           child: Container(
             margin: EdgeInsets.only(top: 40.4.r),
             child: ListView.builder(itemBuilder: (context, index) {
               return Container(
                 padding: EdgeInsets.all(15.r),
-                child: Text("item $index"),
                 decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
                             color: const Color(0xffeeeeee), width: 0.4.r))),
+                child: Text("item $index"),
               );
             }),
           ),
-          screen: '筛选',
         ));
   }
 }

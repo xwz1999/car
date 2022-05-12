@@ -3,7 +3,7 @@ class TextUtils{
       if (phone.length != 11) {
          return '手机号不正确';
       } else {
-         return phone.substring(0, 3) + '****' + phone.substring(7, 11);
+         return '${phone.substring(0, 3)}****${phone.substring(7, 11)}';
       }
    }
 

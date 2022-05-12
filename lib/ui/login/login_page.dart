@@ -49,10 +49,10 @@ class _LoginPageState extends State<LoginPage> {
   /// 添加 loginAuthSyncApi 接口回调的监听
   void addJverifyListen() {
     Jverify().addLoginAuthCallBackListener((event) async {
-      var _result = "监听获取返回数据：[${event.code}] message = ${event.message}";
+      var result = "监听获取返回数据：[${event.code}] message = ${event.message}";
       if (kDebugMode) {
-        print(_result);
-        LoggerData.addData(_result);
+        print(result);
+        LoggerData.addData(result);
       }
       if (event.code == 6000) {
         var base = await apiClient.request(API.login.phone,

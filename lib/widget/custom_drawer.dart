@@ -35,10 +35,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
-    final double _width =
+    final double width =
         MediaQuery.of(context).size.width * widget.widthPercent;
     return ConstrainedBox(
-      constraints: BoxConstraints.expand(width: _width),
+      constraints: BoxConstraints.expand(width: width),
       child: Material(
         color: widget.backgroundColor,
         elevation: widget.elevation,

@@ -92,7 +92,7 @@ class _SearchPageState extends State<SearchPage> {
                 setState(() {});
               },
               onTap: () {},
-              onSubmitted: (_submitted) async {
+              onSubmitted: (submitted) async {
                 if (TextUtils.isEmpty(_searchText)) return;
 
                 _contentFocusNode.unfocus();

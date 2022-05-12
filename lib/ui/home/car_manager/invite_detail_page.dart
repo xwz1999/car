@@ -43,7 +43,7 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
   @override
   void initState() {
     _editingController1 =
-        TextEditingController(text: widget.name + '    ' + widget.phone);
+        TextEditingController(text: '${widget.name}    ${widget.phone}');
     _editingController2 = TextEditingController();
     _editingController3 = TextEditingController();
     _editingController4 = TextEditingController();
@@ -197,12 +197,12 @@ class _InviteDetailPageState extends State<InviteDetailPage> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    DateTime? _firstDate;
-                    _firstDate =
+                    DateTime? firstDate;
+                    firstDate =
                         await CarDatePicker.allTimePicker(DateTime.now());
-                    _editingController3.text = DateUtil.formatDate(_firstDate,
+                    _editingController3.text = DateUtil.formatDate(firstDate,
                         format: 'yyyy-MM-dd HH:mm:ss');
-                    _inviteTime = DateUtil.formatDate(_firstDate,
+                    _inviteTime = DateUtil.formatDate(firstDate,
                         format: 'yyyy-MM-dd HH:mm:ss');
                     setState(() {});
                   },

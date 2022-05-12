@@ -118,17 +118,17 @@ class _CarManagePhotoPageState extends State<CarManagePhotoPage>
           indicatorColor: Colors.transparent,
           tabs: widget.tabs.map((e) => Tab(text: e)).toList()),
       body: TabBarView(controller: _tabController, children: [
-        _getView(0,_carPhotos),
-        _getView(1,_interiorPhotos),
-        _getView(2,_defectPhotos),
-        _getView(3,_dataPhotos),
+        _getView(0, _carPhotos),
+        _getView(1, _interiorPhotos),
+        _getView(2, _defectPhotos),
+        _getView(3, _dataPhotos),
       ]),
     );
   }
 
   Widget _getView(
     int index,
-      List<dynamic> list,
+    List<dynamic> list,
   ) {
     return Padding(
       padding: EdgeInsets.all(30.w),
@@ -143,22 +143,22 @@ class _CarManagePhotoPageState extends State<CarManagePhotoPage>
           MultiImagePickWidget(
               photos: list,
               onChanged: (files) {
-            switch (index) {
-              case 0:
-                _carPhotos = files;
-                break;
-              case 1:
-                _interiorPhotos = files;
-                break;
-              case 2:
-                _defectPhotos = files;
-                break;
-              case 3:
-                _dataPhotos = files;
-                break;
-            }
-            setState(() {});
-          }),
+                switch (index) {
+                  case 0:
+                    _carPhotos = files;
+                    break;
+                  case 1:
+                    _interiorPhotos = files;
+                    break;
+                  case 2:
+                    _defectPhotos = files;
+                    break;
+                  case 3:
+                    _dataPhotos = files;
+                    break;
+                }
+                setState(() {});
+              }),
         ],
       ),
     );

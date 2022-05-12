@@ -84,16 +84,7 @@ class UserInfoModel {
 
   @override
   String toString() {
-    return 'UserInfoModel{' +
-        ' inviteCode: $inviteCode,' +
-        ' nickname: $nickname,' +
-        ' headImg: $headImg,' +
-        ' level: $level,' +
-        ' phone: $phone,' +
-        ' gender: $gender,' +
-        ' data: $data,' +
-        ' store: $store,' +
-        '}';
+    return 'UserInfoModel{ inviteCode: $inviteCode, nickname: $nickname, headImg: $headImg, level: $level, phone: $phone, gender: $gender, data: $data, store: $store,}';
   }
 
   UserInfoModel copyWith({

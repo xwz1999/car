@@ -195,7 +195,7 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
             model.invite.modelName,
             DateUtil.formatDate(DateUtil.getDateTimeByMs(
                 model.invite.inviteAt.toInt() * 1000),format: 'yyyy年MM月'),
-            model.invite.mileage+'万公里',
+            '${model.invite.mileage}万公里',
 
             model.invite.price,
 
@@ -213,7 +213,7 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
             model.reserve.modelName,
             DateUtil.formatDate(DateUtil.getDateTimeByMs(
                 model.reserve.licensingDate.toInt() * 1000),format: 'yyyy年MM月'),
-            model.reserve.mileage+'万公里',
+            '${model.reserve.mileage}万公里',
 
             '',
 

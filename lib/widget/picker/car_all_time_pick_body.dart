@@ -153,7 +153,7 @@ class _CarAllTimePickBodyState extends State<CarAllTimePickBody> {
                     .map((e) => Center(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: Text(e.toString() + '年',
+                            child: Text('$e年',
                                 textAlign: TextAlign.center),
                           ),
                         ))
@@ -182,7 +182,7 @@ class _CarAllTimePickBodyState extends State<CarAllTimePickBody> {
                                   right: 10.w,
                                   top: 10.w,
                                   bottom: 10.w),
-                              child: Text(e.toString() + '月',
+                              child: Text('$e月',
                                   textAlign: TextAlign.center),
                             ),
                           ))
@@ -211,7 +211,7 @@ class _CarAllTimePickBodyState extends State<CarAllTimePickBody> {
                                   right: 10.w,
                                   top: 10.w,
                                   bottom: 10.w),
-                              child: Text(e.toString() + '日',
+                              child: Text('$e日',
                                   textAlign: TextAlign.center),
                             ),
                           ))

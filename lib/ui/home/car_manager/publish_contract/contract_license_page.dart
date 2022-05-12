@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
-import '../../../../widget/picker/car_picker_box.dart';
 
 class ContractLicencePage extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
@@ -259,10 +258,10 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
 
         GestureDetector(
           onTap: () async {
-            DateTime? _firstDate;
-            _firstDate = await CarDatePicker.pick(DateTime.now());
+            DateTime? firstDate;
+            firstDate = await CarDatePicker.pick(DateTime.now());
             widget.consignmentContractModel.value.compulsoryInsuranceDate =
-                DateUtil.formatDate(_firstDate, format: 'yyyy-MM-dd');
+                DateUtil.formatDate(firstDate, format: 'yyyy-MM-dd');
             setState(() {});
           },
           child: Padding(
@@ -270,7 +269,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 150.w,
                   child: Text('交强险到期',
                       style: TextStyle(
@@ -329,10 +328,10 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
 
         GestureDetector(
           onTap: () async {
-            DateTime? _firstDate;
-            _firstDate = await CarDatePicker.pick(DateTime.now());
+            DateTime? firstDate;
+            firstDate = await CarDatePicker.pick(DateTime.now());
             widget.consignmentContractModel.value.commercialInsuranceDate =
-                DateUtil.formatDate(_firstDate, format: 'yyyy-MM-dd');
+                DateUtil.formatDate(firstDate, format: 'yyyy-MM-dd');
             setState(() {});
           },
           child: Padding(
@@ -340,7 +339,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 150.w,
                   child: Text('商业险到期',
                       style: TextStyle(

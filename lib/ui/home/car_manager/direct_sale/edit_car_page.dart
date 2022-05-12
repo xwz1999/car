@@ -119,6 +119,12 @@ class _EditCarPageState extends State<EditCarPage>  with SingleTickerProviderSta
                 width: double.infinity,
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(left: 40.w),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+
+                    border: Border(
+                        bottom: BorderSide(
+                            color: BaseStyle.colordddddd, width: 2.w))),
                 child: TabBar(
                     onTap: (index) {
                       setState(() {});
@@ -150,12 +156,6 @@ class _EditCarPageState extends State<EditCarPage>  with SingleTickerProviderSta
 
 
                     ]),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-
-                    border: Border(
-                        bottom: BorderSide(
-                            color: BaseStyle.colordddddd, width: 2.w))),
               ),
             )
         ),

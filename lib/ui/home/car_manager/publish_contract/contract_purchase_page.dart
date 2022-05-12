@@ -1,7 +1,5 @@
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
-import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_owner_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -21,7 +19,6 @@ class ContractPurchase extends StatefulWidget {
 
 class _ContractPurchaseState extends State<ContractPurchase> {
 
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
