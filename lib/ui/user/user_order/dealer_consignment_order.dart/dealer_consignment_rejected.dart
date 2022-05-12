@@ -1,17 +1,19 @@
+import 'package:cloud_car/ui/user/user_order/user_consignment_order/backup/consignment_audit.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/headers.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
-class ConsignmentRejected extends StatefulWidget {
-  const ConsignmentRejected({Key? key}) : super(key: key);
+class DealerConsignmentRejected extends StatefulWidget {
+  const DealerConsignmentRejected({Key? key}) : super(key: key);
 
   @override
-  State<ConsignmentRejected> createState() => _ConsignmentRejectedState();
+  State<DealerConsignmentRejected> createState() =>
+      _DealerConsignmentRejectedState();
 }
 
-class _ConsignmentRejectedState extends State<ConsignmentRejected> {
+class _DealerConsignmentRejectedState extends State<DealerConsignmentRejected> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +22,7 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('个人寄卖',
+        title: Text('车商寄卖',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
@@ -37,15 +39,14 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
           color: Colors.white,
           child: ProgressBar(
             length: 6,
-            num: 4,
+            num: 3,
             direction: false,
-            cancel: false,
             HW: 96,
+            cancel: false,
             texts: [
-              text('预定'),
-              text('签订'),
+              text('发布'),
               text('上架'),
-              text('交易取消'),
+              text('订单取消'),
               text('到账'),
               text('成交'),
             ],
@@ -62,13 +63,13 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('客户信息'),
+                child: getTitle('车商信息'),
               ),
               36.hb,
-              _getText('客户姓名', '莉丝'),
+              _getText('车商编号', '莉丝'),
               36.hb,
               _getText(
-                '手机号',
+                '车商名称',
                 '18912345432',
               )
             ],
@@ -122,29 +123,6 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
                 ],
               ),
             ])),
-        16.hb,
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.w),
-          padding: EdgeInsets.all(28.w),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('合同信息'),
-              ),
-              36.hb,
-              _getText('合同编号', '9876524612'),
-              36.hb,
-              _getText(
-                '签订时间',
-                '2021-12-30 12:00:00',
-              )
-            ],
-          ),
-        ),
         16.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),

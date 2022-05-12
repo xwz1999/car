@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
@@ -60,6 +61,7 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
                 ? GestureDetector(
                     onTap: () {
                       _isImportant = false;
+                      BotToast.showText(text: '取消成功');
                       setState(() {});
                     },
                     child: Image.asset(
@@ -71,6 +73,7 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
                 : GestureDetector(
                     onTap: () {
                       _isImportant = true;
+                      BotToast.showText(text: '重点客户设置成功');
                       setState(() {});
                     },
                     child: Padding(

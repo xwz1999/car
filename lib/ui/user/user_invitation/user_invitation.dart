@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/task_func.dart';
@@ -84,124 +86,120 @@ class _UserInvitationState extends State<UserInvitation>
         body: TabBarView(
           controller: _tabController,
           children: [
-            Expanded(
-              child: EasyRefresh(
-                  firstRefresh: true,
-                  controller: _invitationRefreshController,
-                  header: MaterialHeader(),
-                  footer: MaterialFooter(),
-                  onRefresh: () async {
-                    _page = 1;
-                    var list =
-                        await TaskFunc.getCarList(page: _page, size: _size);
-                    invitationList.clear();
-                    invitationList.addAll(list);
-                    invitationList = [
-                      const TaskInviteListModel(
-                          customerId: 6,
-                          customerNickname: '守护自己的云2',
-                          id: 1,
-                          inviteAt: 1648771200,
-                          type: 2),
-                      const TaskInviteListModel(
-                          customerId: 6,
-                          customerNickname: '守护自己的云1',
-                          id: 1,
-                          inviteAt: 1648771200,
-                          type: 1)
-                    ];
-                    setState(() {});
-                  },
-                  onLoad: () async {
-                    _page++;
-                    var baseList = await apiClient.requestList(
-                        API.task.getInviteLists,
-                        data: {'page': _page, 'size': 10});
-                    if (baseList.nullSafetyTotal > invitationList.length) {
-                      invitationList.addAll(baseList.nullSafetyList
-                          .map((e) => TaskInviteListModel.fromJson(e)));
-                    } else {
-                      _invitationRefreshController.finishLoad(noMore: true);
-                    }
-                    setState(() {});
-                  },
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      padding:
-                          EdgeInsets.only(left: 32.w, right: 32.w, top: 16.w),
-                      // padding: EdgeInsets.only(top: 10.w),
-                      itemBuilder: (context, index) {
-                        return _getInvitation(invitationList[index]);
-                      },
-                      separatorBuilder: (_, __) {
-                        return SizedBox(
-                          height: 16.w,
-                        );
-                      },
-                      itemCount: invitationList.length)),
-            ),
-            Expanded(
-              child: EasyRefresh(
-                  firstRefresh: true,
-                  controller: _directRefreshController,
-                  header: MaterialHeader(),
-                  footer: MaterialFooter(),
-                  onRefresh: () async {
-                    _page = 1;
-                    var list =
-                        await TaskFunc.getCarList(page: _page, size: _size);
-                    subscribeList.clear();
-                    subscribeList.addAll(list);
-                    subscribeList = [
-                      const TaskInviteListModel(
-                          customerId: 6,
-                          customerNickname: '守护自己的云1',
-                          id: 1,
-                          inviteAt: 1648771200,
-                          type: 1),
-                      const TaskInviteListModel(
-                          customerId: 6,
-                          customerNickname: '守护自己的云2',
-                          id: 1,
-                          inviteAt: 1648771200,
-                          type: 2),
-                      const TaskInviteListModel(
-                          customerId: 6,
-                          customerNickname: '守护自己的云1',
-                          id: 1,
-                          inviteAt: 1648771200,
-                          type: 1)
-                    ];
-                    setState(() {});
-                  },
-                  onLoad: () async {
-                    _page++;
-                    var baseList = await apiClient.requestList(
-                        API.task.getInviteLists,
-                        data: {'page': _page, 'size': 10});
-                    if (baseList.nullSafetyTotal > subscribeList.length) {
-                      subscribeList.addAll(baseList.nullSafetyList
-                          .map((e) => TaskInviteListModel.fromJson(e)));
-                    } else {
-                      _directRefreshController.finishLoad(noMore: true);
-                    }
-                    setState(() {});
-                  },
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      padding:
-                          EdgeInsets.only(left: 32.w, right: 32.w, top: 16.w),
-                      // padding: EdgeInsets.only(top: 10.w),
-                      itemBuilder: (context, index) {
-                        return _getSubscribe(subscribeList[index]);
-                      },
-                      separatorBuilder: (_, __) {
-                        return SizedBox(
-                          height: 16.w,
-                        );
-                      },
-                      itemCount: subscribeList.length)),
-            ),
+            EasyRefresh(
+                firstRefresh: true,
+                controller: _invitationRefreshController,
+                header: MaterialHeader(),
+                footer: MaterialFooter(),
+                onRefresh: () async {
+                  _page = 1;
+                  var list =
+                      await TaskFunc.getCarList(page: _page, size: _size);
+                  invitationList.clear();
+                  invitationList.addAll(list);
+                  invitationList = [
+                    const TaskInviteListModel(
+                        customerId: 6,
+                        customerNickname: '守护自己的云2',
+                        id: 1,
+                        inviteAt: 1648771200,
+                        type: 2),
+                    const TaskInviteListModel(
+                        customerId: 6,
+                        customerNickname: '守护自己的云1',
+                        id: 1,
+                        inviteAt: 1648771200,
+                        type: 1)
+                  ];
+                  setState(() {});
+                },
+                onLoad: () async {
+                  _page++;
+                  var baseList = await apiClient.requestList(
+                      API.task.getInviteLists,
+                      data: {'page': _page, 'size': 10});
+                  if (baseList.nullSafetyTotal > invitationList.length) {
+                    invitationList.addAll(baseList.nullSafetyList
+                        .map((e) => TaskInviteListModel.fromJson(e)));
+                  } else {
+                    _invitationRefreshController.finishLoad(noMore: true);
+                  }
+                  setState(() {});
+                },
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    padding:
+                        EdgeInsets.only(left: 32.w, right: 32.w, top: 16.w),
+                    // padding: EdgeInsets.only(top: 10.w),
+                    itemBuilder: (context, index) {
+                      return _getInvitation(invitationList[index]);
+                    },
+                    separatorBuilder: (_, __) {
+                      return SizedBox(
+                        height: 16.w,
+                      );
+                    },
+                    itemCount: invitationList.length)),
+            EasyRefresh(
+                firstRefresh: true,
+                controller: _directRefreshController,
+                header: MaterialHeader(),
+                footer: MaterialFooter(),
+                onRefresh: () async {
+                  _page = 1;
+                  var list =
+                      await TaskFunc.getCarList(page: _page, size: _size);
+                  subscribeList.clear();
+                  subscribeList.addAll(list);
+                  subscribeList = [
+                    const TaskInviteListModel(
+                        customerId: 6,
+                        customerNickname: '守护自己的云1',
+                        id: 1,
+                        inviteAt: 1648771200,
+                        type: 1),
+                    const TaskInviteListModel(
+                        customerId: 6,
+                        customerNickname: '守护自己的云2',
+                        id: 1,
+                        inviteAt: 1648771200,
+                        type: 2),
+                    const TaskInviteListModel(
+                        customerId: 6,
+                        customerNickname: '守护自己的云1',
+                        id: 1,
+                        inviteAt: 1648771200,
+                        type: 2)
+                  ];
+                  setState(() {});
+                },
+                onLoad: () async {
+                  _page++;
+                  var baseList = await apiClient.requestList(
+                      API.task.getInviteLists,
+                      data: {'page': _page, 'size': 10});
+                  if (baseList.nullSafetyTotal > subscribeList.length) {
+                    subscribeList.addAll(baseList.nullSafetyList
+                        .map((e) => TaskInviteListModel.fromJson(e)));
+                  } else {
+                    _directRefreshController.finishLoad(noMore: true);
+                  }
+                  setState(() {});
+                },
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    padding:
+                        EdgeInsets.only(left: 32.w, right: 32.w, top: 16.w),
+                    // padding: EdgeInsets.only(top: 10.w),
+                    itemBuilder: (context, index) {
+                      return _getSubscribe(subscribeList[index]);
+                    },
+                    separatorBuilder: (_, __) {
+                      return SizedBox(
+                        height: 16.w,
+                      );
+                    },
+                    itemCount: subscribeList.length)),
           ],
         ));
   }

@@ -149,13 +149,17 @@ class _PayChangesPageState extends State<PayChangesPage> {
                   SizedBox(
                       width: 32.w,
                       height: 32.w,
-                      child: Icon(
-                        num % 2 == 0
-                            ? Icons.keyboard_arrow_down
-                            : Icons.keyboard_arrow_right,
-                        color:
-                            num % 2 == 0 ? Colors.blue : BaseStyle.color999999,
-                      ))
+                      child: Image.asset(num.isEven
+                          ? Assets.icons.down.path
+                          : Assets.icons.icGoto.path)
+                      // Icon(
+                      //   num % 2 == 0
+                      //       ? Icons.keyboard_arrow_down
+                      //       : Icons.keyboard_arrow_right,
+                      //   color:
+                      //       num % 2 == 0 ? Colors.blue : BaseStyle.color999999,
+                      // )
+                      )
                 ],
               ),
             ),
@@ -224,7 +228,6 @@ class _PayChangesPageState extends State<PayChangesPage> {
           ],
         ));
     //leading: Icon(Icons.list),
-
     // ListTile(
     //   //minVerticalPadding: ,
     //   title: Text(

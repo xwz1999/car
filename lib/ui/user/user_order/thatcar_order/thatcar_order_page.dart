@@ -8,6 +8,7 @@ import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class ThatcarOrderPage extends StatefulWidget {
   final Function callBack;
@@ -70,7 +71,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
       'buttomname': '',
     },
   ];
-
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
   @override
   void initState() {
     super.initState();
@@ -129,13 +130,20 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
             ),
             16.hb,
             Expanded(
+                child: EasyRefresh(
+              firstRefresh: true,
+              header: MaterialHeader(),
+              footer: MaterialFooter(),
+              controller: _easyRefreshController,
+              onLoad: () async {},
+              onRefresh: () async {},
               child: ListView.builder(
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     return getCar(carList[index]);
                   },
                   itemCount: carList.length),
-            ),
+            )),
           ],
         ));
   }

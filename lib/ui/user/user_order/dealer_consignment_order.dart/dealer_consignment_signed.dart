@@ -10,19 +10,20 @@ import 'package:flutter/material.dart';
 import '../../../../utils/headers.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
-class ConsignmentSigned extends StatefulWidget {
+class DealerConsignmentSigned extends StatefulWidget {
   final String stat;
   final int statusNum;
   final int id;
-  const ConsignmentSigned(
+  const DealerConsignmentSigned(
       {Key? key, required this.stat, required this.statusNum, required this.id})
       : super(key: key);
 
   @override
-  State<ConsignmentSigned> createState() => _ConsignmentSignedState();
+  State<DealerConsignmentSigned> createState() =>
+      _DealerConsignmentSignedState();
 }
 
-class _ConsignmentSignedState extends State<ConsignmentSigned> {
+class _DealerConsignmentSignedState extends State<DealerConsignmentSigned> {
   late String stat = widget.stat;
   late Widget methods;
   late bool bl = true;
@@ -50,7 +51,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
             isSpecial: true,
           ),
           backgroundColor: kForeGroundColor,
-          title: Text('个人寄卖',
+          title: Text('车商寄卖',
               style: TextStyle(
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize36,
@@ -74,8 +75,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                   direction: false,
                   HW: 96,
                   texts: [
-                    text('预定'),
-                    text('签订'),
+                    text('发布'),
                     text('上架'),
                     text('出售'),
                     text('到账'),
@@ -83,6 +83,55 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                   ],
                 ),
               ),
+              16.hb,
+              stat == '已驳回'
+                  ? Container(
+                      margin: EdgeInsets.symmetric(horizontal: 32.w),
+                      padding: EdgeInsets.all(28.w),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.w)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          getTitle('审核驳回'),
+                          36.hb,
+                          _getText('审核时间', _individualList.customer.nickname),
+                          36.hb,
+                          Row(
+                            //crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 120.w,
+                                child: Text(
+                                  '驳回理由',
+                                  style: TextStyle(
+                                      color: BaseStyle.color333333,
+                                      fontSize: BaseStyle.fontSize28),
+                                ),
+                              ),
+                              32.wb,
+                              Flexible(
+                                child: SizedBox(
+                                  width: 478.w,
+                                  child: Text(
+                                    '',
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: BaseStyle.fontSize28),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          _getText(
+                            '驳回理由',
+                            _individualList.customer.mobile,
+                          )
+                        ],
+                      ),
+                    )
+                  : const SizedBox(),
               16.hb,
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -93,12 +142,12 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getTitle('客户信息'),
+                    getTitle('车商信息'),
                     36.hb,
-                    _getText('客户姓名', _individualList.customer.nickname),
+                    _getText('车商编号', _individualList.customer.nickname),
                     36.hb,
                     _getText(
-                      '手机号',
+                      '车商名称',
                       _individualList.customer.mobile,
                     )
                   ],
@@ -160,57 +209,9 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                         ),
                       ])),
               16.hb,
-              stat == '待签订'
-                  ? Container(
-                      margin: EdgeInsets.symmetric(horizontal: 32.w),
-                      padding: EdgeInsets.all(28.w),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.w)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 0.w),
-                            child: getTitle('预约直卖信息'),
-                          ),
-                          36.hb,
-                          _getText('预约地址', '云云问车 浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
-                          36.hb,
-                          _getText(
-                            '预约时间',
-                            '2021-12-30 12:00-18:00',
-                          )
-                        ],
-                      ),
-                    )
-                  : Container(
-                      margin: EdgeInsets.symmetric(horizontal: 32.w),
-                      padding: EdgeInsets.all(28.w),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.w)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 0.w),
-                            child: getTitle('合同信息'),
-                          ),
-                          36.hb,
-                          _getText('合同编号', '9876524612'),
-                          36.hb,
-                          _getText(
-                            '签订时间',
-                            '2021-12-30 12:00:00',
-                          )
-                        ],
-                      ),
-                    ),
-              16.hb,
               getWidget()
             ]),
-            stat == '待发布' || stat == '已驳回'
+            stat == '已驳回'
                 ? Positioned(
                     left: 0,
                     right: 0,
@@ -233,7 +234,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                                     color: const Color(0xFF027AFF),
                                     borderRadius: BorderRadius.circular(8.w)),
                                 child: Text(
-                                  stat == '待发布' ? '发布车辆' : '重新发布',
+                                  '重新发布',
                                   style: TextStyle(
                                       color: kForeGroundColor,
                                       fontSize: BaseStyle.fontSize28),
@@ -248,12 +249,6 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
 
   getWidget() {
     switch (stat) {
-      case '待签订':
-        return methods = const SizedBox();
-        break;
-      case '待发布':
-        return methods = const SizedBox();
-        break;
       case '审核中':
         return methods = Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w),

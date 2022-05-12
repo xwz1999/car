@@ -1,11 +1,18 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+
 import 'package:cloud_car/utils/user_tool.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-//import 'package:permission_handler/permission_handler.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:screenshot/screenshot.dart';
 
 class ShareDetailCustomerPage extends StatefulWidget {
@@ -19,133 +26,185 @@ class ShareDetailCustomerPage extends StatefulWidget {
 class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
+  final GlobalKey _globalKey = GlobalKey();
+  List<Uint8List> images = [];
 
   final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-        body: Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFF66A2FF), kForeGroundColor])),
-            child: Stack(
-              children: [
-                Align(
-                  child: Image.asset(
-                    Assets.images.inviteCodeBg.path,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Positioned(
-                  left: 80.w,
-                  top: 184.w,
-                  child: Text(
-                    '云云问车客户邀请码',
-                    //UserTool.userProvider.userInfo.inviteCode,
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          fontSize: 40.sp,
-                          color: const Color(0xFF1986FF),
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ),
-                Positioned(left: 72.w, top: 280.w, child: _getbody()),
-                Positioned(
-                    left: 70.w,
-                    top: 1246.w,
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+    return RepaintBoundary(
+        key: _globalKey,
+        child: Scaffold(
+            body: Container(
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xFF66A2FF), kForeGroundColor])),
+                child: Stack(
+                  children: [
+                    Align(
+                      child: Image.asset(
+                        Assets.images.inviteCodeBg.path,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Positioned(
+                      left: 80.w,
+                      top: 184.w,
+                      child: Text(
+                        '云云问车客户邀请码',
+                        //UserTool.userProvider.userInfo.inviteCode,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              fontSize: 40.sp,
+                              color: const Color(0xFF1986FF),
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ),
+                    Positioned(left: 72.w, top: 280.w, child: _getbody()),
+                    Positioned(
+                        left: 70.w,
+                        top: 1246.w,
+                        child: Row(
                           children: [
-                            const Text('扫码识别'),
-                            Text(
-                              '即可成为云云问车客户',
-                              style: Theme.of(context).textTheme.subtitle2,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('扫码识别'),
+                                Text(
+                                  '即可成为云云问车客户',
+                                  style: Theme.of(context).textTheme.subtitle2,
+                                )
+                              ],
+                            ),
+                            200.wb,
+                            Padding(
+                              padding: EdgeInsets.only(right: 32.w),
+                              child: SizedBox(
+                                width: 128.w,
+                                height: 128.w,
+                                child: Container(
+                                  padding: EdgeInsets.all(4.w),
+                                  color: Colors.white,
+                                  child: BarcodeWidget(
+                                      width: 128
+                                          .w, //double.parse(widget.model.size),
+                                      height: 128
+                                          .w, //double.parse(widget.model.size),
+                                      data:
+                                          '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
+                                      barcode: Barcode.qrCode()),
+                                ),
+                              ),
                             )
                           ],
-                        ),
-                        200.wb,
-                        Padding(
-                          padding: EdgeInsets.only(right: 32.w),
-                          child: SizedBox(
-                            width: 128.w,
-                            height: 128.w,
-                            child: Container(
-                              padding: EdgeInsets.all(4.w),
-                              color: Colors.white,
-                              child: BarcodeWidget(
-                                  width:
-                                      128.w, //double.parse(widget.model.size),
-                                  height:
-                                      128.w, //double.parse(widget.model.size),
-                                  data:
-                                      '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
-                                  barcode: Barcode.qrCode()),
+                        )),
+                    Positioned(
+                        top: 1488.w,
+                        right: 32.w,
+                        child: GestureDetector(
+                          onTap: () async {
+                            checkPermission(saveAssetsImage());
+                            // var permission = await Permission.storage.isGranted;
+                            // if (!permission) {
+                            //   await Permission.storage.request();
+                            //   var permissionTwice =
+                            //       await Permission.storage.isGranted;
+                            //   if (!permissionTwice) {
+                            //     CloudToast.show('权限未授予');
+                            //     return;
+                            //   }
+                            // }
+                            // var u8List = await _screenshotController.capture(
+                            //     delay: const Duration(milliseconds: 10));
+                            // if (u8List != null) {
+                            //   print('aaaa+${u8List}');
+                            //   var re = await ImageGallerySaver.saveImage(
+                            //     u8List,
+                            //     quality: 100,
+                            //   );
+                            //   if (re['isSuccess']) {
+                            //     CloudToast.show('邀请码已保存到${re['filePath']}',
+                            //         align: Alignment.center);
+                            //   } else {
+                            //     print(u8List);
+                            //     CloudToast.show('保存邀请码失败');
+                            //   }
+                            // } else {
+                            //   print('aaaa+${u8List}');
+                            //   CloudToast.show('邀请码生成失败');
+                            // }
+                          },
+                          child: Container(
+                            width: 72.w,
+                            height: 72.w,
+                            padding: EdgeInsets.all(20.w),
+                            decoration: BoxDecoration(
+                                color: const Color(0xFF000000).withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(36.w)),
+                            child: Image.asset(
+                              Assets.images.download.path,
+                              fit: BoxFit.fill,
                             ),
                           ),
-                        )
-                      ],
-                    )),
-                Positioned(
-                    top: 1488.w,
-                    right: 32.w,
-                    child: GestureDetector(
-                      onTap: () async {
-                        // var permission = await Permission.storage.isGranted;
-                        // if (!permission) {
-                        //   await Permission.storage.request();
-                        //   var permissionTwice =
-                        //       await Permission.storage.isGranted;
-                        //   if (!permissionTwice) {
-                        //     CloudToast.show('权限未授予');
-                        //     return;
-                        //   }
-                        // }
-                        var u8List = await _screenshotController.capture(
-                            delay: const Duration(milliseconds: 10));
-                        var re = await ImageGallerySaver.saveImage(
-                          u8List!,
-                          quality: 100,
-                        );
-                        CloudToast.show('海报已保存到${re['filePath']}',
-                            align: Alignment.center);
-                        // if (u8List != null) {
-                        //   var re = await ImageGallerySaver.saveImage(
-                        //     u8List,
-                        //     quality: 100,
-                        //   );
-                        //   if (re['isSuccess']) {
-                        //     // CloudToast.show('海报已保存到${re['filePath']}',
-                        //     //     align: Alignment.center);
-                        //   } else {
-                        //     CloudToast.show('保存海报失败');
-                        //   }
-                        // } else {
-                        //   CloudToast.show('海报生成失败');
-                        // }
-                      },
-                      child: Container(
-                        width: 72.w,
-                        height: 72.w,
-                        padding: EdgeInsets.all(20.w),
-                        decoration: BoxDecoration(
-                            color: const Color(0xFF000000).withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(36.w)),
-                        child: Image.asset(
-                          Assets.images.download.path,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    )),
-              ],
-            )));
+                        )),
+                  ],
+                ))));
   }
 
+  ///动态申请权限，iOS 要在info.plist 上面添加
+  Future<bool> requestPermission() async {
+    if (Platform.isIOS) {
+      var status = await Permission.photos.status;
+      if (status.isDenied) {
+        await [Permission.photos].request();
+      }
+      return status.isGranted;
+    } else {
+      var status = await Permission.storage.status;
+      if (status.isDenied) {
+        await [Permission.photos].request();
+      }
+      return status.isGranted;
+    }
+  }
+
+  ///保存图片到的权限校验
+  checkPermission(Future<dynamic> fun) {
+    requestPermission().then((value) => {
+          if (value)
+            {
+              //执行操作
+              fun
+            }
+          else
+            {
+              //去授权  储存权限
+              openAppSettings()
+            }
+        });
+  }
+
+  ///保存APP里的图片
+  saveAssetsImage() async {
+    RenderRepaintBoundary boundary =
+        _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    ui.Image image = await boundary.toImage();
+    ByteData? byteData =
+        await (image.toByteData(format: ui.ImageByteFormat.png));
+    if (byteData != null) {
+      final result = await ImageGallerySaver.saveImage(
+          byteData.buffer.asUint8List(),
+          quality: 100);
+      if (result['isSuccess']) {
+        CloudToast.show('邀请码已保存到${result['filePath']}',
+            align: Alignment.center);
+      }
+    }
+  }
 //底部
 //   _getBottom() {
 //     return Row(

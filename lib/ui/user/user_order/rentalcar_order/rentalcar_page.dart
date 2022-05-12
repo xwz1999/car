@@ -23,9 +23,10 @@ class RentalcarOrderPage extends StatefulWidget {
 class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [];
+  bool _onLoad = true;
 //List<> _RentalCarList=[];
-//   int _page = 1;
-//   final int _size = 10;
+  int _page = 1;
+  final int _size = 10;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   //ScreenControl screenControl = ScreenControl();
   List carList = [
@@ -132,7 +133,9 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
             header: MaterialHeader(),
             footer: MaterialFooter(),
             controller: _easyRefreshController,
-            onRefresh: () async {},
+            onRefresh: () async {
+              // _page
+            },
             onLoad: () async {},
             child: ListView.builder(
                 padding: EdgeInsets.zero,

@@ -1,13 +1,9 @@
-import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/user/interface/feedback_func.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
-import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
@@ -120,9 +116,13 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
               ),
             ),
           ),
-          const CarImageItem(
-              //isPadding: false,
-              ),
+          CarImageItem(
+            imageBack: (List<File> image) {
+              img = image.first.path;
+            },
+
+            //isPadding: false,
+          ),
           24.hb,
           Padding(
             padding: EdgeInsets.only(
@@ -168,31 +168,29 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
           ),
           CloudBottomButton(
             onTap: () async {
+              bool zhi = await FeedbackFunc.getFeedback(
+                  widget.title, content, phone, img);
               if (zhi) {
-                Future.delayed(const Duration(milliseconds: 0), () async {
-                  await _refresh();
-                  Get.back();
-                  setState(() {});
-                });
-              } else {
-                // ignore: avoid_print
-                print('标题${widget.title}+文本 $content+手机 $phone+图片$img');
-                BotToast.showText(text: '请输入内容');
-                // if (img.isEmail) {
-                //   BotToast.showText(text: '图片');
-                // } else {
-                //   if (phone.isEmail) {
-                //     BotToast.showText(text: '手机号');
-                //   } else {
-                //     BotToast.showText(text: '提交成功');
-                //     Future.delayed(const Duration(milliseconds: 0), () async {
-                //       await _refresh();
-                //       //Get.back();
-                //       setState(() {});
-                //     });
-                //   }
-                // }
+                print('标题+${widget.title}+文本$content+手机 $phone+图片+$img');
+                CloudToast.show('提交成功');
+                Get.back();
               }
+              // ignore: avoid_print
+              //  BotToast.showText(text: '请输入内容');
+              // if (img.isEmail) {
+              //   BotToast.showText(text: '图片');
+              // } else {
+              //   if (phone.isEmail) {
+              //     BotToast.showText(text: '手机号');
+              //   } else {
+              //     BotToast.showText(text: '提交成功');
+              //     Future.delayed(const Duration(milliseconds: 0), () async {
+              //       await _refresh();
+              //       //Get.back();
+              //       setState(() {});
+              //     });
+              //   }
+              // }
             },
             text: '提 交',
           ),

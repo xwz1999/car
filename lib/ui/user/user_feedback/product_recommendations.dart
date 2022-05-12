@@ -2,12 +2,12 @@
 
 import 'package:cloud_car/model/configuration_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
+import 'package:cloud_car/ui/user/interface/feedback_func.dart';
 import 'package:cloud_car/ui/user/user_feedback/vehicles_release.dart';
-
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
-
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/button/colud_check_radio.dart';
@@ -28,6 +28,10 @@ class _RecommendationsState extends State<Recommendations> {
     ConfigurationModel(title: '产品意见', subtitle: '用的不开心，建议提出来'),
     ConfigurationModel(title: '其他反馈', subtitle: ''),
   ];
+  late String content = '';
+  late String img = '';
+  late String phone = '';
+  late bool zhi = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,6 +120,7 @@ class _RecommendationsState extends State<Recommendations> {
                         // _refreshController.callRefresh();
                       },
                       onChanged: (text) {
+                        content = text;
                         //var content = text;
                         setState(() {});
                       },
@@ -140,7 +145,11 @@ class _RecommendationsState extends State<Recommendations> {
                   ),
                 ],
               )),
-          const CarImageItem(),
+          CarImageItem(
+            imageBack: (List<File> image) {
+              img = image.first.path;
+            },
+          ),
           32.hb,
           Padding(
             padding: EdgeInsets.only(left: 32.w),
@@ -153,41 +162,46 @@ class _RecommendationsState extends State<Recommendations> {
             ),
           ),
           24.hb,
-          Expanded(
-            child: TextField(
-              keyboardType: TextInputType.text,
-              onEditingComplete: () {
-                setState(() {});
-                // _refreshController.callRefresh();
-              },
-              onChanged: (text) {
-                setState(() {});
-              },
-              style: TextStyle(
-                color: BaseStyle.color333333,
-                fontSize: BaseStyle.fontSize28,
-              ),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 32.w),
-                filled: true,
-                fillColor: Colors.white,
-                hintText: "请输入您的手机号码方便联系",
-                hintStyle: TextStyle(
-                    color: Colors.grey.shade500,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                border: InputBorder.none,
-              ),
+          TextField(
+            keyboardType: TextInputType.text,
+            onEditingComplete: () {
+              setState(() {});
+              // _refreshController.callRefresh();
+            },
+            onChanged: (text) {
+              phone = text;
+              setState(() {});
+            },
+            style: TextStyle(
+              color: BaseStyle.color333333,
+              fontSize: BaseStyle.fontSize28,
+            ),
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 32.w),
+              filled: true,
+              fillColor: Colors.white,
+              hintText: "请输入您的手机号码方便联系",
+              hintStyle: TextStyle(
+                  color: Colors.grey.shade500,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w300),
+              border: InputBorder.none,
             ),
           ),
           96.hb,
           CloudBottomButton(
-            onTap: () {
-              Get.to(() => const VehiclesRelease());
+            onTap: () async {
+              bool zhi = await FeedbackFunc.getFeedback(
+                  moddels[_selectIndex.first].title!, content, phone, img);
+              if (zhi) {
+                print(
+                    '标题+${moddels[_selectIndex.first].title}+文本$content+手机 $phone+图片+$img');
+                CloudToast.show('提交成功');
+                Get.to(() => const VehiclesRelease());
+              }
             },
             text: '提交',
           ),
-          32.hb,
         ],
       ),
     );
@@ -211,6 +225,7 @@ class _RecommendationsState extends State<Recommendations> {
                 _selectIndex.add(index);
                 _chooseModels.add(model);
               }
+
               setState(() {});
             }, //点击获取点击选项的下标
             child: SizedBox(

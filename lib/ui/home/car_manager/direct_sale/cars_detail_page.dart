@@ -147,10 +147,14 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                                         showMessage: true);
                                     if (re.code == 0) {}
                                   },
-                                  child: Image.asset(carInfoModel?.collect == 1
-                                      ? Assets.icons.alreadyCollected.path
-                                      : Assets.icons.notCollect.path),
-                                )
+                                  child: SizedBox(
+                                    width: 48.w,
+                                    height: 48.w,
+                                    child: Image.asset(
+                                        carInfoModel?.collect == 1
+                                            ? Assets.icons.alreadyCollected.path
+                                            : Assets.icons.collection.path),
+                                  ))
                               : const SizedBox(),
                           24.wb,
                           GestureDetector(

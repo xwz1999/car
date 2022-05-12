@@ -1,3 +1,5 @@
+import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
+import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_shop_contract.dart';
 import 'package:cloud_car/ui/user/user_recommended/user_recommended.dart';
@@ -55,17 +57,14 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
         extendBody: true,
         //extendBodyBehindAppBar: true,
         body:
-        // Column(
-        //   children: [
-        //     _topInfo(),
-        //
-        //   ],
-        // )
+            // Column(
+            //   children: [
+            //     _topInfo(),
+            //
+            //   ],
+            // )
 
-
-
-
-        Stack(
+            Stack(
           children: [
             Container(
               width: 750.w,
@@ -76,24 +75,20 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
             Positioned(top: 238.w, child: _getInterests()),
             Positioned(left: 32.w, top: 66.w, right: 32.w, child: _shareUser()),
           ],
-        )
-
-
-
-    );
+        ));
   }
 
-
-  _topInfo(){
+  _topInfo() {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 32.w),
       height: 328.w,
       decoration: BoxDecoration(
-        image: DecorationImage(image:  AssetImage(
-            Assets.images.partnerCenterBg.path,
-        ),fit: BoxFit.fill)
-      ),
+          image: DecorationImage(
+              image: AssetImage(
+                Assets.images.partnerCenterBg.path,
+              ),
+              fit: BoxFit.fill)),
     );
   }
 
@@ -116,6 +111,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                 spreadRadius: 0.0)
           ]),
       child: Column(children: [
+        10.hb,
         Row(
           children: [
             Padding(padding: EdgeInsets.only(left: 80.w)),
@@ -201,7 +197,9 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
           ],
         ),
         CloudBottomButton(
-          onTap: () {},
+          onTap: () {
+            Get.to(() => const PartnerShopContractPage());
+          },
           text: '确认协议并续费¥1500.00',
         )
       ]),
@@ -246,6 +244,9 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                   ),
                   children: [
                     GestureDetector(
+                      onTap: () {
+                        Get.to(() => const UserManagerPage());
+                      },
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.w),
@@ -378,7 +379,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const PartnerShopContractPage());
+                        Get.to(() => const ConsignmentContract());
                       },
                       child: Container(
                           decoration: BoxDecoration(

@@ -174,7 +174,6 @@ class _SalesOrderState extends State<SalesOrder> {
   //                     ));
   //                 break;
   //             }
-
   //             break;
   //           case '待过户':
   //             Get.to(() => const Reservation(

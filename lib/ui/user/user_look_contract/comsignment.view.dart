@@ -28,6 +28,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
     with AutomaticKeepAliveClientMixin {
   int _page = 1;
   final int _size = 10;
+  //bool _onload = true;
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
@@ -41,6 +42,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
           var list = await CarFunc.getConsignmentList(page: _page, size: _size);
           widget.consignmentList.clear();
           widget.consignmentList.addAll(list);
+          //_onload = false;
           setState(() {});
         },
         onLoad: () async {

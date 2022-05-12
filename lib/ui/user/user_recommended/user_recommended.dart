@@ -1,6 +1,13 @@
+import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/customer/customer_detail_model.dart';
+import 'package:cloud_car/model/customer/customer_list_model.dart';
+import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/ui/user/user_recommended/share_detail_customer.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../utils/user_tool.dart';
 
@@ -15,15 +22,48 @@ class _RecommendedPageState extends State<RecommendedPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
   late TabController _tabController;
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
+  List<CustomerListModel> recommendedList = [
+    // const CustomerListModel(
+    //     brokerName: '世界这么大我想去看看',
+    //     createdAt: 1645497563,
+    //     gender: 0,
+    //     id: 1,
+    //     isImportant: 2,
+    //     nickname: '世界这么大我想去看看',
+    //     trailContent: '发起客户邀约',
+    //     trailCreatedAt: 1652161448)
+  ];
+  late CustomerDetailModel phone
+      // = const CustomerDetailModel(
+      //     brokerName: '世界这么大我想去看看',
+      //     createdAt: 1645497563,
+      //     gender: 0,
+      //     id: 1,
+      //     isImportant: 2,
+      //     mobile: '15394315510',
+      //     nickname: '世界这么大我想去看看',
+      //     trailContent: '发起客户邀约',
+      //     trailCreatedAt: 1652161448)
+      ;
 
+  ///滚动监听设置
+  late ScrollController _scrollController;
+  int _page = 1;
+  final int _size = 10;
+  bool _onLoad = true;
   @override
   void initState() {
+    _scrollController = ScrollController();
+
     super.initState();
+
     _tabController = TabController(initialIndex: 0, length: 1, vsync: this);
   }
 
   @override
   void dispose() {
+    _easyRefreshController.dispose();
     super.dispose();
   }
 
@@ -32,9 +72,9 @@ class _RecommendedPageState extends State<RecommendedPage>
     super.build(context);
     return Scaffold(
         //path: Assets.images.shareFirstFigure.path,
-
         extendBody: true,
         body: NestedScrollView(
+          controller: _scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
@@ -132,394 +172,387 @@ class _RecommendedPageState extends State<RecommendedPage>
             ];
           },
           body: Padding(
-            padding: EdgeInsets.only(top: 0.w),
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 32.w),
-                  child: ListView(
+              padding: EdgeInsets.only(top: 0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  16.hb,
+                  Padding(
+                    padding: EdgeInsets.only(left: 32.w),
+                    child: Text(
+                      '共找到${recommendedList.length}条信息',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(color: const Color(0xFF999999)),
+                    ),
+                  ),
+                  16.hb,
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        EasyRefresh(
+                            firstRefresh: true,
+                            header: MaterialHeader(),
+                            footer: MaterialFooter(),
+                            scrollController: _scrollController,
+                            controller: _easyRefreshController,
+                            onRefresh: () async {
+                              Future.delayed(
+                                  const Duration(milliseconds: 0), () async {});
+                              _page = 1;
+                              recommendedList =
+                                  await CustomerFunc.getCustomerList(
+                                      page: _page, size: _size);
+                              // recommendedList = [
+                              //   const CustomerListModel(
+                              //       brokerName: '世界这么大我想去看看',
+                              //       createdAt: 1645497563,
+                              //       gender: 0,
+                              //       id: 1,
+                              //       isImportant: 2,
+                              //       nickname: '世界这么大我想去看看',
+                              //       trailContent: '发起客户邀约',
+                              //       trailCreatedAt: 1652161448)
+                              // ];
+                              // phone = const CustomerDetailModel(
+                              //     brokerName: '世界这么大我想去看看',
+                              //     createdAt: 1645497563,
+                              //     gender: 0,
+                              //     id: 1,
+                              //     isImportant: 2,
+                              //     mobile: '15394315510',
+                              //     nickname: '世界这么大我想去看看',
+                              //     trailContent: '发起客户邀约',
+                              //     trailCreatedAt: 1652161448);
+                              _onLoad = false;
+                              setState(() {});
+                            },
+                            onLoad: () async {
+                              _page++;
+                              var baseList = await apiClient.requestList(
+                                  API.customer.customerLists,
+                                  data: {'page': _page, 'size': _size});
+                              if (baseList.nullSafetyTotal <
+                                  recommendedList.length) {
+                                recommendedList.addAll(baseList.nullSafetyList
+                                    .map((e) => CustomerListModel.fromJson(e))
+                                    .toList());
+                              } else {
+                                _easyRefreshController.finishLoad(noMore: true);
+                              }
+                              setState(() {});
+                            },
+                            child: ListView.builder(
+                              itemBuilder: (context, index) {
+                                return getRecommended(recommendedList[index]);
+                              },
+                              itemCount: recommendedList.length,
+                            ))
+                        // Container(
+                        //   padding: EdgeInsets.symmetric(horizontal: 32.w),
+                        //   child: ListView(
+                        //     children: [
+                        //       Text(
+                        //         '共找到2条信息',
+                        //         style: Theme.of(context)
+                        //             .textTheme
+                        //             .subtitle2
+                        //             ?.copyWith(color: const Color(0xFF999999)),
+                        //       ),
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           //Get.to(()=>const UserInfoPage());
+                        //         },
+                        //         child: Container(
+                        //           decoration: BoxDecoration(
+                        //               borderRadius: BorderRadius.circular(16.w),
+                        //               color: kForeGroundColor),
+                        //           child: Stack(
+                        //             children: [
+                        //               Positioned(
+                        //                 child: Image.asset(
+                        //                   Assets.images.importantUser.path,
+                        //                   width: 130.w,
+                        //                   fit: BoxFit.fitWidth,
+                        //                 ),
+                        //                 right: 0,
+                        //                 top: 0,
+                        //               ),
+                        //               Column(
+                        //                 crossAxisAlignment: CrossAxisAlignment.start,
+                        //                 children: [
+                        //                   20.hb,
+                        //                   Row(
+                        //                     children: [
+                        //                       36.wb,
+                        //                       Image.asset(
+                        //                         Assets.icons.icUser.path,
+                        //                         width: 32.w,
+                        //                         height: 32.w,
+                        //                       ),
+                        //                       5.wb,
+                        //                       Text(
+                        //                         '李四',
+                        //                         style: TextStyle(
+                        //                             fontSize: 32.sp,
+                        //                             color: BaseStyle.color333333,
+                        //                             fontWeight: FontWeight.bold),
+                        //                       ),
+                        //                       const Spacer(),
+                        //                       GestureDetector(
+                        //                         onTap: () {},
+                        //                         child: Text(
+                        //                           '设为重要',
+                        //                           style: TextStyle(
+                        //                             fontSize: 24.sp,
+                        //                             color: BaseStyle.color999999,
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                       24.wb,
+                        //                     ],
+                        //                   ),
+                        //                   10.hb,
+                        //                   const Divider(
+                        //                     height: 2,
+                        //                     color: BaseStyle.colorf6f6f6,
+                        //                   ),
+                        //                   Row(
+                        //                     children: [
+                        //                       36.wb,
+                        //                       Column(
+                        //                         children: [
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号1', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890',
+                        //                               isRed: true),
+                        //                           20.hb,
+                        //                         ],
+                        //                       )
+                        //                     ],
+                        //                   )
+                        //                 ],
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           //Get.to(()=>const UserInfoPage());
+                        //         },
+                        //         child: Container(
+                        //           decoration: BoxDecoration(
+                        //               borderRadius: BorderRadius.circular(16.w),
+                        //               color: kForeGroundColor),
+                        //           child: Stack(
+                        //             children: [
+                        //               Positioned(
+                        //                 child: Image.asset(
+                        //                   Assets.images.importantUser.path,
+                        //                   width: 130.w,
+                        //                   fit: BoxFit.fitWidth,
+                        //                 ),
+                        //                 right: 0,
+                        //                 top: 0,
+                        //               ),
+                        //               Column(
+                        //                 crossAxisAlignment: CrossAxisAlignment.start,
+                        //                 children: [
+                        //                   20.hb,
+                        //                   Row(
+                        //                     children: [
+                        //                       36.wb,
+                        //                       Image.asset(
+                        //                         Assets.icons.icUser.path,
+                        //                         width: 32.w,
+                        //                         height: 32.w,
+                        //                       ),
+                        //                       5.wb,
+                        //                       Text(
+                        //                         '李四',
+                        //                         style: TextStyle(
+                        //                             fontSize: 32.sp,
+                        //                             color: BaseStyle.color333333,
+                        //                             fontWeight: FontWeight.bold),
+                        //                       ),
+                        //                       const Spacer(),
+                        //                       GestureDetector(
+                        //                         onTap: () {},
+                        //                         child: Text(
+                        //                           '设为重要',
+                        //                           style: TextStyle(
+                        //                             fontSize: 24.sp,
+                        //                             color: BaseStyle.color999999,
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                       24.wb,
+                        //                     ],
+                        //                   ),
+                        //                   10.hb,
+                        //                   const Divider(
+                        //                     height: 2,
+                        //                     color: BaseStyle.colorf6f6f6,
+                        //                   ),
+                        //                   Row(
+                        //                     children: [
+                        //                       36.wb,
+                        //                       Column(
+                        //                         children: [
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号1', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890'),
+                        //                           16.hb,
+                        //                           _getText('车架号', 'GDL26173890989890',
+                        //                               isRed: true),
+                        //                           20.hb,
+                        //                         ],
+                        //                       )
+                        //                     ],
+                        //                   )
+                        //                 ],
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // )
+                      ],
+                    ),
+                  ),
+                ],
+              )),
+        ));
+  }
+
+  ///客户信息
+  getRecommended(CustomerListModel model) {
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      phone = await CustomerFunc.getCustomerDetailModel(model.id);
+    });
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 32.w),
+      child: GestureDetector(
+        onTap: () {
+          //Get.to(()=>const UserInfoPage());
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.w),
+              color: kForeGroundColor),
+          child: Stack(
+            children: [
+              Positioned(
+                child: model.isImportant == 1
+                    ? Image.asset(
+                        Assets.images.importantUser.path,
+                        width: 130.w,
+                        fit: BoxFit.fitWidth,
+                      )
+                    : Text(
+                        '设为重要',
+                        style: TextStyle(
+                            color: BaseStyle.color999999,
+                            fontSize: BaseStyle.fontSize24),
+                      ),
+                right: model.isImportant == 1 ? 0 : 32.w,
+                top: model.isImportant == 1 ? 0 : 28.w,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  20.hb,
+                  Row(
                     children: [
+                      36.wb,
+                      Image.asset(
+                        model.gender == 0
+                            ? Assets.icons.icUserWoman.path
+                            : Assets.icons.icUser.path,
+                        width: 32.w,
+                        height: 32.w,
+                      ),
+                      5.wb,
                       Text(
-                        '共找到2条信息',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            ?.copyWith(color: const Color(0xFF999999)),
+                        model.nickname,
+                        style: TextStyle(
+                            fontSize: 32.sp,
+                            color: BaseStyle.color333333,
+                            fontWeight: FontWeight.bold),
                       ),
-                      16.hb,
-                      GestureDetector(
-                        onTap: () {
-                          //Get.to(()=>const UserInfoPage());
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.w),
-                              color: kForeGroundColor),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                child: Image.asset(
-                                  Assets.images.importantUser.path,
-                                  width: 130.w,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                                right: 0,
-                                top: 0,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  20.hb,
-                                  Row(
-                                    children: [
-                                      36.wb,
-                                      Image.asset(
-                                        Assets.icons.icUser.path,
-                                        width: 32.w,
-                                        height: 32.w,
-                                      ),
-                                      5.wb,
-                                      Text(
-                                        '李四',
-                                        style: TextStyle(
-                                            fontSize: 32.sp,
-                                            color: BaseStyle.color333333,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const Spacer(),
-                                      // GestureDetector(
-                                      //   onTap: () {},
-                                      //   child: Text(
-                                      //     '设为重要',
-                                      //     style: TextStyle(
-                                      //       fontSize: 24.sp,
-                                      //       color: BaseStyle.color999999,
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // 24.wb,
-                                    ],
-                                  ),
-                                  //10.hb,
-                                  // const Divider(
-                                  //   height: 2,
-                                  //   color: BaseStyle.colorf6f6f6,
-                                  // ),
-                                  Row(
-                                    children: [
-                                      36.wb,
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          16.hb,
-                                          _getText('最近跟进', '发起客户邀约'),
-                                          16.hb,
-                                          _getText(
-                                              '更进时间', '2021—12-01 12:22:12'),
-                                          16.hb,
-                                          _getText('联系方式', '18912345432'),
-                                          16.hb,
-                                          _getText(
-                                              '销售',
-                                              UserTool.userProvider.userInfo
-                                                  .nickname),
-                                          24.hb,
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      16.hb,
-                      GestureDetector(
-                        onTap: () {
-                          //Get.to(()=>const UserInfoPage());
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.w),
-                              color: kForeGroundColor),
-                          child: Stack(
-                            children: [
-                              // Positioned(
-                              //   child: Image.asset(
-                              //     Assets.images.importantUser.path,
-                              //     width: 130.w,
-                              //     fit: BoxFit.fitWidth,
-                              //   ),
-                              //   right: 0,
-                              //   top: 0,
-                              // ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  20.hb,
-                                  Row(
-                                    children: [
-                                      36.wb,
-                                      Image.asset(
-                                        Assets.icons.icUser.path,
-                                        width: 32.w,
-                                        height: 32.w,
-                                      ),
-                                      5.wb,
-                                      Text(
-                                        '王武',
-                                        style: TextStyle(
-                                            fontSize: 32.sp,
-                                            color: BaseStyle.color333333,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const Spacer(),
-                                      GestureDetector(
-                                        onTap: () {},
-                                        child: Text(
-                                          '设为重要',
-                                          style: TextStyle(
-                                            fontSize: 24.sp,
-                                            color: BaseStyle.color999999,
-                                          ),
-                                        ),
-                                      ),
-                                      24.wb,
-                                    ],
-                                  ),
-                                  // 10.hb,
-                                  // const Divider(
-                                  //   height: 2,
-                                  //   color: BaseStyle.colorf6f6f6,
-                                  // ),
-                                  Row(
-                                    children: [
-                                      36.wb,
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          16.hb,
-                                          _getText('最近跟进', '客户电话咨询车辆信息'),
-                                          16.hb,
-                                          _getText(
-                                              '更进时间', '2021—12-01 12:22:12'),
-                                          16.hb,
-                                          _getText('联系方式', '18912345432'),
-                                          16.hb,
-                                          _getText(
-                                              '销售',
-                                              UserTool.userProvider.userInfo
-                                                  .nickname),
-                                          24.hb,
-                                        ],
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      const Spacer(),
+                      // GestureDetector(
+                      //   onTap: () {},
+                      //   child: Text(
+                      //     '设为重要',
+                      //     style: TextStyle(
+                      //       fontSize: 24.sp,
+                      //       color: BaseStyle.color999999,
+                      //     ),
+                      //   ),
+                      // ),
+                      // 24.wb,
                     ],
                   ),
-                ),
-                // Container(
-                //   padding: EdgeInsets.symmetric(horizontal: 32.w),
-                //   child: ListView(
-                //     children: [
-                //       Text(
-                //         '共找到2条信息',
-                //         style: Theme.of(context)
-                //             .textTheme
-                //             .subtitle2
-                //             ?.copyWith(color: const Color(0xFF999999)),
-                //       ),
-                //       GestureDetector(
-                //         onTap: () {
-                //           //Get.to(()=>const UserInfoPage());
-                //         },
-                //         child: Container(
-                //           decoration: BoxDecoration(
-                //               borderRadius: BorderRadius.circular(16.w),
-                //               color: kForeGroundColor),
-                //           child: Stack(
-                //             children: [
-                //               Positioned(
-                //                 child: Image.asset(
-                //                   Assets.images.importantUser.path,
-                //                   width: 130.w,
-                //                   fit: BoxFit.fitWidth,
-                //                 ),
-                //                 right: 0,
-                //                 top: 0,
-                //               ),
-                //               Column(
-                //                 crossAxisAlignment: CrossAxisAlignment.start,
-                //                 children: [
-                //                   20.hb,
-                //                   Row(
-                //                     children: [
-                //                       36.wb,
-                //                       Image.asset(
-                //                         Assets.icons.icUser.path,
-                //                         width: 32.w,
-                //                         height: 32.w,
-                //                       ),
-                //                       5.wb,
-                //                       Text(
-                //                         '李四',
-                //                         style: TextStyle(
-                //                             fontSize: 32.sp,
-                //                             color: BaseStyle.color333333,
-                //                             fontWeight: FontWeight.bold),
-                //                       ),
-                //                       const Spacer(),
-                //                       GestureDetector(
-                //                         onTap: () {},
-                //                         child: Text(
-                //                           '设为重要',
-                //                           style: TextStyle(
-                //                             fontSize: 24.sp,
-                //                             color: BaseStyle.color999999,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                       24.wb,
-                //                     ],
-                //                   ),
-                //                   10.hb,
-                //                   const Divider(
-                //                     height: 2,
-                //                     color: BaseStyle.colorf6f6f6,
-                //                   ),
-                //                   Row(
-                //                     children: [
-                //                       36.wb,
-                //                       Column(
-                //                         children: [
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号1', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890',
-                //                               isRed: true),
-                //                           20.hb,
-                //                         ],
-                //                       )
-                //                     ],
-                //                   )
-                //                 ],
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //       ),
-                //       GestureDetector(
-                //         onTap: () {
-                //           //Get.to(()=>const UserInfoPage());
-                //         },
-                //         child: Container(
-                //           decoration: BoxDecoration(
-                //               borderRadius: BorderRadius.circular(16.w),
-                //               color: kForeGroundColor),
-                //           child: Stack(
-                //             children: [
-                //               Positioned(
-                //                 child: Image.asset(
-                //                   Assets.images.importantUser.path,
-                //                   width: 130.w,
-                //                   fit: BoxFit.fitWidth,
-                //                 ),
-                //                 right: 0,
-                //                 top: 0,
-                //               ),
-                //               Column(
-                //                 crossAxisAlignment: CrossAxisAlignment.start,
-                //                 children: [
-                //                   20.hb,
-                //                   Row(
-                //                     children: [
-                //                       36.wb,
-                //                       Image.asset(
-                //                         Assets.icons.icUser.path,
-                //                         width: 32.w,
-                //                         height: 32.w,
-                //                       ),
-                //                       5.wb,
-                //                       Text(
-                //                         '李四',
-                //                         style: TextStyle(
-                //                             fontSize: 32.sp,
-                //                             color: BaseStyle.color333333,
-                //                             fontWeight: FontWeight.bold),
-                //                       ),
-                //                       const Spacer(),
-                //                       GestureDetector(
-                //                         onTap: () {},
-                //                         child: Text(
-                //                           '设为重要',
-                //                           style: TextStyle(
-                //                             fontSize: 24.sp,
-                //                             color: BaseStyle.color999999,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                       24.wb,
-                //                     ],
-                //                   ),
-                //                   10.hb,
-                //                   const Divider(
-                //                     height: 2,
-                //                     color: BaseStyle.colorf6f6f6,
-                //                   ),
-                //                   Row(
-                //                     children: [
-                //                       36.wb,
-                //                       Column(
-                //                         children: [
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号1', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890'),
-                //                           16.hb,
-                //                           _getText('车架号', 'GDL26173890989890',
-                //                               isRed: true),
-                //                           20.hb,
-                //                         ],
-                //                       )
-                //                     ],
-                //                   )
-                //                 ],
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // )
-              ],
-            ),
+                  //10.hb,
+                  // const Divider(
+                  //   height: 2,
+                  //   color: BaseStyle.colorf6f6f6,
+                  // ),
+                  Row(
+                    children: [
+                      36.wb,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          16.hb,
+                          _getText('最近跟进', model.trailContent),
+                          16.hb,
+                          _getText(
+                            '跟进时间',
+                            DateUtil.formatDateMs(
+                                model.trailCreatedAt.toInt() * 1000,
+                                format: 'yyyy-MM-dd HH:mm:ss'),
+                          ),
+                          16.hb,
+                          _getText('联系方式', phone.mobile),
+                          16.hb,
+                          _getText(
+                              '销售', UserTool.userProvider.userInfo.nickname),
+                          24.hb,
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
 //图片叠加

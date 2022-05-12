@@ -35,7 +35,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         children: [
           Padding(padding: EdgeInsets.symmetric(vertical: 16.w)),
           Container(
-            height: 224.w,
+            height: 210.w,
             padding: EdgeInsets.symmetric(horizontal: 32.w),
             color: kForeGroundColor,
             child: Column(
