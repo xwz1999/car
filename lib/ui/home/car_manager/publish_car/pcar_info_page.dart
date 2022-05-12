@@ -1,5 +1,5 @@
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_report_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/picker/car_list_picker.dart';
 import 'package:cloud_car/widget/publish_car_info_widget.dart';
@@ -11,9 +11,9 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class PublishCarInfoPage extends StatefulWidget {
-  final PublishCarInfo publishCarInfo;
+  final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
 
-  const PublishCarInfoPage({Key? key, required this.publishCarInfo})
+  const PublishCarInfoPage({Key? key, required this.consignmentContractModel})
       : super(key: key);
 
   @override
@@ -93,7 +93,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                 children: [
                   PublishCarInfoWidget(
                     fontColor: Colors.black38,
-                    publishCarInfo: widget.publishCarInfo,
+                    publishCarInfo: widget.consignmentContractModel.value.publishCarInfo!,
                   ),
                   _publishChoose(
                       style: false,

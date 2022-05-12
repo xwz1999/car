@@ -15,6 +15,7 @@ class EditItemWidget extends StatefulWidget {
   final double paddingStart;
   final Widget? endIcon;
   final double? titleWidth;
+  final TextInputType? keyboardType;
 
 
   const EditItemWidget(
@@ -24,7 +25,7 @@ class EditItemWidget extends StatefulWidget {
       this.canChange = true,
       required this.callback,
       this.endText = '',
-      this.topIcon = true, this.paddingTop=0, this.tips = '请输入', this.paddingStart = 28, this.endIcon, this.titleWidth,})
+      this.topIcon = true, this.paddingTop=0, this.tips = '请输入', this.paddingStart = 28, this.endIcon, this.titleWidth, this.keyboardType = TextInputType.text,})
       : super(key: key);
 
   @override
@@ -93,7 +94,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
           Expanded(
             child: TextField(
               enabled: widget.canChange,
-              keyboardType: TextInputType.text,
+              keyboardType: widget.keyboardType,
               onSubmitted: (text) {
 
                 // _refreshController.callRefresh();

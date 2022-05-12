@@ -1,14 +1,17 @@
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_owner_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
 
 class ContractPurchase extends StatefulWidget {
-  final PublishCarInfo publishCarInfo;
-  const ContractPurchase({Key? key, required this.publishCarInfo}) : super(key: key);
+  final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
+  const ContractPurchase({Key? key, required this.consignmentContractModel}) : super(key: key);
 
   @override
   State<ContractPurchase> createState() => _ContractPurchaseState();
@@ -16,7 +19,6 @@ class ContractPurchase extends StatefulWidget {
 
 class _ContractPurchaseState extends State<ContractPurchase> {
 
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +61,12 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.to(() => const ContractOwnerPage());
+                      if(widget.consignmentContractModel.value.sellPrice!.isEmpty){
+                        CloudToast.show('请先输入售价');
+                      }else{
+                        Get.to(() =>  ContractOwnerPage(consignmentContractModel: widget.consignmentContractModel,));
+                      }
+
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -78,7 +85,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
 
   _showarea(
     String title,
-    String content,
+    String? content,
     Color fontColor,
   ) {
     return Container(
@@ -105,7 +112,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                 .make(),
           ),
           Expanded(
-            child: content.text
+            child: (content??'').text
                 .size(28.sp)
                 .normal
                 .textStyle(const TextStyle(decoration: TextDecoration.none))
@@ -121,20 +128,20 @@ class _ContractPurchaseState extends State<ContractPurchase> {
   Column showPushCar(Color fontColor) {
     return Column(
       children: [
-        _showarea('车架号', widget.publishCarInfo.viNum!, fontColor),
-        _showarea('品牌车型', widget.publishCarInfo.carName!, fontColor),
-        _showarea('首次上牌', widget.publishCarInfo.licensingDateStr, fontColor),
-        _showarea('车牌号', widget.publishCarInfo.carNum!, fontColor),
-        _showarea('发动机号', widget.publishCarInfo.engineNum!, fontColor),
-        _showarea('车身颜色', widget.publishCarInfo.carColor!, fontColor),
+        _showarea('车架号', widget.consignmentContractModel.value.publishCarInfo!.viNum, fontColor),
+        _showarea('品牌车型',  widget.consignmentContractModel.value.publishCarInfo!.carName, fontColor),
+        _showarea('首次上牌',  widget.consignmentContractModel.value.publishCarInfo!.licensingDateStr, fontColor),
+        _showarea('车牌号',  widget.consignmentContractModel.value.publishCarInfo!.carNum, fontColor),
+        _showarea('发动机号',  widget.consignmentContractModel.value.publishCarInfo!.engineNum, fontColor),
+        _showarea('车身颜色',  widget.consignmentContractModel.value.publishCarInfo!.carColor, fontColor),
         Container(
-          padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
+          padding: EdgeInsets.only(top: 20.h),
           color: Colors.transparent,
           child: Row(
             children: [
               '*'
                   .text
-                  .size(30.sp)
+                  .size(28.sp)
                   .color(Colors.red)
                   .normal
                   .textStyle(const TextStyle(decoration: TextDecoration.none))
@@ -145,15 +152,15 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                 width: 160.w,
                 child: '表显里程'
                     .text
-                    .size(30.sp)
+                    .size(28.sp)
                     .normal
                     .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black.withOpacity(0.45))
                     .make(),
               ),
               Expanded(
-                child: widget.publishCarInfo.mileage!.text
-                    .size(30.sp)
+                child:  (widget.consignmentContractModel.value.publishCarInfo!.mileage??'').text
+                    .size(28.sp)
                     .normal
                     .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(fontColor)
@@ -162,7 +169,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
               24.wb,
               '万公里'
                   .text
-                  .size(30.sp)
+                  .size(28.sp)
                   .normal
                   .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .color(Colors.black.withOpacity(0.8))
@@ -170,58 +177,18 @@ class _ContractPurchaseState extends State<ContractPurchase> {
             ],
           ),
         ),
-        Container(
-          padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-          color: Colors.transparent,
-          child: Row(
-            children: [
-              '*'
-                  .text
-                  .size(30.sp)
-                  .color(Colors.red)
-                  .normal
-                  .textStyle(const TextStyle(decoration: TextDecoration.none))
-                  .make()
-                  .paddingOnly(top: 5),
-              10.wb,
-              SizedBox(
-                width: 160.w,
-                child: '出售标价'
-                    .text
-                    .size(30.sp)
-                    .normal
-                    .textStyle(const TextStyle(decoration: TextDecoration.none))
-                    .color(Colors.black.withOpacity(0.45))
-                    .make(),
-              ),
-              Expanded(
-                child: TextField(
-                  textAlign: TextAlign.start,
-                  onChanged: (text) => setState(() {}),
-                  autofocus: false,
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      isDense: true,
-                      border: InputBorder.none,
-                      hintText: '请输入',
-                      hintStyle: TextStyle(
-                        fontSize: 30.sp,
-                        color: Colors.black.withOpacity(0.25),
-                      )),
-                ),
-              ),
-              24.wb,
-              '万元'
-                  .text
-                  .size(30.sp)
-                  .normal
-                  .textStyle(const TextStyle(decoration: TextDecoration.none))
-                  .color(Colors.black.withOpacity(0.8))
-                  .make(),
-            ],
-          ),
+
+        EditItemWidget(
+          titleWidth: 160.w,
+          title: '出售标价',
+          endText: '万元',
+          value:  widget.consignmentContractModel.value.sellPrice??'',
+          callback: (String content) {
+            widget.consignmentContractModel.value.sellPrice = content ;
+          },
         ),
+        20.hb,
+
         Container(
           padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
           color: Colors.transparent,
@@ -239,7 +206,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                     .make(),
               ),
               Expanded(
-                child: '张三'
+                child: UserTool.userProvider.userInfo.nickname
                     .text
                     .size(30.sp)
                     .normal

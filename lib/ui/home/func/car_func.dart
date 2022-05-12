@@ -6,6 +6,7 @@ import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/car_sale_contract_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/model/car/estimate_price_model.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
@@ -163,7 +164,7 @@ class CarFunc {
 
 
   ///估算价格
-  static Future<String> getEstimatePrice(CarInfo carInfo) async {
+  static Future<EstimatePriceModel?> getEstimatePrice(CarInfo carInfo) async {
     BaseModel model = await apiClient.request(API.car.estimatePrice, data: {
       'modelId': carInfo.modelId,
       'licensePlate': carInfo.licensePlate,
@@ -182,11 +183,12 @@ class CarFunc {
       'source': carInfo.source,
       'shamMileage': carInfo.shamMileage
     });
+
     if (model.code == 0) {
-      return model.data['price'];
+      return EstimatePriceModel.fromJson(model.data);
     } else {
       CloudToast.show(model.msg);
-      return '-1';
+      return null;
     }
   }
 
@@ -224,20 +226,20 @@ class CarFunc {
   static Future<bool> addConsignment(
       ConsignmentContractModel contractModel) async {
     Map<String, dynamic> params = {
-      "name": contractModel.masterInfo?.name,
-      "idCard": contractModel.masterInfo?.idCard,
-      "phone": contractModel.masterInfo?.phone,
-      "bankCard": contractModel.masterInfo?.bankCard,
-      "bank": contractModel.masterInfo?.bank,
-      "idCardFront": contractModel.masterInfo?.idCardFront,
-      "idCardBack": contractModel.masterInfo?.idCardBack,
-      "photo": contractModel.masterInfo?.photo,
+      "name": contractModel.masterInfo.name,
+      "idCard": contractModel.masterInfo.idCard,
+      "phone": contractModel.masterInfo.phone,
+      "bankCard": contractModel.masterInfo.bankCard,
+      "bank": contractModel.masterInfo.bank,
+      "idCardFront": contractModel.masterInfo.idCardFront,
+      "idCardBack": contractModel.masterInfo.idCardBack,
+      "photo": contractModel.masterInfo.photo,
     };
     BaseModel model =
         await apiClient.request(API.contract.addConsignment, data: {
       'priceId': contractModel.priceId,
       'customerId': contractModel.customerId,
-      'price': contractModel.price,
+      'price': contractModel.sellPrice,
       'masterInfo': params,
       'keyCount': contractModel.keyCount,
       'compulsoryInsurance': contractModel.compulsoryInsurance,

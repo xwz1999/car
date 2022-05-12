@@ -354,6 +354,7 @@ class _PushCarPageState extends State<PushCarPage> {
                       Get.back();
                       _publishCarInfo.carName = _pickCar.value.car.name;
                       _publishCarInfo.carModelId = _pickCar.value.car.id;
+                      FocusManager.instance.primaryFocus?.unfocus();
                     },
                     pickCar: _pickCar,
                   ));
