@@ -30,6 +30,8 @@ class ConsignmentContractModel {
   List<File>? idBack;
   List<File>? bust;
 
+
+
   ConsignmentContractModel(
       {this.priceId,
       this.customerId,
@@ -49,7 +51,7 @@ class ConsignmentContractModel {
       this.workingCondition,
       this.serviceFeeRate,
       this.publishCarInfo,
-      this.bust ,
+      this.bust,
       this.idBack,
       this.idFront});
 }

@@ -11,9 +11,8 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class PublishCarInfoPage extends StatefulWidget {
-  final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
 
-  const PublishCarInfoPage({Key? key, required this.consignmentContractModel})
+  const PublishCarInfoPage({Key? key,})
       : super(key: key);
 
   @override
@@ -91,10 +90,10 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
               padding: EdgeInsets.all(30.w),
               child: Column(
                 children: [
-                  PublishCarInfoWidget(
-                    fontColor: Colors.black38,
-                    publishCarInfo: widget.consignmentContractModel.value.publishCarInfo!,
-                  ),
+                  // PublishCarInfoWidget(
+                  //   fontColor: Colors.black38,
+                  //   publishCarInfo: widget.consignmentContractModel.value.publishCarInfo!,
+                  // ),
                   _publishChoose(
                       style: false,
                       necessary: true,

@@ -166,7 +166,7 @@ class _Order {
   ///交车
   get carFinal => '/order/call/car/final';
 
-  ///添加车商寄卖订单
+  ///添加车商寄卖订单 车商发布订单
   get addConsignment => '/order/dealer/consignment/add';
 
   ///车商寄卖订单
