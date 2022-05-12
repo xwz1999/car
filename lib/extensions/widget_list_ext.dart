@@ -17,24 +17,24 @@ extension WidgetListExt on List<Widget> {
 
 extension OddListExt<T> on List<T> {
   List<T> oddList() {
-    List<T> _newList = [];
+    List<T> newList = [];
     for (var element in this) {
       if (indexOf(element).isEven) {
-        _newList.add(element);
+        newList.add(element);
       }
     }
-    return _newList;
+    return newList;
   }
 }
 
 extension EvenListExt<T> on List<T> {
   List<T> evenList() {
-    List<T> _newList = [];
+    List<T> newList = [];
     forEach((element) {
       if (indexOf(element).isOdd) {
-        _newList.add(element);
+        newList.add(element);
       }
     });
-    return _newList;
+    return newList;
   }
 }

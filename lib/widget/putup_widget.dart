@@ -89,7 +89,7 @@ class SortWidget extends StatelessWidget {
               ),
               Text(
 
-               "¥" +item.pice,
+               "¥${item.pice}",
                 style: TextStyle(
                     color: pickItem == item
                         ? kPrimaryColor

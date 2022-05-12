@@ -118,7 +118,7 @@ class _ContactConditionState extends State<ContactCondition> {
 
   _showDescription(
     String title,
-    TextEditingController _contentController,
+    TextEditingController contentController,
   ) {
     return Container(
       padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
@@ -141,7 +141,7 @@ class _ContactConditionState extends State<ContactCondition> {
               textAlign: TextAlign.start,
               onChanged: (text) => setState(() {}),
               autofocus: false,
-              controller: _contentController,
+              controller: contentController,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
                   isDense: true,

@@ -34,8 +34,8 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
   String? _carType = '';
   String? _interColor = '';
   String? _purpose = '';
-  final String? _carPlace = '';
-  final String? _location = '';
+  final String _carPlace = '';
+  final String _location = '';
   List<ChooseItem> carTypeList = [
     ChooseItem(name: '二手车(中规)'),
     ChooseItem(name: '二手车(平行进口)'),
@@ -150,8 +150,8 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                         setState(() {});
                       },
                       typeList: purposeList),
-                  _publishJumpPage(false, '车辆所在地', '请选择', () {}, _carPlace!),
-                  _publishJumpPage(false, '车辆归属地', '请选择', () {}, _location!),
+                  _publishJumpPage(false, '车辆所在地', '请选择', () {}, _carPlace),
+                  _publishJumpPage(false, '车辆归属地', '请选择', () {}, _location),
                   _publishTextField('车况（对内）', _carConditionInterController),
                   _publishTextField('车况（对外）', _carConditionOutController),
                 ],
@@ -178,7 +178,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
 
   _publishTextField(
     String title,
-    TextEditingController _contentController,
+    TextEditingController contentController,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,7 +192,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
           textAlign: TextAlign.start,
           onChanged: (text) => setState(() {}),
           autofocus: false,
-          controller: _contentController,
+          controller: contentController,
           decoration: InputDecoration(
             hintText: '请输入',
             hintStyle: TextStyle(
@@ -264,7 +264,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
     bool necessary,
     String title,
     String hint,
-    TextEditingController _contentController,
+    TextEditingController contentController,
     String unit,
   ) {
     return Container(
@@ -293,7 +293,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
               textAlign: TextAlign.start,
               onChanged: (text) => setState(() {}),
               autofocus: false,
-              controller: _contentController,
+              controller: contentController,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
                   isDense: true,

@@ -57,7 +57,7 @@ class _CarDatePicker extends StatefulWidget {
   const _CarDatePicker({
     Key? key,
     required this.date,
-    this.use24H = false,
+    this.use24H=false,
     this.max,
     this.min,
     this.mode,

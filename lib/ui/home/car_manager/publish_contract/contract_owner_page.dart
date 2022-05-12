@@ -267,8 +267,8 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
 
   _haveIcon(
     String title,
-    TextEditingController _contentController,
-    VoidCallback _onTap,
+    TextEditingController contentController,
+    VoidCallback onTap,
   ) {
     return Container(
       color: Colors.transparent,
@@ -288,7 +288,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               textAlign: TextAlign.start,
               onChanged: (text) => setState(() {}),
               autofocus: false,
-              controller: _contentController,
+              controller: contentController,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
                   isDense: true,
@@ -302,7 +302,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
           ),
           24.wb,
           IconButton(
-            onPressed: _onTap,
+            onPressed: onTap,
             icon:ImageIcon(
               Assets.icons.scan,
               size: 35.w,
@@ -316,7 +316,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
 
   _noIcon(
     String title,
-    TextEditingController _contentController,
+    TextEditingController contentController,
   ) {
     return Container(
       color: Colors.transparent,
@@ -336,7 +336,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               textAlign: TextAlign.start,
               onChanged: (text) => setState(() {}),
               autofocus: false,
-              controller: _contentController,
+              controller: contentController,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
                   isDense: true,

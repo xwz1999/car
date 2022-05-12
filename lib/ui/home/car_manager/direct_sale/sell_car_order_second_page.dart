@@ -103,7 +103,7 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                             1000,
                         format: 'yyyy年MM月'),
                     distance:
-                        widget.contractModel.value.carModel!.mileage + '万公里',
+                        '${widget.contractModel.value.carModel!.mileage}万公里',
                     //standard: '国六',
                     url: widget.contractModel.value.carModel!.mainPhoto,
                     price: NumUtil.divide(

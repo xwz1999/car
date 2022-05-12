@@ -99,6 +99,11 @@ class _RecommendedPageState extends State<RecommendedPage>
                   child: Container(
                     height: 76.w,
                     width: 750.w,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(16.w),
+                            bottomRight: Radius.circular(16.w))),
                     child: TabBar(
                         onTap: (index) {
                           setState(() {});
@@ -121,11 +126,6 @@ class _RecommendedPageState extends State<RecommendedPage>
                         indicator: const BoxDecoration(),
                         indicatorColor: kPrimaryColor,
                         tabs: [_tab(0, '我邀请的客户')]),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(16.w),
-                            bottomRight: Radius.circular(16.w))),
                   ),
                 ),
               ),
@@ -159,13 +159,13 @@ class _RecommendedPageState extends State<RecommendedPage>
                           child: Stack(
                             children: [
                               Positioned(
+                                right: 0,
+                                top: 0,
                                 child: Image.asset(
                                   Assets.images.importantUser.path,
                                   width: 130.w,
                                   fit: BoxFit.fitWidth,
                                 ),
-                                right: 0,
-                                top: 0,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

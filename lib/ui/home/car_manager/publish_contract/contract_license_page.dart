@@ -18,8 +18,8 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
   final TextEditingController _transferController = TextEditingController();
   final TextEditingController _keyController = TextEditingController();
   final TextEditingController _businessController = TextEditingController();
-  final String? _compulsory = '';
-  final String? _business = '';
+  final String _compulsory = '';
+  final String _business = '';
   final bool _businessCheck = false;
   final bool _compulsoryCheck = false;
 
@@ -220,7 +220,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
 
   _showUnit(
     String title,
-    TextEditingController _contentController,
+    TextEditingController contentController,
     String unit,
   ) {
     return Container(
@@ -243,7 +243,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
               textAlign: TextAlign.start,
               onChanged: (text) => setState(() {}),
               autofocus: false,
-              controller: _contentController,
+              controller: contentController,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
                   isDense: true,
@@ -268,9 +268,9 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
         _showUnit('过户次数', _transferController, '次'),
         _showUnit('钥匙数量', _keyController, '把'),
         _showSelect(_compulsoryCheck, '交强险'),
-        _showArrow('交强险到期时间', '交强险到期', () {}, _compulsory!, Container()),
+        _showArrow('交强险到期时间', '交强险到期', () {}, _compulsory, Container()),
         _showSelect(_businessCheck, '商业险'),
-        _showArrow('商业险到期时间', '商业险到期', () {}, _business!, Container()),
+        _showArrow('商业险到期时间', '商业险到期', () {}, _business, Container()),
         _showUnit('商业险金额', _businessController, '元'),
       ],
     );

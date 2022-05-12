@@ -1,7 +1,7 @@
 import 'package:power_logger/power_logger.dart';
 
 class DevEV {
-  static late final DevEV _instance = DevEV._();
+  static final DevEV _instance = DevEV._();
 
   DevEV._();
 

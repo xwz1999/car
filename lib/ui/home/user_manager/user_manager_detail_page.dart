@@ -159,6 +159,11 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                 bottomHeight: 400.w,
                 screenControl: screenControl,
                 headFontSize: 28.sp,
+                screen: '筛选',
+                onTap: () {
+                  screenControl.screenHide();
+                  Scaffold.of(context).openEndDrawer();
+                },
                 child:
                 EasyRefresh.custom(
                   firstRefresh: true,
@@ -232,11 +237,6 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                               )
                   ],
                 ),
-                screen: '筛选',
-                onTap: () {
-                  screenControl.screenHide();
-                  Scaffold.of(context).openEndDrawer();
-                },
               ),
             )
           ],
@@ -293,6 +293,8 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
           children: [
             model.isImportant == 1
                 ? Positioned(
+                    right: 0,
+                    top: 0,
                     child: GestureDetector(
                       onTap: () async {
                         bool success =
@@ -310,8 +312,6 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
                         fit: BoxFit.fitWidth,
                       ),
                     ),
-                    right: 0,
-                    top: 0,
                   )
                 : const SizedBox(),
             Column(

@@ -57,7 +57,7 @@ class _SortEditWidgetState extends State<SortEditWidget> {
           setState(() {});
         },
         onTap: () {},
-        onSubmitted: (_submitted) async {
+        onSubmitted: (submitted) async {
           setState(() {});
         },
         style: TextStyle(

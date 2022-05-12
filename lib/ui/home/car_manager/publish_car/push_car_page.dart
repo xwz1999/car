@@ -433,7 +433,7 @@ class _PushCarPageState extends State<PushCarPage> {
   }
 
   _textarea(String title, String hint, String content,
-      TextEditingController _contentController, Function(String) callback) {
+      TextEditingController contentController, Function(String) callback) {
     return Container(
       color: Colors.transparent,
       child: Row(
@@ -452,7 +452,7 @@ class _PushCarPageState extends State<PushCarPage> {
               textAlign: TextAlign.start,
               onChanged: callback,
               autofocus: false,
-              controller: _contentController,
+              controller: contentController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.zero,
                 isDense: true,

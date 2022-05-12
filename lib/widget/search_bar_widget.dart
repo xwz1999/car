@@ -77,7 +77,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 setState(() {});
               },
               onTap: () {},
-              onSubmitted: (_submitted) async {
+              onSubmitted: (submitted) async {
                 if (TextUtils.isEmpty(_searchText)) {
 
                   widget.callback('');

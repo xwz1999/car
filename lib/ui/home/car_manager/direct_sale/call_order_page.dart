@@ -211,7 +211,7 @@ class _CallOrderPageState extends State<CallOrderPage> {
                   name: widget.carListModel.modelName,
                   time: DateUtil.formatDateMs(widget.carListModel.licensingDate.toInt() * 1000,
                       format: 'yyyy年MM月'),
-                  distance: widget.carListModel.mileage + '万公里',
+                  distance: '${widget.carListModel.mileage}万公里',
                   // standard: '国六',
                   url: widget.carListModel.mainPhoto,
                   price: NumUtil.divide(num.parse(widget.carListModel.price), 10000).toString(),
@@ -343,12 +343,12 @@ class _CallOrderPageState extends State<CallOrderPage> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    DateTime? _firstDate;
-                    _firstDate =
+                    DateTime? firstDate;
+                    firstDate =
                         await CarDatePicker.allTimePicker(DateTime.now());
-                    _editingController3.text = DateUtil.formatDate(_firstDate,
+                    _editingController3.text = DateUtil.formatDate(firstDate,
                         format: 'yyyy-MM-dd HH:mm:ss');
-                    callOrderModel.reserveTime = DateUtil.formatDate(_firstDate,
+                    callOrderModel.reserveTime = DateUtil.formatDate(firstDate,
                         format: 'yyyy-MM-dd HH:mm:ss');
 
 

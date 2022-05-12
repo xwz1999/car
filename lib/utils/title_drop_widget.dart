@@ -172,7 +172,7 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
                                   setState(() {});
                                 },
                                 onTap: () {},
-                                onSubmitted: (_submitted) async {
+                                onSubmitted: (submitted) async {
 
                                   if (TextUtils.isEmpty(_searchText)) {
                                     widget.callback!('');

@@ -74,7 +74,7 @@ class _TabNavigatorState extends State<TabNavigator>
   @override
   Widget build(BuildContext context) {
     //底部导航来
-    List<BottomNavigationBarItem> _bottomNav = <BottomNavigationBarItem>[
+    List<BottomNavigationBarItem> bottomNav = <BottomNavigationBarItem>[
       _buildBottomBar(
         '工作台',
         Assets.icons.tabHome.path,
@@ -111,13 +111,13 @@ class _TabNavigatorState extends State<TabNavigator>
           return true;
         },
         child: TabBarView(
-          children: _pages,
           controller: _tabController,
           physics: const NeverScrollableScrollPhysics(),
+          children: _pages,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: _bottomNav,
+        items: bottomNav,
         backgroundColor: Colors.white,
         currentIndex: _currentIndex,
         selectedFontSize: 20.sp,

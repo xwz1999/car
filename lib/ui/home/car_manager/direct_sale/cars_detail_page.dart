@@ -223,6 +223,12 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                             height: kToolbarHeight - 10.w,
                             width: double.infinity,
                             alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: BaseStyle.colordddddd,
+                                        width: 2.w))),
                             child: TabBar(
                                 onTap: (index) {
                                   setState(() {});
@@ -246,12 +252,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                                   _tab(0, tabs[0]),
                                   // _tab(1, tabs[1]),
                                 ]),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: BaseStyle.colordddddd,
-                                        width: 2.w))),
                           ),
                         )),
                   ];
@@ -847,7 +847,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
-        ('点击' + index.toString());
+        ('点击$index');
       },
       //布局方法
       //用户进行操作时停止自动翻页

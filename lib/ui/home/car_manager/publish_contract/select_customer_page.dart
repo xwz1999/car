@@ -15,7 +15,7 @@ class SelectCustomerPage extends StatefulWidget {
 class _SelectCustomerPageState extends State<SelectCustomerPage> {
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _searchController = TextEditingController();
+    final TextEditingController searchController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         leading: const CloudBackButton(
@@ -72,12 +72,12 @@ class _SelectCustomerPageState extends State<SelectCustomerPage> {
                           size: 20,
                         ),
                       ),
-                      controller: _searchController,
+                      controller: searchController,
                     ),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: _searchController.text.isEmptyOrNull
+                    child: searchController.text.isEmptyOrNull
                         ? '搜索'
                             .text
                             .size(30.sp)

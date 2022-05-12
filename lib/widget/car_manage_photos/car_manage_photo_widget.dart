@@ -117,7 +117,7 @@ class _CarManagePhotoWidgetState extends State<CarManagePhotoWidget> {
                             ),
                           ),
                           child: Text(
-                            photos.length.toString() + '张',
+                            '${photos.length}张',
                             style: TextStyle(
                               fontSize: 20.sp,
                               color: Colors.white,

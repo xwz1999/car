@@ -119,7 +119,7 @@ class _ChooseCarNextPageState extends State<ChooseCarNextPage> {
               Get.to(() => ChooseCarLastPage(
                     callback: widget.callback,
                     id: e.id,
-                    name: name + ' >> ' + e.name,
+                    name: '$name >> ${e.name}',
                     pickCar: widget.pickCar,
                   ));
             },

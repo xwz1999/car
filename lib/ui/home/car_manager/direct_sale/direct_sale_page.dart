@@ -220,7 +220,7 @@ class _DirectSalePageState extends State<DirectSalePage> with AutomaticKeepAlive
                             name: model.modelName,
                             time: DateUtil.formatDateMs(model.licensingDate.toInt() * 1000,
                                 format: 'yyyy年MM月'),
-                            distance: model.mileage + '万公里',
+                            distance: '${model.mileage}万公里',
                             // standard: '国六',
                             url: model.mainPhoto,
                             price: NumUtil.divide(num.parse(model.price), 10000).toString(),

@@ -98,7 +98,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                     name: widget.carModel.modelName,
                     time:  DateUtil.formatDateMs(widget.carModel.licensingDate.toInt() * 1000,
                         format: 'yyyy年MM月'),
-                    distance:  widget.carModel.mileage + '万公里',
+                    distance:  '${widget.carModel.mileage}万公里',
                     //standard: '国六',
                     url:widget.carModel.mainPhoto,
                     price:  NumUtil.divide(num.parse(widget.carModel.price), 10000).toString(),
@@ -178,7 +178,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
 
                   title: '服务费比列',
                   canChange: false,
-                  value: carAmountModel==null? '':(double.parse(carAmountModel!.serviceFeeRate)  * 100).toString()+'%' ,
+                  value: carAmountModel==null? '':'${double.parse(carAmountModel!.serviceFeeRate)  * 100}%' ,
                   callback: (String content) {},
                   endText: '元',
 
