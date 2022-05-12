@@ -105,7 +105,7 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                             1000,
                         format: 'yyyy年MM月'),
                     distance:
-                    widget.contractModel.value.carModel!.mileage + '万公里',
+                    '${widget.contractModel.value.carModel!.mileage}万公里',
                     //standard: '国六',
                     url: widget.contractModel.value.carModel!.mainPhoto,
                     price: NumUtil.divide(
@@ -149,7 +149,7 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
 
                 getContentItem('尾款',widget.contractModel.value.carAmountModel!.balancePayment,endText: '元',isSpecial:true,topIcon: false),
 
-                getContentItem('服务费比例',(double.parse(widget.contractModel.value.carAmountModel!.serviceFeeRate)  * 100).toString()+'%',isGrey: true,isSpecial:true),
+                getContentItem('服务费比例','${double.parse(widget.contractModel.value.carAmountModel!.serviceFeeRate)  * 100}%',isGrey: true,isSpecial:true),
 
                 // getContentItem('付款方式','全款',),
                 //

@@ -69,7 +69,7 @@ class _CarMonthPickBodyState extends State<CarMonthPickBody> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             child:
-                                Text(e.toString()+'年', textAlign: TextAlign.center),
+                                Text('$e年', textAlign: TextAlign.center),
                           ),
                         ))
                     .toList()),
@@ -95,7 +95,7 @@ class _CarMonthPickBodyState extends State<CarMonthPickBody> {
                                   right: 20.w,
                                   top: 10.w,
                                   bottom: 10.w),
-                              child: Text(e.toString()+'月',
+                              child: Text('$e月',
                                   textAlign: TextAlign.center),
                             ),
                           ))

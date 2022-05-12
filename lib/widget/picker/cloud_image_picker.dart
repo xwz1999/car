@@ -11,12 +11,12 @@ class CloudImagePicker {
       {required String title,
       double maxWidth = 1000,
       double maxHeight = 1000}) async {
-    List<XFile>? _files = [];
-    _files = await ImagePicker().pickMultiImage();
-    if (_files == null) {
+    List<XFile>? files = [];
+    files = await ImagePicker().pickMultiImage();
+    if (files == null) {
       return <File>[];
     } else {
-      return _files.map((e) => File(e.path)).toList();
+      return files.map((e) => File(e.path)).toList();
     }
   }
 
@@ -24,10 +24,10 @@ class CloudImagePicker {
       {required String title,
       double maxWidth = 1000,
       double maxHeight = 1000}) async {
-    List<XFile>? _files = [];
+    List<XFile>? files = [];
     // _files = await ImagePicker().pickMultiImage();
 
-    _files = await Get.bottomSheet(CupertinoActionSheet(
+    files = await Get.bottomSheet(CupertinoActionSheet(
       title: title.text.isIntrinsic.make(),
       actions: [
         CupertinoDialogAction(
@@ -58,11 +58,11 @@ class CloudImagePicker {
             )
                 .then((value) {
               if (value != null) {
-                XFile _pickFile = value;
-                List<XFile> _files = [];
-                _files.add(_pickFile);
+                XFile pickFile = value;
+                List<XFile> files = [];
+                files.add(pickFile);
                 Get.back(
-                  result: _files,
+                  result: files,
                 );
               }
             });
@@ -81,10 +81,10 @@ class CloudImagePicker {
         child: '取消'.text.isIntrinsic.make(),
       ),
     ));
-    if (_files == null) {
+    if (files == null) {
       return <File>[];
     } else {
-      return _files.map((e) => File(e.path)).toList();
+      return files.map((e) => File(e.path)).toList();
     }
   }
 

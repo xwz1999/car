@@ -125,7 +125,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
       ),
       bottomNavigationBar: GestureDetector(
         onTap: () async {
-          var cancel = CloudToast.loading;
+          CloudToast.loading;
           switch (_selectIndex) {
             case 0:
               await _wxPayFunc();

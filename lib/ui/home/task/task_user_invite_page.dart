@@ -37,112 +37,108 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFFF6F6F6),
-        extendBody: true,
-        appBar: AppBar(
-          leading: const CloudBackButton(),
-          backgroundColor: Colors.white,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                widget.model.customerNickname,
-                style: TextStyle(
-                    fontSize: 36.sp,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFF111111)),
-              ),
-            ],
-          ),
-          titleSpacing: 0,
-          actions: [
-            _isImportant
-                ? GestureDetector(
-                    onTap: () {
-                      _isImportant = false;
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      Assets.images.importantUser.path,
-                      width: 130.w,
-                      fit: BoxFit.fitWidth,
-                    ),
-                  )
-                : GestureDetector(
-                    onTap: () {
-                      _isImportant = true;
-                      setState(() {});
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 32.w),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          '设为重要',
-                          style: TextStyle(
-                            color: BaseStyle.color999999,
-                            fontSize: BaseStyle.fontSize28,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+      backgroundColor: const Color(0xFFF6F6F6),
+      extendBody: true,
+      appBar: AppBar(
+        leading: const CloudBackButton(),
+        backgroundColor: Colors.white,
+        title:  Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(widget.model.customerNickname,style: TextStyle(
+              fontSize: 36.sp,fontWeight: FontWeight.bold,color: const Color(0xFF111111)
+            ),),
           ],
         ),
-        body: Column(
-          children: [
-            Container(
-              height: kToolbarHeight - 10.w,
-              width: double.infinity,
-              child: TabBar(
-                  onTap: (index) {
-                    setState(() {});
-                  },
-                  isScrollable: true,
-                  labelPadding:
-                      EdgeInsets.symmetric(vertical: 10.w, horizontal: 40.w),
-                  controller: _tabController,
-                  indicatorWeight: 3,
-                  labelColor: kPrimaryColor,
-                  unselectedLabelColor: BaseStyle.color333333,
-                  indicatorPadding:
-                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 0.w),
-                  indicatorSize: TabBarIndicatorSize.label,
-                  labelStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.85),
-                  ),
-                  indicator: const BoxDecoration(),
-                  indicatorColor: kPrimaryColor,
-                  tabs: [
-                    _tab(0, '浏览车辆'),
-                    _tab(1, '客户轨迹'),
-                    // _tab(2, '相关资料')
-                  ]),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                      bottom: BorderSide(
-                          color: BaseStyle.colordddddd, width: 2.w))),
+        titleSpacing: 0,
+
+        actions: [
+          _isImportant?GestureDetector(
+            onTap: (){
+              _isImportant = false;
+              setState(() {
+
+              });
+            },
+            child: Image.asset(
+              Assets.images.importantUser.path,
+              width: 130.w,
+              fit: BoxFit.fitWidth,
             ),
-            Expanded(
+          ):
+          GestureDetector(
+            onTap: (){
+              _isImportant = true;
+              setState(() {
+
+              });
+            },
+            child: Padding(
+              padding:  EdgeInsets.only(right: 32.w),
               child: Container(
-                color: Colors.white,
-                padding: EdgeInsets.only(bottom: 120.w),
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    CustomersBrowsePage(
-                      customerId: widget.model.customerId,
-                    ),
-                    CustomersTrajectoryPage(
-                      customerId: widget.model.customerId,
-                    ),
-                  ],
+                alignment: Alignment.center,
+                child: Text(
+                  '设为重要',
+                  style: TextStyle(
+                    color: BaseStyle.color999999,
+                    fontSize: BaseStyle.fontSize28,),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: kToolbarHeight - 10.w,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                    bottom: BorderSide(
+                        color: BaseStyle.colordddddd, width: 2.w))),
+            child: TabBar(
+                onTap: (index) {
+                  setState(() {});
+                },
+                isScrollable: true,
+                labelPadding: EdgeInsets.symmetric(
+                    vertical: 10.w, horizontal: 40.w),
+                controller: _tabController,
+                indicatorWeight: 3,
+                labelColor: kPrimaryColor,
+                unselectedLabelColor: BaseStyle.color333333,
+                indicatorPadding: EdgeInsets.symmetric(
+                    horizontal: 30.w, vertical: 0.w),
+                indicatorSize: TabBarIndicatorSize.label,
+                labelStyle: TextStyle(
+                  color: Colors.white.withOpacity(0.85),
+                ),
+                indicator: const BoxDecoration(),
+                indicatorColor: kPrimaryColor,
+                tabs: [
+                  _tab(0, '浏览车辆'),
+                  _tab(1, '客户轨迹'),
+                  // _tab(2, '相关资料')
+                ]),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.white,
+              padding: EdgeInsets.only(bottom: 120.w),
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  CustomersBrowsePage(customerId: widget.model.customerId,),
+                  CustomersTrajectoryPage(customerId: widget.model.customerId,),
+
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
         bottomNavigationBar: Container(
           color: Colors.white,
           height: 120.w,

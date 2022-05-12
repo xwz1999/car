@@ -118,7 +118,7 @@ class CloudScaffold extends StatelessWidget {
               extendBody: extendBody,
               body: body,
               appBar: PreferredSize(
-                preferredSize: Size.fromHeight(88.w),
+                preferredSize: Size.fromHeight(176.w),
                 child: title == null
                     ? appbar!
                     : AppBar(
@@ -126,7 +126,13 @@ class CloudScaffold extends StatelessWidget {
                         backgroundColor:
                             extendBody ? Colors.transparent : appBarBackColor,
                         leading: const CloudBackButton(),
-                        title: Text(title!),
+                        title: Text(
+                          title!,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 32.sp),
+                        ),
                         actions: actions,
                       ),
               ),

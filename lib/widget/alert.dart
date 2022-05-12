@@ -118,7 +118,7 @@ class NormalTextDialog extends Dialog {
   }
 
   _buildItems() {
-    List<Widget> _items = items.map((String title) {
+    List<Widget> privateItems = items.map((String title) {
       int index = items.indexOf(title);
       return Expanded(
           child: GestureDetector(
@@ -147,7 +147,7 @@ class NormalTextDialog extends Dialog {
     }).toList();
 
     if (type == NormalTextDialogType.delete) {
-      _items.add(Expanded(
+      privateItems.add(Expanded(
           child: GestureDetector(
           onTap: () {
             deleteListener();
@@ -164,7 +164,7 @@ class NormalTextDialog extends Dialog {
       ));
     }
 
-    return _items;
+    return privateItems;
   }
 }
 
@@ -247,7 +247,7 @@ class NormalContentDialog extends Dialog {
   }
 
   _buildItems() {
-    List<Widget> _items = items.map((String title) {
+    List<Widget> privateItems = items.map((String title) {
       int index = items.indexOf(title);
       return Expanded(
           child: GestureDetector(
@@ -280,7 +280,7 @@ class NormalContentDialog extends Dialog {
     }).toList();
 
     if (type == NormalTextDialogType.delete) {
-      _items.add(Expanded(
+      privateItems.add(Expanded(
           child:       GestureDetector(
           onTap: () {
             deleteListener();
@@ -298,6 +298,6 @@ class NormalContentDialog extends Dialog {
       ));
     }
 
-    return _items;
+    return privateItems;
   }
 }

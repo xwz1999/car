@@ -49,9 +49,13 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   bool headerWhite = false;
   List tabs = [];
   CarInfoModel? carInfoModel;
+  int collect = 0;
 
   @override
   void initState() {
+
+
+
     ///自己发布的 tab2个 否则1个
     tabs = [
       '车辆详情',
@@ -80,6 +84,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
 
   _refresh() async {
     carInfoModel = await CarFunc.getCarInfo(widget.carListModel.id);
+    collect = carInfoModel!.collect;
     setState(() {});
   }
 
@@ -140,21 +145,26 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                               ? GestureDetector(
                                   onTap: () async {
                                     var re = await apiClient.request(
-                                        carInfoModel?.collect == 0
+                                        collect == 0
                                             ? API.car.collect.add
                                             : API.car.collect.cancel,
                                         data: {'carId': carInfoModel?.id},
                                         showMessage: true);
-                                    if (re.code == 0) {}
+                                    if (re.code == 0) {
+                                      collect==0?collect=1:collect=0;
+                                      setState(() {
+
+                                      });
+                                    }
                                   },
-                                  child: SizedBox(
-                                    width: 48.w,
-                                    height: 48.w,
-                                    child: Image.asset(
-                                        carInfoModel?.collect == 1
-                                            ? Assets.icons.alreadyCollected.path
-                                            : Assets.icons.collection.path),
-                                  ))
+                      child: SizedBox(
+                      width: 48.w,
+                      height: 48.w,
+                      child: Image.asset(collect == 1
+                                      ? Assets.icons.alreadyCollected.path
+                                      : Assets.icons.collection.path, height: 48.w, width: 48.w),
+                                )
+                                  )
                               : const SizedBox(),
                           24.wb,
                           GestureDetector(
@@ -227,6 +237,12 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                             height: kToolbarHeight - 10.w,
                             width: double.infinity,
                             alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: BaseStyle.colordddddd,
+                                        width: 2.w))),
                             child: TabBar(
                                 onTap: (index) {
                                   setState(() {});
@@ -250,12 +266,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                                   _tab(0, tabs[0]),
                                   // _tab(1, tabs[1]),
                                 ]),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: BaseStyle.colordddddd,
-                                        width: 2.w))),
                           ),
                         )),
                   ];
@@ -851,7 +861,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
-        ('点击' + index.toString());
+        ('点击$index');
       },
       //布局方法
       //用户进行操作时停止自动翻页

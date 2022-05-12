@@ -18,7 +18,7 @@ extension ImageOnString on String? {
       return '';
     }
     return this!
-        .replaceAllMapped(exp, (Match m) => ('_' + m.group(0)!))
+        .replaceAllMapped(exp, (Match m) => ('_${m.group(0)!}'))
         .toLowerCase();
   }
 

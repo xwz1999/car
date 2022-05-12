@@ -150,11 +150,11 @@ class _MakeDealDataState extends State<MakeDealData> {
                       Row(
                         children: [
                           SizedBox(
+                            width: 196.w,
+                            height: 150.w,
                             child: CloudImageNetworkWidget.car(
                               urls: [_consignmentInfoList.car.mainPhoto],
                             ),
-                            width: 196.w,
-                            height: 150.w,
                           ),
                           20.wb,
                           SizedBox(
@@ -382,9 +382,9 @@ class _MakeDealDataState extends State<MakeDealData> {
         24.hb,
         GestureDetector(
           child: SizedBox(
-            child: url,
             width: 200.w,
             height: 150.w,
+            child: url,
           ),
         )
       ],

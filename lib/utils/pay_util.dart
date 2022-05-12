@@ -28,7 +28,7 @@ enum PAYTYPE {
 }
 
 class PayUtil {
-  static late final PayUtil _instance = PayUtil._();
+  static final PayUtil _instance = PayUtil._();
 
   factory PayUtil() => _instance;
 
@@ -80,12 +80,12 @@ class PayUtil {
     }
     _resultStatus = result['resultStatus'];
     if (_resultStatus == '9000') {
-      String _res = result['result'];
-      PayModel _model = PayModel.fromJson(jsonDecode(_res));
+      String res = result['result'];
+      PayModel model = PayModel.fromJson(jsonDecode(res));
       if (apiPath != null) {
-        bool _confirmResult = await _confirmPayResult(
-            apiPath, _model.aliPayTradeAppPayResponse.outTradeNo);
-        return _confirmResult;
+        bool confirmResult = await _confirmPayResult(
+            apiPath, model.aliPayTradeAppPayResponse.outTradeNo);
+        return confirmResult;
       } else {
         CloudToast.show('支付成功');
         return true;
@@ -133,18 +133,12 @@ class PayUtil {
       Function(BaseWeChatResponse)? payError}) {
     _wxPayStream = weChatResponseEventHandler.listen((event) {
       if (kDebugMode) {
-        print('errorCode:' +
-            event.errCode.toString() +
-            '    errorStr:' +
-            event.errStr.toString());
+        print('errorCode:${event.errCode}    errorStr:${event.errStr}');
       }
       if (event.errCode == 0) {
         paySuccess();
       } else {
-        LoggerData.addData('errorCode:' +
-            event.errCode.toString() +
-            '    errorStr:' +
-            (event.errStr??'支付失败'));
+        LoggerData.addData('errorCode:${event.errCode}    errorStr:${event.errStr??'支付失败'}');
         CloudToast.show(event.errStr??'支付失败');
         payError == null ? null : payError(event);
       }

@@ -1,5 +1,5 @@
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_begin_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +9,11 @@ import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/publish_car_info_widget.dart';
 
 class CheckPushPage extends StatefulWidget {
-  final PublishCarInfo publishCarInfo;
-  final num price;
+  final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
+  // final PublishCarInfo publishCarInfo;
 
   const CheckPushPage(
-      {Key? key, required this.publishCarInfo, required this.price})
+      {Key? key, required this.consignmentContractModel, })
       : super(key: key);
 
   @override
@@ -70,7 +70,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                         ).paddingOnly(top: 10.w),
                         20.wb,
                         Text(
-                          (widget.price / 10000).toString(),
+                          (num.parse(widget.consignmentContractModel.value.evaluationPrice!)  / 10000).toString(),
                           style: const TextStyle(
                             fontSize: 30,
                             color: Colors.red,
@@ -97,19 +97,19 @@ class _CheckPushPageState extends State<CheckPushPage> {
                     children: [
                       PublishCarInfoWidget(
                         fontColor: Colors.black,
-                        publishCarInfo: widget.publishCarInfo,
+                        publishCarInfo: widget.consignmentContractModel.value.publishCarInfo!,
                       ),
                       30.heightBox,
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            if (widget.publishCarInfo.carSource == 1) {
+                            if ( widget.consignmentContractModel.value.publishCarInfo!.carSource == 1) {
                               Get.to(() => CarPicturePage(
-                                  publishCarInfo: widget.publishCarInfo));
+                                  consignmentContractModel:  widget.consignmentContractModel));
                             } else {
                               Get.to(() => ContractBeginPage(
-                                    publishCarInfo: widget.publishCarInfo,
+                                consignmentContractModel:  widget.consignmentContractModel,
                                   ));
                             }
                           },
@@ -118,7 +118,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                                 MaterialStateProperty.all(Colors.blue),
                           ),
                           child: Text(
-                            widget.publishCarInfo.carSource == 2
+                            widget.consignmentContractModel.value.publishCarInfo!.carSource == 2
                                 ? '发起合同'
                                 : '发布车辆',
                             style: TextStyle(
@@ -128,7 +128,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                           ),
                         ),
                       ),
-                      widget.publishCarInfo.carSource == 2
+                      widget.consignmentContractModel.value.publishCarInfo!.carSource == 2
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -143,7 +143,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                                 TextButton(
                                   onPressed: () {
                                     Get.to(() => CarPicturePage(
-                                        publishCarInfo: widget.publishCarInfo));
+                                        consignmentContractModel:  widget.consignmentContractModel));
                                   },
                                   child: '继续发布车辆'
                                       .text

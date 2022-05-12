@@ -16,9 +16,9 @@ class AddStores extends StatefulWidget {
   State<AddStores> createState() => _AddStoresState();
 }
 
-late String storesName = '';
-late String storesAddress = '';
-late bool zhi = false;
+String storesName = '';
+String storesAddress = '';
+bool zhi = false;
 
 class _AddStoresState extends State<AddStores> {
   @override

@@ -5,35 +5,73 @@ import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class CarManagePhotoWidget extends StatelessWidget {
+class CarManagePhotoWidget extends StatefulWidget {
   final CarManagePhotoModel model;
 
-  CarManagePhotoWidget({Key? key, required this.model}) : super(key: key);
+  const CarManagePhotoWidget({Key? key, required this.model}) : super(key: key);
 
+  @override
+  _CarManagePhotoWidgetState createState() => _CarManagePhotoWidgetState();
+}
+
+class _CarManagePhotoWidgetState extends State<CarManagePhotoWidget> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 3,
       children: [
-        _buildChild(_titles[0], 0, model.carPhotos),
-        _buildChild(_titles[1], 1, model.interiorPhotos),
-        _buildChild(_titles[2], 2, model.defectPhotos),
-        _buildChild(_titles[3], 3, model.dataPhotos),
+        _buildChild(
+          _titles[0],
+          0,
+        ),
+        _buildChild(
+          _titles[1],
+          1,
+        ),
+        _buildChild(
+          _titles[2],
+          2,
+        ),
+        _buildChild(
+          _titles[3],
+          3,
+        ),
       ],
     );
   }
 
   final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片', '资料照片'];
 
-  Widget _buildChild(String bottom, int index, List<String> photos) {
+  Widget _buildChild(
+    String bottom,
+    int index,
+  ) {
+    var photos = [];
+    switch (index) {
+      case 0:
+        photos = widget.model.carPhotos;
+        break;
+      case 1:
+        photos = widget.model.interiorPhotos;
+        break;
+      case 2:
+        photos = widget.model.defectPhotos;
+        break;
+      case 3:
+        photos = widget.model.dataPhotos;
+        break;
+    }
     return GestureDetector(
-      onTap: () {
-        Get.to(
+      onTap: () async {
+        await Get.to(
           CarManagePhotoPage(
             tabs: _titles,
+            model: widget.model,
+            initIndex: index,
           ),
         );
+        setState(() {});
       },
       child: Material(
         color: Colors.transparent,
@@ -70,6 +108,7 @@ class CarManagePhotoWidget extends StatelessWidget {
                         child: Container(
                           width: 66.w,
                           height: 36.w,
+                          alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.5),
                             borderRadius: BorderRadius.only(
@@ -78,7 +117,7 @@ class CarManagePhotoWidget extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            photos.length.toString() + '张',
+                            '${photos.length}张',
                             style: TextStyle(
                               fontSize: 20.sp,
                               color: Colors.white,

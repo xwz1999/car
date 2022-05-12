@@ -2,7 +2,7 @@
 
 import 'dart:io';
 
-// import 'package:cloud_car/model/order/Sale_info.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class CarImageItem extends StatefulWidget {
 }
 
 class _CarImageItemState extends State<CarImageItem> {
-  List<File> _files = [];
+  final List<File> _files = [];
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,10 @@ class _CarImageItemState extends State<CarImageItem> {
           height: 160.w,
           spacing: 15.w,
           onChanged: (files) {
-            _files = files;
+            for (var item in files) {
+              _files.add(item);
+            }
+            //_files = files;
             print("aaaa+$_files");
             widget.imageBack(_files);
           }),

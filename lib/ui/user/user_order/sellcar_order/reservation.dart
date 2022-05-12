@@ -151,11 +151,11 @@ class _ReservationState extends State<Reservation> {
                           Row(
                             children: [
                               SizedBox(
+                                width: 196.w,
+                                height: 150.w,
                                 child: CloudImageNetworkWidget.car(urls: [
                                   _consignmentInfoList.car.modelName,
                                 ]),
-                                width: 196.w,
-                                height: 150.w,
                               ),
                               20.wb,
                               SizedBox(

@@ -102,12 +102,12 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
                       Row(
                         children: [
                           SizedBox(
+                            width: 196.w,
+                            height: 150.w,
                             child: Image.asset(
                               Assets.images.carBanner.path,
                               fit: BoxFit.fill,
                             ),
-                            width: 196.w,
-                            height: 150.w,
                           ),
                           20.wb,
                           SizedBox(

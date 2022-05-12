@@ -206,7 +206,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
                   (value) async {
                     if (value != null) {
                       File files = value;
-                      String urls = await ApiClient().uploadImage(files);
+                      String urls = await apiClient.uploadImage(files);
                       carInfoModel =
                           await CarFunc.carDistinguish(urls.imageWithHost);
                       if (carInfoModel != null) {

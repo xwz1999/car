@@ -1,3 +1,5 @@
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/model/car/estimate_price_model.dart';
 import 'package:cloud_car/ui/home/car_manager/check_pushcar_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
@@ -32,6 +34,10 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
     paint: -1,
     transfer: -1,
   );
+
+  ///寄卖合同model
+  final ValueNotifier<ConsignmentContractModel> consignmentContractModel =
+      ValueNotifier(ConsignmentContractModel(masterInfo: MasterInfo()));
 
   // String? _transfer = ''; //过户次数
   // String? _paint = ''; //油漆面
@@ -396,11 +402,11 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                               return CloudListPickerWidget(
                                 title: '变速箱情况',
                                 items: fixList.map((e) => e.name).toList(),
-                                onConfirm: (str, index) async{
+                                onConfirm: (str, index) async {
                                   Get.back();
                                   _carInfo.hasSituation = index;
                                   if (index == 0) {
-                                  await  Get.bottomSheet(
+                                    await Get.bottomSheet(
                                       CloudListPickerWidget(
                                         title: '变速箱情况',
                                         items: haveFixList,
@@ -439,20 +445,21 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                                   title: '重大事故',
                                   items:
                                       accidentList.map((e) => e.name).toList(),
-                                  onConfirm: (str, index) async{
+                                  onConfirm: (str, index) async {
                                     Get.back();
                                     _carInfo.hasAccident = index;
                                     if (index == 0) {
-                                    await  Get.bottomSheet(CloudListPickerWidget(
-                                          title: '重大事故',
-                                          items: accidentDetailList,
-                                          onConfirm: (str, index) {
-                                            _carInfo.accidents = [];
-                                            _carInfo.accidents!.add(
-                                                accidentDetailType.keys
-                                                    .toList()[index]);
-                                            Get.back();
-                                          }));
+                                      await Get.bottomSheet(
+                                          CloudListPickerWidget(
+                                              title: '重大事故',
+                                              items: accidentDetailList,
+                                              onConfirm: (str, index) {
+                                                _carInfo.accidents = [];
+                                                _carInfo.accidents!.add(
+                                                    accidentDetailType.keys
+                                                        .toList()[index]);
+                                                Get.back();
+                                              }));
                                     }
 
                                     setState(() {});
@@ -523,12 +530,21 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                   child: ElevatedButton(
                     onPressed: () async {
                       var cancel = CloudToast.loading;
-                      var price =
-                          num.parse(await CarFunc.getEstimatePrice(_carInfo));
-                      if (price != -1) {
+                      EstimatePriceModel? estimatePriceModel;
+                      estimatePriceModel =
+                          await CarFunc.getEstimatePrice(_carInfo);
+                      if (estimatePriceModel != null) {
+                        consignmentContractModel.value.publishCarInfo =
+                            widget.publishCarInfo;
+                        consignmentContractModel.value.evaluationPrice =
+                            estimatePriceModel.price;
+                        consignmentContractModel.value.priceId =
+                            estimatePriceModel.id as int?;
+
                         Get.to(() => CheckPushPage(
-                          price: price,
-                            publishCarInfo: widget.publishCarInfo));
+                              consignmentContractModel:
+                                  consignmentContractModel,
+                            ));
                       }
                       cancel();
                     },

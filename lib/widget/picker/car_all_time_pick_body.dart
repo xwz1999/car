@@ -3,9 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarAllTimePickBody extends StatefulWidget {
+  final bool chooseLate;///选择当前时间之前的时间还是当前时间之后的时间
   final DateTime initTime;
 
-  const CarAllTimePickBody({Key? key, required this.initTime})
+  const CarAllTimePickBody({Key? key, required this.initTime, this.chooseLate = true})
       : super(key: key);
 
   @override
@@ -152,7 +153,7 @@ class _CarAllTimePickBodyState extends State<CarAllTimePickBody> {
                     .map((e) => Center(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: Text(e.toString() + '年',
+                            child: Text('$e年',
                                 textAlign: TextAlign.center),
                           ),
                         ))
@@ -181,7 +182,7 @@ class _CarAllTimePickBodyState extends State<CarAllTimePickBody> {
                                   right: 10.w,
                                   top: 10.w,
                                   bottom: 10.w),
-                              child: Text(e.toString() + '月',
+                              child: Text('$e月',
                                   textAlign: TextAlign.center),
                             ),
                           ))
@@ -210,7 +211,7 @@ class _CarAllTimePickBodyState extends State<CarAllTimePickBody> {
                                   right: 10.w,
                                   top: 10.w,
                                   bottom: 10.w),
-                              child: Text(e.toString() + '日',
+                              child: Text('$e日',
                                   textAlign: TextAlign.center),
                             ),
                           ))
