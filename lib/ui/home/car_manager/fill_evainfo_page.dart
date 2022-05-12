@@ -531,7 +531,6 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                     onPressed: () async {
                       var cancel = CloudToast.loading;
                       EstimatePriceModel? estimatePriceModel;
-
                       estimatePriceModel =
                           await CarFunc.getEstimatePrice(_carInfo);
                       if (estimatePriceModel != null) {
