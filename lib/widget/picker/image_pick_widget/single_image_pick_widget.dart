@@ -106,14 +106,14 @@ class _SingleImagePickWidgetState extends State<SingleImagePickWidget> {
         child: Container(
           width: 40.w,
           height: 40.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.w),
+            color: const Color(0xFF000000),
+          ),
           child: Icon(
             CupertinoIcons.xmark,
             size: 20.w,
             color: Colors.white,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.w),
-            color: const Color(0xFF000000),
           ),
         ).onTap(() {
           _files.clear();
