@@ -24,7 +24,7 @@ class _ConsignmentContractState extends State<ConsignmentContract>
   final EasyRefreshController _saleRefreshController = EasyRefreshController();
   final List<ConsignmentListModel> _consignmentList = [];
 
-  bool _onLoad = true;
+  final bool _onLoad = true;
   final List<ConsignmentListModel> _saleList = [];
   @override
   @override

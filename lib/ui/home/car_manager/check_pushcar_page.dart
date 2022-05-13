@@ -133,35 +133,35 @@ class _CheckPushPageState extends State<CheckPushPage> {
                           ),
                         ),
                       ),
-                      widget.consignmentContractModel.value.publishCarInfo!.carSource == 2
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                '已签订合同？'
-                                    .text
-                                    .color(Colors.black.withOpacity(0.45))
-                                    .textStyle(const TextStyle(
-                                        decoration: TextDecoration.none))
-                                    .normal
-                                    .size(20.sp)
-                                    .make(),
-                                TextButton(
-                                  onPressed: () {
-                                    ///去订单列表进行发布车辆操作
-
-                                  },
-                                  child: '继续发布车辆'
-                                      .text
-                                      .color(Colors.blue)
-                                      .textStyle(const TextStyle(
-                                          decoration: TextDecoration.none))
-                                      .normal
-                                      .size(20.sp)
-                                      .make(),
-                                ).paddingZero
-                              ],
-                            )
-                          : 1.heightBox,
+                      // widget.consignmentContractModel.value.publishCarInfo!.carSource == 2
+                      //     ? Row(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         children: [
+                      //           '已签订合同？'
+                      //               .text
+                      //               .color(Colors.black.withOpacity(0.45))
+                      //               .textStyle(const TextStyle(
+                      //                   decoration: TextDecoration.none))
+                      //               .normal
+                      //               .size(20.sp)
+                      //               .make(),
+                      //           TextButton(
+                      //             onPressed: () {
+                      //               ///去订单列表进行发布车辆操作
+                      //
+                      //             },
+                      //             child: '继续发布车辆'
+                      //                 .text
+                      //                 .color(Colors.blue)
+                      //                 .textStyle(const TextStyle(
+                      //                     decoration: TextDecoration.none))
+                      //                 .normal
+                      //                 .size(20.sp)
+                      //                 .make(),
+                      //           ).paddingZero
+                      //         ],
+                      //       )
+                      //     : 1.heightBox,
                     ],
                   ),
                 ),

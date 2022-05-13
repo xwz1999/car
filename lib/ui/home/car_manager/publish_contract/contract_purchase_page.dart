@@ -179,12 +179,13 @@ class _ContractPurchaseState extends State<ContractPurchase> {
         ),
 
         EditItemWidget(
+          keyboardType: TextInputType.number ,
           titleWidth: 160.w,
           title: '出售标价',
           endText: '万元',
-          value:  widget.consignmentContractModel.value.sellPrice??'',
+          value: widget.consignmentContractModel.value.sellPrice==null?'':  (double.parse(widget.consignmentContractModel.value.sellPrice!)/10000 ).toString(),
           callback: (String content) {
-            widget.consignmentContractModel.value.sellPrice = content ;
+            widget.consignmentContractModel.value.sellPrice = (double.parse(content)*10000 ).toString() ;
           },
         ),
         20.hb,

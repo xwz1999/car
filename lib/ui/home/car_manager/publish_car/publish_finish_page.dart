@@ -45,7 +45,7 @@ class _PublishFinishPageState extends State<PublishFinishPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => const TabNavigator());
+                  Get.offAll(() => const TabNavigator());
                 },
                 style: ButtonStyle(
                   backgroundColor:

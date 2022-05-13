@@ -424,9 +424,7 @@ class _PushCarPageState extends State<PushCarPage> {
               );
             },
             _publishCarInfo.carSource != null
-                ? CarSource.values
-                    .toList()[_publishCarInfo.carSource!]
-                    .sourceName
+                ? CarSource.getValue(_publishCarInfo.carSource!).sourceName
                 : '',
             '请选择车辆来源',
           ),

@@ -97,6 +97,11 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
             Container(
               height: kToolbarHeight - 10.w,
               width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                      bottom: BorderSide(
+                          color: BaseStyle.colordddddd, width: 2.w))),
               child: TabBar(
                   onTap: (index) {
                     setState(() {});
@@ -117,11 +122,6 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
                   indicator: const BoxDecoration(),
                   indicatorColor: kPrimaryColor,
                   tabs: [_tab(0, '浏览车辆'), _tab(1, '客户轨迹'), _tab(2, '相关资料')]),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                      bottom: BorderSide(
-                          color: BaseStyle.colordddddd, width: 2.w))),
             ),
             Expanded(
               child: Container(

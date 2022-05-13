@@ -31,6 +31,8 @@ class CarOtherInfo{
 
    num? price;
    int? keyCount;
+   ///接口暂时没有该字段
+   int? transferNum;
    int? compulsoryInsurance;
    String? compulsoryInsuranceDate;
    int? commercialInsurance;
@@ -38,11 +40,12 @@ class CarOtherInfo{
    String? commercialInsurancePrice;
 
    CarOtherInfo({
-    this.price = 0,
-    this.keyCount=0,
-    this.compulsoryInsurance = 0,
+    this.price ,
+    this.keyCount,
+    this.compulsoryInsurance = -1,
     this.compulsoryInsuranceDate='',
-    this.commercialInsurance = 0,
+    this.commercialInsurance = -1,
+     this.transferNum ,
     this.commercialInsuranceDate='',
     this.commercialInsurancePrice='',
   });
