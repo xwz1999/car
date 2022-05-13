@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_management/access_configuration.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure.dart';

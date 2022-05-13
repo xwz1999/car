@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
 import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
@@ -17,7 +16,8 @@ class TaskUserInvitePage extends StatefulWidget {
   _TaskUserInvitePageState createState() => _TaskUserInvitePageState();
 }
 
-class _TaskUserInvitePageState extends State<TaskUserInvitePage>  with SingleTickerProviderStateMixin {
+class _TaskUserInvitePageState extends State<TaskUserInvitePage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isImportant = false;
 
@@ -147,55 +147,58 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>  with SingleTic
             children: [
               Expanded(
                   child: _getBottom(Assets.icons.icPhone.path, '电话', () {
-                    Alert.show(
-                        context,
-                        NormalContentDialog(
-                          type: NormalTextDialogType.delete,
-                          content: RichText(
-                            text: TextSpan(
-                                text: '是否拨打电话',
+                Alert.show(
+                    context,
+                    NormalContentDialog(
+                      type: NormalTextDialogType.delete,
+                      content: RichText(
+                        text: TextSpan(
+                            text: '是否拨打电话',
+                            style: TextStyle(
+                                color: BaseStyle.color333333,
+                                fontSize: BaseStyle.fontSize28),
+                            children: [
+                              TextSpan(
+                                text: '[1289038123093]',
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: BaseStyle.fontSize28),
+                              ),
+                              TextSpan(
+                                text: '?',
                                 style: TextStyle(
                                     color: BaseStyle.color333333,
                                     fontSize: BaseStyle.fontSize28),
-                                children: [
-                                  TextSpan(
-                                    text: '[1289038123093]',
-                                    style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontSize: BaseStyle.fontSize28),
-                                  ),
-                                  TextSpan(
-                                    text: '?',
-                                    style: TextStyle(
-                                        color: BaseStyle.color333333,
-                                        fontSize: BaseStyle.fontSize28),
-                                  ),
-                                ]),
-                          ),
-                          items: const ['取消'],
-                          listener: (index) {
-                            Alert.dismiss(context);
-                          },
-                          deleteListener: () {
-                            Alert.dismiss(context);
-                          },
-                          title: '呼出提示',
-                          deleteItem: '确定',
-                        ));
-                  })),
+                              ),
+                            ]),
+                      ),
+                      items: const ['取消'],
+                      listener: (index) {
+                        Alert.dismiss(context);
+                      },
+                      deleteListener: () {
+                        Alert.dismiss(context);
+                      },
+                      title: '呼出提示',
+                      deleteItem: '确定',
+                    ));
+              })),
               Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
                   child: _getBottom(Assets.icons.icInvite.path, '发起邀约', () {
-                    Get.to(() =>  InviteDetailPage(id: widget.model.customerId, phone:'', name:  widget.model.customerNickname,));
-                  })),
+                Get.to(() => InviteDetailPage(
+                      id: widget.model.customerId,
+                      phone: '',
+                      name: widget.model.customerNickname,
+                    ));
+              })),
               Expanded(
                   child: _getBottom(Assets.icons.icContract.path, '发起合同', () {
-                    Get.to(() => const InitiateContractPage());
-                  })),
+                Get.to(() => const InitiateContractPage());
+              })),
             ],
           ),
-        )
-    );
+        ));
   }
 
   _getBottom(String url, String text, Function callBack) {
@@ -223,5 +226,4 @@ class _TaskUserInvitePageState extends State<TaskUserInvitePage>  with SingleTic
   _tab(int index, String text) {
     return Text(text);
   }
-
 }

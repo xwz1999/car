@@ -6,15 +6,19 @@ import 'package:flutter/material.dart';
 class ProgressBar extends StatefulWidget {
   final bool direction;
   //final int index;
+  final bool cancel;
   final int num;
   final int length;
   final int HW;
   final List<dynamic> texts;
   const ProgressBar(
       {Key? key,
-      this.direction = true,
 
       ///true垂直 false水平
+      this.direction = true,
+
+      ///是否取消订单   true:不取消  false:取消
+      this.cancel = true,
       required this.texts,
       //required this.index,
       required this.length,
@@ -40,52 +44,56 @@ class _ProgressBarState extends State<ProgressBar> {
           ? ListView.builder(
               itemBuilder: (context, index) {
                 late bool ing = index < widget.num;
-                return Row(
-                  children: [
-                    SizedBox(
-                        height: (widget.HW + 20).w,
-                        child: Column(
-                          children: [
-                            // index != 0
-                            //     ? Container(
-                            //         width: 2.w,
-                            //         height: 10.w,
-                            //         decoration: BoxDecoration(
-                            //           color: ing
-                            //               ? kPrimaryColor
-                            //               : BaseStyle.colorcccccc,
-                            //         ),
-                            //       )
-                            //     : const SizedBox(),
-                            Container(
-                              margin:
-                                  EdgeInsets.only(top: index != 0 ? 0 : 10.w),
-                              width: 20.w,
-                              height: 20.w,
-                              decoration: BoxDecoration(
-                                color:
-                                    ing ? kPrimaryColor : BaseStyle.colorcccccc,
-                                borderRadius: BorderRadius.circular(10.w),
+                return IntrinsicWidth(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          height: (widget.HW + 30).w,
+                          child: Column(
+                            children: [
+                              // index != 0
+                              //     ? Container(
+                              //         width: 2.w,
+                              //         height: 10.w,
+                              //         decoration: BoxDecoration(
+                              //           color: ing
+                              //               ? kPrimaryColor
+                              //               : BaseStyle.colorcccccc,
+                              //         ),
+                              //       )
+                              //     : const SizedBox(),
+                              Container(
+                                margin:
+                                    EdgeInsets.only(top: index != 0 ? 0 : 10.w),
+                                width: 20.w,
+                                height: 20.w,
+                                decoration: BoxDecoration(
+                                  color: ing
+                                      ? kPrimaryColor
+                                      : BaseStyle.colorcccccc,
+                                  borderRadius: BorderRadius.circular(10.w),
+                                ),
                               ),
-                            ),
-                            index + 1 == widget.length
-                                ? const SizedBox()
-                                : Container(
-                                    width: 2.w,
-                                    height: widget.HW.w,
-                                    decoration: BoxDecoration(
-                                      color: ing
-                                          ? kPrimaryColor
-                                          : BaseStyle.colorcccccc,
+                              index + 1 == widget.length
+                                  ? const SizedBox()
+                                  : Container(
+                                      width: 2.w,
+                                      height: widget.HW.w,
+                                      decoration: BoxDecoration(
+                                        color: ing
+                                            ? kPrimaryColor
+                                            : BaseStyle.colorcccccc,
+                                      ),
                                     ),
-                                  ),
-                          ],
-                        )),
-                    34.wb,
-                    Column(
-                      children: [widget.texts[index]],
-                    )
-                  ],
+                            ],
+                          )),
+                      34.wb,
+                      Column(
+                        children: [widget.texts[index]],
+                      )
+                    ],
+                  ),
                 );
               },
               itemCount: widget.length,
@@ -94,53 +102,59 @@ class _ProgressBarState extends State<ProgressBar> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 late bool ing = index < widget.num;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                        width: (widget.HW + 20).w,
-                        child: Row(
-                          children: [
-                            // index != 0
-                            //     ? Container(
-                            //         width: 2.w,
-                            //         height: 10.w,
-                            //         decoration: BoxDecoration(
-                            //           color: ing
-                            //               ? kPrimaryColor
-                            //               : BaseStyle.colorcccccc,
-                            //         ),
-                            //       )
-                            //     : const SizedBox(),
-
-                            Container(
-                              margin: EdgeInsets.only(left: 0.w),
-                              width: 20.w,
-                              height: 20.w,
-                              decoration: BoxDecoration(
-                                color:
-                                    ing ? kPrimaryColor : BaseStyle.colorcccccc,
-                                borderRadius: BorderRadius.circular(10.w),
-                              ),
-                            ),
-                            index + 1 == widget.length
-                                ? const SizedBox()
-                                : Container(
-                                    width: widget.HW.w,
-                                    height: 2.w,
-                                    decoration: BoxDecoration(
-                                      color: ing
+                return IntrinsicWidth(
+                  child: Column(
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          width: (widget.HW + 20).w,
+                          child: Row(
+                            children: [
+                              // index != 0
+                              //     ? Container(
+                              //         width: 2.w,
+                              //         height: 10.w,
+                              //         decoration: BoxDecoration(
+                              //           color: ing
+                              //               ? kPrimaryColor
+                              //               : BaseStyle.colorcccccc,
+                              //         ),
+                              //       )
+                              //     : const SizedBox(),
+                              Container(
+                                margin: EdgeInsets.only(left: 0.w),
+                                width: 20.w,
+                                height: 20.w,
+                                decoration: BoxDecoration(
+                                  color: ing
+                                      ? widget.cancel
                                           ? kPrimaryColor
-                                          : BaseStyle.colorcccccc,
+                                          : const Color(0xFFE62222)
+                                      : BaseStyle.colorcccccc,
+                                  borderRadius: BorderRadius.circular(10.w),
+                                ),
+                              ),
+                              index + 1 == widget.length
+                                  ? const SizedBox()
+                                  : Container(
+                                      width: widget.HW.w,
+                                      height: 2.w,
+                                      decoration: BoxDecoration(
+                                        color: ing
+                                            ? widget.cancel
+                                                ? kPrimaryColor
+                                                : BaseStyle.colorcccccc
+                                            : BaseStyle.colorcccccc,
+                                      ),
                                     ),
-                                  ),
-                          ],
-                        )),
-                    12.hb,
-                    Row(
-                      children: [widget.texts[index]],
-                    ),
-                  ],
+                            ],
+                          )),
+                      12.hb,
+                      Row(
+                        children: [widget.texts[index]],
+                      ),
+                    ],
+                  ),
                 );
               },
               itemCount: widget.length,

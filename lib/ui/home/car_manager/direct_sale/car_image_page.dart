@@ -2,12 +2,19 @@
 
 import 'dart:io';
 
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 import 'package:flutter/material.dart';
 
+typedef ImageBack = Function(List<File> image);
+
 class CarImageItem extends StatefulWidget {
-  const CarImageItem({Key? key}) : super(key: key);
+  final ImageBack imageBack;
+  const CarImageItem({
+    Key? key,
+    required this.imageBack,
+  }) : super(key: key);
 
   @override
   _CarImageItemState createState() => _CarImageItemState();
@@ -29,6 +36,9 @@ class _CarImageItemState extends State<CarImageItem> {
             for (var item in files) {
               _files.add(item);
             }
+            //_files = files;
+            print("aaaa+$_files");
+            widget.imageBack(_files);
           }),
       // GridView.builder(
       //     physics: const NeverScrollableScrollPhysics(),

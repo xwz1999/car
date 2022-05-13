@@ -136,7 +136,10 @@ class _ChangeNameDataState extends State<ChangeNameData> {
           32.wb,
           GestureDetector(
             onTap: () {},
-            child: SizedBox(child: Image.asset(Assets.images.addcar.path)),
+            child: SizedBox(
+                width: 200.w,
+                height: 120.w,
+                child: Image.asset(Assets.images.addcar.path)),
           )
         ],
       ),

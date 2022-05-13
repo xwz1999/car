@@ -30,29 +30,24 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
    int _page = 1;
    final int _size = 10;
 
+  bool _onLoad = true;
+  late List<CarEvaluationModel> carList = [];
 
-   bool _onLoad = true;
-   late List<CarEvaluationModel> carList = [];
-
-
-   @override
-   void initState() {
-     super.initState();
-
-   }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return  Column(
+    return Column(
       children: [
         const SizedBox(
-          height:  kToolbarHeight +20 ,
+          height: kToolbarHeight + 20,
         ),
         Expanded(
-          child:
-
-          EasyRefresh.custom(
+          child: EasyRefresh.custom(
             firstRefresh: true,
             controller: widget.refreshController,
             header: MaterialHeader(),
@@ -60,11 +55,8 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
             onRefresh: () async {
               _page = 1;
 
-              var list = await CarFunc.getCarEvaluationList(
-                  _page,
-                  _size,
-                  keyWords:_modelName );
-
+              var list = await CarFunc.getCarEvaluationList(_page, _size,
+                  keyWords: _modelName);
 
               carList.clear();
               carList.addAll(list);
@@ -73,11 +65,11 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
             },
             onLoad: () async {
               _page++;
-              var baseList =
-              await apiClient.requestList(API.car.getCarEvaluationList, data: {
+              var baseList = await apiClient
+                  .requestList(API.car.getCarEvaluationList, data: {
                 'page': _page,
                 'size': _size,
-                'modelName':_modelName,
+                'modelName': _modelName,
               });
               if (baseList.nullSafetyTotal > carList.length) {
                 carList.addAll(baseList.nullSafetyList

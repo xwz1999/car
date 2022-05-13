@@ -10,6 +10,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import 'car_image_page.dart';
@@ -163,8 +164,8 @@ class _EditCarPageState extends State<EditCarPage>  with SingleTickerProviderSta
         extendBody: true,
         body:TabBarView(
           controller: _tabController,
-          children: const [
-            CarImageItem(),
+          children:  [
+            CarImageItem(imageBack: (List<File> image) {  },),
             EditCarDetailItem(),
 
             EditCarReportPage(),

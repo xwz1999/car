@@ -1,3 +1,4 @@
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -32,14 +33,8 @@ class _CreateOrderState extends State<CreateOrder> {
             padding: EdgeInsets.only(left: 32.w),
             child: Text(
               '怎么创建订单',
-              style:
-              Theme.of(context)
-                  .textTheme
-                  .subtitle2
-                  ?.copyWith(
-                color:   const Color(0xFF111111),
-                  fontWeight: FontWeight.bold
-              ),
+              style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                  color: const Color(0xFF111111), fontWeight: FontWeight.bold),
             ),
           ),
           24.hb,
@@ -141,36 +136,10 @@ class _CreateOrderState extends State<CreateOrder> {
             ),
           ),
           96.hb,
-          GestureDetector(
-            onTap: () {
-              //BotToast.showText(text: '验证码输入错误');
-              //Get.to(() => const NoWithddrawalPage());
-            },
-            child: Container(
-              width: 686.w,
-              height: 72.w,
-              margin: EdgeInsets.only(left: 32.w),
-              padding: EdgeInsets.only(left: 318.w, top: 22.w),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.w),
-                  gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-              child: SizedBox(
-                width: 252.w,
-                height: 28.w,
-                child: Text(
-                  '提交',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(color: kForeGroundColor),
-                ),
-              ),
-            ),
+          CloudBottomButton(
+            onTap: () {},
+            text: '提交',
           ),
-          500.hb,
         ],
       ),
     );
