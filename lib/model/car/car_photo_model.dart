@@ -15,6 +15,10 @@ class CarPhotoModel {
     required this.baseInfo,
     required this.report,
   });
+
+
+  static CarPhotoModel get init => CarPhotoModel(report: Report(), photos: CarManagePhotoModel.init, baseInfo: BaseInfo()
+  );
 }
 
 
@@ -26,7 +30,15 @@ class BaseInfo{
   String? emissionStandard;
   String? useCharacter;
   int? location;
+
+  String? locationString;
+
+
   int? attribution;
+
+
+  String? attributionString;
+
   String? conditionIn;
   String? conditionOut;
 
@@ -41,6 +53,8 @@ class BaseInfo{
     this.attribution,
     this.conditionIn= '',
     this.conditionOut= '',
+    this.attributionString = '',
+    this.locationString = '',
   });
 }
 

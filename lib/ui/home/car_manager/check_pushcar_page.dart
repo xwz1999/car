@@ -107,7 +107,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                             if ( widget.consignmentContractModel.value.publishCarInfo!.carSource == 1) {
                               ///车商发布车辆
                               Get.to(() => CarPicturePage(
-                                  consignmentContractModel:widget.consignmentContractModel.value
+                                  consignmentContractModel:widget.consignmentContractModel.value, isPersonal: false,
 
                                 ));
                             } else {

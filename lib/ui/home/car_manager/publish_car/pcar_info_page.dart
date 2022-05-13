@@ -1,19 +1,41 @@
+import 'package:cloud_car/model/car/business_push_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/model/car/dealer_list_model.dart';
+import 'package:cloud_car/model/region/china_region_model.dart';
+import 'package:cloud_car/ui/home/car_manager/choose_dealer_page.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_box_widget.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_report_page.dart';
+import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/picker/car_list_picker.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
+import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:cloud_car/widget/publish_car_info_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../model/car/car_photo_model.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class PublishCarInfoPage extends StatefulWidget {
+  final int? orderId;
 
-  const PublishCarInfoPage({Key? key,})
-      : super(key: key);
+  final ValueNotifier<BusinessPushModel> businessPushModel;
+
+  final ValueNotifier<CarPhotoModel> carPhotoModel;
+
+  final ConsignmentContractModel consignmentContractModel;
+
+  const PublishCarInfoPage({
+    Key? key,
+    required this.businessPushModel,
+    required this.carPhotoModel,
+    required this.consignmentContractModel,
+    this.orderId,
+  }) : super(key: key);
 
   @override
   State<PublishCarInfoPage> createState() => _PublishCarInfoPageState();
@@ -87,72 +109,272 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
             ),
             Container(
               color: Colors.white,
-              padding: EdgeInsets.all(30.w),
+              padding: EdgeInsets.all(32.w),
               child: Column(
                 children: [
-                  // PublishCarInfoWidget(
-                  //   fontColor: Colors.black38,
-                  //   publishCarInfo: widget.consignmentContractModel.value.publishCarInfo!,
-                  // ),
-                  _publishChoose(
-                      style: false,
-                      necessary: true,
+                  PublishCarInfoWidget(
+                    fontColor: const Color(0xFF999999),
+                    publishCarInfo:
+                        widget.consignmentContractModel.publishCarInfo!,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      await showModalBottomSheet(
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16.w))),
+                        builder: (context) {
+                          return CloudListPickerWidget(
+                              title: '车辆类型',
+                              items: carTypeList.map((e) => e.name).toList(),
+                              onConfirm: (str, index) {
+                                widget.carPhotoModel.value.baseInfo.type = str;
+                                Get.back();
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                setState(() {});
+                              });
+                        },
+                      );
+                    },
+                    child: EditItemWidget(
                       title: '车辆类型',
-                      hint: '请选择',
-                      head: '车辆类型',
-                      value: _carType!,
-                      callback: (content,value) {
-                        Get.back();
-                        _carType = content;
-                        setState(() {});
-                      },
-                      typeList: carTypeList),
-                  _publishChoose(
-                      style: true,
-                      necessary: false,
+                      tips: '请选择',
+                      value: widget.carPhotoModel.value.baseInfo.type ?? '',
+                      topIcon: true,
+                      canChange: false,
+                      callback: (String content) {},
+                      paddingTop: 0.w,
+                      endIcon: Image.asset(
+                        Assets.icons.icGoto.path,
+                        width: 32.w,
+                        height: 32.w,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      await showModalBottomSheet(
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16.w))),
+                        builder: (context) {
+                          return CloudGridPickerWidget(
+                              title: '选择内饰颜色',
+                              items: interColorList.map((e) => e.name).toList(),
+                              onConfirm: (str, index) {
+                                widget.carPhotoModel.value.baseInfo
+                                    .interiorColor = str.first;
+
+                                Get.back();
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                setState(() {});
+                              });
+                        },
+                      );
+                    },
+                    child: EditItemWidget(
                       title: '内饰颜色',
-                      hint: '请选择',
-                      head: '选择内饰颜色',
-                      value: _interColor!,
-                      callback: (content,value) {
-                        Get.back();
-                        _interColor = content;
-                        setState(() {});
-                      },
-                      typeList: interColorList),
-                  _publishController(
-                      true, '排量', '请输入', _displacementController, 'L'),
-                  _publishController(
-                      true, '变速箱', '请输入', _transmissionController, ''),
-                  _publishController(
-                      true, '排放标准', '请输入', _emissionController, ''),
-                  Row(
-                    children: [
-                      23.wb,
-                      '所属车商'
-                          .text
-                          .size(30.sp)
-                          .color(Colors.black.withOpacity(0.45))
-                          .make(),
-                    ],
-                  ).paddingOnly(top: 15.h, bottom: 15.h),
-                  _publishChoose(
-                      style: false,
-                      necessary: true,
+                      tips: '请选择',
+                      value:
+                          widget.carPhotoModel.value.baseInfo.interiorColor ??
+                              '',
+                      topIcon: false,
+                      canChange: false,
+                      callback: (String content) {},
+                      endIcon: Image.asset(
+                        Assets.icons.icGoto.path,
+                        width: 32.w,
+                        height: 32.w,
+                      ),
+                    ),
+                  ),
+                  EditItemWidget(
+                    title: '排量',
+                    tips: '请输入',
+                    value:
+                        widget.carPhotoModel.value.baseInfo.displacement ?? '',
+                    topIcon: true,
+                    callback: (String content) {
+                      widget.carPhotoModel.value.baseInfo.displacement =
+                          content;
+                      setState(() {});
+                    },
+                    endText: 'L',
+                  ),
+                  EditItemWidget(
+                    title: '变速箱',
+                    tips: '请输入',
+                    value: widget.carPhotoModel.value.baseInfo.gearbox ?? '',
+                    topIcon: true,
+                    callback: (String content) {
+                      widget.carPhotoModel.value.baseInfo.gearbox = content;
+                      setState(() {});
+                    },
+                  ),
+                  EditItemWidget(
+                    title: '排放标准',
+                    tips: '请输入',
+                    value:
+                        widget.carPhotoModel.value.baseInfo.emissionStandard ??
+                            '',
+                    topIcon: true,
+                    callback: (String content) {
+                      widget.carPhotoModel.value.baseInfo.emissionStandard =
+                          content;
+                      setState(() {});
+                    },
+                  ),
+
+                  GestureDetector(
+                    onTap: () async {
+                      Get.to(() => ChooseDealerPage(
+                        callback: (DealerListModel model) {
+                          widget.businessPushModel.value.dealerName = model.name;
+                          widget.businessPushModel.value.dealerId = model.id;
+                          setState(() {});
+                        },
+                      ));
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: EditItemWidget(
+                      title: '所属车商',
+                      tips: '请选择',
+                      value:
+                      widget.businessPushModel.value.dealerName??
+                          '',
+                      topIcon:  widget.orderId!=null,
+                      canChange: false,
+                      callback: (String content) {},
+                      endIcon: Image.asset(
+                        Assets.icons.icGoto.path,
+                        width: 32.w,
+                        height: 32.w,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      await showModalBottomSheet(
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16.w))),
+                        builder: (context) {
+                          return CloudListPickerWidget(
+                              title: '使用性质',
+                              items: purposeList.map((e) => e.name).toList(),
+                              onConfirm: (str, index) {
+                                widget.carPhotoModel.value.baseInfo
+                                    .useCharacter = str;
+                                Get.back();
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                setState(() {});
+                              });
+                        },
+                      );
+                    },
+                    child: EditItemWidget(
                       title: '使用性质',
-                      hint: '请选择',
-                      head: '使用性质',
-                      value: _purpose!,
-                      callback: (content,value) {
-                        Get.back();
-                        _purpose = content;
-                        setState(() {});
+                      tips: '请选择',
+                      value: widget.carPhotoModel.value.baseInfo.useCharacter ??
+                          '',
+                      topIcon: true,
+                      canChange: false,
+                      callback: (String content) {},
+                      endIcon: Image.asset(
+                        Assets.icons.icGoto.path,
+                        width: 32.w,
+                        height: 32.w,
+                      ),
+                    ),
+                  ),
+
+
+
+
+                  GestureDetector(
+                    onTap: (){
+                        Get.to(()=>ChooseCityPage(callback: (ChinaRegionModel model) {
+                          widget.carPhotoModel.value.baseInfo.locationString = model.name;
+                          widget.carPhotoModel.value.baseInfo.location = model.id;
+                          setState(() {
+
+                          });
+                        },
+
+                        ));
+                    },
+                    child: EditItemWidget(
+                      title: '车辆所在地',
+                      tips: '请选择',
+                      value: widget.carPhotoModel.value.baseInfo.locationString ??
+                          '',
+                      topIcon: true,
+                      canChange: false,
+                      callback: (String content) {},
+                      endIcon: Image.asset(
+                        Assets.icons.icGoto.path,
+                        width: 32.w,
+                        height: 32.w,
+                      ),
+                    ),
+                  ),
+
+
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(()=>ChooseCityPage(callback: (ChinaRegionModel model) {
+                        widget.carPhotoModel.value.baseInfo.attributionString = model.name;
+                        widget.carPhotoModel.value.baseInfo.attribution = model.id;
+                        setState(() {
+
+                        });
                       },
-                      typeList: purposeList),
-                  _publishJumpPage(false, '车辆所在地', '请选择', () {}, _carPlace),
-                  _publishJumpPage(false, '车辆归属地', '请选择', () {}, _location),
-                  _publishTextField('车况（对内）', _carConditionInterController),
-                  _publishTextField('车况（对外）', _carConditionOutController),
+
+                      ));
+                    },
+                    child: EditItemWidget(
+                      title: '车辆归属地',
+                      tips: '请选择',
+                      value: widget.carPhotoModel.value.baseInfo.attributionString ??
+                          '',
+                      topIcon: true,
+                      canChange: false,
+                      callback: (String content) {},
+                      endIcon: Image.asset(
+                        Assets.icons.icGoto.path,
+                        width: 32.w,
+                        height: 32.w,
+                      ),
+                    ),
+                  ),
+
+
+
+                  EditItemBoxWidget(
+                    title: '车况(对内)',
+                    tips: '请输入',
+                    value: widget.carPhotoModel.value.baseInfo.conditionIn ??
+                        '',
+                    topIcon: true,
+                    callback: (String content) {
+                      widget.carPhotoModel.value.baseInfo.conditionIn = content;
+                    },
+                  ),
+
+                  EditItemBoxWidget(
+                    title: '车况(对外)',
+                    tips: '请输入',
+                    value: widget.carPhotoModel.value.baseInfo.conditionOut ??
+                        '',
+                    topIcon: true,
+                    callback: (String content) {
+                      widget.carPhotoModel.value.baseInfo.conditionOut = content;
+                    },
+                  ),
+                  32.hb,
                 ],
               ),
             ),
@@ -161,7 +383,21 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => const CarReportPage());
+                  if (widget.carPhotoModel.value.baseInfo.type==null||
+                      widget.carPhotoModel.value.baseInfo.gearbox==null||
+                      widget.carPhotoModel.value.baseInfo.displacement==null||
+                      widget.carPhotoModel.value.baseInfo.emissionStandard==null||
+                      widget.carPhotoModel.value.baseInfo.useCharacter ==null||(
+                      widget.orderId==null&&widget.businessPushModel.value.dealerId==null
+                  )
+
+                  ){
+                    CloudToast.show('请先完善客户信息');
+
+                  }else{
+                    Get.to(() => const CarReportPage());
+                  }
+
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -175,203 +411,10 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
     );
   }
 
-  _publishTextField(
-    String title,
-    TextEditingController contentController,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        title.text.size(30.sp).color(Colors.black.withOpacity(0.45)).make(),
-        15.heightBox,
-        TextField(
-          minLines: 3,
-          maxLines: 10,
-          cursorHeight: 2,
-          textAlign: TextAlign.start,
-          onChanged: (text) => setState(() {}),
-          autofocus: false,
-          controller: contentController,
-          decoration: InputDecoration(
-            hintText: '请输入',
-            hintStyle: TextStyle(
-              fontSize: 30.sp,
-              color: Colors.black.withOpacity(0.25),
-            ),
-            contentPadding: EdgeInsets.all(30.h),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.w),
-                borderSide: const BorderSide(
-                    color: Colors.black12, width: 1, style: BorderStyle.solid)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.w),
-                borderSide: const BorderSide(
-                    color: Colors.black, width: 1, style: BorderStyle.solid)),
-          ),
-        ),
-      ],
-    ).paddingOnly(top: 15.h, bottom: 15.h, left: 23.w, right: 23.w);
-  }
 
-  _publishJumpPage(
-    bool necessary,
-    String title,
-    String hint,
-    VoidCallback onTap,
-    String content,
-  ) {
-    return GestureDetector(
-      onTap: () {},
-      child: Material(
-        color: Colors.transparent,
-        child: Row(
-          children: [
-            necessary
-                ? '*'
-                    .text
-                    .size(30.sp)
-                    .color(Colors.red)
-                    .make()
-                    .paddingOnly(top: 5)
-                : 13.wb,
-            10.wb,
-            SizedBox(
-              width: 170.w,
-              child: title.text
-                  .size(30.sp)
-                  .color(Colors.black.withOpacity(0.45))
-                  .make(),
-            ),
-            (content.isEmpty ? hint : content)
-                .text
-                .size(30.sp)
-                .color(Colors.black.withOpacity(content.isEmpty ? 0.25 : 0.85))
-                .make(),
-            const Spacer(),
-            Icon(
-              CupertinoIcons.chevron_right,
-              color: Colors.black.withOpacity(0.45),
-              size: 28.w,
-            ),
-          ],
-        ),
-      ),
-    ).paddingOnly(top: 15.h, bottom: 15.h);
-  }
 
-  _publishController(
-    bool necessary,
-    String title,
-    String hint,
-    TextEditingController contentController,
-    String unit,
-  ) {
-    return Container(
-      padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
-      color: Colors.transparent,
-      child: Row(
-        children: [
-          necessary
-              ? '*'
-                  .text
-                  .size(30.sp)
-                  .color(Colors.red)
-                  .make()
-                  .paddingOnly(top: 5)
-              : 13.wb,
-          10.wb,
-          SizedBox(
-            width: 170.w,
-            child: title.text
-                .size(30.sp)
-                .color(Colors.black.withOpacity(0.45))
-                .make(),
-          ),
-          Expanded(
-            child: TextField(
-              textAlign: TextAlign.start,
-              onChanged: (text) => setState(() {}),
-              autofocus: false,
-              controller: contentController,
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.zero,
-                  isDense: true,
-                  border: InputBorder.none,
-                  hintText: hint,
-                  hintStyle: TextStyle(
-                    fontSize: 30.sp,
-                    color: Colors.black.withOpacity(0.25),
-                  )),
-            ),
-          ),
-          24.wb,
-          unit.text.size(30.sp).color(Colors.black.withOpacity(0.8)).make(),
-        ],
-      ),
-    );
-  }
 
-  _publishChoose({
-    required bool style,
-    required bool necessary,
-    required String title,
-    required String hint,
-    required String head,
-    required String value,
-    required Function(String,int) callback,
-    required List<ChooseItem> typeList,
-  }) {
-    return GestureDetector(
-      onTap: () async {
-        await showModalBottomSheet(
-          context: context,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
-          builder: (context) {
-            return CarListPicker(
-              isGrid: style,
-              carString: value.isEmptyOrNull ? '' : value,
-              items: typeList,
-              callback: callback,
-              title: '车辆来源',
-            );
-          },
-        );
-      },
-      child: Material(
-        color: Colors.transparent,
-        child: Row(
-          children: [
-            necessary
-                ? '*'
-                    .text
-                    .size(30.sp)
-                    .color(Colors.red)
-                    .make()
-                    .paddingOnly(top: 5)
-                : 13.wb,
-            10.wb,
-            SizedBox(
-              width: 170.w,
-              child: title.text
-                  .size(30.sp)
-                  .color(Colors.black.withOpacity(0.45))
-                  .make(),
-            ),
-            (value.isEmpty ? hint : value)
-                .text
-                .size(30.sp)
-                .color(Colors.black.withOpacity(value.isEmpty ? 0.25 : 0.85))
-                .make(),
-            const Spacer(),
-            Icon(
-              CupertinoIcons.chevron_right,
-              color: Colors.black.withOpacity(0.45),
-              size: 28.w,
-            ),
-          ],
-        ),
-      ),
-    ).paddingOnly(top: 15.h, bottom: 15.h);
-  }
+
+
+
 }

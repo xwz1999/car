@@ -3,13 +3,19 @@
 class BusinessPushModel{
    int? priceId;
    int? dealerId;
+   String? dealerName;
    CarOtherInfo other;
 
    BusinessPushModel({
     this.priceId,
     this.dealerId,
+     this.dealerName,
     required this.other,
   });
+
+
+   static BusinessPushModel get init => BusinessPushModel(other: CarOtherInfo()
+      );
 }
 
 
@@ -40,4 +46,7 @@ class CarOtherInfo{
     this.commercialInsuranceDate='',
     this.commercialInsurancePrice='',
   });
+
+
+
 }
