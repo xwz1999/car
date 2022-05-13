@@ -370,4 +370,56 @@ class CarFunc {
     }
   }
 
+
+
+
+
+  ///车商发布车辆
+  static Future<bool> personalPushCar(
+      {required int orderId,required CarPhotoModel carPhotoModel,}) async {
+    Map<String, dynamic> baseInfo = {
+      "type": carPhotoModel.baseInfo.type,
+      "interiorColor": carPhotoModel.baseInfo.interiorColor,
+      "displacement": carPhotoModel.baseInfo.displacement,
+      "gearbox": carPhotoModel.baseInfo.gearbox,
+      "emissionStandard": carPhotoModel.baseInfo.emissionStandard,
+      "useCharacter": carPhotoModel.baseInfo.useCharacter,
+      "location":carPhotoModel.baseInfo.location,
+      "attribution": carPhotoModel.baseInfo.attribution,
+      "conditionIn": carPhotoModel.baseInfo.conditionIn,
+      "conditionOut": carPhotoModel.baseInfo.conditionOut,
+    };
+
+    Map<String, dynamic> photos = {
+      "carPhotos":carPhotoModel.photos.carPhotos,
+      "interiorPhotos": carPhotoModel.photos.interiorPhotos,
+      "defectPhotos": carPhotoModel.photos.defectPhotos,
+      "dataPhotos": carPhotoModel.photos.dataPhotos,
+    };
+
+    Map<String, dynamic> report = {
+      "paints":carPhotoModel.report.paints,
+    };
+
+
+
+    BaseModel model =
+    await apiClient.request(API.order.consignmentPublish, data: {
+      'orderId': orderId,
+      'photos': photos,
+      'baseInfo': baseInfo,
+      'report':report,
+    });
+    if (model.code == 0) {
+      if (model.msg == '操作成功') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      CloudToast.show(model.msg);
+      return false;
+    }
+  }
+
 }

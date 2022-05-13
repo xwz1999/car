@@ -122,8 +122,6 @@ class _CarPricePageState extends State<CarPricePage> {
                     cancel();
                   }
 
-
-
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),

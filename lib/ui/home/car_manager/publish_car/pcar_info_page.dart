@@ -96,6 +96,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
               padding: EdgeInsets.all(32.w),
               child: Column(
                 children: [
+                  widget.orderId!=null?const SizedBox():
                   PublishCarInfoWidget(
                     fontColor: const Color(0xFF999999),
                     publishCarInfo:
