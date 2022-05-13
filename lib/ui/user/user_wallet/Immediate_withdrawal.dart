@@ -1,12 +1,16 @@
 // ignore_for_file: file_names
 
 import 'package:cloud_car/model/configuration_model.dart';
+
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+typedef BankCard = Function(String name, String icon);
 
 class ImmediateWithdrawal extends StatefulWidget {
   const ImmediateWithdrawal({Key? key}) : super(key: key);
@@ -15,15 +19,30 @@ class ImmediateWithdrawal extends StatefulWidget {
   State<ImmediateWithdrawal> createState() => _ImmediateWithdrawalState();
 }
 
+//late final BankCard bankCard;
+ConfigurationModel bankCard =
+    [ConfigurationModel(subtitle: '', title: '')] as ConfigurationModel;
 final List<int> _selectIndex = [];
 final List<ConfigurationModel> _chooseModels = [];
+// List moddels = [
+//   {
+//     'icon': Assets.icons.agricultural.path,
+//     'title': '中国农业银行(1278)',
+//   },
+//   {
+//     'icon': Assets.icons.bank1.path,
+//     'title': '中国建设银行（1278）',
+//   },
+//   {
+//     'icon': Assets.icons.bank2.path,
+//     'title': '中国建设银行（1278）',
+//   },
+// ];
 List<ConfigurationModel> moddels = [
   ConfigurationModel(
       subtitle: Assets.icons.agricultural.path, title: '中国农业银行(1278)'),
-  ConfigurationModel(
-      subtitle: Assets.icons.agricultural.path, title: '中国农业银行(1278)'),
-  ConfigurationModel(
-      subtitle: Assets.icons.agricultural.path, title: '中国农业银行(1278)'),
+  ConfigurationModel(subtitle: Assets.icons.bank1.path, title: '中国建设银行（1278）'),
+  ConfigurationModel(subtitle: Assets.icons.bank2.path, title: '中国建设银行（1278）'),
 ];
 
 class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
@@ -56,6 +75,17 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                   17.hb,
                   GestureDetector(
                     onTap: () {
+                      List<ConfigurationModel> moddels = [
+                        ConfigurationModel(
+                            subtitle: Assets.icons.agricultural.path,
+                            title: '中国农业银行(1278)'),
+                        ConfigurationModel(
+                            subtitle: Assets.icons.bank1.path,
+                            title: '中国建设银行（1278）'),
+                        ConfigurationModel(
+                            subtitle: Assets.icons.bank2.path,
+                            title: '中国建设银行（1278）'),
+                      ];
                       showModalBottomSheet(
                           context: context,
                           backgroundColor:
@@ -98,6 +128,13 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                                         ),
                                         const Spacer(),
                                         GestureDetector(
+                                          onTap: () {
+                                            bankCard.subtitle =
+                                                _chooseModels.first.subtitle;
+                                            bankCard.title =
+                                                _chooseModels.first.title;
+                                            Get.back();
+                                          },
                                           child: SizedBox(
                                             child: Text(
                                               '确认',
@@ -123,6 +160,22 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                                               height: 108.w,
                                               child: Row(
                                                 children: [
+                                                  // EditItemWidget(
+                                                  //   title: '车身颜色',
+                                                  //   callback:
+                                                  //       (String content) {},
+                                                  //   value: '',
+                                                  //   //_carInfo.color ??
+                                                  //   tips: '请选择车身颜色',
+                                                  //   topIcon: false,
+                                                  //   paddingStart: 32,
+                                                  //   canChange: false,
+                                                  //   endIcon: Image.asset(
+                                                  //     Assets.icons.icGoto.path,
+                                                  //     width: 32.w,
+                                                  //     height: 32.w,
+                                                  //   ),
+                                                  // ),
                                                   Expanded(
                                                       child: Row(
                                                     children: [
@@ -130,14 +183,14 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                                                         width: 64.w,
                                                         height: 64.w,
                                                         child: Image.asset(
-                                                            Assets
-                                                                .icons
-                                                                .agricultural
-                                                                .path),
+                                                            (moddels[index]
+                                                                    .subtitle)
+                                                                .toString()),
                                                       ),
                                                       16.wb,
                                                       Text(
-                                                        '中国农业银行(1278)',
+                                                        (moddels[index].title)
+                                                            .toString(),
                                                         style: TextStyle(
                                                             color: BaseStyle
                                                                 .color333333,
@@ -159,6 +212,11 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                                                         _chooseModels.add(
                                                             moddels[index]);
                                                       }
+                                                      // bankCard.subtitle =
+                                                      //     moddels[index]
+                                                      //         .subtitle;
+                                                      // bankCard.title =
+                                                      //     moddels[index].title;
                                                       dialogSetState(() {});
                                                     },
                                                     child: SizedBox(
@@ -192,13 +250,13 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                       SizedBox(
                         width: 64.w,
                         height: 64.w,
-                        child: Image.asset(Assets.icons.agricultural.path),
+                        child: Image.asset(Assets.icons.bank2.path),
                       ),
                       SizedBox(
                           width: 380.w,
                           height: 35.w,
                           child: Text(
-                            '中国农业银行(1278)',
+                            '中国建设银行（1278）',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1
@@ -253,7 +311,7 @@ class _ImmediateWithdrawalState extends State<ImmediateWithdrawal> {
                   Row(
                     children: [
                       Text(
-                        '我的余额: ¥10,000.00',
+                        '我的余额: ¥${UserTool.userProvider.userInfo.data.balance}',
                         style: TextStyle(
                             color: BaseStyle.color999999,
                             fontSize: BaseStyle.fontSize24),

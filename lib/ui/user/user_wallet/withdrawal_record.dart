@@ -79,13 +79,11 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
                           SizedBox(
                               width: 32.w,
                               height: 32.w,
-                              child: Icon(
-                                num % 2 == 0
-                                    ? Icons.keyboard_arrow_down
-                                    : Icons.keyboard_arrow_right,
-                                color: num % 2 == 0
-                                    ? Colors.blue
-                                    : BaseStyle.color999999,
+                              child: Image.asset(
+                                num.isOdd
+                                    ? Assets.icons.icGoto.path
+                                    : Assets.icons.down.path,
+                                fit: BoxFit.fill,
                               ))
                         ],
                       ),
@@ -97,7 +95,7 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
 
   getList() {
     return Offstage(
-      offstage: num % 2 != 0,
+      offstage: num.isOdd,
       child: SizedBox(
           height: 700.w,
           child: ListView.builder(

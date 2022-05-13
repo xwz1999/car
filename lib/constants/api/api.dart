@@ -65,12 +65,10 @@ class API {
   ///意见提交
   static _Feedback feedback = _Feedback();
 
-
-
-
   ///二级分类
   static _UserApi user = _UserApi();
 }
+
 class _Task {
   ///客户邀约列表
   String get getInviteLists => '/task/invite/lists';

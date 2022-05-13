@@ -157,10 +157,14 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                                       });
                                     }
                                   },
-                                  child: Image.asset(collect == 1
+                      child: SizedBox(
+                      width: 48.w,
+                      height: 48.w,
+                      child: Image.asset(collect == 1
                                       ? Assets.icons.alreadyCollected.path
                                       : Assets.icons.collection.path, height: 48.w, width: 48.w),
                                 )
+                                  )
                               : const SizedBox(),
                           24.wb,
                           GestureDetector(

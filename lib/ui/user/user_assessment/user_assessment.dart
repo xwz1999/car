@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/ui/user/user_assessment/pay_num_changes.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -57,7 +56,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                   Get.to(() => const PayChangesPage());
                 },
                 child: Text(
-                  '次数变更',
+                  '次数记录',
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
@@ -214,7 +213,10 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
           height: 72.w,
           padding: EdgeInsets.symmetric(vertical: 16.w),
           alignment: Alignment.center,
-          margin: EdgeInsets.only(left: 32.w, right: 32.w,bottom: 32.w+MediaQuery.of(context).padding.bottom),
+          margin: EdgeInsets.only(
+              left: 32.w,
+              right: 32.w,
+              bottom: 32.w + MediaQuery.of(context).padding.bottom),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: <Color>[

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
@@ -60,7 +62,8 @@ class _AllCarViewState extends State<AllCarView>
 
         _page = 1;
         var list = await CarFunc.getCarList(_page, _size,
-            order: CarMap.carSortString.getKeyFromValue(widget.sort), searchParams: _params);
+            order: CarMap.carSortString.getKeyFromValue(widget.sort),
+            searchParams: _params);
         widget.allCarList.clear();
         widget.allCarList.addAll(list);
         setState(() {});

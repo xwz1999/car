@@ -43,7 +43,7 @@ class _ChangeNameState extends State<ChangeName> {
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 height: 120.w,
                 color: Colors.white,
-                child:const Text('')
+                child: const Text('')
                 // TimeLinesWidget(
                 //   index: 1,
                 //   items: [

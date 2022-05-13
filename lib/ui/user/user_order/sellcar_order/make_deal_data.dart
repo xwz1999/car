@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/order/Sale_info.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
+import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
@@ -337,10 +338,12 @@ class _MakeDealDataState extends State<MakeDealData> {
         ),
         24.hb,
         GestureDetector(
-          child: Container(
-            color: Colors.red,
+          child: SizedBox(
             width: 200.w,
             height: 150.w,
+            child: CloudImageNetworkWidget.car(
+              urls: [_consignmentInfoList.report.path],
+            ),
           ),
         )
       ],
@@ -489,53 +492,50 @@ class _MakeDealDataState extends State<MakeDealData> {
 
   //车辆信息下拉
   getList() {
-    return ExpansionTile(
-      //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
-      //leading: Icon(Icons.),
-      collapsedBackgroundColor: kForeGroundColor,
-
-      title: Row(
-        children: [
-          getTitle('车辆总价'),
-          185.wb,
-          SizedBox(
-            child: Text.rich(TextSpan(children: [
-              TextSpan(
-                  text: '¥',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-              TextSpan(
-                  text: '300,000.00',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-            ])),
-          ),
-        ],
-      ),
-      children: [
-        Container(
-            color: kForeGroundColor,
-            child: Row(
-              children: [
-                32.wb,
-                _getCar('车辆定金', _consignmentInfoList.contract.deposit),
-                46.wb,
-                Container(
-                  width: 1.w,
-                  height: 72.w,
-                  color: BaseStyle.coloreeeeee,
-                ),
-                46.wb,
-                _getCar('车辆首付', _consignmentInfoList.contract.downPayment),
-                46.wb,
-                _getCar('车辆尾款', _consignmentInfoList.contract.balancePayment),
-              ],
-            ))
-      ],
+    return DropDown(
+      title: getTitle('车辆总价'),
+      text: SizedBox(
+          child: Text.rich(TextSpan(children: [
+        TextSpan(
+            text: '¥',
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(fontWeight: FontWeight.bold)),
+        TextSpan(
+            text: _consignmentInfoList.contract.totalAmount,
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2
+                ?.copyWith(fontWeight: FontWeight.bold)),
+      ]))),
+      widget: Container(
+          padding: EdgeInsets.only(left: 32.w, top: 16.w),
+          child: Row(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _getCar(
+                  '车辆定金',
+                  //(_consignmentInfoList.contractSignAt).toString()),
+                  _consignmentInfoList.contract.deposit),
+              36.wb,
+              Container(
+                width: 1.w,
+                height: 72.w,
+                color: BaseStyle.coloreeeeee,
+              ),
+              36.wb,
+              _getCar('车辆首付', _consignmentInfoList.contract.downPayment),
+              46.wb,
+              Container(
+                width: 1.w,
+                height: 72.w,
+                color: BaseStyle.coloreeeeee,
+              ),
+              36.wb,
+              _getCar('车辆尾款', _consignmentInfoList.contract.balancePayment),
+            ],
+          )),
     );
   }
 

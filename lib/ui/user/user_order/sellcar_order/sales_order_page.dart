@@ -10,6 +10,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/car_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
@@ -38,6 +39,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   List<SalelistsModel> _SalesList = [];
   int _page = 1;
   final int _size = 10;
+  bool _onLoad = true;
   @override
   void initState() {
     super.initState();
@@ -114,7 +116,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 _page = 1;
                 _SalesList =
                     await OrderFunc.getSaleList(page: _page, size: _size);
-
+                _onLoad = false;
                 setState(() {});
               },
               onLoad: () async {
@@ -133,12 +135,19 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 }
                 setState(() {});
               },
-              child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) {
-                    return getSales(_SalesList[index]);
-                  },
-                  itemCount: _SalesList.length),
+              child: _onLoad
+                  ? const SizedBox()
+                  : _SalesList.isEmpty
+                      ? const NoDataWidget(
+                          text: '暂无相关车辆信息',
+                          paddingTop: 300,
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (context, index) {
+                            return getSales(_SalesList[index]);
+                          },
+                          itemCount: _SalesList.length),
             ),
           ),
         ],

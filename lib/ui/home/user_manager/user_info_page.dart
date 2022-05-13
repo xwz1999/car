@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, unused_element
+
 import 'package:cloud_car/model/customer/customer_detail_model.dart';
 import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';

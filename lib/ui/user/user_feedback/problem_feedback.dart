@@ -1,8 +1,9 @@
-import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/user/interface/feedback_func.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
@@ -34,6 +35,17 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
   late String img = widget.img;
   late String phone = widget.phone;
   late bool zhi = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  _refresh() async {
+    // ignore: unused_local_variable
+    zhi = await FeedbackFunc.getFeedback(widget.title, content, phone, img);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +63,8 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          32.hb,
+        body: ListView(children: [
+          24.hb,
           Padding(
             padding: EdgeInsets.only(left: 32.w),
             child: Text(
@@ -65,59 +77,57 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
           ),
           24.hb,
           Container(
-            height: 520.w,
+            // height: 520.w,
             color: kForeGroundColor,
             padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  // padding:
-                  //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
-                  height: 200.w,
-                  child: TextField(
-                    maxLines: 50,
-                    keyboardType: TextInputType.text,
-                    onEditingComplete: () {
-                      setState(() {});
-                      // _refreshController.callRefresh();
-                    },
-                    onChanged: (text) {
-                      content = text;
-                      setState(() {});
-                    },
-
-                    style: TextStyle(
-                      color: BaseStyle.color333333,
-                      fontSize: BaseStyle.fontSize28,
-                    ),
-                    // controller: _editingController5,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      filled: true,
-                      isDense: true,
-                      fillColor: Colors.white,
-                      hintText: widget.text,
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300),
-                      border: InputBorder.none,
-                    ),
-                  ),
+            child: SizedBox(
+              width: double.infinity,
+              // padding:
+              //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
+              height: 200.w,
+              child: TextField(
+                maxLines: 50,
+                keyboardType: TextInputType.text,
+                onEditingComplete: () {
+                  setState(() {});
+                  // _refreshController.callRefresh();
+                },
+                onChanged: (text) {
+                  content = text;
+                  setState(() {});
+                },
+                style: TextStyle(
+                  color: BaseStyle.color333333,
+                  fontSize: BaseStyle.fontSize28,
                 ),
-                SizedBox(
-                  width: 200.w,
-                  height: 120,
-                  child: Image.asset(Assets.images.addcar.path),
+                // controller: _editingController5,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.zero,
+                  filled: true,
+                  isDense: true,
+                  fillColor: Colors.white,
+                  hintText: widget.text,
+                  hintStyle: TextStyle(
+                      color: Colors.grey.shade500,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  border: InputBorder.none,
                 ),
-              ],
+              ),
             ),
           ),
-          32.hb,
+          CarImageItem(
+            imageBack: (List<File> image) {
+              img = image.first.path;
+            },
+
+            //isPadding: false,
+          ),
+          24.hb,
           Padding(
-            padding: EdgeInsets.only(left: 32.w),
+            padding: EdgeInsets.only(
+              left: 32.w,
+            ),
             child: Text(
               '联系方式',
               style: TextStyle(
@@ -127,7 +137,8 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
             ),
           ),
           24.hb,
-          Expanded(
+          SizedBox(
+            height: 200.w,
             child: TextField(
               keyboardType: TextInputType.text,
               onEditingComplete: () {
@@ -157,38 +168,33 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
           ),
           CloudBottomButton(
             onTap: () async {
+              bool zhi = await FeedbackFunc.getFeedback(
+                  widget.title, content, phone, img);
               if (zhi) {
-                Future.delayed(const Duration(milliseconds: 0), () async {
-                  await _refresh();
-                  Get.back();
-                  setState(() {});
-                });
-              } else {
-                BotToast.showText(text: '请输入内容');
-                // if (img.isEmail) {
-                //   BotToast.showText(text: '图片');
-                // } else {
-                //   if (phone.isEmail) {
-                //     BotToast.showText(text: '手机号');
-                //   } else {
-                //     BotToast.showText(text: '提交成功');
-                //     Future.delayed(const Duration(milliseconds: 0), () async {
-                //       await _refresh();
-                //       //Get.back();
-                //       setState(() {});
-                //     });
-                //   }
-                // }
+                print('标题+${widget.title}+文本$content+手机 $phone+图片+$img');
+                CloudToast.show('提交成功');
+                Get.back();
               }
+              // ignore: avoid_print
+              //  BotToast.showText(text: '请输入内容');
+              // if (img.isEmail) {
+              //   BotToast.showText(text: '图片');
+              // } else {
+              //   if (phone.isEmail) {
+              //     BotToast.showText(text: '手机号');
+              //   } else {
+              //     BotToast.showText(text: '提交成功');
+              //     Future.delayed(const Duration(milliseconds: 0), () async {
+              //       await _refresh();
+              //       //Get.back();
+              //       setState(() {});
+              //     });
+              //   }
+              // }
             },
             text: '提 交',
           ),
           32.hb,
         ]));
-  }
-
-  _refresh() async {
-    // ignore: unused_local_variable
-    zhi = await FeedbackFunc.getFeedback(widget.title, content, phone, img);
   }
 }

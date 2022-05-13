@@ -76,7 +76,8 @@ class _NoWithddrawalPageState extends State<NoWithddrawalPage> {
                                     fontSize: 12 * 2.sp,
                                     color: BaseStyle.color333333)),
                             TextSpan(
-                                text: '（¥1,000.00元）',
+                                text:
+                                    '（¥${UserTool.userProvider.userInfo.data.balance}',
                                 style: TextStyle(
                                     fontSize: 12 * 2.sp,
                                     color: BaseStyle.color333333))

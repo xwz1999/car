@@ -1,9 +1,13 @@
 // ignore_for_file: file_names
 
 import 'package:cloud_car/model/configuration_model.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
+import 'package:cloud_car/ui/user/interface/feedback_func.dart';
 import 'package:cloud_car/ui/user/user_feedback/vehicles_release.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/button/colud_check_radio.dart';
@@ -19,11 +23,15 @@ class _RecommendationsState extends State<Recommendations> {
   final List<int> _selectIndex = [];
   final List<ConfigurationModel> _chooseModels = []; //
   List<ConfigurationModel> moddels = [
-    ConfigurationModel(title: '销售员', subtitle: '能够查看全店的车，并进行客户跟进、销售下单'),
-    ConfigurationModel(title: '评估师/车务', subtitle: '负责录入车辆信息、编辑店里的车辆'),
-    ConfigurationModel(title: '销售/车务', subtitle: '可以录入车辆信息、编辑车辆，并进行客户跟进、销售下单'),
-    ConfigurationModel(title: '店长', subtitle: '能够管理店内的客户、车辆、订单'),
+    ConfigurationModel(title: '性能体检', subtitle: '白屏、卡顿、闪退、图片不显示'),
+    ConfigurationModel(title: '功能异常', subtitle: '现有功能无法正常使用'),
+    ConfigurationModel(title: '产品意见', subtitle: '用的不开心，建议提出来'),
+    ConfigurationModel(title: '其他反馈', subtitle: ''),
   ];
+  late String content = '';
+  late String img = '';
+  late String phone = '';
+  late bool zhi = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +101,7 @@ class _RecommendationsState extends State<Recommendations> {
           ),
           24.hb,
           Container(
-              height: 435.w,
+              // height: 520.w,
               color: kForeGroundColor,
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
               child: Column(
@@ -103,17 +111,19 @@ class _RecommendationsState extends State<Recommendations> {
                     width: double.infinity,
                     // padding:
                     //     EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
-                    height: 120.w,
+                    height: 200.w,
                     child: TextField(
+                      maxLines: 50,
                       keyboardType: TextInputType.text,
                       onEditingComplete: () {
                         setState(() {});
                         // _refreshController.callRefresh();
                       },
                       onChanged: (text) {
+                        content = text;
+                        //var content = text;
                         setState(() {});
                       },
-
                       style: TextStyle(
                         color: BaseStyle.color333333,
                         fontSize: BaseStyle.fontSize28,
@@ -124,23 +134,22 @@ class _RecommendationsState extends State<Recommendations> {
                         filled: true,
                         isDense: true,
                         fillColor: Colors.white,
-                        hintText: "请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题",
+                        hintText: '请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题',
                         hintStyle: TextStyle(
                             color: Colors.grey.shade500,
-                            fontSize: 10,
+                            fontSize: 14,
                             fontWeight: FontWeight.w300),
                         border: InputBorder.none,
                       ),
                     ),
                   ),
-                  //108.hb,
-                  SizedBox(
-                    width: 200.w,
-                    height: 120,
-                    child: Image.asset(Assets.images.addcar.path),
-                  ),
                 ],
               )),
+          CarImageItem(
+            imageBack: (List<File> image) {
+              img = image.first.path;
+            },
+          ),
           32.hb,
           Padding(
             padding: EdgeInsets.only(left: 32.w),
@@ -153,64 +162,46 @@ class _RecommendationsState extends State<Recommendations> {
             ),
           ),
           24.hb,
-          Expanded(
-            child: TextField(
-              keyboardType: TextInputType.text,
-              onEditingComplete: () {
-                setState(() {});
-                // _refreshController.callRefresh();
-              },
-              onChanged: (text) {
-                setState(() {});
-              },
-              style: TextStyle(
-                color: BaseStyle.color333333,
-                fontSize: BaseStyle.fontSize28,
-              ),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 32.w),
-                filled: true,
-                fillColor: Colors.white,
-                hintText: "请输入您的手机号码方便联系",
-                hintStyle: TextStyle(
-                    color: Colors.grey.shade500,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                border: InputBorder.none,
-              ),
+          TextField(
+            keyboardType: TextInputType.text,
+            onEditingComplete: () {
+              setState(() {});
+              // _refreshController.callRefresh();
+            },
+            onChanged: (text) {
+              phone = text;
+              setState(() {});
+            },
+            style: TextStyle(
+              color: BaseStyle.color333333,
+              fontSize: BaseStyle.fontSize28,
+            ),
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 32.w),
+              filled: true,
+              fillColor: Colors.white,
+              hintText: "请输入您的手机号码方便联系",
+              hintStyle: TextStyle(
+                  color: Colors.grey.shade500,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w300),
+              border: InputBorder.none,
             ),
           ),
           96.hb,
-          GestureDetector(
-            onTap: () {
-              //BotToast.showText(text: '验证码输入错误');
-              Get.to(() => const VehiclesRelease());
+          CloudBottomButton(
+            onTap: () async {
+              bool zhi = await FeedbackFunc.getFeedback(
+                  moddels[_selectIndex.first].title!, content, phone, img);
+              if (zhi) {
+                print(
+                    '标题+${moddels[_selectIndex.first].title}+文本$content+手机 $phone+图片+$img');
+                CloudToast.show('提交成功');
+                Get.to(() => const VehiclesRelease());
+              }
             },
-            child: Container(
-              width: 686.w,
-              height: 72.w,
-              margin: EdgeInsets.only(left: 32.w),
-              padding: EdgeInsets.only(left: 318.w, top: 22.w),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.w),
-                  gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Color(0xFF0593FF), Color(0xFF027AFF)])),
-              child: SizedBox(
-                width: 252.w,
-                height: 28.w,
-                child: Text(
-                  '提交',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(color: const Color(0xffffffff)),
-                ),
-              ),
-            ),
+            text: '提交',
           ),
-          32.hb,
         ],
       ),
     );
@@ -234,6 +225,7 @@ class _RecommendationsState extends State<Recommendations> {
                 _selectIndex.add(index);
                 _chooseModels.add(model);
               }
+
               setState(() {});
             }, //点击获取点击选项的下标
             child: SizedBox(
@@ -249,14 +241,14 @@ class _RecommendationsState extends State<Recommendations> {
               SizedBox(
                 width: 138.w,
                 child: Text(
-                  '性能体验',
+                  (model.title).toString(),
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 0.w),
                 child: Text(
-                  '白屏、卡顿、闪退、图片不显示',
+                  (model.subtitle).toString(),
                   style: TextStyle(
                       color: BaseStyle.color999999,
                       fontSize: BaseStyle.fontSize24),

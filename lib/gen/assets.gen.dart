@@ -55,6 +55,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/back.png
   AssetGenImage get back => const AssetGenImage('assets/icons/back.png');
 
+  /// File path: assets/icons/bank1.png
+  AssetGenImage get bank1 => const AssetGenImage('assets/icons/bank1.png');
+
+  /// File path: assets/icons/bank2.png
+  AssetGenImage get bank2 => const AssetGenImage('assets/icons/bank2.png');
+
   /// File path: assets/icons/bar_bubble_gray.png
   AssetGenImage get barBubbleGray =>
       const AssetGenImage('assets/icons/bar_bubble_gray.png');
@@ -299,6 +305,9 @@ class $AssetsIconsGen {
   AssetGenImage get mainSearch =>
       const AssetGenImage('assets/icons/main_search.png');
 
+  /// File path: assets/icons/map.png
+  AssetGenImage get map => const AssetGenImage('assets/icons/map.png');
+
   /// File path: assets/icons/merchantsbankhead.png
   AssetGenImage get merchantsbankhead =>
       const AssetGenImage('assets/icons/merchantsbankhead.png');
@@ -340,6 +349,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/not_collect.png
   AssetGenImage get notCollect =>
       const AssetGenImage('assets/icons/not_collect.png');
+
+  /// File path: assets/icons/pan.png
+  AssetGenImage get pan => const AssetGenImage('assets/icons/pan.png');
 
   /// File path: assets/icons/payment.png
   AssetGenImage get payment => const AssetGenImage('assets/icons/payment.png');

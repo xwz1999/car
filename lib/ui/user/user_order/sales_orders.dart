@@ -84,7 +84,7 @@ class _SalesOrderState extends State<SalesOrder> {
                 Expanded(
                     child: TitleDropDownWidget(
                         _dropDownHeaderItemStrings1, listWidget,
-
+                        //isNotSearch: false,
                         isSearch: false,
                         height: kToolbarHeight + 10,
                         bottomHeight: 24.w,
@@ -174,7 +174,6 @@ class _SalesOrderState extends State<SalesOrder> {
   //                     ));
   //                 break;
   //             }
-
   //             break;
   //           case '待过户':
   //             Get.to(() => const Reservation(

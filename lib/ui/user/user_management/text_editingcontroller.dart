@@ -77,12 +77,11 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
           ),
           widget.isBold ? 400.wb : const SizedBox(),
           SizedBox(
-            width: widget.isBold ? 50.w : 300.w,
-            height: widget.isBold ? 100.w : 35.w,
+            width: widget.isBold ? 50.w : 450.w,
+            height: widget.isBold ? 100.w : 40.w,
             child: TextField(
               keyboardType: TextInputType.text,
               // onSubmitted: (text) {
-
               //   setState(() {});
               //   // _refreshController.callRefresh();
               // },
@@ -98,6 +97,7 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
               // ),
               maxLines: null,
               controller: _editingController,
+
               decoration: InputDecoration(
                 //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
                 enabled: widget.endIcon ? false : true,

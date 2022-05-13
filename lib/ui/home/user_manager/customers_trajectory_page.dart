@@ -7,15 +7,17 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-
-
 ///客户轨迹
 class CustomersTrajectoryPage extends StatefulWidget {
   final int customerId;
-  const CustomersTrajectoryPage({Key? key, required this.customerId}) : super(key: key);
+  final bool subscribe;
+  const CustomersTrajectoryPage(
+      {Key? key, required this.customerId, this.subscribe = false})
+      : super(key: key);
 
   @override
-  _CustomersTrajectoryPageState createState() => _CustomersTrajectoryPageState();
+  _CustomersTrajectoryPageState createState() =>
+      _CustomersTrajectoryPageState();
 }
 
 class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
@@ -25,7 +27,6 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
   final ScrollController _scrollController = ScrollController();
 
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
-
 
   @override
   void dispose() {
@@ -49,27 +50,26 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
         setState(() {});
       },
       //emptyWidget: const NoDataWidget(text: '暂无客户轨迹信息',),
-      child:
-
-      _onLoad?const SizedBox():
-      _list.isEmpty?const NoDataWidget(text: '暂无客户轨迹信息',paddingTop: 300,):
-      ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-
-        itemBuilder: (BuildContext context, int index) {
-          return _getListItem(index, index < 1,_list[index]);
-        },
-        itemCount: _list.length,
-      ),
+      child: _onLoad
+          ? const SizedBox()
+          : _list.isEmpty
+              ? const NoDataWidget(
+                  text: '暂无客户轨迹信息',
+                  paddingTop: 300,
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return _getListItem(index, index < 1, _list[index]);
+                  },
+                  itemCount: _list.length,
+                ),
     );
-
-
   }
 
-  _getListItem(int index, bool ing,CustomerTrailModel model) {
+  _getListItem(int index, bool ing, CustomerTrailModel model) {
     return Container(
-
       width: double.infinity,
       color: Colors.white,
       child: IntrinsicHeight(
@@ -82,12 +82,14 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
                 children: [
                   index != 0
                       ? Container(
-                    width: 2.w,
-                    height: 25.w,
-                    decoration: BoxDecoration(
-                      color:  index == 1 ? kPrimaryColor : BaseStyle.colorcccccc,
-                    ),
-                  )
+                          width: 2.w,
+                          height: 25.w,
+                          decoration: BoxDecoration(
+                            color: index == 1
+                                ? kPrimaryColor
+                                : BaseStyle.colorcccccc,
+                          ),
+                        )
                       : const SizedBox(),
                   Container(
                     margin: EdgeInsets.only(top: index != 0 ? 00.w : 30.w),
@@ -98,16 +100,18 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
                       borderRadius: BorderRadius.circular(10.w),
                     ),
                   ),
-                  index!=_list.length-1?
-                  Expanded(
-                    child: Container(
-                      width: 2.w,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: ing ? kPrimaryColor : BaseStyle.colorcccccc,
-                      ),
-                    ),
-                  ):const SizedBox()
+                  index != _list.length - 1
+                      ? Expanded(
+                          child: Container(
+                            width: 2.w,
+                            height: double.infinity,
+                            decoration: BoxDecoration(
+                              color:
+                                  ing ? kPrimaryColor : BaseStyle.colorcccccc,
+                            ),
+                          ),
+                        )
+                      : const SizedBox()
                 ],
               ),
             ),
@@ -118,34 +122,59 @@ class _CustomersTrajectoryPageState extends State<CustomersTrajectoryPage> {
               children: [
                 20.hb,
                 Row(
-                  children:  [
-                    Text(model.type,style: TextStyle(
-                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
-                    ),),
-                    Text(' ｜ ',style: TextStyle(
-                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
-                    ),),
-                    Text(model.initiatorName,style: TextStyle(
-                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
-                    ),),
-                    Text(' ｜ ',style: TextStyle(
-                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
-                    ),),
-                    Text(DateUtil.formatDate(DateUtil.getDateTimeByMs(
-                        model.createdAt.toInt() * 1000),format: 'yyyy-MM-dd HH:mm:ss'),style: TextStyle(
-                      color: const Color(0xFFAAAAAA),fontSize: 24.sp,
-                    ),),
+                  children: [
+                    Text(
+                      model.type,
+                      style: TextStyle(
+                        color: const Color(0xFFAAAAAA),
+                        fontSize: 24.sp,
+                      ),
+                    ),
+                    Text(
+                      ' ｜ ',
+                      style: TextStyle(
+                        color: const Color(0xFFAAAAAA),
+                        fontSize: 24.sp,
+                      ),
+                    ),
+                    Text(
+                      model.initiatorName,
+                      style: TextStyle(
+                        color: const Color(0xFFAAAAAA),
+                        fontSize: 24.sp,
+                      ),
+                    ),
+                    Text(
+                      ' ｜ ',
+                      style: TextStyle(
+                        color: const Color(0xFFAAAAAA),
+                        fontSize: 24.sp,
+                      ),
+                    ),
+                    Text(
+                      DateUtil.formatDate(
+                          DateUtil.getDateTimeByMs(
+                              model.createdAt.toInt() * 1000),
+                          format: 'yyyy-MM-dd HH:mm:ss'),
+                      style: TextStyle(
+                        color: const Color(0xFFAAAAAA),
+                        fontSize: 24.sp,
+                      ),
+                    ),
                   ],
                 ),
                 16.hb,
-                Text(model.content,style: TextStyle(
-                  color: model.contentType==1?  const Color(0xFF027AFF):const Color(0xFF027AFF),fontSize: 28.sp,
-                ),),
-
-                model.contentType==1?const SizedBox():16.hb,
+                Text(
+                  model.content,
+                  style: TextStyle(
+                    color: model.contentType == 1
+                        ? const Color(0xFF027AFF)
+                        : const Color(0xFF027AFF),
+                    fontSize: 28.sp,
+                  ),
+                ),
+                model.contentType == 1 ? const SizedBox() : 16.hb,
                 _getContent(model),
-
-
                 50.hb,
               ],
             ),
