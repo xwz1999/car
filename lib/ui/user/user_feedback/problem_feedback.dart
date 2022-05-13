@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/user/interface/feedback_func.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
