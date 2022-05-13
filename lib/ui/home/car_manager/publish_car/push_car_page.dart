@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
+import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -67,13 +68,9 @@ class _PushCarPageState extends State<PushCarPage> {
     ChooseItem(name: '黄色'),
     ChooseItem(name: '其他'),
   ];
-  final Map<int, String> _sourceType = {
-    1: '车商',
-    2: '个人直卖',
-  };
 
-  List<ChooseItem> get typeList =>
-      _sourceType.values.map((e) => ChooseItem(name: e)).toList();
+  List<ChooseItem> get list =>
+      CarSource.values.map((e) => ChooseItem(name: e.sourceName)).toList();
 
   String? _source;
 
@@ -414,10 +411,10 @@ class _PushCarPageState extends State<PushCarPage> {
                 builder: (context) {
                   return CloudListPickerWidget(
                       title: '车辆来源',
-                      items: _sourceType.values.toList(),
+                      items: CarSource.values.map((e) => e.sourceName).toList(),
                       onConfirm: (str, index) {
                         _publishCarInfo.carSource =
-                            _sourceType.keys.toList()[index];
+                            CarSource.values.toList()[index].sourceNum;
                         Get.back();
                         FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {});
@@ -425,7 +422,11 @@ class _PushCarPageState extends State<PushCarPage> {
                 },
               );
             },
-            _sourceType[_publishCarInfo.carSource] ?? '',
+            _publishCarInfo.carSource != null
+                ? CarSource.values
+                    .toList()[_publishCarInfo.carSource!]
+                    .sourceName
+                : '',
             '请选择车辆来源',
           ),
         ],
