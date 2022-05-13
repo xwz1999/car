@@ -165,7 +165,9 @@ class _EditCarPageState extends State<EditCarPage>  with SingleTickerProviderSta
         body:TabBarView(
           controller: _tabController,
           children:  [
-            CarImageItem(imageBack: (List<File> image) {  },),
+            CarImageItem(imageBack: (List<File> image) {
+
+            },),
             EditCarDetailItem(),
 
             EditCarReportPage(),

@@ -92,16 +92,16 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
             style: const ButtonStyle(
                 //side: BorderSide(color: Colors.grey[300], width: .5),
                 ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Text(e.name),
-            ),
             onPressed: () {
               if (kDebugMode) {
                 print("OnItemClick: $e");
               }
               Navigator.pop(context, e);
             },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Text(e.name),
+            ),
           );
         }).toList(),
       ),

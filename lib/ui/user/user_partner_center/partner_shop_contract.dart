@@ -199,7 +199,7 @@ class _PartnerShopContractPageState extends State<PartnerShopContractPage>
                             offstage: isMove,
                             child: GestureDetector(
                               onTap: () async {
-                                isMove = await true;
+                                isMove = true;
                                 setState(() {});
                               },
                               child: Container(

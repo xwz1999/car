@@ -6,6 +6,7 @@ import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/car/inner_model/car_manage_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_info_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/car_manage_photos/car_manage_photo_widget.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,7 @@ class CarPicturePage extends StatefulWidget {
     this.orderId,
     required this.consignmentContractModel,
     required this.isPersonal,
-  })  :
-        super(key: key);
+  }) : super(key: key);
 
   @override
   State<CarPicturePage> createState() => _CarPicturePageState();
@@ -40,7 +40,6 @@ class _CarPicturePageState extends State<CarPicturePage> {
 
   final ValueNotifier<CarPhotoModel> carPhotoModel =
       ValueNotifier(CarPhotoModel.init);
-
 
   @override
   void initState() {
@@ -77,14 +76,21 @@ class _CarPicturePageState extends State<CarPicturePage> {
             30.hb,
             CloudBottomButton(
               onTap: () {
-                Get.to(
-                  () => PublishCarInfoPage(
-                    businessPushModel: businessPushModel,
-                    carPhotoModel: carPhotoModel,
-                    consignmentContractModel: widget.consignmentContractModel,
-                    orderId: widget.orderId,
-                  ),
-                );
+                if (carPhotoModel.value.photos.dataPhotos.isEmpty ||
+                    carPhotoModel.value.photos.defectPhotos.isEmpty ||
+                    carPhotoModel.value.photos.interiorPhotos.isEmpty||carPhotoModel.value.photos.carPhotos.isEmpty){
+                  CloudToast.show('每种照片至少上传一张');
+                }else{
+                  Get.to(
+                        () => PublishCarInfoPage(
+                      businessPushModel: businessPushModel,
+                      carPhotoModel: carPhotoModel,
+                      consignmentContractModel: widget.consignmentContractModel,
+                      orderId: widget.orderId,
+                    ),
+                  );
+                }
+
               },
               text: '下一步',
             )

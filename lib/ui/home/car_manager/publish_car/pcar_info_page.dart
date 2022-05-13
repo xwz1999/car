@@ -13,7 +13,6 @@ import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:cloud_car/widget/publish_car_info_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -42,21 +41,6 @@ class PublishCarInfoPage extends StatefulWidget {
 }
 
 class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
-  final TextEditingController _displacementController =
-      TextEditingController(); //排量
-  final TextEditingController _transmissionController =
-      TextEditingController(); //变速箱
-  final TextEditingController _emissionController =
-      TextEditingController(); //排放标准
-  final TextEditingController _carConditionInterController =
-      TextEditingController(); //排放标准
-  final TextEditingController _carConditionOutController =
-      TextEditingController(); //排放标准
-  String? _carType = '';
-  String? _interColor = '';
-  String? _purpose = '';
-  final String _carPlace = '';
-  final String _location = '';
   List<ChooseItem> carTypeList = [
     ChooseItem(name: '二手车(中规)'),
     ChooseItem(name: '二手车(平行进口)'),
@@ -226,25 +210,24 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                       setState(() {});
                     },
                   ),
-
                   GestureDetector(
                     onTap: () async {
                       Get.to(() => ChooseDealerPage(
-                        callback: (DealerListModel model) {
-                          widget.businessPushModel.value.dealerName = model.name;
-                          widget.businessPushModel.value.dealerId = model.id;
-                          setState(() {});
-                        },
-                      ));
+                            callback: (DealerListModel model) {
+                              widget.businessPushModel.value.dealerName =
+                                  model.name;
+                              widget.businessPushModel.value.dealerId =
+                                  model.id;
+                              setState(() {});
+                            },
+                          ));
                       FocusManager.instance.primaryFocus?.unfocus();
                     },
                     child: EditItemWidget(
                       title: '所属车商',
                       tips: '请选择',
-                      value:
-                      widget.businessPushModel.value.dealerName??
-                          '',
-                      topIcon:  widget.orderId!=null,
+                      value: widget.businessPushModel.value.dealerName ?? '',
+                      topIcon: widget.orderId == null,
                       canChange: false,
                       callback: (String content) {},
                       endIcon: Image.asset(
@@ -290,27 +273,24 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                       ),
                     ),
                   ),
-
-
-
-
                   GestureDetector(
-                    onTap: (){
-                        Get.to(()=>ChooseCityPage(callback: (ChinaRegionModel model) {
-                          widget.carPhotoModel.value.baseInfo.locationString = model.name;
-                          widget.carPhotoModel.value.baseInfo.location = model.id;
-                          setState(() {
-
-                          });
-                        },
-
-                        ));
+                    onTap: () {
+                      Get.to(() => ChooseCityPage(
+                            callback: (ChinaRegionModel model) {
+                              widget.carPhotoModel.value.baseInfo
+                                  .locationString = model.name;
+                              widget.carPhotoModel.value.baseInfo.location =
+                                  model.id;
+                              setState(() {});
+                            },
+                          ));
                     },
                     child: EditItemWidget(
                       title: '车辆所在地',
                       tips: '请选择',
-                      value: widget.carPhotoModel.value.baseInfo.locationString ??
-                          '',
+                      value:
+                          widget.carPhotoModel.value.baseInfo.locationString ??
+                              '',
                       topIcon: true,
                       canChange: false,
                       callback: (String content) {},
@@ -321,26 +301,25 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                       ),
                     ),
                   ),
-
-
                   GestureDetector(
-                    onTap: (){
-                      Get.to(()=>ChooseCityPage(callback: (ChinaRegionModel model) {
-                        widget.carPhotoModel.value.baseInfo.attributionString = model.name;
-                        widget.carPhotoModel.value.baseInfo.attribution = model.id;
-                        setState(() {
-
-                        });
-                      },
-
-                      ));
+                    onTap: () {
+                      Get.to(() => ChooseCityPage(
+                            callback: (ChinaRegionModel model) {
+                              widget.carPhotoModel.value.baseInfo
+                                  .attributionString = model.name;
+                              widget.carPhotoModel.value.baseInfo.attribution =
+                                  model.id;
+                              setState(() {});
+                            },
+                          ));
                     },
                     child: EditItemWidget(
                       title: '车辆归属地',
                       tips: '请选择',
-                      value: widget.carPhotoModel.value.baseInfo.attributionString ??
-                          '',
                       topIcon: true,
+                      value: widget
+                              .carPhotoModel.value.baseInfo.attributionString ??
+                          '',
                       canChange: false,
                       callback: (String content) {},
                       endIcon: Image.asset(
@@ -350,28 +329,27 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                       ),
                     ),
                   ),
-
-
-
                   EditItemBoxWidget(
                     title: '车况(对内)',
                     tips: '请输入',
-                    value: widget.carPhotoModel.value.baseInfo.conditionIn ??
-                        '',
                     topIcon: true,
+                    value:
+                        widget.carPhotoModel.value.baseInfo.conditionIn ?? '',
+
                     callback: (String content) {
                       widget.carPhotoModel.value.baseInfo.conditionIn = content;
                     },
                   ),
-
                   EditItemBoxWidget(
                     title: '车况(对外)',
                     tips: '请输入',
-                    value: widget.carPhotoModel.value.baseInfo.conditionOut ??
-                        '',
                     topIcon: true,
+                    value:
+                        widget.carPhotoModel.value.baseInfo.conditionOut ?? '',
+
                     callback: (String content) {
-                      widget.carPhotoModel.value.baseInfo.conditionOut = content;
+                      widget.carPhotoModel.value.baseInfo.conditionOut =
+                          content;
                     },
                   ),
                   32.hb,
@@ -383,21 +361,33 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (widget.carPhotoModel.value.baseInfo.type==null||
-                      widget.carPhotoModel.value.baseInfo.gearbox==null||
-                      widget.carPhotoModel.value.baseInfo.displacement==null||
-                      widget.carPhotoModel.value.baseInfo.emissionStandard==null||
-                      widget.carPhotoModel.value.baseInfo.useCharacter ==null||(
-                      widget.orderId==null&&widget.businessPushModel.value.dealerId==null
-                  )
-
-                  ){
+                  if (widget.carPhotoModel.value.baseInfo.type == null ||
+                      widget.carPhotoModel.value.baseInfo.gearbox == null ||
+                      widget.carPhotoModel.value.baseInfo.displacement ==
+                          null ||
+                      widget.carPhotoModel.value.baseInfo.emissionStandard ==
+                          null ||
+                      widget.carPhotoModel.value.baseInfo.useCharacter ==
+                          null ||
+                      widget.carPhotoModel.value.baseInfo.location==null||
+                      widget.carPhotoModel.value.baseInfo.attribution==null||
+                      (widget.carPhotoModel.value.baseInfo.conditionIn==null||
+                          widget.carPhotoModel.value.baseInfo.conditionIn!.isEmpty)
+                      ||
+                      (widget.carPhotoModel.value.baseInfo.conditionOut==null||
+                          widget.carPhotoModel.value.baseInfo.conditionOut!.isEmpty)||
+                      (widget.orderId == null &&
+                          widget.businessPushModel.value.dealerId == null)) {
                     CloudToast.show('请先完善客户信息');
-
-                  }else{
-                    Get.to(() => const CarReportPage());
+                  } else {
+                    Get.to(() => CarReportPage(
+                          consignmentContractModel:
+                              widget.consignmentContractModel,
+                          businessPushModel: widget.businessPushModel,
+                          carPhotoModel: widget.carPhotoModel,
+                      orderId: widget.orderId,
+                        ));
                   }
-
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -410,11 +400,4 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
       ),
     );
   }
-
-
-
-
-
-
-
 }

@@ -17,7 +17,7 @@ class CarPhotoModel {
   });
 
 
-  static CarPhotoModel get init => CarPhotoModel(report: Report(), photos: CarManagePhotoModel.init, baseInfo: BaseInfo()
+  static CarPhotoModel get init => CarPhotoModel(report: Report(paints: [],paintsFile: []), photos: CarManagePhotoModel.init, baseInfo: BaseInfo()
   );
 }
 
@@ -60,4 +60,11 @@ class BaseInfo{
 
 class Report{
   List<String>? paints;
+  List<File>? paintsFile;
+
+  Report({
+    this.paints,
+    this.paintsFile,
+  });
 }
+

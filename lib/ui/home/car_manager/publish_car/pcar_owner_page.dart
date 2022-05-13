@@ -1,13 +1,30 @@
+import 'package:cloud_car/model/car/business_push_model.dart';
+import 'package:cloud_car/model/car/car_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_license_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../model/car/consignment_contact_model.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../direct_sale/edit_item_widget.dart';
 
 class CarOwnerPage extends StatefulWidget {
-  const CarOwnerPage({Key? key}) : super(key: key);
+  final int? orderId;
+
+  final ValueNotifier<BusinessPushModel> businessPushModel;
+
+  final ValueNotifier<CarPhotoModel> carPhotoModel;
+
+  final ConsignmentContractModel consignmentContractModel;
+
+  const CarOwnerPage(
+      {Key? key,
+      this.orderId,
+      required this.businessPushModel,
+      required this.carPhotoModel,
+      required this.consignmentContractModel})
+      : super(key: key);
 
   @override
   State<CarOwnerPage> createState() => _CarOwnerPageState();
@@ -137,7 +154,13 @@ class _CarOwnerPageState extends State<CarOwnerPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.to(() => const CarLicensePage());
+                      Get.to(() => CarLicensePage(
+                            consignmentContractModel:
+                                widget.consignmentContractModel,
+                            businessPushModel: widget.businessPushModel,
+                            carPhotoModel: widget.carPhotoModel,
+                            orderId: widget.orderId,
+                          ));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.blue),

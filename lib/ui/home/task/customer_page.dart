@@ -18,7 +18,7 @@ class CustomerPage extends StatefulWidget {
 
 class _CustomerPageState extends State<CustomerPage> {
   int _page = 1;
-  int _size = 10;
+  final int _size = 10;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   List<TaskInviteListModel> lists = [];
