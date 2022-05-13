@@ -40,7 +40,7 @@ dependencies:
   #刷新组件
   flutter_easyrefresh: ^2.2.1
 
-  extended_image: ^3.0.0
+  extended_image: ^7.0.0-dev.1
   #下拉框
   gzx_dropdown_menu: ^3.1.0
   #各种扩展
@@ -101,7 +101,7 @@ dev_dependencies:
   import_sorter: ^4.5.1
   hive_generator: ^1.1.0
   #脚本工具
-  grinder: ^0.9.0
+  grinder: ^0.9.1
   flutter_native_splash: ^1.1.8+4
   #model自动生成
   json_serializable: ^6.1.3
