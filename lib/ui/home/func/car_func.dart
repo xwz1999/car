@@ -16,6 +16,8 @@ import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:flustars/flustars.dart';
 
+import '../../../model/car/dealer_list_model.dart';
+
 class CarFunc {
   ///获取⻋辆品牌
   static Future<List<SortBrandModel>> getBrandList() async {
@@ -289,4 +291,20 @@ class CarFunc {
       return false;
     }
   }
+
+
+  ///获取车商列表
+
+  static Future<List<DealerListModel>> getDealerList() async {
+    BaseModel res = await apiClient.request(API.car.dealerList,);
+    if (res.code == 0) {
+      return (res.data as List)
+          .map((e) => DealerListModel.fromJson(e))
+          .toList();
+    } else {
+      return [];
+    }
+
+  }
+
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_car/constants/app_theme.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -17,6 +18,7 @@ class _PublishCarInfoWidgetState extends State<PublishCarInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         _showarea('车架号', widget.publishCarInfo.viNum!,widget.fontColor),
@@ -26,13 +28,13 @@ class _PublishCarInfoWidgetState extends State<PublishCarInfoWidget> {
         _showarea('发动机号', widget.publishCarInfo.engineNum!,widget.fontColor),
         _showarea('车身颜色', widget.publishCarInfo.carColor!,widget.fontColor),
         Container(
-          padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
+          padding: EdgeInsets.only(top: 20.w, bottom: 5.w),
           color: Colors.transparent,
           child: Row(
             children: [
               '*'
                   .text
-                  .size(30.sp)
+                  .size(28.sp)
                   .color(Colors.red)
                   .normal
                   .textStyle(const TextStyle(decoration: TextDecoration.none))
@@ -43,7 +45,7 @@ class _PublishCarInfoWidgetState extends State<PublishCarInfoWidget> {
                 width: 170.w,
                 child: '表显里程'
                     .text
-                    .size(30.sp)
+                    .size(28.sp)
                     .normal
                     .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black.withOpacity(0.45))
@@ -52,7 +54,7 @@ class _PublishCarInfoWidgetState extends State<PublishCarInfoWidget> {
               Expanded(
                 child: widget.publishCarInfo.mileage!
                     .text
-                    .size(30.sp)
+                    .size(28.sp)
                     .normal
                     .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(widget.fontColor)
@@ -61,7 +63,7 @@ class _PublishCarInfoWidgetState extends State<PublishCarInfoWidget> {
               24.wb,
               '万公里'
                   .text
-                  .size(30.sp)
+                  .size(28.sp)
                   .normal
                   .textStyle(const TextStyle(decoration: TextDecoration.none))
                   .color(Colors.black.withOpacity(0.8))

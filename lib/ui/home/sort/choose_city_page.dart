@@ -49,6 +49,7 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
       extendBody: true,
       body: CityListPage(cityCallback: (model) {
         widget.callback(model);
+        Get.back();
       }),
     );
   }

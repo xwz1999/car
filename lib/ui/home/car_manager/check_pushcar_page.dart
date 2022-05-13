@@ -105,9 +105,14 @@ class _CheckPushPageState extends State<CheckPushPage> {
                         child: ElevatedButton(
                           onPressed: () {
                             if ( widget.consignmentContractModel.value.publishCarInfo!.carSource == 1) {
+                              ///车商发布车辆
                               Get.to(() => CarPicturePage(
-                                  consignmentContractModel:  widget.consignmentContractModel));
+                                  consignmentContractModel:widget.consignmentContractModel.value, isPersonal: false,
+
+                                ));
                             } else {
+
+                              ///个人发布车辆先填合同  合同确认后再进行发布操作
                               Get.to(() => ContractBeginPage(
                                 consignmentContractModel:  widget.consignmentContractModel,
                                   ));
@@ -142,8 +147,8 @@ class _CheckPushPageState extends State<CheckPushPage> {
                                     .make(),
                                 TextButton(
                                   onPressed: () {
-                                    Get.to(() => CarPicturePage(
-                                        consignmentContractModel:  widget.consignmentContractModel));
+                                    ///去订单列表进行发布车辆操作
+
                                   },
                                   child: '继续发布车辆'
                                       .text
