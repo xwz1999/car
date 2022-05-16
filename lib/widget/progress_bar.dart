@@ -102,6 +102,7 @@ class _ProgressBarState extends State<ProgressBar> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 late bool ing = index < widget.num;
+                late bool ing2 = (index + 1) - widget.num == 0;
                 return IntrinsicWidth(
                   child: Column(
                     //crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,11 +127,15 @@ class _ProgressBarState extends State<ProgressBar> {
                                 width: 20.w,
                                 height: 20.w,
                                 decoration: BoxDecoration(
-                                  color: ing
-                                      ? widget.cancel
+                                  color: widget.cancel
+                                      ? ing
                                           ? kPrimaryColor
-                                          : const Color(0xFFE62222)
-                                      : BaseStyle.colorcccccc,
+                                          : BaseStyle.colorcccccc
+                                      : ing
+                                          ? ing2
+                                              ? const Color(0xFFE62222)
+                                              : kPrimaryColor
+                                          : BaseStyle.colorcccccc,
                                   borderRadius: BorderRadius.circular(10.w),
                                 ),
                               ),
@@ -140,11 +145,15 @@ class _ProgressBarState extends State<ProgressBar> {
                                       width: widget.HW.w,
                                       height: 2.w,
                                       decoration: BoxDecoration(
-                                        color: ing
-                                            ? widget.cancel
+                                        color: widget.cancel
+                                            ? ing
                                                 ? kPrimaryColor
                                                 : BaseStyle.colorcccccc
-                                            : BaseStyle.colorcccccc,
+                                            : ing
+                                                ? ing2
+                                                    ? BaseStyle.colorcccccc
+                                                    : kPrimaryColor
+                                                : BaseStyle.colorcccccc,
                                       ),
                                     ),
                             ],

@@ -51,7 +51,6 @@ class _RecommendedPageState extends State<RecommendedPage>
   late ScrollController _scrollController;
   int _page = 1;
   final int _size = 10;
-  bool _onLoad = true;
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -139,6 +138,11 @@ class _RecommendedPageState extends State<RecommendedPage>
                   child: Container(
                     height: 76.w,
                     width: 750.w,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(16.w),
+                            bottomRight: Radius.circular(16.w))),
                     child: TabBar(
                         onTap: (index) {
                           setState(() {});
@@ -161,11 +165,6 @@ class _RecommendedPageState extends State<RecommendedPage>
                         indicator: const BoxDecoration(),
                         indicatorColor: kPrimaryColor,
                         tabs: [_tab(0, '我邀请的客户')]),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(16.w),
-                            bottomRight: Radius.circular(16.w))),
                   ),
                 ),
               ),
@@ -226,7 +225,6 @@ class _RecommendedPageState extends State<RecommendedPage>
                               //     nickname: '世界这么大我想去看看',
                               //     trailContent: '发起客户邀约',
                               //     trailCreatedAt: 1652161448);
-                              _onLoad = false;
                               setState(() {});
                             },
                             onLoad: () async {
@@ -465,6 +463,8 @@ class _RecommendedPageState extends State<RecommendedPage>
           child: Stack(
             children: [
               Positioned(
+                right: model.isImportant == 1 ? 0 : 32.w,
+                top: model.isImportant == 1 ? 0 : 28.w,
                 child: model.isImportant == 1
                     ? Image.asset(
                         Assets.images.importantUser.path,
@@ -477,8 +477,6 @@ class _RecommendedPageState extends State<RecommendedPage>
                             color: BaseStyle.color999999,
                             fontSize: BaseStyle.fontSize24),
                       ),
-                right: model.isImportant == 1 ? 0 : 32.w,
-                top: model.isImportant == 1 ? 0 : 28.w,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

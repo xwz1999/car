@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print
 
 import 'package:cloud_car/model/configuration_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';

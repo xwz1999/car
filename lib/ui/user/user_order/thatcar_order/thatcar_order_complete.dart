@@ -1,3 +1,4 @@
+import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -275,51 +276,44 @@ class _ThatcarCompleteState extends State<ThatcarComplete> {
     );
   }
 
+  //车辆信息下拉
   getList() {
-    return ExpansionTile(
-      //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
-      //leading: Icon(Icons.),
-      collapsedBackgroundColor: kForeGroundColor,
-      title: Row(
-        children: [
-          getTitle('订单总额'),
-          280.wb,
-          SizedBox(
-            child: Text.rich(TextSpan(children: [
-              TextSpan(
-                  text: '¥',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-              TextSpan(
-                  text: '100.00',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-            ])),
-          ),
-        ],
-      ),
-      children: [
-        Container(
-            color: kForeGroundColor,
-            child: Row(
-              children: [
-                32.wb,
-                _getCar('车辆上门费', '100.00'),
-                46.wb,
-                Container(
-                  width: 1.w,
-                  height: 72.w,
-                  color: BaseStyle.coloreeeeee,
-                ),
-                46.wb,
-                _getCar('其他费用', '0.00'),
-              ],
-            ))
-      ],
+    return DropDown(
+      title: getTitle('订单总价'),
+      text: SizedBox(
+          child: Text.rich(TextSpan(children: [
+        TextSpan(
+            text: '¥',
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(fontWeight: FontWeight.bold)),
+        TextSpan(
+            text: '100.00',
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2
+                ?.copyWith(fontWeight: FontWeight.bold)),
+      ]))),
+      widget: Container(
+          padding: EdgeInsets.only(left: 32.w, top: 16.w),
+          child: Row(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _getCar(
+                  '车辆上门费',
+                  //(_consignmentInfoList.contractSignAt).toString()),
+                  '100.00'),
+              36.wb,
+              Container(
+                width: 1.w,
+                height: 72.w,
+                color: BaseStyle.coloreeeeee,
+              ),
+              36.wb,
+              _getCar('其他费用', '10.00'),
+            ],
+          )),
     );
   }
 

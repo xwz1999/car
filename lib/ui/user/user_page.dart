@@ -1,4 +1,5 @@
 import 'package:cloud_car/ui/home/home_page.dart';
+
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
@@ -73,7 +74,9 @@ class _UserPageState extends State<UserPage> {
         //height: 334.w,
         alignment: Alignment.centerRight,
         padding: EdgeInsets.only(right: 32.w),
-        margin: EdgeInsets.only(top: 78.w,),
+        margin: EdgeInsets.only(
+          top: 78.w,
+        ),
         child: GestureDetector(
           onTap: () {
             Get.to(() => const SystemSettingPage());
@@ -345,7 +348,7 @@ class _UserPageState extends State<UserPage> {
                       )
                     ],
                   ),
-                  255.wb,
+                  const Spacer(),
                   SizedBox(
                     width: 40.w,
                     height: 40.w,

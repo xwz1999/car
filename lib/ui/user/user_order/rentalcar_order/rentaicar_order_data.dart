@@ -38,7 +38,6 @@ class _RentaicarOrderDataState extends State<RentaicarOrderData> {
               144.hb,
               GestureDetector(
                 onTap: () {
-                  //BotToast.showText(text: '验证码输入错误');
                   BotToast.showText(text: '提交成功');
                 },
                 child: Container(

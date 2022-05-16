@@ -55,7 +55,7 @@ class _ContractPayPageState extends State<ContractPayPage> {
               _getPice(),
               56.hb,
               _getPay(),
-              868.hb,
+              const Spacer(),
               Container(
                 width: double.infinity,
                 height: 72.w,
@@ -74,9 +74,7 @@ class _ContractPayPageState extends State<ContractPayPage> {
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         bottom: CloudBottomButton(
-                          onTap: () {
-
-                          },
+                          onTap: () {},
                           text: '返回支付',
                         )));
                   },

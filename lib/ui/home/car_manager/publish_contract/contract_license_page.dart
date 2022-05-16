@@ -22,11 +22,8 @@ class ContractLicencePage extends StatefulWidget {
 }
 
 class _ContractLicencePageState extends State<ContractLicencePage> {
-
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -53,15 +50,10 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
           color: Color(0x99eeeeee),
         ),
         child: ListView(
-
           children: [
             Container(
               padding: EdgeInsets.all(30.w),
-              child: '牌证信息'.text
-                  .size(32.sp)
-                  .bold
-                  .color(Colors.black)
-                  .make(),
+              child: '牌证信息'.text.size(32.sp).bold.color(Colors.black).make(),
             ),
             Container(
               padding: EdgeInsets.only(top: 10.h, right: 30.w, left: 30.w),
@@ -74,16 +66,18 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
               child: ElevatedButton(
                 onPressed: () {
                   if (widget.consignmentContractModel.value
-                      .commercialInsurance == null ||
+                              .commercialInsurance ==
+                          null ||
                       widget.consignmentContractModel.value
-                          .compulsoryInsurance == null){
+                              .compulsoryInsurance ==
+                          null) {
                     CloudToast.show('请先完善牌证信息');
-                  }else{
-                    Get.to(() =>
-                        ContactCondition(consignmentContractModel: widget
-                            .consignmentContractModel,));
+                  } else {
+                    Get.to(() => ContactCondition(
+                          consignmentContractModel:
+                              widget.consignmentContractModel,
+                        ));
                   }
-
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -97,17 +91,18 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
     );
   }
 
-
-  _showSelect(int select,
-      String title,
-      Function(int choose) callBack,) {
+  _showSelect(
+    int select,
+    String title,
+    Function(int choose) callBack,
+  ) {
     return Container(
-      padding: EdgeInsets.only(top: 40.w,),
+      padding: EdgeInsets.only(
+        top: 40.w,
+      ),
       color: Colors.transparent,
       child: Row(
         children: [
-
-
           Padding(
             padding: EdgeInsets.only(top: 10.w),
             child: Text(
@@ -128,15 +123,13 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
           Row(
             children: [
               GestureDetector(
-                onTap: (){
-                  if(select==1){
+                onTap: () {
+                  if (select == 1) {
                     select = -1;
-                  }else{
-                    select =1;
+                  } else {
+                    select = 1;
                   }
-                  setState(() {
-
-                  });
+                  setState(() {});
                   callBack(select);
                 },
                 child: Row(
@@ -147,18 +140,17 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                         width: 50.w,
                         height: 50.w,
                         padding: EdgeInsets.only(top: 6.w, right: 5.w),
-                        child: !(select==1)
+                        child: !(select == 1)
                             ? const Icon(CupertinoIcons.circle,
-                            size: 18, color: Color(0xFFdddddd))
+                                size: 18, color: Color(0xFFdddddd))
                             : const Icon(
-                            CupertinoIcons.checkmark_alt_circle_fill,
-                            size: 18,
-                            color: Colors.blue)),
+                                CupertinoIcons.checkmark_alt_circle_fill,
+                                size: 18,
+                                color: Colors.blue)),
                     RichText(
                       text: TextSpan(
                         text: "有",
-                        style:
-                        TextStyle(color: Colors.black, fontSize: 30.sp),
+                        style: TextStyle(color: Colors.black, fontSize: 30.sp),
                       ),
                     ),
                   ],
@@ -167,14 +159,12 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
               30.widthBox,
               GestureDetector(
                 onTap: () {
-                  if(select==0){
+                  if (select == 0) {
                     select = -1;
-                  }else{
-                    select =0;
+                  } else {
+                    select = 0;
                   }
-                  setState(() {
-
-                  });
+                  setState(() {});
                   callBack(select);
                 },
                 child: Row(
@@ -185,18 +175,17 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                         width: 50.w,
                         height: 50.w,
                         padding: EdgeInsets.only(top: 6.w, right: 5.w),
-                        child: select == 1||select==-1
+                        child: select == 1 || select == -1
                             ? const Icon(CupertinoIcons.circle,
-                            size: 18, color: Color(0xFFdddddd))
+                                size: 18, color: Color(0xFFdddddd))
                             : const Icon(
-                            CupertinoIcons.checkmark_alt_circle_fill,
-                            size: 18,
-                            color: Colors.blue)),
+                                CupertinoIcons.checkmark_alt_circle_fill,
+                                size: 18,
+                                color: Colors.blue)),
                     RichText(
                       text: TextSpan(
                         text: "无",
-                        style:
-                        TextStyle(color: Colors.black, fontSize: 30.sp),
+                        style: TextStyle(color: Colors.black, fontSize: 30.sp),
                       ),
                     ),
                   ],
@@ -208,7 +197,6 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
       ),
     );
   }
-
 
   Column showLicense() {
     return Column(
@@ -226,7 +214,6 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                 int.parse(content);
           },
         ),
-
         EditItemWidget(
           topIcon: false,
           title: '钥匙数量',
@@ -242,20 +229,15 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
         _showSelect(
             widget.consignmentContractModel.value.compulsoryInsurance ?? -1,
             '交强险', (choose) {
-
           FocusManager.instance.primaryFocus?.unfocus();
-              if(choose!=-1){
-                widget.consignmentContractModel.value.compulsoryInsurance = choose;
-              }else{
-                widget.consignmentContractModel.value.compulsoryInsurance = null;
-              }
+          if (choose != -1) {
+            widget.consignmentContractModel.value.compulsoryInsurance = choose;
+          } else {
+            widget.consignmentContractModel.value.compulsoryInsurance = null;
+          }
 
-          setState(() {
-
-          });
+          setState(() {});
         }),
-
-
         GestureDetector(
           onTap: () async {
             DateTime? firstDate;
@@ -281,19 +263,16 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                 Expanded(
                   child: Text(
                       widget.consignmentContractModel.value
-                          .compulsoryInsuranceDate!.isEmpty
+                              .compulsoryInsuranceDate!.isEmpty
                           ? '请选择日期'
                           : widget.consignmentContractModel.value
-                          .compulsoryInsuranceDate!,
+                              .compulsoryInsuranceDate!,
                       style: widget.consignmentContractModel.value
-                          .compulsoryInsuranceDate !=
-                          null
-                          ? Theme
-                          .of(context)
-                          .textTheme
-                          .subtitle2
+                                  .compulsoryInsuranceDate !=
+                              null
+                          ? Theme.of(context).textTheme.subtitle2
                           : TextStyle(
-                          fontSize: 28.sp, color: const Color(0xFFCCCCCC))),
+                              fontSize: 28.sp, color: const Color(0xFFCCCCCC))),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 5.w),
@@ -307,25 +286,18 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
             ),
           ),
         ),
-
-
         _showSelect(
             widget.consignmentContractModel.value.commercialInsurance ?? -1,
             '商业险', (choose) {
           FocusManager.instance.primaryFocus?.unfocus();
-              if(choose!=-1){
-                widget.consignmentContractModel.value.commercialInsurance = choose;
-              }else{
+          if (choose != -1) {
+            widget.consignmentContractModel.value.commercialInsurance = choose;
+          } else {
+            widget.consignmentContractModel.value.commercialInsurance = null;
+          }
 
-          widget.consignmentContractModel.value.commercialInsurance = null;
-
-              }
-
-          setState(() {
-
-          });
+          setState(() {});
         }),
-
         GestureDetector(
           onTap: () async {
             DateTime? firstDate;
@@ -351,19 +323,16 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                 Expanded(
                   child: Text(
                       widget.consignmentContractModel.value
-                          .commercialInsuranceDate!.isEmpty
+                              .commercialInsuranceDate!.isEmpty
                           ? '请选择日期'
                           : widget.consignmentContractModel.value
-                          .commercialInsuranceDate!,
+                              .commercialInsuranceDate!,
                       style: widget.consignmentContractModel.value
-                          .commercialInsuranceDate !=
-                          null
-                          ? Theme
-                          .of(context)
-                          .textTheme
-                          .subtitle2
+                                  .commercialInsuranceDate !=
+                              null
+                          ? Theme.of(context).textTheme.subtitle2
                           : TextStyle(
-                          fontSize: 28.sp, color: const Color(0xFFCCCCCC))),
+                              fontSize: 28.sp, color: const Color(0xFFCCCCCC))),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 5.w),
@@ -377,23 +346,20 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
             ),
           ),
         ),
-
-
         EditItemWidget(
           topIcon: false,
           title: '商业险金额',
           endText: '元',
-          value: widget.consignmentContractModel.value
-              .commercialInsurancePrice ?? "",
+          value:
+              widget.consignmentContractModel.value.commercialInsurancePrice ??
+                  "",
           callback: (String content) {
             widget.consignmentContractModel.value.commercialInsurancePrice =
                 content;
           },
         ),
-
         40.hb,
       ],
     );
   }
-
 }

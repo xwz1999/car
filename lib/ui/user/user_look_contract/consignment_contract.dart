@@ -1,7 +1,6 @@
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/user/user_look_contract/comsignment.view.dart';
 import 'package:cloud_car/ui/user/user_look_contract/sale.dart';
-import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -24,7 +23,6 @@ class _ConsignmentContractState extends State<ConsignmentContract>
   final EasyRefreshController _saleRefreshController = EasyRefreshController();
   final List<ConsignmentListModel> _consignmentList = [];
 
-  bool _onLoad = true;
   final List<ConsignmentListModel> _saleList = [];
   @override
   @override

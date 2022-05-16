@@ -1,4 +1,5 @@
 
+
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_card_info_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_detail_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_owner_item.dart';
@@ -166,15 +167,14 @@ class _EditCarPageState extends State<EditCarPage>  with SingleTickerProviderSta
           controller: _tabController,
           children:  [
             CarImageItem(imageBack: (List<File> image) {  },),
-            EditCarDetailItem(),
+           const  EditCarDetailItem(),
 
-            EditCarReportPage(),
-            EditCarSourceItem(),
-            EditCarOwnerItem(),
+            const EditCarReportPage(),
+            const EditCarSourceItem(),
+            const EditCarOwnerItem(),
 
-
-            EditCardInfoItem(),
-            EditCarPriceInfoItem(),
+            const EditCardInfoItem(),
+            const  EditCarPriceInfoItem(),
           ],
         ),
 

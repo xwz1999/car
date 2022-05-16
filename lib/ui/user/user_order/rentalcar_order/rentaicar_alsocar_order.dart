@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
@@ -43,21 +44,19 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
               children: [
                 16.hb,
                 Container(
+                  padding: EdgeInsets.only(top: 32.w),
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
                   height: 120.w,
                   color: Colors.white,
                   child: ProgressBar(
-                    length: 6,
-                    num: 3,
+                    length: 3,
+                    num: bL ? 3 : 2,
                     direction: false,
-                    HW: 96,
+                    HW: 251,
                     texts: [
-                      text('预定'),
-                      text('签订'),
-                      text('上架'),
-                      text('出售'),
-                      text('到账'),
-                      text('成交'),
+                      text('下单'),
+                      text('交车'),
+                      text('还车'),
                     ],
                   ),
                 ),
@@ -185,6 +184,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
                     ],
                   ),
                 ),
+                200.hb
               ],
             ),
             Positioned(
@@ -248,51 +248,44 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
     );
   }
 
+  //车辆信息下拉
   getList() {
-    return ExpansionTile(
-      //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
-      //leading: Icon(Icons.),
-      collapsedBackgroundColor: kForeGroundColor,
-      title: Row(
-        children: [
-          getTitle('订单总额'),
-          310.wb,
-          SizedBox(
-            child: Text.rich(TextSpan(children: [
-              TextSpan(
-                  text: '¥',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-              TextSpan(
-                  text: '220.00',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-            ])),
-          ),
-        ],
-      ),
-      children: [
-        Container(
-            color: kForeGroundColor,
-            child: Row(
-              children: [
-                32.wb,
-                _getCar('车辆定金', '10,000.00'),
-                46.wb,
-                Container(
-                  width: 1.w,
-                  height: 72.w,
-                  color: BaseStyle.coloreeeeee,
-                ),
-                46.wb,
-                _getCar('车辆定金', '10,000.00'),
-              ],
-            ))
-      ],
+    return DropDown(
+      title: getTitle('订单总额'),
+      text: SizedBox(
+          child: Text.rich(TextSpan(children: [
+        TextSpan(
+            text: '¥',
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(fontWeight: FontWeight.bold)),
+        TextSpan(
+            text: '220.00',
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2
+                ?.copyWith(fontWeight: FontWeight.bold)),
+      ]))),
+      widget: Container(
+          padding: EdgeInsets.only(left: 32.w, top: 16.w),
+          child: Row(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _getCar(
+                  '车辆租赁费',
+                  //(_consignmentInfoList.contractSignAt).toString()),
+                  '200.00'),
+              36.wb,
+              Container(
+                width: 1.w,
+                height: 72.w,
+                color: BaseStyle.coloreeeeee,
+              ),
+              36.wb,
+              _getCar('服务费用', '20.00'),
+            ],
+          )),
     );
   }
 
