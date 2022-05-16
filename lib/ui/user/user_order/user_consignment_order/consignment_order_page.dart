@@ -81,8 +81,8 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
       },
       child: Column(
         children: [
-          const SizedBox(
-            height: kToolbarHeight + 10,
+           SizedBox(
+            height: kToolbarHeight + 50.w,
           ),
           SizedBox(
             height: 88.w,
@@ -111,6 +111,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
                 _page = 1;
                 _ConsignmentList =
                     await OrderFunc.getLists(page: _page, size: _size);
+                _onLoad = false;
                 _ConsignmentList = [
                   const ListsModel(
                       id: 13,

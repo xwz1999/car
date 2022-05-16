@@ -86,8 +86,8 @@ class _SalesOrderState extends State<SalesOrder> {
                         _dropDownHeaderItemStrings1, listWidget,
                         //isNotSearch: false,
                         isSearch: false,
-                        height: kToolbarHeight + 10,
-                        bottomHeight: 24.w,
+                        height: kToolbarHeight + 30.w,
+                        bottomHeight: 30.w,
                         headFontSize: 36.sp,
                         leftWidget: const CloudBackButton(
                           isSpecial: true,

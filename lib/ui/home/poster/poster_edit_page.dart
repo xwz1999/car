@@ -121,7 +121,6 @@ class _PosterEditPageState extends State<PosterEditPage> {
                       u8List,
                       quality: 100,
                     );
-                    //print('aaaa+${u8List}');
                     if (re['isSuccess']) {
                       CloudToast.show('海报已保存到${re['filePath']}',
                           align: Alignment.center);

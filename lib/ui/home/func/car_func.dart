@@ -1,9 +1,11 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/car/business_push_model.dart';
 import 'package:cloud_car/model/car/car_amount_model.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/model/car/car_evaluation_model.dart';
 import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
+import 'package:cloud_car/model/car/car_photo_model.dart';
 import 'package:cloud_car/model/car/car_sale_contract_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/car/estimate_price_model.dart';
@@ -15,6 +17,8 @@ import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:flustars/flustars.dart';
+
+import '../../../model/car/dealer_list_model.dart';
 
 class CarFunc {
   ///获取⻋辆品牌
@@ -289,4 +293,133 @@ class CarFunc {
       return false;
     }
   }
+
+
+  ///获取车商列表
+
+  static Future<List<DealerListModel>> getDealerList() async {
+    BaseModel res = await apiClient.request(API.car.dealerList,);
+    if (res.code == 0) {
+      return (res.data as List)
+          .map((e) => DealerListModel.fromJson(e))
+          .toList();
+    } else {
+      return [];
+    }
+
+  }
+
+
+  ///车商发布车辆
+  static Future<bool> dealerPushCar(
+  {required BusinessPushModel businessPushModel,required CarPhotoModel carPhotoModel,}) async {
+    Map<String, dynamic> baseInfo = {
+      "type": carPhotoModel.baseInfo.type,
+      "interiorColor": carPhotoModel.baseInfo.interiorColor,
+      "displacement": carPhotoModel.baseInfo.displacement,
+      "gearbox": carPhotoModel.baseInfo.gearbox,
+      "emissionStandard": carPhotoModel.baseInfo.emissionStandard,
+      "useCharacter": carPhotoModel.baseInfo.useCharacter,
+      "location":carPhotoModel.baseInfo.location,
+      "attribution": carPhotoModel.baseInfo.attribution,
+      "conditionIn": carPhotoModel.baseInfo.conditionIn,
+      "conditionOut": carPhotoModel.baseInfo.conditionOut,
+    };
+
+    Map<String, dynamic> photos = {
+      "carPhotos":carPhotoModel.photos.carPhotos,
+      "interiorPhotos": carPhotoModel.photos.interiorPhotos,
+      "defectPhotos": carPhotoModel.photos.defectPhotos,
+      "dataPhotos": carPhotoModel.photos.dataPhotos,
+    };
+
+    Map<String, dynamic> report = {
+      "paints":carPhotoModel.report.paints,
+    };
+
+    Map<String, dynamic> other = {
+      "price": businessPushModel.other.price,
+      "keyCount": businessPushModel.other.keyCount,
+      "compulsoryInsurance": businessPushModel.other.compulsoryInsurance,
+      "compulsoryInsuranceDate": businessPushModel.other.compulsoryInsuranceDate==''?null:businessPushModel.other.compulsoryInsuranceDate,
+      "commercialInsurance":businessPushModel.other.commercialInsurance,
+      "commercialInsuranceDate": businessPushModel.other.commercialInsuranceDate==''?null:businessPushModel.other.commercialInsuranceDate,
+      "commercialInsurancePrice": businessPushModel.other.commercialInsurancePrice==''?null:businessPushModel.other.commercialInsurancePrice,
+    };
+
+
+
+    BaseModel model =
+    await apiClient.request(API.order.addConsignment, data: {
+      'priceId': businessPushModel.priceId,
+      'dealerId': businessPushModel.dealerId,
+      'photos': photos,
+      'baseInfo': baseInfo,
+      'report':report,
+      'other': other,
+    });
+    if (model.code == 0) {
+      if (model.msg == '操作成功') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      CloudToast.show(model.msg);
+      return false;
+    }
+  }
+
+
+
+
+
+  ///车商发布车辆
+  static Future<bool> personalPushCar(
+      {required int orderId,required CarPhotoModel carPhotoModel,}) async {
+    Map<String, dynamic> baseInfo = {
+      "type": carPhotoModel.baseInfo.type,
+      "interiorColor": carPhotoModel.baseInfo.interiorColor,
+      "displacement": carPhotoModel.baseInfo.displacement,
+      "gearbox": carPhotoModel.baseInfo.gearbox,
+      "emissionStandard": carPhotoModel.baseInfo.emissionStandard,
+      "useCharacter": carPhotoModel.baseInfo.useCharacter,
+      "location":carPhotoModel.baseInfo.location,
+      "attribution": carPhotoModel.baseInfo.attribution,
+      "conditionIn": carPhotoModel.baseInfo.conditionIn,
+      "conditionOut": carPhotoModel.baseInfo.conditionOut,
+    };
+
+    Map<String, dynamic> photos = {
+      "carPhotos":carPhotoModel.photos.carPhotos,
+      "interiorPhotos": carPhotoModel.photos.interiorPhotos,
+      "defectPhotos": carPhotoModel.photos.defectPhotos,
+      "dataPhotos": carPhotoModel.photos.dataPhotos,
+    };
+
+    Map<String, dynamic> report = {
+      "paints":carPhotoModel.report.paints,
+    };
+
+
+
+    BaseModel model =
+    await apiClient.request(API.order.consignmentPublish, data: {
+      'orderId': orderId,
+      'photos': photos,
+      'baseInfo': baseInfo,
+      'report':report,
+    });
+    if (model.code == 0) {
+      if (model.msg == '操作成功') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      CloudToast.show(model.msg);
+      return false;
+    }
+  }
+
 }

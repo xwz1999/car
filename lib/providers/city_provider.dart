@@ -57,6 +57,22 @@ class CityProvider extends ChangeNotifier {
       '苏州',
       '西安'
     ];
+
+    List hotss = [
+      '杭州',
+      '北京',
+      '上海',
+      '广州',
+      '深圳',
+      '成都',
+      '重庆',
+      '天津',
+      '南京',
+      '武汉',
+      '苏州',
+      '西安'
+    ];
+
     if (_regions.isEmpty) {
       return [];
     } else {
@@ -71,9 +87,9 @@ class CityProvider extends ChangeNotifier {
           //遍历热门城市列表 若其中包含此城市名则加入列表
           for (var i in hots) {
             if (item.name.contains(i)) {
-              hots.remove(i);
+              hotss.remove(i);
               list.add(item);
-              if (hots.isEmpty) {
+              if (hotss.isEmpty) {
                 return list;
               }
             }

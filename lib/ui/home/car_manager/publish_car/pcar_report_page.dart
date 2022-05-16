@@ -1,12 +1,35 @@
+import 'dart:io';
+
+import 'package:cloud_car/model/car/business_push_model.dart';
+import 'package:cloud_car/model/car/car_photo_model.dart';
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_source_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
 
 class CarReportPage extends StatefulWidget {
-  const CarReportPage({Key? key}) : super(key: key);
+  final int? orderId;
+
+  final ValueNotifier<BusinessPushModel> businessPushModel;
+
+  final ValueNotifier<CarPhotoModel> carPhotoModel;
+
+  final ConsignmentContractModel consignmentContractModel;
+
+  const CarReportPage(
+      {Key? key,
+      this.orderId,
+      required this.businessPushModel,
+      required this.carPhotoModel,
+      required this.consignmentContractModel})
+      : super(key: key);
 
   @override
   State<CarReportPage> createState() => _CarReportPageState();
@@ -70,26 +93,25 @@ class _CarReportPageState extends State<CarReportPage> {
                     ],
                   ),
                   20.hb,
-                  GestureDetector(
-                    onTap: () {},
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 210.w,
-                            height: 158.w,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: Assets.images.addcar,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
+                  MultiImagePickWidget(
+                      width: 216.w,
+                      height: 160.w,
+                      spacing: 15.w,
+                      maxCount: 6,
+                      photos: widget.carPhotoModel.value.report.paintsFile!,
+                      onChanged: (files) {
+                        widget.carPhotoModel.value.report.paintsFile =files.cast<File>();
+                        // for (var item in files) {
+                        //   widget.carPhotoModel.value.report.paintsFile!
+                        //       .add(item);
+                        // }
+                        setState(() {
+
+                        });
+                        //_files = files;
+                        print(
+                            "aaaa+${widget.carPhotoModel.value.report.paintsFile}");
+                      }),
                 ],
               ),
             ),
@@ -97,8 +119,37 @@ class _CarReportPageState extends State<CarReportPage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const CarSourcePage());
+                onPressed: () async {
+                  if (widget.carPhotoModel.value.report.paintsFile != null) {
+                    widget.carPhotoModel.value.report.paints!.clear();
+                    for (var i = 0;
+                        i <
+                            widget
+                                .carPhotoModel.value.report.paintsFile!.length;
+                        i++) {
+                      if (widget.carPhotoModel.value.report.paintsFile!
+                              .runtimeType !=
+                          String) {
+                        var url = await apiClient.uploadImage(
+                            widget.carPhotoModel.value.report.paintsFile![i]);
+                        widget.carPhotoModel.value.report.paints!.add(url);
+                      }
+                    }
+                    if(widget.carPhotoModel.value.report.paints!.isNotEmpty){
+                      Get.to(() => CarSourcePage(
+                        consignmentContractModel:
+                        widget.consignmentContractModel,
+                        carPhotoModel: widget.carPhotoModel,
+                        businessPushModel: widget.businessPushModel,
+                        orderId: widget.orderId,
+                      ));
+                    }else {
+                      CloudToast.show('请先上传漆面数据');
+                    }
+
+                  } else {
+                    CloudToast.show('请先上传漆面数据');
+                  }
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),

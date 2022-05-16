@@ -125,8 +125,7 @@ class _ContactConditionState extends State<ContactCondition> {
 
                     if(success){
                       CloudToast.show('合同发布成功');
-                      Get.close(5);
-                      Get.to(CarPicturePage(consignmentContractModel: widget.consignmentContractModel,));
+                      Get.close(5);///关闭估价和发布合同的所有页面 跳转到寄卖订单列表
 
                     }else{
                       CloudToast.show('合同发布失败');

@@ -140,7 +140,7 @@ class _Order {
   ///寄卖订单->寄卖订单列表
   get consignmentLists => '/order/consignment/lists';
 
-  ///寄卖订单->发布车辆
+  ///寄卖订单->发布车辆 个人
   get consignmentPublish => '/order/consignment/publish';
 
   ///邀约
@@ -164,7 +164,7 @@ class _Order {
   ///交车
   get carFinal => '/order/call/car/final';
 
-  ///添加车商寄卖订单
+  ///添加车商寄卖订单 车商发布订单
   get addConsignment => '/order/dealer/consignment/add';
 
   ///车商寄卖订单

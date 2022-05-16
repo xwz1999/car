@@ -196,7 +196,6 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               CloudToast.show('请先完善车主信息');
 
             }else{
-
               Get.to(() =>  ContractLicencePage(consignmentContractModel: widget.consignmentContractModel,));
             }
 
@@ -322,118 +321,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
     );
   }
 
-  // Widget companyInfo() {
-  //   return Column(
-  //     children: [
-  //       _noIcon('公司名称', _companyController),
-  //       30.hb,
-  //       _noIcon('信用代码', _creditCodeController),
-  //       30.hb,
-  //       _noIcon('联系方式', _phoneController),
-  //       30.hb,
-  //       _noIcon('开户行', _depositBankController),
-  //       _haveIcon('银行卡号', _bankNumController, () {}),
-  //       _takePhoto(
-  //         '营业执照',
-  //         GestureDetector(
-  //           child: SizedBox(
-  //             child:
-  //                 Assets.images.carCompany.image(width: 200.w, height: 150.h),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
-  // _haveIcon(
-  //   String title,
-  //   TextEditingController _contentController,
-  //   VoidCallback _onTap,
-  // ) {
-  //   return Container(
-  //     color: Colors.transparent,
-  //     child: Row(
-  //       children: [
-  //         '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
-  //         10.wb,
-  //         SizedBox(
-  //           width: 160.w,
-  //           child: title.text
-  //               .size(30.sp)
-  //               .color(Colors.black.withOpacity(0.45))
-  //               .make(),
-  //         ),
-  //         Expanded(
-  //           child: TextField(
-  //             textAlign: TextAlign.start,
-  //             onChanged: (text) => setState(() {}),
-  //             autofocus: false,
-  //             controller: _contentController,
-  //             decoration: InputDecoration(
-  //                 contentPadding: EdgeInsets.zero,
-  //                 isDense: true,
-  //                 border: InputBorder.none,
-  //                 hintText: '请输入',
-  //                 hintStyle: TextStyle(
-  //                   fontSize: 30.sp,
-  //                   color: Colors.black.withOpacity(0.25),
-  //                 )),
-  //           ),
-  //         ),
-  //         24.wb,
-  //         IconButton(
-  //           onPressed: _onTap,
-  //           icon:ImageIcon(
-  //             Assets.icons.scan,
-  //             size: 35.w,
-  //             color: Colors.black38,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  // _noIcon(
-  //   String title,
-  //   TextEditingController _contentController,
-  // ) {
-  //   return Container(
-  //     color: Colors.transparent,
-  //     child: Row(
-  //       children: [
-  //         '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
-  //         10.wb,
-  //         SizedBox(
-  //           width: 160.w,
-  //           child: title.text
-  //               .size(30.sp)
-  //               .color(Colors.black.withOpacity(0.45))
-  //               .make(),
-  //         ),
-  //         Expanded(
-  //           child: TextField(
-  //             textAlign: TextAlign.start,
-  //             onChanged: (text) => setState(() {}),
-  //             autofocus: false,
-  //             controller: _contentController,
-  //             decoration: InputDecoration(
-  //                 contentPadding: EdgeInsets.zero,
-  //                 isDense: true,
-  //                 border: InputBorder.none,
-  //                 hintText: '请输入',
-  //                 hintStyle: TextStyle(
-  //                   fontSize: 30.sp,
-  //                   color: Colors.black.withOpacity(0.25),
-  //                 )),
-  //           ),
-  //         ),
-  //         24.wb,
-  //       ],
-  //     ),
-  //   );
-  // }
 
   _takePhoto(
     String title,

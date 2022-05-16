@@ -1,6 +1,9 @@
 // ignore_for_file: dead_code
 
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/backup/consignment_audit.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
@@ -28,6 +31,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
   late bool bl = true;
   // getConsignmentInfo
   late IndividualModel _individualList;
+  bool _onLoad = true;
 
   @override
   void initState() {
@@ -39,7 +43,8 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
   }
 
   _refresh() async {
-    // _individualList = (await OrderFunc.getConsignmentInfo(widget.id))!;
+     _individualList = (await OrderFunc.getConsignmentInfo(widget.id))!;
+     _onLoad = false;
   }
 
   @override
@@ -84,7 +89,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                 ),
               ),
               16.hb,
-              Container(
+              _onLoad?SizedBox():  Container(
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 padding: EdgeInsets.all(28.w),
                 decoration: BoxDecoration(
@@ -105,7 +110,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                 ),
               ),
               16.hb,
-              Container(
+              _onLoad?SizedBox():  Container(
                   padding:
                       EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -160,7 +165,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                         ),
                       ])),
               16.hb,
-              stat == '待签订'
+              _onLoad?SizedBox():  stat == '待签订'
                   ? Container(
                       margin: EdgeInsets.symmetric(horizontal: 32.w),
                       padding: EdgeInsets.all(28.w),
@@ -222,7 +227,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                             top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
                         child: GestureDetector(
                           onTap: () {
-                            Get.to(() => const ConsignmentAudit());
+                            Get.to(()=>CarPicturePage(isPersonal: true, consignmentContractModel: ConsignmentContractModel(masterInfo: MasterInfo()),orderId: widget.id,));
                           },
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 16.w),
@@ -395,6 +400,8 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
           ),
         );
         break;
+      default:
+        return const SizedBox();
     }
   }
 

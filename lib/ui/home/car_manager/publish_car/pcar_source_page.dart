@@ -1,19 +1,46 @@
+import 'package:cloud_car/model/car/business_push_model.dart';
+import 'package:cloud_car/model/car/car_photo_model.dart';
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_license_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_owner_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/publish_finish_page.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
 
 class CarSourcePage extends StatefulWidget {
-  const CarSourcePage({Key? key}) : super(key: key);
+  final int? orderId;
+
+  final ValueNotifier<BusinessPushModel> businessPushModel;
+
+  final ValueNotifier<CarPhotoModel> carPhotoModel;
+
+  final ConsignmentContractModel consignmentContractModel;
+
+  const CarSourcePage(
+      {Key? key,
+      this.orderId,
+      required this.businessPushModel,
+      required this.carPhotoModel,
+      required this.consignmentContractModel})
+      : super(key: key);
 
   @override
   State<CarSourcePage> createState() => _CarSourcePageState();
 }
 
 class _CarSourcePageState extends State<CarSourcePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,14 +78,14 @@ class _CarSourcePageState extends State<CarSourcePage> {
                   EditItemWidget(
                     topIcon: true,
                     title: '车辆来源',
-                    value: '个人直买',
+                    value: widget.orderId == null ? '车商' : '个人直卖',
                     canChange: false,
                     callback: (String content) {},
                   ),
                   EditItemWidget(
                     topIcon: true,
                     title: '上架人',
-                    value: '张三',
+                    value: UserTool.userProvider.userInfo.nickname,
                     canChange: false,
                     callback: (String content) {},
                   ),
@@ -76,13 +103,45 @@ class _CarSourcePageState extends State<CarSourcePage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const CarOwnerPage());
+                onPressed: () async {
+                  ///个人直卖到这里直接提交
+                  if( widget.orderId!=null){
+
+
+                    var cancel = CloudToast.loading;
+
+
+                      //车商
+                      var success = await CarFunc.personalPushCar(
+                          carPhotoModel: widget.carPhotoModel.value, orderId: widget.orderId!);
+                      cancel();
+                      if(success){
+                        Get.to(() => const PublishFinishPage());
+                      }else{
+                        CloudToast.show('车辆发布失败');
+                      }
+
+
+                  }
+
+                  else{
+                    ///车商还需填写信息
+                    Get.to(() => CarLicensePage(
+                      carPhotoModel: widget.carPhotoModel,
+                      consignmentContractModel:
+                      widget.consignmentContractModel,
+                      businessPushModel: widget.businessPushModel,
+                      orderId: widget.orderId,
+                    ));
+                  }
+
+
+                  //Get.to(() => const CarOwnerPage());
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                child: '下一步'.text.size(30.sp).color(Colors.white).make(),
+                child: ( widget.orderId!=null?'提交':'下一步').text.size(30.sp).color(Colors.white).make(),
               ),
             ).paddingAll(30.h),
           ],
