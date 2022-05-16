@@ -111,8 +111,8 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
         },
         child: Column(
           children: [
-            const SizedBox(
-              height: kToolbarHeight + 10,
+             SizedBox(
+              height: kToolbarHeight + 50.w,
             ),
             SizedBox(
               height: 88.w,

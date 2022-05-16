@@ -1,4 +1,8 @@
+// ignore_for_file: dead_code
+
+import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/backup/consignment_audit.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
@@ -13,7 +17,6 @@ class ConsignmentSigned extends StatefulWidget {
   final String stat;
   final int statusNum;
   final int id;
-
   const ConsignmentSigned(
       {Key? key, required this.stat, required this.statusNum, required this.id})
       : super(key: key);
@@ -26,9 +29,9 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
   late String stat = widget.stat;
   late Widget methods;
   late bool bl = true;
-
   // getConsignmentInfo
-  IndividualModel? _individualList;
+  late IndividualModel _individualList;
+  bool _onLoad = true;
 
   @override
   void initState() {
@@ -40,7 +43,8 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
   }
 
   _refresh() async {
-    _individualList = (await OrderFunc.getConsignmentInfo(widget.id))!;
+     _individualList = (await OrderFunc.getConsignmentInfo(widget.id))!;
+     _onLoad = false;
   }
 
   @override
@@ -60,34 +64,109 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: _individualList == null
-            ? Container()
-            : Stack(
-                children: [
-                  ListView(children: [
-                    16.hb,
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 32.w),
-                      padding: EdgeInsets.only(top: 32.w),
-                      height: 120.w,
-                      color: Colors.white,
-                      child: ProgressBar(
-                        length: 6,
-                        num: widget.statusNum,
-                        direction: false,
-                        HW: 96,
-                        texts: [
-                          text('预定'),
-                          text('签订'),
-                          text('上架'),
-                          text('出售'),
-                          text('到账'),
-                          text('成交'),
-                        ],
-                      ),
-                    ),
-                    16.hb,
-                    Container(
+        body: Stack(
+          children: [
+            ListView(children: [
+              16.hb,
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 32.w),
+                padding: EdgeInsets.only(top: 32.w),
+                height: 120.w,
+                color: Colors.white,
+                child: ProgressBar(
+                  length: 6,
+                  num: widget.statusNum,
+                  direction: false,
+                  HW: 96,
+                  texts: [
+                    text('预定'),
+                    text('签订'),
+                    text('上架'),
+                    text('出售'),
+                    text('到账'),
+                    text('成交'),
+                  ],
+                ),
+              ),
+              16.hb,
+              _onLoad?SizedBox():  Container(
+                margin: EdgeInsets.symmetric(horizontal: 32.w),
+                padding: EdgeInsets.all(28.w),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.w)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    getTitle('客户信息'),
+                    36.hb,
+                    _getText('客户姓名', _individualList.customer.nickname),
+                    36.hb,
+                    _getText(
+                      '手机号',
+                      _individualList.customer.mobile,
+                    )
+                  ],
+                ),
+              ),
+              16.hb,
+              _onLoad?SizedBox():  Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+                  margin: EdgeInsets.symmetric(horizontal: 32.w),
+                  decoration: BoxDecoration(
+                      color: kForeGroundColor,
+                      borderRadius: BorderRadius.circular(16.w)),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 0.w),
+                          child: Text(
+                            '车辆信息',
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
+                        ),
+                        24.hb,
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 196.w,
+                              height: 150.w,
+                              child: CloudImageNetworkWidget.car(
+                                urls: [_individualList.car.mainPhoto],
+                              ),
+                            ),
+                            20.wb,
+                            SizedBox(
+                              width: 406.w,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(_individualList.car.modelName,
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color111111)),
+                                  32.hb,
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 16.w),
+                                    child: getText(
+                                        DateUtil.formatDateMs(
+                                            _individualList.car.licensingDate
+                                                    .toInt() *
+                                                1000,
+                                            format: 'yyyy年MM'),
+                                        '${_individualList.car.mileage}万公里'),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ])),
+              16.hb,
+              _onLoad?SizedBox():  stat == '待签订'
+                  ? Container(
                       margin: EdgeInsets.symmetric(horizontal: 32.w),
                       padding: EdgeInsets.all(28.w),
                       decoration: BoxDecoration(
@@ -96,172 +175,90 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          getTitle('客户信息'),
+                          Padding(
+                            padding: EdgeInsets.only(left: 0.w),
+                            child: getTitle('预约直卖信息'),
+                          ),
                           36.hb,
-                          _getText('客户姓名', _individualList!.customer.nickname),
+                          _getText('预约地址', '云云问车 浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
                           36.hb,
                           _getText(
-                            '手机号',
-                            _individualList!.customer.mobile,
+                            '预约时间',
+                            '2021-12-30 12:00-18:00',
+                          )
+                        ],
+                      ),
+                    )
+                  : Container(
+                      margin: EdgeInsets.symmetric(horizontal: 32.w),
+                      padding: EdgeInsets.all(28.w),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.w)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 0.w),
+                            child: getTitle('合同信息'),
+                          ),
+                          36.hb,
+                          _getText('合同编号', '9876524612'),
+                          36.hb,
+                          _getText(
+                            '签订时间',
+                            '2021-12-30 12:00:00',
                           )
                         ],
                       ),
                     ),
-                    16.hb,
-                    Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 24.w, horizontal: 32.w),
-                        margin: EdgeInsets.symmetric(horizontal: 32.w),
-                        decoration: BoxDecoration(
-                            color: kForeGroundColor,
-                            borderRadius: BorderRadius.circular(16.w)),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 0.w),
+              16.hb,
+              getWidget()
+            ]),
+            stat == '待发布' || stat == '已驳回'
+                ? Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                        width: double.infinity,
+                        color: kForeGroundColor,
+                        padding: EdgeInsets.only(
+                            top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(()=>CarPicturePage(isPersonal: true, consignmentContractModel: ConsignmentContractModel(masterInfo: MasterInfo()),orderId: widget.id,));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 16.w),
+                            child: Container(
+                                padding: EdgeInsets.only(
+                                    left: 38.w, top: 16.w, bottom: 16.w),
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF027AFF),
+                                    borderRadius: BorderRadius.circular(8.w)),
                                 child: Text(
-                                  '车辆信息',
-                                  style: Theme.of(context).textTheme.subtitle2,
-                                ),
-                              ),
-                              24.hb,
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 196.w,
-                                    height: 150.w,
-                                    child: CloudImageNetworkWidget.car(
-                                      urls: [_individualList!.car.mainPhoto],
-                                    ),
-                                  ),
-                                  20.wb,
-                                  SizedBox(
-                                    width: 406.w,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(_individualList!.car.modelName,
-                                            style: TextStyle(
-                                                fontSize: BaseStyle.fontSize28,
-                                                color: BaseStyle.color111111)),
-                                        32.hb,
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 16.w),
-                                          child: getText(
-                                              DateUtil.formatDateMs(
-                                                  _individualList!
-                                                          .car.licensingDate
-                                                          .toInt() *
-                                                      1000,
-                                                  format: 'yyyy年MM'),
-                                              '${_individualList!.car.mileage}万公里'),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ])),
-                    16.hb,
-                    stat == '待签订'
-                        ? Container(
-                            margin: EdgeInsets.symmetric(horizontal: 32.w),
-                            padding: EdgeInsets.all(28.w),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8.w)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 0.w),
-                                  child: getTitle('预约直卖信息'),
-                                ),
-                                36.hb,
-                                _getText(
-                                    '预约地址', '云云问车 浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
-                                36.hb,
-                                _getText(
-                                  '预约时间',
-                                  '2021-12-30 12:00-18:00',
-                                )
-                              ],
-                            ),
-                          )
-                        : Container(
-                            margin: EdgeInsets.symmetric(horizontal: 32.w),
-                            padding: EdgeInsets.all(28.w),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8.w)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 0.w),
-                                  child: getTitle('合同信息'),
-                                ),
-                                36.hb,
-                                _getText('合同编号', '9876524612'),
-                                36.hb,
-                                _getText(
-                                  '签订时间',
-                                  '2021-12-30 12:00:00',
-                                )
-                              ],
-                            ),
+                                  stat == '待发布' ? '发布车辆' : '重新发布',
+                                  style: TextStyle(
+                                      color: kForeGroundColor,
+                                      fontSize: BaseStyle.fontSize28),
+                                )),
                           ),
-                    16.hb,
-                    getWidget()
-                  ]),
-                  stat == '待发布' || stat == '已驳回'
-                      ? Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          child: Container(
-                              width: double.infinity,
-                              color: kForeGroundColor,
-                              padding: EdgeInsets.only(
-                                  top: 36.w,
-                                  left: 526.w,
-                                  bottom: 10.w,
-                                  right: 32.w),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Get.to(() => const ConsignmentAudit());
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(bottom: 16.w),
-                                  child: Container(
-                                      padding: EdgeInsets.only(
-                                          left: 38.w, top: 16.w, bottom: 16.w),
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xFF027AFF),
-                                          borderRadius:
-                                              BorderRadius.circular(8.w)),
-                                      child: Text(
-                                        stat == '待发布' ? '发布车辆' : '重新发布',
-                                        style: TextStyle(
-                                            color: kForeGroundColor,
-                                            fontSize: BaseStyle.fontSize28),
-                                      )),
-                                ),
-                              )),
-                        )
-                      : const SizedBox()
-                ],
-              ));
+                        )),
+                  )
+                : const SizedBox()
+          ],
+        ));
   }
 
   getWidget() {
     switch (stat) {
       case '待签订':
         return methods = const SizedBox();
+        break;
       case '待发布':
         return methods = const SizedBox();
+        break;
       case '审核中':
         return methods = Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w),
@@ -271,8 +268,10 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                 fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
         );
+        break;
       case '在售':
         return methods = const SizedBox();
+        break;
       case '已售':
         return methods = bl
             ? Column(
@@ -291,16 +290,16 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                           child: getTitle('出售信息'),
                         ),
                         36.hb,
-                        _getText('购车客户', _individualList!.customer.nickname),
+                        _getText('购车客户', _individualList.customer.nickname),
                         36.hb,
                         _getText(
                           '手机号',
-                          _individualList!.customer.mobile,
+                          _individualList.customer.mobile,
                         ),
                         36.hb,
                         _getText(
                           '出售价格',
-                          '¥${_individualList!.saleAmount}',
+                          '¥${_individualList.saleAmount}',
                         ),
                         36.hb,
                         _getText(
@@ -376,6 +375,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                   ],
                 ),
               );
+        break;
       case '交易取消':
         return methods = Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -399,6 +399,9 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
             ],
           ),
         );
+        break;
+      default:
+        return const SizedBox();
     }
   }
 

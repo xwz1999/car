@@ -141,6 +141,7 @@ class _CarReportPageState extends State<CarReportPage> {
                         widget.consignmentContractModel,
                         carPhotoModel: widget.carPhotoModel,
                         businessPushModel: widget.businessPushModel,
+                        orderId: widget.orderId,
                       ));
                     }else {
                       CloudToast.show('请先上传漆面数据');

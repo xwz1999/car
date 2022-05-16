@@ -140,7 +140,7 @@ class _Order {
   ///寄卖订单->寄卖订单列表
   get consignmentLists => '/order/consignment/lists';
 
-  ///寄卖订单->发布车辆
+  ///寄卖订单->发布车辆 个人
   get consignmentPublish => '/order/consignment/publish';
 
   ///邀约
