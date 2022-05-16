@@ -81,14 +81,12 @@ class CustomerFunc {
 
     if (model.code != 0) {
       CloudToast.show(model.msg);
-      return const CustomerStatisticsModel(
-          intentionCount: 0, doneCount: 0, registerCount: 0, browseCount: 0);
+      return null;
     } else {
       if (model.data != null) {
         return CustomerStatisticsModel.fromJson(model.data);
       } else {
-        return const CustomerStatisticsModel(
-            intentionCount: 0, doneCount: 0, registerCount: 0, browseCount: 0);
+        return null;
       }
     }
   }

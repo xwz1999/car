@@ -84,7 +84,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
 
   _refresh() async {
     carInfoModel = await CarFunc.getCarInfo(widget.carListModel.id);
-    collect = carInfoModel!.collect;
+    collect = carInfoModel?.collect??0;
     setState(() {});
   }
 
