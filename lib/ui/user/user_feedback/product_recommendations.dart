@@ -1,12 +1,14 @@
 // ignore_for_file: file_names, avoid_print
 
+import 'dart:io';
+
 import 'package:cloud_car/model/configuration_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/user/interface/feedback_func.dart';
 import 'package:cloud_car/ui/user/user_feedback/vehicles_release.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
-import 'package:extended_image/extended_image.dart';
+
 import 'package:flutter/material.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';

@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/History_model.dart';
 import 'package:cloud_car/ui/user/interface/user_func.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
-
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class PayChangesPage extends StatefulWidget {
@@ -26,17 +21,22 @@ class _PayChangesPageState extends State<PayChangesPage> {
   // ignore: non_constant_identifier_names
   List<HistoryModel> payNumList = [
     const HistoryModel(id: 23, type: 3, count: -1, createdAt: 1651149932),
-    const HistoryModel(id: 23, type: 2, count: -1, createdAt: 1343465364),
-    const HistoryModel(id: 23, type: 1, count: 20, createdAt: 832132312),
-    const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1651149932),
-    const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1651149932),
+    const HistoryModel(id: 23, type: 2, count: -1, createdAt: 1232312313),
+    const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1732432432),
+    const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1732432432),
+    const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1732432432),
   ];
+
   //List<String> timeList = [];
   //bool num = true;
-  late int num = 0;
+  //late int num = 0;
+  List<int> num = [];
+
   List<String> timeList = [];
+
   // late int timeNum = 0;
   List<String> timeList1 = [];
+  List<int> number1 = [];
 
   @override
   void initState() {
@@ -46,8 +46,11 @@ class _PayChangesPageState extends State<PayChangesPage> {
             format: 'yyyy年MM月'),
       );
     }
-    timeList1 = timeList.map((e) => jsonEncode(e)).toList();
-    //timeList = timeList.map((e) => jsonEncode(e)).toList();
+    timeList1 = timeList.toSet().toList();
+    for (var i = 0; i < timeList1.length; i++) {
+      num.add(0);
+    }
+    print(num);
     super.initState();
 
     Future.delayed(const Duration(milliseconds: 0), () async {
@@ -138,19 +141,28 @@ class _PayChangesPageState extends State<PayChangesPage> {
             },
             child: ListView.builder(
               itemBuilder: (context, index) {
-                return _getChanges(timeList[index]);
+                return _getChanges(timeList1[index], index);
               },
-              itemCount: timeList.length,
+              itemCount: timeList1.length,
             ),
           ))
         ]));
   }
 
 //列表
-  _getChanges(String model) {
+  _getChanges(String model, int number) {
     return GestureDetector(
         onTap: (() {
-          num++;
+          print(number1);
+          //print(timeList1);
+          // var a = timeList[0];
+          // var b = DateUtil.formatDateMs(
+          //     payNumList.first.createdAt.toInt() * 1000,
+          //     format: 'yyyy年MM月');
+          // print(a);
+          // print(b);
+          // print(a == b);
+          num[number]++;
           //num = false;
           setState(() {});
         }),
@@ -182,7 +194,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
                   SizedBox(
                       width: 32.w,
                       height: 32.w,
-                      child: Image.asset(num.isEven
+                      child: Image.asset(num[number].isEven
                           ? Assets.icons.down.path
                           : Assets.icons.icGoto.path)
                       // Icon(
@@ -197,110 +209,52 @@ class _PayChangesPageState extends State<PayChangesPage> {
               ),
             ),
             Offstage(
-              offstage: num.isOdd, //num % 2 != 0,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemExtent: 140.w,
-                itemBuilder: (context, index) {
-                  return getSc(payNumList[index]);
-                  // GestureDetector(
-                  //     onTap: () {
-                  //       Get.to(() => const Withdrawal(
-                  //           pice: '100', //timeList[index]['pice'],
-                  //           bankName: '银行卡', //timeList[index]['bankname'],
-                  //           time: '2022年')); //timeList[index]['time']));
-                  //     },
-                  //     child: Container(
-                  //       width: 750.w,
-                  //       height: 140.w,
-                  //       padding: EdgeInsets.symmetric(
-                  //           horizontal: 32.w, vertical: 24.w),
-                  //       color: kForeGroundColor,
-                  //       child: Row(
-                  //         children: [
-                  //           Column(
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-                  //               Text(
-                  //                 '提现到银行卡',
-                  //                 style:
-                  //                     Theme.of(context).textTheme.subtitle1,
-                  //               ),
-                  //               Text(
-                  //                 '11111',
-                  //                 style: TextStyle(
-                  //                     color: BaseStyle.color999999,
-                  //                     fontSize: BaseStyle.fontSize24),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //           const Spacer(),
-                  //           Row(
-                  //             children: [
-                  //               Text(
-                  //                 '111111',
-                  //                 style:
-                  //                     Theme.of(context).textTheme.subtitle2,
-                  //               ),
-                  //               SizedBox(
-                  //                   width: 40.w,
-                  //                   height: 40.w,
-                  //                   child: const Icon(
-                  //                     Icons.keyboard_arrow_right,
-                  //                   ))
-                  //             ],
-                  //           )
-                  //         ],
-                  //       ),
-                  //     ));
-                },
-                itemCount: payNumList.length,
-              ),
-            )
+                offstage: num[number].isOdd, //num % 2 != 0,
+                child: getJubge(number)
+
+                //
+                //     ListView.builder(
+                //   shrinkWrap: true,
+                //   itemExtent: 140.w,
+                //   itemBuilder: (context, index) {
+                //     return timeList1[number] ==
+                //             DateUtil.formatDateMs(
+                //                 payNumList[index].createdAt.toInt() * 1000,
+                //                 format: 'yyyy年MM月')
+                //         ? getSc(payNumList[index])
+                //         : '';
+                //
+                //     //getSc(payNumList[index]);
+                //   },
+                //   itemCount: 3,
+                // ),
+                )
             //getList()
           ],
         ));
-    //leading: Icon(Icons.list),
-    // ListTile(
-    //   //minVerticalPadding: ,
-    //   title: Text(
-    //     '评估车辆1次',
-    //     style: Theme.of(context).textTheme.subtitle2,
-    //   ),
-    //   subtitle: Text(
-    //     '12月1日 16:34:09',
-    //     style: TextStyle(
-    //         fontSize: 24.sp,
-    //         color: const Color.fromRGBO(153, 153, 153, 1)),
-    //   ),
-    //   trailing: Text(
-    //     '-1',
-    //     style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold),
-    //   ),
-    // ),
-    // ListTile(
-    //   title: Text(
-    //     '充值次数',
-    //     style: Theme.of(context).textTheme.subtitle2,
-    //   ),
-    //   subtitle: Column(
-    //     //左对齐
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       Text('扣款银行卡: 工商银行，尾号0909 扣款金额：¥20.00',
-    //           style: Theme.of(context).textTheme.bodyText1?.copyWith(
-    //                 color: const Color(0xFF999999),
-    //                 overflow: TextOverflow.ellipsis,
-    //               )),
-    //       8.hb,
-    //       Text('12月1日 16:34:09',
-    //           style: Theme.of(context).textTheme.bodyText1?.copyWith(
-    //                 color: const Color(0xFF999999),
-    //               )),
-    //     ],
-    //   ),
-    //   trailing: Text('+20', style: Theme.of(context).textTheme.subtitle2),
-    // ),
+  }
+
+  getJubge(int number) {
+    number1.clear();
+    for (var i = 0; i < payNumList.length; i++) {
+      if (timeList1[number] ==
+          DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
+              format: 'yyyy年MM月')) {
+        number1.add(i);
+        //return getSc(payNumList[i]);
+        //getSc();
+        continue;
+      }
+    }
+    print(number1);
+    return ListView.builder(
+      shrinkWrap: true,
+      itemExtent: 140.w,
+      itemBuilder: (context, index) {
+        return getSc(payNumList[number1[index]]);
+      },
+      itemCount: number1.length,
+    );
   }
 
   getSc(HistoryModel model) {

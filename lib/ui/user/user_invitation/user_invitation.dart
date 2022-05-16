@@ -416,7 +416,7 @@ class _UserInvitationState extends State<UserInvitation>
       child: Text(
           newTime.difference(subscribeTime).inHours >= 1000 ? '过期' : '看车',
           style: TextStyle(
-              color: newTime.difference(subscribeTime).inHours >= 10000
+              color: newTime.difference(subscribeTime).inHours >= 1000
                   ? const Color(0xFF999999)
                   : const Color(0xFF027AFF),
               fontSize: BaseStyle.fontSize24,

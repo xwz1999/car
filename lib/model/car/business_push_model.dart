@@ -4,7 +4,7 @@ class BusinessPushModel{
    int? priceId;
    int? dealerId;
    String? dealerName;
-   CarOtherInfo other;  
+   CarOtherInfo other;
 
    BusinessPushModel({
     this.priceId,
