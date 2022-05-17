@@ -54,6 +54,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   late bool bl = true;
+
   @override
   void dispose() {
     _refreshController.dispose();
@@ -239,48 +240,48 @@ class _UserPageState extends State<UserPage> {
 
 //banner内部文字
   _getBannerFont() {
-    return Container(
-      margin: const EdgeInsets.only(top: 25, right: 20, left: 20),
-      child: Row(
-        children: [
-          Expanded(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  //Get.to(() => const PartnerCenterPage());
-                },
-                child: Text(
-                  "合伙人",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      ?.copyWith(color: kForeGroundColor),
-                  // style: TextStyle(
-                  //     fontSize: 32.sp,
-                  //     color: Colors.white,
-                  //     fontWeight: FontWeight.bold),
-                ),
-              ),
-              16.wb,
-              Text(bl ? "开通即享5项权益" : '您已享受5项权益',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: Colors.white.withOpacity(0.8))
-                  // TextStyle(
-                  //   fontSize: 24.sp,
-                  //   color: Colors.white60,
-                  // ),
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => const PartnerCenterPage());
+      },
+      child: Container(
+        margin: const EdgeInsets.only(top: 25, right: 20, left: 20),
+        child: Row(
+          children: [
+            Expanded(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    //Get.to(() => const PartnerCenterPage());
+                  },
+                  child: Text(
+                    "合伙人",
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(color: kForeGroundColor),
+                    // style: TextStyle(
+                    //     fontSize: 32.sp,
+                    //     color: Colors.white,
+                    //     fontWeight: FontWeight.bold),
                   ),
-            ],
-          )),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => const PartnerCenterPage());
-            },
-            child: Container(
+                ),
+                16.wb,
+                Text(bl ? "开通即享5项权益" : '您已享受5项权益',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.copyWith(color: Colors.white.withOpacity(0.8))
+                    // TextStyle(
+                    //   fontSize: 24.sp,
+                    //   color: Colors.white60,
+                    // ),
+                    ),
+              ],
+            )),
+            Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.w),
                   color: Colors.white),
@@ -294,9 +295,9 @@ class _UserPageState extends State<UserPage> {
                   //     fontSize: 13,
                   //     fontWeight: FontWeight.bold),
                   ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

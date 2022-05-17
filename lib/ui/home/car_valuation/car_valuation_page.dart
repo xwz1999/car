@@ -15,6 +15,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/picker/car_date_picker.dart';
 import 'package:cloud_car/widget/picker/car_list_picker.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
+import 'package:cloud_car/widget/scan_license_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
@@ -200,31 +201,15 @@ class _CarValuationPageState extends State<CarValuationPage> {
             ]),
         child: Column(
           children: [
-            GestureDetector(
-              onTap: () async {
-                await CloudImagePicker.pickSingleImage(title: '选择图片').then(
-                  (value) async {
-                    if (value != null) {
-                      File files = value;
-                      String urls = await apiClient.uploadImage(files);
-                      carInfoModel =
-                          await CarFunc.carDistinguish(urls.imageWithHost);
-                      if (carInfoModel != null) {
-                        _carInfo.name = carInfoModel!.cartype;
+            ScanLicenseWidget(onLoadComplete: (carInfoModel) {
+              _carInfo.name = carInfoModel.cartype;
 
-                        _carInfo.address = carInfoModel!.address;
+              _carInfo.address = carInfoModel.address;
 
-                        _carInfo.licensingDate =
-                            DateUtil.getDateTime(carInfoModel!.regdate);
-                        setState(() {});
-                      }
-                    }
-                  },
-                );
-                setState(() {});
-              },
-              child: Image.asset('assets/images/driving_license2.png'),
-            ),
+              _carInfo.licensingDate =
+                  DateUtil.getDateTime(carInfoModel.regdate);
+              setState(() {});
+            }),
             GestureDetector(
               onTap: () async {
                 await Get.to(() => ChooseCarPage(
@@ -370,6 +355,7 @@ class CarInfo {
 
   ///上牌照时间
   DateTime? licensingDate;
+
   String get licensingDateStr =>
       DateUtil.formatDate(licensingDate, format: 'yyyy-MM');
 

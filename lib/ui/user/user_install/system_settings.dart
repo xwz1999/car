@@ -6,6 +6,7 @@ import 'package:cloud_car/ui/user/user_install/enterprise_information.dart';
 import 'package:cloud_car/ui/user/user_install/real_name.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -92,12 +93,14 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
   _getBottom() {
     return GestureDetector(
       onTap: ()async{
+        var cancel=CloudToast.loading;
        var base = await apiClient.request(API.login.logout,showMessage: true);
         if (base.code==0) {
 
           UserTool.userProvider.logout();
           Get.offAll(const LoginPage());
         }
+        cancel();
       },
       child: Container(
           alignment: Alignment.center,

@@ -21,8 +21,8 @@ class CloudListPickerWidget extends StatefulWidget {
 }
 
 class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
-  late String _pickString='';
-  late int _pickIndex=-1;
+  String? _pickString;
+  int? _pickIndex;
 
   @override
   void initState() {
@@ -36,9 +36,15 @@ class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
   @override
   Widget build(BuildContext context) {
     return CarPickerBox(
-      height: widget.items.length*30.w+300.w,
+        height: widget.items.length * 30.w + 300.w,
         title: widget.title,
-        onPressed: () => widget.onConfirm(_pickString, _pickIndex),
+        onPressed: () {
+          if (_pickIndex == null) {
+            return;
+          } else {
+            widget.onConfirm(_pickString!, _pickIndex!);
+          }
+        },
         child: ListView.builder(
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {

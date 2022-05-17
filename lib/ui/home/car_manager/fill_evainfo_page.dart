@@ -361,7 +361,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                               return CloudListPickerWidget(
                                 title: '更换件情况',
                                 items: replaceList.map((e) => e.name).toList(),
-                                onConfirm: (String content, int value) {
+                                onConfirm: (String? content, int? value) {
                                   Get.back();
                                   _carInfo.hasParts = value;
                                   if (value == 0) {

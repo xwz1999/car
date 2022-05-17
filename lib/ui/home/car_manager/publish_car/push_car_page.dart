@@ -10,6 +10,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
+import 'package:cloud_car/widget/scan_license_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -220,43 +221,15 @@ class _PushCarPageState extends State<PushCarPage> {
                           ]),
                       child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: () async {
-                              await CloudImagePicker.pickSingleImage(
-                                      title: '选择图片')
-                                  .then(
-                                (value) async {
-                                  if (value != null) {
-                                    File files = value;
-                                    String urls =
-                                        await apiClient.uploadImage(files);
-                                    carInfoModel =
-                                        await CarFunc.carDistinguish(urls);
-                                    if (carInfoModel != null) {
-                                      _publishCarInfo.viNum = carInfoModel!.vin;
-                                      _publishCarInfo.carName =
-                                          carInfoModel!.cartype;
-                                      _publishCarInfo.licensingDate =
-                                          DateUtil.getDateTime(
-                                              carInfoModel!.issuedate);
-                                      _publishCarInfo.carNum =
-                                          carInfoModel!.lsnum;
-                                      _publishCarInfo.engineNum =
-                                          carInfoModel!.engineno;
-                                      setState(() {});
-                                    }
-                                  }
-                                },
-                              );
-                              setState(() {});
-                            },
-                            child: Stack(
-                              children: [
-                                Image.asset(
-                                    'assets/images/driving_license2.png'),
-                              ],
-                            ),
-                          ),
+                          ScanLicenseWidget(onLoadComplete: (carInfoModel) {
+                            _publishCarInfo.viNum = carInfoModel.vin;
+                            _publishCarInfo.carName = carInfoModel.cartype;
+                            _publishCarInfo.licensingDate =
+                                DateUtil.getDateTime(carInfoModel.issuedate);
+                            _publishCarInfo.carNum = carInfoModel.lsnum;
+                            _publishCarInfo.engineNum = carInfoModel.engineno;
+                            setState(() {});
+                          }),
                           _rewardWidget(),
                           100.w.heightBox,
                           SizedBox(
@@ -410,6 +383,9 @@ class _PushCarPageState extends State<PushCarPage> {
                       title: '车辆来源',
                       items: CarSource.values.map((e) => e.sourceName).toList(),
                       onConfirm: (str, index) {
+                        if (index==null) {
+                          return;
+                        }
                         _publishCarInfo.carSource =
                             CarSource.values.toList()[index].sourceNum;
                         Get.back();
