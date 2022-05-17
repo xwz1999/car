@@ -23,13 +23,9 @@ class _UserInvitationState extends State<UserInvitation>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
   List<TaskInviteListModel> invitationList = [
-    const TaskInviteListModel(
-        customerId: 0, id: 0, inviteAt: 0, type: 0, customerNickname: '')
   ];
 
   List<TaskInviteListModel> subscribeList = [
-    const TaskInviteListModel(
-        customerId: 0, id: 0, inviteAt: 0, type: 0, customerNickname: '')
   ];
   final EasyRefreshController _invitationRefreshController =
       EasyRefreshController();
