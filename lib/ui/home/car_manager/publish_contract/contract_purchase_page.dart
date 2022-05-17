@@ -126,6 +126,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
   }
 
   Column showPushCar(Color fontColor) {
+    print(widget.consignmentContractModel.value.sellPrice);
     return Column(
       children: [
         _showarea('车架号', widget.consignmentContractModel.value.publishCarInfo!.viNum, fontColor),
@@ -183,7 +184,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
           titleWidth: 160.w,
           title: '出售标价',
           endText: '万元',
-          value: widget.consignmentContractModel.value.sellPrice==null?'':  (double.parse(widget.consignmentContractModel.value.sellPrice!)/10000 ).toString(),
+          value: widget.consignmentContractModel.value.sellPrice.isEmptyOrNull?'':  (double.parse(widget.consignmentContractModel.value.sellPrice!)/10000 ).toString(),
           callback: (String content) {
             widget.consignmentContractModel.value.sellPrice = (double.parse(content)*10000 ).toString() ;
           },
