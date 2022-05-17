@@ -1,14 +1,21 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class DetectionData extends StatefulWidget {
-  const DetectionData({Key? key}) : super(key: key);
+  final int orderId;
+  const DetectionData({Key? key, required this.orderId}) : super(key: key);
 
   @override
   State<DetectionData> createState() => _DetectionDataState();
 }
+
+late String img;
 
 class _DetectionDataState extends State<DetectionData> {
   @override
@@ -32,7 +39,7 @@ class _DetectionDataState extends State<DetectionData> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     width: 150.w,
@@ -44,19 +51,27 @@ class _DetectionDataState extends State<DetectionData> {
                           ?.copyWith(color: const Color(0xFF999999)),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child:
-                        SizedBox(child: Image.asset(Assets.images.addcar.path)),
-                  )
+                  CarImageItem(
+                    imageBack: (List<File> image) {
+                      img = image.first.path;
+                    },
+
+                    //isPadding: false,
+                  ),
                 ],
               ),
             ),
             144.hb,
             GestureDetector(
-              onTap: () {
+              onTap: () async {
+                bool zhi = await OrderFunc.getTestrepord(widget.orderId, img);
                 //BotToast.showText(text: '验证码输入错误');
-                BotToast.showText(text: '提交成功');
+                //print("检测报告+$img");
+                if (zhi) {
+                  BotToast.showText(text: '提交成功');
+                  Get.back();
+                }
+                //BotToast.showText(text: '提交成功');
               },
               child: Container(
                 width: 686.w,

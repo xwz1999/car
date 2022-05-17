@@ -58,17 +58,14 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
         extendBody: true,
         //extendBodyBehindAppBar: true,
         body:
-        // Column(
-        //   children: [
-        //     _topInfo(),
-        //
-        //   ],
-        // )
+            // Column(
+            //   children: [
+            //     _topInfo(),
+            //
+            //   ],
+            // )
 
-
-
-
-        Stack(
+            Stack(
           children: [
             Container(
               width: 750.w,
@@ -82,19 +79,19 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
         ));
   }
 
-  _topInfo() {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 32.w),
-      height: 328.w,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                Assets.images.partnerCenterBg.path,
-              ),
-              fit: BoxFit.fill)),
-    );
-  }
+  // _topInfo() {
+  //   return Container(
+  //     width: double.infinity,
+  //     margin: EdgeInsets.symmetric(horizontal: 32.w),
+  //     height: 328.w,
+  //     decoration: BoxDecoration(
+  //         image: DecorationImage(
+  //             image: AssetImage(
+  //               Assets.images.partnerCenterBg.path,
+  //             ),
+  //             fit: BoxFit.fill)),
+  //   );
+  // }
 
 //底部按钮
   _getButton() {

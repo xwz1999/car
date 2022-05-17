@@ -1558,7 +1558,9 @@ class _ReservationState extends State<Reservation> {
             margin: EdgeInsets.only(top: 16.w),
             child: GestureDetector(
               onTap: () {
-                Get.to(() => const DetectionData());
+                Get.to(() => DetectionData(
+                      orderId: widget.orderId,
+                    ));
               },
               child: Padding(
                 padding: EdgeInsets.only(left: 0.w),
@@ -1620,7 +1622,9 @@ class _ReservationState extends State<Reservation> {
             margin: EdgeInsets.only(top: 16.w),
             child: GestureDetector(
               onTap: () {
-                Get.to(() => const ChangeNameData());
+                Get.to(() => ChangeNameData(
+                      orderId: widget.orderId,
+                    ));
               },
               child: Padding(
                 padding: EdgeInsets.only(left: 0.w),

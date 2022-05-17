@@ -25,6 +25,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
     const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1732432432),
     const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1732432432),
     const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1732432432),
+    const HistoryModel(id: 23, type: 1, count: -1, createdAt: 1732432432),
   ];
 
   //List<String> timeList = [];
@@ -108,6 +109,8 @@ class _PayChangesPageState extends State<PayChangesPage> {
                     id: 23, type: 1, count: 20, createdAt: 1732432432),
                 const HistoryModel(
                     id: 23, type: 1, count: 20, createdAt: 1732432432),
+                const HistoryModel(
+                    id: 23, type: 2, count: -1, createdAt: 1732432432),
               ];
 
               // for (var i = 0; i < payNumList.length; i++) {

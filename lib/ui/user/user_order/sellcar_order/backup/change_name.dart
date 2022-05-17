@@ -239,7 +239,7 @@ class _ChangeNameState extends State<ChangeName> {
                     top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const ChangeNameData());
+                    //  Get.to(() =>  ChangeNameData(orderId: ,));
                   },
                   child: Container(
                       width: 168.w,

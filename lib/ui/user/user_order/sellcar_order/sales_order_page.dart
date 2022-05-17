@@ -85,7 +85,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
       },
       child: Column(
         children: [
-           SizedBox(
+          SizedBox(
             height: kToolbarHeight + 50.w,
           ),
           SizedBox(
