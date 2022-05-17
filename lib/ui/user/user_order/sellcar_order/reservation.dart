@@ -18,6 +18,7 @@ class Reservation extends StatefulWidget {
   final int orderId;
   final String status;
   final int statusNum;
+
   const Reservation(
       {super.key,
       required this.judge,
@@ -32,8 +33,10 @@ class Reservation extends StatefulWidget {
 class _ReservationState extends State<Reservation> {
   late bool judge = widget.judge;
   late Widget methods;
+
   // late int id = ;
   late String audit = '3';
+
   // ignore: unused_field
   late SaleInfo _consignmentInfoList = const SaleInfo(
       id: 0,
@@ -64,6 +67,7 @@ class _ReservationState extends State<Reservation> {
       report: Report(path: '', reportId: 0),
       means: Means(
           certificate: '', guaranteeSlip: '', invoice: '', vehicleLicense: ''));
+
   @override
   @override
   void initState() {
@@ -216,7 +220,12 @@ class _ReservationState extends State<Reservation> {
                     _getText('合同编号',
                         (_consignmentInfoList.contract.contract).toString()),
                     36.hb,
-                    _getText('签订时间', DateUtil.formatDateMs((_consignmentInfoList.contract.signAt.toInt())*1000,format: DateFormats.zh_y_mo_d))
+                    _getText(
+                        '签订时间',
+                        DateUtil.formatDateMs(
+                            (_consignmentInfoList.contract.signAt.toInt()) *
+                                1000,
+                            format: DateFormats.zh_y_mo_d))
                   ],
                 ),
               )
@@ -273,7 +282,8 @@ class _ReservationState extends State<Reservation> {
                 ],
               );
         break;
-      case '待检测':
+      case '申请检测':
+      case '上传检测报告':
         return Column(
           children: [
             getContainer(
@@ -1548,7 +1558,10 @@ class _ReservationState extends State<Reservation> {
                 ),
               );
         break;
-      case '待检测':
+
+      case '上传检测报告':
+        return const SizedBox();
+      case '申请检测':
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -1912,6 +1925,7 @@ class _ReservationState extends State<Reservation> {
           )),
     );
   }
+
 //     ExpansionTile(
 //       //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
 //       //leading: Icon(Icons.),

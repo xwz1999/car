@@ -247,7 +247,8 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                     judge: true,
                   ));
               break;
-            case '待检测':
+            case '申请检测':
+            case '上传检测报告':
               Get.to(() => Reservation(
                     statusNum: _getStatusNum(model.status),
                     status: _getText(model.status),
