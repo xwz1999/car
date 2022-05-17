@@ -22,7 +22,7 @@ import '../../model/sort/sort_car_model_model.dart';
 import '../../model/sort/sort_series_model.dart';
 
 class CarCollection extends StatefulWidget {
-  const CarCollection({Key? key}) : super(key: key);
+  const CarCollection({super.key});
 
   @override
   State<CarCollection> createState() => _CarCollectionState();

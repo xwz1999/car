@@ -13,9 +13,9 @@ class UserSortListPage extends StatefulWidget {
   final VoidCallback onConfirm;
 
   const UserSortListPage({
-    Key? key,
+    super.key,
     required this.onConfirm, required this.pickSort,
-  }) : super(key: key);
+  });
 
   @override
   _UserSortListPageState createState() => _UserSortListPageState();

@@ -4,7 +4,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class ChangeNameData extends StatefulWidget {
-  const ChangeNameData({Key? key}) : super(key: key);
+  const ChangeNameData({super.key});
 
   @override
   State<ChangeNameData> createState() => _ChangeNameDataState();

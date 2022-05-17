@@ -14,7 +14,7 @@ class EmployeeDetails extends StatefulWidget {
   final String business;
   final String proportion;
   const EmployeeDetails({
-    Key? key,
+    super.key,
     required this.name,
     required this.sex,
     required this.phone,
@@ -22,7 +22,7 @@ class EmployeeDetails extends StatefulWidget {
     required this.stores,
     required this.business,
     required this.proportion,
-  }) : super(key: key);
+  });
 
   @override
   State<EmployeeDetails> createState() => _EmployeeDetailsState();

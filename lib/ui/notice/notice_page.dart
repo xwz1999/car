@@ -10,7 +10,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'notice_fashionable.dart';
 
 class NoticePage extends StatefulWidget {
-  const NoticePage({Key? key}) : super(key: key);
+  const NoticePage({super.key});
 
   @override
   _NoticePageState createState() => _NoticePageState();

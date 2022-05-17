@@ -12,7 +12,7 @@ import 'package:flutter/services.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class ValidationPage extends StatefulWidget {
-  const ValidationPage({Key? key}) : super(key: key);
+  const ValidationPage({super.key});
 
   @override
   _ValidationPageState createState() => _ValidationPageState();

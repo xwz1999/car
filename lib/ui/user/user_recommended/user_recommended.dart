@@ -12,7 +12,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../../../utils/user_tool.dart';
 
 class RecommendedPage extends StatefulWidget {
-  const RecommendedPage({Key? key}) : super(key: key);
+  const RecommendedPage({super.key});
 
   @override
   _RecommendedPageState createState() => _RecommendedPageState();

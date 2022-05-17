@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class Complete0ther extends StatefulWidget {
   final String stat;
 
-  const Complete0ther({Key? key, required this.stat}) : super(key: key);
+  const Complete0ther({super.key, required this.stat});
 
   @override
   State<Complete0ther> createState() => _Complete0therState();

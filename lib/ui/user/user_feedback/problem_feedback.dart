@@ -4,7 +4,6 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/user/interface/feedback_func.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
@@ -18,7 +17,7 @@ class ProblemFeedback extends StatefulWidget {
   final String text;
   final bool isTitle;
   const ProblemFeedback({
-    Key? key,
+    super.key,
     this.title = '问题反馈',
     this.content = '',
     this.img = '',
@@ -26,7 +25,7 @@ class ProblemFeedback extends StatefulWidget {
     required this.title1,
     required this.text,
     this.isTitle = false,
-  }) : super(key: key);
+  });
 
   @override
   State<ProblemFeedback> createState() => _ProblemFeedbackState();

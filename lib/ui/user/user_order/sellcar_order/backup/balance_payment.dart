@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class BalancePayment extends StatefulWidget {
   final bool judge;
-  const BalancePayment({Key? key, required this.judge}) : super(key: key);
+  const BalancePayment({super.key, required this.judge});
 
   @override
   State<BalancePayment> createState() => _BalancePaymentState();

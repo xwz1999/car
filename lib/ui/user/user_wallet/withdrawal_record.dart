@@ -4,7 +4,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class WithdrawalRecordPage extends StatefulWidget {
-  const WithdrawalRecordPage({Key? key}) : super(key: key);
+  const WithdrawalRecordPage({super.key});
 
   @override
   _WithdrawalRecordPageState createState() => _WithdrawalRecordPageState();

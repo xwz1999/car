@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class FirstPay extends StatefulWidget {
   final bool judge;
-  const FirstPay({Key? key, required this.judge}) : super(key: key);
+  const FirstPay({super.key, required this.judge});
 
   @override
   State<FirstPay> createState() => _FirstPayState();

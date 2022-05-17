@@ -7,7 +7,7 @@ import '../../../../utils/user_tool.dart';
 
 class ThatcarComplete extends StatefulWidget {
   final String stat;
-  const ThatcarComplete({Key? key, required this.stat}) : super(key: key);
+  const ThatcarComplete({super.key, required this.stat});
 
   @override
   State<ThatcarComplete> createState() => _ThatcarCompleteState();

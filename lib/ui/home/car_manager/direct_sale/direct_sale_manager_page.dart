@@ -17,7 +17,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'assessment_car_page.dart';
 
 class DirectSaleManagerPage extends StatefulWidget {
-  const DirectSaleManagerPage({Key? key}) : super(key: key);
+  const DirectSaleManagerPage({super.key});
 
   @override
   _DirectSaleManagerPageState createState() => _DirectSaleManagerPageState();

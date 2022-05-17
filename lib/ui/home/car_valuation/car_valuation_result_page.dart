@@ -14,8 +14,7 @@ import 'car_valuation_page.dart';
 class CarValuationResultPage extends StatefulWidget {
   final CarInfo carInfo;
 
-  const CarValuationResultPage({Key? key, required this.carInfo})
-      : super(key: key);
+  const CarValuationResultPage({super.key, required this.carInfo});
 
   @override
   _CarValuationResultPageState createState() => _CarValuationResultPageState();

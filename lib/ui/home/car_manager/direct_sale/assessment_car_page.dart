@@ -16,7 +16,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 class AssessmentCarPage extends StatefulWidget {
   final EasyRefreshController refreshController;
   final ValueNotifier<SearchParamModel> pickCar;
-  const AssessmentCarPage({Key? key, required this.refreshController, required this.pickCar, }) : super(key: key);
+  const AssessmentCarPage({super.key, required this.refreshController, required this.pickCar, });
 
   @override
   _AssessmentCarPageState createState() => _AssessmentCarPageState();

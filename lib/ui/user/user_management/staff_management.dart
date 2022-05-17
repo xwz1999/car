@@ -15,7 +15,7 @@ import '../../../widget/button/cloud_back_button.dart';
 
 //getStoreall()
 class StaffManagement extends StatefulWidget {
-  const StaffManagement({Key? key}) : super(key: key);
+  const StaffManagement({super.key});
 
   @override
   State<StaffManagement> createState() => _StaffManagementState();

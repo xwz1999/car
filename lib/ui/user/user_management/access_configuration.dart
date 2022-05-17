@@ -14,9 +14,9 @@ typedef CarCallback = Function(String city, int id); //
 class AccessConfiguration extends StatefulWidget {
   final CarCallback callback; //
   const AccessConfiguration({
-    Key? key,
+    super.key,
     required this.callback, //
-  }) : super(key: key);
+  });
 
   @override
   State<AccessConfiguration> createState() => _AccessConfigurationState();

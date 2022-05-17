@@ -8,7 +8,7 @@ import '../../widget/button/cloud_back_button.dart';
 import 'sort/citylist_custom_header_page.dart';
 
 class DirectSaleManagerPage extends StatefulWidget {
-  const DirectSaleManagerPage({Key? key}) : super(key: key);
+  const DirectSaleManagerPage({super.key});
 
   @override
   _DirectSaleManagerPageState createState() => _DirectSaleManagerPageState();

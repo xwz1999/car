@@ -8,7 +8,7 @@ import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 ///下架退库页面
 class OffCarPage extends StatefulWidget {
-  const OffCarPage({Key? key}) : super(key: key);
+  const OffCarPage({super.key});
 
   @override
   _OffCarPageState createState() => _OffCarPageState();

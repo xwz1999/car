@@ -27,10 +27,10 @@ class CarsDetailPage extends StatefulWidget {
   final CarListModel carListModel;
 
   const CarsDetailPage({
-    Key? key,
+    super.key,
     required this.carListModel,
     required this.isSelf,
-  }) : super(key: key);
+  });
 
   @override
   _CarsDetailPageState createState() => _CarsDetailPageState();

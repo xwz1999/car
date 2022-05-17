@@ -44,9 +44,8 @@ class DropDownWidget extends StatefulWidget {
       required this.bottomHeight,
       required this.screenControl,
       this.screen,
-      Key? key,
-      this.onTap})
-      : super(key: key);
+      super.key,
+      this.onTap});
 
   @override
   _DropDownWidgetState createState() => _DropDownWidgetState();

@@ -13,8 +13,7 @@ class ScanLicenseWidget extends StatefulWidget {
   final Function(CarDistinguishModel) onLoadComplete;
 
   const ScanLicenseWidget(
-      {Key? key, this.width, this.height, required this.onLoadComplete})
-      : super(key: key);
+      {super.key, this.width, this.height, required this.onLoadComplete});
 
   @override
   _ScanLicenseWidgetState createState() => _ScanLicenseWidgetState();

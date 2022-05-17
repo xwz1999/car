@@ -17,9 +17,9 @@ class PosterEditPage extends StatefulWidget {
   final PosterListModel model;
 
   const PosterEditPage({
-    Key? key,
+    super.key,
     required this.model,
-  }) : super(key: key);
+  });
 
   @override
   _PosterEditPageState createState() => _PosterEditPageState();

@@ -1,4 +1,3 @@
-import 'package:cloud_car/constants/app_theme.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -8,7 +7,7 @@ import '../ui/home/car_manager/publish_car/push_car_page.dart';
 class PublishCarInfoWidget extends StatefulWidget {
   final Color fontColor;
   final PublishCarInfo publishCarInfo;
-  const PublishCarInfoWidget({Key? key, required this.fontColor, required this.publishCarInfo}) : super(key: key);
+  const PublishCarInfoWidget({super.key, required this.fontColor, required this.publishCarInfo});
 
   @override
   State<PublishCarInfoWidget> createState() => _PublishCarInfoWidgetState();

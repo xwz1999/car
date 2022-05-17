@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../utils/user_tool.dart';
 
 class EditCarSourceItem extends StatefulWidget {
-  const EditCarSourceItem({Key? key}) : super(key: key);
+  const EditCarSourceItem({super.key});
 
   @override
   _EditCarSourceItemState createState() => _EditCarSourceItemState();

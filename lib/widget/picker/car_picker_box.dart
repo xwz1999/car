@@ -12,12 +12,11 @@ class CarPickerBox extends StatelessWidget {
   final double? height;
 
   const CarPickerBox(
-      {Key? key,
+      {super.key,
       this.onPressed,
       this.confirmString = '确定',
       this.title,
-      required this.child,  this.height,})
-      : super(key: key);
+      required this.child,  this.height,});
 
   _buildButton({
     required String title,

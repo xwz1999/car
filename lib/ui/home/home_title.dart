@@ -8,11 +8,11 @@ class HomeTitle extends StatelessWidget {
   final VoidCallback onTap;
 
   const HomeTitle({
-    Key? key,
+    super.key,
     required this.title,
     required this.suffixTitle,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

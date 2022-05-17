@@ -13,9 +13,9 @@ class TabNavigator extends StatefulWidget {
   final int? index;
 
   const TabNavigator({
-    Key? key,
+    super.key,
     this.index,
-  }) : super(key: key);
+  });
 
   @override
   _TabNavigatorState createState() => _TabNavigatorState();

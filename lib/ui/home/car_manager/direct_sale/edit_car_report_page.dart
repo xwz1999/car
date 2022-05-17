@@ -3,7 +3,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
 class EditCarReportPage extends StatefulWidget {
-  const EditCarReportPage({Key? key}) : super(key: key);
+  const EditCarReportPage({super.key});
 
   @override
   _EditCarReportPageState createState() => _EditCarReportPageState();

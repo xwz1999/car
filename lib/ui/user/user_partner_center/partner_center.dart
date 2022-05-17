@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import '../../../utils/user_tool.dart';
 
 class PartnerCenterPage extends StatefulWidget {
-  const PartnerCenterPage({Key? key}) : super(key: key);
+  const PartnerCenterPage({super.key});
 
   @override
   _PartnerCenterPageState createState() => _PartnerCenterPageState();

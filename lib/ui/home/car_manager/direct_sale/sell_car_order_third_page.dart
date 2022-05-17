@@ -18,7 +18,7 @@ class SellCarOrderThirdPage extends StatefulWidget {
   final ValueNotifier<InitiateContractModel> contractModel;
 
 
-  const SellCarOrderThirdPage({Key? key, required this.contractModel}) : super(key: key);
+  const SellCarOrderThirdPage({super.key, required this.contractModel});
 
   @override
   _SellCarOrderThirdPageState createState() => _SellCarOrderThirdPageState();

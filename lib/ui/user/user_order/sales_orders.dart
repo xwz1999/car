@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SalesOrder extends StatefulWidget {
-  const SalesOrder({Key? key}) : super(key: key);
+  const SalesOrder({super.key});
 
   @override
   State<SalesOrder> createState() => _SalesOrderState();

@@ -87,7 +87,7 @@ class Languages extends GithubLanguage with ISuspensionBean {
   String? pinyin;
   String? shortPinyin;
 
-  Languages.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  Languages.fromJson(super.json) : super.fromJson();
 
   @override
   Map<String, dynamic> toJson() {

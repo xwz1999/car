@@ -7,8 +7,7 @@ class ChooseWidget<T> extends StatefulWidget{
   final List<T> items;
   final Function(String) callBack;
 
-  const ChooseWidget({Key? key, required this.items, required this.callBack, required this.item})
-      : super(key: key);
+  const ChooseWidget({super.key, required this.items, required this.callBack, required this.item});
 
   @override
   _ChooseWidgetState createState() => _ChooseWidgetState();

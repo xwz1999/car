@@ -23,6 +23,24 @@ linter:
   # producing the lint.
   rules:
     library_private_types_in_public_api: false
+    always_use_package_import: true
+    use_super_parameters: true
+    use_decorated_box: true
+    use_colored_box: true
+    use_full_hex_values_for_flutter_colors: true
+    use_if_null_to_convert_nulls_to_bools: true
+    unnecessary_this: true
+    avoid_type_to_string: true
+    cancel_subscriptions: true
+    literal_only_boolean_expressions: true
+    unnecessary_statements: true
+    file_names: true
+    missing_whitespace_between_adjacent_strings: true
+    no_runtimeType_toString: true
+    prefer_null_aware_method_calls: true
+    avoid_positional_boolean_parameters: true
+    avoid_bool_literals_in_conditional_expressions: true
+
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 

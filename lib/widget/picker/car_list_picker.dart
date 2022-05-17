@@ -16,13 +16,12 @@ class CarListPicker extends StatefulWidget {
   final String carString;
 
   const CarListPicker(
-      {Key? key,
+      {super.key,
       required this.callback,
       this.confirmString = '确认',
       this.title,
       this.isGrid = true,
-      required this.items, this.carString=''})
-      : super(key: key);
+      required this.items, this.carString=''});
 
   @override
   _CarListPickerState createState() => _CarListPickerState();

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class EditCarPriceInfoItem extends StatefulWidget {
-  const EditCarPriceInfoItem({Key? key}) : super(key: key);
+  const EditCarPriceInfoItem({super.key});
 
   @override
   _EditCarPriceInfoItemState createState() => _EditCarPriceInfoItemState();

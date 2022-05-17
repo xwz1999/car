@@ -21,7 +21,7 @@ import '../../utils/user_tool.dart';
 import '../../widget/cloud_avatar_widget.dart';
 
 class UserPage extends StatefulWidget {
-  const UserPage({Key? key}) : super(key: key);
+  const UserPage({super.key});
 
   @override
   _UserPageState createState() => _UserPageState();

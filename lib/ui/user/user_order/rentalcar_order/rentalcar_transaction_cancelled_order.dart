@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class CancelOrder extends StatefulWidget {
   const CancelOrder({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CancelOrder> createState() => _CancelOrderState();

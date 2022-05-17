@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../widget/button/cloud_back_button.dart';
 
 class MessagePage extends StatefulWidget {
-  const MessagePage({Key? key}) : super(key: key);
+  const MessagePage({super.key});
 
   @override
   _MessagePageState createState() => _MessagePageState();

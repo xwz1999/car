@@ -12,12 +12,11 @@ class ChooseCarLastPage extends StatefulWidget {
 
   final ValueNotifier<SearchParamModel> pickCar;
   const ChooseCarLastPage(
-      {Key? key,
+      {super.key,
       required this.name,
       required this.id,
       required this.callback,
-      required this.pickCar})
-      : super(key: key);
+      required this.pickCar});
 
   @override
   _ChooseCarLastPageState createState() => _ChooseCarLastPageState();

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class SuccessfulPage extends StatefulWidget {
-  const SuccessfulPage({Key? key}) : super(key: key);
+  const SuccessfulPage({super.key});
 
   @override
   _SuccessfulPageState createState() => _SuccessfulPageState();

@@ -15,9 +15,9 @@ class CustomersBrowsePage extends StatefulWidget {
   final int customerId;
 
   const CustomersBrowsePage({
-    Key? key,
+    super.key,
     required this.customerId,
-  }) : super(key: key);
+  });
 
   @override
   _CustomersBrowsePageState createState() => _CustomersBrowsePageState();

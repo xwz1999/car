@@ -7,8 +7,7 @@ class CloudBackButton extends StatelessWidget {
   final bool isSpecial;
 
   const CloudBackButton(
-      {Key? key, this.color = const Color(0xFF111111), this.isSpecial = false})
-      : super(key: key);
+      {super.key, this.color = const Color(0xFF111111), this.isSpecial = false});
 
   @override
   Widget build(BuildContext context) {

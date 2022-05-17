@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class ManagerContainerItem extends StatelessWidget {
   final String num;
   final String text;
-  const ManagerContainerItem({Key? key, required this.num, required this.text}) : super(key: key);
+  const ManagerContainerItem({super.key, required this.num, required this.text});
 
   @override
   Widget build(BuildContext context) {

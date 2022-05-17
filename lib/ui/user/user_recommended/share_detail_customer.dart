@@ -16,7 +16,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 
 class ShareDetailCustomerPage extends StatefulWidget {
-  const ShareDetailCustomerPage({Key? key}) : super(key: key);
+  const ShareDetailCustomerPage({super.key});
 
   @override
   _ShareDetailCustomerPageState createState() =>

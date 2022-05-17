@@ -1,6 +1,5 @@
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -12,7 +11,7 @@ import '../../../../widget/button/cloud_back_button.dart';
 
 class ContactCondition extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
-  const ContactCondition({Key? key, required this.consignmentContractModel}) : super(key: key);
+  const ContactCondition({super.key, required this.consignmentContractModel});
 
   @override
   State<ContactCondition> createState() => _ContactConditionState();

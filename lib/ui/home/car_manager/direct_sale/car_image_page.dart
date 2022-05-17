@@ -12,9 +12,9 @@ typedef ImageBack = Function(List<File> image);
 class CarImageItem extends StatefulWidget {
   final ImageBack imageBack;
   const CarImageItem({
-    Key? key,
+    super.key,
     required this.imageBack,
-  }) : super(key: key);
+  });
 
   @override
   _CarImageItemState createState() => _CarImageItemState();

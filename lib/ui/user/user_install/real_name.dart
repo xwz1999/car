@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class RealNamePage extends StatefulWidget {
-  const RealNamePage({Key? key}) : super(key: key);
+  const RealNamePage({super.key});
 
   @override
   _RealNamePageState createState() => _RealNamePageState();

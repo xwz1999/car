@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class AlsocarOrder extends StatefulWidget {
   final bool bl;
-  const AlsocarOrder({Key? key, required this.bl}) : super(key: key);
+  const AlsocarOrder({super.key, required this.bl});
 
   @override
   State<AlsocarOrder> createState() => _AlsocarOrderState();

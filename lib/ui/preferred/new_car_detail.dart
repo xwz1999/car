@@ -6,7 +6,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
 class NewCarPage extends StatefulWidget {
-  const NewCarPage({Key? key}) : super(key: key);
+  const NewCarPage({super.key});
 
   @override
   _NewCarPageState createState() => _NewCarPageState();

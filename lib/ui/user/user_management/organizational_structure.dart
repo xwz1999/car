@@ -11,7 +11,7 @@ typedef TextCallback = Function(String content, int id);
 class StructurePage extends StatefulWidget {
   final TextCallback callback;
 
-  const StructurePage({Key? key, required this.callback}) : super(key: key);
+  const StructurePage({super.key, required this.callback});
 
   @override
   State<StructurePage> createState() => _StructurePageState();

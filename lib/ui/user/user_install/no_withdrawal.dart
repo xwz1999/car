@@ -7,7 +7,7 @@ import '../../../utils/user_tool.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class NoWithddrawalPage extends StatefulWidget {
-  const NoWithddrawalPage({Key? key}) : super(key: key);
+  const NoWithddrawalPage({super.key});
 
   @override
   _NoWithddrawalPageState createState() => _NoWithddrawalPageState();

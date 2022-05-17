@@ -16,7 +16,7 @@ class TextEditItemWidget extends StatefulWidget {
   final Widget widget;
 
   TextEditItemWidget({
-    Key? key,
+    super.key,
     this.isBold = false,
     required this.title,
     this.value = '',
@@ -25,7 +25,7 @@ class TextEditItemWidget extends StatefulWidget {
     required this.ontap,
     this.tips = '请输入',
     this.widget = const SizedBox(),
-  }) : super(key: key);
+  });
 
   @override
   _TextEditItemWidgetState createState() => _TextEditItemWidgetState();

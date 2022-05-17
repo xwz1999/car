@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 class FirstLicensingDatePage extends StatefulWidget {
   final ValueNotifier<SearchParamModel> pickCar;
 
-  const FirstLicensingDatePage({Key? key, required this.pickCar})
-      : super(key: key);
+  const FirstLicensingDatePage({super.key, required this.pickCar});
 
   @override
   _FirstLicensingDatePageState createState() => _FirstLicensingDatePageState();

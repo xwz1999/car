@@ -8,7 +8,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:signature/signature.dart';
 
 class PartnershipContractPage extends StatefulWidget {
-  const PartnershipContractPage({Key? key}) : super(key: key);
+  const PartnershipContractPage({super.key});
 
   @override
   _PartnershipContractPageState createState() =>

@@ -6,7 +6,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class SelectCustomerPage extends StatefulWidget {
-  const SelectCustomerPage({Key? key}) : super(key: key);
+  const SelectCustomerPage({super.key});
 
   @override
   State<SelectCustomerPage> createState() => _SelectCustomerPageState();

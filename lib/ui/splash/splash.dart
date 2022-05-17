@@ -17,7 +17,7 @@ import '../../providers/user_provider.dart';
 import '../login/login_page.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({super.key});
 
   @override
   _SplashPageState createState() => _SplashPageState();

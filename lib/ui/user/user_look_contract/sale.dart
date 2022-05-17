@@ -15,10 +15,10 @@ class SaleView extends StatefulWidget {
   final List<ConsignmentListModel> saleList;
 
   const SaleView({
-    Key? key,
+    super.key,
     required this.refreshController,
     required this.saleList,
-  }) : super(key: key);
+  });
 
   @override
   State<SaleView> createState() => _SaleViewState();

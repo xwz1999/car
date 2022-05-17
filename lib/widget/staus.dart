@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class StatusPage extends StatefulWidget {
   final int num;
-  const StatusPage({Key? key, required this.num}) : super(key: key);
+  const StatusPage({super.key, required this.num});
 
   @override
   State<StatusPage> createState() => _StatusPageState();

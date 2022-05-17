@@ -4,7 +4,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
 class EditCarDetailItem extends StatefulWidget {
-  const EditCarDetailItem({Key? key}) : super(key: key);
+  const EditCarDetailItem({super.key});
 
   @override
   _EditCarDetailItemState createState() => _EditCarDetailItemState();

@@ -5,7 +5,7 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 
 class EditCarOwnerItem extends StatefulWidget {
-  const EditCarOwnerItem({Key? key}) : super(key: key);
+  const EditCarOwnerItem({super.key});
 
   @override
   _EditCarOwnerItemState createState() => _EditCarOwnerItemState();

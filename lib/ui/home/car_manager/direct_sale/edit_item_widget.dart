@@ -19,14 +19,13 @@ class EditItemWidget extends StatefulWidget {
 
 
   const EditItemWidget(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.value,
       this.canChange = true,
       required this.callback,
       this.endText = '',
-      this.topIcon = true, this.paddingTop=0, this.tips = '请输入', this.paddingStart = 28, this.endIcon, this.titleWidth, this.keyboardType = TextInputType.text,})
-      : super(key: key);
+      this.topIcon = true, this.paddingTop=0, this.tips = '请输入', this.paddingStart = 28, this.endIcon, this.titleWidth, this.keyboardType = TextInputType.text,});
 
   @override
   _EditItemWidgetState createState() => _EditItemWidgetState();

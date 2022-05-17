@@ -13,9 +13,9 @@ typedef CarCallback = Function(String city);
 class ShareCarPage extends StatefulWidget {
   final List<CarListModel> models;
   const ShareCarPage({
-    Key? key,
+    super.key,
     required this.models,
-  }) : super(key: key);
+  });
 
   @override
   _ShareCarPageState createState() => _ShareCarPageState();

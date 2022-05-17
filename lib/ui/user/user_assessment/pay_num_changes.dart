@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class PayChangesPage extends StatefulWidget {
-  const PayChangesPage({Key? key}) : super(key: key);
+  const PayChangesPage({super.key});
 
   @override
   _PayChangesPageState createState() => _PayChangesPageState();

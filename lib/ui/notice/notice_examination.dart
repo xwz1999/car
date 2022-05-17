@@ -6,7 +6,7 @@ import '../../widget/button/cloud_back_button.dart';
 import 'car_rejected_detail.dart';
 
 class ExaminationPage extends StatefulWidget {
-  const ExaminationPage({Key? key}) : super(key: key);
+  const ExaminationPage({super.key});
 
   @override
   _ExaminationPageState createState() => _ExaminationPageState();

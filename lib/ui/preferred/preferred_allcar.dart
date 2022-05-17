@@ -26,7 +26,7 @@ import '../../model/sort/sort_series_model.dart';
 
 class AllCar extends StatefulWidget {
   final String title;
-  const AllCar({Key? key, required this.title}) : super(key: key);
+  const AllCar({super.key, required this.title});
 
   @override
   State<AllCar> createState() => _AllCarState();

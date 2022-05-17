@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class BankCardPage extends StatefulWidget {
-  const BankCardPage({Key? key}) : super(key: key);
+  const BankCardPage({super.key});
 
   @override
   _BankCardPageState createState() => _BankCardPageState();

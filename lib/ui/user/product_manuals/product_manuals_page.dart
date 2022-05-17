@@ -11,7 +11,7 @@ import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class ProductManuals extends StatefulWidget {
-  const ProductManuals({Key? key}) : super(key: key);
+  const ProductManuals({super.key});
 
   @override
   State<ProductManuals> createState() => _ProductManualsState();

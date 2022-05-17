@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../gen/assets.gen.dart';
 
 class SingleImagePickWidget extends StatefulWidget {
   final double? width;
@@ -19,13 +18,12 @@ class SingleImagePickWidget extends StatefulWidget {
   final Widget imageView;
   final List<File>? files;
   const SingleImagePickWidget(
-      {Key? key,
+      {super.key,
       this.width,
       this.height,
         required this.files,
       required this.onChanged,
-        required this.imageView,})
-      : super(key: key);
+        required this.imageView,});
 
   @override
   _SingleImagePickWidgetState createState() => _SingleImagePickWidgetState();

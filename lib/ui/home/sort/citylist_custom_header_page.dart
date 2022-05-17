@@ -10,7 +10,7 @@ import 'package:lpinyin/lpinyin.dart';
 import '../models.dart';
 
 class CityListCustomHeaderPage extends StatefulWidget {
-  const CityListCustomHeaderPage({Key? key}) : super(key: key);
+  const CityListCustomHeaderPage({super.key});
 
   @override
   _CityListCustomHeaderPageState createState() =>

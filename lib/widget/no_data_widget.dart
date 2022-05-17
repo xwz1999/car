@@ -6,7 +6,7 @@ class NoDataWidget extends StatelessWidget {
   final String? path;
   final String text;
   final double paddingTop;
-  const NoDataWidget({Key? key, this.path, required this.text, this.paddingTop = 200}) : super(key: key);
+  const NoDataWidget({super.key, this.path, required this.text, this.paddingTop = 200});
 
   @override
   Widget build(BuildContext context) {

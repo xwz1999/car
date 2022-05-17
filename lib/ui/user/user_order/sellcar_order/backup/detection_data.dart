@@ -4,7 +4,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class DetectionData extends StatefulWidget {
-  const DetectionData({Key? key}) : super(key: key);
+  const DetectionData({super.key});
 
   @override
   State<DetectionData> createState() => _DetectionDataState();

@@ -16,7 +16,7 @@ import '../../constants/api/api.dart';
 class WxLoginPage extends StatefulWidget {
   final String token;
 
-  const WxLoginPage({Key? key, required this.token}) : super(key: key);
+  const WxLoginPage({super.key, required this.token});
 
   @override
   _WxLoginPageState createState() => _WxLoginPageState();

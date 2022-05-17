@@ -7,10 +7,10 @@ class CarWidget extends StatefulWidget {
   final Function(String) callBack;
 
   const CarWidget({
-    Key? key,
+    super.key,
     required this.items,
     required this.callBack,
-  }) : super(key: key);
+  });
 
   @override
   _CarWidgetState createState() => _CarWidgetState();

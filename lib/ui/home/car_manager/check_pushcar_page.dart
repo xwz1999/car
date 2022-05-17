@@ -13,8 +13,7 @@ class CheckPushPage extends StatefulWidget {
   // final PublishCarInfo publishCarInfo;
 
   const CheckPushPage(
-      {Key? key, required this.consignmentContractModel, })
-      : super(key: key);
+      {super.key, required this.consignmentContractModel, });
 
   @override
   State<CheckPushPage> createState() => _CheckPushPageState();

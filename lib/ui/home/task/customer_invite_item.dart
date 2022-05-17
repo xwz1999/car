@@ -7,7 +7,7 @@ class CustomerInviteItem extends StatelessWidget {
   // final int type;///1为客服付款 2为客户跟踪 3客户邀约
   final TaskInviteListModel model;
 
-  const CustomerInviteItem({Key? key, required this.model}) : super(key: key);
+  const CustomerInviteItem({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {

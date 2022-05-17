@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 
 import 'inner_model/car_manage_photo_model.dart';
 

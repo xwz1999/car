@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class EditCardInfoItem extends StatefulWidget {
-  const EditCardInfoItem({Key? key}) : super(key: key);
+  const EditCardInfoItem({super.key});
 
   @override
   _EditCardInfoItemState createState() => _EditCardInfoItemState();

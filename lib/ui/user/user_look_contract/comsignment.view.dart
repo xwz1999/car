@@ -14,11 +14,11 @@ class ConsignmentView extends StatefulWidget {
   final List<ConsignmentListModel> consignmentList;
   // final int id;
   const ConsignmentView({
-    Key? key,
+    super.key,
     required this.refreshController,
     required this.consignmentList,
     //required this.id
-  }) : super(key: key);
+  });
 
   @override
   State<ConsignmentView> createState() => _ConsignmentViewState();

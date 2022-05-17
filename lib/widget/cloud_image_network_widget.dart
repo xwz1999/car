@@ -12,8 +12,7 @@ class CloudImageNetworkWidget extends StatelessWidget {
   final bool? isCar;
 
   const CloudImageNetworkWidget(
-      {Key? key, this.width, this.height, this.urls, this.fit = BoxFit.cover, this.isCar = false})
-      : super(key: key);
+      {super.key, this.width, this.height, this.urls, this.fit = BoxFit.cover, this.isCar = false});
 
   String get imagePath {
     if (urls == null) {
@@ -28,8 +27,7 @@ class CloudImageNetworkWidget extends StatelessWidget {
 
 
    const CloudImageNetworkWidget.car(
-      {Key? key, this.width, this.height, this.urls, this.fit = BoxFit.cover,this.isCar = true })
-      : super(key: key);
+      {super.key, this.width, this.height, this.urls, this.fit = BoxFit.cover,this.isCar = true });
 
 
   @override

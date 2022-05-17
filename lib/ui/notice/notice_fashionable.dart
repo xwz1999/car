@@ -5,7 +5,7 @@ import '../../utils/user_tool.dart';
 import '../../widget/button/cloud_back_button.dart';
 
 class FashionablePage extends StatefulWidget {
-  const FashionablePage({Key? key}) : super(key: key);
+  const FashionablePage({super.key});
 
   @override
   _FashionablePageState createState() => _FashionablePageState();

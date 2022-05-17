@@ -12,8 +12,7 @@ class InvitationDetailsList extends StatefulWidget {
   final int customerId;
   final int type;
   const InvitationDetailsList(
-      {Key? key, required this.customerId, required this.type})
-      : super(key: key);
+      {super.key, required this.customerId, required this.type});
 
   @override
   _InvitationDetailsListState createState() => _InvitationDetailsListState();
@@ -414,7 +413,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                             DateUtil.getDateTimeByMs(
                                 model.invite.inviteAt.toInt() * 1000),
                             format: 'yyyy年MM月'),
-                        model.invite.mileage + '万公里',
+                        '${model.invite.mileage}万公里',
                         model.invite.price,
                       ),
                       decoration: BoxDecoration(
@@ -432,7 +431,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                             DateUtil.getDateTimeByMs(
                                 model.reserve.licensingDate.toInt() * 1000),
                             format: 'yyyy年MM月'),
-                        model.reserve.mileage + '万公里',
+                        '${model.reserve.mileage}万公里',
                         '',
                       ),
                       decoration: BoxDecoration(

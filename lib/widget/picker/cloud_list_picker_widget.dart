@@ -9,12 +9,11 @@ class CloudListPickerWidget extends StatefulWidget {
   final int? initIndex;
 
   const CloudListPickerWidget(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.items,
       required this.onConfirm,
-      this.initIndex})
-      : super(key: key);
+      this.initIndex});
 
   @override
   _CloudListPickerWidgetState createState() => _CloudListPickerWidgetState();

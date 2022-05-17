@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class EnterpriseInformationPage extends StatefulWidget {
-  const EnterpriseInformationPage({Key? key}) : super(key: key);
+  const EnterpriseInformationPage({super.key});
 
   @override
   _EnterpriseInformationPageState createState() =>

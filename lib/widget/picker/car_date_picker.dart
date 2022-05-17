@@ -55,13 +55,13 @@ class _CarDatePicker extends StatefulWidget {
   final CupertinoDatePickerMode? mode;
 
   const _CarDatePicker({
-    Key? key,
+    super.key,
     required this.date,
     this.use24H=false,
     this.max,
     this.min,
     this.mode,
-  }) : super(key: key);
+  });
 
   @override
   __CarDatePickerState createState() => __CarDatePickerState();

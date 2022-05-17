@@ -16,7 +16,7 @@ import 'package:velocity_x/velocity_x.dart';
 class SellCarOrderPage extends StatefulWidget {
   final  CarListModel carModel;
 
-  const SellCarOrderPage({Key? key, required this.carModel}) : super(key: key);
+  const SellCarOrderPage({super.key, required this.carModel});
 
   @override
   _SellCarOrderPageState createState() => _SellCarOrderPageState();

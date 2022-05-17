@@ -16,8 +16,7 @@ class DealerConsignmentSigned extends StatefulWidget {
   final int statusNum;
   final int id;
   const DealerConsignmentSigned(
-      {Key? key, required this.stat, required this.statusNum, required this.id})
-      : super(key: key);
+      {super.key, required this.stat, required this.statusNum, required this.id});
 
   @override
   State<DealerConsignmentSigned> createState() =>

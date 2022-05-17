@@ -22,15 +22,14 @@ class MultiImagePickWidget extends StatefulWidget {
   final List<dynamic> photos;
 
   const MultiImagePickWidget(
-      {Key? key,
+      {super.key,
       this.width,
       this.height,
       required this.onChanged,
       this.description = '上传照片',
       this.maxCount,
       this.spacing,
-      this.photos = const []})
-      : super(key: key);
+      this.photos = const []});
 
   @override
   _MultiImagePickWidgetState createState() => _MultiImagePickWidgetState();

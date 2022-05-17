@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 typedef BankCard = Function(String name, String icon);
 
 class ImmediateWithdrawal extends StatefulWidget {
-  const ImmediateWithdrawal({Key? key}) : super(key: key);
+  const ImmediateWithdrawal({super.key});
 
   @override
   State<ImmediateWithdrawal> createState() => _ImmediateWithdrawalState();

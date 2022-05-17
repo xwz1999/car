@@ -9,11 +9,10 @@ class Withdrawal extends StatefulWidget {
   final String bankName;
   final String time;
   const Withdrawal(
-      {Key? key,
+      {super.key,
       required this.pice,
       required this.bankName,
-      required this.time})
-      : super(key: key);
+      required this.time});
 
   @override
   State<Withdrawal> createState() => _WithdrawalState();

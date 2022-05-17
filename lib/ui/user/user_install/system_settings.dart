@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class SystemSettingPage extends StatefulWidget {
-  const SystemSettingPage({Key? key}) : super(key: key);
+  const SystemSettingPage({super.key});
 
   @override
   _SystemSettingPageState createState() => _SystemSettingPageState();

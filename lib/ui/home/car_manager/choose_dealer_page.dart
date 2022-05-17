@@ -1,18 +1,12 @@
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/dealer_list_model.dart';
-import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
-import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
-import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -24,8 +18,8 @@ typedef CarCallback = Function(DealerListModel model);
 class ChooseDealerPage extends StatefulWidget {
   final CarCallback callback;
   const ChooseDealerPage({
-    Key? key, required this.callback,
-  }) : super(key: key);
+    super.key, required this.callback,
+  });
 
   @override
   _ChooseDealerPageState createState() => _ChooseDealerPageState();

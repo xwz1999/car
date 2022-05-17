@@ -15,7 +15,7 @@ import 'package:signature/signature.dart';
 import 'dart:ui' as ui;
 
 class PartnerShopContractPage extends StatefulWidget {
-  const PartnerShopContractPage({Key? key}) : super(key: key);
+  const PartnerShopContractPage({super.key});
 
   @override
   _PartnerShopContractPageState createState() =>

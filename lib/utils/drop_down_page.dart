@@ -5,7 +5,7 @@ import '../ui/home/sort/citylist_custom_header_page.dart';
 import 'drop_down_widget.dart';
 
 class DropDownPage extends StatefulWidget {
-  const DropDownPage({Key? key}) : super(key: key);
+  const DropDownPage({super.key});
 
   @override
   _DropDownPageState createState() => _DropDownPageState();

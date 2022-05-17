@@ -18,7 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 class CallOrderPage extends StatefulWidget {
   final CarListModel carListModel;
 
-  const CallOrderPage({Key? key, required this.carListModel}) : super(key: key);
+  const CallOrderPage({super.key, required this.carListModel});
 
   @override
   _CallOrderPageState createState() => _CallOrderPageState();

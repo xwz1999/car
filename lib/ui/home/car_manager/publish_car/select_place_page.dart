@@ -4,7 +4,7 @@ import '../../../../base/base_style.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class SelectPlacePage extends StatefulWidget {
-  const SelectPlacePage({Key? key}) : super(key: key);
+  const SelectPlacePage({super.key});
 
   @override
   State<SelectPlacePage> createState() => _SelectPlacePageState();

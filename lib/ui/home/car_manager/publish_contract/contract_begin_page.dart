@@ -12,7 +12,7 @@ import '../../../../widget/button/cloud_back_button.dart';
 
 class ContractBeginPage extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
-  const ContractBeginPage({Key? key, required this.consignmentContractModel}) : super(key: key);
+  const ContractBeginPage({super.key, required this.consignmentContractModel});
 
   @override
   State<ContractBeginPage> createState() => _ContractBeginPageState();

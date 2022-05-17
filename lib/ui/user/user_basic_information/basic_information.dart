@@ -14,7 +14,7 @@ import '../../../utils/user_tool.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class BasicInformationPage extends StatefulWidget {
-  const BasicInformationPage({Key? key}) : super(key: key);
+  const BasicInformationPage({super.key});
 
   @override
   State<BasicInformationPage> createState() => _BasicInformationPageState();

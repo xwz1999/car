@@ -22,7 +22,7 @@ import 'package:power_logger/power_logger.dart';
 import '../../utils/new_work/api_client.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();

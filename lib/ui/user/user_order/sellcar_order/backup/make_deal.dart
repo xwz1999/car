@@ -3,7 +3,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class MakeDeal extends StatefulWidget {
-  const MakeDeal({Key? key}) : super(key: key);
+  const MakeDeal({super.key});
 
   @override
   State<MakeDeal> createState() => _MakeDealState();

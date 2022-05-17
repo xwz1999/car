@@ -8,7 +8,7 @@ import 'package:velocity_x/velocity_x.dart';
 class CarManagePhotoWidget extends StatefulWidget {
   final CarManagePhotoModel model;
 
-  const CarManagePhotoWidget({Key? key, required this.model}) : super(key: key);
+  const CarManagePhotoWidget({super.key, required this.model});
 
   @override
   _CarManagePhotoWidgetState createState() => _CarManagePhotoWidgetState();

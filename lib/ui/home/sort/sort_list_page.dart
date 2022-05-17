@@ -13,10 +13,10 @@ class SortListPage extends StatefulWidget {
   final VoidCallback onConfirm;
 
   const SortListPage({
-    Key? key,
+    super.key,
     required this.pickCar,
     required this.onConfirm,
-  }) : super(key: key);
+  });
 
   @override
   _SortListPageState createState() => _SortListPageState();

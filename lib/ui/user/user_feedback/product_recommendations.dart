@@ -14,7 +14,7 @@ import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/button/colud_check_radio.dart';
 
 class Recommendations extends StatefulWidget {
-  const Recommendations({Key? key}) : super(key: key);
+  const Recommendations({super.key});
 
   @override
   State<Recommendations> createState() => _RecommendationsState();

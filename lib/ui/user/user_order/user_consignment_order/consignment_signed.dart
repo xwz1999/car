@@ -4,7 +4,6 @@ import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/backup/consignment_audit.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flustars/flustars.dart';
@@ -18,8 +17,7 @@ class ConsignmentSigned extends StatefulWidget {
   final int statusNum;
   final int id;
   const ConsignmentSigned(
-      {Key? key, required this.stat, required this.statusNum, required this.id})
-      : super(key: key);
+      {super.key, required this.stat, required this.statusNum, required this.id});
 
   @override
   State<ConsignmentSigned> createState() => _ConsignmentSignedState();
@@ -89,7 +87,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                 ),
               ),
               16.hb,
-              _onLoad?SizedBox():  Container(
+              _onLoad?const SizedBox():  Container(
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 padding: EdgeInsets.all(28.w),
                 decoration: BoxDecoration(
@@ -110,7 +108,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                 ),
               ),
               16.hb,
-              _onLoad?SizedBox():  Container(
+              _onLoad?const SizedBox():  Container(
                   padding:
                       EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -165,7 +163,7 @@ class _ConsignmentSignedState extends State<ConsignmentSigned> {
                         ),
                       ])),
               16.hb,
-              _onLoad?SizedBox():  stat == '待签订'
+              _onLoad?const SizedBox():  stat == '待签订'
                   ? Container(
                       margin: EdgeInsets.symmetric(horizontal: 32.w),
                       padding: EdgeInsets.all(28.w),

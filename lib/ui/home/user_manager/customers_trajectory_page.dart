@@ -12,8 +12,7 @@ class CustomersTrajectoryPage extends StatefulWidget {
   final int customerId;
   final bool subscribe;
   const CustomersTrajectoryPage(
-      {Key? key, required this.customerId, this.subscribe = false})
-      : super(key: key);
+      {super.key, required this.customerId, this.subscribe = false});
 
   @override
   _CustomersTrajectoryPageState createState() =>

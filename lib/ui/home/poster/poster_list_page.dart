@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class PosterListPage extends StatefulWidget {
-  const PosterListPage({Key? key}) : super(key: key);
+  const PosterListPage({super.key});
 
   @override
   _PosterListPageState createState() => _PosterListPageState();

@@ -17,8 +17,7 @@ typedef TextCallback = Function(String content);
 class SellCarOrderSecondPage extends StatefulWidget {
   final ValueNotifier<InitiateContractModel> contractModel;
 
-  const SellCarOrderSecondPage({Key? key, required this.contractModel})
-      : super(key: key);
+  const SellCarOrderSecondPage({super.key, required this.contractModel});
 
   @override
   _SellCarOrderSecondPageState createState() => _SellCarOrderSecondPageState();

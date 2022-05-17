@@ -5,8 +5,8 @@ class CustomerItem extends StatelessWidget {
   // final int type;///1为客服付款 2为客户跟踪 3客户邀约
 
   const CustomerItem({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
