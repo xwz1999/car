@@ -8,6 +8,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -78,19 +79,19 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
         ));
   }
 
-  _topInfo() {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 32.w),
-      height: 328.w,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                Assets.images.partnerCenterBg.path,
-              ),
-              fit: BoxFit.fill)),
-    );
-  }
+  // _topInfo() {
+  //   return Container(
+  //     width: double.infinity,
+  //     margin: EdgeInsets.symmetric(horizontal: 32.w),
+  //     height: 328.w,
+  //     decoration: BoxDecoration(
+  //         image: DecorationImage(
+  //             image: AssetImage(
+  //               Assets.images.partnerCenterBg.path,
+  //             ),
+  //             fit: BoxFit.fill)),
+  //   );
+  // }
 
 //底部按钮
   _getButton() {
@@ -507,8 +508,8 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                         child: ClipRRect(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(60.w)),
-                            child: Container(
-                              color: Colors.white,
+                            child: CloudImageNetworkWidget.car(
+                              urls: [UserTool.userProvider.userInfo.headImg],
                             )),
                       ),
                     ),
@@ -524,7 +525,8 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                               ?.copyWith(color: kForeGroundColor),
                         ),
                         Text(
-                          '189****3627',
+                          UserTool.userProvider.userInfo.phone
+                              .replaceFirst(RegExp(r'\d{4}'), '****', 3),
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2

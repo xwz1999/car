@@ -51,7 +51,6 @@ class _RecommendedPageState extends State<RecommendedPage>
   late ScrollController _scrollController;
   int _page = 1;
   final int _size = 10;
-  bool _onLoad = true;
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -226,7 +225,6 @@ class _RecommendedPageState extends State<RecommendedPage>
                               //     nickname: '世界这么大我想去看看',
                               //     trailContent: '发起客户邀约',
                               //     trailCreatedAt: 1652161448);
-                              _onLoad = false;
                               setState(() {});
                             },
                             onLoad: () async {

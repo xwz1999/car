@@ -149,7 +149,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
   }
 
   getCar(item) {
-    late bool bl = true;
+    late bool bl = false;
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
         child: GestureDetector(

@@ -1,10 +1,8 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/History_model.dart';
 import 'package:cloud_car/ui/user/interface/user_func.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
-
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +19,41 @@ class _PayChangesPageState extends State<PayChangesPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
-  List<HistoryModel> payNumList = [];
+  List<HistoryModel> payNumList = [
+    const HistoryModel(id: 23, type: 3, count: -1, createdAt: 1651149932),
+    const HistoryModel(id: 23, type: 2, count: -1, createdAt: 1232312313),
+    const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1732432432),
+    const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1732432432),
+    const HistoryModel(id: 23, type: 1, count: 20, createdAt: 1732432432),
+    const HistoryModel(id: 23, type: 1, count: -1, createdAt: 1732432432),
+  ];
+
   //List<String> timeList = [];
-  late int num = 0;
+  //bool num = true;
+  //late int num = 0;
+  List<int> num = [];
+
+  List<String> timeList = [];
+
   // late int timeNum = 0;
+  List<String> timeList1 = [];
+  List<int> number1 = [];
+
   @override
   void initState() {
+    for (var i = 0; i < payNumList.length; i++) {
+      timeList.add(
+        DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
+            format: 'yyyy年MM月'),
+      );
+    }
+    timeList1 = timeList.toSet().toList();
+    for (var i = 0; i < timeList1.length; i++) {
+      num.add(0);
+    }
+    print(num);
     super.initState();
+
     Future.delayed(const Duration(milliseconds: 0), () async {
       await _refresh();
       setState(() {});
@@ -52,104 +78,126 @@ class _PayChangesPageState extends State<PayChangesPage> {
   // ignore: must_call_super
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: const CloudBackButton(
-          isSpecial: true,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          title: Text('次数记录', style: Theme.of(context).textTheme.headline6),
         ),
-        title: Text('次数记录', style: Theme.of(context).textTheme.headline6),
-      ),
-      extendBody: true,
-      //extendBodyBehindAppBar: true,
-      body: EasyRefresh(
-        firstRefresh: true,
-        header: MaterialHeader(),
-        footer: MaterialFooter(),
-        controller: _easyRefreshController,
-        onRefresh: () async {
-          page = 1;
-          payNumList = await User.getHistory(page: page, size: size);
-          payNumList = [
-            const HistoryModel(
-                id: 23, type: 3, count: -1, createdAt: 1651149932),
-            const HistoryModel(
-                id: 23, type: 2, count: -1, createdAt: 1651148299),
-            const HistoryModel(
-                id: 23, type: 1, count: 20, createdAt: 1651148072),
-          ];
-          // for (var i = 0; i < payNumList.length; i++) {
-          //   if (DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
-          //           format: 'yyyy年MM月') !=
-          //       DateUtil.formatDateMs(
-          //           payNumList[i + 1].createdAt.toInt() * 1000,
-          //           format: 'yyyy年MM月')) {
-          //     timeList.add(DateUtil.formatDateMs(
-          //         payNumList[i].createdAt.toInt() * 1000,
-          //         format: 'yyyy年MM月'));
-          //   }
-          // }
-          setState(() {});
-        },
-        onLoad: () async {
-          page++;
-          var baseList =
-              await apiClient.requestList(API.user.wallet.assessHistory, data: {
-            'page': page,
-            'size': size,
-          });
-          if (baseList.nullSafetyTotal > payNumList.length) {
-            payNumList.addAll(baseList.nullSafetyList
-                .map((e) => HistoryModel.fromJson(e))
-                .toList());
-          } else {
-            _easyRefreshController.finishLoad(noMore: true);
-          }
-          setState(() {});
-        },
-        child: _getChanges(),
-        // child: ListView.builder(
-        //   itemBuilder: (context, index) {
-        //     return _getChanges();
-        //   },
-        //   itemCount: timeNum,
-        // )
-      ),
-    );
+        extendBody: true,
+        //extendBodyBehindAppBar: true,
+        body: Column(children: [
+          const SizedBox(),
+          Expanded(
+              child: EasyRefresh(
+            firstRefresh: true,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            controller: _easyRefreshController,
+            onRefresh: () async {
+              page = 1;
+              payNumList = await User.getHistory(page: page, size: size);
+              payNumList = [
+                const HistoryModel(
+                    id: 23, type: 3, count: -1, createdAt: 1651149932),
+                const HistoryModel(
+                    id: 23, type: 2, count: -1, createdAt: 1232312313),
+                const HistoryModel(
+                    id: 23, type: 1, count: 20, createdAt: 1732432432),
+                const HistoryModel(
+                    id: 23, type: 1, count: 20, createdAt: 1732432432),
+                const HistoryModel(
+                    id: 23, type: 1, count: 20, createdAt: 1732432432),
+                const HistoryModel(
+                    id: 23, type: 2, count: -1, createdAt: 1732432432),
+              ];
+
+              // for (var i = 0; i < payNumList.length; i++) {
+              //   if (DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
+              //           format: 'yyyy年MM月') !=
+              //       DateUtil.formatDateMs(
+              //           payNumList[i + 1].createdAt.toInt() * 1000,
+              //           format: 'yyyy年MM月')) {
+              //     timeList.add(DateUtil.formatDateMs(
+              //         payNumList[i].createdAt.toInt() * 1000,
+              //         format: 'yyyy年MM月'));
+              //   }
+              // }
+              setState(() {});
+            },
+            onLoad: () async {
+              page++;
+              var baseList = await apiClient
+                  .requestList(API.user.wallet.assessHistory, data: {
+                'page': page,
+                'size': size,
+              });
+              if (baseList.nullSafetyTotal > payNumList.length) {
+                payNumList.addAll(baseList.nullSafetyList
+                    .map((e) => HistoryModel.fromJson(e))
+                    .toList());
+              } else {
+                _easyRefreshController.finishLoad(noMore: true);
+              }
+              setState(() {});
+            },
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return _getChanges(timeList1[index], index);
+              },
+              itemCount: timeList1.length,
+            ),
+          ))
+        ]));
   }
 
 //列表
-  _getChanges() {
+  _getChanges(String model, int number) {
     return GestureDetector(
         onTap: (() {
-          num++;
-
+          print(number1);
+          //print(timeList1);
+          // var a = timeList[0];
+          // var b = DateUtil.formatDateMs(
+          //     payNumList.first.createdAt.toInt() * 1000,
+          //     format: 'yyyy年MM月');
+          // print(a);
+          // print(b);
+          // print(a == b);
+          num[number]++;
+          //num = false;
           setState(() {});
         }),
         child: Column(
           children: [
             Container(
-              color: kForeGroundColor,
               width: 750.w,
               height: 96.w,
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 22.w),
+              decoration: BoxDecoration(
+                  color: kForeGroundColor,
+                  border: Border(
+                      bottom: BorderSide(
+                          color: BaseStyle.colorcccccc, width: 1.w))),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '2022年04月',
+                    model,
                     // DateUtil.formatDateMs(.createdAt.toInt() * 1000,
                     //     format: 'yyyy年MM月'),
                     //payNumList[],
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
-                        ?.copyWith(fontSize: 32.w),
+                        ?.copyWith(fontSize: 32.w, fontWeight: FontWeight.bold),
                   ),
                   16.wb,
                   SizedBox(
                       width: 32.w,
                       height: 32.w,
-                      child: Image.asset(num.isEven
+                      child: Image.asset(num[number].isEven
                           ? Assets.icons.down.path
                           : Assets.icons.icGoto.path)
                       // Icon(
@@ -164,110 +212,52 @@ class _PayChangesPageState extends State<PayChangesPage> {
               ),
             ),
             Offstage(
-              offstage: num % 2 != 0,
-              child: SizedBox(
-                  height: 700.w,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return getSc(payNumList[index]);
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       Get.to(() => const Withdrawal(
-                      //           pice: '100', //timeList[index]['pice'],
-                      //           bankName: '银行卡', //timeList[index]['bankname'],
-                      //           time: '2022年')); //timeList[index]['time']));
-                      //     },
-                      //     child: Container(
-                      //       width: 750.w,
-                      //       height: 140.w,
-                      //       padding: EdgeInsets.symmetric(
-                      //           horizontal: 32.w, vertical: 24.w),
-                      //       color: kForeGroundColor,
-                      //       child: Row(
-                      //         children: [
-                      //           Column(
-                      //             crossAxisAlignment: CrossAxisAlignment.start,
-                      //             children: [
-                      //               Text(
-                      //                 '提现到银行卡',
-                      //                 style:
-                      //                     Theme.of(context).textTheme.subtitle1,
-                      //               ),
-                      //               Text(
-                      //                 '11111',
-                      //                 style: TextStyle(
-                      //                     color: BaseStyle.color999999,
-                      //                     fontSize: BaseStyle.fontSize24),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //           const Spacer(),
-                      //           Row(
-                      //             children: [
-                      //               Text(
-                      //                 '111111',
-                      //                 style:
-                      //                     Theme.of(context).textTheme.subtitle2,
-                      //               ),
-                      //               SizedBox(
-                      //                   width: 40.w,
-                      //                   height: 40.w,
-                      //                   child: const Icon(
-                      //                     Icons.keyboard_arrow_right,
-                      //                   ))
-                      //             ],
-                      //           )
-                      //         ],
-                      //       ),
-                      //     ));
-                    },
-                    itemCount: payNumList.length,
-                  )),
-            )
+                offstage: num[number].isOdd, //num % 2 != 0,
+                child: getJubge(number)
+
+                //
+                //     ListView.builder(
+                //   shrinkWrap: true,
+                //   itemExtent: 140.w,
+                //   itemBuilder: (context, index) {
+                //     return timeList1[number] ==
+                //             DateUtil.formatDateMs(
+                //                 payNumList[index].createdAt.toInt() * 1000,
+                //                 format: 'yyyy年MM月')
+                //         ? getSc(payNumList[index])
+                //         : '';
+                //
+                //     //getSc(payNumList[index]);
+                //   },
+                //   itemCount: 3,
+                // ),
+                )
             //getList()
           ],
         ));
-    //leading: Icon(Icons.list),
-    // ListTile(
-    //   //minVerticalPadding: ,
-    //   title: Text(
-    //     '评估车辆1次',
-    //     style: Theme.of(context).textTheme.subtitle2,
-    //   ),
-    //   subtitle: Text(
-    //     '12月1日 16:34:09',
-    //     style: TextStyle(
-    //         fontSize: 24.sp,
-    //         color: const Color.fromRGBO(153, 153, 153, 1)),
-    //   ),
-    //   trailing: Text(
-    //     '-1',
-    //     style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold),
-    //   ),
-    // ),
-    // ListTile(
-    //   title: Text(
-    //     '充值次数',
-    //     style: Theme.of(context).textTheme.subtitle2,
-    //   ),
-    //   subtitle: Column(
-    //     //左对齐
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       Text('扣款银行卡: 工商银行，尾号0909 扣款金额：¥20.00',
-    //           style: Theme.of(context).textTheme.bodyText1?.copyWith(
-    //                 color: const Color(0xFF999999),
-    //                 overflow: TextOverflow.ellipsis,
-    //               )),
-    //       8.hb,
-    //       Text('12月1日 16:34:09',
-    //           style: Theme.of(context).textTheme.bodyText1?.copyWith(
-    //                 color: const Color(0xFF999999),
-    //               )),
-    //     ],
-    //   ),
-    //   trailing: Text('+20', style: Theme.of(context).textTheme.subtitle2),
-    // ),
+  }
+
+  getJubge(int number) {
+    number1.clear();
+    for (var i = 0; i < payNumList.length; i++) {
+      if (timeList1[number] ==
+          DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
+              format: 'yyyy年MM月')) {
+        number1.add(i);
+        //return getSc(payNumList[i]);
+        //getSc();
+        continue;
+      }
+    }
+    print(number1);
+    return ListView.builder(
+      shrinkWrap: true,
+      itemExtent: 140.w,
+      itemBuilder: (context, index) {
+        return getSc(payNumList[number1[index]]);
+      },
+      itemCount: number1.length,
+    );
   }
 
   getSc(HistoryModel model) {
@@ -281,7 +271,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
             //     time: '2022年')); //timeList[index]['time']));
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+            padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 24.w),
             color: kForeGroundColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,7 +313,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
             //     time: '2022年')); //timeList[index]['time']));
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+            padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 24.w),
             color: kForeGroundColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -367,7 +357,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
             //     )); //timeList[index]['time']));
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+            padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 24.w),
             color: kForeGroundColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

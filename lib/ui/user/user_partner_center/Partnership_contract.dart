@@ -1,10 +1,8 @@
-// ignore_for_file: file_names
-
-import 'package:cloud_car/ui/user/user_partner_center/successful.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
+
 import 'package:signature/signature.dart';
 
 class PartnershipContractPage extends StatefulWidget {
@@ -15,23 +13,49 @@ class PartnershipContractPage extends StatefulWidget {
       _PartnershipContractPageState();
 }
 
-class _PartnershipContractPageState extends State<PartnershipContractPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _PartnershipContractPageState extends State<PartnershipContractPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
 
-  late EasyRefreshController _refreshController;
+  //late EasyRefreshController _refreshController;
 
   //手写版控制器
   final SignatureController _signatureController = SignatureController(
     penStrokeWidth: 10.w, //线条宽度
     penColor: Colors.black, //线条颜色
   );
+  late bool isEmpty;
+
   @override
+  void initState() {
+    if (_signatureController.value.isNotEmpty) {
+      isEmpty = false;
+    } else {
+      isEmpty = true;
+    }
+    //监听画板
+    _signatureController.addListener(() {
+      bool tmpIsEmpty = true;
+      if (_signatureController.value.isNotEmpty) {
+        tmpIsEmpty = false;
+      } else {
+        tmpIsEmpty = true;
+      }
+      if (isEmpty != tmpIsEmpty) {
+        if (mounted) {
+          setState(() {
+            isEmpty = tmpIsEmpty;
+          });
+        }
+      }
+    });
+    super.initState();
+  }
+
   @override
   void dispose() {
-    _refreshController.dispose();
+    //_refreshController.dispose();
     super.dispose();
   }
 
@@ -127,156 +151,112 @@ class _PartnershipContractPageState extends State<PartnershipContractPage>
 
 //底部按钮
   _getButton() {
-    return Container(
-      width: double.infinity,
-      height: 98.w,
-      padding: EdgeInsets.symmetric(horizontal: 285.w, vertical: 22.w),
-      decoration: BoxDecoration(
-          gradient: const LinearGradient(
-              begin: Alignment.centerRight,
-              end: Alignment.centerLeft,
-              stops: [0.0, 1.0],
-              colors: [Color(0xFF027AFF), Color(0xFF0593FF)]),
-          borderRadius: BorderRadius.circular(8.w)),
-      child: GestureDetector(
-        onTap: () {
-          showModalBottomSheet(
-            context: context,
-            isDismissible: true,
-            isScrollControlled: false,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16.w),
-                    topRight: Radius.circular(16.w))), //弹框矩形圆角
-            builder: (BuildContext context) {
-              return SizedBox(
-                height: 566.w,
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(padding: EdgeInsets.only(top: 32.w)),
-                        Row(
-                          children: [
-                            Padding(padding: EdgeInsets.only(left: 312.w)),
-                            Text(
-                              '合同签名',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  ?.copyWith(color: const Color(0xFF111111)),
-                            ),
-                            248.wb,
-                            SizedBox(
-                              width: 19.8.w,
-                              height: 19.8.w,
-                              child: GestureDetector(
-                                child: const Icon(
-                                  Icons.clear,
-                                  color: Color(0xFFCCCCCC),
-                                ),
+    return CloudBottomButton(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          isDismissible: true,
+          isScrollControlled: false,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16.w),
+                  topRight: Radius.circular(16.w))), //弹框矩形圆角
+          builder: (BuildContext context) {
+            return SizedBox(
+              height: 566.w,
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Padding(padding: EdgeInsets.only(top: 32.w)),
+                      Row(
+                        children: [
+                          Padding(padding: EdgeInsets.only(left: 312.w)),
+                          Text(
+                            '合同签名',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                ?.copyWith(color: const Color(0xFF111111)),
+                          ),
+                          248.wb,
+                          SizedBox(
+                            width: 19.8.w,
+                            height: 19.8.w,
+                            child: GestureDetector(
+                              child: const Icon(
+                                Icons.clear,
+                                color: Color(0xFFCCCCCC),
                               ),
-                            )
-                          ],
-                        ),
-                        40.hb,
-                        Stack(children: [
-                          Signature(
-                            controller: _signatureController,
-                            width: 654.w,
-                            height: 324.w,
-                            backgroundColor: const Color(0xFFF6F6F6),
-                          ),
-                          Offstage(
-                            offstage: false,
-                            child: Container(
-                                padding:
-                                    EdgeInsets.only(left: 180.w, top: 140.w),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 2.w, vertical: 2.w),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            width: 24.5.w,
-                                            height: 24.5.w,
-                                            child: Image.asset(
-                                              Assets.icons.icFavorite1.path,
-                                              fit: BoxFit.fill,
-                                              color: const Color(0xFF979797),
-                                            ),
-                                          ),
-                                          Divider(
-                                            indent: 2.w,
-                                            endIndent: 2.w,
-                                            color: const Color(0xFF979797),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Text(
-                                      '在此处手写您的姓名',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle2
-                                          ?.copyWith(
-                                              color: const Color(0xFF999999)),
-                                    ),
-                                  ],
-                                )),
-                          ),
-                        ]),
-                        27.hb,
-                        Container(
-                          width: double.infinity,
-                          height: 72.w,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 285.w, vertical: 11.w),
-                          margin: EdgeInsets.symmetric(horizontal: 32.w),
-                          decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                  begin: Alignment.centerRight,
-                                  end: Alignment.centerLeft,
-                                  stops: [
-                                    0.0,
-                                    1.0
-                                  ],
-                                  colors: [
-                                    Color(0xFF027AFF),
-                                    Color(0xFF0593FF)
-                                  ]),
-                              borderRadius: BorderRadius.circular(8.w)),
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.to(() => const SuccessfulPage());
-                            },
-                            child: Text(
-                              '立即签订',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(color: kForeGroundColor),
                             ),
-                          ),
+                          )
+                        ],
+                      ),
+                      40.hb,
+                      Stack(children: [
+                        Signature(
+                          controller: _signatureController,
+                          width: 654.w,
+                          height: 324.w,
+                          backgroundColor: const Color(0xFFF6F6F6),
                         ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            },
-          );
-        },
-        child: Text(
-          '立即签订',
-          style: Theme.of(context)
-              .textTheme
-              .subtitle2
-              ?.copyWith(color: kForeGroundColor),
-        ),
-      ),
+                        Offstage(
+                          offstage: isEmpty ? false : true,
+                          child: Container(
+                              padding: EdgeInsets.only(left: 180.w, top: 140.w),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 2.w, vertical: 2.w),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          width: 24.5.w,
+                                          height: 24.5.w,
+                                          child: Image.asset(
+                                            Assets.icons.icFavorite1.path,
+                                            fit: BoxFit.fill,
+                                            color: const Color(0xFF979797),
+                                          ),
+                                        ),
+                                        Divider(
+                                          indent: 2.w,
+                                          endIndent: 2.w,
+                                          color: const Color(0xFF979797),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Text(
+                                    '在此处手写您的姓名',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2
+                                        ?.copyWith(
+                                            color: const Color(0xFF999999)),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ]),
+                      27.hb,
+                      CloudBottomButton(
+                        onTap: () {
+                          print(isEmpty);
+                          // Get.to(() => const SuccessfulPage());
+                        },
+                        text: '立即签订',
+                      )
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
+        );
+      },
+      text: '立即签订',
     );
   }
 
@@ -294,12 +274,4 @@ class _PartnershipContractPageState extends State<PartnershipContractPage>
   //   );
   // }
 
-  @override
-  bool get wantKeepAlive => true;
 }
-
-class Button {
-  Button(Null Function() param0);
-}
-
-void column() {}

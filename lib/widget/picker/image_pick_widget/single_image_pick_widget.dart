@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-
 class SingleImagePickWidget extends StatefulWidget {
   final double? width;
   final double? height;
@@ -43,16 +42,16 @@ class _SingleImagePickWidgetState extends State<SingleImagePickWidget> {
   //   if(widget.files!=null){
   //     return widget.files!;
   //   }else{
-  //     return _filess;
+  //     return _files;
   //   }
   //
   // }
 
   @override
   Widget build(BuildContext context) {
-    return   GestureDetector(
+    return GestureDetector(
       onTap: () async {
-        var value= await CloudImagePicker.pickSingleImage(title: '选择图片');
+        var value = await CloudImagePicker.pickSingleImage(title: '选择图片');
         print(value);
         _files.add(value!);
         print(_files.length);

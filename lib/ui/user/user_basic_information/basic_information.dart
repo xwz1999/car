@@ -116,8 +116,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                               32.hb,
                               Row(
                                 children: [
-                                  30.wb,
-                                  const Spacer(),
+                                  300.wb,
                                   Text(
                                     '更换头像',
                                     style: TextStyle(
@@ -128,6 +127,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                   const Spacer(),
                                   IconButton(
                                       onPressed: () {
+                                        Get.back();
                                         //Get.to(() => getImage());
                                       },
                                       icon: Icon(
@@ -135,7 +135,6 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                         color: BaseStyle.colorcccccc,
                                         size: 30.w,
                                       )),
-                                  30.wb,
                                 ],
                               ),
                               40.hb,

@@ -159,7 +159,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                 break;
               case '已完成':
                 Get.to(() => const AlsocarOrder(
-                      bl: true,
+                      bl: false,
                     ));
                 break;
               case '已取消':

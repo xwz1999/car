@@ -23,7 +23,6 @@ class _ConsignmentContractState extends State<ConsignmentContract>
   final EasyRefreshController _saleRefreshController = EasyRefreshController();
   final List<ConsignmentListModel> _consignmentList = [];
 
-  final bool _onLoad = true;
   final List<ConsignmentListModel> _saleList = [];
   @override
   @override
@@ -45,7 +44,9 @@ class _ConsignmentContractState extends State<ConsignmentContract>
     super.build(context);
     return Scaffold(
         // appBar: AppBar(
+
         // )
+
         // AppBar(
         //   toolbarHeight: 88.w,
         //   backgroundColor: kForeGroundColor,

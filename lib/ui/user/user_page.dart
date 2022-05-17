@@ -116,6 +116,13 @@ class _UserPageState extends State<UserPage> {
                     .bodyText1
                     ?.copyWith(color: const Color(0xFFCCCCCC))),
             64.hb,
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Get.to(() => const DetectionData(
+            //             orderId: 1,
+            //           ));
+            //     },
+            //     child: Text('1111'))
           ],
         ),
       ),
@@ -348,7 +355,7 @@ class _UserPageState extends State<UserPage> {
                       )
                     ],
                   ),
-                  255.wb,
+                  const Spacer(),
                   SizedBox(
                     width: 40.w,
                     height: 40.w,
