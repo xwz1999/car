@@ -1,14 +1,34 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class ChangeNameData extends StatefulWidget {
-  const ChangeNameData({super.key});
+  final int orderId;
+
+  const ChangeNameData({super.key, required this.orderId});
 
   @override
   State<ChangeNameData> createState() => _ChangeNameDataState();
 }
+
+String certificate = '';
+
+///登记证书
+String vehicleLicense = '';
+
+///行驶证
+String invoice = '';
+
+///发票
+String guaranteeSlip = '';
+
+///保单
+late double pice;
 
 class _ChangeNameDataState extends State<ChangeNameData> {
   @override
@@ -19,7 +39,7 @@ class _ChangeNameDataState extends State<ChangeNameData> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor, //头部颜色
-        title: Text('个人实名认证',
+        title: Text('上传过户资料',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
@@ -31,13 +51,49 @@ class _ChangeNameDataState extends State<ChangeNameData> {
           margin: EdgeInsets.symmetric(horizontal: 32.w),
           child: ListView(
             children: [
-              getText('登记证书'),
+              getText(
+                '登记证书',
+                CarImageItem(
+                  imageBack: (List<File> image) {
+                    certificate = image.first.path;
+                  },
+
+                  //isPadding: false,
+                ),
+              ),
               //48.hb,
-              getText('行驶证'),
+              getText(
+                '行驶证',
+                CarImageItem(
+                  imageBack: (List<File> image) {
+                    vehicleLicense = image.first.path;
+                  },
+
+                  //isPadding: false,
+                ),
+              ),
               //48.hb,
-              getText('发票'),
+              getText(
+                '发票',
+                CarImageItem(
+                  imageBack: (List<File> image) {
+                    invoice = image.first.path;
+                  },
+
+                  //isPadding: false,
+                ),
+              ),
               //48.hb,
-              getText('保单'),
+              getText(
+                '保单',
+                CarImageItem(
+                  imageBack: (List<File> image) {
+                    guaranteeSlip = image.first.path;
+                  },
+
+                  //isPadding: false,
+                ),
+              ),
               //48.hb,
               Row(
                 children: [
@@ -52,17 +108,21 @@ class _ChangeNameDataState extends State<ChangeNameData> {
                       width: 300.w,
                       height: 35.w,
                       child: TextField(
+                          onChanged: (text) {
+                            pice = double.parse(text);
+                          },
                           decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.only(bottom: 23.w), //文字与边框的距离
-                        border: InputBorder.none, //去掉下划线
-                        hintText: '请输入金额',
-                        hintStyle: TextStyle(
-                          fontSize: BaseStyle.fontSize28,
-                          color: BaseStyle.colorcccccc,
-                          // onChanged: ,
-                        ),
-                      ))),
+                            contentPadding:
+                                EdgeInsets.only(bottom: 23.w), //文字与边框的距离
+                            border: InputBorder.none, //去掉下划线
+                            hintText: '请输入金额',
+                            hintStyle: TextStyle(
+                              fontSize: BaseStyle.fontSize28,
+                              color: BaseStyle.colorcccccc,
+
+                              // onChanged: ,
+                            ),
+                          ))),
                   Padding(
                     padding: EdgeInsets.only(top: 5.w, left: 191.w),
                     child: Text(
@@ -76,9 +136,21 @@ class _ChangeNameDataState extends State<ChangeNameData> {
               ),
               144.hb,
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  bool zhi = await OrderFunc.getTransfer(
+                      widget.orderId,
+                      certificate,
+                      vehicleLicense,
+                      invoice,
+                      guaranteeSlip,
+                      pice);
+                  // print(
+                  //     '登记证书+$certificate+行驶证+$vehicleLicense+发票+$invoice+保单+$guaranteeSlip+金额+$pice');
+                  if (zhi) {
+                    BotToast.showText(text: '提交成功');
+                    Get.back();
+                  }
                   //BotToast.showText(text: '验证码输入错误');
-                  BotToast.showText(text: '提交成功');
                 },
                 child: Container(
                   width: 686.w,
@@ -115,16 +187,14 @@ class _ChangeNameDataState extends State<ChangeNameData> {
     );
   }
 
-  getText(
-    String title,
-  ) {
+  getText(String title, dynamic name) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 150.w,
+            width: 130.w,
             child: Text(
               title,
               style: Theme.of(context)
@@ -134,13 +204,14 @@ class _ChangeNameDataState extends State<ChangeNameData> {
             ),
           ),
           32.wb,
-          GestureDetector(
-            onTap: () {},
-            child: SizedBox(
-                width: 200.w,
-                height: 120.w,
-                child: Image.asset(Assets.images.addcar.path)),
-          )
+          name,
+          // CarImageItem(
+          //   imageBack: (List<File> image) {
+          //     picture = image.first.path;
+          //   },
+
+          //   //isPadding: false,
+          // ),
         ],
       ),
     );

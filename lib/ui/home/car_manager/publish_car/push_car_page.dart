@@ -1,6 +1,3 @@
-// ignore_for_file: unused_field
-
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
@@ -69,7 +66,6 @@ class _PushCarPageState extends State<PushCarPage> {
   List<ChooseItem> get list =>
       CarSource.values.map((e) => ChooseItem(name: e.sourceName)).toList();
 
-  String? _source;
 
   @override
   void initState() {

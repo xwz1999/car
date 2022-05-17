@@ -1,6 +1,9 @@
 // ignore_for_file: unused_element
 //  银行卡添加 35
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -157,9 +160,9 @@ class _AddCardPageState extends State<AddCardPage> {
               ),
             ],
           ),
-          64.hb,
+          52.hb,
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 width: 150.w,
@@ -171,13 +174,16 @@ class _AddCardPageState extends State<AddCardPage> {
                       ?.copyWith(color: const Color(0xFF999999)),
                 ),
               ),
-              GestureDetector(
-                onTap: () {},
-                child: SizedBox(child: Image.asset(Assets.images.addcar.path)),
-              )
+              CarImageItem(
+                imageBack: (List<File> image) {
+                  //img = image.first.path;
+                },
+
+                //isPadding: false,
+              ),
             ],
           ),
-          32.hb,
+          // 32.hb,
         ],
       ),
     );

@@ -1,4 +1,3 @@
-import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -239,7 +238,7 @@ class _ChangeNameState extends State<ChangeName> {
                     top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const ChangeNameData());
+                    //  Get.to(() =>  ChangeNameData(orderId: ,));
                   },
                   child: Container(
                       width: 168.w,

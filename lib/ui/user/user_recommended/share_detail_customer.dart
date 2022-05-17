@@ -13,8 +13,6 @@ import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:screenshot/screenshot.dart';
-
 class ShareDetailCustomerPage extends StatefulWidget {
   const ShareDetailCustomerPage({super.key});
 
@@ -28,8 +26,6 @@ class _ShareDetailCustomerPageState extends State<ShareDetailCustomerPage>
   List<dynamic>? data;
   final GlobalKey _globalKey = GlobalKey();
   List<Uint8List> images = [];
-
-  final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {

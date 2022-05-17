@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_car/ui/user/user_partner_center/successful.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -30,15 +29,40 @@ class _PartnerShopContractPageState extends State<PartnerShopContractPage>
   // List listWidget = [];
 
   //late EasyRefreshController _refreshController;
-  bool isMove = false;
+  late bool isEmpty = false;
   //手写版控制器
   final SignatureController _signatureController = SignatureController(
       penStrokeWidth: 10.w, //线条宽度
       penColor: Colors.black, //线条颜色
       onDrawStart: () {
-        //isMove = true;
+        //print('aasfadfasfdasdsfasfasfasfasf');
       });
   @override
+  void initState() {
+    // if (_signatureController.value.isNotEmpty) {
+    //   isEmpty = false;
+    // } else {
+    //   isEmpty = true;
+    // }
+    // //监听画板
+    // _signatureController.addListener(() {
+    //   bool tmpIsEmpty = true;
+    //   if (_signatureController.value.isNotEmpty) {
+    //     tmpIsEmpty = false;
+    //   } else {
+    //     tmpIsEmpty = true;
+    //   }
+    //   if (isEmpty != tmpIsEmpty) {
+    //     if (mounted) {
+    //       setState(() {
+    //         isEmpty = tmpIsEmpty;
+    //       });
+    //     }
+    //   }
+    // });
+    super.initState();
+  }
+
   @override
   void dispose() {
     // _refreshController.dispose();
@@ -185,78 +209,59 @@ class _PartnerShopContractPageState extends State<PartnerShopContractPage>
                         ],
                       ),
                       40.hb,
-                      Stack(children: [
-                        RepaintBoundary(
-                          key: _globalKey,
-                          child: Signature(
-                            controller: _signatureController,
-                            width: 654.w,
-                            height: 324.w,
-                            backgroundColor: const Color(0xFFF6F6F6),
+                      GestureDetector(
+                        onPanDown: ((details) async {
+                          isEmpty = true;
+                        }),
+                        child: Stack(children: [
+                          RepaintBoundary(
+                            key: _globalKey,
+                            child: Signature(
+                              controller: _signatureController,
+                              width: 654.w,
+                              height: 324.w,
+                              backgroundColor: const Color(0xFFF6F6F6),
+                            ),
                           ),
-                        ),
-                        Offstage(
-                            offstage: isMove,
-                            child: GestureDetector(
-                              onTap: () async {
-                                isMove = true;
-                                setState(() {});
-                              },
-                              child: Container(
-                                  padding:
-                                      EdgeInsets.only(left: 240.w, top: 140.w),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: 19.8.w,
-                                        height: 19.8.w,
-                                        child: Image.asset(
-                                          Assets.icons.pan.path,
-                                          fit: BoxFit.fill,
-                                          color: const Color(0xFF979797),
-                                        ),
+                          Offstage(
+                            offstage: isEmpty, //isEmpty ? false : true,
+                            child: Container(
+                                padding:
+                                    EdgeInsets.only(left: 240.w, top: 140.w),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 19.8.w,
+                                      height: 19.8.w,
+                                      child: Image.asset(
+                                        Assets.icons.pan.path,
+                                        fit: BoxFit.fill,
+                                        color: const Color(0xFF979797),
                                       ),
-                                      Text(
-                                        '在此处手写您的姓名',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2
-                                            ?.copyWith(
-                                                color: const Color(0xFF999999)),
-                                      ),
-                                    ],
-                                  )),
-                            )),
-                      ]),
+                                    ),
+                                    Text(
+                                      '在此处手写您的姓名',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2
+                                          ?.copyWith(
+                                              color: const Color(0xFF999999)),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ]),
+                      ),
                       27.hb,
-                      Container(
-                        width: double.infinity,
-                        height: 72.w,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 285.w, vertical: 11.w),
-                        margin: EdgeInsets.symmetric(horizontal: 32.w),
-                        decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                                begin: Alignment.centerRight,
-                                end: Alignment.centerLeft,
-                                stops: [0.0, 1.0],
-                                colors: [Color(0xFF027AFF), Color(0xFF0593FF)]),
-                            borderRadius: BorderRadius.circular(8.w)),
-                        child: GestureDetector(
-                          onTap: () {
-                            checkPermission(saveAssetsImage());
-                            Get.to(() => const SuccessfulPage());
-                          },
-                          child: Text(
-                            '立即签订',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle2
-                                ?.copyWith(color: kForeGroundColor),
-                          ),
-                        ),
+                      CloudBottomButton(
+                        onTap: () {
+                          checkPermission(saveAssetsImage());
+
+                          //print("aaaa+$isEmpty");
+                          Get.to(() => const SuccessfulPage());
+                        },
+                        text: '立即签订',
                       ),
                     ],
                   )

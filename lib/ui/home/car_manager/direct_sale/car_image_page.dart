@@ -37,7 +37,7 @@ class _CarImageItemState extends State<CarImageItem> {
               _files.add(item);
             }
             //_files = files;
-            print("aaaa+$_files");
+            //print("aaaa+$_files");
             widget.imageBack(_files);
           }),
       // GridView.builder(

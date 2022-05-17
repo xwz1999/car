@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
@@ -42,10 +44,10 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
     super.initState();
   }
 
-  _refresh() async {
-    // ignore: unused_local_variable
-    zhi = await FeedbackFunc.getFeedback(widget.title, content, phone, img);
-  }
+  // _refresh() async {
+  //   // ignore: unused_local_variable
+  //   zhi = await FeedbackFunc.getFeedback(widget.title, content, phone, img);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +178,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
                 CloudToast.show('提交成功');
                 Get.back();
               }
-              // ignore: avoid_print
+
               //  BotToast.showText(text: '请输入内容');
               // if (img.isEmail) {
               //   BotToast.showText(text: '图片');

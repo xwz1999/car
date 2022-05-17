@@ -18,19 +18,16 @@ class _ExaminationPageState extends State<ExaminationPage>
   // ignore: non_constant_identifier_names
   final auditlist = [
     {
-      'title': '发布审核',
       'name': '奥迪A3',
       'time': '2021-12-01 12:00:22',
       'text': '车辆信息未填写完整',
-      'conditions': '1',
+      'conditions': 1,
     },
-  ];
-  final noauditlist = [
     {
-      'title': '修改审核',
-      'name': '宝马CLS级',
-      'time': '2021-11-23 15:34:12',
-      'conditions': '0',
+      'name': '奥迪A3',
+      'time': '2021-12-01 12:00:22',
+      'text': '',
+      'conditions': 2,
     },
   ];
   late EasyRefreshController _refreshController;
@@ -56,59 +53,38 @@ class _ExaminationPageState extends State<ExaminationPage>
       ),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-          child: ListView(children: [
-            //引用列表数据
-            ...auditlist.map(
-              (e) => _release(e),
-            ),
-            ...noauditlist.map(
-              (e) => _modify(e),
-            ),
-            //_release(auditlist[0]),
-            //_modify(noauditlist[0])
-          ]
-              // children: [
+      body: ListView(children: [
+        //引用列表数据
 
-              // ],
-              )),
+        ...auditlist.map(
+          (e) => _release(e),
+        ),
+
+        //_release(auditlist[0]),
+        //_modify(noauditlist[0])
+      ]
+          // children: [
+          // ],
+          ),
     );
   }
 
 //驳回 通过
-  _pass() {
+  _isPass(int state) {
     return Row(
       children: [
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
           margin: EdgeInsets.only(left: 150.w),
-          color: const Color.fromRGBO(6, 180, 77, 0.1),
+          color: state == 2
+              ? const Color.fromRGBO(6, 180, 77, 0.1)
+              : const Color.fromRGBO(230, 34, 34, 0.1),
           child: Text(
-            "通过",
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                ?.copyWith(color: const Color(0xFF06B44D)),
-          ),
-        )
-      ],
-    );
-  }
-
-  _rejected() {
-    return Row(
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
-          margin: EdgeInsets.only(left: 150.w),
-          color: const Color.fromRGBO(230, 34, 34, 0.1),
-          child: Text(
-            "驳回",
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                ?.copyWith(color: const Color(0xFFE62222)),
+            state == 2 ? "通过" : '驳回',
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                color: state == 2
+                    ? const Color(0xFF06B44D)
+                    : const Color(0xFFE62222)),
           ),
         )
       ],
@@ -119,80 +95,71 @@ class _ExaminationPageState extends State<ExaminationPage>
   _release(item) {
     return InkWell(
       onTap: () {
-        switch (item['title']) {
-          case '发布审核':
+        switch (item['conditions']) {
+          case '1':
+            Get.to(() => const CardetailPage());
+            break;
+          case '2':
             Get.to(() => const CardetailPage());
             break;
         }
       },
       child: Container(
         decoration: const BoxDecoration(color: Colors.white),
+        margin: EdgeInsets.only(top: 10.w, left: 32.w, right: 32.w),
+        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
         child: Column(children: [
           Row(
             children: [
-              Padding(padding: EdgeInsets.only(left: 32.w, top: 16.w)),
               Text(
-                item['title'],
+                item['conditions'] == 2 ? "修改审核" : "发布审核",
                 style: TextStyle(
                     fontSize: 32.sp,
                     color: const Color.fromRGBO(51, 51, 51, 1)),
               ),
-              Container(
-                  padding: EdgeInsets.only(left: 243.w, top: 20.w),
-                  //child: item['conditions'] == 0 ? print('0') : print('1');
-                  child: item['conditions'] == '0' ? _pass() : _rejected()
-                  // if(item['conditions']=='0') {
-                  //   _read();
-                  // } else {
-                  //   _noread();
-                  // }
-
-                  )
+              const Spacer(),
+              _isPass(item['conditions'])
             ],
           ),
-          Container(
-            width: double.infinity,
-            height: 260.w,
-            padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      '车辆名称',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(102, 102, 102, 1)),
-                    ),
-                    48.wb,
-                    Text(
-                      item['name'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(51, 51, 51, 1)),
-                    )
-                  ],
-                ),
-                28.hb,
-                Row(
-                  children: [
-                    Text(
-                      '审核时间',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(102, 102, 102, 1)),
-                    ),
-                    48.wb,
-                    Text(
-                      item['time'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(51, 51, 51, 1)),
-                    )
-                  ],
-                ),
-                28.hb,
-                Row(
+          24.hb,
+          Row(
+            children: [
+              Text(
+                '车辆名称',
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(102, 102, 102, 1)),
+              ),
+              48.wb,
+              Text(
+                item['name'],
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
+              )
+            ],
+          ),
+          28.hb,
+          Row(
+            children: [
+              Text(
+                '审核时间',
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(102, 102, 102, 1)),
+              ),
+              48.wb,
+              Text(
+                item['time'],
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
+              )
+            ],
+          ),
+          item['conditions'] == 1 ? 28.hb : 0.hb,
+          item['conditions'] == 1
+              ? Row(
                   children: [
                     Text(
                       '驳回原因',
@@ -208,86 +175,10 @@ class _ExaminationPageState extends State<ExaminationPage>
                           color: const Color.fromRGBO(51, 51, 51, 1)),
                     )
                   ],
-                ),
-              ],
-            ),
-          )
+                )
+              : const SizedBox(),
         ]),
       ),
-    );
-  }
-
-//修改审核
-  _modify(item) {
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      child: Column(children: [
-        Row(
-          children: [
-            Padding(padding: EdgeInsets.only(left: 32.w, top: 16.w)),
-            Text(
-              item['title'],
-              style: TextStyle(
-                  fontSize: 32.sp, color: const Color.fromRGBO(51, 51, 51, 1)),
-            ),
-            Container(
-                padding: EdgeInsets.only(left: 243.w, top: 20.w),
-                //child: item['conditions'] == 0 ? print('0') : print('1');
-                child: item['conditions'] == '0' ? _pass() : _rejected()
-                // if(item['conditions']=='0') {
-                //   _read();
-                // } else {
-                //   _noread();
-                // }
-
-                )
-          ],
-        ),
-        Container(
-          width: double.infinity,
-          height: 200.w,
-          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    '车辆名称',
-                    style: TextStyle(
-                        fontSize: 28.sp,
-                        color: const Color.fromRGBO(102, 102, 102, 1)),
-                  ),
-                  48.wb,
-                  Text(
-                    item['name'],
-                    style: TextStyle(
-                        fontSize: 28.sp,
-                        color: const Color.fromRGBO(51, 51, 51, 1)),
-                  )
-                ],
-              ),
-              28.hb,
-              Row(
-                children: [
-                  Text(
-                    '审核时间',
-                    style: TextStyle(
-                        fontSize: 28.sp,
-                        color: const Color.fromRGBO(102, 102, 102, 1)),
-                  ),
-                  48.wb,
-                  Text(
-                    item['time'],
-                    style: TextStyle(
-                        fontSize: 28.sp,
-                        color: const Color.fromRGBO(51, 51, 51, 1)),
-                  )
-                ],
-              ),
-            ],
-          ),
-        )
-      ]),
     );
   }
 
@@ -298,5 +189,3 @@ class _ExaminationPageState extends State<ExaminationPage>
 class Button {
   Button(Null Function() param0);
 }
-
-void column() {}

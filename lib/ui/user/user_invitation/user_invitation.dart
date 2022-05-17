@@ -3,15 +3,13 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/task_func.dart';
-
 import 'package:cloud_car/ui/user/user_invitation/invitation_details_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
-
 import 'package:flustars/flustars.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+
 import '../../../widget/button/cloud_back_button.dart';
 
 class UserInvitation extends StatefulWidget {
@@ -222,7 +220,7 @@ class _UserInvitationState extends State<UserInvitation>
                   ),
                 ],
               ),
-              hourLag >= 1000 ? 0.hb : 32.hb,
+              hourLag >= 24 ? 0.hb : 32.hb,
               Offstage(
                 offstage: hourLag > 1000,
                 child: Row(
@@ -235,7 +233,7 @@ class _UserInvitationState extends State<UserInvitation>
                     ),
                     48.wb,
                     Text(
-                      hourLag <= 1000 && hourLag > 0 ? '小于${hourLag}小时' : '',
+                      hourLag <= 24 && hourLag > 0 ? '小于${hourLag}小时' : '',
                       style: TextStyle(
                           color: BaseStyle.color333333,
                           fontSize: BaseStyle.fontSize28),
@@ -320,7 +318,7 @@ class _UserInvitationState extends State<UserInvitation>
                   ),
                 ],
               ),
-              hourLag >= 1000 ? 0.hb : 32.hb,
+              hourLag >= 24 ? 0.hb : 32.hb,
               Offstage(
                 offstage: hourLag > 1000,
                 child: Row(
@@ -333,7 +331,7 @@ class _UserInvitationState extends State<UserInvitation>
                     ),
                     48.wb,
                     Text(
-                      hourLag <= 1000 && hourLag > 0 ? '小于${hourLag}小时' : '',
+                      hourLag <= 24 && hourLag > 0 ? '小于${hourLag}小时' : '',
                       style: TextStyle(
                           color: BaseStyle.color333333,
                           fontSize: BaseStyle.fontSize28),
@@ -375,14 +373,14 @@ class _UserInvitationState extends State<UserInvitation>
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
       decoration: BoxDecoration(
-          color: newTime.difference(subscribeTime).inHours >= 1000
+          color: newTime.difference(subscribeTime).inHours >= 24
               ? const Color(0xFF999999).withOpacity(0.1)
               : const Color(0xFF027AFF).withOpacity(0.1),
           borderRadius: BorderRadius.circular(4.w)),
       child: Text(
-          newTime.difference(subscribeTime).inHours >= 1000 ? '过期' : '看车',
+          newTime.difference(subscribeTime).inHours >= 24 ? '过期' : '看车',
           style: TextStyle(
-              color: newTime.difference(subscribeTime).inHours >= 10000
+              color: newTime.difference(subscribeTime).inHours >= 24
                   ? const Color(0xFF999999)
                   : const Color(0xFF027AFF),
               fontSize: BaseStyle.fontSize24,
@@ -398,14 +396,14 @@ class _UserInvitationState extends State<UserInvitation>
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
       decoration: BoxDecoration(
-          color: newTime.difference(subscribeTime).inHours >= 1000
+          color: newTime.difference(subscribeTime).inHours >= 24
               ? const Color(0xFF999999).withOpacity(0.1)
               : const Color(0xFF027AFF).withOpacity(0.1),
           borderRadius: BorderRadius.circular(4.w)),
       child: Text(
-          newTime.difference(subscribeTime).inHours >= 1000 ? '过期' : '直卖',
+          newTime.difference(subscribeTime).inHours >= 24 ? '过期' : '直卖',
           style: TextStyle(
-              color: newTime.difference(subscribeTime).inHours >= 1000
+              color: newTime.difference(subscribeTime).inHours >= 24
                   ? const Color(0xFF999999)
                   : const Color(0xFF027AFF),
               fontSize: BaseStyle.fontSize24,
