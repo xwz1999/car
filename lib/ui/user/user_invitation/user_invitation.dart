@@ -23,13 +23,9 @@ class _UserInvitationState extends State<UserInvitation>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
   List<TaskInviteListModel> invitationList = [
-    const TaskInviteListModel(
-        customerId: 0, id: 0, inviteAt: 0, type: 0, customerNickname: '')
   ];
 
   List<TaskInviteListModel> subscribeList = [
-    const TaskInviteListModel(
-        customerId: 0, id: 0, inviteAt: 0, type: 0, customerNickname: '')
   ];
   final EasyRefreshController _invitationRefreshController =
       EasyRefreshController();
@@ -95,20 +91,6 @@ class _UserInvitationState extends State<UserInvitation>
                       await TaskFunc.getCarList(page: _page, size: _size);
                   invitationList.clear();
                   invitationList.addAll(list);
-                  invitationList = [
-                    const TaskInviteListModel(
-                        customerId: 6,
-                        customerNickname: '守护自己的云2',
-                        id: 1,
-                        inviteAt: 1648771200,
-                        type: 2),
-                    const TaskInviteListModel(
-                        customerId: 6,
-                        customerNickname: '守护自己的云1',
-                        id: 1,
-                        inviteAt: 1648771200,
-                        type: 1)
-                  ];
                   setState(() {});
                 },
                 onLoad: () async {
@@ -149,26 +131,6 @@ class _UserInvitationState extends State<UserInvitation>
                       await TaskFunc.getCarList(page: _page, size: _size);
                   subscribeList.clear();
                   subscribeList.addAll(list);
-                  subscribeList = [
-                    const TaskInviteListModel(
-                        customerId: 6,
-                        customerNickname: '守护自己的云1',
-                        id: 1,
-                        inviteAt: 1648771200,
-                        type: 1),
-                    const TaskInviteListModel(
-                        customerId: 6,
-                        customerNickname: '守护自己的云2',
-                        id: 1,
-                        inviteAt: 1648771200,
-                        type: 2),
-                    const TaskInviteListModel(
-                        customerId: 6,
-                        customerNickname: '守护自己的云1',
-                        id: 1,
-                        inviteAt: 1648771200,
-                        type: 2)
-                  ];
                   setState(() {});
                 },
                 onLoad: () async {
