@@ -18,12 +18,11 @@ class MyCarView extends StatefulWidget {
   final List<CarListModel> myCarList;
 
   const MyCarView(
-      {Key? key,
+      {super.key,
       required this.sort,
       required this.refreshController,
       required this.pickCar,
-      required this.myCarList})
-      : super(key: key);
+      required this.myCarList});
 
   @override
   _MyCarViewState createState() => _MyCarViewState();

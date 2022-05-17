@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CarMonthPickBody extends StatefulWidget {
   final DateTime initTime;
 
-  const CarMonthPickBody({Key? key, required this.initTime}) : super(key: key);
+  const CarMonthPickBody({super.key, required this.initTime});
 
   @override
   _CarMonthPickBodyState createState() => _CarMonthPickBodyState();

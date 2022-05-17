@@ -24,7 +24,7 @@ class EditorEmployee extends StatefulWidget {
   final int storeid;
 
   const EditorEmployee(
-      {Key? key,
+      {super.key,
       this.storeid = 0,
       required this.callback,
       this.permissions1 = '',
@@ -32,8 +32,7 @@ class EditorEmployee extends StatefulWidget {
       this.genderText = '',
       this.phoneText = '',
       this.storeidText = '',
-      this.commissionText = ''})
-      : super(key: key);
+      this.commissionText = ''});
 
   @override
   State<EditorEmployee> createState() => _EditorEmployeeState();

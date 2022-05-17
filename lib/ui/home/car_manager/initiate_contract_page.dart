@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class InitiateContractPage extends StatefulWidget {
-  const InitiateContractPage({Key? key}) : super(key: key);
+  const InitiateContractPage({super.key});
 
   @override
   _InitiateContractPageState createState() => _InitiateContractPageState();

@@ -7,7 +7,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../../home/manager_container_item.dart';
 
 class MyOrderPage extends StatefulWidget {
-  const MyOrderPage({Key? key}) : super(key: key);
+  const MyOrderPage({super.key});
 
   @override
   _MyOrderPageState createState() => _MyOrderPageState();

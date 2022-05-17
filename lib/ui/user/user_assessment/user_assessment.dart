@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'assessment_pay.dart';
 
 class UserAssessmentPage extends StatefulWidget {
-  const UserAssessmentPage({Key? key}) : super(key: key);
+  const UserAssessmentPage({super.key});
 
   @override
   _UserAssessmentPageState createState() => _UserAssessmentPageState();

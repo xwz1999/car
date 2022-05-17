@@ -25,10 +25,10 @@ class ChooseCarPage extends StatefulWidget {
   final CarCallback callback;
 
   const ChooseCarPage({
-    Key? key,
+    super.key,
     required this.callback,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   _ChooseCarPageState createState() => _ChooseCarPageState();

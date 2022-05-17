@@ -16,7 +16,7 @@ class ScreenWidget extends StatefulWidget {
   final String pickString;
 
   const ScreenWidget(
-      {Key? key,
+      {super.key,
       required this.itemList,
       required this.callback,
       required this.crossAxisCount,
@@ -25,8 +25,7 @@ class ScreenWidget extends StatefulWidget {
       required this.childAspectRatio,
       this.haveButton = false,
       this.isGrid = true,
-      required this.pickString})
-      : super(key: key);
+      required this.pickString});
 
   @override
   _ScreenWidgetState createState() => _ScreenWidgetState();

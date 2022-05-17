@@ -9,9 +9,9 @@ class SortEditWidget extends StatefulWidget {
   final TextCallback callback;
 
   const SortEditWidget({
-    Key? key,
+    super.key,
     required this.callback,
-  }) : super(key: key);
+  });
 
   @override
   _SortEditWidgetState createState() => _SortEditWidgetState();

@@ -21,10 +21,10 @@ class UserInfoPage extends StatefulWidget {
   final CustomerListModel model;
 
   const UserInfoPage({
-    Key? key,
+    super.key,
     required this.customerId,
     required this.model,
-  }) : super(key: key);
+  });
 
   @override
   _UserInfoPageState createState() => _UserInfoPageState();

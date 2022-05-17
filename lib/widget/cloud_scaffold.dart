@@ -23,7 +23,7 @@ class CloudScaffold extends StatelessWidget {
   final Widget? endDrawer;
 
   const CloudScaffold({
-    Key? key,
+    super.key,
     this.body,
     this.appbar,
     this.bodyColor = const Color(0xFFF9F9F9),
@@ -37,11 +37,10 @@ class CloudScaffold extends StatelessWidget {
         title = '',
         actions = const [],
         appBarBackColor = Colors.white,
-        appBarBottom = null,
-        super(key: key);
+        appBarBottom = null;
 
   const CloudScaffold.white({
-    Key? key,
+    super.key,
     this.body,
     this.bottomNavi,
     this.fab,
@@ -55,11 +54,10 @@ class CloudScaffold extends StatelessWidget {
         title = '',
         actions = const [],
         appBarBackColor = Colors.white,
-        appBarBottom = null,
-        super(key: key);
+        appBarBottom = null;
 
   const CloudScaffold.normal(
-      {Key? key,
+      {super.key,
       this.body,
       this.appbar,
       this.bodyColor = const Color(0xFFF9F9F9),
@@ -74,8 +72,7 @@ class CloudScaffold extends StatelessWidget {
       this.actions = const [],
       this.endDrawer})
       : normal = true,
-        assert(title != null || appbar != null),
-        super(key: key);
+        assert(title != null || appbar != null);
 
   @override
   Widget build(BuildContext context) {

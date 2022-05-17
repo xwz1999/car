@@ -12,13 +12,11 @@ class CloudAvatarWidget extends StatelessWidget {
   final BoxFit? fit;
 
   const CloudAvatarWidget(
-      {Key? key,
+      {super.key,
         this.width,
         this.height,
         this.urls,
-        this.fit = BoxFit.cover})
-      :
-        super(key: key);
+        this.fit = BoxFit.cover});
   String get imagePath {
     if (urls == null) {
       return '';

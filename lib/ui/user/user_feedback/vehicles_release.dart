@@ -5,7 +5,7 @@ import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class VehiclesRelease extends StatefulWidget {
-  const VehiclesRelease({Key? key}) : super(key: key);
+  const VehiclesRelease({super.key});
 
   @override
   State<VehiclesRelease> createState() => _VehiclesReleaseState();

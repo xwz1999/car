@@ -20,14 +20,13 @@ class AddEmployee extends StatefulWidget {
   final String commissionText;
 
   const AddEmployee(
-      {Key? key,
+      {super.key,
       this.permissions1 = '',
       this.nameText = '',
       this.genderText = '',
       this.phoneText = '',
       this.storeidText = '',
-      this.commissionText = ''})
-      : super(key: key);
+      this.commissionText = ''});
 
   @override
   State<AddEmployee> createState() => _AddEmployeeState();

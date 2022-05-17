@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class InvitaionDetailsPage extends StatefulWidget {
   final TaskInviteListModel model;
 
-  const InvitaionDetailsPage({Key? key, required this.model}) : super(key: key);
+  const InvitaionDetailsPage({super.key, required this.model});
 
   @override
   _InvitaionDetailsPageState createState() => _InvitaionDetailsPageState();

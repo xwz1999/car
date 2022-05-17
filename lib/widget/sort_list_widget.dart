@@ -17,7 +17,7 @@ class SortListWidget extends StatefulWidget {
   final String pickString;
 
   const SortListWidget({
-    Key? key,
+    super.key,
     this.itemList,
     required this.callback,
     required this.crossAxisCount,
@@ -28,7 +28,7 @@ class SortListWidget extends StatefulWidget {
     this.rightWidget,
     this.isGrid = true,
     required this.pickString,
-  }) : super(key: key);
+  });
 
   @override
   _SortListWidgetState createState() => _SortListWidgetState();

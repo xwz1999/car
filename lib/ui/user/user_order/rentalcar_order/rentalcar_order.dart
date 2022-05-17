@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 class RentalcarOrder extends StatefulWidget {
   const RentalcarOrder({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<RentalcarOrder> createState() => _RentalcarOrderState();

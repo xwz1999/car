@@ -3,7 +3,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class ChartPage extends StatefulWidget {
-  const ChartPage({Key? key}) : super(key: key);
+  const ChartPage({super.key});
 
   @override
   State<ChartPage> createState() => _ChartPageState();

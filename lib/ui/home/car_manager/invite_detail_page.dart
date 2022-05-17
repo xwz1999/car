@@ -15,11 +15,11 @@ class InviteDetailPage extends StatefulWidget {
   final String name;
   final String phone;
   const InviteDetailPage({
-    Key? key,
+    super.key,
     required this.id,
     required this.name,
     required this.phone,
-  }) : super(key: key);
+  });
 
   @override
   _InviteDetailPageState createState() => _InviteDetailPageState();

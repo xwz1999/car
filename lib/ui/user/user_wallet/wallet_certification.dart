@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import '../../../widget/alert.dart';
 
 class WalletCertificationPage extends StatefulWidget {
-  const WalletCertificationPage({Key? key}) : super(key: key);
+  const WalletCertificationPage({super.key});
 
   @override
   _WalletCertificationPageState createState() =>

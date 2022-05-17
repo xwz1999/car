@@ -12,7 +12,7 @@ class SearchBarWidget extends StatefulWidget {
   final Widget title;
   final String tips;
 
-  const SearchBarWidget({Key? key, required this.callback, required this.title, required this.tips}) : super(key: key);
+  const SearchBarWidget({super.key, required this.callback, required this.title, required this.tips});
 
   @override
   _SearchBarWidgetState createState() => _SearchBarWidgetState();

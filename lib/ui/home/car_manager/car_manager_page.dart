@@ -7,7 +7,7 @@ import 'assessment_page.dart';
 import 'direct_sale/direct_sale_manager_page.dart';
 
 class CarManagerPage extends StatefulWidget {
-  const CarManagerPage({Key? key}) : super(key: key);
+  const CarManagerPage({super.key});
 
   @override
   _CarManagerPageState createState() => _CarManagerPageState();

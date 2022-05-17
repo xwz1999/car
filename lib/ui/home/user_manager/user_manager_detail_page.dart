@@ -27,7 +27,7 @@ class UserManagerDetailPage extends StatefulWidget {
 
   ///1浏览客户 2意向客户 3 邀请注册 4成交客户
 
-  const UserManagerDetailPage({Key? key, required this.type}) : super(key: key);
+  const UserManagerDetailPage({super.key, required this.type});
 
   @override
   _UserManagerDetailPageState createState() => _UserManagerDetailPageState();

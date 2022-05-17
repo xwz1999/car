@@ -12,8 +12,8 @@ typedef CarCallback = Function(String city);
 
 class ShareCar extends StatefulWidget {
   const ShareCar({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _ShareCarState createState() => _ShareCarState();

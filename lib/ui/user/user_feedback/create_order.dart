@@ -6,7 +6,7 @@ import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class CreateOrder extends StatefulWidget {
-  const CreateOrder({Key? key}) : super(key: key);
+  const CreateOrder({super.key});
 
   @override
   State<CreateOrder> createState() => _CreateOrderState();

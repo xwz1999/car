@@ -6,8 +6,8 @@ import 'package:image_picker/image_picker.dart';
 
 class ImagePickers extends StatefulWidget {
   const ImagePickers({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ImagePickers> createState() => _ImagePickersState();

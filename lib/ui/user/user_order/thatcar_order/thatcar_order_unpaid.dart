@@ -8,7 +8,7 @@ import '../../../../utils/user_tool.dart';
 
 class ThatcarUnpaid extends StatefulWidget {
   final String stat;
-  const ThatcarUnpaid({Key? key, required this.stat}) : super(key: key);
+  const ThatcarUnpaid({super.key, required this.stat});
 
   @override
   State<ThatcarUnpaid> createState() => _ThatcarUnpaidState();

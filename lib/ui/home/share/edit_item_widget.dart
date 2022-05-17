@@ -17,7 +17,7 @@ class EditItemWidget extends StatefulWidget {
   final BoolCallback boolCallback;
 
 
-  const EditItemWidget({Key? key, required this.callback, required this.canEdit, required this.text, required this.boolCallback}) : super(key: key);
+  const EditItemWidget({super.key, required this.callback, required this.canEdit, required this.text, required this.boolCallback});
 
   @override
   EditItemWidgetState createState() => EditItemWidgetState();

@@ -10,7 +10,7 @@ import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class AddStores extends StatefulWidget {
-  const AddStores({Key? key}) : super(key: key);
+  const AddStores({super.key});
 
   @override
   State<AddStores> createState() => _AddStoresState();

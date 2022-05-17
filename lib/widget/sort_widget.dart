@@ -26,7 +26,7 @@ class SortWidget extends StatelessWidget {
   final String pickString;
 
   const SortWidget(
-      {Key? key,
+      {super.key,
       required this.itemList,
       required this.callback,
       required this.crossAxisCount,
@@ -35,8 +35,7 @@ class SortWidget extends StatelessWidget {
       required this.childAspectRatio,
       this.haveButton = false,
       this.isGrid = true,
-      required this.pickString})
-      : super(key: key);
+      required this.pickString});
 
   @override
   Widget build(BuildContext context) {

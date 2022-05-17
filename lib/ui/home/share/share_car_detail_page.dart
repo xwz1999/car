@@ -17,10 +17,10 @@ class ShareCarDetailPage extends StatefulWidget {
   final List<CarListModel> model;
 
   const ShareCarDetailPage({
-    Key? key,
+    super.key,
     required this.isMore,
     required this.model,
-  }) : super(key: key);
+  });
 
   @override
   _ShareCarDetailPageState createState() => _ShareCarDetailPageState();

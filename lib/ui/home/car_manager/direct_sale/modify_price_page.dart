@@ -8,7 +8,7 @@ import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 ///调价页面
 class ModifyPricePage extends StatefulWidget {
-  const ModifyPricePage({Key? key}) : super(key: key);
+  const ModifyPricePage({super.key});
 
   @override
   _ModifyPricePageState createState() => _ModifyPricePageState();

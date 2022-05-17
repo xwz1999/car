@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloud_car/model/car/business_push_model.dart';
 import 'package:cloud_car/model/car/car_photo_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_source_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -24,12 +23,11 @@ class CarReportPage extends StatefulWidget {
   final ConsignmentContractModel consignmentContractModel;
 
   const CarReportPage(
-      {Key? key,
+      {super.key,
       this.orderId,
       required this.businessPushModel,
       required this.carPhotoModel,
-      required this.consignmentContractModel})
-      : super(key: key);
+      required this.consignmentContractModel});
 
   @override
   State<CarReportPage> createState() => _CarReportPageState();

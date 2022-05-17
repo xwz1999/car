@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 
 class ChangeNameData extends StatefulWidget {
   final int orderId;
-  const ChangeNameData({Key? key, required this.orderId}) : super(key: key);
+
+  const ChangeNameData({super.key, required this.orderId});
 
   @override
   State<ChangeNameData> createState() => _ChangeNameDataState();

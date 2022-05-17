@@ -13,7 +13,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class UserInvitation extends StatefulWidget {
-  const UserInvitation({Key? key}) : super(key: key);
+  const UserInvitation({super.key});
 
   @override
   _UserInvitationState createState() => _UserInvitationState();

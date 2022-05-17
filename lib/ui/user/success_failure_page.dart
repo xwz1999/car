@@ -9,12 +9,11 @@ class SuccessFailure extends StatefulWidget {
   final Widget bottom;
 
   const SuccessFailure(
-      {Key? key,
+      {super.key,
       required this.conditions,
       required this.headline,
       required this.body,
-      required this.bottom})
-      : super(key: key);
+      required this.bottom});
 
   @override
   State<SuccessFailure> createState() => _SuccessFailureState();

@@ -12,8 +12,7 @@ class ChooseItemPage extends StatefulWidget {
   final List<String> items;
 
   const ChooseItemPage(
-      {Key? key, required this.name, required this.callback, required this.items})
-      : super(key: key);
+      {super.key, required this.name, required this.callback, required this.items});
 
   @override
   _ChooseItemPageState createState() => _ChooseItemPageState();

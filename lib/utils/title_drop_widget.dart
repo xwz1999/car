@@ -48,7 +48,7 @@ class TitleDropDownWidget extends StatefulWidget {
     this.iconData,
     required this.bottomHeight,
     required this.screenControl,
-    Key? key,
+    super.key,
     this.onTap,
     this.leftWidget,
     this.child,
@@ -57,7 +57,7 @@ class TitleDropDownWidget extends StatefulWidget {
     this.tips,
     this.isSearch = true,
         //bool isNotSearch,
-  }) : super(key: key);
+  });
 
   @override
   _TitleDropDownWidgetState createState() => _TitleDropDownWidgetState();

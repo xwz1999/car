@@ -12,7 +12,7 @@ class ProgressBar extends StatefulWidget {
   final int HW;
   final List<dynamic> texts;
   const ProgressBar(
-      {Key? key,
+      {super.key,
 
       ///true垂直 false水平
       this.direction = true,
@@ -23,8 +23,7 @@ class ProgressBar extends StatefulWidget {
       //required this.index,
       required this.length,
       required this.num,
-      required this.HW})
-      : super(key: key);
+      required this.HW});
 
   @override
   State<ProgressBar> createState() => _ProgressBarState();

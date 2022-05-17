@@ -24,10 +24,10 @@ class DirectSalePage extends StatefulWidget {
   final ValueNotifier<SearchParamModel> pickCar;
 
   const DirectSalePage({
-    Key? key,
+    super.key,
     required this.refreshController,
     required this.pickCar,
-  }) : super(key: key);
+  });
 
   @override
   _DirectSalePageState createState() => _DirectSalePageState();

@@ -7,12 +7,12 @@ class CloudBottomButton extends StatefulWidget {
   final Color color2;
   final Function() onTap;
   const CloudBottomButton({
-    Key? key,
+    super.key,
     this.text = '返回首页',
     this.color1 = const Color(0xFF0593FF),
     this.color2 = const Color(0xFF027AFF),
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<CloudBottomButton> createState() => _CloudBottomButtonState();

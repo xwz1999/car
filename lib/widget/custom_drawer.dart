@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatefulWidget {
-    const CustomDrawer({Key? key,
+    const CustomDrawer({super.key,
     required this.backgroundColor,
     this.elevation = 16.0,
     required this.child,
     required this.widthPercent,
     required this.callback,
-  }) : assert(widthPercent < 1.0 && widthPercent > 0.0), super(key: key);
+  }) : assert(widthPercent < 1.0 && widthPercent > 0.0);
 
   final Color backgroundColor;
   final double elevation;

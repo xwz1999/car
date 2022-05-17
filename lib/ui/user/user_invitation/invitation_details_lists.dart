@@ -2,7 +2,6 @@ import 'package:cloud_car/model/car/customer_trail_model.dart';
 import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
-
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -11,9 +10,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 class InvitationDetailsList extends StatefulWidget {
   final int customerId;
   final int type;
+
   const InvitationDetailsList(
-      {Key? key, required this.customerId, required this.type})
-      : super(key: key);
+      {super.key, required this.customerId, required this.type});
 
   @override
   _InvitationDetailsListState createState() => _InvitationDetailsListState();
@@ -22,7 +21,6 @@ class InvitationDetailsList extends StatefulWidget {
 class _InvitationDetailsListState extends State<InvitationDetailsList> {
   List<CustomerTrailModel> _list = [];
 
-  bool _onLoad = true;
   final ScrollController _scrollController = ScrollController();
 
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
@@ -52,7 +50,6 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
         _list = await CustomerFunc.getCustomerTrail(
           widget.customerId,
         );
-        _onLoad = false;
         setState(() {});
       },
       //emptyWidget: const NoDataWidget(text: '暂无客户轨迹信息',),
@@ -414,7 +411,6 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                             DateUtil.getDateTimeByMs(
                                 model.invite.inviteAt.toInt() * 1000),
                             format: 'yyyy年MM月'),
-
                         '${model.invite.mileage}万公里',
                         model.invite.price,
                       ),
@@ -433,7 +429,6 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                             DateUtil.getDateTimeByMs(
                                 model.reserve.licensingDate.toInt() * 1000),
                             format: 'yyyy年MM月'),
-
                         '${model.reserve.mileage}万公里',
                         '',
                       ),

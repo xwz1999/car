@@ -1,9 +1,6 @@
 import 'package:cloud_car/model/car/business_push_model.dart';
 import 'package:cloud_car/model/car/car_photo_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
-import 'package:cloud_car/model/car/consignment_contact_model.dart';
-import 'package:cloud_car/model/car/consignment_contact_model.dart';
-import 'package:cloud_car/model/car/inner_model/car_manage_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_info_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -24,11 +21,11 @@ class CarPicturePage extends StatefulWidget {
   final ConsignmentContractModel consignmentContractModel;
 
   const CarPicturePage({
-    Key? key,
+    super.key,
     this.orderId,
     required this.consignmentContractModel,
     required this.isPersonal,
-  }) : super(key: key);
+  });
 
   @override
   State<CarPicturePage> createState() => _CarPicturePageState();

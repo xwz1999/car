@@ -21,8 +21,7 @@ import '../../../../widget/car_widget.dart';
 
 class ConsignmentOrderPage extends StatefulWidget {
   final Function callBack;
-  const ConsignmentOrderPage({Key? key, required this.callBack})
-      : super(key: key);
+  const ConsignmentOrderPage({super.key, required this.callBack});
 
   @override
   State<ConsignmentOrderPage> createState() => _ConsignmentOrderPageState();

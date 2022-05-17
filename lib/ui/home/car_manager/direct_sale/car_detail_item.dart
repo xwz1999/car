@@ -8,7 +8,7 @@ class CarDetailItem extends StatelessWidget {
   final CarInfoModel carInfoModel;
 
 
-  const CarDetailItem({Key? key, required this.carInfoModel}) : super(key: key);
+  const CarDetailItem({super.key, required this.carInfoModel});
 
   @override
   Widget build(BuildContext context) {

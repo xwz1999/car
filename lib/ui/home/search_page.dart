@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import '../../widget/button/cloud_back_button.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
   _SearchPageState createState() => _SearchPageState();

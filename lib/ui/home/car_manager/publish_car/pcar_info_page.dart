@@ -29,12 +29,12 @@ class PublishCarInfoPage extends StatefulWidget {
   final ConsignmentContractModel consignmentContractModel;
 
   const PublishCarInfoPage({
-    Key? key,
+    super.key,
     required this.businessPushModel,
     required this.carPhotoModel,
     required this.consignmentContractModel,
     this.orderId,
-  }) : super(key: key);
+  });
 
   @override
   State<PublishCarInfoPage> createState() => _PublishCarInfoPageState();

@@ -22,12 +22,11 @@ class CarLicensePage extends StatefulWidget {
   final ConsignmentContractModel consignmentContractModel;
 
   const CarLicensePage(
-      {Key? key,
+      {super.key,
       this.orderId,
       required this.businessPushModel,
       required this.carPhotoModel,
-      required this.consignmentContractModel})
-      : super(key: key);
+      required this.consignmentContractModel});
 
   @override
   State<CarLicensePage> createState() => _CarLicensePageState();

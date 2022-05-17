@@ -6,7 +6,7 @@ import '../../../../widget/button/cloud_back_button.dart';
 import '../../../tab_navigator.dart';
 
 class PublishFinishPage extends StatefulWidget {
-  const PublishFinishPage({Key? key}) : super(key: key);
+  const PublishFinishPage({super.key});
 
   @override
   State<PublishFinishPage> createState() => _PublishFinishPageState();

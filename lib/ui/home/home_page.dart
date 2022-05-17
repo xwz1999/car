@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
+import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_func.dart';
 import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
@@ -16,9 +17,9 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
-import '../../utils/user_tool.dart';
 import 'car_manager/car_manager_page.dart';
 import 'car_manager/publish_car/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
@@ -26,7 +27,7 @@ import 'func/car_func.dart';
 import 'home_title.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -76,6 +77,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final userProvider = Provider.of<UserProvider>(context);
     return CloudScaffold(
       path: Assets.images.homeBg.path,
       bodyColor: bgColor,
@@ -97,12 +99,12 @@ class _HomePageState extends State<HomePage>
               child: AspectRatio(
                 aspectRatio: 1,
                 child: CloudAvatarWidget(
-                  urls: [UserTool.userProvider.userInfo.headImg],
+                  urls: [userProvider.userInfo.headImg],
                 ),
               ),
             ),
             16.wb,
-            Text('Hi,${UserTool.userProvider.userInfo.nickname}',
+            Text('Hi,${userProvider.userInfo.nickname}',
                 style: TextStyle(
                     color: BaseStyle.color111111,
                     fontWeight: FontWeight.bold,

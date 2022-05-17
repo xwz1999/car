@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class AddCardPage extends StatefulWidget {
-  const AddCardPage({Key? key}) : super(key: key);
+  const AddCardPage({super.key});
 
   @override
   _AddCardPageState createState() => _AddCardPageState();

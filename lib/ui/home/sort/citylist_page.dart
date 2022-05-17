@@ -14,7 +14,7 @@ typedef CityCallback = Function(ChinaRegionModel model);
 class CityListPage extends StatefulWidget {
   final CityCallback cityCallback;
 
-  const CityListPage({Key? key, required this.cityCallback}) : super(key: key);
+  const CityListPage({super.key, required this.cityCallback});
   @override
   _CityListPageState createState() => _CityListPageState();
 }

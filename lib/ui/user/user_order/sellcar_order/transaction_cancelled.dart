@@ -4,7 +4,7 @@ import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 class TransactionCancelled extends StatefulWidget {
-  const TransactionCancelled({Key? key}) : super(key: key);
+  const TransactionCancelled({super.key});
 
   @override
   State<TransactionCancelled> createState() => _TransactionCancelledState();

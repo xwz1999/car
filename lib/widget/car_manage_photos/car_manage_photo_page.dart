@@ -12,8 +12,7 @@ class CarManagePhotoPage extends StatefulWidget {
   final int initIndex;
 
   const CarManagePhotoPage(
-      {Key? key, required this.tabs, required this.model, this.initIndex = 0})
-      : super(key: key);
+      {super.key, required this.tabs, required this.model, this.initIndex = 0});
 
   @override
   _CarManagePhotoPageState createState() => _CarManagePhotoPageState();

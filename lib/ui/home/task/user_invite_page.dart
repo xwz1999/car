@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 class UserInvitePage extends StatefulWidget {
   final TaskInviteListModel model;
   const UserInvitePage({
-    Key? key,
+    super.key,
     required this.model,
-  }) : super(key: key);
+  });
 
   @override
   _UserInvitePageState createState() => _UserInvitePageState();

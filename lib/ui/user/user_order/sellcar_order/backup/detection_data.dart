@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 
 class DetectionData extends StatefulWidget {
   final int orderId;
-  const DetectionData({Key? key, required this.orderId}) : super(key: key);
+
+  const DetectionData({super.key, required this.orderId});
 
   @override
   State<DetectionData> createState() => _DetectionDataState();

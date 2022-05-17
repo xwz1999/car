@@ -12,13 +12,12 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import 'car_image_page.dart';
 
 class EditCarPage extends StatefulWidget {
-  const EditCarPage({Key? key}) : super(key: key);
+  const EditCarPage({super.key});
 
   @override
   _EditCarPageState createState() => _EditCarPageState();

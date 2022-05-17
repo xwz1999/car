@@ -13,8 +13,7 @@ class MakeDealData extends StatefulWidget {
   final int statusNum;
 
   ///状态进度数值
-  const MakeDealData({Key? key, required this.id, required this.statusNum})
-      : super(key: key);
+  const MakeDealData({super.key, required this.id, required this.statusNum});
 
   @override
   State<MakeDealData> createState() => _MakeDealDataState();

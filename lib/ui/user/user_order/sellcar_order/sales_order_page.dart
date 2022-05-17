@@ -24,9 +24,9 @@ class SalesOrderPage extends StatefulWidget {
   final Function callBack;
 
   const SalesOrderPage({
-    Key? key,
+    super.key,
     required this.callBack,
-  }) : super(key: key);
+  });
 
   @override
   State<SalesOrderPage> createState() => _SalesOrderPageState();

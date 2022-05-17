@@ -4,7 +4,7 @@ import '../../../../../utils/headers.dart';
 import '../../../../../widget/button/cloud_back_button.dart';
 
 class ConsignmentAudit extends StatefulWidget {
-  const ConsignmentAudit({Key? key}) : super(key: key);
+  const ConsignmentAudit({super.key});
 
   @override
   State<ConsignmentAudit> createState() => _ConsignmentAuditState();

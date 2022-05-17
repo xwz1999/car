@@ -21,8 +21,7 @@ class AssessmentPayPage extends StatefulWidget {
   final String price;
   final int count;
 
-  const AssessmentPayPage({Key? key, required this.price, required this.count})
-      : super(key: key);
+  const AssessmentPayPage({super.key, required this.price, required this.count});
 
   @override
   _AssessmentPayPageState createState() => _AssessmentPayPageState();

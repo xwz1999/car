@@ -5,7 +5,7 @@ import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 
 class ContractPayPage extends StatefulWidget {
-  const ContractPayPage({Key? key}) : super(key: key);
+  const ContractPayPage({super.key});
 
   @override
   _ContractPayPageState createState() => _ContractPayPageState();

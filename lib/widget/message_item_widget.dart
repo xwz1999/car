@@ -20,13 +20,12 @@ class MessageItemWidget extends StatelessWidget {
   final String url;
   final TaskType? type;
   const MessageItemWidget(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.tip,
       required this.time,
       required this.num,
-      required this.url, this.type})
-      : super(key: key);
+      required this.url, this.type});
 
   @override
   Widget build(BuildContext context) {

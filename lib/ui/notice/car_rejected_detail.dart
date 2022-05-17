@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
 class CardetailPage extends StatefulWidget {
-  const CardetailPage({Key? key}) : super(key: key);
+  const CardetailPage({super.key});
 
   @override
   _CardetailPageState createState() => _CardetailPageState();

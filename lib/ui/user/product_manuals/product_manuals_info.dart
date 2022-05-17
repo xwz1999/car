@@ -16,14 +16,14 @@ class HandbookInfo extends StatefulWidget {
   // final String startTime;
   // final String endTime;
   const HandbookInfo({
-    Key? key,
+    super.key,
     //required this.manualsBack,
     required this.itemId,
     required this.name,
     // required this.endTime,
     // required this.startTime,
     // required this.text,
-  }) : super(key: key);
+  });
 
   @override
   State<HandbookInfo> createState() => _HandbookInfoState();

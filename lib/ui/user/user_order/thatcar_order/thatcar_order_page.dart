@@ -13,9 +13,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 class ThatcarOrderPage extends StatefulWidget {
   final Function callBack;
   const ThatcarOrderPage({
-    Key? key,
+    super.key,
     required this.callBack,
-  }) : super(key: key);
+  });
 
   @override
   State<ThatcarOrderPage> createState() => _ThatcarOrderPageState();

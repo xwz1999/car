@@ -8,8 +8,7 @@ class ChooseCarPage extends StatefulWidget {
   final VoidCallback callback;
 
   final ValueNotifier<SearchParamModel> pickCar;
-  const ChooseCarPage({Key? key, required this.callback, required this.pickCar})
-      : super(key: key);
+  const ChooseCarPage({super.key, required this.callback, required this.pickCar});
 
   @override
   _ChooseCarPageState createState() => _ChooseCarPageState();

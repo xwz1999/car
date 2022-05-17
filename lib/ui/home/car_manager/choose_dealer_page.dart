@@ -1,18 +1,11 @@
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/dealer_list_model.dart';
-import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
-import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
-import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
-import 'package:cloud_car/widget/search_bar_widget.dart';
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -23,9 +16,11 @@ typedef CarCallback = Function(DealerListModel model);
 ///单选
 class ChooseDealerPage extends StatefulWidget {
   final CarCallback callback;
+
   const ChooseDealerPage({
-    Key? key, required this.callback,
-  }) : super(key: key);
+    super.key,
+    required this.callback,
+  });
 
   @override
   _ChooseDealerPageState createState() => _ChooseDealerPageState();
@@ -36,17 +31,12 @@ class _ChooseDealerPageState extends State<ChooseDealerPage> {
    final List<int> _selectIndex = [];
    final List<DealerListModel> _chooseModels = [];
 
-   String _search = '';
 
    List<DealerListModel> _list = [];
 
 
-   Map<String, dynamic> get _params => {
-     'name': _search,
-   };
    bool _onLoad = true;
 
-   int _page = 1;
    final EasyRefreshController _easyRefreshController = EasyRefreshController();
   @override
   void initState() {
@@ -75,7 +65,6 @@ class _ChooseDealerPageState extends State<ChooseDealerPage> {
               footer: MaterialFooter(),
               controller: _easyRefreshController,
               onRefresh: () async {
-                _page = 1;
                 _list = await CarFunc.getDealerList();
                 _onLoad = false;
                 setState(() {});
@@ -163,24 +152,6 @@ class _ChooseDealerPageState extends State<ChooseDealerPage> {
   }
 
 
-   _getAppbar() {
-     return SearchBarWidget(
-       callback: (String text) {
-         _search = text;
-         _easyRefreshController.callRefresh();
-         setState(() {});
-       },
-       tips: '请输入客户名称',
-       title: Container(
-         alignment: Alignment.center,
-         child: Text(
-           '选择客户',
-           style: TextStyle(
-               color: const Color(0xFF111111), fontSize: BaseStyle.fontSize36),
-         ),
-       ),
-     );
-   }
 
   _getCustom(int index,DealerListModel model){
     return GestureDetector(

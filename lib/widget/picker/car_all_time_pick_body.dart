@@ -6,8 +6,7 @@ class CarAllTimePickBody extends StatefulWidget {
   final bool chooseLate;///选择当前时间之前的时间还是当前时间之后的时间
   final DateTime initTime;
 
-  const CarAllTimePickBody({Key? key, required this.initTime, this.chooseLate = true})
-      : super(key: key);
+  const CarAllTimePickBody({super.key, required this.initTime, this.chooseLate = true});
 
   @override
   _CarAllTimePickBodyState createState() => _CarAllTimePickBodyState();

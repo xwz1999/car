@@ -10,7 +10,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../manager_container_item.dart';
 
 class UserManagerPage extends StatefulWidget {
-  const UserManagerPage({Key? key}) : super(key: key);
+  const UserManagerPage({super.key});
 
   @override
   _UserManagerPageState createState() => _UserManagerPageState();

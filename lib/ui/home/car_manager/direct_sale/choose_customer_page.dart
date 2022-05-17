@@ -20,8 +20,8 @@ typedef CarCallback = Function(CustomerListModel model);
 class ChooseCustomerPage extends StatefulWidget {
   final CarCallback callback;
   const ChooseCustomerPage({
-    Key? key, required this.callback,
-  }) : super(key: key);
+    super.key, required this.callback,
+  });
 
   @override
   _ChooseCustomerPageState createState() => _ChooseCustomerPageState();

@@ -5,7 +5,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 class RentaicarOrderData extends StatefulWidget {
-  const RentaicarOrderData({Key? key}) : super(key: key);
+  const RentaicarOrderData({super.key});
 
   @override
   State<RentaicarOrderData> createState() => _RentaicarOrderDataState();

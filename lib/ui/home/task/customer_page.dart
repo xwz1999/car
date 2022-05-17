@@ -10,7 +10,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class CustomerPage extends StatefulWidget {
-  const CustomerPage({Key? key}) : super(key: key);
+  const CustomerPage({super.key});
 
   @override
   _CustomerPageState createState() => _CustomerPageState();

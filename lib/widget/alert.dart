@@ -51,14 +51,14 @@ class NormalTextDialog extends Dialog {
   final NormalTextDialogType type;
 
     const NormalTextDialog(
-      {Key? key, required this.title,
+      {super.key, required this.title,
       this.titleColor,
       required this.content,
       this.deleteItem = "删除",
       required this.items,
       required this.listener,
       required this.deleteListener,
-      this.type = NormalTextDialogType.normal}) : super(key: key);
+      this.type = NormalTextDialogType.normal});
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +177,7 @@ class NormalContentDialog extends Dialog {
   final DeleteItemClickListener deleteListener;
   final NormalTextDialogType type;
 
-   const NormalContentDialog({Key? key,
+   const NormalContentDialog({super.key,
     required this.title,
     required this.content,
      this.deleteItem,
@@ -185,7 +185,7 @@ class NormalContentDialog extends Dialog {
     required this.listener,
     required this.deleteListener,
     this.type = NormalTextDialogType.normal,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

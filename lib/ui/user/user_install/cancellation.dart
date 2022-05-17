@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class CancellationPage extends StatefulWidget {
-  const CancellationPage({Key? key}) : super(key: key);
+  const CancellationPage({super.key});
 
   @override
   _CancellationPageState createState() => _CancellationPageState();

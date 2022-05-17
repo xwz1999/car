@@ -13,8 +13,7 @@ import 'contract_license_page.dart';
 class ContractOwnerPage extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
 
-  const ContractOwnerPage({Key? key, required this.consignmentContractModel})
-      : super(key: key);
+  const ContractOwnerPage({super.key, required this.consignmentContractModel});
 
   @override
   State<ContractOwnerPage> createState() => _ContractOwnerPageState();

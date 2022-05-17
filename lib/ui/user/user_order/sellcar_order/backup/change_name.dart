@@ -1,10 +1,9 @@
-import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 class ChangeName extends StatefulWidget {
-  const ChangeName({Key? key}) : super(key: key);
+  const ChangeName({super.key});
 
   @override
   State<ChangeName> createState() => _ChangeNameState();

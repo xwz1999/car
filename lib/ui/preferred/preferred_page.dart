@@ -30,7 +30,7 @@ import '../../model/sort/sort_car_model_model.dart';
 import '../../model/sort/sort_series_model.dart';
 
 class PreferredPage extends StatefulWidget {
-  const PreferredPage({Key? key}) : super(key: key);
+  const PreferredPage({super.key});
 
   @override
   _PreferredPageState createState() => _PreferredPageState();

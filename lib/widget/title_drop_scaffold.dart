@@ -17,7 +17,7 @@ class TitleDropScaffold extends StatelessWidget {
   final SystemUiOverlayStyle systemStyle;
 
   const TitleDropScaffold({
-    Key? key,
+    super.key,
     this.body,
     this.appbar,
     this.bodyColor = const Color(0xFFF9F9F9),
@@ -26,7 +26,7 @@ class TitleDropScaffold extends StatelessWidget {
     this.systemStyle = SystemStyle.initial,
     this.extendBody = false,
     this.path, this.drawer,
-  }) : super(key: key);
+  });
 
   // const TitleDropScaffold.white({
   //   Key? key,

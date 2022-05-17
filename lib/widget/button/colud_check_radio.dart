@@ -9,13 +9,13 @@ class BeeCheckRadio<T> extends StatefulWidget {
   final Color? backColor;
   final bool? border;
   const BeeCheckRadio({
-    Key? key,
+    super.key,
     this.value,
     this.groupValue,
     this.indent,
     this.backColor,
     this.border = true,
-  }) : super(key: key);
+  });
 
   @override
   _BeeCheckRadioState createState() => _BeeCheckRadioState();

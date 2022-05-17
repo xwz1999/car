@@ -1,5 +1,4 @@
 import 'package:cloud_car/ui/home/home_page.dart';
-
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
@@ -10,8 +9,6 @@ import 'package:cloud_car/ui/user/user_invitation/user_invitation.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
 import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -24,7 +21,7 @@ import '../../utils/user_tool.dart';
 import '../../widget/cloud_avatar_widget.dart';
 
 class UserPage extends StatefulWidget {
-  const UserPage({Key? key}) : super(key: key);
+  const UserPage({super.key});
 
   @override
   _UserPageState createState() => _UserPageState();

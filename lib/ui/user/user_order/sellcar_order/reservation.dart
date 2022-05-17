@@ -19,12 +19,11 @@ class Reservation extends StatefulWidget {
   final String status;
   final int statusNum;
   const Reservation(
-      {Key? key,
+      {super.key,
       required this.judge,
       required this.orderId,
       required this.status,
-      required this.statusNum})
-      : super(key: key);
+      required this.statusNum});
 
   @override
   State<Reservation> createState() => _ReservationState();

@@ -7,7 +7,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 
 class PreferredCardDetailPage extends StatefulWidget {
-  const PreferredCardDetailPage({Key? key}) : super(key: key);
+  const PreferredCardDetailPage({super.key});
 
   @override
   _PreferredCardDetailPageState createState() => _PreferredCardDetailPageState();

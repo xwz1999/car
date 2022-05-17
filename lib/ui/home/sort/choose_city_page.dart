@@ -11,9 +11,9 @@ class ChooseCityPage extends StatefulWidget {
   final CityCallback callback;
 
   const ChooseCityPage({
-    Key? key,
+    super.key,
     required this.callback,
-  }) : super(key: key);
+  });
 
   @override
   _ChooseCityPageState createState() => _ChooseCityPageState();

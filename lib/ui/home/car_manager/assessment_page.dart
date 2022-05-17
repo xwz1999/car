@@ -13,7 +13,7 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/material.dart';
 
 class AssessmentPage extends StatefulWidget {
-  const AssessmentPage({Key? key}) : super(key: key);
+  const AssessmentPage({super.key});
 
   @override
   _AssessmentPageState createState() => _AssessmentPageState();

@@ -15,7 +15,7 @@ class CloudGridPickerWidget extends StatefulWidget {
   final bool multi;
 
   const CloudGridPickerWidget(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.items,
       required this.onConfirm,
@@ -24,11 +24,10 @@ class CloudGridPickerWidget extends StatefulWidget {
       this.mainAxisSpacing,
       this.crossAxisSpacing,
       this.childAspectRatio = 72 / 28})
-      : multi = false,
-        super(key: key);
+      : multi = false;
 
   const CloudGridPickerWidget.multi(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.items,
       required this.onConfirm,
@@ -37,8 +36,7 @@ class CloudGridPickerWidget extends StatefulWidget {
       this.mainAxisSpacing,
       this.crossAxisSpacing,
       this.childAspectRatio = 72 / 28})
-      : multi = true,
-        super(key: key);
+      : multi = true;
 
   @override
   _CloudGridPickerWidgetState createState() => _CloudGridPickerWidgetState();

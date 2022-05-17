@@ -5,7 +5,7 @@ import '../../../widget/alert.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class AboutPage extends StatefulWidget {
-  const AboutPage({Key? key}) : super(key: key);
+  const AboutPage({super.key});
 
   @override
   State<AboutPage> createState() => _AboutPageState();

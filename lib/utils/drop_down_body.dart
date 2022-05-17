@@ -7,14 +7,13 @@ class DropDown extends StatefulWidget {
   final Widget widget;
   final bool horizontalLine;
   const DropDown(
-      {Key? key,
+      {super.key,
 
       ///是否需要水平线   false///不需要 true////需要
       this.horizontalLine = false,
       required this.text,
       required this.title,
-      required this.widget})
-      : super(key: key);
+      required this.widget});
 
   @override
   State<DropDown> createState() => _DropDownState();

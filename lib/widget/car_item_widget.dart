@@ -16,7 +16,7 @@ class CarItemWidget extends StatelessWidget {
   final EdgeInsetsGeometry widgetPadding;
 
   const CarItemWidget({
-    Key? key,
+    super.key,
     required this.name,
     required this.price,
     required this.time,
@@ -24,7 +24,7 @@ class CarItemWidget extends StatelessWidget {
     this.standard,
     required this.url,
     required this.widgetPadding,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -48,13 +48,11 @@ class CloudImagePreview extends StatefulWidget {
   final String? path;
   final String? tag;
 
-  const CloudImagePreview.file({Key? key, required this.file, this.tag})
-      : path = null,
-        super(key: key);
+  const CloudImagePreview.file({super.key, required this.file, this.tag})
+      : path = null;
 
-  const CloudImagePreview.path({Key? key, required this.path, this.tag})
-      : file = null,
-        super(key: key);
+  const CloudImagePreview.path({super.key, required this.path, this.tag})
+      : file = null;
 
   @override
   _CloudImagePreviewState createState() => _CloudImagePreviewState();

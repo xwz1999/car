@@ -20,9 +20,9 @@ class FillEvainfoPage extends StatefulWidget {
   final PublishCarInfo publishCarInfo;
 
   const FillEvainfoPage({
-    Key? key,
+    super.key,
     required this.publishCarInfo,
-  }) : super(key: key);
+  });
 
   @override
   State<FillEvainfoPage> createState() => _FillEvainfoPageState();

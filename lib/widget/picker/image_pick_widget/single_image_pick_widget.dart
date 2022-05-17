@@ -16,14 +16,13 @@ class SingleImagePickWidget extends StatefulWidget {
   final Function(List<File> files) onChanged;
   final Widget imageView;
   final List<File>? files;
-  const SingleImagePickWidget({
-    Key? key,
-    this.width,
-    this.height,
-    required this.files,
-    required this.onChanged,
-    required this.imageView,
-  }) : super(key: key);
+  const SingleImagePickWidget(
+      {super.key,
+      this.width,
+      this.height,
+        required this.files,
+      required this.onChanged,
+        required this.imageView,});
 
   @override
   _SingleImagePickWidgetState createState() => _SingleImagePickWidgetState();
@@ -32,10 +31,11 @@ class SingleImagePickWidget extends StatefulWidget {
 class _SingleImagePickWidgetState extends State<SingleImagePickWidget> {
   late List<File> _files;
 
+
   @override
   void initState() {
     super.initState();
-    widget.files == null ? _files = [] : _files = widget.files!;
+    widget.files==null?_files=[]:_files=widget.files!;
   }
 
   // List<File> get _files{
@@ -58,22 +58,23 @@ class _SingleImagePickWidgetState extends State<SingleImagePickWidget> {
         widget.onChanged(_files);
         setState(() {});
       },
-      child: _files.isEmpty
-          ? DottedBorder(
-              color: Colors.black.withOpacity(0.25),
-              borderType: BorderType.RRect,
-              strokeWidth: 2.w,
-              dashPattern: const [6, 3],
-              radius: Radius.circular(8.w),
-              child: SizedBox(
-                width: widget.width != null ? widget.width! - 10.w : 160.w,
-                height: widget.height != null ? widget.height! - 10.w : 160.w,
-                child: widget.imageView,
-              ),
-            ).material(color: Colors.transparent)
-          : showImage(_files.first),
+      child: _files.isEmpty? DottedBorder(
+        color: Colors.black.withOpacity(0.25),
+        borderType: BorderType.RRect,
+        strokeWidth: 2.w,
+        dashPattern: const [6, 3],
+        radius: Radius.circular(8.w),
+        child: SizedBox(
+          width: widget.width!=null?widget.width!-10.w:160.w,
+          height: widget.height!=null?widget.height!-10.w:160.w,
+          child: widget.imageView,
+        ),
+      ).material(color: Colors.transparent):showImage(_files.first),
     );
   }
+
+
+
 
   Widget showImage(File file) {
     return Stack(children: [
