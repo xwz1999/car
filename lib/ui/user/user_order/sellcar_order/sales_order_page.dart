@@ -40,6 +40,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   int _page = 1;
   final int _size = 10;
   bool _onLoad = true;
+
   @override
   void initState() {
     super.initState();
@@ -400,7 +401,9 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text:(num.parse(model.amount)/10000).toString(),
+                                          text:
+                                              (num.parse(model.amount) / 10000)
+                                                  .toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2),
@@ -425,7 +428,9 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: (num.parse(model.deposit)/10000).toString(), //item['pice'],
+                                          text:
+                                              (num.parse(model.deposit) / 10000)
+                                                  .toString(), //item['pice'],
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2
@@ -492,7 +497,9 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: (num.parse(model.amount)/10000).toString(),
+                                          text:
+                                              (num.parse(model.amount) / 10000)
+                                                  .toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2),
@@ -516,7 +523,9 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: (num.parse(model.deposit)/10000).toString(),
+                                          text:
+                                              (num.parse(model.deposit) / 10000)
+                                                  .toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2
@@ -550,7 +559,9 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text:(num.parse(model.amount)/10000).toString(),
+                                          text:
+                                              (num.parse(model.amount) / 10000)
+                                                  .toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2),
@@ -709,43 +720,26 @@ _getTextStatus(int num) {
   switch (num) {
     case 1:
       return '需付定金';
-      // ignore: dead_code
-      break;
     case 2:
       return '已付定金';
-      // ignore: dead_code
-      break;
-
+    case 10:
+      return '待检测';
     case 11:
       return '已付定金';
-      // ignore: dead_code
-      break;
     case 20:
       return '需付首付';
-      // ignore: dead_code
-      break;
     case 21:
       return '已付首付';
-      // ignore: dead_code
-      break;
 
     case 31:
       return '已付首付';
-      // ignore: dead_code
-      break;
 
     case 40:
       return '需付尾款';
-      // ignore: dead_code
-      break;
     case 41:
       return '已付尾款';
-      // ignore: dead_code
-      break;
     case 50:
       return '已付尾款';
-      // ignore: dead_code
-      break;
   }
 }
 
