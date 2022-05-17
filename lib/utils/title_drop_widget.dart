@@ -107,7 +107,6 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
     super.initState();
     _contentFocusNode = FocusNode();
     _editingController = TextEditingController();
-    widget.bottomHeight;
     //展开隐藏控制器，动画初始化
     _controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200));
@@ -385,7 +384,6 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
   }
 
   Widget getBottomIndex() {
-    widget.bottomHeight;
 
     return Container(
       margin: EdgeInsets.only(top: widget.height),

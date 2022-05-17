@@ -58,29 +58,23 @@ class _SaleViewState extends State<SaleView>
           setState(() {});
         },
         slivers: [
-          SliverToBoxAdapter(
-            child: 80.hb,
-          ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
-            sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-              var model = widget.saleList[index];
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 96.w),
-                child: _getCard(
-                  model.status,
-                  '出售合同（${model.contractSn}）',
-                  model.modelName,
-                  model.customerName,
-                  model.status != 1
-                      ? '/'
-                      : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
-                          format: 'yyyy-MM-dd'),
-                ),
-              );
-            }, childCount: widget.saleList.length)),
-          ),
+          SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                var model = widget.saleList[index];
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+                  child: _getCard(
+                    model.status,
+                    '出售合同（${model.contractSn}）',
+                    model.modelName,
+                    model.customerName,
+                    model.status != 1
+                        ? '/'
+                        : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
+                        format: 'yyyy-MM-dd'),
+                  ),
+                );
+              }, childCount: widget.saleList.length))
         ]);
   }
 

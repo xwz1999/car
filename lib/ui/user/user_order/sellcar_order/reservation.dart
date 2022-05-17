@@ -216,7 +216,7 @@ class _ReservationState extends State<Reservation> {
                     _getText('合同编号',
                         (_consignmentInfoList.contract.contract).toString()),
                     36.hb,
-                    _getText('签订时间', '——')
+                    _getText('签订时间', DateUtil.formatDateMs((_consignmentInfoList.contract.signAt.toInt())*1000,format: DateFormats.zh_y_mo_d))
                   ],
                 ),
               )

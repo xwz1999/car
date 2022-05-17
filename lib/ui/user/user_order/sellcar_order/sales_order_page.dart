@@ -364,7 +364,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                           Padding(
                               padding: EdgeInsets.only(right: 16.w),
                               child: getText(
-                                '过户${model.amount}次',
+                                '过户${0}次',
                                 DateUtil.formatDateMs(
                                     model.licensingDate.toInt() * 1000,
                                     format: 'yyyy年MM月'),
@@ -400,7 +400,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: model.amount,
+                                          text:(num.parse(model.amount)/10000).toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2),
@@ -425,7 +425,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: model.deposit, //item['pice'],
+                                          text: (num.parse(model.deposit)/10000).toString(), //item['pice'],
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2
@@ -492,7 +492,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: model.balancePayment,
+                                          text: (num.parse(model.amount)/10000).toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2),
@@ -516,7 +516,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: model.deposit,
+                                          text: (num.parse(model.deposit)/10000).toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2
@@ -550,7 +550,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                   SizedBox(
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: model.balancePayment,
+                                          text:(num.parse(model.amount)/10000).toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2),

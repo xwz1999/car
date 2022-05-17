@@ -191,7 +191,7 @@ class _DirectSalePageState extends State<DirectSalePage>
                         )
                       : SliverPadding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 24.w, vertical: 20.w),
+                              horizontal: 24.w,),
                           sliver: SliverList(
                               delegate:
                                   SliverChildBuilderDelegate((context, index) {
