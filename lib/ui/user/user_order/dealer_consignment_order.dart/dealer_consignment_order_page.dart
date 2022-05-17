@@ -5,7 +5,6 @@ import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/dealer_consignment_order.dart/dealer_consignment_rejected.dart';
 import 'package:cloud_car/ui/user/user_order/dealer_consignment_order.dart/dealer_consignment_signed.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
@@ -68,6 +67,8 @@ class _DealerConsignmentOrderPageState
     ];
   }
 
+  String text = '全部';
+
   @override
   void dispose() {
     _easyRefreshController.dispose();
@@ -90,6 +91,7 @@ class _DealerConsignmentOrderPageState
             child: CarWidget(
                 items: const ['全部', '审核中', '已驳回', '在售', '已售', '交易取消'],
                 callBack: (name) {
+                  text = name;
                   setState(() {});
                 }),
           ),
@@ -302,39 +304,41 @@ class _DealerConsignmentOrderPageState
   }
 
   getCar(ListsModel model) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-      child: GestureDetector(
-        onTap: () {
-          switch (model.status) {
-            case 3:
-              Get.to(() => DealerConsignmentSigned(
-                    id: model.id,
-                    statusNum: _getStatusNum(model.status),
-                    stat: '审核中',
-                  ));
-              break;
-            case 1:
-              Get.to(() => DealerConsignmentSigned(
-                    id: model.id,
-                    statusNum: _getStatusNum(model.status),
-                    stat: '已驳回',
-                  ));
-              break;
-            case 4:
-              Get.to(() => DealerConsignmentSigned(
-                    id: model.id,
-                    statusNum: _getStatusNum(model.status),
-                    stat: '在售',
-                  ));
-              break;
-            case 5:
-              Get.to(() => DealerConsignmentSigned(
-                    id: model.id,
-                    statusNum: _getStatusNum(model.status),
-                    stat: '已售',
-                  ));
-              break;
+    return Offstage(
+        offstage: text == '全部' ? false : _getStatusText(model) != text,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+          child: GestureDetector(
+            onTap: () {
+              switch (model.status) {
+                case 3:
+                  Get.to(() => DealerConsignmentSigned(
+                        id: model.id,
+                        statusNum: _getStatusNum(model.status),
+                        stat: '审核中',
+                      ));
+                  break;
+                case 1:
+                  Get.to(() => DealerConsignmentSigned(
+                        id: model.id,
+                        statusNum: _getStatusNum(model.status),
+                        stat: '已驳回',
+                      ));
+                  break;
+                case 4:
+                  Get.to(() => DealerConsignmentSigned(
+                        id: model.id,
+                        statusNum: _getStatusNum(model.status),
+                        stat: '在售',
+                      ));
+                  break;
+                case 5:
+                  Get.to(() => DealerConsignmentSigned(
+                        id: model.id,
+                        statusNum: _getStatusNum(model.status),
+                        stat: '已售',
+                      ));
+                  break;
             case 0:
               Get.to(() => const DealerConsignmentRejected());
               break;
@@ -377,27 +381,27 @@ class _DealerConsignmentOrderPageState
                         children: [
                           Text(model.modeName,
                               style: TextStyle(
-                                  fontSize: BaseStyle.fontSize28,
-                                  color: BaseStyle.color111111)),
-                          32.hb,
-                          Padding(
-                            padding: EdgeInsets.only(right: 16.w),
-                            child: getText(
-                                DateUtil.formatDateMs(
-                                    model.licensingDate.toInt() * 1000,
-                                    format: 'yyyy年MM月'),
-                                '${model.mileage}万公里'),
-                          )
-                        ],
-                      ),
+                                      fontSize: BaseStyle.fontSize28,
+                                      color: BaseStyle.color111111)),
+                              32.hb,
+                              Padding(
+                                padding: EdgeInsets.only(right: 16.w),
+                                child: getText(
+                                    DateUtil.formatDateMs(
+                                        model.licensingDate.toInt() * 1000,
+                                        format: 'yyyy年MM月'),
+                                    '${model.mileage}万公里'),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
+                    32.hb,
                   ],
-                ),
-                32.hb,
-              ],
-            )),
-      ),
-    );
+                )),
+          ),
+        ));
   }
 
   getText(String time, String distance) {

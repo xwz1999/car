@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -6,8 +7,10 @@ import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 class AlsocarOrder extends StatefulWidget {
+  final int orderId;
   final bool bl;
-  const AlsocarOrder({super.key, required this.bl});
+
+  const AlsocarOrder({super.key, required this.bl, required this.orderId});
 
   @override
   State<AlsocarOrder> createState() => _AlsocarOrderState();
@@ -198,7 +201,9 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
                         padding: EdgeInsets.only(
                             top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            var zhi =
+                                await OrderFunc.getCarFinal(widget.orderId);
                             //Get.to(() => const RentaicarOrderData());
                             BotToast.showText(text: '确认成功');
                           },

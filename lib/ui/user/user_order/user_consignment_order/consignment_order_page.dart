@@ -4,7 +4,6 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_rejected.dart';
-
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_signed.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -66,6 +65,8 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
     ];
   }
 
+  String text = '全部';
+
   @override
   void dispose() {
     _easyRefreshController.dispose();
@@ -97,6 +98,7 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
                   '交易取消'
                 ],
                 callBack: (name) {
+                  text = name;
                   setState(() {});
                 }),
           ),
@@ -243,69 +245,73 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
   getCar(ListsModel model) {
     return Offstage(
         offstage: model.status == 6 || model.status == 7,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-          child: GestureDetector(
-            onTap: () {
-              switch (model.status) {
-                case 1:
-                  Get.to(() => ConsignmentSigned(
-                        stat: '待签订',
-                        statusNum: _getStatusNum(model.status),
-                        id: model.id,
-                      ));
-                  break;
-                case 2:
-                  Get.to(() => ConsignmentSigned(
-                        id: model.id,
-                        stat: '待发布',
-                        statusNum: _getStatusNum(model.status),
-                      ));
-                  break;
-                case 3:
-                  // ignore: unrelated_type_equality_checks
-                  model.auditStatus == '0'
-                      ? Get.to(() => ConsignmentSigned(
-                            id: model.id,
-                            stat: '审核中',
+        child: Offstage(
+            offstage: text == '全部' ? false : _getStatusText(model) != text,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+              child: GestureDetector(
+                onTap: () {
+                  switch (model.status) {
+                    case 1:
+                      Get.to(() => ConsignmentSigned(
+                            stat: '待签订',
                             statusNum: _getStatusNum(model.status),
-                          ))
-                      : Get.to(() => ConsignmentSigned(
                             id: model.id,
-                            stat: '已驳回',
+                          ));
+                      break;
+                    case 2:
+                      Get.to(() => ConsignmentSigned(
+                            id: model.id,
+                            stat: '待发布',
                             statusNum: _getStatusNum(model.status),
                           ));
+                      break;
+                    case 3:
+                      // ignore: unrelated_type_equality_checks
+                      model.auditStatus == '0'
+                          ? Get.to(() => ConsignmentSigned(
+                                id: model.id,
+                                stat: '审核中',
+                                statusNum: _getStatusNum(model.status),
+                              ))
+                          : Get.to(() => ConsignmentSigned(
+                                id: model.id,
+                                stat: '已驳回',
+                                statusNum: _getStatusNum(model.status),
+                              ));
 
-                  break;
-                // case 4:
-                //   Get.to(() => const ConsignmentRejected());
-                //   break;
-                case 4:
-                  Get.to(() => ConsignmentSigned(
-                        id: model.id,
-                        stat: '在售',
-                        statusNum: _getStatusNum(model.status),
-                      ));
+                      break;
+                    // case 4:
+                    //   Get.to(() => const ConsignmentRejected());
+                    //   break;
+                    case 4:
+                      Get.to(() => ConsignmentSigned(
+                            id: model.id,
+                            stat: '在售',
+                            statusNum: _getStatusNum(model.status),
+                          ));
                   break;
                 case 5:
                   Get.to(() => ConsignmentSigned(
                         id: model.id,
                         stat: '已售',
                         statusNum: _getStatusNum(model.status),
-                      ));
-                  break;
-                case 7:
-                  Get.to(() => ConsignmentSigned(
-                        id: model.id,
-                        stat: '成交',
-                        statusNum: _getStatusNum(model.status),
-                      ));
-                  break;
-                case 0:
-                  Get.to(() => const ConsignmentRejected());
-                  break;
-              }
-            },
+                          ));
+                      break;
+                    case 7:
+                      Get.to(() => ConsignmentSigned(
+                            id: model.id,
+                            stat: '成交',
+                            statusNum: _getStatusNum(model.status),
+                          ));
+                      break;
+                    case 0:
+                      Get.to(() => ConsignmentRejected(
+                            orderId: model.id,
+                          ));
+                      break;
+                  }
+                },
             child: Container(
                 padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
                 decoration: BoxDecoration(
@@ -457,37 +463,37 @@ class _ConsignmentOrderPageState extends State<ConsignmentOrderPage> {
                         //       )
                         //     : Row(
                         //         mainAxisAlignment: MainAxisAlignment.end,
-                        //         children: [
-                        //           SizedBox(
-                        //             child: Text(
-                        //               '车辆总价',
-                        //               style: TextStyle(
-                        //                   fontSize: BaseStyle.fontSize28,
-                        //                   color: BaseStyle.color999999),
-                        //             ),
-                        //           ),
-                        //           16.wb,
-                        //           SizedBox(
-                        //             child: Text.rich(TextSpan(children: [
-                        //               TextSpan(
-                        //                   text: '30.00',
-                        //                   style: Theme.of(context)
-                        //                       .textTheme
-                        //                       .subtitle2),
-                        //               TextSpan(
-                        //                   text: '万',
-                        //                   style: Theme.of(context)
-                        //                       .textTheme
-                        //                       .subtitle2),
-                        //             ])),
-                        //           ),
-                        //         ],
-                        // )
-                        ),
-                  ],
-                )),
-          ),
-        ));
+                            //         children: [
+                            //           SizedBox(
+                            //             child: Text(
+                            //               '车辆总价',
+                            //               style: TextStyle(
+                            //                   fontSize: BaseStyle.fontSize28,
+                            //                   color: BaseStyle.color999999),
+                            //             ),
+                            //           ),
+                            //           16.wb,
+                            //           SizedBox(
+                            //             child: Text.rich(TextSpan(children: [
+                            //               TextSpan(
+                            //                   text: '30.00',
+                            //                   style: Theme.of(context)
+                            //                       .textTheme
+                            //                       .subtitle2),
+                            //               TextSpan(
+                            //                   text: '万',
+                            //                   style: Theme.of(context)
+                            //                       .textTheme
+                            //                       .subtitle2),
+                            //             ])),
+                            //           ),
+                            //         ],
+                            // )
+                            ),
+                      ],
+                    )),
+              ),
+            )));
   }
 
   getText(String time, String distance) {

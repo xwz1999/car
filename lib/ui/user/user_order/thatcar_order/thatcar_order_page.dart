@@ -71,7 +71,9 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
       'buttomname': '',
     },
   ];
+  String text = '全部';
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
+
   @override
   void initState() {
     super.initState();
@@ -124,6 +126,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                   '已完成',
                 ],
                 callBack: (name) {
+                  text = name;
                   setState(() {});
                 },
               ),
@@ -150,38 +153,40 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
 
   getCar(item) {
     late bool bl = false;
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-        child: GestureDetector(
-          onTap: () {
-            switch (item['judgename']) {
-              case '待支付':
-                Get.to(() => bl == true
-                    ? const ThatcarUnpaid(
-                        stat: '待支付',
-                      )
-                    : const UnpaidOther(
-                        stat: '待支付',
-                      ));
-                break;
-              case '待交车':
-                Get.to(() => bl
-                    ? const ThatcarUnpaid(
-                        stat: '待交车',
-                      )
-                    : const UnpaidOther(
-                        stat: '待交车',
-                      ));
-                break;
-              case '已完成':
-                Get.to(() => bl
-                    ? const ThatcarComplete(
-                        stat: '已完成',
-                      )
-                    : const Complete0ther(
-                        stat: '已完成',
-                      ));
-                break;
+    return Offstage(
+        offstage: text == '全部' ? false : item['judgename'] != text,
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+            child: GestureDetector(
+              onTap: () {
+                switch (item['judgename']) {
+                  case '待支付':
+                    Get.to(() => bl == true
+                        ? const ThatcarUnpaid(
+                            stat: '待支付',
+                          )
+                        : const UnpaidOther(
+                            stat: '待支付',
+                          ));
+                    break;
+                  case '待交车':
+                    Get.to(() => bl
+                        ? const ThatcarUnpaid(
+                            stat: '待交车',
+                          )
+                        : const UnpaidOther(
+                            stat: '待交车',
+                          ));
+                    break;
+                  case '已完成':
+                    Get.to(() => bl
+                        ? const ThatcarComplete(
+                            stat: '已完成',
+                          )
+                        : const Complete0ther(
+                            stat: '已完成',
+                          ));
+                    break;
               case '已退款':
                 Get.to(() => bl
                     ? const ThatcarComplete(
@@ -299,17 +304,17 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                                   color: item['judgename'] == '已取消'
                                       ? const Color(0xFF333333)
                                       : const Color(0xFFFF3B02),
-                                  fontSize: BaseStyle.fontSize28,
-                                  fontWeight: FontWeight.bold)),
-                        ])),
-                      ),
-                    ],
-                  ),
-                ],
-              ))
-            ]),
-          ),
-        ));
+                                          fontSize: BaseStyle.fontSize28,
+                                          fontWeight: FontWeight.bold)),
+                                ])),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ))
+                    ]),
+              ),
+            )));
   }
 
   getText(String num, String time, String distance, String conditions) {

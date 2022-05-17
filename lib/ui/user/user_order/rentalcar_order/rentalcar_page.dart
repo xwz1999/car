@@ -23,11 +23,15 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [];
   bool _onLoad = true;
+
 //List<> _RentalCarList=[];
   int _page = 1;
   final int _size = 10;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
+
   //ScreenControl screenControl = ScreenControl();
+  String text = '全部';
+
   List carList = [
     {
       'judge': false,
@@ -121,6 +125,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                 '已取消',
               ],
               callBack: (name) {
+                text = name;
                 setState(() {});
               },
             ),
@@ -149,44 +154,48 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   }
 
   getCar(item) {
-    return Container(
-        color: bodyColor,
-        child: GestureDetector(
-          onTap: () {
-            switch (item['judgename']) {
-              case '进行中':
-                Get.to(() => const RentalcarOrder());
-                break;
-              case '已完成':
-                Get.to(() => const AlsocarOrder(
-                      bl: false,
-                    ));
-                break;
-              case '已取消':
-                Get.to(() => const CancelOrder());
-                break;
-            }
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
-            margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 8.w),
-            decoration: BoxDecoration(
-                color: kForeGroundColor,
-                borderRadius: BorderRadius.circular(16.w)),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: Text(
-                  item['judgename'],
-                  style: TextStyle(
-                      color: item['judgename'] != '已取消'
-                          ? const Color(0xFF027AFF)
-                          : const Color(0xFF666666),
-                      fontSize: BaseStyle.fontSize28),
-                ),
-              ),
-              // 24.hb,
+    return Offstage(
+        offstage: text == '全部' ? false : item['judgename'] != text,
+        child: Container(
+            color: bodyColor,
+            child: GestureDetector(
+              onTap: () {
+                switch (item['judgename']) {
+                  case '进行中':
+                    Get.to(() => const RentalcarOrder());
+                    break;
+                  case '已完成':
+                    Get.to(() => const AlsocarOrder(
+                          bl: false,
+                          orderId: 1,
+                        ));
+                    break;
+                  case '已取消':
+                    Get.to(() => const CancelOrder());
+                    break;
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+                margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 8.w),
+                decoration: BoxDecoration(
+                    color: kForeGroundColor,
+                    borderRadius: BorderRadius.circular(16.w)),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.w),
+                        child: Text(
+                          item['judgename'],
+                          style: TextStyle(
+                              color: item['judgename'] != '已取消'
+                                  ? const Color(0xFF027AFF)
+                                  : const Color(0xFF666666),
+                              fontSize: BaseStyle.fontSize28),
+                        ),
+                      ),
+                      // 24.hb,
               Row(
                 children: [
                   SizedBox(
@@ -278,17 +287,17 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                                       ? const Color(0xFF333333)
                                       : const Color(0xFFFF3B02),
                                   fontSize: BaseStyle.fontSize28,
-                                  fontWeight: FontWeight.bold)),
-                        ])),
-                      ),
-                    ],
-                  ),
-                  32.hb,
-                ],
-              ))
-            ]),
-          ),
-        ));
+                                          fontWeight: FontWeight.bold)),
+                                ])),
+                              ),
+                            ],
+                          ),
+                          32.hb,
+                        ],
+                      ))
+                    ]),
+              ),
+            )));
   }
 
   getText(String num, String time, String distance) {

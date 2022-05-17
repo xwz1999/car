@@ -71,6 +71,8 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
     ];
   }
 
+  String text = '全部';
+
   @override
   void dispose() {
     _easyRefreshController.dispose();
@@ -103,6 +105,8 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                   '交易取消'
                 ],
                 callBack: (name) {
+                  text = name;
+                  print(name);
                   setState(() {});
                 },
               )),
@@ -156,18 +160,20 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   }
 
   getSales(SalelistsModel model) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-      child: GestureDetector(
-        onTap: () {
-          switch (_getText(model.status)) {
-            // case 0:
-            //   ///交易取消
-            //   Get.to(() => const TransactionCancelled());
-            //   break;
-            // case 1:
-            //   ///待预定
-            //   Get.to(() => const Reservation(
+    return Offstage(
+        offstage: text == '全部' ? false : _getText(model.status) != text,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+          child: GestureDetector(
+            onTap: () {
+              switch (_getText(model.status)) {
+                // case 0:
+                //   ///交易取消
+                //   Get.to(() => const TransactionCancelled());
+                //   break;
+                // case 1:
+                //   ///待预定
+                //   Get.to(() => const Reservation(
             //         stat: '待预定',
             //         judge: false,
             //       ));
@@ -556,17 +562,17 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                                               .subtitle2),
                                       TextSpan(
                                           text: '万',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2),
-                                    ])),
-                                  ),
-                                ],
-                              )),
-              ],
-            )),
-      ),
-    );
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2),
+                                        ])),
+                                      ),
+                                    ],
+                                  )),
+                  ],
+                )),
+          ),
+        ));
   }
 
   getText(String num, String time, String distance, int conditions) {

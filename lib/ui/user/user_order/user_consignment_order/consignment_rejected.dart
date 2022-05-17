@@ -1,17 +1,39 @@
+import 'package:cloud_car/model/order/individual_model.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/headers.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class ConsignmentRejected extends StatefulWidget {
-  const ConsignmentRejected({super.key});
+  final int orderId;
+
+  const ConsignmentRejected({super.key, required this.orderId});
 
   @override
   State<ConsignmentRejected> createState() => _ConsignmentRejectedState();
 }
 
 class _ConsignmentRejectedState extends State<ConsignmentRejected> {
+  late IndividualModel _individualList;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+      setState(() {});
+    });
+  }
+
+  _refresh() async {
+    _individualList = (await OrderFunc.getConsignmentInfo(widget.orderId))!;
+    // _onLoad = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +54,7 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
       body: ListView(children: [
         16.hb,
         Container(
+          padding: EdgeInsets.only(top: 24.w),
           margin: EdgeInsets.symmetric(horizontal: 32.w),
           height: 120.w,
           color: Colors.white,
@@ -96,9 +119,8 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
                   SizedBox(
                     width: 196.w,
                     height: 150.w,
-                    child: Image.asset(
-                      Assets.images.carBanner.path,
-                      fit: BoxFit.fill,
+                    child: CloudImageNetworkWidget.car(
+                      urls: [_individualList.car.mainPhoto],
                     ),
                   ),
                   20.wb,
@@ -107,14 +129,19 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text('奥迪Q3 2020款 35 TFSI 进取型SUV',
+                        Text(_individualList.car.modelName,
                             style: TextStyle(
                                 fontSize: BaseStyle.fontSize28,
                                 color: BaseStyle.color111111)),
                         32.hb,
                         Padding(
                           padding: EdgeInsets.only(right: 16.w),
-                          child: getText('2020年10月', '20.43万公里'),
+                          child: getText(
+                              DateUtil.formatDateMs(
+                                  _individualList.car.licensingDate.toInt() *
+                                      1000,
+                                  format: 'yyyy年MM'),
+                              '${_individualList.car.mileage}万公里'),
                         )
                       ],
                     ),
