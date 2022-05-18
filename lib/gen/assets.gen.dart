@@ -718,7 +718,7 @@ class Assets {
 }
 
 class AssetGenImage extends AssetImage {
-  const AssetGenImage(super.assetName);
+  const AssetGenImage(String assetName) : super(assetName);
 
   Image image({
     Key? key,

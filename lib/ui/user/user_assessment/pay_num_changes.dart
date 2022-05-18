@@ -22,20 +22,15 @@ class _PayChangesPageState extends State<PayChangesPage> {
   // ignore: non_constant_identifier_names
   List<HistoryModel> payNumList = [];
   List<List<HistoryModel>> _sortList = [];
-
   List<bool> _foldStatus = [];
-
   //List<String> timeList = [];
   //bool num = true;
   //late int num = 0;
   // List<int> num = [];
-
   // List<String> timeList = [];
-
   // late int timeNum = 0;
   // List<String> timeList1 = [];
   // List<int> number1 = [];
-
   void sortByDate() {
     if (payNumList.isEmpty) {
       return;
@@ -240,6 +235,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
   getSc(HistoryModel model) {
     switch (model.type) {
       case 2:
+
       case 3:
         return GestureDetector(
           onTap: () {

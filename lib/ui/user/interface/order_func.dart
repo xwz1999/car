@@ -2,6 +2,7 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/order/Sale_info.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/model/order/order_dealer_model.dart';
+import 'package:cloud_car/model/order/ordercount_model.dart';
 import 'package:cloud_car/model/order/publish_car_model.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/model/user/salelists_model.dart';
@@ -9,6 +10,8 @@ import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+
+import '../../../model/order/callcarlist_model.dart';
 
 class OrderFunc {
   ///独立合伙人签订合同
@@ -240,7 +243,7 @@ class OrderFunc {
       'page': page,
       'size': size,
     });
-    if (baseList.code != 0) {
+    if (baseList.code == 0) {
       CloudToast.show(baseList.msg);
       return [];
     } else {
@@ -262,7 +265,7 @@ class OrderFunc {
     }
   }
 
-  //上传检车报告
+  ///上传检车报告
   static Future<bool> getTestrepord(
     int orderId,
     String report,
@@ -314,6 +317,40 @@ class OrderFunc {
     } else {
       CloudToast.show(res.msg);
       return false;
+    }
+  }
+
+  ///获取客户统计
+  static Future<OrdercountModel?> getOrderCount() async {
+    BaseModel model = await apiClient.request(
+      API.order.orderCount,
+    );
+
+    if (model.code != 0) {
+      CloudToast.show(model.msg);
+      return null;
+    } else {
+      if (model.data != null) {
+        return OrdercountModel.fromJson(model.data);
+      } else {
+        return null;
+      }
+    }
+  }
+
+  ///叫车订单列表
+  static Future<List<CallcarlistModel>> getCallCar(
+      {required int page, int size = 10}) async {
+    BaseListModel res = await apiClient
+        .requestList(API.order.callCar, data: {'page': page, 'size': size});
+
+    if (res.code != 0) {
+      CloudToast.show(res.msg);
+      return [];
+    } else {
+      return res.nullSafetyList
+          .map((e) => CallcarlistModel.fromJson(e))
+          .toList();
     }
   }
 

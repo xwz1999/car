@@ -181,6 +181,12 @@ class _Order {
 
   ///售车订单详情
   get saleInfo => '/order/sale/info';
+
+  ///订单统计
+  get orderCount => '/order/data/count';
+
+  ///叫车订单
+  get callCar => '/order/call/car/lists';
 }
 
 class _Poster {
