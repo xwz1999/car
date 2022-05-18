@@ -254,35 +254,22 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                   ));
               break;
             case '申请检测':
+              Get.to(() => Reservation(
+                    statusNum: _getStatusNum(model.status),
+                    status: _getText(model.status),
+                    judge: true,
+                    orderId: model.id,
+                  ));
+              break;
             case '上传检测报告':
               Get.to(() => Reservation(
                     statusNum: _getStatusNum(model.status),
                     status: _getText(model.status),
-                    judge: true,
+                    judge: false,
                     orderId: model.id,
                   ));
               break;
-            case '支付首付':
-              switch (_getTextStatus(model.status)) {
-                case '需付首付':
-                  Get.to(() => Reservation(
-                        statusNum: _getStatusNum(model.status),
-                        status: _getText(model.status),
-                        judge: false,
-                        orderId: model.id,
-                      ));
-                  break;
-                case '已付首付':
-                  Get.to(() => Reservation(
-                        statusNum: _getStatusNum(model.status),
-                        status: _getText(model.status),
-                        judge: true,
-                        orderId: model.id,
-                      ));
-                  break;
-              }
-              break;
-            case '待过户':
+            case '首付审核':
               Get.to(() => Reservation(
                     statusNum: _getStatusNum(model.status),
                     status: _getText(model.status),
@@ -290,26 +277,31 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                     orderId: model.id,
                   ));
               break;
-            case '支付尾款':
-              switch (_getTextStatus(model.status)) {
-                case '需付尾款':
+            case '首付审核通过':
+            case '过户':
+              Get.to(() => Reservation(
+                    statusNum: _getStatusNum(model.status),
+                    status: _getText(model.status),
+                    judge: true,
+                    orderId: model.id,
+                  ));
+              break;
+                case '过户完成':
                   Get.to(() => Reservation(
-                        statusNum: _getStatusNum(5),
+                        statusNum: _getStatusNum(model.status),
                         orderId: model.id,
                         judge: false,
                         status: _getText(model.status),
                       ));
                   break;
-                case '已付尾款':
+                case '尾款审核通过':
                   Get.to(() => Reservation(
-                        statusNum: _getStatusNum(5),
+                        statusNum: _getStatusNum(model.status),
                         status: _getText(model.status),
                         judge: true,
                         orderId: model.id,
                       ));
                   break;
-              }
-              break;
             case '交易完成':
               Get.to(() => MakeDealData(
                     id: model.id,

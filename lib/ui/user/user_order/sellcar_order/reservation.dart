@@ -68,7 +68,6 @@ class _ReservationState extends State<Reservation> {
           certificate: '', guaranteeSlip: '', invoice: '', vehicleLicense: ''));
 
   @override
-  @override
   void initState() {
     super.initState();
 
@@ -282,6 +281,7 @@ class _ReservationState extends State<Reservation> {
               );
         break;
       case '申请检测':
+      case '首付审核':
       case '上传检测报告':
         return Column(
           children: [
@@ -326,7 +326,7 @@ class _ReservationState extends State<Reservation> {
           ],
         );
         break;
-      case '支付首付':
+      case '首付审核通过':
         return !judge
             ? Column(
                 children: [
@@ -393,7 +393,7 @@ class _ReservationState extends State<Reservation> {
               )
             : getFirst();
         break;
-      case '待过户':
+      case '过户':
         return Column(
           children: [
             getContainer(
@@ -481,7 +481,8 @@ class _ReservationState extends State<Reservation> {
           ],
         );
         break;
-      case '支付尾款':
+      case '过户完成':
+      case '尾款审核通过':
         return !judge
             ? Column(
                 children: [
@@ -1558,8 +1559,6 @@ class _ReservationState extends State<Reservation> {
               );
         break;
 
-      case '上传检测报告':
-        return const SizedBox();
       case '申请检测':
         return Container(
             width: double.infinity,
@@ -1590,7 +1589,9 @@ class _ReservationState extends State<Reservation> {
               ),
             ));
         break;
-      case '支付首付':
+      case '上传检测报告':
+      case '首付审核':
+      case '首付审核通过':
         return !judge
             ? Container(
                 width: double.infinity,
@@ -1624,7 +1625,7 @@ class _ReservationState extends State<Reservation> {
               )
             : const SizedBox();
         break;
-      case '待过户':
+      case '过户':
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -1654,69 +1655,71 @@ class _ReservationState extends State<Reservation> {
               ),
             ));
         break;
-      case '支付尾款':
-        if (!judge) {
-          return Container(
+
+      case '过户完成':
+        return Container(
+          width: double.infinity,
+          color: kForeGroundColor,
+          padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
+          margin: EdgeInsets.only(top: 16.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                child: Text(
+                  '等待支付尾款',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+              ),
+              24.wb,
+              Text.rich(TextSpan(children: [
+                TextSpan(
+                    text: '¥',
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize28,
+                        color: const Color(0xFFFF3B02))),
+                TextSpan(
+                    text: _consignmentInfoList.contract.balancePayment,
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize32,
+                        color: const Color(0xFFFF3B02)))
+              ]))
+            ],
+          ),
+        );
+      case '交易完成':
+        return Container();
+      case '尾款审核通过':
+        return Container(
             width: double.infinity,
             color: kForeGroundColor,
-            padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
+            padding: EdgeInsets.only(
+                top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
             margin: EdgeInsets.only(top: 16.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  child: Text(
-                    '等待支付尾款',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                ),
-                24.wb,
-                Text.rich(TextSpan(children: [
-                  TextSpan(
-                      text: '¥',
+            child: GestureDetector(
+              onTap: () async {
+                // Get.to(() => const MakeDealData());
+                var re = await OrderFunc.getFinal(widget.orderId);
+                if (re) {
+                  Get.back();
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.only(left: 0.w),
+                child: Container(
+                    padding:
+                        EdgeInsets.only(left: 32.w, top: 16.w, bottom: 16.w),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF027AFF),
+                        borderRadius: BorderRadius.circular(8.w)),
+                    child: Text(
+                      '成交订单',
                       style: TextStyle(
-                          fontSize: BaseStyle.fontSize28,
-                          color: const Color(0xFFFF3B02))),
-                  TextSpan(
-                      text: _consignmentInfoList.contract.balancePayment,
-                      style: TextStyle(
-                          fontSize: BaseStyle.fontSize32,
-                          color: const Color(0xFFFF3B02)))
-                ]))
-              ],
-            ),
-          );
-        } else if (judge || audit == '3') {
-          return Container(
-              width: double.infinity,
-              color: kForeGroundColor,
-              padding: EdgeInsets.only(
-                  top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
-              margin: EdgeInsets.only(top: 16.w),
-              child: GestureDetector(
-                onTap: () {
-                  // Get.to(() => const MakeDealData());
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: Container(
-                      padding:
-                          EdgeInsets.only(left: 32.w, top: 16.w, bottom: 16.w),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFF027AFF),
-                          borderRadius: BorderRadius.circular(8.w)),
-                      child: Text(
-                        '成交订单',
-                        style: TextStyle(
-                            color: kForeGroundColor,
-                            fontSize: BaseStyle.fontSize28),
-                      )),
-                ),
-              ));
-        } else {
-          const SizedBox();
-        }
-        break;
+                          color: kForeGroundColor,
+                          fontSize: BaseStyle.fontSize28),
+                    )),
+              ),
+            ));
     }
   }
 
