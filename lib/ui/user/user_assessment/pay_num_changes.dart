@@ -21,7 +21,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
 
   // ignore: non_constant_identifier_names
   List<HistoryModel> payNumList = [];
-  List<List<HistoryModel>> _sortList = [];
+  final List<List<HistoryModel>> _sortList = [];
 
   List<bool> _foldStatus = [];
 
@@ -58,7 +58,6 @@ class _PayChangesPageState extends State<PayChangesPage> {
       }
     }
     _foldStatus = List.filled(payNumList.length, true);
-    print(_sortList.length);
   }
 
   @override
@@ -105,56 +104,54 @@ class _PayChangesPageState extends State<PayChangesPage> {
         ),
         extendBody: true,
         //extendBodyBehindAppBar: true,
-        body: Column(children: [
-          Expanded(
-              child: EasyRefresh(
-            firstRefresh: true,
-            header: MaterialHeader(),
-            footer: MaterialFooter(),
-            controller: _easyRefreshController,
-            onRefresh: () async {
-              page = 1;
-              await _refresh();
+        body: EasyRefresh(
+          firstRefresh: true,
+          header: MaterialHeader(),
+          footer: MaterialFooter(),
+          controller: _easyRefreshController,
+          onRefresh: () async {
+        page = 1;
+        await _refresh();
 
-              // for (var i = 0; i < payNumList.length; i++) {
-              //   if (DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
-              //           format: 'yyyy年MM月') !=
-              //       DateUtil.formatDateMs(
-              //           payNumList[i + 1].createdAt.toInt() * 1000,
-              //           format: 'yyyy年MM月')) {
-              //     timeList.add(DateUtil.formatDateMs(
-              //         payNumList[i].createdAt.toInt() * 1000,
-              //         format: 'yyyy年MM月'));
-              //   }
-              // }
-              setState(() {});
-            },
-            onLoad: () async {
-              page++;
-              var baseList = await apiClient
-                  .requestList(API.user.wallet.assessHistory, data: {
-                'page': page,
-                'size': size,
-              });
-              if (baseList.nullSafetyTotal > payNumList.length) {
-                payNumList.addAll(baseList.nullSafetyList
-                    .map((e) => HistoryModel.fromJson(e))
-                    .toList());
-              } else {
-                _easyRefreshController.finishLoad(noMore: true);
-              }
-              setState(() {});
-            },
-            child: payNumList.isEmpty
-                ? const SizedBox()
-                : ListView.builder(
-                    itemBuilder: (context, index) {
-                      return _getChanges(_sortList[index], index);
-                    },
-                    itemCount: _sortList.length,
-                  ),
-          ))
-        ]));
+        // for (var i = 0; i < payNumList.length; i++) {
+        //   if (DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
+        //           format: 'yyyy年MM月') !=
+        //       DateUtil.formatDateMs(
+        //           payNumList[i + 1].createdAt.toInt() * 1000,
+        //           format: 'yyyy年MM月')) {
+        //     timeList.add(DateUtil.formatDateMs(
+        //         payNumList[i].createdAt.toInt() * 1000,
+        //         format: 'yyyy年MM月'));
+        //   }
+        // }
+        setState(() {});
+          },
+          onLoad: () async {
+        page++;
+        var baseList = await apiClient
+            .requestList(API.user.wallet.assessHistory, data: {
+          'page': page,
+          'size': size,
+        });
+        if (baseList.nullSafetyTotal > payNumList.length) {
+          payNumList.addAll(baseList.nullSafetyList
+              .map((e) => HistoryModel.fromJson(e))
+              .toList());
+          sortByDate();
+        } else {
+          _easyRefreshController.finishLoad(noMore: true);
+        }
+        setState(() {});
+          },
+          child: payNumList.isEmpty
+          ? const SizedBox()
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                return _getChanges(_sortList[index], index);
+              },
+              itemCount: _sortList.length,
+            ),
+        ));
   }
 
 //列表
@@ -257,7 +254,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
                 Row(
                   children: [
                     Text(
-                      '评估车辆${model.count.round()}次',
+                      '评估车辆${model.count.abs()}次',
                       style: TextStyle(
                           color: BaseStyle.color333333, fontSize: 28.sp),
                     ),

@@ -308,13 +308,8 @@ class OrderFunc {
   static Future<bool> getFinal(int orderId) async {
     BaseModel res = await apiClient.request(API.order.saleFinal, data: {
       'orderId': orderId,
-    });
-    if (res.code == 0) {
-      return true;
-    } else {
-      CloudToast.show(res.msg);
-      return false;
-    }
+    },showMessage: true);
+    return res.code==0;
   }
 
   ///叫车订单->添加叫车订单
