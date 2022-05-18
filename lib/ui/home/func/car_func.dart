@@ -7,6 +7,7 @@ import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/car_photo_model.dart';
 import 'package:cloud_car/model/car/car_sale_contract_model.dart';
+import 'package:cloud_car/model/car/car_statistics_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/car/estimate_price_model.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
@@ -420,6 +421,17 @@ class CarFunc {
       CloudToast.show(model.msg);
       return false;
     }
+  }
+
+  ///车辆管理统计数据
+  static Future<CarStatisticsModel> getStatisticNum() async {
+    BaseModel res = await apiClient.request(API.car.statisticsNum,);
+    if (res.code == 0) {
+      return CarStatisticsModel.fromJson(res.data);
+    } else {
+      return CarStatisticsModel.init;
+    }
+
   }
 
 }

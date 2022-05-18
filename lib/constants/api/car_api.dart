@@ -18,7 +18,6 @@ class _Car {
   ///估算价格
   String get estimatePrice => '/car/price/estimate';
 
-
   ///快速估算价格
   String get fastEstimatePrice => '/car/price/fast/estimate';
 
@@ -34,15 +33,14 @@ class _Car {
   ///车辆信息
   String get getCarIfo => '/car/info';
 
-
   ///估价列表
   String get getCarEvaluationList => '/car/price/lists';
-
 
   ///车商列表///暂时用这个
   String get dealerList => '/dealer/select';
 
-
+  ///车辆统计
+  String get statisticsNum => '/car/self/count';
 }
 
 class _Collect {
