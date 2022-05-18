@@ -5,7 +5,6 @@ import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
@@ -1867,6 +1866,7 @@ class _ReservationState extends State<Reservation> {
 //车辆信息下拉
   getList() {
     return DropDown(
+      border: true,
       title: getTitle('车辆总价'),
       text: SizedBox(
           child: Text.rich(TextSpan(children: [
@@ -1884,7 +1884,7 @@ class _ReservationState extends State<Reservation> {
                 ?.copyWith(fontWeight: FontWeight.bold)),
       ]))),
       widget: Container(
-          padding: EdgeInsets.only(left: 32.w, top: 16.w),
+          padding: EdgeInsets.only(top: 16.w),
           child: Row(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -1892,13 +1892,13 @@ class _ReservationState extends State<Reservation> {
                   '车辆定金',
                   //(_consignmentInfoList.contractSignAt).toString()),
                   _consignmentInfoList.contract.deposit),
-              36.wb,
+              46.wb,
               Container(
                 width: 1.w,
                 height: 72.w,
                 color: BaseStyle.coloreeeeee,
               ),
-              36.wb,
+              46.wb,
               _getCar('车辆首付', _consignmentInfoList.contract.downPayment),
               46.wb,
               Container(
@@ -1906,7 +1906,7 @@ class _ReservationState extends State<Reservation> {
                 height: 72.w,
                 color: BaseStyle.coloreeeeee,
               ),
-              36.wb,
+              46.wb,
               _getCar('车辆尾款', _consignmentInfoList.contract.balancePayment),
             ],
           )),
