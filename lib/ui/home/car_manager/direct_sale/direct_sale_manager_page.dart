@@ -38,8 +38,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   late String price;
   late String sort;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   String title = '直卖车辆';
 
   List<ChooseItem> _sortList = [];
@@ -79,11 +77,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
             callback: (String item, int value) {
               screenControl.screenHide();
               _dropDownHeaderItemStrings1.first = item;
-
-
-
-
-
               _dropDownHeaderItemStrings1.first != '直卖车辆'
                   ? refreshController.callRefresh()
                   : asRefreshController.callRefresh();
@@ -114,16 +107,15 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
         statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
-          key: _scaffoldKey,
           backgroundColor: bodyColor,
           extendBodyBehindAppBar: true,
           extendBody: true,
-          body: Container(
-              color: bodyColor,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TitleDropDownWidget(
+          body: Row(
+            children: [
+              Expanded(
+                child: Builder(
+                  builder: (context) {
+                    return TitleDropDownWidget(
                         _dropDownHeaderItemStrings1, listWidget,
                         height: kToolbarHeight + 20.w,
                         bottomHeight: 30.w,
@@ -132,13 +124,10 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                         isSearch: true,
                         callback: (text) {
                           _pickCar.value.keyWords = text;
-
                           _dropDownHeaderItemStrings1.first == '直卖车辆'
                               ? refreshController.callRefresh()
                               : asRefreshController.callRefresh();
                           setState(() {});
-
-
                         },
                         leftWidget: const CloudBackButton(
                           isSpecial: true,
@@ -146,7 +135,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                         // screen: '筛选',
                         onTap: () {
                           screenControl.screenHide();
-                          _scaffoldKey.currentState?.openEndDrawer();
+                          Scaffold.of(context).openEndDrawer();
                         },
                         child: _dropDownHeaderItemStrings1.first == '直卖车辆'
                             ? DirectSalePage(
@@ -156,10 +145,12 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                             : AssessmentCarPage(
                                 refreshController: asRefreshController,
                                 pickCar: _pickCar,
-                              )),
-                  )
-                ],
-              )),
+                              ));
+                  }
+                ),
+              )
+            ],
+          ),
           endDrawer: CustomDrawer(
               widthPercent: 0.86,
               backgroundColor: Colors.white,

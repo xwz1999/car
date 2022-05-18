@@ -216,7 +216,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
         EditItemWidget(
           topIcon: false,
           title: '钥匙数量',
-          endText: '次',
+          endText: '把',
           keyboardType: TextInputType.number,
           value: widget.consignmentContractModel.value.keyCount == null
               ? ''

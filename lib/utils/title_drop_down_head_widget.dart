@@ -85,7 +85,7 @@ class _TitleDropDownHeadWidgetState extends State<TitleDropDownHeadWidget>
           alignment: Alignment.center,
           width: double.infinity,
           height: double.infinity,
-          padding: EdgeInsets.only(left: 5.r, right: 5.r),
+          padding: EdgeInsets.only(left: 5.w, right: 5.w),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(widget.title, style: headTextStyle),
             RotationTransition(

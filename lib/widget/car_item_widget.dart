@@ -34,6 +34,7 @@ class CarItemWidget extends StatelessWidget {
         color: kForeGroundColor,
       ),
       padding: widgetPadding,
+      margin:EdgeInsets.only(top: 24.w),
       alignment: Alignment.center,
       child: Row(
         mainAxisSize: MainAxisSize.min,
