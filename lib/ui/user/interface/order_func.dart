@@ -2,6 +2,7 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/order/Sale_info.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/model/order/order_dealer_model.dart';
+import 'package:cloud_car/model/order/order_statistics_model.dart';
 import 'package:cloud_car/model/order/ordercount_model.dart';
 import 'package:cloud_car/model/order/publish_car_model.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
@@ -243,7 +244,7 @@ class OrderFunc {
       'page': page,
       'size': size,
     });
-    if (baseList.code == 0) {
+    if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
     } else {
@@ -384,6 +385,18 @@ class OrderFunc {
     } else {
       CloudToast.show(res.msg);
       return false;
+    }
+  }
+
+  ///订单统计数据
+  static Future<OrderStatisticsModel> getStatisticNum() async {
+    BaseModel res = await apiClient.request(
+      API.order.orderCount.data,
+    );
+    if (res.code == 0) {
+      return OrderStatisticsModel.fromJson(res.data);
+    } else {
+      return OrderStatisticsModel.init;
     }
   }
 }

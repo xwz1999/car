@@ -1,3 +1,6 @@
+import 'package:cloud_car/model/car/car_statistics_model.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +17,17 @@ class CarManagerPage extends StatefulWidget {
 }
 
 class _CarManagerPageState extends State<CarManagerPage> {
-  List<dynamic>? data;
+  CarStatisticsModel _model = CarStatisticsModel.init;
+
+  Future _getStatisticsNum() async {
+    _model = await CarFunc.getStatisticNum();
+    setState(() {});
+  }
 
   @override
   void initState() {
     super.initState();
+    _getStatisticsNum();
   }
 
   @override
@@ -46,9 +55,9 @@ class _CarManagerPageState extends State<CarManagerPage> {
         children: [
           _getItem('直卖车辆'),
           40.hb,
-          _getItem('收购车辆'),
-          40.hb,
-          _getItem('评估车辆'),
+          // _getItem('收购车辆'),
+          // 40.hb,
+          // _getItem('评估车辆'),
         ],
       ),
     );
@@ -65,37 +74,67 @@ class _CarManagerPageState extends State<CarManagerPage> {
                   color: const Color(0xFF333333), fontWeight: FontWeight.bold)),
         ),
         24.hb,
-        GridView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.only(left: 32.w, right: 32.w),
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 4,
-            //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                //横轴元素个数
-                crossAxisCount: 3,
-                //纵轴间距
-                mainAxisSpacing: 10,
-                //横轴间距
-                crossAxisSpacing: 15,
-                //子组件宽高长度比例
-                childAspectRatio: 200 / 176),
-            itemBuilder: (BuildContext context, int index) {
-              //Widget Function(BuildContext context, int index)
-              return GestureDetector(
-                onTap: () {
-                  if (text == '评估车辆') {
-                    Get.to(() => const AssessmentPage());
-                  } else {
-                    Get.to(() => const DirectSaleManagerPage());
-                  }
-                },
-                child: const ManagerContainerItem(
-                  text: '在售',
-                  num: '12',
-                ),
-              );
-            }),
+        GridView.count(
+          shrinkWrap: true,
+          padding: EdgeInsets.only(left: 32.w, right: 32.w),
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 3,
+          childAspectRatio: 200 / 176,
+          children: [
+            GestureDetector(
+              onTap: () {
+                if (text == '评估车辆') {
+                  Get.to(() => const AssessmentPage());
+                } else {
+                  Get.to(() => const DirectSaleManagerPage());
+                }
+              },
+              child: ManagerContainerItem(
+                text: '在售',
+                num: '${_model.sellCount}',
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                if (text == '评估车辆') {
+                  Get.to(() => const AssessmentPage());
+                } else {
+                  Get.to(() => const DirectSaleManagerPage());
+                }
+              },
+              child: ManagerContainerItem(
+                text: '已预订',
+                num: '${_model.reserveCount}',
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                if (text == '评估车辆') {
+                  Get.to(() => const AssessmentPage());
+                } else {
+                  Get.to(() => const DirectSaleManagerPage());
+                }
+              },
+              child: ManagerContainerItem(
+                text: '已售',
+                num: '${_model.soldCount}',
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                if (text == '评估车辆') {
+                  Get.to(() => const AssessmentPage());
+                } else {
+                  Get.to(() => const DirectSaleManagerPage());
+                }
+              },
+              child: ManagerContainerItem(
+                text: '退库',
+                num: '${_model.backOutCount}',
+              ),
+            )
+          ],
+        ),
       ],
     );
   }
