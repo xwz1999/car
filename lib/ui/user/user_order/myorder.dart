@@ -4,7 +4,7 @@ import 'package:cloud_car/ui/user/user_order/sales_orders.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
+
 
 import '../../home/manager_container_item.dart';
 
@@ -56,6 +56,8 @@ class _MyOrderPageState extends State<MyOrderPage> {
         padding: EdgeInsets.only(left: 32.w, right: 32.w),
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 3,
+        mainAxisSpacing: 15,
+      crossAxisSpacing: 10,
         childAspectRatio: 200 / 176,
         children: [
           GestureDetector(
@@ -83,6 +85,15 @@ class _MyOrderPageState extends State<MyOrderPage> {
             child: ManagerContainerItem(
               text: '租车订单',
               num: '${_model.dealerConsignmentCount}',
+            ),
+          ),
+            GestureDetector(
+            onTap: () {
+              Get.to(()=> const SalesOrder());
+            },
+            child: ManagerContainerItem(
+              text: '车商寄卖',
+              num: '${_model.consignmentCount}',
             ),
           ),
           GestureDetector(

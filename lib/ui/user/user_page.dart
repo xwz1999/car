@@ -1,3 +1,4 @@
+import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/home/home_page.dart';
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
@@ -9,15 +10,15 @@ import 'package:cloud_car/ui/user/user_invitation/user_invitation.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
+import 'package:cloud_car/ui/user/user_recommended/user_recommended.dart';
 import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/user_tool.dart';
 import '../../widget/cloud_avatar_widget.dart';
@@ -105,8 +106,8 @@ class _UserPageState extends State<UserPage> {
                       60.hb,
                       //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
                       _shareUser(),
-                      32.hb,
-                      _getBanner(),
+                      // 32.hb,
+                      // _getBanner(),
                       24.hb,
                       _share(),
                     ],
@@ -158,7 +159,7 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const WalletCertificationPage());
             break;
           case '邀请':
-            Get.to(() => const UserAssessmentPage());
+            Get.to(() => const RecommendedPage());
             break;
         }
       },
@@ -306,6 +307,8 @@ class _UserPageState extends State<UserPage> {
 
 //头像信息
   _shareUser() {
+    var userProvider = Provider.of<UserProvider>(Get.context!, listen: true);
+    print(userProvider.userInfo.headImg);
     return Container(
         padding: EdgeInsets.all(32.w),
         decoration: BoxDecoration(
@@ -314,9 +317,10 @@ class _UserPageState extends State<UserPage> {
         ),
         child: Column(children: [
           GestureDetector(
-            onTap: () {
+            onTap: () async {
               //print("aaaaa:${re.data['count']}");
-              Get.to(() => const BasicInformationPage());
+              await Get.to(() => const BasicInformationPage());
+              setState(() {});
             },
             child: Container(
               color: Colors.transparent,
@@ -326,7 +330,7 @@ class _UserPageState extends State<UserPage> {
                     //头像
                     width: 120.w, height: 120.w,
                     child: CloudAvatarWidget(
-                      urls: [UserTool.userProvider.userInfo.headImg],
+                      urls: [userProvider.userInfo.headImg],
                     ),
                   ),
                   32.wb,

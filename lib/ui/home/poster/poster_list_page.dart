@@ -74,8 +74,8 @@ class _PosterListPageState extends State<PosterListPage> {
                 }
               },
               child: Wrap(
-                runSpacing: 16.w,
-                spacing: 16.w,
+                 runSpacing: 16.w,
+                spacing: 12.w,
                 children: _models.map((e) => _buildCard(e)).toList(),
               )),
         ),
@@ -92,7 +92,7 @@ class _PosterListPageState extends State<PosterListPage> {
         width: 220.w,
         height: 396.w,
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.w)),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.w)),
         child: CloudImageNetworkWidget(
           urls: [model.path],
         ),

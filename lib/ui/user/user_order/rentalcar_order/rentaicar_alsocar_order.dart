@@ -202,7 +202,7 @@ class _AlsocarOrderState extends State<AlsocarOrder> {
                             top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
                         child: GestureDetector(
                           onTap: () async {
-                            var zhi =
+                            var res =
                                 await OrderFunc.getCarFinal(widget.orderId);
                             //Get.to(() => const RentaicarOrderData());
                             BotToast.showText(text: '确认成功');

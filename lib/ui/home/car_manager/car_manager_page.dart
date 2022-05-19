@@ -79,7 +79,8 @@ class _CarManagerPageState extends State<CarManagerPage> {
           padding: EdgeInsets.only(left: 32.w, right: 32.w),
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 3,
-          childAspectRatio: 200 / 176,
+       mainAxisSpacing: 15,
+       crossAxisSpacing: 10,
           children: [
             GestureDetector(
               onTap: () {

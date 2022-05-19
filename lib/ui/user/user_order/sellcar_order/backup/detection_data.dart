@@ -86,10 +86,10 @@ class _DetectionDataState extends State<DetectionData> {
             144.hb,
             GestureDetector(
               onTap: () async {
-                bool zhi = await OrderFunc.getTestrepord(widget.orderId, imagePath.path);
+                bool res = await OrderFunc.getTestrepord(widget.orderId, imagePath.path);
                 //BotToast.showText(text: '验证码输入错误');
                 //print("检测报告+$img");
-                if (zhi) {
+                if (res) {
                   BotToast.showText(text: '提交成功');
                   Get.back();
                 }

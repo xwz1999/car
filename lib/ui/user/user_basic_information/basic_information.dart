@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, deprecated_member_use, duplicate_ignore, unnecessary_null_comparison
-
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -7,6 +5,8 @@ import 'package:cloud_car/ui/user/interface/user_func.dart';
 import 'package:cloud_car/ui/user/user_basic_information/enterprise.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,36 +24,35 @@ class BasicInformationPage extends StatefulWidget {
 class _BasicInformationPageState extends State<BasicInformationPage> {
   int sexId = 1;
 
-  late String genderText =
-      UserTool.userProvider.userInfo.gender == 0 ? '女' : '男';
+  // late String genderText =
+  //     UserTool.userProvider.userInfo.gender == 0 ? '女' : '男';
   String name = '';
   late int gender;
   final picker = ImagePicker();
   late File imagePath = File(UserTool.userProvider.userInfo.headImg);
 
-  Future getImage() async {
-    // ignore: deprecated_member_use
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-    final File file = File(pickedFile!.path);
-    setState(() {
-      if (pickedFile != null) {
-        imagePath = file;
-      } else {
-        print('no image selected');
-      }
-    });
-  }
+  // Future getImage() async {
+  //   // ignore: deprecated_member_use
+  //   final pickedFile = await picker.getImage(source: ImageSource.camera);
+  //   final File file = File(pickedFile!.path);
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       imagePath = file;
+  //     } else {
+  //       print('no image selected');
+  //     }
+  //   });
+  // }
+  //
+  // void openGallery() async {
+  //   // ignore: deprecated_member_use
+  //   PickedFile? pickedFile = await picker.getImage(source: ImageSource.gallery);
+  //   final File file = File(pickedFile!.path);
+  //   setState(() {
+  //     imagePath = file;
+  //   });
+  // }
 
-  void openGallery() async {
-    // ignore: deprecated_member_use
-    PickedFile? pickedFile = await picker.getImage(source: ImageSource.gallery);
-    final File file = File(pickedFile!.path);
-    setState(() {
-      imagePath = file;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -89,13 +88,12 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                         ),
                         const Spacer(),
                         SizedBox(
-                            width: 72.w,
-                            height: 72.w,
-                            child: Image.asset(imagePath.path)
-                            // CloudAvatarWidget(
-                            //   urls: [UserTool.userProvider.userInfo.headImg],
-                            // ),
-                            )
+                          width: 72.w,
+                          height: 72.w,
+                          child: CloudAvatarWidget(
+                            urls: [UserTool.userProvider.userInfo.headImg],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -108,16 +106,19 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                   onTap: () async {
                     var value =
                         await CloudImagePicker.pickSingleImage(title: '选择图片');
-                    imagePath = value!;
-                    var zhi = await User.getUserUpdate(imagePath.path, name,
-                        UserTool.userProvider.userInfo.gender);
-                    if (zhi) {
-                      BotToast.showText(text: '修改头像成功');
+                    if (value != null) {
+                      String urls = await apiClient.uploadImage(value);
+                      var res = await User.getUserUpdateImg(
+                        urls,
+                      );
+                      if (res) {
+                        BotToast.showText(text: '修改头像成功');
+                      }
+                      // print(urls);
                     }
-
-                    setState(() async {
-                      await UserTool.userProvider.updateUserInfo();
-                    });
+                    await UserTool.userProvider.updateUserInfo();
+                    setState(() {});
+                    // imagePath = value!;
                   },
                   // onTap: () {
                   //   showModalBottomSheet(
@@ -304,20 +305,16 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                     210.wb,
                                     GestureDetector(
                                       onTap: () async {
-                                        var zhi = await User.getUserUpdate(
-                                            UserTool
-                                                .userProvider.userInfo.headImg,
-                                            name,
-                                            UserTool
-                                                .userProvider.userInfo.gender);
-                                        if (zhi) {
+                                        var res = await User.getUserUpdateName(
+                                          name,
+                                        );
+                                        if (res) {
                                           BotToast.showText(text: '修改名字成功');
                                           Navigator.pop(context);
                                         }
-                                        setState(() async {
-                                          await UserTool.userProvider
-                                              .updateUserInfo();
-                                        });
+                                        await UserTool.userProvider
+                                            .updateUserInfo();
+                                        setState(() {});
                                       },
                                       child: Text(
                                         '确认',
@@ -388,7 +385,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                   title: '性别 ',
                   endIcon: true,
                   tips: '请选择',
-                  value: UserTool.userProvider.userInfo.gender == 1 ? '男' : '女',
+                  value: UserTool.userProvider.userInfo.gender == 1 ? "男" : '女',
                   widget: Image(
                     image: Assets.icons.icGoto,
                     width: 32.w,
@@ -443,21 +440,17 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                         child: SizedBox(
                                           child: GestureDetector(
                                             onTap: () async {
-                                              print(gender);
-                                              // var zhi =
-                                              // await User.getUserUpdate(
-                                              //     UserTool.userProvider
-                                              //         .userInfo.headImg,
-                                              //     UserTool.userProvider
-                                              //         .userInfo.nickname,
-                                              //     0);
-                                              // if (zhi) {
-                                              //   BotToast.showText(
-                                              //       text: '修改性别成功');
-                                              //   Navigator.pop(context);
-                                              // }
-                                              // await UserTool.userProvider
-                                              //     .updateUserInfo();
+                                              //print(gender);
+                                              var res = await User
+                                                  .getUserUpdateGender(gender);
+                                              if (res) {
+                                                BotToast.showText(
+                                                    text: '修改性别成功');
+                                                Navigator.pop(context);
+                                              }
+                                              await UserTool.userProvider
+                                                  .updateUserInfo();
+                                              setState(() {});
                                             },
                                             child: Text(
                                               '确认',
@@ -500,7 +493,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          sexId = 0;
+                                          sexId = 2;
                                           gender = sexId;
                                           dialogSetState(() {});
                                         },
@@ -511,7 +504,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                           color: Colors.white,
                                           child: Text('女',
                                               style: TextStyle(
-                                                  color: sexId == 0
+                                                  color: sexId == 2
                                                       ? const Color(0xFF027AFF)
                                                       : const Color(0xFF330000),
                                                   fontSize:
@@ -561,5 +554,14 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
             ),
           ),
         ));
+  }
+
+  getGender(int gender) {
+    switch (gender) {
+      case 2:
+        return '女';
+      case 1:
+        return '男';
+    }
   }
 }

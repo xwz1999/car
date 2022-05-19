@@ -83,10 +83,35 @@ class User {
   // }
 
   ///修改用户信息
-  static Future<bool> getUserUpdate(
-      String headImg, String nickname, int gender) async {
-    BaseModel res = await apiClient.request(API.user.userUpdate,
-        data: {'headImg': headImg, 'nickname': nickname, 'gender': gender});
+  static Future<bool> getUserUpdateGender(int gender) async {
+    BaseModel res =
+        await apiClient.request(API.user.userUpdate, data: {'gender': gender});
+    if (res.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(res.msg);
+      return false;
+    }
+  }
+
+  static Future<bool> getUserUpdateImg(String headImg) async {
+    BaseModel res = await apiClient.request(API.user.userUpdate, data: {
+      'headImg': headImg,
+    });
+    if (res.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(res.msg);
+      return false;
+    }
+  }
+
+  static Future<bool> getUserUpdateName(
+    String nickname,
+  ) async {
+    BaseModel res = await apiClient.request(API.user.userUpdate, data: {
+      'nickname': nickname,
+    });
     if (res.code == 0) {
       return true;
     } else {

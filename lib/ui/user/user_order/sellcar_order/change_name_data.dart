@@ -147,7 +147,7 @@ class _ChangeNameDataState extends State<ChangeNameData> {
               144.hb,
               GestureDetector(
                 onTap: () async {
-                  bool zhi = await OrderFunc.getTransfer(
+                  bool res = await OrderFunc.getTransfer(
                       widget.orderId,
                       certificate,
                       vehicleLicense,
@@ -156,7 +156,7 @@ class _ChangeNameDataState extends State<ChangeNameData> {
                       pice);
                   // print(
                   //     '登记证书+$certificate+行驶证+$vehicleLicense+发票+$invoice+保单+$guaranteeSlip+金额+$pice');
-                  if (zhi) {
+                  if (res) {
                     BotToast.showText(text: '提交成功');
                     Get.back();
                   }

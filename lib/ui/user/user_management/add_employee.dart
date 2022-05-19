@@ -45,7 +45,7 @@ class _AddEmployeeState extends State<AddEmployee> {
   int sexId = 1;
   List blText = [];
 
-  late bool zhi = false;
+  late bool res = false;
   @override
   void initState() {
     super.initState();
@@ -423,7 +423,7 @@ class _AddEmployeeState extends State<AddEmployee> {
   }
 
   _refresh() async {
-    zhi = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
+    res = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
         phoneText, storeId, roleId, commissionText);
   }
 }

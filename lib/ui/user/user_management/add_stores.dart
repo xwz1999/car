@@ -18,7 +18,7 @@ class AddStores extends StatefulWidget {
 
 String storesName = '';
 String storesAddress = '';
-bool zhi = false;
+bool res = false;
 
 class _AddStoresState extends State<AddStores> {
   @override
@@ -77,7 +77,7 @@ class _AddStoresState extends State<AddStores> {
   }
 
   _refresh() async {
-    zhi = await BusinessFunc.getStoreadd(storesName, storesAddress);
+    res = await BusinessFunc.getStoreadd(storesName, storesAddress);
   }
 }
 
