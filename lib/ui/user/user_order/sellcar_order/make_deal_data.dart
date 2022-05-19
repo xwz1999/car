@@ -60,7 +60,7 @@ class _MakeDealDataState extends State<MakeDealData> {
   }
 
   _refresh() async {
-    _consignmentInfoList = (await OrderFunc.getSaleInfo(widget.id))!;
+    _consignmentInfoList = await OrderFunc.getSaleInfo(widget.id);
     setState(() {});
   }
 

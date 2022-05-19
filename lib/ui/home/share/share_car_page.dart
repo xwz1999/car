@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -12,6 +13,7 @@ typedef CarCallback = Function(String city);
 
 class ShareCarPage extends StatefulWidget {
   final List<CarListModel> models;
+
   const ShareCarPage({
     super.key,
     required this.models,
@@ -240,12 +242,13 @@ class _ShareCarPageState extends State<ShareCarPage> {
           Expanded(
             child: CarItemWidget(
               widgetPadding: EdgeInsets.zero,
-              name: '奔驰CLE 插电混动 纯电动续航103km',
-              time: '2019年5月',
-              distance: '20.43万公里',
+              name: model.modelName,
+              time: DateUtil.formatDate(model.licensingDateDT,
+                  format: DateFormats.zh_y_mo),
+              distance: model.mileage,
               standard: '国六',
               url: Assets.images.homeBg.path,
-              price: '27.43万',
+              price: '${(double.parse(model.price) / 10000)}万元',
             ),
           ),
         ],

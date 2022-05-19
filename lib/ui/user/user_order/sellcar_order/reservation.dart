@@ -1,5 +1,3 @@
-// ignore_for_file: dead_code
-
 import 'package:cloud_car/model/order/Sale_info.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data.dart';
@@ -33,39 +31,9 @@ class _ReservationState extends State<Reservation> {
   late bool judge = widget.judge;
   late Widget methods;
 
-  // late int id = ;
   late String audit = '3';
 
-  // ignore: unused_field
-  late SaleInfo _consignmentInfoList = const SaleInfo(
-      id: 0,
-      car: Car(
-          licensingDate: 0,
-          carId: 0,
-          mainPhoto: '',
-          mileage: '',
-          modelName: '',
-          transfer: 0),
-      contract: Contract(
-        amount: '',
-        deposit: '',
-        balancePayment: '',
-        contract: 0,
-        downPayment: '',
-        serviceFee: '',
-        signAt: 0,
-        totalAmount: '',
-      ),
-      deposit: Deposit(amount: '', createdAt: 0, payType: ''),
-      downPayment: DownPayment(
-        amount: '',
-        createdAt: 0,
-        proof: '',
-      ),
-      balancePayment: BalancePayment(amount: '', createdAt: 0, proof: ''),
-      report: Report(path: '', reportId: 0),
-      means: Means(
-          certificate: '', guaranteeSlip: '', invoice: '', vehicleLicense: ''));
+   SaleInfo _consignmentInfoList=SaleInfo.init ;
 
   @override
   void initState() {
@@ -78,7 +46,7 @@ class _ReservationState extends State<Reservation> {
   }
 
   _refresh() async {
-    _consignmentInfoList = (await OrderFunc.getSaleInfo(widget.orderId))!;
+    _consignmentInfoList = await OrderFunc.getSaleInfo(widget.orderId);
     setState(() {});
   }
 
@@ -96,7 +64,6 @@ class _ReservationState extends State<Reservation> {
                   fontSize: BaseStyle.fontSize36,
                   fontWeight: FontWeight.bold)),
 
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
         body: Stack(
@@ -279,7 +246,6 @@ class _ReservationState extends State<Reservation> {
                   )
                 ],
               );
-        break;
       case '申请检测':
       case '首付审核':
       case '上传检测报告':
@@ -325,7 +291,6 @@ class _ReservationState extends State<Reservation> {
             ),
           ],
         );
-        break;
       case '首付审核通过':
         return !judge
             ? Column(
@@ -392,7 +357,6 @@ class _ReservationState extends State<Reservation> {
                 ],
               )
             : getFirst();
-        break;
       case '过户':
         return Column(
           children: [
@@ -480,7 +444,6 @@ class _ReservationState extends State<Reservation> {
             ))
           ],
         );
-        break;
       case '过户完成':
       case '尾款审核通过':
         return !judge
@@ -602,7 +565,6 @@ class _ReservationState extends State<Reservation> {
                 ],
               )
             : getPayment();
-        break;
     }
   }
 
@@ -758,7 +720,6 @@ class _ReservationState extends State<Reservation> {
             ],
           ))
         ]);
-        break;
       case '2':
         return Column(
           children: [
@@ -910,7 +871,6 @@ class _ReservationState extends State<Reservation> {
             ))
           ],
         );
-        break;
       case '3':
         return Column(children: [
           getContainer(
@@ -1063,7 +1023,6 @@ class _ReservationState extends State<Reservation> {
             ],
           ))
         ]);
-        break;
     }
   }
 
@@ -1101,7 +1060,6 @@ class _ReservationState extends State<Reservation> {
             ]))
           ],
         );
-        break;
       case '2':
         return Column(
           children: [
@@ -1157,7 +1115,6 @@ class _ReservationState extends State<Reservation> {
             )
           ],
         );
-        break;
     }
   }
 
@@ -1280,7 +1237,6 @@ class _ReservationState extends State<Reservation> {
           ],
         );
 
-        break;
       case '2':
         return methods = Column(
           children: [
@@ -1414,8 +1370,6 @@ class _ReservationState extends State<Reservation> {
             ))
           ],
         );
-
-        break;
       case '3':
         return methods = Column(
           children: [
@@ -1505,8 +1459,6 @@ class _ReservationState extends State<Reservation> {
             ))
           ],
         );
-
-        break;
     }
   }
 
@@ -1557,8 +1509,6 @@ class _ReservationState extends State<Reservation> {
                   ],
                 ),
               );
-        break;
-
       case '申请检测':
         return Container(
             width: double.infinity,
@@ -1588,7 +1538,6 @@ class _ReservationState extends State<Reservation> {
                     )),
               ),
             ));
-        break;
       case '上传检测报告':
       case '首付审核':
       case '首付审核通过':
@@ -1624,7 +1573,6 @@ class _ReservationState extends State<Reservation> {
                 ),
               )
             : const SizedBox();
-        break;
       case '过户':
         return Container(
             width: double.infinity,
@@ -1654,7 +1602,6 @@ class _ReservationState extends State<Reservation> {
                     )),
               ),
             ));
-        break;
 
       case '过户完成':
         return Container(
@@ -1809,29 +1756,6 @@ class _ReservationState extends State<Reservation> {
                 fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
           ),
         )
-        // Padding(padding: EdgeInsets.symmetric(horizontal: 24.w)),
-        // Chip(
-        //   label: Text(num),
-        //   labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
-        //   backgroundColor: const Color(0xFF027AFF).withOpacity(0.08),
-        //   labelStyle: TextStyle(
-        //       fontSize: BaseStyle.fontSize20, color: const Color(0xFF027AFF)),
-        //   shape:
-        //       BeveledRectangleBorder(borderRadius: BorderRadius.circular(4.w)),
-        // ),
-        // ChipTheme(
-        //     data: ChipThemeData(
-        //       backgroundColor: const Color(0xFF4F5A74).withOpacity(0.08),
-        //       labelStyle: TextStyle(
-        //           fontSize: BaseStyle.fontSize20,
-        //           color: const Color(0xFF4F5A74)),
-        //       shape: BeveledRectangleBorder(
-        //           borderRadius: BorderRadius.circular(4.w)),
-        //       labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
-        //     ),
-        //     child: Wrap(
-        //       children: [Chip(label: Text(time)), Chip(label: Text(distance))],
-        //     ))
       ],
     );
   }
@@ -1928,59 +1852,6 @@ class _ReservationState extends State<Reservation> {
           )),
     );
   }
-
-//     ExpansionTile(
-//       //backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
-//       //leading: Icon(Icons.),
-//       collapsedBackgroundColor: kForeGroundColor,
-//       title: Row(
-//         children: [
-//           getTitle('车辆总价'),
-//           185.wb,
-//           SizedBox(
-//             child: Text.rich(TextSpan(children: [
-//               TextSpan(
-//                   text: '¥',
-//                   style: Theme.of(context)
-//                       .textTheme
-//                       .bodyText1
-//                       ?.copyWith(fontWeight: FontWeight.bold)),
-//               TextSpan(
-//                   text: _consignmentInfoList.contract.totalAmount,
-//                   style: Theme.of(context)
-//                       .textTheme
-//                       .subtitle2
-//                       ?.copyWith(fontWeight: FontWeight.bold)),
-//             ])),
-//           ),
-//         ],
-//       ),
-//       children: [
-//         Container(
-//             color: kForeGroundColor,
-//             child: Row(
-//               children: [
-//                 32.wb,
-//                 _getCar(
-//                     '车辆定金',
-//                     //(_consignmentInfoList.contractSignAt).toString()),
-//                     _consignmentInfoList.contract.deposit),
-//                 46.wb,
-//                 Container(
-//                   width: 1.w,
-//                   height: 72.w,
-//                   color: BaseStyle.coloreeeeee,
-//                 ),
-//                 46.wb,
-//                 _getCar('车辆首付', _consignmentInfoList.contract.downPayment),
-//                 46.wb,
-//                 _getCar('车辆尾款', _consignmentInfoList.contract.balancePayment),
-//               ],
-//             ))
-//       ],
-//     );
-//   }
-
   text(String text) {
     return Text(
       text,

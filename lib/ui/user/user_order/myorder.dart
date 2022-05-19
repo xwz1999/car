@@ -51,7 +51,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
-      body:         GridView.count(
+      body: GridView.count(
         shrinkWrap: true,
         padding: EdgeInsets.only(left: 32.w, right: 32.w),
         physics: const NeverScrollableScrollPhysics(),

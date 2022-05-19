@@ -1,3 +1,4 @@
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -16,8 +17,11 @@ class SalelistsModel extends Equatable {
   final String deposit;
   final String downPayment;
   final String balancePayment;
+
   factory SalelistsModel.fromJson(Map<String, dynamic> json) =>
       _$SalelistsModelFromJson(json);
+
+  OrderSaleStatus get statusEnum => OrderSaleStatus.getStatus(status);
 
   @override
   List<Object?> get props => [
