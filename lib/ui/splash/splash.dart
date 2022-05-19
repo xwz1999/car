@@ -114,7 +114,7 @@ class _SplashPageState extends State<SplashPage> {
     if (kDebugMode) {
       print('env :$env');
     }
-    DevEV.instance.setEnvironment(env == 'dev', context);
+    DevEV.instance.setEnvironment( context, environment: env == 'dev',);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll();
       if (!await userProvider.init()) {

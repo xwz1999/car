@@ -4,7 +4,6 @@ import 'package:cloud_car/ui/user/user_order/sales_orders.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../home/manager_container_item.dart';
 
@@ -51,7 +50,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
-      body:         GridView.count(
+      body: GridView.count(
         shrinkWrap: true,
         padding: EdgeInsets.only(left: 32.w, right: 32.w),
         physics: const NeverScrollableScrollPhysics(),
@@ -60,7 +59,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(()=> const SalesOrder());
+              Get.to(() => const SalesOrder());
             },
             child: ManagerContainerItem(
               text: '售车订单',
@@ -69,7 +68,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(()=> const SalesOrder());
+              Get.to(() => const SalesOrder());
             },
             child: ManagerContainerItem(
               text: '个人寄卖',
@@ -78,7 +77,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(()=> const SalesOrder());
+              Get.to(() => const SalesOrder());
             },
             child: ManagerContainerItem(
               text: '租车订单',
@@ -87,7 +86,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(()=> const SalesOrder());
+              Get.to(() => const SalesOrder());
             },
             child: ManagerContainerItem(
               text: '叫车订单',

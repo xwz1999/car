@@ -206,13 +206,15 @@ class _LoginPageState extends State<LoginPage> {
                         var map = await Jverify().getToken();
                         if (kDebugMode) {
                           print('极光认证获取token数据返回： ${map.toString()}');
+                          LoggerData.addData(map.toString());
                         }
                         if (map['code'] == 2000) {
                           // var token = map['message'];
 
                           await _authToken();
                         } else {
-                          CloudToast.show('获取token失败');
+                          CloudToast.show(
+                              '错误码：${map['code']}${map['message']}');
                         }
                       } else {
                         CloudToast.show('当前网络不支持认证');

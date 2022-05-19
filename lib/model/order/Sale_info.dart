@@ -15,8 +15,39 @@ class SaleInfo extends Equatable {
   final BalancePayment balancePayment;
   final Report report;
   final Means means;
+
   factory SaleInfo.fromJson(Map<String, dynamic> json) =>
       _$SaleInfoFromJson(json);
+
+ static SaleInfo get init => const SaleInfo(
+      id: 0,
+      car: Car(
+          licensingDate: 0,
+          carId: 0,
+          mainPhoto: '',
+          mileage: '',
+          modelName: '',
+          transfer: 0),
+      contract: Contract(
+        amount: '',
+        deposit: '',
+        balancePayment: '',
+        contract: 0,
+        downPayment: '',
+        serviceFee: '',
+        signAt: 0,
+        totalAmount: '',
+      ),
+      deposit: Deposit(amount: '', createdAt: 0, payType: ''),
+      downPayment: DownPayment(
+        amount: '',
+        createdAt: 0,
+        proof: '',
+      ),
+      balancePayment: BalancePayment(amount: '', createdAt: 0, proof: ''),
+      report: Report(path: '', reportId: 0),
+      means: Means(
+          certificate: '', guaranteeSlip: '', invoice: '', vehicleLicense: ''));
 
   const SaleInfo({
     required this.id,
@@ -28,6 +59,7 @@ class SaleInfo extends Equatable {
     required this.report,
     required this.means,
   });
+
   @override
   List<Object?> get props =>
       [id, car, contract, deposit, downPayment, balancePayment, report, means];
@@ -52,6 +84,7 @@ class Car extends Equatable {
     required this.mileage,
     required this.transfer,
   });
+
   @override
   List<Object?> get props =>
       [carId, mainPhoto, modelName, licensingDate, mileage, transfer];
@@ -81,6 +114,7 @@ class Contract extends Equatable {
     required this.totalAmount,
     required this.signAt,
   });
+
   @override
   List<Object?> get props => [
         contract,
@@ -108,6 +142,7 @@ class Deposit extends Equatable {
     required this.payType,
     required this.createdAt,
   });
+
   @override
   List<Object?> get props => [amount, payType, createdAt];
 }
@@ -117,6 +152,7 @@ class DownPayment extends Equatable {
   final String amount;
   final String proof;
   final num createdAt;
+
   factory DownPayment.fromJson(Map<String, dynamic> json) =>
       _$DownPaymentFromJson(json);
 
@@ -125,6 +161,7 @@ class DownPayment extends Equatable {
     required this.proof,
     required this.createdAt,
   });
+
   @override
   List<Object?> get props => [amount, proof, createdAt];
 }
@@ -134,6 +171,7 @@ class BalancePayment extends Equatable {
   final String amount;
   final String proof;
   final num createdAt;
+
   factory BalancePayment.fromJson(Map<String, dynamic> json) =>
       _$BalancePaymentFromJson(json);
 
@@ -142,6 +180,7 @@ class BalancePayment extends Equatable {
     required this.proof,
     required this.createdAt,
   });
+
   @override
   List<Object?> get props => [amount, proof, createdAt];
 }
@@ -150,12 +189,14 @@ class BalancePayment extends Equatable {
 class Report extends Equatable {
   final int reportId;
   final String path;
+
   factory Report.fromJson(Map<String, dynamic> json) => _$ReportFromJson(json);
 
   const Report({
     required this.reportId,
     required this.path,
   });
+
   @override
   List<Object?> get props => [reportId, path];
 }
@@ -166,6 +207,7 @@ class Means extends Equatable {
   final String vehicleLicense;
   final String invoice;
   final String guaranteeSlip;
+
   factory Means.fromJson(Map<String, dynamic> json) => _$MeansFromJson(json);
 
   const Means({
@@ -174,6 +216,7 @@ class Means extends Equatable {
     required this.invoice,
     required this.guaranteeSlip,
   });
+
   @override
   List<Object?> get props =>
       [certificate, vehicleLicense, invoice, guaranteeSlip];
