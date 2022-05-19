@@ -252,14 +252,14 @@ class OrderFunc {
   }
 
   ///售车订单详情
-  static Future<SaleInfo?> getSaleInfo(int orderId) async {
+  static Future<SaleInfo> getSaleInfo(int orderId) async {
     BaseModel res =
         await apiClient.request(API.order.saleInfo, data: {'orderId': orderId});
     if (res.code == 0) {
       return SaleInfo.fromJson(res.data);
     } else {
       CloudToast.show(res.msg);
-      return null;
+      return SaleInfo.init;
     }
   }
 

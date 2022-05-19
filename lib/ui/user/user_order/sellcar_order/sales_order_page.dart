@@ -39,7 +39,6 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   List<SalelistsModel> _SalesList = [];
   int _page = 1;
   final int _size = 10;
-  bool _onLoad = true;
 
   @override
   void initState() {
@@ -116,14 +115,13 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
               onRefresh: () async {
                 _page = 1;
                 _SalesList =
-                    await OrderFunc.getSaleList(page: _page, size: _size);
-                _onLoad = false;
+                await OrderFunc.getSaleList(page: _page, size: _size);
                 setState(() {});
               },
               onLoad: () async {
                 _page++;
                 var baseList =
-                    await apiClient.requestList(API.order.saleLists, data: {
+                await apiClient.requestList(API.order.saleLists, data: {
                   'page': _page,
                   'size': _size,
                 });
@@ -136,19 +134,17 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 }
                 setState(() {});
               },
-              child: _onLoad
-                  ? const SizedBox()
-                  : _SalesList.isEmpty
-                      ? const NoDataWidget(
-                          text: '暂无相关车辆信息',
-                          paddingTop: 300,
-                        )
-                      : ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (context, index) {
-                            return getSales(_SalesList[index]);
-                          },
-                          itemCount: _SalesList.length),
+              child: _SalesList.isEmpty
+                  ? const NoDataWidget(
+                text: '暂无相关车辆信息',
+                paddingTop: 300,
+              )
+                  : ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    return getSales(_SalesList[index]);
+                  },
+                  itemCount: _SalesList.length),
             ),
           ),
         ],
@@ -161,151 +157,90 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
       child: GestureDetector(
         onTap: () {
-          switch (_getText(model.status)) {
-            // case 0:
-            //   ///交易取消
-            //   Get.to(() => const TransactionCancelled());
-            //   break;
-            // case 1:
-            //   ///待预定
-            //   Get.to(() => const Reservation(
-            //         stat: '待预定',
-            //         judge: false,
-            //       ));
-            //   break;
-            // case 2:
-            //   ///已预定
-            //   Get.to(() => const Reservation(
-            //         stat: '待预定',
-            //         judge: true,
-            //       ));
-            //   break;
-            // case 3:
-            //   ///待检测
-            //   Get.to(() => const Reservation(
-            //         stat: '待检测',
-            //         judge: true,
-            //       ));
-            //   break;
-            // case 4:
-            //   ///支付首付
-            //   switch () {
-            //     case '需付首付':
-            //       Get.to(() => const Reservation(
-            //             stat: '支付首付',
-            //             judge: false,
-            //           ));
-            //       break;
-            //     case '已付首付':
-            //       Get.to(() => const Reservation(
-            //             stat: '支付首付',
-            //             judge: true,
-            //           ));
-            //       break;
-            //   }
-            //   break;
-            // case '待过户':///待过户
-            //   Get.to(() => const Reservation(
-            //         stat: '待过户',
-            //         judge: true,
-            //       ));
-            //   break;
-            // case '支付尾款':///支付尾款
-            //   switch (item['picename']) {
-            //     case '需付尾款':
-            //       Get.to(() => const Reservation(
-            //             stat: '支付尾款',
-            //             judge: false,
-            //           ));
-            //       break;
-            //     case '已付尾款':
-            //       Get.to(() => const Reservation(
-            //             stat: '支付尾款',
-            //             judge: true,
-            //           ));
-            //       break;
-            //   }
-            //   break;
-            //   case 50:
-            //     ///成交订单
-            //     Get.to(() => const MakeDealData());
-            //     break;
-            // }
-            case '待预定':
-              Get.to(() => Reservation(
-                    judge: false,
-                    orderId: model.id,
-                    status: _getText(model.status),
-                    statusNum: _getStatusNum(model.status),
-                  ));
-              break;
-            case '已预定':
-              Get.to(() => Reservation(
-                    statusNum: _getStatusNum(model.status),
-                    orderId: model.id,
-                    status: _getText(model.status),
-                    judge: true,
-                  ));
-              break;
-            case '申请检测':
-              Get.to(() => Reservation(
-                    statusNum: _getStatusNum(model.status),
-                    status: _getText(model.status),
-                    judge: true,
-                    orderId: model.id,
-                  ));
-              break;
-            case '上传检测报告':
-              Get.to(() => Reservation(
-                    statusNum: _getStatusNum(model.status),
-                    status: _getText(model.status),
-                    judge: false,
-                    orderId: model.id,
-                  ));
-              break;
-            case '首付审核':
-              Get.to(() => Reservation(
-                    statusNum: _getStatusNum(model.status),
-                    status: _getText(model.status),
-                    judge: true,
-                    orderId: model.id,
-                  ));
-              break;
-            case '首付审核通过':
-            case '过户':
-              Get.to(() => Reservation(
-                    statusNum: _getStatusNum(model.status),
-                    status: _getText(model.status),
-                    judge: true,
-                    orderId: model.id,
-                  ));
-              break;
-                case '过户完成':
-                  Get.to(() => Reservation(
-                        statusNum: _getStatusNum(model.status),
-                        orderId: model.id,
-                        judge: false,
-                        status: _getText(model.status),
-                      ));
-                  break;
-                case '尾款审核通过':
-                  Get.to(() => Reservation(
-                        statusNum: _getStatusNum(model.status),
-                        status: _getText(model.status),
-                        judge: true,
-                        orderId: model.id,
-                      ));
-                  break;
-            case '交易完成':
-              Get.to(() => MakeDealData(
-                    id: model.id,
-                    statusNum: _getStatusNum(model.status),
-                  ));
-              break;
-            case '交易取消':
-              Get.to(() => const TransactionCancelled());
-              break;
-          }
+          Get.to(() =>
+              Reservation(
+                judge: false,
+                orderId: model.id,
+                status: model.statusEnum.str,
+                statusNum: model.statusEnum.progressNum,
+              ));
+
+          // switch (_getText(model.status)) {
+          //   case '待预定':
+          //     Get.to(() => Reservation(
+          //           judge: false,
+          //           orderId: model.id,
+          //           status: _getText(model.status),
+          //           statusNum: _getStatusNum(model.status),
+          //         ));
+          //     break;
+          //   case '已预定':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           orderId: model.id,
+          //           status: _getText(model.status),
+          //           judge: true,
+          //         ));
+          //     break;
+          //   case '申请检测':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           status: _getText(model.status),
+          //           judge: true,
+          //           orderId: model.id,
+          //         ));
+          //     break;
+          //   case '上传检测报告':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           status: _getText(model.status),
+          //           judge: false,
+          //           orderId: model.id,
+          //         ));
+          //     break;
+          //   case '首付审核':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           status: _getText(model.status),
+          //           judge: true,
+          //           orderId: model.id,
+          //         ));
+          //     break;
+          //   case '首付审核通过':
+          //   case '过户':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           status: _getText(model.status),
+          //           judge: true,
+          //           orderId: model.id,
+          //         ));
+          //     break;
+          //       case '过户完成':
+          //         Get.to(() => Reservation(
+          //               statusNum: _getStatusNum(model.status),
+          //               orderId: model.id,
+          //               judge: false,
+          //               status: _getText(model.status),
+          //             ));
+          //         break;
+          //       case '尾款审核通过':
+          //         Get.to(() => Reservation(
+          //               statusNum: _getStatusNum(model.status),
+          //               status: _getText(model.status),
+          //               judge: true,
+          //               orderId: model.id,
+          //             ));
+          //         break;
+          //   case '交易完成':
+          //     Get.to(() => MakeDealData(
+          //           id: model.id,
+          //           statusNum: _getStatusNum(model.status),
+          //         ));
+          //     break;
+          //   case '交易取消':
+          //     Get.to(() => const TransactionCancelled());
+          //     break;
+          // }
         },
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
@@ -315,13 +250,14 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 ///状态
                 Padding(
                   padding: EdgeInsets.only(left: 0.w),
                   child: Text(
                     //StatusPage(num: model.status),
                     //item['judgename'],
-                    _getText(model.status),
+                    model.statusEnum.str,
                     style: TextStyle(
                         color: model.status != 0
                             ? const Color(0xFF027AFF)
@@ -332,6 +268,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 // 24.hb,
                 Row(
                   children: [
+
                     ///图片
                     SizedBox(
                       width: 196.w,
@@ -373,200 +310,209 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 40.hb,
                 SizedBox(
                     child: model.status == 10 &&
-                            model.status == 30 &&
-                            model.status == 40
+                        model.status == 30 &&
+                        model.status == 40
                         ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ///汽车总价
-                                  SizedBox(
-                                    child: Text(
-                                      '车辆总价',
-                                      style: TextStyle(
-                                          fontSize: BaseStyle.fontSize28,
-                                          color: BaseStyle.color999999),
-                                    ),
-                                  ),
-                                  16.wb,
-                                  SizedBox(
-                                    child: Text.rich(TextSpan(children: [
-                                      TextSpan(
-                                          text:
-                                              (num.parse(model.amount) / 10000)
-                                                  .toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2),
-                                      TextSpan(
-                                          text: '万',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2),
-                                    ])),
-                                  ),
-                                  56.wb,
-                                  SizedBox(
-                                    child: Text(
-                                      _getTextStatus(model.status),
-                                      // item['picename'],
-                                      style: TextStyle(
-                                          fontSize: BaseStyle.fontSize28,
-                                          color: BaseStyle.color999999),
-                                    ),
-                                  ),
-                                  16.wb,
-                                  SizedBox(
-                                    child: Text.rich(TextSpan(children: [
-                                      TextSpan(
-                                          text:
-                                              (num.parse(model.deposit) / 10000)
-                                                  .toString(), //item['pice'],
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2
-                                              ?.copyWith(
-                                                  color:
-                                                      const Color(0xFFFF3B02))),
-                                      TextSpan(
-                                          text: '万',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2
-                                              ?.copyWith(
-                                                  color:
-                                                      const Color(0xFFFF3B02))),
-                                    ])),
-                                  ),
-                                ],
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+
+                            ///汽车总价
+                            SizedBox(
+                              child: Text(
+                                '车辆总价',
+                                style: TextStyle(
+                                    fontSize: BaseStyle.fontSize28,
+                                    color: BaseStyle.color999999),
                               ),
-                              32.hb,
-                              GestureDetector(
-                                //item['buttomname']
-                                onTap: () {
-                                  switch (model.modelName) {
-                                    case '成交订单':
-                                      Get.to(() => const MakeDeal());
-                                      break;
-                                    default:
-                                  }
-                                },
-                                child: Container(
-                                    width: 168.w,
-                                    height: 68.w,
-                                    padding:
-                                        EdgeInsets.only(left: 28.w, top: 14.w),
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xFF027AFF),
-                                        borderRadius:
-                                            BorderRadius.circular(8.w)),
-                                    child: Text(
-                                      _getBottonText(
-                                          model.status), // item['buttomname'],
-                                      style: TextStyle(
-                                          color: kForeGroundColor,
-                                          fontSize: BaseStyle.fontSize28),
-                                    )),
-                              )
-                            ],
-                          )
+                            ),
+                            16.wb,
+                            SizedBox(
+                              child: Text.rich(TextSpan(children: [
+                                TextSpan(
+                                    text:
+                                    (num.parse(model.amount) / 10000)
+                                        .toString(),
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .subtitle2),
+                                TextSpan(
+                                    text: '万',
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .subtitle2),
+                              ])),
+                            ),
+                            56.wb,
+                            SizedBox(
+                              child: Text(
+                               model.statusEnum.str,
+                                style: TextStyle(
+                                    fontSize: BaseStyle.fontSize28,
+                                    color: BaseStyle.color999999),
+                              ),
+                            ),
+                            16.wb,
+                            SizedBox(
+                              child: Text.rich(TextSpan(children: [
+                                TextSpan(
+                                    text:
+                                    (num.parse(model.deposit) / 10000)
+                                        .toString(), //item['pice'],
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .subtitle2
+                                        ?.copyWith(
+                                        color:
+                                        const Color(0xFFFF3B02))),
+                                TextSpan(
+                                    text: '万',
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .subtitle2
+                                        ?.copyWith(
+                                        color:
+                                        const Color(0xFFFF3B02))),
+                              ])),
+                            ),
+                          ],
+                        ),
+                        32.hb,
+                        GestureDetector(
+                          onTap: () {
+                            switch (model.modelName) {
+                              case '成交订单':
+                                Get.to(() => const MakeDeal());
+                                break;
+                              default:
+                            }
+                          },
+                          child: Container(
+                              width: 168.w,
+                              height: 68.w,
+                              padding:
+                              EdgeInsets.only(left: 28.w, top: 14.w),
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFF027AFF),
+                                  borderRadius:
+                                  BorderRadius.circular(8.w)),
+                              child: Text(
+                                _getBottonText(
+                                    model.status),
+                                style: TextStyle(
+                                    color: kForeGroundColor,
+                                    fontSize: BaseStyle.fontSize28),
+                              )),
+                        )
+                      ],
+                    )
                         : model.status != 0
 
-                            ///判断交易是否取消
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  SizedBox(
-                                    child: Text(
-                                      '车辆总价',
-                                      style: TextStyle(
-                                          fontSize: BaseStyle.fontSize28,
-                                          color: BaseStyle.color999999),
-                                    ),
-                                  ),
-                                  16.wb,
-                                  SizedBox(
-                                    child: Text.rich(TextSpan(children: [
-                                      TextSpan(
-                                          text:
-                                              (num.parse(model.amount) / 10000)
-                                                  .toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2),
-                                      TextSpan(
-                                          text: '万',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2),
-                                    ])),
-                                  ),
-                                  56.wb,
-                                  SizedBox(
-                                    child: Text(
-                                      _getTextStatus(model.status),
-                                      style: TextStyle(
-                                          fontSize: BaseStyle.fontSize28,
-                                          color: BaseStyle.color999999),
-                                    ),
-                                  ),
-                                  16.wb,
-                                  SizedBox(
-                                    child: Text.rich(TextSpan(children: [
-                                      TextSpan(
-                                          text:
-                                              (num.parse(model.deposit) / 10000)
-                                                  .toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2
-                                              ?.copyWith(
-                                                  color:
-                                                      const Color(0xFFFF3B02))),
-                                      TextSpan(
-                                          text: '万',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2
-                                              ?.copyWith(
-                                                  color:
-                                                      const Color(0xFFFF3B02))),
-                                    ])),
-                                  ),
-                                ],
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  SizedBox(
-                                    child: Text(
-                                      '车辆总价',
-                                      style: TextStyle(
-                                          fontSize: BaseStyle.fontSize28,
-                                          color: BaseStyle.color999999),
-                                    ),
-                                  ),
-                                  16.wb,
-                                  SizedBox(
-                                    child: Text.rich(TextSpan(children: [
-                                      TextSpan(
-                                          text:
-                                              (num.parse(model.amount) / 10000)
-                                                  .toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2),
-                                      TextSpan(
-                                          text: '万',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2),
-                                    ])),
-                                  ),
-                                ],
-                              )),
+                    ///判断交易是否取消
+                        ? Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          child: Text(
+                            '车辆总价',
+                            style: TextStyle(
+                                fontSize: BaseStyle.fontSize28,
+                                color: BaseStyle.color999999),
+                          ),
+                        ),
+                        16.wb,
+                        SizedBox(
+                          child: Text.rich(TextSpan(children: [
+                            TextSpan(
+                                text:
+                                (num.parse(model.amount) / 10000)
+                                    .toString(),
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .subtitle2),
+                            TextSpan(
+                                text: '万',
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .subtitle2),
+                          ])),
+                        ),
+                        56.wb,
+                        SizedBox(
+                          child: Text(
+                            model.statusEnum.str,
+                            style: TextStyle(
+                                fontSize: BaseStyle.fontSize28,
+                                color: BaseStyle.color999999),
+                          ),
+                        ),
+                        16.wb,
+                        SizedBox(
+                          child: Text.rich(TextSpan(children: [
+                            TextSpan(
+                                text:
+                                (num.parse(model.deposit) / 10000)
+                                    .toString(),
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    ?.copyWith(
+                                    color:
+                                    const Color(0xFFFF3B02))),
+                            TextSpan(
+                                text: '万',
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    ?.copyWith(
+                                    color:
+                                    const Color(0xFFFF3B02))),
+                          ])),
+                        ),
+                      ],
+                    )
+                        : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          child: Text(
+                            '车辆总价',
+                            style: TextStyle(
+                                fontSize: BaseStyle.fontSize28,
+                                color: BaseStyle.color999999),
+                          ),
+                        ),
+                        16.wb,
+                        SizedBox(
+                          child: Text.rich(TextSpan(children: [
+                            TextSpan(
+                                text:
+                                (num.parse(model.amount) / 10000)
+                                    .toString(),
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .subtitle2),
+                            TextSpan(
+                                text: '万',
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .subtitle2),
+                          ])),
+                        ),
+                      ],
+                    )),
               ],
             )),
       ),
@@ -643,99 +589,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
       ],
     );
   }
-
-  ///状态文字
-  _getText(int num) {
-    switch (num) {
-      case 0:
-        return '订单取消';
-        // ignore: dead_code
-        break;
-      case 1:
-        return '待预定';
-
-        ///待签订
-        // ignore: dead_code
-        break;
-      case 2:
-        return '已预定';
-
-        ///已签订
-        // ignore: dead_code
-        break;
-      case 3:
-        return '已支付定金';
-        // ignore: dead_code
-        break;
-      case 10:
-        return '申请检测';
-        // ignore: dead_code
-        break;
-      case 11:
-        return '上传检测报告';
-        // ignore: dead_code
-        break;
-      case 20:
-        return '首付审核';
-        // ignore: dead_code
-        break;
-      case 21:
-        return '首付审核通过';
-        // ignore: dead_code
-        break;
-      case 30:
-        return '过户';
-        // ignore: dead_code
-        break;
-      case 31:
-        return '过户完成';
-        // ignore: dead_code
-        break;
-      case 40:
-        return '尾款审核';
-        // ignore: dead_code
-        break;
-      case 41:
-        return '尾款审核通过';
-        // ignore: dead_code
-        break;
-      case 50:
-        return '交易完成';
-        // ignore: dead_code
-        break;
-      default:
-    }
-  }
 }
-
-///状态文字是否支付
-_getTextStatus(int num) {
-  switch (num) {
-    case 1:
-      return '需付定金';
-    case 2:
-      return '已付定金';
-    case 10:
-      return '待检测';
-    case 11:
-      return '已付定金';
-    case 20:
-      return '需付首付';
-    case 21:
-      return '已付首付';
-
-    case 31:
-      return '已付首付';
-
-    case 40:
-      return '需付尾款';
-    case 41:
-      return '已付尾款';
-    case 50:
-      return '已付尾款';
-  }
-}
-
 ///状态按钮文字
 _getBottonText(int num) {
   switch (num) {
@@ -749,60 +603,6 @@ _getBottonText(int num) {
       break;
     case 40:
       return '成交订单';
-      // ignore: dead_code
-      break;
-  }
-}
-
-///状态数值
-_getStatusNum(int num) {
-  switch (num) {
-    case 0:
-      return 3;
-      // ignore: dead_code
-      break;
-    case 1:
-      return 1;
-      // ignore: dead_code
-      break;
-    case 2:
-      return 2;
-      // ignore: dead_code
-      break;
-    case 10:
-      return 2;
-      // ignore: dead_code
-      break;
-    case 11:
-      return 2;
-      // ignore: dead_code
-      break;
-    case 20:
-      return 3;
-      // ignore: dead_code
-      break;
-    case 21:
-      return 3;
-      // ignore: dead_code
-      break;
-    case 30:
-      return 4;
-      // ignore: dead_code
-      break;
-    case 31:
-      return 4;
-      // ignore: dead_code
-      break;
-    case 40:
-      return 5;
-      // ignore: dead_code
-      break;
-    case 41:
-      return 5;
-      // ignore: dead_code
-      break;
-    case 50:
-      return 6;
       // ignore: dead_code
       break;
   }
