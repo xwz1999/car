@@ -73,7 +73,8 @@ class _CallOrderPageState extends State<CallOrderPage> {
       ),
       backgroundColor: bodyColor,
       extendBody: true,
-      bottomNavigationBar: Container(
+      bottomNavigationBar:
+      Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 30.w),
         height: 150.w,
