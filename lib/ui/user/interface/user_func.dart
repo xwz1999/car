@@ -41,46 +41,57 @@ class User {
     }
   }
 
-  ///支付宝实名认证
-  static Future<String> getAil(
-      String name, String idCard, String idCardFront, String idCardBack) async {
-    BaseModel res = await apiClient.request(API.user.ail.certifyAil, data: {
-      'name': name,
-      'idCard': idCard,
-      'idCardFront': idCardFront,
-      'idCardBack': idCardBack,
-    });
-    if (res.data! == 0) return '0';
-    return (res.msg).toString();
-  }
+  // ///支付宝实名认证
+  // static Future<String> getAil(
+  //     String name, String idCard, String idCardFront, String idCardBack) async {
+  //   BaseModel res = await apiClient.request(API.user.ail.certifyAil, data: {
+  //     'name': name,
+  //     'idCard': idCard,
+  //     'idCardFront': idCardFront,
+  //     'idCardBack': idCardBack,
+  //   });
+  //   if (res.data! == 0) return '0';
+  //   return (res.msg).toString();
+  // }
+  //
+  // ///获取支付宝实名认证结果
+  // static Future<String> getResult(
+  //   String certifyId,
+  // ) async {
+  //   BaseModel res = await apiClient
+  //       .request(API.user.ail.ailResult, data: {"certifyId": certifyId});
+  //   if (res.data! == null) return '1';
+  //   return (res.data['success'] as String).toString();
+  // }
+  //
+  // ///独立合伙人签订合同
+  // static Future<String> getSign(String sign) async {
+  //   BaseModel res = await apiClient
+  //       .request(API.user.sign.contractSign, data: {'sign': sign});
+  //   if (res.data! == null) return '0';
+  //   return (res.data as String).toString();
+  // }
 
-  ///获取支付宝实名认证结果
-  static Future<String> getResult(
-    String certifyId,
-  ) async {
-    BaseModel res = await apiClient
-        .request(API.user.ail.ailResult, data: {"certifyId": certifyId});
-    if (res.data! == null) return '1';
-    return (res.data['success'] as String).toString();
-  }
+  // ///独立合伙人支付
+  // static Future<String> getPartnerPay(int orderId, int payType) async {
+  //   BaseModel res = await apiClient.request(API.user.sign.partnerPay, data: {
+  //     'orderId': orderId,
+  //     'payType': payType,
+  //   });
+  //   if (res.data! == null) return '';
+  //   return (res.data as String).toString();
+  // }
 
-  ///独立合伙人签订合同
-  static Future<String> getSign(String sign) async {
-    BaseModel res = await apiClient
-        .request(API.user.sign.contractSign, data: {'sign': sign});
-    if (res.data! == null) return '0';
-    return (res.data as String).toString();
-
-    /// }
-  }
-
-  ////独立合伙人支付
-  static Future<String> getPartnerPay(int orderId, int payType) async {
-    BaseModel res = await apiClient.request(API.user.sign.partnerPay, data: {
-      'orderId': orderId,
-      'payType': payType,
-    });
-    if (res.data! == null) return '';
-    return (res.data as String).toString();
+  ///修改用户信息
+  static Future<bool> getUserUpdate(
+      String headImg, String nickname, int gender) async {
+    BaseModel res = await apiClient.request(API.user.userUpdate,
+        data: {'headImg': headImg, 'nickname': nickname, 'gender': gender});
+    if (res.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(res.msg);
+      return false;
+    }
   }
 }

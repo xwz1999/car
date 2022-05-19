@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
+
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 
 class ChangeNameData extends StatefulWidget {
@@ -29,7 +30,9 @@ String guaranteeSlip = '';
 
 ///保单
 late double pice;
-
+  // final picker = ImagePicker();
+ // ignore: unnecessary_late
+ File imagePath = File('');
 class _ChangeNameDataState extends State<ChangeNameData> {
   @override
   Widget build(BuildContext context) {
@@ -53,47 +56,54 @@ class _ChangeNameDataState extends State<ChangeNameData> {
             children: [
               getText(
                 '登记证书',
-                CarImageItem(
-                  imageBack: (List<File> image) {
-                    certificate = image.first.path;
-                  },
-
-                  //isPadding: false,
-                ),
+                                  GestureDetector(onTap: () async{
+ var value =  await CloudImagePicker.pickSingleImage(title: '选择图片');
+                           certificate=value!.path;
+                          // print(imagePath);
+                            setState(() {});
+                  },child:
+                   Image.asset(certificate==''?Assets.images.addcar.path:certificate,width: 200.w,height: 150.w,),)
               ),
               //48.hb,
               getText(
                 '行驶证',
-                CarImageItem(
-                  imageBack: (List<File> image) {
-                    vehicleLicense = image.first.path;
-                  },
-
-                  //isPadding: false,
-                ),
+                 GestureDetector(onTap: () async{
+ var value =  await CloudImagePicker.pickSingleImage(title: '选择图片');
+                           vehicleLicense=value!.path;
+                          // print(imagePath);
+                            setState(() {});
+                  },child:
+                   Image.asset(vehicleLicense==""?Assets.images.addcar.path:vehicleLicense,width: 200.w,height: 150.w,),)
+      
               ),
               //48.hb,
               getText(
                 '发票',
-                CarImageItem(
-                  imageBack: (List<File> image) {
-                    invoice = image.first.path;
-                  },
-
-                  //isPadding: false,
-                ),
+                            GestureDetector(onTap: () async{
+ var value =  await CloudImagePicker.pickSingleImage(title: '选择图片');
+                           invoice=value!.path;
+                          // print(imagePath);
+                            setState(() {});
+                  },child:
+                   Image.asset(invoice==''?Assets.images.addcar.path:invoice,width: 200.w,height: 150.w,),)
+      
               ),
+             
+           
               //48.hb,
               getText(
                 '保单',
-                CarImageItem(
-                  imageBack: (List<File> image) {
-                    guaranteeSlip = image.first.path;
-                  },
-
-                  //isPadding: false,
-                ),
+                             GestureDetector(onTap: () async{
+ var value =  await CloudImagePicker.pickSingleImage(title: '选择图片');
+                           guaranteeSlip=value!.path;
+                          // print(imagePath);
+                            setState(() {});
+                  },child:
+                   Image.asset(guaranteeSlip==''?Assets.images.addcar.path:guaranteeSlip,width: 200.w,height: 150.w,),)
+      
               ),
+          
+           
               //48.hb,
               Row(
                 children: [
@@ -193,6 +203,8 @@ class _ChangeNameDataState extends State<ChangeNameData> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+    
           SizedBox(
             width: 130.w,
             child: Text(

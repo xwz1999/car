@@ -9,6 +9,8 @@ import 'package:cloud_car/ui/user/user_invitation/user_invitation.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_order/myorder.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
 import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -116,13 +118,7 @@ class _UserPageState extends State<UserPage> {
                     .bodyText1
                     ?.copyWith(color: const Color(0xFFCCCCCC))),
             64.hb,
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Get.to(() => const DetectionData(
-            //             orderId: 1,
-            //           ));
-            //     },
-            //     child: Text('1111'))
+          
           ],
         ),
       ),

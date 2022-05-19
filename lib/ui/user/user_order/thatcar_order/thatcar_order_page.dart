@@ -131,7 +131,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                   ? const SizedBox()
                   : callCarList.isEmpty
                       ? const NoDataWidget(
-                          text: '暂无相关车辆信息',
+                          text: '暂无相关订单信息',
                           paddingTop: 300,
                         )
                       : ListView.builder(
