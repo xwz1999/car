@@ -7,13 +7,15 @@ class CloudListPickerWidget extends StatefulWidget {
   final List<String> items;
   final Function(String, int) onConfirm;
   final int? initIndex;
+  final MainAxisAlignment? textAlignment;
 
   const CloudListPickerWidget(
       {super.key,
       required this.title,
       required this.items,
       required this.onConfirm,
-      this.initIndex});
+      this.initIndex,
+      this.textAlignment});
 
   @override
   _CloudListPickerWidgetState createState() => _CloudListPickerWidgetState();
@@ -65,7 +67,7 @@ class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
         color: Colors.transparent,
         alignment: Alignment.center,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: widget.textAlignment ?? MainAxisAlignment.center,
           children: [
             _pickString == item
                 ? Image.asset(

@@ -1,6 +1,7 @@
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_result_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/picker/car_picker_box.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_item_widget.dart';
@@ -8,6 +9,23 @@ import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'choose_time_widget.dart';
+
+enum LoanType {
+  equalPrincipalInterest(0, '等额本息', '月供每月相同，本金逐月递增，利息逐月增加'),
+  equalPrincipal(1, '等额本金', '月供逐月递减，本金每月相同，利息逐月递减'),
+  equalInterest(2, '等额等息', '月供、本金、利息每月相同'),
+  interestFirstPrincipalNext(3, '先息后本', '每月固定还利息，到期还全部本金'),
+  duePrincipalInterest(4, '到期本息', '到期一次性还清全部本金和利息');
+
+  final int typeNum;
+  final String typeString;
+  final String description;
+
+  static LoanType getValue(int value) =>
+      LoanType.values.firstWhere((element) => element.typeNum == value);
+
+  const LoanType(this.typeNum, this.typeString, this.description);
+}
 
 ///车辆按揭
 class CarMortgagePage extends StatefulWidget {
@@ -18,21 +36,10 @@ class CarMortgagePage extends StatefulWidget {
 }
 
 class _CarMortgagePageState extends State<CarMortgagePage> {
-
-  bool chooseOne = true;
   num? loanAmount;
   num? loanTerm;
   num? interestRate;
-  String? repaymentMethod;
-
-
-  List<PayWay> payWayLists = [
-    const PayWay(title: '等额本息', describe: '月供每月相同，本金逐月递增，利息逐月增加', id: '等额本息'),
-    const PayWay(title: '等额本金', describe: '月供逐月递减，本金每月相同，利息逐月递减', id: '等额本金'),
-    const PayWay(title: '等额等息', describe: '月供、本金、利息每月相同', id: '等额等息'),
-    const PayWay(title: '先息后本', describe: '每月还固定利息，到期还全部本金', id: '先息后本'),
-    const PayWay(title: '到期本息', describe: '到期一次性还清全部本金和利息', id: '到期本息'),
-  ];
+  LoanType? _pickLoanType;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +50,7 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
         ),
         backgroundColor: Colors.white,
         title: Text(
-          '车贷计算器',
+          '车贷计算',
           style: Theme.of(context).textTheme.headline4,
         ),
       ),
@@ -58,14 +65,12 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
           ),
           EditItemWidget(
             paddingTop: 30.w,
-            keyboardType:TextInputType.number,
+            keyboardType: TextInputType.number,
             title: '贷款金额',
-            value: loanAmount==null?'': loanAmount.toString(),
+            value: loanAmount == null ? '' : loanAmount.toString(),
             callback: (String content) {
               loanAmount = double.parse(content);
-              setState(() {
-
-              });
+              setState(() {});
             },
             endText: '万元',
             canChange: true,
@@ -79,15 +84,13 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
             color: const Color(0xFFE8E8E8),
           ),
           EditItemWidget(
-            keyboardType:TextInputType.number,
+            keyboardType: TextInputType.number,
             paddingTop: 30.w,
             title: '贷款期限',
-            value: loanTerm==null?'': loanTerm.toString(),
+            value: loanTerm == null ? '' : loanTerm.toString(),
             callback: (String content) {
               loanTerm = double.parse(content);
-              setState(() {
-
-              });
+              setState(() {});
             },
             canChange: true,
             tips: '限制600月以内',
@@ -107,15 +110,12 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
           ),
           EditItemWidget(
             paddingTop: 30.w,
-            keyboardType:TextInputType.number,
+            keyboardType: TextInputType.number,
             title: '利率',
-            value: interestRate==null?'': interestRate.toString(),
+            value: interestRate == null ? '' : interestRate.toString(),
             callback: (String content) {
               interestRate = double.parse(content);
-              setState(() {
-
-              });
-
+              setState(() {});
             },
             endIcon: Row(
               children: [
@@ -148,28 +148,31 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
               await showModalBottomSheet(
                 context: context,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(16.w))),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
-                  return CloudListPickerItemWidget(
+                  return CloudListPickerWidget(
                       title: '还款方式',
-                      items: payWayLists,
-                      onConfirm: (str, index) {
-                        repaymentMethod = str.id;
-                        Get.back();
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        setState(() {});
-                      });
+                      items: LoanType.values
+                          .map((e) => '${e.typeString}/n${e.description}')
+                          .toList(),
+                      onConfirm: (str, index) {});
+                  // return CloudListPickerItemWidget(
+                  //     title: '还款方式',
+                  //     items: LoanType.values.map((e) => e.typeString).toList(),
+                  //     onConfirm: (str, index) {
+                  //       repaymentMethod = str.id;
+                  //       Get.back();
+                  //       FocusManager.instance.primaryFocus?.unfocus();
+                  //       setState(() {});
+                  //     });
                 },
               );
             },
             child: EditItemWidget(
               title: '还款方式',
-              value: repaymentMethod??'',
-              callback: (String content) {
-
-
-              },
+              value: _pickLoanType?.typeString ?? '',
+              callback: (String content) {},
               endText: '万元',
               canChange: false,
               tips: '请选择还款方式',
@@ -182,7 +185,19 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
             color: kForeGroundColor,
             child: GestureDetector(
               onTap: () async {
-                Get.to(()=>const CarMortgageResultPage());
+                if (loanTerm == null ||
+                    loanAmount == null ||
+                    interestRate == null ||
+                    _pickLoanType == null) {
+                  CloudToast.show('请先填写数据！');
+                  return;
+                }
+                Get.to(() => CarMortgageResultPage(
+                      loanTerm: loanTerm!,
+                      loanType: _pickLoanType!,
+                      loanAmount: loanAmount!,
+                      interestRate: interestRate!,
+                    ));
               },
               child: Container(
                 width: double.infinity,
@@ -235,16 +250,4 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
       ),
     );
   }
-}
-
-class PayWay{
-  final String title;
-  final String describe;
-  final String id;
-
-  const PayWay({
-    required this.title,
-    required this.describe,
-    required this.id,
-  });
 }

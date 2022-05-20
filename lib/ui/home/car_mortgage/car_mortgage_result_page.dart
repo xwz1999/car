@@ -1,4 +1,5 @@
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
+import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
@@ -11,34 +12,99 @@ import 'choose_time_widget.dart';
 
 ///车辆按揭
 class CarMortgageResultPage extends StatefulWidget {
-  const CarMortgageResultPage({super.key});
+  final num loanAmount;
+  final num loanTerm;
+  final num interestRate;
+  final LoanType loanType;
+
+  const CarMortgageResultPage(
+      {super.key,
+      required this.loanAmount,
+      required this.loanTerm,
+      required this.interestRate,
+      required this.loanType});
 
   @override
   _CarMortgageResultPageState createState() => _CarMortgageResultPageState();
 }
 
 class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
-
   bool onLoad = false;
 
-
   List<Loan> list = [
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
-    Loan(surplus: 960295.28, amount: 43871.39, interest: 4166.67, date: '2022-02-15', principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
+    Loan(
+        surplus: 960295.28,
+        amount: 43871.39,
+        interest: 4166.67,
+        date: '2022-02-15',
+        principal: 39704.72),
   ];
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +115,12 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
         ),
         backgroundColor: Colors.white,
         title: Text(
-          '车贷计算器',
+          '车贷计算',
           style: Theme.of(context).textTheme.headline4,
         ),
       ),
       backgroundColor: Colors.white,
       body: ListView(
-
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 32.w),
@@ -69,13 +134,15 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
               32.wb,
               Text(
                 '还款计划（单位：元）',
-                style:
-                    TextStyle(color: const Color(0xFF333333), fontSize: 32.sp,fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: const Color(0xFF333333),
+                    fontSize: 32.sp,
+                    fontWeight: FontWeight.bold),
               ),
               Text(
                 '假定每月15日还款',
-                style: TextStyle(
-                    color: const Color(0xFF999999), fontSize: 24.sp),
+                style:
+                    TextStyle(color: const Color(0xFF999999), fontSize: 24.sp),
               ),
             ],
           ),
@@ -147,11 +214,11 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
           onLoad
               ? const SizedBox()
               : list.isEmpty
-              ? const NoDataWidget(
-            text: '暂无相关信息',
-            paddingTop: 300,
-          )
-              :bottomWidget(),
+                  ? const NoDataWidget(
+                      text: '暂无相关信息',
+                      paddingTop: 300,
+                    )
+                  : bottomWidget(),
         ],
       ),
     );
@@ -159,21 +226,20 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
 
   bottomWidget() {
     return ListView.builder(
-      physics:const NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
-        return getItem(list[index],index);
+        return getItem(list[index], index);
       },
       itemCount: list.length,
     );
   }
 
-
-  getItem(Loan loan,int index){
-    return        Container(
+  getItem(Loan loan, int index) {
+    return Container(
       width: double.infinity,
       height: 96.w,
-      color: index%2==0? Colors.white:const Color(0xFFF9F9F9),
+      color: index % 2 == 0 ? Colors.white : const Color(0xFFF9F9F9),
       child: Row(
         children: [
           Expanded(
@@ -406,9 +472,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
   }
 }
 
-
-
-class  Loan{
+class Loan {
   String date;
   num amount;
   num principal;
