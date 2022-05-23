@@ -203,7 +203,7 @@ class _HomePageState extends State<HomePage>
             Get.to(() => const CarMortgagePage());
             break;
           case '维护查询':
-            Get.to(() => const MaintainQueryPage());
+            //Get.to(() => const MaintainQueryPage());
             break;
         }
       },
