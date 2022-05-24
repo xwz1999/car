@@ -1,3 +1,4 @@
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/ui/user/user_management/employee_details.dart';
@@ -29,6 +30,7 @@ class _StaffManagementState extends State<StaffManagement> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   late TextEditingController _editingController;
   String searchText = '';
+
   @override
   void initState() {
     super.initState();
@@ -244,7 +246,7 @@ class _StaffManagementState extends State<StaffManagement> {
                           //销售比例
                           proportion: '10%',
                           //性别
-                          sex: e.auditStatus == 1 ? '女' : '男',
+                          sex: e.genderEM.typeStr,
                           //所属门店
                           stores: model.name,
                         ));
@@ -253,9 +255,9 @@ class _StaffManagementState extends State<StaffManagement> {
                   child: _getText(
                       e.roleName,
                       // ignore: unrelated_type_equality_checks
-                      e.auditStatus == '1'
+                      e.genderEM == Gender.male
                           ? Assets.icons.icUser.path
-                          : Assets.icons.customerManager.path,
+                          : Assets.icons.icUserWoman.path,
                       e.name,
                       e.phone,
                       e.auditStatus),

@@ -423,7 +423,7 @@ class _AddEmployeeState extends State<AddEmployee> {
   }
 
   _refresh() async {
-    zhi = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
+    zhi = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 2 : 1,
         phoneText, storeId, roleId, commissionText);
   }
 }
