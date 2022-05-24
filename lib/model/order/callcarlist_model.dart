@@ -1,11 +1,11 @@
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'callcarlist_model.g.dart';
 
-
 @JsonSerializable()
-class CallcarlistModel extends Equatable{
+class CallcarlistModel extends Equatable {
   final int id;
   final String orderSn;
   final String mainPhoto;
@@ -15,8 +15,11 @@ class CallcarlistModel extends Equatable{
   final int transfer;
   final String amount;
   final int status;
-    factory CallcarlistModel.fromJson(Map<String, dynamic> json) =>_$CallcarlistModelFromJson(json);
 
+  factory CallcarlistModel.fromJson(Map<String, dynamic> json) =>
+      _$CallcarlistModelFromJson(json);
+
+  OrderCallCarStatus get statusEnum => OrderCallCarStatus.getStatus(status);
 
   const CallcarlistModel({
     required this.id,
@@ -29,6 +32,17 @@ class CallcarlistModel extends Equatable{
     required this.amount,
     required this.status,
   });
+
   @override
-  List<Object?> get props => [id,orderSn,mainPhoto,modelName,licensingDate,mileage,transfer,amount,status,];
+  List<Object?> get props => [
+        id,
+        orderSn,
+        mainPhoto,
+        modelName,
+        licensingDate,
+        mileage,
+        transfer,
+        amount,
+        status,
+      ];
 }

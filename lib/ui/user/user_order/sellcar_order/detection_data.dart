@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -73,13 +75,32 @@ class _DetectionDataState extends State<DetectionData> {
                           ?.copyWith(color: const Color(0xFF999999)),
                     ),
                   ),
-                  GestureDetector(onTap: () async{
- var value =  await CloudImagePicker.pickSingleImage(title: '选择图片');
-                           imagePath=value!;
-                          // print(imagePath);
-                            setState(() {});
-                  },child:
-                   Image.asset(imagePath==null?Assets.images.addcar.path:imagePath.path,width: 200.w,height: 150.w,),)
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          img = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: img == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [img],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))
                 ],
               ),
             ),

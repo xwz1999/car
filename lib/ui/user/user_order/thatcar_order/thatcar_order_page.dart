@@ -1,7 +1,5 @@
 import 'package:cloud_car/model/order/callcarlist_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
-import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete.dart';
-import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete_other.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid.dart';
 import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid_other.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -81,7 +79,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
         },
         child: Column(
           children: [
-             SizedBox(
+            SizedBox(
               height: kToolbarHeight + 50.w,
             ),
             SizedBox(
@@ -102,7 +100,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
             16.hb,
             Expanded(
                 child: EasyRefresh(
-                  firstRefresh: true,
+              firstRefresh: true,
               header: MaterialHeader(),
               footer: MaterialFooter(),
               controller: _easyRefreshController,
@@ -123,8 +121,20 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                 _page = 1;
                 callCarList =
                     await OrderFunc.getCallCar(page: _page, size: _size);
-                _onLoad = false;
 
+                _onLoad = false;
+                // callCarList = [
+                //   const CallcarlistModel(
+                //       amount: '100',
+                //       mileage: '25.5',
+                //       transfer: 1,
+                //       mainPhoto: '',
+                //       modelName: '',
+                //       status: 0,
+                //       licensingDate: 1136217600,
+                //       id: 9,
+                //       orderSn: '202205180003')
+                // ];
                 setState(() {});
               },
               child: _onLoad
@@ -148,47 +158,18 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
   getCar(CallcarlistModel model) {
     late bool bl = false;
     return Offstage(
-        offstage: text == '全部' ? false : getStatus(model.status) != text,
+        offstage: text == '全部' ? false : model.statusEnum.str != text,
         child: GestureDetector(
             onTap: () {
-              switch (getStatus(model.status)) {
-                case '待支付':
-                  Get.to(() => bl == true
-                      ? const ThatcarUnpaid(
-                          stat: '待支付',
-                        )
-                      : const UnpaidOther(
-                          stat: '待支付',
-                        ));
-                  break;
-                case '待交车':
-                  Get.to(() => bl
-                      ? const ThatcarUnpaid(
-                          stat: '待交车',
-                        )
-                      : const UnpaidOther(
-                          stat: '待交车',
-                        ));
-                  break;
-                case '已完成':
-                  Get.to(() => bl
-                      ? const ThatcarComplete(
-                          stat: '已完成',
-                        )
-                      : const Complete0ther(
-                          stat: '已完成',
-                        ));
-                  break;
-                case '已退款':
-                  Get.to(() => bl
-                      ? const ThatcarComplete(
-                          stat: '已退款',
-                        )
-                      : const Complete0ther(
-                          stat: '已退款',
-                        ));
-                  break;
-              }
+              model.transfer == 1
+                  ? Get.to(() => UnpaidOther(
+                        status: model.status,
+                        statusText: model.statusEnum.str,
+                      ))
+                  : Get.to(() => ThatcarUnpaid(
+                        statusText: model.statusEnum.str,
+                        status: model.status,
+                      ));
             },
             child: Container(
                 padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
@@ -202,7 +183,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                     Text(
                       getStatus(model.status),
                       style: TextStyle(
-                          color: getStatus(model.status) != '已退款'
+                          color: model.status != 4
                               ? const Color(0xFF027AFF)
                               : const Color(0xFF666666),
                           fontSize: BaseStyle.fontSize28),
@@ -235,7 +216,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                                         model.licensingDate.toInt() * 1000,
                                         format: 'yyyy年MM月'),
                                     '${model.mileage}万公里',
-                                    getStatus(model.status)),
+                                    model.statusEnum.str),
                               )
                             ],
                           ),

@@ -14,7 +14,9 @@ class HistoryModel extends Equatable {
   final int createdAt;
   factory HistoryModel.fromJson(Map<String, dynamic> json) =>
       _$HistoryModelFromJson(json);
-   DateTime get createDateTime => DateUtil.getDateTimeByMs(createdAt*1000);
+  DateTime get createDateTime => DateUtil.getDateTimeByMs(createdAt * 1000);
+
+  ///时间戳传唤格式
 
   @override
   List<Object?> get props => [

@@ -3,7 +3,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
-import 'package:cloud_car/ui/user/user_order/dealer_consignment_order.dart/dealer_consignment_rejected.dart';
 import 'package:cloud_car/ui/user/user_order/dealer_consignment_order.dart/dealer_consignment_signed.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -20,6 +19,7 @@ import '../../../../widget/car_widget.dart';
 
 class DealerConsignmentOrderPage extends StatefulWidget {
   final Function callBack;
+
   const DealerConsignmentOrderPage({super.key, required this.callBack});
 
   @override
@@ -36,6 +36,7 @@ class _DealerConsignmentOrderPageState
   int _page = 1;
   final int _size = 10;
   bool _onLoad = true;
+
   @override
   void initState() {
     super.initState();
@@ -83,7 +84,7 @@ class _DealerConsignmentOrderPageState
       },
       child: Column(
         children: [
-           SizedBox(
+          SizedBox(
             height: kToolbarHeight + 50.w,
           ),
           SizedBox(
@@ -105,78 +106,78 @@ class _DealerConsignmentOrderPageState
                 _page = 1;
                 _DealerConsignmentList =
                     await OrderFunc.getDealerLists(page: _page, size: _size);
-                _DealerConsignmentList = [
-                  const ListsModel(
-                      id: 13,
-                      orderSn: '202205120008',
-                      status: 3,
-                      auditStatus: 0,
-                      modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                      licensingDate: 1640966400,
-                      mileage: '1',
-                      price: '11',
-                      createdAt: 1652322521),
-                  const ListsModel(
-                      id: 13,
-                      orderSn: '202205120008',
-                      status: 3,
-                      auditStatus: 1,
-                      modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                      licensingDate: 1640966400,
-                      mileage: '1',
-                      price: '11',
-                      createdAt: 1652322521),
-                  const ListsModel(
-                      id: 13,
-                      orderSn: '202205120008',
-                      status: 4,
-                      auditStatus: 0,
-                      modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                      licensingDate: 1640966400,
-                      mileage: '1',
-                      price: '11',
-                      createdAt: 1652322521),
-                  const ListsModel(
-                      id: 13,
-                      orderSn: '202205120008',
-                      status: 5,
-                      auditStatus: 0,
-                      modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                      licensingDate: 1640966400,
-                      mileage: '1',
-                      price: '11',
-                      createdAt: 1652322521),
-                  const ListsModel(
-                      id: 13,
-                      orderSn: '202205120008',
-                      status: 6,
-                      auditStatus: 0,
-                      modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                      licensingDate: 1640966400,
-                      mileage: '1',
-                      price: '11',
-                      createdAt: 1652322521),
-                  const ListsModel(
-                      id: 13,
-                      orderSn: '202205120008',
-                      status: 7,
-                      auditStatus: 0,
-                      modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                      licensingDate: 1640966400,
-                      mileage: '1',
-                      price: '11',
-                      createdAt: 1652322521),
-                  const ListsModel(
-                      id: 13,
-                      orderSn: '202205120008',
-                      status: 0,
-                      auditStatus: 0,
-                      modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                      licensingDate: 1640966400,
-                      mileage: '1',
-                      price: '11',
-                      createdAt: 1652322521),
-                ];
+                // _DealerConsignmentList = [
+                //   const ListsModel(
+                //       id: 13,
+                //       orderSn: '202205120008',
+                //       status: 3,
+                //       auditStatus: 0,
+                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
+                //       licensingDate: 1640966400,
+                //       mileage: '1',
+                //       price: '11',
+                //       createdAt: 1652322521),
+                //   const ListsModel(
+                //       id: 13,
+                //       orderSn: '202205120008',
+                //       status: 3,
+                //       auditStatus: 1,
+                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
+                //       licensingDate: 1640966400,
+                //       mileage: '1',
+                //       price: '11',
+                //       createdAt: 1652322521),
+                //   const ListsModel(
+                //       id: 13,
+                //       orderSn: '202205120008',
+                //       status: 4,
+                //       auditStatus: 0,
+                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
+                //       licensingDate: 1640966400,
+                //       mileage: '1',
+                //       price: '11',
+                //       createdAt: 1652322521),
+                //   const ListsModel(
+                //       id: 13,
+                //       orderSn: '202205120008',
+                //       status: 5,
+                //       auditStatus: 0,
+                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
+                //       licensingDate: 1640966400,
+                //       mileage: '1',
+                //       price: '11',
+                //       createdAt: 1652322521),
+                //   const ListsModel(
+                //       id: 13,
+                //       orderSn: '202205120008',
+                //       status: 6,
+                //       auditStatus: 0,
+                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
+                //       licensingDate: 1640966400,
+                //       mileage: '1',
+                //       price: '11',
+                //       createdAt: 1652322521),
+                //   const ListsModel(
+                //       id: 13,
+                //       orderSn: '202205120008',
+                //       status: 7,
+                //       auditStatus: 0,
+                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
+                //       licensingDate: 1640966400,
+                //       mileage: '1',
+                //       price: '11',
+                //       createdAt: 1652322521),
+                //   const ListsModel(
+                //       id: 13,
+                //       orderSn: '202205120008',
+                //       status: 0,
+                //       auditStatus: 0,
+                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
+                //       licensingDate: 1640966400,
+                //       mileage: '1',
+                //       price: '11',
+                //       createdAt: 1652322521),
+                // ];
                 _onLoad = false;
                 setState(() {});
               },
@@ -214,173 +215,65 @@ class _DealerConsignmentOrderPageState
     );
   }
 
-  ///状态表示进度
-  _getStatusNum(int num) {
-    switch (num) {
-      case 0:
-        return 4;
-        // ignore: dead_code
-        break;
-      case 1:
-        return 1;
-        // ignore: dead_code
-        break;
-      case 2:
-        return 2;
-        // ignore: dead_code
-        break;
-      case 3:
-        return 3;
-        // ignore: dead_code
-        break;
-      case 4:
-        return 3;
-        // ignore: dead_code
-        break;
-      case 5:
-        return 4;
-        // ignore: dead_code
-        break;
-      case 6:
-        return 5;
-        // ignore: dead_code
-        break;
-      case 7:
-        return 6;
-        // ignore: dead_code
-        break;
-    }
-  }
-
-  ///状态文字
-  _getStatusText(ListsModel num) {
-    switch (num.status) {
-      case 0:
-        return '交易取消';
-
-        ///订单取消
-        // ignore: dead_code
-        break;
-      case 3:
-        switch (num.auditStatus) {
-          case 0:
-            return '审核中';
-            // ignore: dead_code
-            break;
-          case 1:
-            return '已驳回';
-            // ignore: dead_code
-            break;
-        }
-
-        ///提交审核
-        // ignore: dead_code
-        break;
-      case 4:
-        return '在售';
-
-        ///已上架
-        // ignore: dead_code
-        break;
-
-      case 5:
-        return '已售';
-
-        ///已出售
-        // ignore: dead_code
-        break;
-
-      case 6:
-        return '已到账';
-        // ignore: dead_code
-        break;
-      case 7:
-        return '已售';
-
-        ///已成交
-        // ignore: dead_code
-        break;
-    }
-  }
-
   getCar(ListsModel model) {
     return Offstage(
-        offstage: text == '全部' ? false : _getStatusText(model) != text,
+        offstage:
+            text == '全部' ? false : model.carStatusEnum.carProgressNum != text,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
           child: GestureDetector(
             onTap: () {
-              switch (model.status) {
-                case 3:
-                  Get.to(() => DealerConsignmentSigned(
-                        id: model.id,
-                        statusNum: _getStatusNum(model.status),
-                        stat: '审核中',
-                      ));
-                  break;
-                case 1:
-                  Get.to(() => DealerConsignmentSigned(
-                        id: model.id,
-                        statusNum: _getStatusNum(model.status),
-                        stat: '已驳回',
-                      ));
-                  break;
-                case 4:
-                  Get.to(() => DealerConsignmentSigned(
-                        id: model.id,
-                        statusNum: _getStatusNum(model.status),
-                        stat: '在售',
-                      ));
-                  break;
-                case 5:
-                  Get.to(() => DealerConsignmentSigned(
-                        id: model.id,
-                        statusNum: _getStatusNum(model.status),
-                        stat: '已售',
-                      ));
-                  break;
-            case 0:
-              Get.to(() => const DealerConsignmentRejected());
-              break;
-          }
-        },
-        child: Container(
-            padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
-            decoration: BoxDecoration(
-                color: kForeGroundColor,
-                borderRadius: BorderRadius.circular(16.w)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: Text(
-                    _getStatusText(model),
-                    style: TextStyle(
-                        color: getColor(
-                          _getStatusText(model),
-                        ),
-                        fontSize: BaseStyle.fontSize28),
-                  ),
-                ),
-                // 24.hb,
-                Row(
+              Get.to(() => DealerConsignmentSigned(
+                    status: model.status,
+                    price: model.price,
+                    id: model.id,
+                    statusNum: model.carStatusEnum.carProgressNum,
+                    auditStatus: model.auditStatus,
+                    //stat: '审核中',
+                  ));
+
+              //   case 0:
+              //     Get.to(() => const DealerConsignmentRejected());
+              //     break;
+              // }
+            },
+            child: Container(
+                padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+                decoration: BoxDecoration(
+                    color: kForeGroundColor,
+                    borderRadius: BorderRadius.circular(16.w)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 196.w,
-                      height: 150.w,
-                      child: const CloudImageNetworkWidget.car(
-                        urls: [],
+                    Padding(
+                      padding: EdgeInsets.only(left: 0.w),
+                      child: Text(
+                        model.carStatusEnum.str,
+                        style: TextStyle(
+                            color: getColor(
+                              model,
+                            ),
+                            fontSize: BaseStyle.fontSize28),
                       ),
                     ),
-                    20.wb,
-                    SizedBox(
-                      width: 406.w,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(model.modeName,
-                              style: TextStyle(
+                    // 24.hb,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 196.w,
+                          height: 150.w,
+                          child: const CloudImageNetworkWidget.car(
+                            urls: [],
+                          ),
+                        ),
+                        20.wb,
+                        SizedBox(
+                          width: 406.w,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(model.modeName,
+                                  style: TextStyle(
                                       fontSize: BaseStyle.fontSize28,
                                       color: BaseStyle.color111111)),
                               32.hb,
@@ -458,13 +351,15 @@ class _DealerConsignmentOrderPageState
     );
   }
 
-  Color getColor(String judgename) {
-    if (judgename == '交易取消') {
+  Color getColor(ListsModel model) {
+    if (model.status == 0) {
       return const Color(0xFF666666);
-    } else if (judgename == '审核中') {
-      return const Color(0xFFFE8029);
-    } else if (judgename == '已驳回') {
-      return Colors.red;
+    } else if (model.status == 1) {
+      if (model.auditStatus == 3) {
+        return Colors.red;
+      } else {
+        return const Color(0xFFFE8029);
+      }
     } else {
       return const Color(0xFF027AFF);
     }
@@ -477,7 +372,5 @@ class _DealerConsignmentOrderPageState
     );
   }
 }
-
-
 
 ///

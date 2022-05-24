@@ -5,8 +5,8 @@ import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/headers.dart';
-import '../../../../widget/button/cloud_back_button.dart';
+import '../../../../../utils/headers.dart';
+import '../../../../../widget/button/cloud_back_button.dart';
 
 class ConsignmentRejected extends StatefulWidget {
   final int orderId;

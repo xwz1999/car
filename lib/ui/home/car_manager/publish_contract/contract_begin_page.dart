@@ -12,6 +12,7 @@ import '../../../../widget/button/cloud_back_button.dart';
 
 class ContractBeginPage extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
+
   const ContractBeginPage({super.key, required this.consignmentContractModel});
 
   @override
@@ -19,11 +20,9 @@ class ContractBeginPage extends StatefulWidget {
 }
 
 class _ContractBeginPageState extends State<ContractBeginPage> {
-
   // ///寄卖合同model
   // final ValueNotifier<ConsignmentContractModel> consignmentContractModel = ValueNotifier(
   //     ConsignmentContractModel(masterInfo: MasterInfo()));
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +56,17 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
             Container(
               padding: EdgeInsets.all(30.w),
               color: Colors.white,
-              child:GestureDetector(
+              child: GestureDetector(
                 onTap: () {
-
-
                   Get.to(() => ChooseCustomerPage(
-                    callback: (CustomerListModel model) {
-                      widget.consignmentContractModel.value.customerName = model.nickname;
-                      widget.consignmentContractModel.value.customerId = model.id;
-                      setState(() {});
-                    },
-                  ));
-
-
-
+                        callback: (CustomerListModel model) {
+                          widget.consignmentContractModel.value.customerName =
+                              model.nickname;
+                          widget.consignmentContractModel.value.customerId =
+                              model.id;
+                          setState(() {});
+                        },
+                      ));
                 },
                 child: Material(
                   color: Colors.transparent,
@@ -91,11 +87,20 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
                             .color(Colors.black.withOpacity(0.45))
                             .make(),
                       ),
-                      (widget.consignmentContractModel.value.customerName!.isEmpty ? '请选择卖车客户' : widget.consignmentContractModel.value.customerName!)
+                      (widget.consignmentContractModel.value.customerName!
+                                  .isEmpty
+                              ? '请选择卖车客户'
+                              : widget
+                                  .consignmentContractModel.value.customerName!)
                           .text
                           .size(30.sp)
-                          .color(Colors.black
-                          .withOpacity(widget.consignmentContractModel.value.customerName!.isEmpty ? 0.25 : 0.85))
+                          .color(Colors.black.withOpacity(widget
+                                  .consignmentContractModel
+                                  .value
+                                  .customerName!
+                                  .isEmpty
+                              ? 0.25
+                              : 0.85))
                           .make(),
                       const Spacer(),
                       Icon(
@@ -108,23 +113,25 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
                 ),
               ),
             ),
-
             30.heightBox,
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if(widget.consignmentContractModel.value.customerId==null){
+                  if (widget.consignmentContractModel.value.customerId ==
+                      null) {
                     CloudToast.show('请先选择客户');
+                  } else {
+                    Get.to(() => ContractPurchase(
+                          consignmentContractModel:
+                              widget.consignmentContractModel,
+                        ));
                   }
-                  Get.to(() => ContractPurchase(consignmentContractModel:  widget.consignmentContractModel,));
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                child:
-                '下一步'.text.size(30.sp).color(Colors.white).make(),
+                child: '下一步'.text.size(30.sp).color(Colors.white).make(),
               ),
             ).paddingAll(30.w),
           ],

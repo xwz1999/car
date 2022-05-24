@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
-
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -55,55 +56,122 @@ class _ChangeNameDataState extends State<ChangeNameData> {
           child: ListView(
             children: [
               getText(
-                '登记证书',
-                                  GestureDetector(onTap: () async{
- var value =  await CloudImagePicker.pickSingleImage(title: '选择图片');
-                           certificate=value!.path;
-                          // print(imagePath);
-                            setState(() {});
-                  },child:
-                   Image.asset(certificate==''?Assets.images.addcar.path:certificate,width: 200.w,height: 150.w,),)
-              ),
+                  '登记证书',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          certificate = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: certificate == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [certificate],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
               //48.hb,
               getText(
-                '行驶证',
-                 GestureDetector(onTap: () async{
- var value =  await CloudImagePicker.pickSingleImage(title: '选择图片');
-                           vehicleLicense=value!.path;
-                          // print(imagePath);
-                            setState(() {});
-                  },child:
-                   Image.asset(vehicleLicense==""?Assets.images.addcar.path:vehicleLicense,width: 200.w,height: 150.w,),)
-      
-              ),
+                  '行驶证',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          vehicleLicense = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: vehicleLicense == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [vehicleLicense],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
               //48.hb,
               getText(
-                '发票',
-                            GestureDetector(onTap: () async{
- var value =  await CloudImagePicker.pickSingleImage(title: '选择图片');
-                           invoice=value!.path;
-                          // print(imagePath);
-                            setState(() {});
-                  },child:
-                   Image.asset(invoice==''?Assets.images.addcar.path:invoice,width: 200.w,height: 150.w,),)
-      
-              ),
-             
-           
+                  '发票',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          invoice = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: invoice == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [invoice],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
+
               //48.hb,
               getText(
-                '保单',
-                             GestureDetector(onTap: () async{
- var value =  await CloudImagePicker.pickSingleImage(title: '选择图片');
-                           guaranteeSlip=value!.path;
-                          // print(imagePath);
-                            setState(() {});
-                  },child:
-                   Image.asset(guaranteeSlip==''?Assets.images.addcar.path:guaranteeSlip,width: 200.w,height: 150.w,),)
-      
-              ),
-          
-           
+                  '保单',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          guaranteeSlip = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: guaranteeSlip == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [guaranteeSlip],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
+
               //48.hb,
               Row(
                 children: [
