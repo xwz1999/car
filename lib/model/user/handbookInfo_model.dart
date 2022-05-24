@@ -3,7 +3,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'HandbookInfo_model.g.dart';
+part 'handbookInfo_model.g.dart';
 
 @JsonSerializable()
 class HandbookInfoModel extends Equatable {
@@ -12,6 +12,7 @@ class HandbookInfoModel extends Equatable {
   final String content;
   final int createdAt;
   final int updatedAt;
+
   factory HandbookInfoModel.fromJson(Map<String, dynamic> json) =>
       _$HandbookInfoModelFromJson(json);
 
@@ -22,6 +23,7 @@ class HandbookInfoModel extends Equatable {
     required this.createdAt,
     required this.updatedAt,
   });
+
   @override
   List<Object?> get props => [id, name, content, createdAt, updatedAt];
 }

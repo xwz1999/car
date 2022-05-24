@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Handbook_model.dart';
+part of 'handbook_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

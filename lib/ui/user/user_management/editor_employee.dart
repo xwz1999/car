@@ -3,6 +3,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_management/access_configuration.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure.dart';
+import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
   late String nameText = widget.nameText;
   late String genderText = widget.genderText;
   late String phoneText = widget.phoneText;
-  late String storeidText = widget.storeidText;
+  late String storeIdText = widget.storeidText;
   late String commissionText = widget.commissionText;
   late int storeid;
   int sexId = 1;
@@ -93,10 +94,11 @@ class _EditorEmployeeState extends State<EditorEmployee> {
           40.hb,
           getTitle('权限分配'),
           24.hb,
-          getpermissions(),
+          getPermissions(),
           88.hb,
           CloudBottomButton(
             onTap: () async {
+              //print('res');
               var res = await BusinessFunc.getStaffEdit(
                   widget.staffId,
                   nameText,
@@ -106,9 +108,9 @@ class _EditorEmployeeState extends State<EditorEmployee> {
                   commissionText);
               if (res) {
                 BotToast.showText(text: '提交成功');
-                Get.back();
+                Get.to(() => const StaffManagement());
               }
-              // //print("输出返回值：$zhi");
+              //print("输出返回值：$zhi");
             },
             text: '提交',
           ),
@@ -324,7 +326,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
             title: '组织架构',
             endIcon: true,
             tips: '请选择',
-            value: storeidText,
+            value: storeIdText,
             widget: Image(
               image: Assets.icons.icGoto,
               width: 32.w,
@@ -333,7 +335,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
             ontap: () async {
               await Get.to(() => StructurePage(
                     callback: (String city, int id) {
-                      storeidText = city;
+                      storeIdText = city;
                       storeid = id;
                     },
                   ));
@@ -348,7 +350,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
   }
 
 //权限分配   ///权限配置 销售提成
-  getpermissions() {
+  getPermissions() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -394,8 +396,12 @@ class _EditorEmployeeState extends State<EditorEmployee> {
     );
   }
 
-  _refresh() async {
-    res = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
-        phoneText, storeid, roleId, commissionText);
-  }
+// _refresh() async {
+//   res = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
+//       phoneText, storeid, roleId, commissionText);
+// }
+
 }
+// class Editor{
+//
+// }
