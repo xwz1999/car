@@ -1,5 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/model/order/Sale_info.dart';
+import 'package:cloud_car/model/order/sale_info.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/model/order/order_dealer_model.dart';
 import 'package:cloud_car/model/order/order_statistics_model.dart';

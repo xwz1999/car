@@ -1,9 +1,8 @@
-// ignore_for_file: file_names
 
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'Sale_info.g.dart';
+part 'sale_info.g.dart';
 
 @JsonSerializable()
 class SaleInfo extends Equatable {
