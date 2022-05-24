@@ -13,7 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SalesOrder extends StatefulWidget {
-  const SalesOrder({super.key});
+  ///1售车订单  2个人寄卖 3租车订单 4叫车订单 5=2车商寄卖
+  const SalesOrder({
+    super.key,
+  });
 
   @override
   State<SalesOrder> createState() => _SalesOrderState();
@@ -25,19 +28,21 @@ class _SalesOrderState extends State<SalesOrder> {
   TitleScreenControl screenControl1 = TitleScreenControl();
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [
-    ChooseItem(name: '售卖订单'),
+    ChooseItem(name: '售车订单'),
     ChooseItem(name: '个人寄卖'),
     ChooseItem(name: '租车订单'),
     ChooseItem(name: '叫车订单'),
     ChooseItem(name: '车商寄卖'),
   ];
-  late String title = '售车订单';
+  String title = '售车订单';
+
+  //String? get status => CustomerMap.orderStatusByInt[widget.type];
 
   @override
   void initState() {
     super.initState();
     _dropDownHeaderItemStrings1 = [
-      '售卖订单',
+      '售车订单',
     ];
     listWidget = [
       Container(
@@ -102,7 +107,7 @@ class _SalesOrderState extends State<SalesOrder> {
 
   get() {
     switch (_dropDownHeaderItemStrings1.first) {
-      case '售卖订单':
+      case '售车订单':
         return SalesOrderPage(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });

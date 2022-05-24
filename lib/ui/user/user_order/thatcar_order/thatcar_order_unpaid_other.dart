@@ -1,21 +1,24 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/user_tool.dart';
-
 class UnpaidOther extends StatefulWidget {
-  final String stat;
-  const UnpaidOther({super.key, required this.stat});
+  final int status;
+  final String statusText;
+
+  const UnpaidOther(
+      {super.key, required this.status, required this.statusText});
 
   @override
   State<UnpaidOther> createState() => _UnpaidOtherState();
 }
 
 class _UnpaidOtherState extends State<UnpaidOther> {
-  late String stat = widget.stat;
+  //late String stat = widget.stat;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,14 +50,86 @@ class _UnpaidOtherState extends State<UnpaidOther> {
                     16.hb,
                     _getText('联系方式', '189****5432'),
                     16.hb,
-                    _getText('绑定销售', UserTool.userProvider.userInfo.nickname),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 120.w,
+                          child: Text(
+                            '绑定销售',
+                            style: TextStyle(
+                                color: BaseStyle.color333333,
+                                fontSize: BaseStyle.fontSize28),
+                          ),
+                        ),
+                        32.wb,
+                        GestureDetector(
+                          onTap: () {
+                            Alert.show(
+                                context,
+                                NormalContentDialog(
+                                  type: NormalTextDialogType.delete,
+                                  title: '',
+                                  content: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 238.w,
+                                        height: 174.w,
+                                        child: Image.asset(
+                                          Assets.images.immediately.path,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                      48.hb,
+                                      Text(
+                                        '183-****-1289',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2
+                                            ?.copyWith(
+                                                fontSize: BaseStyle.fontSize40),
+                                      ),
+                                      16.hb,
+                                      Text(
+                                        '使用虚拟号联系绑定销售',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2,
+                                      ),
+                                    ],
+                                  ),
+                                  items: const ['取消'],
+                                  deleteItem: '立即联系',
+                                  //监听器
+                                  listener: (index) {
+                                    Alert.dismiss(context);
+                                    //Value = false;
+                                    //(Value);
+                                  },
+                                  deleteListener: () {
+                                    Alert.dismiss(context);
+                                    //Value = true;
+                                    //(Value);
+                                  },
+                                ));
+                          },
+                          child: Text(
+                            '联系车务',
+                            style: TextStyle(
+                                color: const Color(0xFF027AFF),
+                                fontSize: BaseStyle.fontSize28),
+                          ),
+                        ),
+                      ],
+                    ),
                     16.hb,
                     _getText('上门地址', '浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
                     16.hb,
                     _getText('上门时间', '2022-01-04 12:00'),
                   ],
                 )),
-                stat == '待支付'
+                widget.status == 1
                     ? const SizedBox()
                     : getCarBox(Column(
                         children: [
@@ -67,7 +142,7 @@ class _UnpaidOtherState extends State<UnpaidOther> {
                       )),
               ],
             ),
-            stat == '待交车'
+            widget.status == 2
                 ? Positioned(
                     bottom: 0,
                     left: 0,
@@ -121,17 +196,21 @@ class _UnpaidOtherState extends State<UnpaidOther> {
             getTitle('叫车车辆信息'),
             350.wb,
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFE8029).withOpacity(0.01),
-              ),
-              child: Text(
-                stat,
-                style: TextStyle(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+                decoration: BoxDecoration(
+                  color: widget.status == 3 || widget.status == 4
+                      ? const Color(0xFF027AFF).withOpacity(0.1)
+                      : const Color(0xFFFE8029).withOpacity(0.1),
+                ),
+                child: Text(
+                  widget.statusText,
+                  style: TextStyle(
                     fontSize: BaseStyle.fontSize24,
-                    color: const Color(0xFFFE8029)),
-              ),
-            )
+                    color: widget.status == 3 || widget.status == 4
+                        ? const Color(0xFF027AFF)
+                        : const Color(0xFFFE8029),
+                  ),
+                ))
           ],
         ),
         24.hb,
@@ -140,9 +219,8 @@ class _UnpaidOtherState extends State<UnpaidOther> {
             SizedBox(
               width: 196.w,
               height: 150.w,
-              child: Image.asset(
-                Assets.images.carBanner.path,
-                fit: BoxFit.fill,
+              child: const CloudImageNetworkWidget.car(
+                urls: [],
               ),
             ),
             20.wb,
@@ -177,14 +255,14 @@ class _UnpaidOtherState extends State<UnpaidOther> {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: stat == '已取消'
+              color: widget.status == 4
                   ? const Color(0xFF4F5A74).withOpacity(0.08)
                   : const Color(0xFF027AFF).withOpacity(0.08)),
           child: Text(
             num,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize20,
-                color: stat == '已取消'
+                color: widget.status == 4
                     ? const Color(0xFF4F5A74)
                     : const Color(0xFF027AFF)),
           ),

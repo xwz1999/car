@@ -13,16 +13,20 @@ class EmployeeDetails extends StatefulWidget {
   final String stores;
   final String business;
   final String proportion;
-  const EmployeeDetails({
-    super.key,
-    required this.name,
-    required this.sex,
-    required this.phone,
-    required this.permissions,
-    required this.stores,
-    required this.business,
-    required this.proportion,
-  });
+  final int staffId;
+  final int auditStatus;
+
+  const EmployeeDetails(
+      {super.key,
+      required this.name,
+      required this.sex,
+      required this.phone,
+      required this.permissions,
+      required this.stores,
+      required this.business,
+      required this.proportion,
+      required this.auditStatus,
+      required this.staffId});
 
   @override
   State<EmployeeDetails> createState() => _EmployeeDetailsState();
@@ -95,60 +99,64 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
           ),
           const Spacer(),
           const Divider(),
-          Row(
-            children: [
-              Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
-              _getBotton(Assets.icons.delete.path, '删除', () {
-                setState(() {
-                  Alert.show(
-                      context,
-                      NormalContentDialog(
-                        type: NormalTextDialogType.delete,
-                        title: '确认提示',
-                        content: const Text('确认删除该员工吗？'),
-                        items: const ['取消'],
-                        deleteItem: '确定',
-                        //监听器
-                        listener: (index) {
-                          Alert.dismiss(context);
-                          _getSure = false;
-                          setState(() {
-                            _getSure;
-                          });
-                          //Value = false;
-                          //(Value);
-                        },
-                        deleteListener: () {
-                          Alert.dismiss(context);
-                          _getSure = true;
-                          Navigator.pop(context);
-                          BotToast.showText(text: '删除成功');
-                          setState(() {
-                            _getSure;
-                          });
-                          //print(_getSure);
-                          //Value = true;
-                          //(Value);
+          Offstage(
+            offstage: widget.auditStatus == 1,
+            child: Row(
+              children: [
+                Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
+                _getBotton(Assets.icons.delete.path, '删除', () {
+                  setState(() {
+                    Alert.show(
+                        context,
+                        NormalContentDialog(
+                          type: NormalTextDialogType.delete,
+                          title: '确认提示',
+                          content: const Text('确认删除该员工吗？'),
+                          items: const ['取消'],
+                          deleteItem: '确定',
+                          //监听器
+                          listener: (index) {
+                            Alert.dismiss(context);
+                            _getSure = false;
+                            setState(() {
+                              _getSure;
+                            });
+                            //Value = false;
+                            //(Value);
+                          },
+                          deleteListener: () {
+                            Alert.dismiss(context);
+                            _getSure = true;
+                            Navigator.pop(context);
+                            BotToast.showText(text: '删除成功');
+                            setState(() {
+                              _getSure;
+                            });
+                            //print(_getSure);
+                            //Value = true;
+                            //(Value);
+                          },
+                        ));
+                  });
+                }),
+                200.wb,
+                _getBotton(Assets.icons.editor1.path, '编辑', () {
+                  Get.to(() => EditorEmployee(
+                        staffId: widget.staffId,
+                        nameText: widget.name,
+                        genderText: widget.sex,
+                        phoneText: widget.phone,
+                        storeidText: widget.stores,
+                        permissions1: widget.permissions,
+                        commissionText: widget.proportion,
+                        callback: (bool audit) {
+                          audit = audit;
                         },
                       ));
-                });
-              }),
-              200.wb,
-              _getBotton(Assets.icons.editor1.path, '编辑', () {
-                Get.to(() => EditorEmployee(
-                      nameText: widget.name,
-                      genderText: widget.sex,
-                      phoneText: widget.phone,
-                      storeidText: widget.business,
-                      permissions1: widget.permissions,
-                      commissionText: widget.proportion,
-                      callback: (bool audit) {
-                        audit = audit;
-                      },
-                    ));
-                //print(audit);
-              })
-            ],
+                  //print(audit);
+                })
+              ],
+            ),
           )
         ],
       ),
@@ -157,9 +165,11 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
 
   getAudit() {
     return Offstage(
-      offstage: audit,
+      offstage: widget.auditStatus == 2,
       child: Image.asset(
-        Assets.icons.inreview.path,
+        widget.auditStatus == 1
+            ? Assets.icons.inreview.path
+            : Assets.icons.hasrejected.path,
         width: 140.w,
         height: 140.w,
       ),
@@ -207,24 +217,14 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                   color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
             ),
             32.hb,
-            Row(
-              children: [
-                SizedBox(
-                    width: 170.w,
-                    child: Text(
-                      '销售提成比例',
-                      style: TextStyle(
-                          color: BaseStyle.color666666,
-                          fontSize: BaseStyle.fontSize28),
-                    )),
-                Text(
-                  widget.proportion,
+            SizedBox(
+                width: 250.w,
+                child: Text(
+                  '销售提成比例${widget.proportion}%',
                   style: TextStyle(
-                      color: BaseStyle.color333333,
+                      color: BaseStyle.color666666,
                       fontSize: BaseStyle.fontSize28),
-                )
-              ],
-            ),
+                )),
           ],
         );
       case '评估师/车务':
@@ -244,24 +244,14 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                   color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
             ),
             32.hb,
-            Row(
-              children: [
-                SizedBox(
-                    width: 170.w,
-                    child: Text(
-                      '销售提成比例',
-                      style: TextStyle(
-                          color: BaseStyle.color666666,
-                          fontSize: BaseStyle.fontSize28),
-                    )),
-                Text(
-                  widget.proportion,
+            SizedBox(
+                width: 250.w,
+                child: Text(
+                  '销售提成比例${widget.proportion}%',
                   style: TextStyle(
-                      color: BaseStyle.color333333,
+                      color: BaseStyle.color666666,
                       fontSize: BaseStyle.fontSize28),
-                )
-              ],
-            ),
+                )),
           ],
         );
 
@@ -271,7 +261,6 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
           style: TextStyle(
               color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
         );
-
     }
   }
 

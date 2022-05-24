@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_adjacent_string_concatenation
 import 'package:cloud_car/constants/enums.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';

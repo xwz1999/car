@@ -1,4 +1,3 @@
-import 'package:cloud_car/constants/enums.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -9,8 +8,6 @@ class StoreallModel extends Equatable {
   final int id;
   final String name;
   final List<Staff>? staffs;
-
-
 
   factory StoreallModel.fromJson(Map<String, dynamic> json) =>
       _$StoreallModelFromJson(json);
@@ -35,8 +32,10 @@ class Staff extends Equatable {
   final int gender;
 
   factory Staff.fromJson(Map<String, dynamic> json) => _$StaffFromJson(json);
-  const Staff(this.id, this.name, this.phone, this.auditStatus, this.roleName, this.gender);
-  Gender get genderEM => Gender.getValue(gender);
+
+  const Staff(this.id, this.name, this.phone, this.auditStatus, this.roleName,
+      this.gender);
+
   @override
-  List<Object?> get props => [id, name, phone, auditStatus, roleName];
+  List<Object?> get props => [id, name, phone, auditStatus, roleName, gender];
 }

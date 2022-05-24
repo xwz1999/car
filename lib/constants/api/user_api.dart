@@ -9,6 +9,9 @@ class _UserApi {
 
   ///用户详情
   String get userInfo => '/user/info';
+
+  ///修改用户信息
+  String get userUpdate => '/user/update';
 }
 
 class _Wallet {

@@ -7,15 +7,19 @@ import 'package:flutter/material.dart';
 import '../../../../utils/user_tool.dart';
 
 class ThatcarUnpaid extends StatefulWidget {
-  final String stat;
-  const ThatcarUnpaid({super.key, required this.stat});
+  final int status;
+  final String statusText;
+
+  const ThatcarUnpaid(
+      {super.key, required this.status, required this.statusText});
 
   @override
   State<ThatcarUnpaid> createState() => _ThatcarUnpaidState();
 }
 
 class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
-  late String stat = widget.stat;
+  //late String stat = widget.stat;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +123,7 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
               _getText('上门时间', '2022-01-04 12:00'),
             ],
           )),
-          stat == '待支付'
+          widget.status == 1
               ? const SizedBox()
               : getCarBox(Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,17 +158,21 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
             getTitle('叫车车辆信息'),
             350.wb,
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFE8029).withOpacity(0.08),
-              ),
-              child: Text(
-                stat,
-                style: TextStyle(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+                decoration: BoxDecoration(
+                  color: widget.status == 3 || widget.status == 4
+                      ? const Color(0xFF027AFF).withOpacity(0.1)
+                      : const Color(0xFFFE8029).withOpacity(0.1),
+                ),
+                child: Text(
+                  widget.statusText,
+                  style: TextStyle(
                     fontSize: BaseStyle.fontSize24,
-                    color: const Color(0xFFFE8029)),
-              ),
-            )
+                    color: widget.status == 3 || widget.status == 4
+                        ? const Color(0xFF027AFF)
+                        : const Color(0xFFFE8029),
+                  ),
+                ))
           ],
         ),
         24.hb,
@@ -210,14 +218,14 @@ class _ThatcarUnpaidState extends State<ThatcarUnpaid> {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: stat == '已取消'
+              color: widget.status == 4
                   ? const Color(0xFF4F5A74).withOpacity(0.08)
                   : const Color(0xFF027AFF).withOpacity(0.08)),
           child: Text(
             num,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize20,
-                color: stat == '已取消'
+                color: widget.status == 4
                     ? const Color(0xFF4F5A74)
                     : const Color(0xFF027AFF)),
           ),

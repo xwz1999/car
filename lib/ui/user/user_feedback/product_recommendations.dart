@@ -33,7 +33,7 @@ class _RecommendationsState extends State<Recommendations> {
   late String content = '';
   late String img = '';
   late String phone = '';
-  late bool zhi = false;
+  late bool res = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -193,9 +193,9 @@ class _RecommendationsState extends State<Recommendations> {
           96.hb,
           CloudBottomButton(
             onTap: () async {
-              bool zhi = await FeedbackFunc.getFeedback(
+              bool res = await FeedbackFunc.getFeedback(
                   moddels[_selectIndex.first].title!, content, phone, img);
-              if (zhi) {
+              if (res) {
                 print(
                     '标题+${moddels[_selectIndex.first].title}+文本$content+手机 $phone+图片+$img');
                 CloudToast.show('提交成功');

@@ -6,6 +6,8 @@ class DropDown extends StatefulWidget {
   final Widget text;
   final Widget widget;
   final bool horizontalLine;
+  final bool border;
+
   const DropDown(
       {super.key,
 
@@ -13,7 +15,9 @@ class DropDown extends StatefulWidget {
       this.horizontalLine = false,
       required this.text,
       required this.title,
-      required this.widget});
+      required this.widget,
+      this.border = false //false：不需要边框 true:需要边框
+      });
 
   @override
   State<DropDown> createState() => _DropDownState();
@@ -42,7 +46,10 @@ class _DropDownState extends State<DropDown> {
                 : const BoxDecoration(
                     color: kForeGroundColor,
                   ),
-            padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 16.w),
+            padding: EdgeInsets.only(
+                left: widget.border ? 0.w : 32.w,
+                right: widget.border ? 0.w : 32.w,
+                top: 16.w),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

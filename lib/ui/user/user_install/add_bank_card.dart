@@ -1,11 +1,11 @@
-// ignore_for_file: unused_element
 //  银行卡添加 35
-import 'dart:io';
-
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -19,6 +19,7 @@ class AddCardPage extends StatefulWidget {
 
 class _AddCardPageState extends State<AddCardPage> {
   List<dynamic>? data;
+  String img = '';
 
   @override
   void initState() {
@@ -174,13 +175,32 @@ class _AddCardPageState extends State<AddCardPage> {
                       ?.copyWith(color: const Color(0xFF999999)),
                 ),
               ),
-              CarImageItem(
-                imageBack: (List<File> image) {
-                  //img = image.first.path;
-                },
-
-                //isPadding: false,
-              ),
+              GestureDetector(
+                  onTap: () async {
+                    var value =
+                        await CloudImagePicker.pickSingleImage(title: '选择图片');
+                    if (value != null) {
+                      String urls = await apiClient.uploadImage(value);
+                      img = urls;
+                      // print(urls);
+                    }
+                    print(img);
+                    // guaranteeSlip = value!.path;
+                    // print(imagePath);
+                    setState(() {});
+                  },
+                  child: SizedBox(
+                    width: 200.w,
+                    height: 150.w,
+                    child: img == ''
+                        ? Image.asset(Assets.images.addcar.path)
+                        : CloudImageNetworkWidget.car(
+                            urls: [img],
+                          ),
+                    // Image.asset(
+                    //   img == '' ? Assets.images.addcar.path : img,
+                    // ),
+                  ))
             ],
           ),
           // 32.hb,

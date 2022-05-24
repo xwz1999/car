@@ -49,18 +49,20 @@ class _ProductManualsState extends State<ProductManuals> {
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
                 fontWeight: FontWeight.bold)),
-
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
+//leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: bodyColor,
       body: Column(
         children: [
+          ///搜索框
           Container(
             width: 750.w,
             height: 96.w,
             color: Colors.white,
             child: _search(),
           ),
+
+          ///列表
           Expanded(
               child: EasyRefresh(
             firstRefresh: true,
@@ -69,6 +71,7 @@ class _ProductManualsState extends State<ProductManuals> {
             controller: _easyRefreshController,
             onRefresh: () async {
               _refresh();
+              setState(() {});
             },
             child: ListView.builder(
               itemBuilder: (context, index) {
@@ -158,7 +161,7 @@ class _ProductManualsState extends State<ProductManuals> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           40.hb,
-          _getTItle(model.name),
+          _getTitle(model.name),
           24.hb,
           ...model.items != null
               ? model.items!.mapIndexed((e, index) {
@@ -189,7 +192,6 @@ class _ProductManualsState extends State<ProductManuals> {
       height: 92.w,
       color: Colors.white,
       child: ListTile(
-        minVerticalPadding: 32.w,
         title: Text(
           text,
           style: Theme.of(context).textTheme.subtitle2,
@@ -205,7 +207,7 @@ class _ProductManualsState extends State<ProductManuals> {
     );
   }
 
-  _getTItle(String title) {
+  _getTitle(String title) {
     return Padding(
       padding: EdgeInsets.only(left: 32.w),
       child: Text(

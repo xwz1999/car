@@ -1,9 +1,8 @@
-import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
-import 'package:cloud_car/ui/user/user_management/employee_details.dart';
 import 'package:cloud_car/ui/user/user_management/add_employee.dart';
 import 'package:cloud_car/ui/user/user_management/add_stores.dart';
+import 'package:cloud_car/ui/user/user_management/employee_details.dart';
 import 'package:cloud_car/ui/user/user_management/permissions.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
@@ -161,7 +160,6 @@ class _StaffManagementState extends State<StaffManagement> {
             // },
             // // focusNode: _contentFocusNode,
             // onTap: () {},
-
             style: TextStyle(
               textBaseline: TextBaseline.ideographic,
               fontSize: 32.sp,
@@ -235,6 +233,8 @@ class _StaffManagementState extends State<StaffManagement> {
                 return GestureDetector(
                   onTap: () {
                     Get.to(() => EmployeeDetails(
+                          //员工详情
+                          staffId: e.id,
                           //所属入驻商
                           business: '宁波xx4s专营店',
                           //权限配置
@@ -244,20 +244,19 @@ class _StaffManagementState extends State<StaffManagement> {
                           //员工手机
                           phone: e.phone,
                           //销售比例
-                          proportion: '10%',
+                          proportion: '10',
                           //性别
-                          sex: e.genderEM.typeStr,
+                          sex: e.gender == 2 ? '女' : '男',
                           //所属门店
                           stores: model.name,
+                          auditStatus: e.auditStatus,
                         ));
                     //Get.to(()=>)
                   },
                   child: _getText(
                       e.roleName,
                       // ignore: unrelated_type_equality_checks
-                      e.genderEM == Gender.male
-                          ? Assets.icons.icUser.path
-                          : Assets.icons.icUserWoman.path,
+                      e.gender,
                       e.name,
                       e.phone,
                       e.auditStatus),
@@ -268,7 +267,7 @@ class _StaffManagementState extends State<StaffManagement> {
     );
   }
 
-  _getText(String position, String icon, String name, String phone, int judge) {
+  _getText(String position, int gender, String name, String phone, int judge) {
     return Container(
       color: Colors.white,
       height: 94.w,
@@ -285,7 +284,9 @@ class _StaffManagementState extends State<StaffManagement> {
             width: 32.w,
             height: 32.w,
             child: Image.asset(
-              Assets.icons.icUser.path,
+              gender == 2
+                  ? Assets.icons.icUserWoman.path
+                  : Assets.icons.icUser.path,
               fit: BoxFit.fill,
             ),
           ),
