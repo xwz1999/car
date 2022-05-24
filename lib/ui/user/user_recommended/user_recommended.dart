@@ -21,6 +21,10 @@ class RecommendedPage extends StatefulWidget {
 class _RecommendedPageState extends State<RecommendedPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
+
+  //头部背景布局，true滚动一定的高度 false滚动高度为0
+  late bool headerWhite = false;
+
   late TabController _tabController;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   List<CustomerListModel> recommendedList = [
@@ -35,6 +39,7 @@ class _RecommendedPageState extends State<RecommendedPage>
     //     trailCreatedAt: 1652161448)
   ];
   late CustomerDetailModel phone
+
       // = const CustomerDetailModel(
       //     brokerName: '世界这么大我想去看看',
       //     createdAt: 1645497563,
@@ -51,11 +56,16 @@ class _RecommendedPageState extends State<RecommendedPage>
   late ScrollController _scrollController;
   int _page = 1;
   final int _size = 10;
+
   @override
   void initState() {
     _scrollController = ScrollController();
-
-    super.initState();
+    _scrollController.addListener(() {
+      setState(() {
+        headerWhite = _scrollController.offset > 400 ? true : false;
+      });
+    });
+    // super.initState();
 
     _tabController = TabController(initialIndex: 0, length: 1, vsync: this);
   }
@@ -82,11 +92,13 @@ class _RecommendedPageState extends State<RecommendedPage>
                 //固定顶部
                 pinned: true,
                 snap: false,
-                elevation: 0, //阴影
+                elevation: 0,
+                //阴影
                 // toolbarHeight:
                 //     MediaQuery.of(context).padding.top + kToolbarHeight,
                 //展开高度
-                expandedHeight: 762.w, //
+                expandedHeight: 762.w,
+                //
 
                 leadingWidth: 0,
                 titleSpacing: 0,
@@ -108,7 +120,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                             Assets.icons.back.path,
                             height: 48.w,
                             width: 48.w,
-                            color: Colors.white,
+                            color: headerWhite ? Colors.black : Colors.white,
                           ),
                         ),
                         206.wb,
@@ -117,7 +129,10 @@ class _RecommendedPageState extends State<RecommendedPage>
                           style: Theme.of(context)
                               .textTheme
                               .headline6
-                              ?.copyWith(color: kForeGroundColor),
+                              ?.copyWith(
+                                  color: headerWhite
+                                      ? const Color(0xFF333333)
+                                      : kForeGroundColor),
                         ),
                       ],
                     )),
@@ -125,7 +140,8 @@ class _RecommendedPageState extends State<RecommendedPage>
                 //左侧标题
                 leading: const SizedBox(),
                 //collapsedHeight: kToolbarHeight,
-                backgroundColor: const Color(0xFFF6F6F6),
+                backgroundColor:
+                    headerWhite ? Colors.white : const Color(0xFFF6F6F6),
                 flexibleSpace: FlexibleSpaceBar(
                   titlePadding: EdgeInsets.zero,
                   background: Container(
@@ -583,6 +599,7 @@ class _RecommendedPageState extends State<RecommendedPage>
   _tab(int index, String text) {
     return Text(text);
   }
+
 //
 
   _getText(String title, String content, {bool isRed = false}) {

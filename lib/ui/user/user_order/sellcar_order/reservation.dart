@@ -614,8 +614,6 @@ class _ReservationState extends State<Reservation> {
             ],
           ),
         );
-      case 50:
-        return;
       case 41:
         return Container(
             width: double.infinity,
@@ -648,7 +646,7 @@ class _ReservationState extends State<Reservation> {
               ),
             ));
       default:
-        return;
+        return const SizedBox();
     }
   }
 

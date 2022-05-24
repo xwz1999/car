@@ -271,8 +271,8 @@ class _DealerConsignmentSignedState extends State<DealerConsignmentSigned> {
                     color: BaseStyle.color999999),
               ),
             );
-          case 3:
-            return;
+          default:
+            return const SizedBox();
         }
         break;
       case 4:
@@ -386,7 +386,7 @@ class _DealerConsignmentSignedState extends State<DealerConsignmentSigned> {
             ],
           ),
         );
-        break;
+
       case 0:
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -410,7 +410,8 @@ class _DealerConsignmentSignedState extends State<DealerConsignmentSigned> {
             ],
           ),
         );
-        break;
+      default:
+        return const SizedBox();
     }
   }
 

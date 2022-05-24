@@ -221,6 +221,9 @@ class _StoreManagement {
 
   ///添加员工
   get staffAdd => '/business/staff/add';
+
+  ///编辑员工
+  get staffEdit => '/business/staff/edit';
 }
 
 ///用户手册

@@ -1,7 +1,5 @@
 import 'package:cloud_car/model/order/callcarlist_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
-import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid.dart';
-import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid_other.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/car_widget.dart';
@@ -130,10 +128,40 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                 //       transfer: 1,
                 //       mainPhoto: '',
                 //       modelName: '',
-                //       status: 0,
+                //       status: 1,
                 //       licensingDate: 1136217600,
                 //       id: 9,
-                //       orderSn: '202205180003')
+                //       orderSn: '202205180003'),
+                //   const CallcarlistModel(
+                //       amount: '100',
+                //       mileage: '25.5',
+                //       transfer: 1,
+                //       mainPhoto: '',
+                //       modelName: '',
+                //       status: 2,
+                //       licensingDate: 1136217600,
+                //       id: 9,
+                //       orderSn: '202205180003'),
+                //   const CallcarlistModel(
+                //       amount: '100',
+                //       mileage: '25.5',
+                //       transfer: 1,
+                //       mainPhoto: '',
+                //       modelName: '',
+                //       status: 3,
+                //       licensingDate: 1136217600,
+                //       id: 9,
+                //       orderSn: '202205180003'),
+                //   const CallcarlistModel(
+                //       amount: '100',
+                //       mileage: '25.5',
+                //       transfer: 1,
+                //       mainPhoto: '',
+                //       modelName: '',
+                //       status: 4,
+                //       licensingDate: 1136217600,
+                //       id: 9,
+                //       orderSn: '202205180003'),
                 // ];
                 setState(() {});
               },
@@ -161,15 +189,15 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
         offstage: text == '全部' ? false : model.statusEnum.str != text,
         child: GestureDetector(
             onTap: () {
-              model.transfer == 1
-                  ? Get.to(() => UnpaidOther(
-                        status: model.status,
-                        statusText: model.statusEnum.str,
-                      ))
-                  : Get.to(() => ThatcarUnpaid(
-                        statusText: model.statusEnum.str,
-                        status: model.status,
-                      ));
+              // model.transfer == 1
+              //     ? Get.to(() => UnpaidOther(
+              //           status: model.status,
+              //           statusText: model.statusEnum.str,
+              //         ))
+              //     : Get.to(() => ThatcarUnpaid(
+              //           statusText: model.statusEnum.str,
+              //           status: model.status,
+              //         ));
             },
             child: Container(
                 padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
@@ -181,7 +209,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      getStatus(model.status),
+                      model.statusEnum.str,
                       style: TextStyle(
                           color: model.status != 4
                               ? const Color(0xFF027AFF)
@@ -250,7 +278,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                         ])),
                         56.wb,
                         Text(
-                          model.status == 0 ? '退款金额' : '已付金额',
+                          model.status == 4 ? '退款金额' : '已付金额',
                           style: TextStyle(
                               fontSize: BaseStyle.fontSize28,
                               color: BaseStyle.color999999),
@@ -260,7 +288,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                           TextSpan(
                               text: '¥',
                               style: TextStyle(
-                                  color: getStatus(model.status) == '已退款'
+                                  color: model.status == 4
                                       ? const Color(0xFF333333)
                                       : const Color(0xFFFF3B02),
                                   fontSize: BaseStyle.fontSize24,
@@ -268,7 +296,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                           TextSpan(
                               text: model.status == 1 ? '0.00' : model.amount,
                               style: TextStyle(
-                                  color: getStatus(model.status) == '已退款'
+                                  color: model.statusEnum.num == 4
                                       ? const Color(0xFF333333)
                                       : const Color(0xFFFF3B02),
                                   fontSize: BaseStyle.fontSize28,
@@ -351,16 +379,16 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
     );
   }
 
-  getStatus(int num) {
-    switch (num) {
-      case 0:
-        return '已退款';
-      case 1:
-        return '待支付';
-      case 2:
-        return '待交车';
-      case 3:
-        return '已完成';
-    }
-  }
+// getStatus(int num) {
+//   switch (num) {
+//     case 0:
+//       return '已退款';
+//     case 1:
+//       return '待支付';
+//     case 2:
+//       return '待交车';
+//     case 3:
+//       return '已完成';
+//   }
+// }
 }

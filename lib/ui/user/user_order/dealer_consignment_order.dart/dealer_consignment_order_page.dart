@@ -3,7 +3,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
-import 'package:cloud_car/ui/user/user_order/dealer_consignment_order.dart/dealer_consignment_signed.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
@@ -106,77 +105,17 @@ class _DealerConsignmentOrderPageState
                 _page = 1;
                 _DealerConsignmentList =
                     await OrderFunc.getDealerLists(page: _page, size: _size);
-                // _DealerConsignmentList = [
-                //   const ListsModel(
-                //       id: 13,
-                //       orderSn: '202205120008',
-                //       status: 3,
-                //       auditStatus: 0,
-                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                //       licensingDate: 1640966400,
-                //       mileage: '1',
-                //       price: '11',
-                //       createdAt: 1652322521),
-                //   const ListsModel(
-                //       id: 13,
-                //       orderSn: '202205120008',
-                //       status: 3,
-                //       auditStatus: 1,
-                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                //       licensingDate: 1640966400,
-                //       mileage: '1',
-                //       price: '11',
-                //       createdAt: 1652322521),
-                //   const ListsModel(
-                //       id: 13,
-                //       orderSn: '202205120008',
-                //       status: 4,
-                //       auditStatus: 0,
-                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                //       licensingDate: 1640966400,
-                //       mileage: '1',
-                //       price: '11',
-                //       createdAt: 1652322521),
-                //   const ListsModel(
-                //       id: 13,
-                //       orderSn: '202205120008',
-                //       status: 5,
-                //       auditStatus: 0,
-                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                //       licensingDate: 1640966400,
-                //       mileage: '1',
-                //       price: '11',
-                //       createdAt: 1652322521),
-                //   const ListsModel(
-                //       id: 13,
-                //       orderSn: '202205120008',
-                //       status: 6,
-                //       auditStatus: 0,
-                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                //       licensingDate: 1640966400,
-                //       mileage: '1',
-                //       price: '11',
-                //       createdAt: 1652322521),
-                //   const ListsModel(
-                //       id: 13,
-                //       orderSn: '202205120008',
-                //       status: 7,
-                //       auditStatus: 0,
-                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                //       licensingDate: 1640966400,
-                //       mileage: '1',
-                //       price: '11',
-                //       createdAt: 1652322521),
-                //   const ListsModel(
-                //       id: 13,
-                //       orderSn: '202205120008',
-                //       status: 0,
-                //       auditStatus: 0,
-                //       modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
-                //       licensingDate: 1640966400,
-                //       mileage: '1',
-                //       price: '11',
-                //       createdAt: 1652322521),
+                //_DealerConsignmentList = [
+                // const ListsModel(
+                //     id: 13,
+                //     orderSn: '202205120008',
+                //     status: 0,
+                //     auditStatus: 0,
+                //     modeName: "2020款 奥迪A4L 45 TFSI quattro 臻选致雅型",
+                //     licensingDate: 1640966400,
+                //     mileage: '1',
+                //     price: '11',
+                //     createdAt: 1652322521),
                 // ];
                 _onLoad = false;
                 setState(() {});
@@ -223,14 +162,14 @@ class _DealerConsignmentOrderPageState
           padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
           child: GestureDetector(
             onTap: () {
-              Get.to(() => DealerConsignmentSigned(
-                    status: model.status,
-                    price: model.price,
-                    id: model.id,
-                    statusNum: model.carStatusEnum.carProgressNum,
-                    auditStatus: model.auditStatus,
-                    //stat: '审核中',
-                  ));
+              // Get.to(() => DealerConsignmentSigned(
+              //       status: model.status,
+              //       price: model.price,
+              //       id: model.id,
+              //       statusNum: model.carStatusEnum.carProgressNum,
+              //       auditStatus: model.auditStatus,
+              //       //stat: '审核中',
+              //     ));
 
               //   case 0:
               //     Get.to(() => const DealerConsignmentRejected());
