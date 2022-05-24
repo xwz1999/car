@@ -7,14 +7,23 @@ part 'dealer_list_model.g.dart';
 class DealerListModel extends Equatable {
   final int id;
   final String name;
+  final String liaison;
+  final String liaisonPhone;
+  final int createdAt;
+  final String brokerName;
 
   factory DealerListModel.fromJson(Map<String, dynamic> json) =>
       _$DealerListModelFromJson(json);
 
+  @override
+  List<Object?> get props => [id,name,];
+
   const DealerListModel({
     required this.id,
     required this.name,
+    required this.liaison,
+    required this.liaisonPhone,
+    required this.createdAt,
+    required this.brokerName,
   });
-  @override
-  List<Object?> get props => [id,name,];
 }
