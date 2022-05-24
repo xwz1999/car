@@ -13,7 +13,7 @@ import 'choose_time_widget.dart';
 enum LoanType {
   equalPrincipalInterest(0, '等额本息', '月供每月相同，本金逐月递增，利息逐月增加'),
   equalPrincipal(1, '等额本金', '月供逐月递减，本金每月相同，利息逐月递减'),
-  equalInterest(2, '等额等息', '月供、本金、利息每月相同'),
+  // equalInterest(2, '等额等息', '月供、本金、利息每月相同'),
   interestFirstPrincipalNext(3, '先息后本', '每月固定还利息，到期还全部本金'),
   duePrincipalInterest(4, '到期本息', '到期一次性还清全部本金和利息');
 
@@ -37,8 +37,16 @@ class CarMortgagePage extends StatefulWidget {
 
 class _CarMortgagePageState extends State<CarMortgagePage> {
   num? loanAmount;
+
+  ///期限类型 1为月 2为日
+  int termType = 1;
   num? loanTerm;
+
+  int get finalTerm => termType == 1 ? loanTerm!.toInt() : loanTerm! ~/ 30;
   num? interestRate;
+
+  ///利率类型 1为年 2为日
+  int rateType = 1;
   LoanType? _pickLoanType;
 
   @override
@@ -98,7 +106,11 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
                 first: '月',
                 second: '天',
                 callBack: (String text) {
-                  print(text);
+                  if (text == '月') {
+                    termType = 1;
+                  } else {
+                    termType = 2;
+                  }
                 }),
           ),
           30.hb,
@@ -129,7 +141,11 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
                     first: '年',
                     second: '日',
                     callBack: (String text) {
-                      print(text);
+                      if (text == '年') {
+                        rateType = 1;
+                      } else {
+                        rateType = 2;
+                      }
                     }),
               ],
             ),
@@ -153,19 +169,16 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
                 builder: (context) {
                   return CloudListPickerWidget(
                       title: '还款方式',
+                      textAlignment: MainAxisAlignment.start,
+                      itemHeight: 80.w,
                       items: LoanType.values
-                          .map((e) => '${e.typeString}/n${e.description}')
+                          .map((e) => '${e.typeString}\n${e.description}')
                           .toList(),
-                      onConfirm: (str, index) {});
-                  // return CloudListPickerItemWidget(
-                  //     title: '还款方式',
-                  //     items: LoanType.values.map((e) => e.typeString).toList(),
-                  //     onConfirm: (str, index) {
-                  //       repaymentMethod = str.id;
-                  //       Get.back();
-                  //       FocusManager.instance.primaryFocus?.unfocus();
-                  //       setState(() {});
-                  //     });
+                      onConfirm: (str, index) {
+                        Get.back();
+                        _pickLoanType = LoanType.values.toList()[index];
+                        setState(() {});
+                      });
                 },
               );
             },
@@ -193,10 +206,11 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
                   return;
                 }
                 Get.to(() => CarMortgageResultPage(
-                      loanTerm: loanTerm!,
+                      rateType: rateType,
+                      loanTerm: finalTerm,
                       loanType: _pickLoanType!,
-                      loanAmount: loanAmount!,
-                      interestRate: interestRate!,
+                      loanAmount: loanAmount!*10000,
+                      interestRate: interestRate!/100.0,
                     ));
               },
               child: Container(

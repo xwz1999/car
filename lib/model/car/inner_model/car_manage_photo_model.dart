@@ -46,9 +46,9 @@ class CarManagePhotoModel {
     return 'CarManagePhotoModel{'
         ' carPhotos: $carPhotos,'
         ' interiorPhotos: $interiorPhotos,'
-        ' defectPhotos: $defectPhotos,'
+        ' defectPhotos: $defectPhotos, '
         ' dataPhotos: $dataPhotos,'
-        '}';
+        ' }';
   }
 
   CarManagePhotoModel copyWith({

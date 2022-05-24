@@ -89,13 +89,13 @@ class _UserManagerPageState extends State<UserManagerPage> {
                   physics:const NeverScrollableScrollPhysics(),
                   itemCount: 4,
                   //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                     //横轴元素个数
                       crossAxisCount: 3,
                       //纵轴间距
-                      mainAxisSpacing: 10,
+                      mainAxisSpacing: 24.w,
                       //横轴间距
-                      crossAxisSpacing: 15,
+                      crossAxisSpacing: 40.w,
                       //子组件宽高长度比例
                       childAspectRatio: 200/176),
                   itemBuilder: (BuildContext context, int index) {

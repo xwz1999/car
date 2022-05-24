@@ -5,7 +5,6 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-
 import '../../home/manager_container_item.dart';
 
 class MyOrderPage extends StatefulWidget {
@@ -56,8 +55,9 @@ class _MyOrderPageState extends State<MyOrderPage> {
         padding: EdgeInsets.only(left: 32.w, right: 32.w),
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 3,
-        mainAxisSpacing: 15,
-      crossAxisSpacing: 10,
+        mainAxisSpacing: 24.w,
+        //横轴间距
+        crossAxisSpacing: 40.w,
         childAspectRatio: 200 / 176,
         children: [
           GestureDetector(

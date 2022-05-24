@@ -8,6 +8,7 @@ class CloudListPickerWidget extends StatefulWidget {
   final Function(String, int) onConfirm;
   final int? initIndex;
   final MainAxisAlignment? textAlignment;
+  final double? itemHeight;
 
   const CloudListPickerWidget(
       {super.key,
@@ -15,7 +16,8 @@ class CloudListPickerWidget extends StatefulWidget {
       required this.items,
       required this.onConfirm,
       this.initIndex,
-      this.textAlignment});
+      this.textAlignment,
+      this.itemHeight});
 
   @override
   _CloudListPickerWidgetState createState() => _CloudListPickerWidgetState();
@@ -37,7 +39,7 @@ class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
   @override
   Widget build(BuildContext context) {
     return CarPickerBox(
-        height: widget.items.length * 30.w + 300.w,
+        height: widget.items.length * (widget.itemHeight ?? 30.w) + 300.w,
         title: widget.title,
         onPressed: () {
           if (_pickIndex == null) {
@@ -63,7 +65,7 @@ class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
         setState(() {});
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.w),
+        padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.w),
         color: Colors.transparent,
         alignment: Alignment.center,
         child: Row(
@@ -76,7 +78,10 @@ class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
                     height: 30.w,
                     fit: BoxFit.fill,
                   )
-                : const SizedBox(),
+                : SizedBox(
+                    width: 30.w,
+                    height: 30.w,
+                  ),
             10.wb,
             Text(
               item,

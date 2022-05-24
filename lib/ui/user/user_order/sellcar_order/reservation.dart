@@ -1,4 +1,4 @@
-import 'package:cloud_car/model/order/Sale_info.dart';
+import 'package:cloud_car/model/order/sale_info.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/detection_data.dart';

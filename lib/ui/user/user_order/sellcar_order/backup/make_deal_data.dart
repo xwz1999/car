@@ -1,4 +1,4 @@
-import 'package:cloud_car/model/order/Sale_info.dart';
+import 'package:cloud_car/model/order/sale_info.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
