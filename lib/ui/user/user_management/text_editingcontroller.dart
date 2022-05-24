@@ -14,6 +14,7 @@ class TextEditItemWidget extends StatefulWidget {
   final Function() ontap;
   final String tips;
   final Widget widget;
+  final bool editor;
 
   TextEditItemWidget({
     super.key,
@@ -25,6 +26,7 @@ class TextEditItemWidget extends StatefulWidget {
     required this.ontap,
     this.tips = '请输入',
     this.widget = const SizedBox(),
+    this.editor = true,
   });
 
   @override
@@ -97,7 +99,7 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
               // ),
               maxLines: null,
               controller: _editingController,
-
+              enabled: widget.editor,
               decoration: InputDecoration(
                 //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
                 enabled: widget.endIcon ? false : true,
@@ -105,6 +107,7 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
                 isCollapsed: true,
                 fillColor: Colors.white,
                 hintText: widget.tips,
+
                 contentPadding: widget.isBold
                     ? EdgeInsets.only(top: 30.w)
                     : EdgeInsets.only(top: 0.w),

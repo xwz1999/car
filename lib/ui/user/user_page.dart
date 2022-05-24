@@ -119,7 +119,6 @@ class _UserPageState extends State<UserPage> {
                     .bodyText1
                     ?.copyWith(color: const Color(0xFFCCCCCC))),
             64.hb,
-          
           ],
         ),
       ),
@@ -308,7 +307,7 @@ class _UserPageState extends State<UserPage> {
 //头像信息
   _shareUser() {
     var userProvider = Provider.of<UserProvider>(Get.context!, listen: true);
-    print(userProvider.userInfo.headImg);
+    //print(userProvider.userInfo.headImg);
     return Container(
         padding: EdgeInsets.all(32.w),
         decoration: BoxDecoration(

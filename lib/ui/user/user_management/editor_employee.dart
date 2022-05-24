@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_management/access_configuration.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
@@ -21,17 +22,20 @@ class EditorEmployee extends StatefulWidget {
   final String storeidText;
   final String commissionText;
   final int storeid;
+  final int staffId;
 
-  const EditorEmployee(
-      {super.key,
-      this.storeid = 0,
-      required this.callback,
-      this.permissions1 = '',
-      this.nameText = '',
-      this.genderText = '',
-      this.phoneText = '',
-      this.storeidText = '',
-      this.commissionText = ''});
+  const EditorEmployee({
+    super.key,
+    this.storeid = 0,
+    required this.callback,
+    this.permissions1 = '',
+    this.nameText = '',
+    this.genderText = '',
+    this.phoneText = '',
+    this.storeidText = '',
+    this.commissionText = '',
+    required this.staffId,
+  });
 
   @override
   State<EditorEmployee> createState() => _EditorEmployeeState();
@@ -93,8 +97,17 @@ class _EditorEmployeeState extends State<EditorEmployee> {
           88.hb,
           CloudBottomButton(
             onTap: () async {
-              // var res = await BusinessFunc.getStaffEdit(staffId, nameText,
-              //     genderText == '女' ? 2 : 1, storeid, roleId, commissionText);
+              var res = await BusinessFunc.getStaffEdit(
+                  widget.staffId,
+                  nameText,
+                  genderText == '女' ? 2 : 1,
+                  storeid,
+                  roleId,
+                  commissionText);
+              if (res) {
+                BotToast.showText(text: '提交成功');
+                Get.back();
+              }
               // //print("输出返回值：$zhi");
             },
             text: '提交',
@@ -298,6 +311,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
           32.hb,
           TextEditItemWidget(
             title: '手机号',
+            editor: false,
             value: phoneText,
             ontap: () {},
             callback: (String content) {

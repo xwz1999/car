@@ -21,4 +21,5 @@ Staff _$StaffFromJson(Map<String, dynamic> json) => Staff(
       json['phone'] as String,
       json['auditStatus'] as int,
       json['roleName'] as String,
+      json['gender'] as int,
     );
