@@ -26,6 +26,14 @@ class _PosterListPageState extends State<PosterListPage> {
   final ScrollController _scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      // print(_scrollController.offset);
+    });
+  }
+
+  @override
   void dispose() {
     _easyRefreshController.dispose();
     _scrollController.dispose();
@@ -45,39 +53,42 @@ class _PosterListPageState extends State<PosterListPage> {
         child: Padding(
           padding: EdgeInsets.all(32.w),
           child: EasyRefresh(
-              firstRefresh: true,
-              header: MaterialHeader(),
-              footer: MaterialFooter(),
-              scrollController: _scrollController,
-              controller: _easyRefreshController,
-              onRefresh: () async {
-                _page = 1;
-                _models = await PosterFunc.getPosterList(page: _page);
-                setState(() {});
-              },
-              onLoad: () async {
-                _page++;
-                BaseListModel baseList = await apiClient.requestList(
-                    API.poster.list,
-                    data: {"page": _page, "size": _size});
-                if (baseList.code == 0) {
-                  if (baseList.nullSafetyTotal > _models.length) {
-                    _models.addAll(baseList.nullSafetyList
-                        .map((e) => PosterListModel.fromJson(e))
-                        .toList());
-                    setState(() {});
-                  } else {
-                    _easyRefreshController.finishLoad(noMore: true);
-                  }
+            firstRefresh: true,
+            header: MaterialHeader(),
+            footer: MaterialFooter(enableInfiniteLoad: false),
+            scrollController: _scrollController,
+            controller: _easyRefreshController,
+            onRefresh: () async {
+              _page = 1;
+              _models =
+                  await PosterFunc.getPosterList(page: _page, size: _size);
+              setState(() {});
+            },
+            onLoad: () async {
+              _page++;
+              BaseListModel baseList = await apiClient.requestList(
+                  API.poster.list,
+                  data: {"page": _page, "size": _size});
+              if (baseList.code == 0) {
+                if (baseList.nullSafetyTotal > _models.length) {
+                  _models.addAll(baseList.nullSafetyList
+                      .map((e) => PosterListModel.fromJson(e))
+                      .toList());
+                  setState(() {});
                 } else {
-                  CloudToast.show(baseList.msg);
+                  _easyRefreshController.finishLoad(noMore: true);
                 }
-              },
-              child: Wrap(
-                 runSpacing: 16.w,
-                spacing: 12.w,
-                children: _models.map((e) => _buildCard(e)).toList(),
-              )),
+              } else {
+                CloudToast.show(baseList.msg);
+              }
+            },
+            child: GridView.count(
+                crossAxisCount: 3,
+                childAspectRatio: 220 / 400,
+                mainAxisSpacing: 14.w,
+                crossAxisSpacing: 14.w,
+                children:_models.map((e) => _buildCard(e)).toList()),
+          ),
         ),
       ),
     );
@@ -85,14 +96,16 @@ class _PosterListPageState extends State<PosterListPage> {
 
   Widget _buildCard(PosterListModel model) {
     return GestureDetector(
-      onTap: (){
-        Get.to(()=> PosterEditPage(model: model,));
+      onTap: () {
+        Get.to(() => PosterEditPage(
+              model: model,
+            ));
       },
       child: Container(
         width: 220.w,
         height: 396.w,
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.w)),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.w)),
         child: CloudImageNetworkWidget(
           urls: [model.path],
         ),

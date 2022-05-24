@@ -1,6 +1,7 @@
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/providers/user_provider.dart';
+import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_func.dart';
 import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
@@ -21,6 +22,7 @@ import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 import 'car_manager/car_manager_page.dart';
+import 'car_manager/maintain_query/maintain_query_page.dart';
 import 'car_manager/publish_car/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
 import 'func/car_func.dart';
@@ -196,6 +198,12 @@ class _HomePageState extends State<HomePage>
             break;
           case '车辆估值':
             Get.to(() => const CarValuationPage());
+            break;
+          case '车辆按揭':
+            Get.to(() => const CarMortgagePage());
+            break;
+          case '维护查询':
+            //Get.to(() => const MaintainQueryPage());
             break;
         }
       },
