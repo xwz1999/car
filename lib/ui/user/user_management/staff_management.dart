@@ -246,7 +246,8 @@ class _StaffManagementState extends State<StaffManagement> {
                           //销售比例
                           proportion: '10',
                           //性别
-                          sex: e.gender == 2 ? '女' : '男',
+                          sex: e.genderEM.typeStr,
+                          //e.gender == 2 ? '女' : '男',
                           //所属门店
                           stores: model.name,
                           auditStatus: e.auditStatus,
@@ -256,7 +257,7 @@ class _StaffManagementState extends State<StaffManagement> {
                   child: _getText(
                       e.roleName,
                       // ignore: unrelated_type_equality_checks
-                      e.gender,
+                      e.genderEM.typeNum,
                       e.name,
                       e.phone,
                       e.auditStatus),

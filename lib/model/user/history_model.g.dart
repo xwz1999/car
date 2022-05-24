@@ -1,16 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'HandbookInfo_model.dart';
+part of 'history_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-HandbookInfoModel _$HandbookInfoModelFromJson(Map<String, dynamic> json) =>
-    HandbookInfoModel(
+HistoryModel _$HistoryModelFromJson(Map<String, dynamic> json) => HistoryModel(
       id: json['id'] as int,
-      name: json['name'] as String,
-      content: json['content'] as String,
+      type: json['type'] as int,
+      count: json['count'] as num,
       createdAt: json['createdAt'] as int,
-      updatedAt: json['updatedAt'] as int,
     );

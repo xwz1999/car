@@ -1,4 +1,4 @@
-import 'package:cloud_car/model/user/Handbook_model.dart';
+import 'package:cloud_car/model/user/handbook_model.dart';
 import 'package:cloud_car/ui/user/interface/manuals_func.dart';
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_info.dart';
 import 'package:flustars/flustars.dart';
@@ -20,6 +20,7 @@ class ProductManuals extends StatefulWidget {
 class _ProductManualsState extends State<ProductManuals> {
   List<HandbookModel> productManuals = [];
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
+
   @override
   void initState() {
     super.initState();
@@ -220,4 +221,3 @@ class _ProductManualsState extends State<ProductManuals> {
     );
   }
 }
-

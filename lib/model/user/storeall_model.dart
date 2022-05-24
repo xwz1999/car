@@ -1,3 +1,4 @@
+import 'package:cloud_car/constants/enums.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -35,6 +36,8 @@ class Staff extends Equatable {
 
   const Staff(this.id, this.name, this.phone, this.auditStatus, this.roleName,
       this.gender);
+
+  Gender get genderEM => Gender.getValue(gender);
 
   @override
   List<Object?> get props => [id, name, phone, auditStatus, roleName, gender];
