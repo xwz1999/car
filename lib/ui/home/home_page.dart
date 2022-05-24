@@ -20,6 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'car_manager/car_manager_page.dart';
 import 'car_manager/maintain_query/maintain_query_page.dart';

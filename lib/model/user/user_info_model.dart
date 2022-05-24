@@ -1,3 +1,4 @@
+import 'package:cloud_car/constants/enums.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -37,11 +38,7 @@ class UserInfoModel {
         3: '入驻商',
       };
 
-  Map<int, String> get genderMap => {
-        1: '男',
-        2: '女',
-        0: '未知',
-      };
+  Gender get genderEM => Gender.getValue(gender);
 
 //<editor-fold desc="Data Methods">
 
