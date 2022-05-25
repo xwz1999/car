@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -6,6 +5,7 @@ import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
+
 ///调价页面
 class ModifyPricePage extends StatefulWidget {
   const ModifyPricePage({super.key});
@@ -14,20 +14,15 @@ class ModifyPricePage extends StatefulWidget {
   _ModifyPricePageState createState() => _ModifyPricePageState();
 }
 
-class _ModifyPricePageState extends State<ModifyPricePage>  with SingleTickerProviderStateMixin{
-
-
+class _ModifyPricePageState extends State<ModifyPricePage>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
-
-
     super.initState();
-
   }
 
   @override
   void dispose() {
-
     super.dispose();
   }
 
@@ -35,22 +30,19 @@ class _ModifyPricePageState extends State<ModifyPricePage>  with SingleTickerPro
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            leading: const CloudBackButton(
-              isSpecial: true,
-            ),
-            backgroundColor: kForeGroundColor,
-            title: Text('调价',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline4,
-            ),
-
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          backgroundColor: kForeGroundColor,
+          title: Text(
+            '调价',
+            style: Theme.of(context).textTheme.headline4,
+          ),
         ),
         backgroundColor: kForeGroundColor,
         extendBody: true,
-        body:Padding(
-          padding:  EdgeInsets.only(right: 32.w),
+        body: Padding(
+          padding: EdgeInsets.only(right: 32.w),
           child: Column(
             children: [
               EditItemWidget(
@@ -59,7 +51,6 @@ class _ModifyPricePageState extends State<ModifyPricePage>  with SingleTickerPro
                 callback: (String content) {},
                 endText: '万元',
                 topIcon: false,
-
               ),
               EditItemWidget(
                 title: '系统估价',
@@ -69,13 +60,9 @@ class _ModifyPricePageState extends State<ModifyPricePage>  with SingleTickerPro
                 topIcon: false,
                 canChange: false,
               ),
-
               200.hb,
-
               GestureDetector(
-                onTap: (){
-
-
+                onTap: () {
                   Alert.show(
                       context,
                       NormalContentDialog(
@@ -89,7 +76,6 @@ class _ModifyPricePageState extends State<ModifyPricePage>  with SingleTickerPro
                               '是否确认提交调价申请？',
                               style: Theme.of(context).textTheme.subtitle2,
                             ),
-
                           ],
                         ),
                         items: const ['取消'],
@@ -97,11 +83,10 @@ class _ModifyPricePageState extends State<ModifyPricePage>  with SingleTickerPro
                         //监听器
                         listener: (index) {
                           Alert.dismiss(context);
-
                         },
                         deleteListener: () {
                           Alert.dismiss(context);
-                          Get.off(() => SuccessFailure(
+                          Get.off(() => SuccessFailurePage(
                               conditions: true,
                               headline: '调价',
                               body: Text(
@@ -114,14 +99,10 @@ class _ModifyPricePageState extends State<ModifyPricePage>  with SingleTickerPro
                                 },
                                 text: '返回汽车详情',
                               )));
-
                         },
                       ));
-
-
-
                 },
-                child:Container(
+                child: Container(
                   width: double.infinity,
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
                   padding: EdgeInsets.symmetric(vertical: 16.w),
@@ -138,15 +119,13 @@ class _ModifyPricePageState extends State<ModifyPricePage>  with SingleTickerPro
                   child: Text(
                     '提交',
                     style: TextStyle(
-                        color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
+                        color: kForeGroundColor,
+                        fontSize: BaseStyle.fontSize28),
                   ),
                 ),
               )
             ],
           ),
-        )
-
-    );
+        ));
   }
-
 }

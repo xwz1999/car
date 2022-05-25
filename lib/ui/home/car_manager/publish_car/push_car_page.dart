@@ -2,7 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
-import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
+import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
@@ -65,7 +65,6 @@ class _PushCarPageState extends State<PushCarPage> {
 
   List<ChooseItem> get list =>
       CarSource.values.map((e) => ChooseItem(name: e.sourceName)).toList();
-
 
   @override
   void initState() {
@@ -378,7 +377,7 @@ class _PushCarPageState extends State<PushCarPage> {
                       title: '车辆来源',
                       items: CarSource.values.map((e) => e.sourceName).toList(),
                       onConfirm: (str, index) {
-                        if (index==null) {
+                        if (index == null) {
                           return;
                         }
                         _publishCarInfo.carSource =

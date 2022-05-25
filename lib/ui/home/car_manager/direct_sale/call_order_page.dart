@@ -31,7 +31,6 @@ class _CallOrderPageState extends State<CallOrderPage> {
   late TextEditingController _editingController5;
   late TextEditingController _editingController6;
 
-
   // FocusNode focusNode = FocusNode();
 
   CallOrderModel callOrderModel = CallOrderModel();
@@ -73,16 +72,14 @@ class _CallOrderPageState extends State<CallOrderPage> {
       ),
       backgroundColor: bodyColor,
       extendBody: true,
-      bottomNavigationBar:
-      Container(
+      bottomNavigationBar: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 30.w),
         height: 150.w,
         color: kForeGroundColor,
         child: GestureDetector(
           onTap: () async {
-            if (
-                callOrderModel.reserveTime == null ||
+            if (callOrderModel.reserveTime == null ||
                 callOrderModel.remark == null ||
                 callOrderModel.address == null ||
                 callOrderModel.customerId == null ||
@@ -95,11 +92,11 @@ class _CallOrderPageState extends State<CallOrderPage> {
                       callOrderModel.customerId!,
                       callOrderModel.phone!,
                       callOrderModel.reserveTime!,
-                  callOrderModel.address!,
-                  callOrderModel.remark!)
+                      callOrderModel.address!,
+                      callOrderModel.remark!)
                   .then((value) {
                 value
-                    ? Get.to(() => SuccessFailure(
+                    ? Get.to(() => SuccessFailurePage(
                         conditions: true,
                         headline: '叫车订单',
                         body: Text(
@@ -153,9 +150,9 @@ class _CallOrderPageState extends State<CallOrderPage> {
                                   },
                                   deleteListener: () {
                                     Alert.dismiss(context);
-                                    launchUrl(Uri(scheme: 'tel', path: callOrderModel.phone!));
-
-
+                                    launchUrl(Uri(
+                                        scheme: 'tel',
+                                        path: callOrderModel.phone!));
                                   },
                                 ));
                           },
@@ -207,15 +204,17 @@ class _CallOrderPageState extends State<CallOrderPage> {
                 ),
                 24.hb,
                 CarItemWidget(
-                  widgetPadding:
-                  EdgeInsets.zero,
+                  widgetPadding: EdgeInsets.zero,
                   name: widget.carListModel.modelName,
-                  time: DateUtil.formatDateMs(widget.carListModel.licensingDate.toInt() * 1000,
+                  time: DateUtil.formatDateMs(
+                      widget.carListModel.licensingDate.toInt() * 1000,
                       format: 'yyyy年MM月'),
                   distance: '${widget.carListModel.mileage}万公里',
                   // standard: '国六',
                   url: widget.carListModel.mainPhoto,
-                  price: NumUtil.divide(num.parse(widget.carListModel.price), 10000).toString(),
+                  price: NumUtil.divide(
+                          num.parse(widget.carListModel.price), 10000)
+                      .toString(),
                 ),
               ],
             ),
@@ -352,8 +351,9 @@ class _CallOrderPageState extends State<CallOrderPage> {
                     callOrderModel.reserveTime = DateUtil.formatDate(firstDate,
                         format: 'yyyy-MM-dd HH:mm:ss');
 
+                    FocusManager.instance.primaryFocus?.unfocus();
 
-                    FocusManager.instance.primaryFocus?.unfocus();///隐藏所有焦点
+                    ///隐藏所有焦点
 
                     setState(() {});
                   },
@@ -517,7 +517,6 @@ class _CallOrderPageState extends State<CallOrderPage> {
 }
 
 class CallOrderModel {
-
   int? customerId;
   String? phone;
   String? reserveTime;
@@ -525,7 +524,6 @@ class CallOrderModel {
   String? remark;
 
   CallOrderModel({
-
     this.customerId,
     this.phone,
     this.reserveTime,

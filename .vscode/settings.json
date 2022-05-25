@@ -32,5 +32,6 @@
         "userview",
         "xxbankbg",
         "xxbankhead"
-    ]
+    ],
+    "dart.flutterSdkPath": "/Users/datang/flutter"
 }

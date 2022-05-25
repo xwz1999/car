@@ -9,7 +9,6 @@ environment:
   sdk: ">=2.17.0 <3.0.0"
 
 
-
 dependencies:
   flutter:
     sdk: flutter
@@ -59,7 +58,7 @@ dependencies:
   badges: ^2.0.2
   #手写
   signature: ^5.0.0
-   # 相机
+  # 相机
   image_picker: ^0.8.5
   # 虚线框
   dotted_border: ^2.0.0+2

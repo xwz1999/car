@@ -1,6 +1,5 @@
-import 'package:cloud_car/ui/user/user_feedback/Product_recommendations.dart';
-
-import 'package:cloud_car/ui/user/user_feedback/problem_feedback.dart';
+import 'package:cloud_car/ui/user/user_feedback/problem_feedback_page.dart';
+import 'package:cloud_car/ui/user/user_feedback/product_recommendations_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
@@ -57,7 +56,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const ProblemFeedback(
+                        Get.to(() => const ProblemFeedbackPage(
                               isTitle: true,
                               title1: '问题描述',
                               text: '请输入您的问题并上传页面截屏可帮助技术人员更快地解决问题',
@@ -86,7 +85,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     80.wb,
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const Recommendations());
+                        Get.to(() => const RecommendationsPage());
                       },
                       child: Column(
                         children: [
@@ -153,7 +152,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                   Icons.keyboard_arrow_right,
                                 )),
                             onTap: () {
-                              Get.to(() => const ProblemFeedback(
+                              Get.to(() => const ProblemFeedbackPage(
                                     title1: '怎么创建订单',
                                     text:
                                         '请点击【工作台】-【客户管理】客户详情页面右下角，点击“发起合同”即为订单生成。同样，创建订单入口在【工作台】-【车辆管理】中也可以以“出售”车辆形式生成合同，完成订单创建。以上为建议方案，若未能解决，请直接在此处输入您的详细问题。',
@@ -172,7 +171,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                   Icons.keyboard_arrow_right,
                                 )),
                             onTap: () {
-                              Get.to(() => const ProblemFeedback(
+                              Get.to(() => const ProblemFeedbackPage(
                                     title1: '订单成交后在哪里查看合同',
                                     text:
                                         '订单成交后，可至【我的】-【查看合同】处查看相关合同文件。以上为建议方案，若未能解决，请直接在此处输入您的详细问题。',
@@ -191,7 +190,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                   Icons.keyboard_arrow_right,
                                 )),
                             onTap: () {
-                              Get.to(() => const ProblemFeedback(
+                              Get.to(() => const ProblemFeedbackPage(
                                     title1: '怎么添加客户',
                                     text:
                                         '可至【我的】-【邀请】模块分享客户邀请码，客户使用微信扫描二维码进入云云问车小程序注册成功后即为您的绑定客户。以上为建议方案，若未能解决，请直接在此处输入您的详细问题。',
@@ -210,7 +209,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                   Icons.keyboard_arrow_right,
                                 )),
                             onTap: () {
-                              Get.to(() => const ProblemFeedback(
+                              Get.to(() => const ProblemFeedbackPage(
                                     title1: '车辆信息为什么修改不了',
                                     text:
                                         '车辆信息的修改需要经过平台后台审核，若您已经提交相关修改信息，请耐心等待，平台审核通过后即可修改成功。以上为建议方案，若未能解决，请直接在此处输入您的详细问题。',
@@ -229,7 +228,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                   Icons.keyboard_arrow_right,
                                 )),
                             onTap: () {
-                              Get.to(() => const ProblemFeedback(
+                              Get.to(() => const ProblemFeedbackPage(
                                     title1: '怎么提现店铺获利金额',
                                     text:
                                         '请点击【我的】-【钱包】进行金额提现，提现前务必进行实名认证并绑定您的提现银行卡号。以上为建议方案，若未能解决，请直接在此处输入您的详细问题。',
