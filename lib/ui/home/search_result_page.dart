@@ -239,7 +239,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
   _getAppbar() {
     return SearchBarWidget(
       callback: (String text) {
-        _pickCar.value.tukeyWords = text;
+        _pickCar.value.keyWords = text;
         _refreshController.callRefresh();
       },
       canChange: false,
