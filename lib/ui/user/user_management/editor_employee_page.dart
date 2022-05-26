@@ -116,6 +116,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                   commissionText);
               if (res) {
                 BotToast.showText(text: '提交成功');
+                //Navigator.pop(context);
                 Get.back();
               }
               //print("输出返回值：$zhi");
@@ -390,8 +391,9 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
         TextEditItemWidget(
           title: '销售提成',
           endIcon: false,
-          editor: !(roleId == 2 || roleId == 4),
-          value: roleId == 2 || roleId == 4 ? '' : commissionText,
+          editor: !(roleId == 1 || roleId == 3),
+          value: roleId == 1 || roleId == 3 ? '' : commissionText,
+          tips: roleId == 1 || roleId == 3 ? '' : '请输入',
           widget: Text(
             '%',
             style: TextStyle(

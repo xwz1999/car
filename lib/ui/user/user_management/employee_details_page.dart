@@ -121,6 +121,8 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 ),
                 72.hb,
                 Offstage(
+                  offstage:
+                      staffInfo.AuditStatus == 1 || staffInfo.AuditStatus == 2,
                   child: Column(
                     children: [
                       Text(
@@ -229,6 +231,19 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                                     },
                                     deleteListener: () async {
                                       Alert.dismiss(context);
+                                      var res = await BusinessFunc.getStaffadd(
+                                          staffInfo.Name,
+                                          staffInfo.Gender,
+                                          staffInfo.Phone,
+                                          staffInfo.StoreId,
+                                          staffInfo.RoleId,
+                                          staffInfo.RoleId == 1 ||
+                                                  staffInfo.RoleId == 3
+                                              ? '0'
+                                              : staffInfo.Commission);
+                                      if (res) {
+                                        Navigator.pop(context);
+                                      }
                                       // var res =
                                       //     await BusinessFunc.getStaffDelete(
                                       //         widget.staffId);
