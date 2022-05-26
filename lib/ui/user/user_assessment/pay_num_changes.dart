@@ -1,5 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/model/user/History_model.dart';
+import 'package:cloud_car/model/user/history_model.dart';
 import 'package:cloud_car/ui/user/interface/user_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
@@ -20,31 +20,28 @@ class _PayChangesPageState extends State<PayChangesPage> {
   List<dynamic>? data;
 
   // ignore: non_constant_identifier_names
-  List<HistoryModel> payNumList = [];
-  final List<List<HistoryModel>> _sortList = [];
+  List<HistoryModel> payNumList = []; //内容列表
+  final List<List<HistoryModel>> _sortList = []; //时间列表
 
-  List<bool> _foldStatus = [];
-
+  List<bool> _foldStatus = []; //判断是否点击
   //List<String> timeList = [];
   //bool num = true;
   //late int num = 0;
   // List<int> num = [];
-
   // List<String> timeList = [];
-
   // late int timeNum = 0;
   // List<String> timeList1 = [];
   // List<int> number1 = [];
-
   void sortByDate() {
     if (payNumList.isEmpty) {
       return;
     }
-    var currentMonth = payNumList.first.createDateTime.month;
-    var currentYear = payNumList.first.createDateTime.year;
+    var currentMonth = payNumList.first.createDateTime.month; //月
+    var currentYear = payNumList.first.createDateTime.year; //年
     int count = 0;
     _sortList.clear();
     _sortList.add(<HistoryModel>[]);
+
     for (var item in payNumList) {
       if (item.createDateTime.year == currentYear &&
           item.createDateTime.month == currentMonth) {
@@ -110,47 +107,47 @@ class _PayChangesPageState extends State<PayChangesPage> {
           footer: MaterialFooter(),
           controller: _easyRefreshController,
           onRefresh: () async {
-        page = 1;
-        await _refresh();
+            page = 1;
+            await _refresh();
 
-        // for (var i = 0; i < payNumList.length; i++) {
-        //   if (DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
-        //           format: 'yyyy年MM月') !=
-        //       DateUtil.formatDateMs(
-        //           payNumList[i + 1].createdAt.toInt() * 1000,
-        //           format: 'yyyy年MM月')) {
-        //     timeList.add(DateUtil.formatDateMs(
-        //         payNumList[i].createdAt.toInt() * 1000,
-        //         format: 'yyyy年MM月'));
-        //   }
-        // }
-        setState(() {});
+            // for (var i = 0; i < payNumList.length; i++) {
+            //   if (DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
+            //           format: 'yyyy年MM月') !=
+            //       DateUtil.formatDateMs(
+            //           payNumList[i + 1].createdAt.toInt() * 1000,
+            //           format: 'yyyy年MM月')) {
+            //     timeList.add(DateUtil.formatDateMs(
+            //         payNumList[i].createdAt.toInt() * 1000,
+            //         format: 'yyyy年MM月'));
+            //   }
+            // }
+            setState(() {});
           },
           onLoad: () async {
-        page++;
-        var baseList = await apiClient
-            .requestList(API.user.wallet.assessHistory, data: {
-          'page': page,
-          'size': size,
-        });
-        if (baseList.nullSafetyTotal > payNumList.length) {
-          payNumList.addAll(baseList.nullSafetyList
-              .map((e) => HistoryModel.fromJson(e))
-              .toList());
-          sortByDate();
-        } else {
-          _easyRefreshController.finishLoad(noMore: true);
-        }
-        setState(() {});
+            page++;
+            var baseList = await apiClient
+                .requestList(API.user.wallet.assessHistory, data: {
+              'page': page,
+              'size': size,
+            });
+            if (baseList.nullSafetyTotal > payNumList.length) {
+              payNumList.addAll(baseList.nullSafetyList
+                  .map((e) => HistoryModel.fromJson(e))
+                  .toList());
+              sortByDate();
+            } else {
+              _easyRefreshController.finishLoad(noMore: true);
+            }
+            setState(() {});
           },
           child: payNumList.isEmpty
-          ? const SizedBox()
-          : ListView.builder(
-              itemBuilder: (context, index) {
-                return _getChanges(_sortList[index], index);
-              },
-              itemCount: _sortList.length,
-            ),
+              ? const SizedBox()
+              : ListView.builder(
+                  itemBuilder: (context, index) {
+                    return _getChanges(_sortList[index], index);
+                  },
+                  itemCount: _sortList.length,
+                ),
         ));
   }
 
@@ -180,7 +177,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
                         models.isEmpty
                             ? DateTime.now()
                             : models.first.createDateTime,
-                        format: DateFormats.zh_y_mo ),
+                        format: DateFormats.zh_y_mo),
                     //payNumList[],
                     style: Theme.of(context)
                         .textTheme

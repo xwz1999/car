@@ -55,11 +55,14 @@ class _MyOrderPageState extends State<MyOrderPage> {
         padding: EdgeInsets.only(left: 32.w, right: 32.w),
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 3,
+        mainAxisSpacing: 24.w,
+        //横轴间距
+        crossAxisSpacing: 40.w,
         childAspectRatio: 200 / 176,
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrder());
+              Get.to(()=> const SalesOrder());
             },
             child: ManagerContainerItem(
               text: '售车订单',
@@ -68,7 +71,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrder());
+              Get.to(()=> const SalesOrder());
             },
             child: ManagerContainerItem(
               text: '个人寄卖',
@@ -77,16 +80,25 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrder());
+              Get.to(()=> const SalesOrder());
             },
             child: ManagerContainerItem(
               text: '租车订单',
               num: '${_model.dealerConsignmentCount}',
             ),
           ),
+            GestureDetector(
+            onTap: () {
+              Get.to(()=> const SalesOrder());
+            },
+            child: ManagerContainerItem(
+              text: '车商寄卖',
+              num: '${_model.consignmentCount}',
+            ),
+          ),
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrder());
+              Get.to(()=> const SalesOrder());
             },
             child: ManagerContainerItem(
               text: '叫车订单',

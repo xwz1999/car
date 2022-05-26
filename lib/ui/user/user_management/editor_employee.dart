@@ -3,6 +3,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_management/access_configuration.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure.dart';
+import 'package:cloud_car/ui/user/user_management/staff_management.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -22,17 +23,20 @@ class EditorEmployee extends StatefulWidget {
   final String storeidText;
   final String commissionText;
   final int storeid;
+  final int staffId;
 
-  const EditorEmployee(
-      {super.key,
-      this.storeid = 0,
-      required this.callback,
-      this.permissions1 = '',
-      this.nameText = '',
-      this.genderText = '',
-      this.phoneText = '',
-      this.storeidText = '',
-      this.commissionText = ''});
+  const EditorEmployee({
+    super.key,
+    this.storeid = 0,
+    required this.callback,
+    this.permissions1 = '',
+    this.nameText = '',
+    this.genderText = '',
+    this.phoneText = '',
+    this.storeidText = '',
+    this.commissionText = '',
+    required this.staffId,
+  });
 
   @override
   State<EditorEmployee> createState() => _EditorEmployeeState();
@@ -44,13 +48,14 @@ class _EditorEmployeeState extends State<EditorEmployee> {
   late String nameText = widget.nameText;
   late String genderText = widget.genderText;
   late String phoneText = widget.phoneText;
-  late String storeidText = widget.storeidText;
+  late String storeIdText = widget.storeidText;
   late String commissionText = widget.commissionText;
   late int storeid;
   int sexId = 1;
   List blText = [];
 
-  late bool zhi = false;
+  late bool res = false;
+
   @override
   void initState() {
     super.initState();
@@ -71,7 +76,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('新增员工',
+        title: Text('编辑员工',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
@@ -89,50 +94,23 @@ class _EditorEmployeeState extends State<EditorEmployee> {
           40.hb,
           getTitle('权限分配'),
           24.hb,
-          getpermissions(),
+          getPermissions(),
           88.hb,
           CloudBottomButton(
             onTap: () async {
-              if (nameText.isEmpty) {
-                BotToast.showText(text: '请输入姓名');
-              } else {
-                if (genderText.isEmpty) {
-                  BotToast.showText(text: '请选择性别');
-                } else {
-                  if (phoneText.isEmpty) {
-                    BotToast.showText(text: '请输入手机号码');
-                  } else {
-                    RegExp exp = RegExp(
-                        r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
-                    bool matched = exp.hasMatch(phoneText);
-                    if (!matched) {
-                      BotToast.showText(text: '手机号码格式不正确');
-                    } else {
-                      if (storeidText.isEmpty) {
-                        BotToast.showText(text: '请选择手机架构');
-                      } else {
-                        if (permissions1.isEmpty) {
-                          BotToast.showText(text: '请选择权限配置');
-                        } else {
-                          if (commissionText.isEmpty) {
-                            BotToast.showText(text: '请输入销售提成');
-                          } else {
-                            BotToast.showText(text: '提交成功');
-                            widget.callback(false);
-                            Get.back();
-                            Future.delayed(const Duration(milliseconds: 0),
-                                () async {
-                              await _refresh();
-                            });
-
-                            //print("输出返回值：$zhi");
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
+              //print('res');
+              var res = await BusinessFunc.getStaffEdit(
+                  widget.staffId,
+                  nameText,
+                  genderText == '女' ? 2 : 1,
+                  storeid,
+                  roleId,
+                  commissionText);
+              if (res) {
+                BotToast.showText(text: '提交成功');
+                Get.to(() => const StaffManagement());
               }
+              //print("输出返回值：$zhi");
             },
             text: '提交',
           ),
@@ -335,6 +313,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
           32.hb,
           TextEditItemWidget(
             title: '手机号',
+            editor: false,
             value: phoneText,
             ontap: () {},
             callback: (String content) {
@@ -347,7 +326,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
             title: '组织架构',
             endIcon: true,
             tips: '请选择',
-            value: storeidText,
+            value: storeIdText,
             widget: Image(
               image: Assets.icons.icGoto,
               width: 32.w,
@@ -356,7 +335,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
             ontap: () async {
               await Get.to(() => StructurePage(
                     callback: (String city, int id) {
-                      storeidText = city;
+                      storeIdText = city;
                       storeid = id;
                     },
                   ));
@@ -371,7 +350,7 @@ class _EditorEmployeeState extends State<EditorEmployee> {
   }
 
 //权限分配   ///权限配置 销售提成
-  getpermissions() {
+  getPermissions() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -417,8 +396,12 @@ class _EditorEmployeeState extends State<EditorEmployee> {
     );
   }
 
-  _refresh() async {
-    zhi = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
-        phoneText, storeid, roleId, commissionText);
-  }
+// _refresh() async {
+//   res = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
+//       phoneText, storeid, roleId, commissionText);
+// }
+
 }
+// class Editor{
+//
+// }

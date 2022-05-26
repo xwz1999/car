@@ -1,4 +1,4 @@
-import 'package:cloud_car/model/user/HandbookInfo_model.dart';
+import 'package:cloud_car/model/user/handbookInfo_model.dart';
 import 'package:cloud_car/ui/user/interface/manuals_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -12,6 +12,7 @@ class HandbookInfo extends StatefulWidget {
   //final ManualsBack manualsBack;
   final String name;
   final int itemId;
+
   // final String text;
   // final String startTime;
   // final String endTime;
@@ -33,6 +34,7 @@ class _HandbookInfoState extends State<HandbookInfo> {
   late HandbookInfoModel manualsList = const HandbookInfoModel(
       id: 0, name: '', updatedAt: 0, content: '', createdAt: 0);
   late String name;
+
   // late String startTime;
   // late String endTime;
   late String text;

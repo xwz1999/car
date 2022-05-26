@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 
 class ChangeNameData extends StatefulWidget {
@@ -29,7 +31,9 @@ String guaranteeSlip = '';
 
 ///保单
 late double pice;
-
+  // final picker = ImagePicker();
+ // ignore: unnecessary_late
+ File imagePath = File('');
 class _ChangeNameDataState extends State<ChangeNameData> {
   @override
   Widget build(BuildContext context) {
@@ -52,48 +56,122 @@ class _ChangeNameDataState extends State<ChangeNameData> {
           child: ListView(
             children: [
               getText(
-                '登记证书',
-                CarImageItem(
-                  imageBack: (List<File> image) {
-                    certificate = image.first.path;
-                  },
-
-                  //isPadding: false,
-                ),
-              ),
+                  '登记证书',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          certificate = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: certificate == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [certificate],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
               //48.hb,
               getText(
-                '行驶证',
-                CarImageItem(
-                  imageBack: (List<File> image) {
-                    vehicleLicense = image.first.path;
-                  },
-
-                  //isPadding: false,
-                ),
-              ),
+                  '行驶证',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          vehicleLicense = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: vehicleLicense == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [vehicleLicense],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
               //48.hb,
               getText(
-                '发票',
-                CarImageItem(
-                  imageBack: (List<File> image) {
-                    invoice = image.first.path;
-                  },
+                  '发票',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          invoice = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: invoice == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [invoice],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
 
-                  //isPadding: false,
-                ),
-              ),
               //48.hb,
               getText(
-                '保单',
-                CarImageItem(
-                  imageBack: (List<File> image) {
-                    guaranteeSlip = image.first.path;
-                  },
+                  '保单',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          guaranteeSlip = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: guaranteeSlip == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [guaranteeSlip],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
 
-                  //isPadding: false,
-                ),
-              ),
               //48.hb,
               Row(
                 children: [
@@ -137,7 +215,7 @@ class _ChangeNameDataState extends State<ChangeNameData> {
               144.hb,
               GestureDetector(
                 onTap: () async {
-                  bool zhi = await OrderFunc.getTransfer(
+                  bool res = await OrderFunc.getTransfer(
                       widget.orderId,
                       certificate,
                       vehicleLicense,
@@ -146,7 +224,7 @@ class _ChangeNameDataState extends State<ChangeNameData> {
                       pice);
                   // print(
                   //     '登记证书+$certificate+行驶证+$vehicleLicense+发票+$invoice+保单+$guaranteeSlip+金额+$pice');
-                  if (zhi) {
+                  if (res) {
                     BotToast.showText(text: '提交成功');
                     Get.back();
                   }
@@ -193,6 +271,8 @@ class _ChangeNameDataState extends State<ChangeNameData> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+    
           SizedBox(
             width: 130.w,
             child: Text(

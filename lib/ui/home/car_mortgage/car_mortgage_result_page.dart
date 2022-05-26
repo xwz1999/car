@@ -3,108 +3,219 @@ import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
-import 'package:cloud_car/widget/picker/car_picker_box.dart';
-import 'package:cloud_car/widget/picker/cloud_list_picker_item_widget.dart';
-import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
-import 'choose_time_widget.dart';
+import 'dart:math';
 
 ///车辆按揭
 class CarMortgageResultPage extends StatefulWidget {
+  ///本金
   final num loanAmount;
-  final num loanTerm;
+
+  ///期数
+  final int loanTerm;
+
+  ///利率
   final num interestRate;
+
+  ///贷款类型
   final LoanType loanType;
+
+  ///利率类型 1年 2日
+  final int rateType;
 
   const CarMortgageResultPage(
       {super.key,
       required this.loanAmount,
       required this.loanTerm,
       required this.interestRate,
-      required this.loanType});
+      required this.loanType,
+      required this.rateType});
 
   @override
   _CarMortgageResultPageState createState() => _CarMortgageResultPageState();
 }
 
 class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
-  bool onLoad = false;
+  ///年利率
+  late double yearRate;
 
-  List<Loan> list = [
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-    Loan(
-        surplus: 960295.28,
-        amount: 43871.39,
-        interest: 4166.67,
-        date: '2022-02-15',
-        principal: 39704.72),
-  ];
+  ///日利率
+  late double dayRate;
+
+  ///月利率
+  late double monthRate;
+
+  ///总还款金额
+  double get totalRepayment {
+    switch (widget.loanType) {
+      case LoanType.equalPrincipalInterest:
+        return widget.loanTerm * monthPayment();
+      case LoanType.equalPrincipal:
+        double total = 0.0;
+        for (var item in loanList) {
+          total += item.amount;
+        }
+        return total;
+      // case LoanType.equalInterest:
+      //   return 0;
+      case LoanType.interestFirstPrincipalNext:
+        return widget.loanAmount + totalInterest;
+      case LoanType.duePrincipalInterest:
+        return widget.loanAmount + totalInterest;
+    }
+  }
+
+  ///总利息
+  double get totalInterest {
+    switch (widget.loanType) {
+      case LoanType.equalPrincipalInterest:
+        return totalRepayment - widget.loanAmount;
+      case LoanType.equalPrincipal:
+        double total = 0.0;
+        for (var item in loanList) {
+          total += item.interest;
+        }
+        return total;
+      case LoanType.interestFirstPrincipalNext:
+        return widget.loanAmount * monthRate * widget.loanTerm;
+      case LoanType.duePrincipalInterest:
+        return widget.loanAmount * monthRate * widget.loanTerm;
+    }
+  }
+
+  ///每月还款额
+  double monthPayment({int? term}) {
+    switch (widget.loanType) {
+      case LoanType.equalPrincipalInterest:
+        var rate = pow((1 + monthRate), widget.loanTerm);
+        return (widget.loanAmount * monthRate * rate) / (rate - 1);
+      case LoanType.equalPrincipal:
+        return (widget.loanAmount / widget.loanTerm) + getMonthInterest(term!);
+      // case LoanType.equalInterest:
+      //   return 0;
+      case LoanType.interestFirstPrincipalNext:
+        if (term == widget.loanTerm) {
+          return widget.loanAmount * monthRate + widget.loanAmount;
+        } else {
+          return widget.loanAmount * monthRate;
+        }
+      case LoanType.duePrincipalInterest:
+        if (term == widget.loanTerm) {
+          return totalRepayment;
+        } else {
+          return 0;
+        }
+    }
+  }
+
+  ///每月还款本金
+  double getMonthPrincipal(int term) {
+    switch (widget.loanType) {
+      case LoanType.equalPrincipalInterest:
+        return monthPayment() - getMonthInterest(term);
+      case LoanType.equalPrincipal:
+        return widget.loanAmount / widget.loanTerm;
+      case LoanType.interestFirstPrincipalNext:
+        if (term == widget.loanTerm) {
+          return widget.loanAmount.toDouble();
+        } else {
+          return 0;
+        }
+      case LoanType.duePrincipalInterest:
+        if (term == widget.loanTerm) {
+          return widget.loanAmount.toDouble();
+        } else {
+          return 0;
+        }
+    }
+  }
+
+  ///计算剩余本金
+  double getRemainingPrincipal(int term) {
+    switch (widget.loanType) {
+      case LoanType.equalPrincipalInterest:
+        if (term == 1) {
+          return widget.loanAmount - getMonthPrincipal(1);
+        }
+        return (loanList[term - 2].surplus - loanList[term - 1].principal)
+            .toDouble()
+            .abs();
+      case LoanType.equalPrincipal:
+        return (widget.loanAmount -
+                term * (widget.loanAmount / widget.loanTerm))
+            .abs();
+      case LoanType.interestFirstPrincipalNext:
+        if (term == widget.loanTerm) {
+          return 0;
+        } else {
+          return widget.loanAmount.toDouble();
+        }
+      case LoanType.duePrincipalInterest:
+        if (term == widget.loanTerm) {
+          return 0;
+        } else {
+          return widget.loanAmount.toDouble();
+        }
+    }
+  }
+
+  ///计算每月还款利息
+  double getMonthInterest(int term) {
+    switch (widget.loanType) {
+      case LoanType.equalPrincipalInterest:
+        return (widget.loanAmount * monthRate - monthPayment()) *
+                pow((1 + monthRate), term - 1) +
+            monthPayment();
+      case LoanType.equalPrincipal:
+        return (widget.loanAmount -
+                (widget.loanAmount / widget.loanTerm) * (term - 1)) *
+            monthRate;
+      // case LoanType.equalInterest:
+      //   return 0;
+      case LoanType.interestFirstPrincipalNext:
+        return widget.loanAmount * monthRate;
+      case LoanType.duePrincipalInterest:
+        if (term == widget.loanTerm) {
+          return totalInterest;
+        } else {
+          return 0;
+        }
+    }
+  }
+
+  List<Loan> loanList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    yearRate = widget.rateType == 1
+        ? widget.interestRate.toDouble()
+        : widget.interestRate * 365.0;
+    dayRate = widget.rateType == 2
+        ? widget.interestRate.toDouble()
+        : widget.interestRate / 365.0;
+    monthRate = yearRate / 12.0;
+    loanList = List.generate(
+      widget.loanTerm,
+      (index) => Loan(
+          date: DateUtil.formatDate(
+              DateTime(
+                  DateTime.now().year + ((DateTime.now().month + index) ~/ 12),
+                  (DateTime.now().month + index) % 12,
+                  15),
+              format: DateFormats.y_mo_d),
+          amount: monthPayment(term: index + 1),
+          principal: getMonthPrincipal(index + 1),
+          interest: getMonthInterest(index + 1),
+          surplus: 0.0),
+    );
+
+    for (var i = 0; i < loanList.length; i++) {
+      loanList[i].surplus = getRemainingPrincipal(i + 1);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,14 +322,12 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
               ],
             ),
           ),
-          onLoad
-              ? const SizedBox()
-              : list.isEmpty
-                  ? const NoDataWidget(
-                      text: '暂无相关信息',
-                      paddingTop: 300,
-                    )
-                  : bottomWidget(),
+          loanList.isEmpty
+              ? const NoDataWidget(
+                  text: '暂无相关信息',
+                  paddingTop: 300,
+                )
+              : bottomWidget(),
         ],
       ),
     );
@@ -229,9 +338,9 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
-        return getItem(list[index], index);
+        return getItem(loanList[index], index);
       },
-      itemCount: list.length,
+      itemCount: loanList.length,
     );
   }
 
@@ -260,7 +369,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
           Expanded(
             flex: 2,
             child: Text(
-              loan.amount.toString(),
+              loan.amount.toStringAsFixed(2),
               style: TextStyle(
                   color: const Color(0xFF333333),
                   fontSize: 20.sp,
@@ -270,7 +379,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
           Expanded(
             flex: 2,
             child: Text(
-              loan.principal.toString(),
+              loan.principal.toStringAsFixed(2),
               style: TextStyle(
                   color: const Color(0xFF333333),
                   fontSize: 20.sp,
@@ -280,7 +389,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
           Expanded(
             flex: 2,
             child: Text(
-              loan.interest.toString(),
+              loan.interest.toStringAsFixed(2),
               style: TextStyle(
                   color: const Color(0xFF333333),
                   fontSize: 20.sp,
@@ -290,7 +399,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
           Expanded(
             flex: 2,
             child: Text(
-              loan.surplus.toString(),
+              loan.surplus.toStringAsFixed(2),
               style: TextStyle(
                   color: const Color(0xFF333333),
                   fontSize: 20.sp,
@@ -329,7 +438,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
                     ),
                     16.hb,
                     Text(
-                      '1052913.35',
+                      totalRepayment.toStringAsFixed(2),
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 40.sp,
@@ -350,7 +459,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
                     ),
                     16.hb,
                     Text(
-                      '52913.35',
+                      totalInterest.toStringAsFixed(2),
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 40.sp,
@@ -378,7 +487,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
                       ),
                       16.hb,
                       Text(
-                        '5.000',
+                        (yearRate * 100.0).toStringAsFixed(3),
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 40.sp,
@@ -416,7 +525,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
                       ),
                       16.hb,
                       Text(
-                        '0.417',
+                        (monthRate * 100.0).toStringAsFixed(3),
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 40.sp,
@@ -454,7 +563,7 @@ class _CarMortgageResultPageState extends State<CarMortgageResultPage> {
                       ),
                       16.hb,
                       Text(
-                        '0.014',
+                        (dayRate * 100.0).toStringAsFixed(3),
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 40.sp,

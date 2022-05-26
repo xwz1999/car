@@ -78,4 +78,24 @@ class BusinessFunc {
       return false;
     }
   }
+
+  ///编辑员工
+  static Future<bool> getStaffEdit(int staffId, String name, int gender,
+      int storeId, int roleId, String commission) async {
+    BaseModel res =
+        await apiClient.request(API.storeManagement.staffEdit, data: {
+      'staffId': staffId,
+      'name': name,
+      'gender': gender,
+      'storeId': storeId,
+      'roleId': roleId,
+      'commission': commission
+    });
+    if (res.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(res.msg);
+      return false;
+    }
+  }
 }

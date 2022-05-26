@@ -1,17 +1,22 @@
-import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete.dart';
-import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_complete_other.dart';
-import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid.dart';
-import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_unpaid_other.dart';
+import 'package:cloud_car/model/order/callcarlist_model.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/car_widget.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../../../constants/api/api.dart';
+
 class ThatcarOrderPage extends StatefulWidget {
   final Function callBack;
+
   const ThatcarOrderPage({
     super.key,
     required this.callBack,
@@ -24,54 +29,15 @@ class ThatcarOrderPage extends StatefulWidget {
 class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
   List<Widget> listWidget = []; //创建方法列表
   //List<ChooseItem> _sortList = [];
+  List<CallcarlistModel> callCarList = [];
+  int _page = 1;
+  final int _size = 10;
+  bool _onLoad = true;
   final List<ChooseItem> _sortList = [];
-  List carList = [
-    {
-      'judge': false,
-      'judgename': '待支付',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'pice1name': '叫车总价',
-      'pice1': '100.00',
-      'picename': '已付金额',
-      'pice': '0.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '待交车',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'pice1name': '叫车总价',
-      'pice1': '100.00',
-      'picename': '已付金额',
-      'pice': '100.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '已完成',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'pice1name': '叫车总价',
-      'pice1': '100.00',
-      'picename': '已付金额',
-      'pice': '100.00',
-      'buttomname': '',
-    },
-    {
-      'judge': false,
-      'judgename': '已退款',
-      'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
-      'url': Assets.images.carBanner.path,
-      'pice1name': '叫车总价',
-      'pice1': '100.00',
-      'picename': '已付金额',
-      'pice': '100.00',
-      'buttomname': '',
-    },
-  ];
+
+  String text = '全部';
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
+
   @override
   void initState() {
     super.initState();
@@ -111,7 +77,7 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
         },
         child: Column(
           children: [
-             SizedBox(
+            SizedBox(
               height: kToolbarHeight + 50.w,
             ),
             SizedBox(
@@ -120,10 +86,11 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                 items: const [
                   '全部',
                   '待支付',
-                  '待公交',
+                  '待交车',
                   '已完成',
                 ],
                 callBack: (name) {
+                  text = name;
                   setState(() {});
                 },
               ),
@@ -135,130 +102,167 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
               header: MaterialHeader(),
               footer: MaterialFooter(),
               controller: _easyRefreshController,
-              onLoad: () async {},
-              onRefresh: () async {},
-              child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) {
-                    return getCar(carList[index]);
-                  },
-                  itemCount: carList.length),
+              onLoad: () async {
+                _page++;
+                var baseList = await apiClient.requestList(API.order.callCar,
+                    data: {'page': _page, 'size': _size});
+                if (baseList.nullSafetyTotal > callCarList.length) {
+                  callCarList.addAll(baseList.nullSafetyList
+                      .map((e) => CallcarlistModel.fromJson(e))
+                      .toList());
+                } else {
+                  _easyRefreshController.finishLoad(noMore: true);
+                }
+                setState(() {});
+              },
+              onRefresh: () async {
+                _page = 1;
+                callCarList =
+                    await OrderFunc.getCallCar(page: _page, size: _size);
+
+                _onLoad = false;
+                // callCarList = [
+                //   const CallcarlistModel(
+                //       amount: '100',
+                //       mileage: '25.5',
+                //       transfer: 1,
+                //       mainPhoto: '',
+                //       modelName: '',
+                //       status: 1,
+                //       licensingDate: 1136217600,
+                //       id: 9,
+                //       orderSn: '202205180003'),
+                //   const CallcarlistModel(
+                //       amount: '100',
+                //       mileage: '25.5',
+                //       transfer: 1,
+                //       mainPhoto: '',
+                //       modelName: '',
+                //       status: 2,
+                //       licensingDate: 1136217600,
+                //       id: 9,
+                //       orderSn: '202205180003'),
+                //   const CallcarlistModel(
+                //       amount: '100',
+                //       mileage: '25.5',
+                //       transfer: 1,
+                //       mainPhoto: '',
+                //       modelName: '',
+                //       status: 3,
+                //       licensingDate: 1136217600,
+                //       id: 9,
+                //       orderSn: '202205180003'),
+                //   const CallcarlistModel(
+                //       amount: '100',
+                //       mileage: '25.5',
+                //       transfer: 1,
+                //       mainPhoto: '',
+                //       modelName: '',
+                //       status: 4,
+                //       licensingDate: 1136217600,
+                //       id: 9,
+                //       orderSn: '202205180003'),
+                // ];
+                setState(() {});
+              },
+              child: _onLoad
+                  ? const SizedBox()
+                  : callCarList.isEmpty
+                      ? const NoDataWidget(
+                          text: '暂无相关订单信息',
+                          paddingTop: 300,
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (context, index) {
+                            return getCar(callCarList[index]);
+                          },
+                          itemCount: callCarList.length),
             )),
           ],
         ));
   }
 
-  getCar(item) {
+  getCar(CallcarlistModel model) {
     late bool bl = false;
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+    return Offstage(
+        offstage: text == '全部' ? false : model.statusEnum.str != text,
         child: GestureDetector(
-          onTap: () {
-            switch (item['judgename']) {
-              case '待支付':
-                Get.to(() => bl == true
-                    ? const ThatcarUnpaid(
-                        stat: '待支付',
-                      )
-                    : const UnpaidOther(
-                        stat: '待支付',
-                      ));
-                break;
-              case '待交车':
-                Get.to(() => bl
-                    ? const ThatcarUnpaid(
-                        stat: '待交车',
-                      )
-                    : const UnpaidOther(
-                        stat: '待交车',
-                      ));
-                break;
-              case '已完成':
-                Get.to(() => bl
-                    ? const ThatcarComplete(
-                        stat: '已完成',
-                      )
-                    : const Complete0ther(
-                        stat: '已完成',
-                      ));
-                break;
-              case '已退款':
-                Get.to(() => bl
-                    ? const ThatcarComplete(
-                        stat: '已退款',
-                      )
-                    : const Complete0ther(
-                        stat: '已退款',
-                      ));
-                break;
-            }
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
-            decoration: BoxDecoration(
-                color: kForeGroundColor,
-                borderRadius: BorderRadius.circular(16.w)),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: Text(
-                  item['judgename'],
-                  style: TextStyle(
-                      color: item['judgename'] != '已退款'
-                          ? const Color(0xFF027AFF)
-                          : const Color(0xFF666666),
-                      fontSize: BaseStyle.fontSize28),
-                ),
-              ),
-              // 24.hb,
-              Row(
-                children: [
-                  SizedBox(
-                    width: 196.w,
-                    height: 150.w,
-                    child: Image.asset(item['url']),
-                  ),
-                  20.wb,
-                  SizedBox(
-                    width: 406.w,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+            onTap: () {
+              // model.transfer == 1
+              //     ? Get.to(() => UnpaidOther(
+              //           status: model.status,
+              //           statusText: model.statusEnum.str,
+              //         ))
+              //     : Get.to(() => ThatcarUnpaid(
+              //           statusText: model.statusEnum.str,
+              //           status: model.status,
+              //         ));
+            },
+            child: Container(
+                padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+                margin: EdgeInsets.only(left: 32.w, right: 32.w, top: 16.w),
+                decoration: BoxDecoration(
+                    color: kForeGroundColor,
+                    borderRadius: BorderRadius.circular(16.w)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      model.statusEnum.str,
+                      style: TextStyle(
+                          color: model.status != 4
+                              ? const Color(0xFF027AFF)
+                              : const Color(0xFF666666),
+                          fontSize: BaseStyle.fontSize28),
+                    ),
+                    // 24.hb,
+                    Row(
                       children: [
-                        Text(item['title'],
-                            style: TextStyle(
-                                fontSize: BaseStyle.fontSize28,
-                                color: BaseStyle.color111111)),
-                        32.hb,
-                        Padding(
-                          padding: EdgeInsets.only(right: 16.w),
-                          child: getText('过户0次', '2020年10月', '20.43万公里',
-                              item['judgename']),
-                        )
+                        SizedBox(
+                          width: 196.w,
+                          height: 150.w,
+                          child: CloudImageNetworkWidget.car(
+                              urls: [model.mainPhoto]),
+                        ),
+                        20.wb,
+                        SizedBox(
+                          width: 406.w,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(model.modelName,
+                                  style: TextStyle(
+                                      fontSize: BaseStyle.fontSize28,
+                                      color: BaseStyle.color111111)),
+                              32.hb,
+                              Padding(
+                                padding: EdgeInsets.only(right: 16.w),
+                                child: getText(
+                                    '过户${model.transfer}次',
+                                    DateUtil.formatDateMs(
+                                        model.licensingDate.toInt() * 1000,
+                                        format: 'yyyy年MM月'),
+                                    '${model.mileage}万公里',
+                                    model.statusEnum.str),
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-              40.hb,
-              SizedBox(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        child: Text(
-                          item['pice1name'],
+                    40.hb,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          '叫车总价',
                           style: TextStyle(
                               fontSize: BaseStyle.fontSize28,
                               color: BaseStyle.color999999),
                         ),
-                      ),
-                      16.wb,
-                      SizedBox(
-                        child: Text.rich(TextSpan(children: [
+                        16.wb,
+                        Text.rich(TextSpan(children: [
                           TextSpan(
                               text: '¥',
                               style: Theme.of(context)
@@ -266,50 +270,42 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
                                   .subtitle2
                                   ?.copyWith(fontWeight: FontWeight.bold)),
                           TextSpan(
-                              text: item['pice1'],
+                              text: model.amount,
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
                                   ?.copyWith(fontWeight: FontWeight.bold)),
                         ])),
-                      ),
-                      56.wb,
-                      SizedBox(
-                        child: Text(
-                          item['picename'],
+                        56.wb,
+                        Text(
+                          model.status == 4 ? '退款金额' : '已付金额',
                           style: TextStyle(
                               fontSize: BaseStyle.fontSize28,
                               color: BaseStyle.color999999),
                         ),
-                      ),
-                      16.wb,
-                      SizedBox(
-                        child: Text.rich(TextSpan(children: [
+                        16.wb,
+                        Text.rich(TextSpan(children: [
                           TextSpan(
                               text: '¥',
                               style: TextStyle(
-                                  color: item['judgename'] == '已取消'
+                                  color: model.status == 4
                                       ? const Color(0xFF333333)
                                       : const Color(0xFFFF3B02),
                                   fontSize: BaseStyle.fontSize24,
                                   fontWeight: FontWeight.bold)),
                           TextSpan(
-                              text: item['pice'],
+                              text: model.status == 1 ? '0.00' : model.amount,
                               style: TextStyle(
-                                  color: item['judgename'] == '已取消'
+                                  color: model.statusEnum.num == 4
                                       ? const Color(0xFF333333)
                                       : const Color(0xFFFF3B02),
                                   fontSize: BaseStyle.fontSize28,
                                   fontWeight: FontWeight.bold)),
                         ])),
-                      ),
-                    ],
-                  ),
-                ],
-              ))
-            ]),
-          ),
-        ));
+                      ],
+                    ),
+                  ],
+                ))));
   }
 
   getText(String num, String time, String distance, String conditions) {
@@ -382,4 +378,17 @@ class _ThatcarOrderPageState extends State<ThatcarOrderPage> {
       ],
     );
   }
+
+// getStatus(int num) {
+//   switch (num) {
+//     case 0:
+//       return '已退款';
+//     case 1:
+//       return '待支付';
+//     case 2:
+//       return '待交车';
+//     case 3:
+//       return '已完成';
+//   }
+// }
 }

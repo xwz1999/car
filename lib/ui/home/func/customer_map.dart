@@ -51,15 +51,25 @@ class CustomerMap {
     '成交客户': 4
   };
 
-
-
   static Map<int, String> customerStatusByInt = {
     1: '浏览客户',
-    2:'意向客户',
-    3:'邀请注册',
-    4:'成交客户'
+    2: '意向客户',
+    3: '邀请注册',
+    4: '成交客户'
   };
 
-
-
+  static Map<String, int> orderStatus = {
+    '售车订单': 1,
+    '个人寄卖': 2,
+    '租车订单': 3,
+    '叫车订单': 4,
+    '车商寄卖': 5
+  };
+  static Map<int, String> orderStatusByInt = {
+    1: '售车订单',
+    2: '个人寄卖',
+    3: '租车订单',
+    4: '叫车订单',
+    5: '车商寄卖'
+  };
 }

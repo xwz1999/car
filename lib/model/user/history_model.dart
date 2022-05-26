@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flustars/flustars.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'History_model.g.dart';
+part 'history_model.g.dart';
 
 @JsonSerializable()
 class HistoryModel extends Equatable {
@@ -12,9 +12,13 @@ class HistoryModel extends Equatable {
   final int type;
   final num count;
   final int createdAt;
+
   factory HistoryModel.fromJson(Map<String, dynamic> json) =>
       _$HistoryModelFromJson(json);
-   DateTime get createDateTime => DateUtil.getDateTimeByMs(createdAt*1000);
+
+  DateTime get createDateTime => DateUtil.getDateTimeByMs(createdAt * 1000);
+
+  ///时间戳传唤格式
 
   @override
   List<Object?> get props => [

@@ -1,6 +1,5 @@
 import 'package:cloud_car/model/car/car_statistics_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
-import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -79,6 +78,9 @@ class _CarManagerPageState extends State<CarManagerPage> {
           padding: EdgeInsets.only(left: 32.w, right: 32.w),
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 3,
+          mainAxisSpacing: 24.w,
+          //横轴间距
+          crossAxisSpacing: 40.w,
           childAspectRatio: 200 / 176,
           children: [
             GestureDetector(

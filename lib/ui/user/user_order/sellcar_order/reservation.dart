@@ -1,9 +1,8 @@
-import 'package:cloud_car/model/order/Sale_info.dart';
+import 'package:cloud_car/model/order/sale_info.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
-import 'package:cloud_car/ui/user/user_order/sellcar_order/backup/detection_data.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data.dart';
+import 'package:cloud_car/ui/user/user_order/sellcar_order/detection_data.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
@@ -12,29 +11,29 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
 class Reservation extends StatefulWidget {
-  final bool judge;
   final int orderId;
   final String status;
   final int statusNum;
+  final int statusNumber;
 
   const Reservation(
       {super.key,
-      required this.judge,
       required this.orderId,
       required this.status,
-      required this.statusNum});
+      required this.statusNum,
+      required this.statusNumber});
 
   @override
   State<Reservation> createState() => _ReservationState();
 }
 
 class _ReservationState extends State<Reservation> {
-  late bool judge = widget.judge;
+  //late bool judge = widget.judge;
   late Widget methods;
 
   late String audit = '3';
 
-   SaleInfo _consignmentInfoList=SaleInfo.init ;
+  SaleInfo _consignmentInfoList = SaleInfo.init;
 
   @override
   void initState() {
@@ -64,7 +63,6 @@ class _ReservationState extends State<Reservation> {
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize36,
                   fontWeight: FontWeight.bold)),
-
         ),
         backgroundColor: bodyColor,
         body: Stack(
@@ -79,13 +77,14 @@ class _ReservationState extends State<Reservation> {
                   color: Colors.white,
                   child: ProgressBar(
                     length: 6,
-                    num: widget.statusNum,
+                    num: widget.statusNumber,
                     direction: false,
+                    cancel: widget.statusNum != 0,
                     HW: 96,
                     texts: [
                       text('预定'),
                       text('检测'),
-                      text('首付'),
+                      widget.statusNum == 0 ? text('订单取消') : text('首付'),
                       text('过户'),
                       text('尾款'),
                       text('完成'),
@@ -93,6 +92,7 @@ class _ReservationState extends State<Reservation> {
                   ),
                 ),
                 getContainer(
+                  ///客户信息
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -101,12 +101,14 @@ class _ReservationState extends State<Reservation> {
                         child: getTitle('客户信息'),
                       ),
                       36.hb,
-                      _getText('客户姓名', '莉丝'),
+                      _getText('客户姓名', '莉丝', BaseStyle.color333333),
                       36.hb,
-                      _getText('手机号', '111112112122')
+                      _getText('手机号', '111112112122', BaseStyle.color333333)
                     ],
                   ),
                 ),
+
+                ///车辆信息
                 getContainer(
                   GestureDetector(
                     onTap: () {
@@ -155,8 +157,50 @@ class _ReservationState extends State<Reservation> {
                         ]),
                   ),
                 ),
-                getWidget(),
-                130.hb,
+
+                ///合同信息
+                getContract(widget.statusNum),
+
+                ///支付信息
+                Offstage(
+                  offstage: widget.statusNum == 1,
+                  child: getPay(widget.statusNum),
+                ),
+
+                ///车辆检测报告
+                Offstage(
+                  offstage: widget.statusNum == 1 ||
+                      widget.statusNum == 3 ||
+                      widget.statusNum == 10,
+                  child: getReport(),
+                ),
+                widget.statusNum == 0
+                    ? getContainer(
+                        ///订单取消
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 0.w),
+                              child: getTitle('订单取消信息'),
+                            ),
+                            36.hb,
+                            _getText('取消人员', '云云问车平台', BaseStyle.color333333),
+                            36.hb,
+                            _getText(
+                                '取消时间', '111112112122', BaseStyle.color333333)
+                          ],
+                        ),
+                      )
+                    : const SizedBox(),
+
+                ///车辆检测报告2
+                Offstage(
+                  offstage: !(widget.statusNum == 40 ||
+                      widget.statusNum == 41 ||
+                      widget.statusNum == 50),
+                  child: getReport2(),
+                ),
               ],
             ),
             Positioned(
@@ -169,1348 +213,288 @@ class _ReservationState extends State<Reservation> {
         ));
   }
 
-//判断页面
-  getWidget() {
-    switch (widget.status) {
-      case '待预定':
-        return !judge
-            ? getContainer(
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 0.w),
-                      child: getTitle('合同信息'),
-                    ),
-                    36.hb,
-                    _getText('合同编号',
-                        (_consignmentInfoList.contract.contract).toString()),
-                    36.hb,
-                    _getText(
-                        '签订时间',
-                        DateUtil.formatDateMs(
-                            (_consignmentInfoList.contract.signAt.toInt()) *
-                                1000,
-                            format: DateFormats.zh_y_mo_d))
-                  ],
-                ),
-              )
-            : Column(
-                children: [
-                  getContainer(
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 0.w),
-                          child: getTitle('合同信息'),
-                        ),
-                        36.hb,
-                        _getText(
-                            '合同编号',
-                            (_consignmentInfoList.contract.contract)
-                                .toString()),
-                        36.hb,
-                        _getText(
-                          '签订时间',
-                          DateUtil.formatDateMs(
-                              _consignmentInfoList.contract.signAt.toInt() *
-                                  1000,
-                              format: 'yyyy-MM-dd HH:mm:ss'),
-                        )
-                      ],
-                    ),
-                  ),
-                  getContainer(
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 0.w),
-                          child: getTitle('合同信息'),
-                        ),
-                        36.hb,
-                        _getText(
-                            '合同编号',
-                            (_consignmentInfoList.contract.contract)
-                                .toString()),
-                        36.hb,
-                        _getText(
-                          '签订时间',
-                          DateUtil.formatDateMs(
-                              _consignmentInfoList.contract.signAt.toInt() *
-                                  1000,
-                              format: 'yyyy-MM-dd HH:mm:ss'),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              );
-      case '申请检测':
-      case '首付审核':
-      case '上传检测报告':
-        return Column(
-          children: [
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('合同信息'),
-                  ),
-                  36.hb,
-                  _getText('合同编号',
-                      (_consignmentInfoList.contract.contract).toString()),
-                  36.hb,
-                  _getText(
-                    '签订时间',
-                    DateUtil.formatDateMs(
-                        _consignmentInfoList.contract.signAt.toInt() * 1000,
-                        format: 'yyyy-MM-dd'),
-                  )
-                ],
-              ),
-            ),
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('支付信息'),
-                  ),
-                  36.hb,
-                  _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}'),
-                  36.hb,
-                  _getText('支付方式', '支付宝'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                ],
-              ),
-            ),
-          ],
-        );
-      case '首付审核通过':
-        return !judge
-            ? Column(
-                children: [
-                  getContainer(
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 0.w),
-                          child: getTitle('合同信息'),
-                        ),
-                        36.hb,
-                        _getText(
-                            '合同编号',
-                            (_consignmentInfoList.contract.contract)
-                                .toString()),
-                        36.hb,
-                        _getText(
-                          '签订时间',
-                          DateUtil.formatDateMs(
-                              _consignmentInfoList.contract.signAt.toInt() *
-                                  1000,
-                              format: 'yyyy-MM-dd HH:mm:ss'),
-                        )
-                      ],
-                    ),
-                  ),
-                  getContainer(
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 0.w),
-                          child: getTitle('支付信息'),
-                        ),
-                        36.hb,
-                        _getText('定金支付',
-                            '¥${_consignmentInfoList.contract.deposit}'),
-                        36.hb,
-                        _getText('支付方式', '支付宝'),
-                        36.hb,
-                        _getText('支付时间', '2021-12-30 15:23:48'),
-                      ],
-                    ),
-                  ),
-                  getContainer(Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      getTitle('车辆检测报告'),
-                      36.hb,
-                      SizedBox(
-                        width: 200.w,
-                        height: 150.w,
-                        child: CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.report.path],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  ))
-                ],
-              )
-            : getFirst();
-      case '过户':
-        return Column(
-          children: [
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('合同信息'),
-                  ),
-                  36.hb,
-                  _getText('合同编号',
-                      (_consignmentInfoList.contract.contract).toString()),
-                  36.hb,
-                  _getText(
-                    '签订时间',
-                    DateUtil.formatDateMs(
-                        _consignmentInfoList.contract.signAt.toInt() * 1000,
-                        format: 'yyyy-MM-dd HH:mm:ss'),
-                  )
-                ],
-              ),
-            ),
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('支付信息'),
-                  ),
-                  36.hb,
-                  _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}'),
-                  36.hb,
-                  _getText('支付方式', '支付宝'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                  40.hb,
-                  _getText(
-                      '首付支付', '¥${_consignmentInfoList.contract.downPayment}'),
-                  36.hb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '支付凭证',
-                        style: TextStyle(
-                            color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28),
-                      ),
-                      16.hb,
-                      SizedBox(
-                        width: 200.w,
-                        height: 150.w,
-                        child: const CloudImageNetworkWidget.car(
-                          urls: [],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  ),
-                  36.hb,
-                ],
-              ),
-            ),
-            getContainer(Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                getTitle('车辆检测报告'),
-                36.hb,
-                SizedBox(
-                  width: 200.w,
-                  height: 150.w,
-                  child: CloudImageNetworkWidget.car(
-                    urls: [_consignmentInfoList.report.path],
-                  ),
-                ),
-                SizedBox(
-                  width: 686.w,
-                )
-              ],
-            ))
-          ],
-        );
-      case '过户完成':
-      case '尾款审核通过':
-        return !judge
-            ? Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('合同信息'),
-                  ),
-                  36.hb,
-                  _getText('合同编号',
-                      (_consignmentInfoList.contract.contract).toString()),
-                  36.hb,
-                  _getText(
-                    '签订时间',
-                    DateUtil.formatDateMs(
-                        _consignmentInfoList.contract.signAt.toInt() * 1000,
-                        format: 'yyyy-MM-dd HH:mm:ss'),
-                  ),
-                  getContainer(
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 0.w),
-                          child: getTitle('支付信息'),
-                        ),
-                        36.hb,
-                        _getText('定金支付',
-                            '¥${_consignmentInfoList.contract.deposit}'),
-                        36.hb,
-                        _getText('支付方式', '支付宝'),
-                        36.hb,
-                        _getText('支付时间', '2021-12-30 15:23:48'),
-                        40.hb,
-                        _getText('首付支付',
-                            '¥${_consignmentInfoList.contract.downPayment}'),
-                        36.hb,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '支付凭证',
-                              style: TextStyle(
-                                  color: BaseStyle.color333333,
-                                  fontSize: BaseStyle.fontSize28),
-                            ),
-                            16.hb,
-                            SizedBox(
-                              width: 200.w,
-                              height: 150.w,
-                              child: const CloudImageNetworkWidget.car(
-                                urls: [],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 686.w,
-                            )
-                          ],
-                        ),
-                        36.hb,
-                      ],
-                    ),
-                  ),
-                  getContainer(Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      getTitle('车辆检测报告'),
-                      36.hb,
-                      SizedBox(
-                        width: 200.w,
-                        height: 150.w,
-                        child: CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.report.path],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  )),
-                  getContainer(Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      getTitle("车辆检测报告"),
-                      36.hb,
-                      getPhoto(
-                        '登记证书',
-                        CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.means.certificate],
-                        ),
-                      ),
-                      36.hb,
-                      getPhoto(
-                        '行驶证',
-                        CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.means.vehicleLicense],
-                        ),
-                      ),
-                      36.hb,
-                      getPhoto(
-                        '发票',
-                        CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.means.invoice],
-                        ),
-                      ),
-                      36.hb,
-                      getPhoto(
-                        '保单',
-                        CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.means.guaranteeSlip],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  ))
-                ],
-              )
-            : getPayment();
-    }
+  //合同信息
+  getContract(int number) {
+    return getContainer(
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 0.w),
+            child: getTitle('合同信息'),
+          ),
+          36.hb,
+          _getText('合同编号', (_consignmentInfoList.contract.contract).toString(),
+              BaseStyle.color333333),
+          36.hb,
+          _getText(
+              '签订时间',
+              number == 1
+                  ? '-'
+                  : DateUtil.formatDateMs(
+                      (_consignmentInfoList.contract.signAt.toInt()) * 1000,
+                      format: DateFormats.full),
+              BaseStyle.color333333)
+        ],
+      ),
+    );
   }
 
-//是否支付尾款
-  getPayment() {
-    switch (audit) {
-      case '1':
-        return Column(children: [
-          getContainer(
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('合同信息'),
-                ),
-                36.hb,
-                _getText('合同编号',
-                    (_consignmentInfoList.contract.contract).toString()),
-                36.hb,
-                _getText(
-                  '签订时间',
-                  DateUtil.formatDateMs(
-                      _consignmentInfoList.contract.signAt.toInt() * 1000,
-                      format: 'yyyy-MM-dd HH:mm:ss'),
-                )
-              ],
-            ),
+//支付信息
+  getPay(int number) {
+    return getContainer(
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 0.w),
+            child: getTitle('支付信息'),
           ),
-          getContainer(
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('支付信息'),
-                ),
-                36.hb,
-                _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}'),
-                36.hb,
-                _getText('支付方式', '支付宝'),
-                36.hb,
-                _getText('支付时间', '2021-12-30 15:23:48'),
-                40.hb,
-                _getText(
-                    '首付支付', '¥${_consignmentInfoList.contract.downPayment}'),
-                36.hb,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '支付凭证',
-                      style: TextStyle(
-                          color: BaseStyle.color333333,
-                          fontSize: BaseStyle.fontSize28),
-                    ),
-                    16.hb,
-                    SizedBox(
-                        width: 200.w,
-                        height: 150.w,
-                        child: const CloudImageNetworkWidget.car(
-                          urls: [],
-                        )),
-                    SizedBox(
-                      width: 686.w,
-                    )
-                  ],
-                ),
-                36.hb,
-                _getText('支付时间', '2021-12-30 15:23:48'),
-                40.hb,
-                getJudge(),
-                36.hb,
-                _getText('支付形式', '按揭支付'),
-                36.hb,
-                _getText('支付时间', '2021-12-30 15:23:48'),
-              ],
-            ),
+          36.hb,
+          _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}',
+              BaseStyle.color333333),
+          36.hb,
+          _getText('支付方式', '支付宝', BaseStyle.color333333),
+          36.hb,
+          _getText(
+              '支付时间',
+              DateUtil.formatDateMs(
+                  _consignmentInfoList.deposit.createdAt.toInt() * 1000,
+                  format: DateFormats.full),
+              BaseStyle.color333333),
+          40.hb,
+          widget.statusNum == 20 || widget.statusNum == 20
+              ? widget.statusNum == 20
+                  ? _getText(
+                      '首付支付',
+                      '¥${_consignmentInfoList.contract.downPayment}(审核中)',
+                      const Color(0xFF027AFFA))
+                  : _getText(
+                      '首付支付',
+                      '¥${_consignmentInfoList.contract.downPayment}(审核驳回)',
+                      const Color(0xFFE62222))
+              : _getText(
+                  '首付支付',
+                  '¥${_consignmentInfoList.contract.downPayment}',
+                  BaseStyle.color333333),
+          widget.statusNum == 20 ? 36.hb : 0.hb,
+          Offstage(
+            offstage: widget.statusNum != 20,
+            child: _getText('驳回理由', '凭证金额与汇款金额不符', const Color(0xFFE62222)),
           ),
-          getContainer(Column(
+          36.hb,
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              getTitle('车辆检测报告'),
-              36.hb,
-              SizedBox(
-                width: 200.w,
-                height: 150.w,
-                child: CloudImageNetworkWidget.car(
-                  urls: [_consignmentInfoList.report.path],
-                ),
-              ),
-              SizedBox(
-                width: 686.w,
-              )
-            ],
-          )),
-          getContainer(Column(
-            children: [
-              getContainer(Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  getTitle('车辆检测报告'),
-                  36.hb,
-                  SizedBox(
-                    width: 200.w,
-                    height: 150.w,
-                    child: CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.report.path],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 686.w,
-                  )
-                ],
-              )),
-              getContainer(Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  getTitle("车辆检测报告"),
-                  36.hb,
-                  getPhoto(
-                    '登记证书',
-                    CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.means.certificate],
-                    ),
-                  ),
-                  36.hb,
-                  getPhoto(
-                    '行驶证',
-                    CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.means.vehicleLicense],
-                    ),
-                  ),
-                  36.hb,
-                  getPhoto(
-                    '发票',
-                    CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.means.invoice],
-                    ),
-                  ),
-                  36.hb,
-                  getPhoto(
-                    '保单',
-                    CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.means.guaranteeSlip],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 686.w,
-                  )
-                ],
-              ))
-            ],
-          ))
-        ]);
-      case '2':
-        return Column(
-          children: [
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('合同信息'),
-                  ),
-                  36.hb,
-                  _getText('合同编号',
-                      (_consignmentInfoList.contract.contract).toString()),
-                  36.hb,
-                  _getText(
-                    '签订时间',
-                    DateUtil.formatDateMs(
-                        _consignmentInfoList.contract.signAt.toInt() * 1000,
-                        format: 'yyyy-MM-dd HH:mm:ss'),
-                  )
-                ],
-              ),
-            ),
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('支付信息'),
-                  ),
-                  36.hb,
-                  _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}'),
-                  36.hb,
-                  _getText('支付方式', '支付宝'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                  40.hb,
-                  _getText(
-                      '首付支付', '¥${_consignmentInfoList.contract.downPayment}'),
-                  36.hb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '支付凭证',
-                        style: TextStyle(
-                            color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28),
-                      ),
-                      16.hb,
-                      SizedBox(
-                        width: 200.w,
-                        height: 150.w,
-                        child: const CloudImageNetworkWidget.car(
-                          urls: [],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  ),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                  40.hb,
-                  getJudge(),
-                  36.hb,
-                  _getText('支付形式', '按揭支付'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                ],
-              ),
-            ),
-            getContainer(Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                getTitle('车辆检测报告'),
-                36.hb,
-                SizedBox(
-                  width: 200.w,
-                  height: 150.w,
-                  child: CloudImageNetworkWidget.car(
-                    urls: [_consignmentInfoList.report.path],
-                  ),
-                ),
-                SizedBox(
-                  width: 686.w,
-                )
-              ],
-            )),
-            getContainer(Column(
-              children: [
-                getContainer(Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    getTitle('车辆检测报告'),
-                    36.hb,
-                    SizedBox(
-                      width: 200.w,
-                      height: 150.w,
-                      child: CloudImageNetworkWidget.car(
-                        urls: [_consignmentInfoList.report.path],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 686.w,
-                    )
-                  ],
-                )),
-                getContainer(Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      getTitle("车辆检测报告"),
-                      36.hb,
-                      getPhoto(
-                        '登记证书',
-                        CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.means.certificate],
-                        ),
-                      ),
-                      36.hb,
-                      getPhoto(
-                        '行驶证',
-                        CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.means.vehicleLicense],
-                        ),
-                      ),
-                      36.hb,
-                      getPhoto(
-                        '发票',
-                        CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.means.invoice],
-                        ),
-                      ),
-                      36.hb,
-                      getPhoto(
-                        '保单',
-                        CloudImageNetworkWidget.car(
-                          urls: [_consignmentInfoList.means.guaranteeSlip],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ]))
-              ],
-            ))
-          ],
-        );
-      case '3':
-        return Column(children: [
-          getContainer(
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('合同信息'),
-                ),
-                36.hb,
-                _getText('合同编号',
-                    (_consignmentInfoList.contract.contract).toString()),
-                36.hb,
-                _getText(
-                  '签订时间',
-                  DateUtil.formatDateMs(
-                      _consignmentInfoList.contract.signAt.toInt() * 1000,
-                      format: 'yyyy-MM-dd HH:mm:ss'),
-                )
-              ],
-            ),
-          ),
-          getContainer(
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('支付信息'),
-                ),
-                36.hb,
-                _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}'),
-                36.hb,
-                _getText('支付方式', '支付宝'),
-                36.hb,
-                _getText('支付时间', '2021-12-30 15:23:48'),
-                40.hb,
-                _getText(
-                    '首付支付', '¥${_consignmentInfoList.contract.balancePayment}'),
-                36.hb,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '支付凭证',
-                      style: TextStyle(
-                          color: BaseStyle.color333333,
-                          fontSize: BaseStyle.fontSize28),
-                    ),
-                    16.hb,
-                    SizedBox(
-                      width: 200.w,
-                      height: 150.w,
-                      child: const CloudImageNetworkWidget.car(
-                        urls: [],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 686.w,
-                    )
-                  ],
-                ),
-                36.hb,
-                _getText('支付时间', '2021-12-30 15:23:48'),
-                40.hb,
-                _getText(
-                    '尾款支付', '¥${_consignmentInfoList.contract.balancePayment}'),
-                36.hb,
-                _getText('支付形式', '按揭支付'),
-                36.hb,
-                _getText('支付时间', '2021-12-30 15:23:48'),
-              ],
-            ),
-          ),
-          getContainer(Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getTitle('车辆检测报告'),
-              36.hb,
-              SizedBox(
-                width: 200.w,
-                height: 150.w,
-                child: CloudImageNetworkWidget.car(
-                  urls: [_consignmentInfoList.report.path],
-                ),
-              ),
-              SizedBox(
-                width: 686.w,
-              )
-            ],
-          )),
-          getContainer(Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getContainer(Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  getTitle('车辆检测报告'),
-                  36.hb,
-                  SizedBox(
-                    width: 200.w,
-                    height: 150.w,
-                    child: CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.report.path],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 686.w,
-                  )
-                ],
-              )),
-              getContainer(Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  getTitle("车辆检测报告"),
-                  36.hb,
-                  getPhoto(
-                    '登记证书',
-                    CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.means.certificate],
-                    ),
-                  ),
-                  36.hb,
-                  getPhoto(
-                    '行驶证',
-                    CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.means.vehicleLicense],
-                    ),
-                  ),
-                  36.hb,
-                  getPhoto(
-                    '发票',
-                    CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.means.invoice],
-                    ),
-                  ),
-                  36.hb,
-                  getPhoto(
-                    '保单',
-                    CloudImageNetworkWidget.car(
-                      urls: [_consignmentInfoList.means.guaranteeSlip],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 686.w,
-                  )
-                ],
-              ))
-            ],
-          ))
-        ]);
-    }
-  }
-
-//是否付款文字样式
-  getJudge() {
-    switch (audit) {
-      case '1':
-        return Row(
-          children: [
-            SizedBox(
-              child: Text(
-                '首付支付',
+              Text(
+                '支付凭证',
                 style: TextStyle(
                     color: BaseStyle.color333333,
                     fontSize: BaseStyle.fontSize28),
               ),
-            ),
-            32.wb,
-            Text.rich(TextSpan(children: [
-              TextSpan(
-                  text: '¥',
-                  style: TextStyle(
-                      color: const Color(0xFF027AFF),
-                      fontSize: BaseStyle.fontSize28)),
-              TextSpan(
-                  text: _consignmentInfoList.contract.downPayment,
-                  style: TextStyle(
-                      color: const Color(0xFF027AFF),
-                      fontSize: BaseStyle.fontSize28)),
-              TextSpan(
-                  text: '(待审核)',
-                  style: TextStyle(
-                      color: const Color(0xFF027AFF),
-                      fontSize: BaseStyle.fontSize28)),
-            ]))
-          ],
-        );
-      case '2':
-        return Column(
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  child: Text(
-                    '尾款支付',
-                    style: TextStyle(
-                        color: BaseStyle.color333333,
-                        fontSize: BaseStyle.fontSize28),
-                  ),
+              16.hb,
+              SizedBox(
+                width: 200.w,
+                height: 150.w,
+                child: const CloudImageNetworkWidget.car(
+                  urls: [],
                 ),
-                32.wb,
-                Text.rich(TextSpan(children: [
-                  TextSpan(
-                      text: '¥',
-                      style: TextStyle(
-                          color: const Color(0xFFE62222),
-                          fontSize: BaseStyle.fontSize28)),
-                  TextSpan(
-                      text: _consignmentInfoList.contract.balancePayment,
-                      style: TextStyle(
-                          color: const Color(0xFFE62222),
-                          fontSize: BaseStyle.fontSize28)),
-                  TextSpan(
-                      text: '(审核驳回)',
-                      style: TextStyle(
-                          color: const Color(0xFFE62222),
-                          fontSize: BaseStyle.fontSize28)),
-                ]))
-              ],
-            ),
-            36.hb,
-            Row(
-              children: [
-                SizedBox(
-                  child: Text(
-                    '驳回理由',
-                    style: TextStyle(
-                        color: BaseStyle.color333333,
-                        fontSize: BaseStyle.fontSize28),
-                  ),
-                ),
-                32.wb,
-                Text(
-                  '未收到银行汇款款项',
-                  style: TextStyle(
-                      color: const Color(0xFFE62222),
-                      fontSize: BaseStyle.fontSize28),
-                )
-              ],
-            )
-          ],
-        );
-    }
-  }
-
-//是否首付
-  getFirst() {
-    switch (audit) {
-      case '1':
-        return methods = Column(
-          children: [
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('合同信息'),
-                  ),
-                  36.hb,
-                  _getText('合同编号',
-                      (_consignmentInfoList.contract.contract).toString()),
-                  36.hb,
-                  _getText(
-                    '签订时间',
-                    DateUtil.formatDateMs(
-                        _consignmentInfoList.contract.signAt.toInt() * 1000,
-                        format: 'yyyy-MM-dd HH:mm:ss'),
-                  )
-                ],
               ),
-            ),
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('支付信息'),
-                  ),
-                  36.hb,
-                  _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}'),
-                  36.hb,
-                  _getText('支付方式', '支付宝'),
-                  36.hb,
-                  _getText(
+              SizedBox(
+                width: 686.w,
+              )
+            ],
+          ),
+          36.hb,
+          _getText(
+              '支付时间',
+              DateUtil.formatDateMs(
+                  _consignmentInfoList.downPayment.createdAt.toInt() * 1000,
+                  format: DateFormats.full),
+              BaseStyle.color333333),
+          widget.statusNum == 40 ||
+                  widget.statusNum == 41 ||
+                  widget.statusNum == 50
+              ? 36.hb
+              : 0.hb,
+          Offstage(
+            offstage: !(widget.statusNum == 40 ||
+                widget.statusNum == 41 ||
+                widget.statusNum == 50),
+            child: Column(
+              children: [
+                widget.statusNum == 40 || widget.statusNum == 40
+                    ? widget.statusNum == 40
+                        ? _getText(
+                            '尾款支付',
+                            '¥${_consignmentInfoList.contract.balancePayment}(审核中)',
+                            const Color(0xFF027AFFA))
+                        : _getText(
+                            '尾款支付',
+                            '¥${_consignmentInfoList.contract.balancePayment}(审核驳回)',
+                            const Color(0xFFE62222))
+                    : _getText(
+                        '尾款支付',
+                        '¥${_consignmentInfoList.contract.balancePayment}',
+                        BaseStyle.color333333),
+                36.hb,
+                Offstage(
+                  offstage: widget.statusNum != 2222,
+                  child: _getText('驳回理由', '未收到银行汇款款项', const Color(0xFFE62222)),
+                ),
+                widget.statusNum == 222 ? 36.hb : 0.hb,
+                _getText('支付形式', '按揭支付', BaseStyle.color333333),
+                36.hb,
+                _getText(
                     '支付时间',
                     DateUtil.formatDateMs(
-                        _consignmentInfoList.contract.signAt.toInt() * 1000,
-                        format: 'yyyy-MM-dd HH:mm:ss'),
-                  ),
-                  40.hb,
-                  Row(
-                    children: [
-                      SizedBox(
-                        child: Text(
-                          '首付支付',
-                          style: TextStyle(
-                              color: BaseStyle.color333333,
-                              fontSize: BaseStyle.fontSize28),
-                        ),
-                      ),
-                      32.wb,
-                      Padding(
-                        padding: EdgeInsets.only(left: 0.w),
-                        child: Text(
-                          '¥${_consignmentInfoList.contract.downPayment}(审核中)',
-                          style: TextStyle(
-                              color: const Color(0xFF027AFF),
-                              fontSize: BaseStyle.fontSize28),
-                        ),
-                      )
-                    ],
-                  ),
-                  36.hb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '支付凭证',
-                        style: TextStyle(
-                            color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28),
-                      ),
-                      16.hb,
-                      SizedBox(
-                        width: 200.w,
-                        height: 150.w,
-                        child: const CloudImageNetworkWidget.car(
-                          urls: [],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  ),
-                  36.hb,
-                ],
-              ),
-            ),
-            getContainer(Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('车辆检测报告'),
-                ),
-                36.hb,
-                SizedBox(
-                  width: 200.w,
-                  height: 150.w,
-                  child: const CloudImageNetworkWidget.car(
-                    urls: [],
-                  ),
-                ),
-                SizedBox(
-                  width: 686.w,
-                )
+                        _consignmentInfoList.balancePayment.createdAt.toInt() *
+                            1000,
+                        format: DateFormats.full),
+                    BaseStyle.color333333),
               ],
-            ))
-          ],
-        );
-
-      case '2':
-        return methods = Column(
-          children: [
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('合同信息'),
-                  ),
-                  36.hb,
-                  _getText('合同编号',
-                      (_consignmentInfoList.contract.contract).toString()),
-                  36.hb,
-                  _getText(
-                    '签订时间',
-                    DateUtil.formatDateMs(
-                        _consignmentInfoList.contract.signAt.toInt() * 1000,
-                        format: 'yyyy-MM-dd HH:mm:ss'),
-                  )
-                ],
-              ),
             ),
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('支付信息'),
-                  ),
-                  36.hb,
-                  _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}'),
-                  36.hb,
-                  _getText('支付方式', '支付宝'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                  40.hb,
-                  Row(
-                    children: [
-                      SizedBox(
-                        child: Text(
-                          '首付支付',
-                          style: TextStyle(
-                              color: BaseStyle.color333333,
-                              fontSize: BaseStyle.fontSize28),
-                        ),
-                      ),
-                      32.wb,
-                      Padding(
-                        padding: EdgeInsets.only(left: 0.w),
-                        child: Text(
-                          '¥${_consignmentInfoList.contract.downPayment}(审核驳回)',
-                          style: TextStyle(
-                              color: const Color(0xFFE62222),
-                              fontSize: BaseStyle.fontSize28),
-                        ),
-                      )
-                    ],
-                  ),
-                  36.hb,
-                  Row(
-                    children: [
-                      SizedBox(
-                        child: Text(
-                          '驳回理由',
-                          style: TextStyle(
-                              color: BaseStyle.color333333,
-                              fontSize: BaseStyle.fontSize28),
-                        ),
-                      ),
-                      32.wb,
-                      Padding(
-                        padding: EdgeInsets.only(left: 0.w),
-                        child: Text(
-                          '凭证金额与汇款金额不符',
-                          style: TextStyle(
-                              color: const Color(0xFFE62222),
-                              fontSize: BaseStyle.fontSize28),
-                        ),
-                      )
-                    ],
-                  ),
-                  36.hb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '支付凭证',
-                        style: TextStyle(
-                            color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28),
-                      ),
-                      16.hb,
-                      SizedBox(
-                        width: 200.w,
-                        height: 150.w,
-                        child: const CloudImageNetworkWidget.car(
-                          urls: [],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  ),
-                  36.hb,
-                ],
-              ),
-            ),
-            getContainer(Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('车辆检测报告'),
-                ),
-                36.hb,
-                SizedBox(
-                  width: 200.w,
-                  height: 150.w,
-                  child: const CloudImageNetworkWidget.car(
-                    urls: [],
-                  ),
-                ),
-                SizedBox(
-                  width: 686.w,
-                )
-              ],
-            ))
-          ],
-        );
-      case '3':
-        return methods = Column(
-          children: [
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('合同信息'),
-                  ),
-                  36.hb,
-                  _getText('合同编号',
-                      (_consignmentInfoList.contract.contract).toString()),
-                  36.hb,
-                  _getText(
-                    '签订时间',
-                    DateUtil.formatDateMs(
-                        _consignmentInfoList.contract.signAt.toInt() * 1000,
-                        format: 'yyyy-MM-dd HH:mm:ss'),
-                  )
-                ],
-              ),
-            ),
-            getContainer(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('支付信息'),
-                  ),
-                  36.hb,
-                  _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}'),
-                  36.hb,
-                  _getText('支付方式', '支付宝'),
-                  36.hb,
-                  _getText('支付时间', '2021-12-30 15:23:48'),
-                  40.hb,
-                  _getText(
-                      '首付支付', '¥${_consignmentInfoList.contract.downPayment}'),
-                  36.hb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '支付凭证',
-                        style: TextStyle(
-                            color: BaseStyle.color333333,
-                            fontSize: BaseStyle.fontSize28),
-                      ),
-                      16.hb,
-                      SizedBox(
-                        width: 200.w,
-                        height: 150.w,
-                        child: const CloudImageNetworkWidget.car(
-                          urls: [],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 686.w,
-                      )
-                    ],
-                  ),
-                  36.hb,
-                ],
-              ),
-            ),
-            getContainer(Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 0.w),
-                  child: getTitle('车辆检测报告'),
-                ),
-                36.hb,
-                SizedBox(
-                    width: 200.w,
-                    height: 150.w,
-                    child: const CloudImageNetworkWidget.car(
-                      urls: [],
-                    )),
-                SizedBox(
-                  width: 686.w,
-                )
-              ],
-            ))
-          ],
-        );
-    }
-  }
-
-// //body框架
-  getContainer(Widget widget) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 8.w),
-      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 28.w),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-      child: widget,
+          ),
+        ],
+      ),
     );
   }
 
+// //首付支付审核
+//   getPayAudit() {
+//     switch (widget.statusNum) {
+//       case 20:
+//         return _getText(
+//             '首付支付',
+//             '¥${_consignmentInfoList.contract.downPayment}(审核中)',
+//             const Color(0xFF027AFFA));
+//       case 21:
+//         _getText('首付支付', '¥${_consignmentInfoList.contract.downPayment}',
+//             BaseStyle.color333333);
+//     }
+//   }
+
+//车辆检测报告
+  getReport() {
+    return getContainer(Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        getTitle('车辆检测报告'),
+        36.hb,
+        SizedBox(
+          width: 200.w,
+          height: 150.w,
+          child: CloudImageNetworkWidget.car(
+            urls: [_consignmentInfoList.report.path],
+          ),
+        ),
+        SizedBox(
+          width: 686.w,
+        )
+      ],
+    ));
+  }
+
+  //车辆检测报告2
+  getReport2() {
+    return getContainer(Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        getTitle("车辆检测报告"),
+        36.hb,
+        getPhoto(
+          '登记证书',
+          CloudImageNetworkWidget.car(
+            urls: [_consignmentInfoList.means.certificate],
+          ),
+        ),
+        36.hb,
+        getPhoto(
+          '行驶证',
+          CloudImageNetworkWidget.car(
+            urls: [_consignmentInfoList.means.vehicleLicense],
+          ),
+        ),
+        36.hb,
+        getPhoto(
+          '发票',
+          CloudImageNetworkWidget.car(
+            urls: [_consignmentInfoList.means.invoice],
+          ),
+        ),
+        36.hb,
+        getPhoto(
+          '保单',
+          CloudImageNetworkWidget.car(
+            urls: [_consignmentInfoList.means.guaranteeSlip],
+          ),
+        ),
+        SizedBox(
+          width: 686.w,
+        )
+      ],
+    ));
+  }
+
+//是否驳回
+//   getRejected() {
+//     return Row(
+//       children: [
+//         SizedBox(
+//           child: Text(
+//             '驳回理由',
+//             style: TextStyle(
+//                 color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+//           ),
+//         ),
+//         32.wb,
+//         Padding(
+//           padding: EdgeInsets.only(left: 0.w),
+//           child: Text(
+//             '凭证金额与汇款金额不符',
+//             style: TextStyle(
+//                 color: const Color(0xFFE62222), fontSize: BaseStyle.fontSize28),
+//           ),
+//         )
+//       ],
+//     );
+//   }
+
 //支付是否成功
   getPayPass() {
-    switch (widget.status) {
-      case '待预定':
-        return judge
-            ? const SizedBox()
-            : Container(
-                width: double.infinity,
-                color: kForeGroundColor,
-                padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
-                margin: EdgeInsets.only(top: 16.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      child: Text(
-                        '等待支付定金',
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                    ),
-                    24.wb,
-                    Text.rich(TextSpan(children: [
-                      TextSpan(
-                          text: '¥',
-                          style: TextStyle(
-                              fontSize: BaseStyle.fontSize28,
-                              color: const Color(0xFFFF3B02))),
-                      TextSpan(
-                          text: _consignmentInfoList.contract.deposit,
-                          style: TextStyle(
-                              fontSize: BaseStyle.fontSize32,
-                              color: const Color(0xFFFF3B02)))
-                    ]))
-                  ],
+    switch (widget.statusNum) {
+      case 1:
+        return Container(
+          width: double.infinity,
+          color: kForeGroundColor,
+          padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
+          margin: EdgeInsets.only(top: 16.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                child: Text(
+                  '等待支付定金',
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
-              );
-      case '申请检测':
+              ),
+              24.wb,
+              Text.rich(TextSpan(children: [
+                TextSpan(
+                    text: '¥',
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize28,
+                        color: const Color(0xFFFF3B02))),
+                TextSpan(
+                    text: _consignmentInfoList.contract.deposit,
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize32,
+                        color: const Color(0xFFFF3B02)))
+              ]))
+            ],
+          ),
+        );
+      case 10:
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -1539,42 +523,38 @@ class _ReservationState extends State<Reservation> {
                     )),
               ),
             ));
-      case '上传检测报告':
-      case '首付审核':
-      case '首付审核通过':
-        return !judge
-            ? Container(
-                width: double.infinity,
-                color: kForeGroundColor,
-                padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
-                margin: EdgeInsets.only(top: 16.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      child: Text(
-                        '等待支付首付',
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                    ),
-                    24.wb,
-                    Text.rich(TextSpan(children: [
-                      TextSpan(
-                          text: '¥',
-                          style: TextStyle(
-                              fontSize: BaseStyle.fontSize28,
-                              color: const Color(0xFFFF3B02))),
-                      TextSpan(
-                          text: _consignmentInfoList.contract.downPayment,
-                          style: TextStyle(
-                              fontSize: BaseStyle.fontSize32,
-                              color: const Color(0xFFFF3B02)))
-                    ]))
-                  ],
+      case 20:
+        return Container(
+          width: double.infinity,
+          color: kForeGroundColor,
+          padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
+          margin: EdgeInsets.only(top: 16.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                child: Text(
+                  '等待支付首付',
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
-              )
-            : const SizedBox();
-      case '过户':
+              ),
+              24.wb,
+              Text.rich(TextSpan(children: [
+                TextSpan(
+                    text: '¥',
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize28,
+                        color: const Color(0xFFFF3B02))),
+                TextSpan(
+                    text: _consignmentInfoList.contract.downPayment,
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize32,
+                        color: const Color(0xFFFF3B02)))
+              ]))
+            ],
+          ),
+        );
+      case 30:
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -1603,8 +583,7 @@ class _ReservationState extends State<Reservation> {
                     )),
               ),
             ));
-
-      case '过户完成':
+      case 40:
         return Container(
           width: double.infinity,
           color: kForeGroundColor,
@@ -1635,9 +614,7 @@ class _ReservationState extends State<Reservation> {
             ],
           ),
         );
-      case '交易完成':
-        return Container();
-      case '尾款审核通过':
+      case 41:
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -1668,7 +645,20 @@ class _ReservationState extends State<Reservation> {
                     )),
               ),
             ));
+      default:
+        return const SizedBox();
     }
+  }
+
+//body框架
+  getContainer(Widget widget) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 8.w),
+      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 28.w),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+      child: widget,
+    );
   }
 
 //文字加图片样式
@@ -1693,7 +683,7 @@ class _ReservationState extends State<Reservation> {
   }
 
 //文本样式
-  _getText(String title, String text) {
+  _getText(String title, String text, Color color) {
     return Row(
       children: [
         SizedBox(
@@ -1709,8 +699,7 @@ class _ReservationState extends State<Reservation> {
           padding: EdgeInsets.only(left: 0.w),
           child: Text(
             text,
-            style: TextStyle(
-                color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
+            style: TextStyle(color: color, fontSize: BaseStyle.fontSize28),
           ),
         )
       ],
@@ -1807,6 +796,7 @@ class _ReservationState extends State<Reservation> {
 //车辆信息下拉
   getList() {
     return DropDown(
+      border: true,
       title: getTitle('车辆总价'),
       text: SizedBox(
           child: Text.rich(TextSpan(children: [
@@ -1824,7 +814,7 @@ class _ReservationState extends State<Reservation> {
                 ?.copyWith(fontWeight: FontWeight.bold)),
       ]))),
       widget: Container(
-          padding: EdgeInsets.only(left: 32.w, top: 16.w),
+          padding: EdgeInsets.only(top: 16.w),
           child: Row(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -1832,13 +822,13 @@ class _ReservationState extends State<Reservation> {
                   '车辆定金',
                   //(_consignmentInfoList.contractSignAt).toString()),
                   _consignmentInfoList.contract.deposit),
-              36.wb,
+              46.wb,
               Container(
                 width: 1.w,
                 height: 72.w,
                 color: BaseStyle.coloreeeeee,
               ),
-              36.wb,
+              46.wb,
               _getCar('车辆首付', _consignmentInfoList.contract.downPayment),
               46.wb,
               Container(
@@ -1846,12 +836,13 @@ class _ReservationState extends State<Reservation> {
                 height: 72.w,
                 color: BaseStyle.coloreeeeee,
               ),
-              36.wb,
+              46.wb,
               _getCar('车辆尾款', _consignmentInfoList.contract.balancePayment),
             ],
           )),
     );
   }
+
   text(String text) {
     return Text(
       text,

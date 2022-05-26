@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DetectionData extends StatefulWidget {
   final int orderId;
@@ -17,9 +20,29 @@ class DetectionData extends StatefulWidget {
 }
 
 late String img;
+   final picker = ImagePicker();
+ // ignore: unnecessary_late
+ late File imagePath = File(Assets.images.addcar.path);
 
 class _DetectionDataState extends State<DetectionData> {
-  @override
+  
+
+ 
+  // Future getImage() async {
+  //   // ignore: deprecated_member_use
+  //   final pickedFile = await picker.getImage(source: ImageSource.camera);
+  //   final File file = File(pickedFile!.path);
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       imagePath = file;
+  //     } else {
+  //       print('no image selected');
+  //     }
+  //   });
+  // }
+
+
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -52,23 +75,42 @@ class _DetectionDataState extends State<DetectionData> {
                           ?.copyWith(color: const Color(0xFF999999)),
                     ),
                   ),
-                  CarImageItem(
-                    imageBack: (List<File> image) {
-                      img = image.first.path;
-                    },
-
-                    //isPadding: false,
-                  ),
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          img = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: img == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [img],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))
                 ],
               ),
             ),
             144.hb,
             GestureDetector(
               onTap: () async {
-                bool zhi = await OrderFunc.getTestrepord(widget.orderId, img);
+                bool res = await OrderFunc.getTestrepord(widget.orderId, imagePath.path);
                 //BotToast.showText(text: '验证码输入错误');
                 //print("检测报告+$img");
-                if (zhi) {
+                if (res) {
                   BotToast.showText(text: '提交成功');
                   Get.back();
                 }

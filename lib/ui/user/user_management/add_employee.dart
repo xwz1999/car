@@ -45,7 +45,8 @@ class _AddEmployeeState extends State<AddEmployee> {
   int sexId = 1;
   List blText = [];
 
-  late bool zhi = false;
+  late bool res = false;
+
   @override
   void initState() {
     super.initState();
@@ -99,45 +100,24 @@ class _AddEmployeeState extends State<AddEmployee> {
               // } else {
               //   BotToast.showText(text: '请输入内容');
               // }
-              if (nameText.isEmpty) {
-                BotToast.showText(text: '请输入姓名');
-              } else {
-                if (genderText.isEmpty) {
-                  BotToast.showText(text: '请选择性别');
-                } else {
-                  if (phoneText.isEmpty) {
-                    BotToast.showText(text: '请输入手机号码');
-                  } else {
-                    RegExp exp = RegExp(
-                        r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
-                    bool matched = exp.hasMatch(phoneText);
-                    if (!matched) {
-                      BotToast.showText(text: '手机号码格式不正确');
-                    } else {
-                      if (storeidText.isEmpty) {
-                        BotToast.showText(text: '请选择手机架构');
-                      } else {
-                        if (permissions1.isEmpty) {
-                          BotToast.showText(text: '请选择权限配置');
-                        } else {
-                          if (commissionText.isEmpty) {
-                            BotToast.showText(text: '请输入销售提成');
-                          } else {
-                            BotToast.showText(text: '提交成功');
-                            Get.back();
-                            Future.delayed(const Duration(milliseconds: 0),
-                                () async {
-                              await _refresh();
-                              setState(() {});
-                            });
-                            //print("输出返回值：$zhi");
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
+              var res = await BusinessFunc.getStaffadd(
+                  nameText,
+                  genderText == '女' ? 2 : 1,
+                  phoneText,
+                  storeId,
+                  roleId,
+                  commissionText);
+              if (res) {
+                BotToast.showText(text: '提交成功');
+                Get.back();
               }
+
+              // Future.delayed(const Duration(milliseconds: 0),
+              //     () async {
+              //   await _refresh();
+              //   setState(() {});
+              // });
+              //print("输出返回值：$zhi");
             },
             text: '提交',
           ),
@@ -339,6 +319,7 @@ class _AddEmployeeState extends State<AddEmployee> {
           ),
           32.hb,
           TextEditItemWidget(
+            //editor: false,
             title: '手机号',
             value: phoneText,
             ontap: () {},
@@ -422,8 +403,8 @@ class _AddEmployeeState extends State<AddEmployee> {
     );
   }
 
-  _refresh() async {
-    zhi = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
-        phoneText, storeId, roleId, commissionText);
-  }
+// _refresh() async {
+//   res = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
+//       phoneText, storeId, roleId, commissionText);
+// }
 }

@@ -37,7 +37,7 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
   late String content = widget.content;
   late String img = widget.img;
   late String phone = widget.phone;
-  late bool zhi = false;
+  late bool res = false;
 
   @override
   void initState() {
@@ -171,9 +171,9 @@ class _ProblemFeedbackState extends State<ProblemFeedback> {
           ),
           CloudBottomButton(
             onTap: () async {
-              bool zhi = await FeedbackFunc.getFeedback(
+              bool res = await FeedbackFunc.getFeedback(
                   widget.title, content, phone, img);
-              if (zhi) {
+              if (res) {
                 print('标题+${widget.title}+文本$content+手机 $phone+图片+$img');
                 CloudToast.show('提交成功');
                 Get.back();
