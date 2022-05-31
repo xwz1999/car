@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage>
   List<dynamic>? data;
   late final List<KingCoin> _kingCoinList = [];
 
-  late final EasyRefreshController _refreshController=EasyRefreshController();
+  late final EasyRefreshController _refreshController = EasyRefreshController();
 
   //网络图片转u8list
   ScreenshotController screenshotController = ScreenshotController();
@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage>
         ),
         Container(
           height: 400.w,
-          padding: EdgeInsets.only(left: 32.w,right: 32.w),
+          padding: EdgeInsets.only(left: 32.w, right: 32.w),
           child: ListView.separated(
             padding: EdgeInsets.zero,
             separatorBuilder: (context, index) {
@@ -373,7 +373,7 @@ class _HomePageState extends State<HomePage>
                     const Spacer(),
                     GestureDetector(
                       onTap: () async {
-                       ShareUtil.shareNetWorkImage(model.mainPhoto);
+                        ShareUtil.shareNetWorkImage(model.mainPhoto);
                       },
                       child: Image.asset(
                         Assets.icons.homeShare.path,
