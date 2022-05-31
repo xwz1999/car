@@ -1,8 +1,8 @@
 // ignore_for_file: unused_field, prefer_final_fields
 
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_alsocar_order.dart';
+import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_alsocar_order_page.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_order.dart';
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_transaction_cancelled_order.dart';
+import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_transaction_cancelled_order_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/car_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
@@ -13,6 +13,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class RentalcarOrderPage extends StatefulWidget {
   final Function callBack;
+
   const RentalcarOrderPage({super.key, required this.callBack});
 
   @override
@@ -67,6 +68,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
       'buttomname': '',
     },
   ];
+
   @override
   void initState() {
     super.initState();
@@ -112,7 +114,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
       },
       child: Column(
         children: [
-           SizedBox(
+          SizedBox(
             height: kToolbarHeight + 50.w,
           ),
           SizedBox(
@@ -165,13 +167,13 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                     Get.to(() => const RentalcarOrder());
                     break;
                   case '已完成':
-                    Get.to(() => const AlsocarOrder(
+                    Get.to(() => const AlsoCarOrderPage(
                           bl: false,
                           orderId: 1,
                         ));
                     break;
                   case '已取消':
-                    Get.to(() => const CancelOrder());
+                    Get.to(() => const CancelOrderPage());
                     break;
                 }
               },
@@ -196,97 +198,99 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                         ),
                       ),
                       // 24.hb,
-              Row(
-                children: [
-                  SizedBox(
-                    width: 196.w,
-                    height: 150.w,
-                    child: Image.asset(item['url']),
-                  ),
-                  20.wb,
-                  SizedBox(
-                    width: 406.w,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(item['title'],
-                            style: TextStyle(
-                                fontSize: BaseStyle.fontSize28,
-                                color: BaseStyle.color111111)),
-                        32.hb,
-                        Padding(
-                          padding: EdgeInsets.only(right: 16.w),
-                          child: getText(
-                            '自动2.0T',
-                            '国VI',
-                            '五座',
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 196.w,
+                            height: 150.w,
+                            child: Image.asset(item['url']),
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              40.hb,
-              SizedBox(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        child: Text(
-                          item['pice1name'],
-                          style: TextStyle(
-                              fontSize: BaseStyle.fontSize28,
-                              color: BaseStyle.color999999),
-                        ),
+                          20.wb,
+                          SizedBox(
+                            width: 406.w,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(item['title'],
+                                    style: TextStyle(
+                                        fontSize: BaseStyle.fontSize28,
+                                        color: BaseStyle.color111111)),
+                                32.hb,
+                                Padding(
+                                  padding: EdgeInsets.only(right: 16.w),
+                                  child: getText(
+                                    '自动2.0T',
+                                    '国VI',
+                                    '五座',
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      16.wb,
+                      40.hb,
                       SizedBox(
-                        child: Text.rich(TextSpan(children: [
-                          TextSpan(
-                              text: '¥',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text: item['pice1'],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(fontWeight: FontWeight.bold)),
-                        ])),
-                      ),
-                      56.wb,
-                      SizedBox(
-                        child: Text(
-                          item['picename'],
-                          style: TextStyle(
-                              fontSize: BaseStyle.fontSize28,
-                              color: BaseStyle.color999999),
-                        ),
-                      ),
-                      16.wb,
-                      SizedBox(
-                        child: Text.rich(TextSpan(children: [
-                          TextSpan(
-                              text: '¥',
-                              style: TextStyle(
-                                  color: item['judgename'] == '已取消'
-                                      ? const Color(0xFF333333)
-                                      : const Color(0xFFFF3B02),
-                                  fontSize: BaseStyle.fontSize24,
-                                  fontWeight: FontWeight.bold)),
-                          TextSpan(
-                              text: item['pice'],
-                              style: TextStyle(
-                                  color: item['judgename'] == '已取消'
-                                      ? const Color(0xFF333333)
-                                      : const Color(0xFFFF3B02),
-                                  fontSize: BaseStyle.fontSize28,
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                child: Text(
+                                  item['pice1name'],
+                                  style: TextStyle(
+                                      fontSize: BaseStyle.fontSize28,
+                                      color: BaseStyle.color999999),
+                                ),
+                              ),
+                              16.wb,
+                              SizedBox(
+                                child: Text.rich(TextSpan(children: [
+                                  TextSpan(
+                                      text: '¥',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.bold)),
+                                  TextSpan(
+                                      text: item['pice1'],
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.bold)),
+                                ])),
+                              ),
+                              56.wb,
+                              SizedBox(
+                                child: Text(
+                                  item['picename'],
+                                  style: TextStyle(
+                                      fontSize: BaseStyle.fontSize28,
+                                      color: BaseStyle.color999999),
+                                ),
+                              ),
+                              16.wb,
+                              SizedBox(
+                                child: Text.rich(TextSpan(children: [
+                                  TextSpan(
+                                      text: '¥',
+                                      style: TextStyle(
+                                          color: item['judgename'] == '已取消'
+                                              ? const Color(0xFF333333)
+                                              : const Color(0xFFFF3B02),
+                                          fontSize: BaseStyle.fontSize24,
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(
+                                      text: item['pice'],
+                                      style: TextStyle(
+                                          color: item['judgename'] == '已取消'
+                                              ? const Color(0xFF333333)
+                                              : const Color(0xFFFF3B02),
+                                          fontSize: BaseStyle.fontSize28,
                                           fontWeight: FontWeight.bold)),
                                 ])),
                               ),

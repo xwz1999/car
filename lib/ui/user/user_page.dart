@@ -2,17 +2,17 @@ import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/home/home_page.dart';
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
-import 'package:cloud_car/ui/user/user_assessment/user_assessment.dart';
-import 'package:cloud_car/ui/user/user_basic_information/basic_information.dart';
+import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
+import 'package:cloud_car/ui/user/user_basic_information/basic_information_page.dart';
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
-import 'package:cloud_car/ui/user/user_install/system_settings.dart';
-import 'package:cloud_car/ui/user/user_invitation/user_invitation.dart';
-import 'package:cloud_car/ui/user/user_look_contract/consignment_contract.dart';
-import 'package:cloud_car/ui/user/user_management/staff_management.dart';
-import 'package:cloud_car/ui/user/user_order/myorder.dart';
-import 'package:cloud_car/ui/user/user_partner_center/partner_center.dart';
-import 'package:cloud_car/ui/user/user_recommended/user_recommended.dart';
-import 'package:cloud_car/ui/user/user_wallet/wallet_certification.dart';
+import 'package:cloud_car/ui/user/user_install/system_settings_page.dart';
+import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
+import 'package:cloud_car/ui/user/user_look_contract/consignment_contract_page.dart';
+import 'package:cloud_car/ui/user/user_management/staff_management_page.dart';
+import 'package:cloud_car/ui/user/user_order/myorder_page.dart';
+import 'package:cloud_car/ui/user/user_partner_center/partner_center_page.dart';
+import 'package:cloud_car/ui/user/user_recommended/user_recommended_page.dart';
+import 'package:cloud_car/ui/user/user_wallet/wallet_certification_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -449,10 +449,10 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const AboutPage());
             break;
           case '员工管理':
-            Get.to(() => const StaffManagement());
+            Get.to(() => const StaffManagementPage());
             break;
           case '查看合同':
-            Get.to(() => const ConsignmentContract());
+            Get.to(() => const ConsignmentContractPage());
             break;
           case '产品手册':
             Get.to(() => const ProductManuals());
@@ -461,7 +461,7 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const FeedbackPage());
             break;
           case '我的邀约':
-            Get.to(() => const UserInvitation());
+            Get.to(() => const UserInvitationPage());
             break;
         }
       },
