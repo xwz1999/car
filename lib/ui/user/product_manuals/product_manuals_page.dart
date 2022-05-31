@@ -1,6 +1,6 @@
 import 'package:cloud_car/model/user/handbook_model.dart';
 import 'package:cloud_car/ui/user/interface/manuals_func.dart';
-import 'package:cloud_car/ui/user/product_manuals/product_manuals_info.dart';
+import 'package:cloud_car/ui/user/product_manuals/product_manuals_info_page.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -168,7 +168,7 @@ class _ProductManualsState extends State<ProductManuals> {
               ? model.items!.mapIndexed((e, index) {
                   return GestureDetector(
                       onTap: () {
-                        Get.to(() => HandbookInfo(
+                        Get.to(() => HandbookInfoPage(
                               //manualsBack: (int id) {},
                               itemId: e.id,
                               name: e.name,

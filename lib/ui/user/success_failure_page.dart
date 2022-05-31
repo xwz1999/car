@@ -2,13 +2,13 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
-class SuccessFailure extends StatefulWidget {
+class SuccessFailurePage extends StatefulWidget {
   final bool conditions;
   final String headline;
   final Widget body;
   final Widget bottom;
 
-  const SuccessFailure(
+  const SuccessFailurePage(
       {super.key,
       required this.conditions,
       required this.headline,
@@ -16,10 +16,10 @@ class SuccessFailure extends StatefulWidget {
       required this.bottom});
 
   @override
-  State<SuccessFailure> createState() => _SuccessFailureState();
+  State<SuccessFailurePage> createState() => _SuccessFailurePageState();
 }
 
-class _SuccessFailureState extends State<SuccessFailure> {
+class _SuccessFailurePageState extends State<SuccessFailurePage> {
   late bool conditions = widget.conditions;
   late String headline = widget.headline;
   late Widget body = widget.body;

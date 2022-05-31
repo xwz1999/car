@@ -1,4 +1,4 @@
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_order_data.dart';
+import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_order_data_page.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -172,7 +172,7 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
                         top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
                     child: GestureDetector(
                       onTap: () {
-                        Get.to(() => const RentaicarOrderData());
+                        Get.to(() => const RentaicarOrderDataPage());
                       },
                       child: Container(
                           width: 168.w,

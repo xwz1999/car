@@ -39,6 +39,8 @@ class Staff extends Equatable {
 
   Gender get genderEM => Gender.getValue(gender);
 
+  Role get roleEm => Role.getValue(roleName);
+
   @override
   List<Object?> get props => [id, name, phone, auditStatus, roleName, gender];
 }

@@ -224,6 +224,12 @@ class _StoreManagement {
 
   ///编辑员工
   get staffEdit => '/business/staff/edit';
+
+  ///删除员工
+  get staffDelete => '/business/staff/delete';
+
+  ///员工详情
+  get staffInfo => '/business/staff/info';
 }
 
 ///用户手册
