@@ -20,6 +20,9 @@ enum OrderSaleStatus {
   static OrderSaleStatus getStatus(int value) =>
       OrderSaleStatus.values.firstWhere((element) => element.num == value);
 
+  // static OrderSaleStatus getStatus1(String value) =>
+  //     OrderSaleStatus.values.firstWhere((element) => element.str == value);
+
   int get progressNum {
     switch (num) {
       case 0:
@@ -56,20 +59,20 @@ enum OrderSaleStatus {
 
 ///个人寄卖订单
 enum ConsignmentStatus {
-  Cancel(0, '交易取消'),
-  UnSign(1, '待签订'),
-  UnPublish(2, '待发布'),
-  Publish(3, '审核中'),
-  TheUpper(4, '在售'),
-  Sale(5, '出售'),
-  Account(6, '已到账'),
-  Final(7, '已成交');
+  cancel(0, '交易取消'),
+  unSign(1, '待签订'),
+  unPublish(2, '待发布'),
+  publish(3, '审核中'),
+  theUpper(4, '在售'),
+  sale(5, '出售'),
+  account(6, '已到账'),
+  uFinal(7, '已成交');
 
   final int num;
   final String str;
 
   static ConsignmentStatus getStatus(int value) =>
-      ConsignmentStatus.values.firstWhere((elment) => elment.num == value);
+      ConsignmentStatus.values.firstWhere((element) => element.num == value);
 
   int get progressNum {
     switch (num) {
@@ -99,18 +102,18 @@ enum ConsignmentStatus {
 
 ///车商订单状态
 enum CarConsignmentStatus {
-  Cancel(0, '交易取消'),
-  Publish(1, '审核中'),
-  TheUpper(2, '在售'),
-  Sale(3, '出售'),
-  Account(4, '已到账'),
-  Final(5, '已成交');
+  cancel(0, '交易取消'),
+  publish(1, '审核中'),
+  theUpper(2, '在售'),
+  sale(3, '出售'),
+  account(4, '已到账'),
+  uFinal(5, '已成交');
 
   final int num;
   final String str;
 
   static CarConsignmentStatus getStatus(int value) =>
-      CarConsignmentStatus.values.firstWhere((elment) => elment.num == value);
+      CarConsignmentStatus.values.firstWhere((element) => element.num == value);
 
   int get carProgressNum {
     switch (num) {
@@ -136,10 +139,10 @@ enum CarConsignmentStatus {
 
 ///叫车订单状态
 enum OrderCallCarStatus {
-  UnPay(1, '待支付'),
-  Pay(2, '待交车'),
-  Final(3, '已完成'),
-  Refund(4, '已退款');
+  unPay(1, '待支付'),
+  pay(2, '待交车'),
+  uFinal(3, '已完成'),
+  refund(4, '已退款');
 
   final int num;
   final String str;

@@ -1,7 +1,5 @@
-// ignore_for_file: unused_field, prefer_final_fields
-
+///需要修改****************
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_alsocar_order_page.dart';
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_order.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_transaction_cancelled_order_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/car_widget.dart';
@@ -23,10 +21,11 @@ class RentalcarOrderPage extends StatefulWidget {
 class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [];
-  bool _onLoad = true;
+
+  //bool _onLoad = true;
 
 //List<> _RentalCarList=[];
-  int _page = 1;
+  //int _page = 1;
   final int _size = 10;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
@@ -36,14 +35,14 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   List carList = [
     {
       'judge': false,
-      'judgename': '进行中',
+      'judgeName': '进行中',
       'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
       'url': Assets.images.carBanner.path,
-      'pice1name': '租车总价',
-      'pice1': '220.00',
-      'picename': '已付租金',
-      'pice': '220.00',
-      'buttomname': '',
+      'price1name': '租车总价',
+      'price1': '220.00',
+      'priceName': '已付租金',
+      'price': '220.00',
+      'buttonName': '',
     },
     {
       'judge': false,
@@ -110,7 +109,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.callBack();
+        // widget.callBack();
       },
       child: Column(
         children: [
@@ -157,14 +156,14 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
 
   _getCar(item) {
     return Offstage(
-        offstage: text == '全部' ? false : item['judgename'] != text,
+        offstage: false, //text == '全部' ? false : item['judgename'] != text,
         child: Container(
             color: bodyColor,
             child: GestureDetector(
               onTap: () {
                 switch (item['judgename']) {
                   case '进行中':
-                    Get.to(() => const RentalcarOrder());
+                    //Get.to(() => const RentalcarOrderPage());
                     break;
                   case '已完成':
                     Get.to(() => const AlsoCarOrderPage(

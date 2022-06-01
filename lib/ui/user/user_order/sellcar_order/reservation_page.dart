@@ -2,6 +2,7 @@ import 'package:cloud_car/model/order/sale_info.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/detection_data_page.dart';
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -12,16 +13,18 @@ import 'package:flutter/material.dart';
 
 class ReservationPage extends StatefulWidget {
   final int orderId;
-  final String status;
-  final int statusNum;
-  final int statusNumber;
 
-  const ReservationPage(
-      {super.key,
-      required this.orderId,
-      required this.status,
-      required this.statusNum,
-      required this.statusNumber});
+  final OrderSaleStatus status;
+
+  //final OrderSaleStatus status1;
+
+  const ReservationPage({
+    super.key,
+    required this.orderId,
+    required this.status,
+
+    //required this.status1
+  });
 
   @override
   State<ReservationPage> createState() => _ReservationPageState();
@@ -77,14 +80,14 @@ class _ReservationPageState extends State<ReservationPage> {
                   color: Colors.white,
                   child: ProgressBar(
                     length: 6,
-                    num: widget.statusNumber,
+                    num: widget.status.progressNum,
                     direction: false,
-                    cancel: widget.statusNum != 0,
+                    cancel: widget.status.num != 0,
                     HW: 96,
                     texts: [
                       _text('预定'),
                       _text('检测'),
-                      widget.statusNum == 0 ? _text('订单取消') : _text('首付'),
+                      widget.status.num == 0 ? _text('订单取消') : _text('首付'),
                       _text('过户'),
                       _text('尾款'),
                       _text('完成'),
@@ -159,22 +162,22 @@ class _ReservationPageState extends State<ReservationPage> {
                 ),
 
                 ///合同信息
-                _getContract(widget.statusNum),
+                _getContract(widget.status.num),
 
                 ///支付信息
                 Offstage(
-                  offstage: widget.statusNum == 1,
-                  child: _getPay(widget.statusNum),
+                  offstage: widget.status.num == 1,
+                  child: _getPay(widget.status.num),
                 ),
 
                 ///车辆检测报告
                 Offstage(
-                  offstage: widget.statusNum == 1 ||
-                      widget.statusNum == 3 ||
-                      widget.statusNum == 10,
+                  offstage: widget.status.num == 1 ||
+                      widget.status.num == 3 ||
+                      widget.status.num == 10,
                   child: _getReport(),
                 ),
-                widget.statusNum == 0
+                widget.status.num == 0
                     ? _getContainer(
                         ///订单取消
                         Column(
@@ -196,9 +199,9 @@ class _ReservationPageState extends State<ReservationPage> {
 
                 ///车辆检测报告2
                 Offstage(
-                  offstage: !(widget.statusNum == 40 ||
-                      widget.statusNum == 41 ||
-                      widget.statusNum == 50),
+                  offstage: !(widget.status.num == 40 ||
+                      widget.status.num == 41 ||
+                      widget.status.num == 50),
                   child: _getReport2(),
                 ),
               ],
@@ -263,12 +266,12 @@ class _ReservationPageState extends State<ReservationPage> {
                   format: DateFormats.full),
               BaseStyle.color333333),
           40.hb,
-          widget.statusNum == 20 || widget.statusNum == 20
-              ? widget.statusNum == 20
+          widget.status.num == 20 || widget.status.num == 20
+              ? widget.status.num == 20
                   ? _getText(
                       '首付支付',
                       '¥${_consignmentInfoList.contract.downPayment}(审核中)',
-                      const Color(0xFF027AFFA))
+                      const Color(0xFF027AFF))
                   : _getText(
                       '首付支付',
                       '¥${_consignmentInfoList.contract.downPayment}(审核驳回)',
@@ -277,9 +280,9 @@ class _ReservationPageState extends State<ReservationPage> {
                   '首付支付',
                   '¥${_consignmentInfoList.contract.downPayment}',
                   BaseStyle.color333333),
-          widget.statusNum == 20 ? 36.hb : 0.hb,
+          widget.status.num == 20 ? 36.hb : 0.hb,
           Offstage(
-            offstage: widget.statusNum != 20,
+            offstage: widget.status.num != 20,
             child: _getText('驳回理由', '凭证金额与汇款金额不符', const Color(0xFFE62222)),
           ),
           36.hb,
@@ -312,23 +315,23 @@ class _ReservationPageState extends State<ReservationPage> {
                   _consignmentInfoList.downPayment.createdAt.toInt() * 1000,
                   format: DateFormats.full),
               BaseStyle.color333333),
-          widget.statusNum == 40 ||
-                  widget.statusNum == 41 ||
-                  widget.statusNum == 50
+          widget.status.num == 40 ||
+                  widget.status.num == 41 ||
+                  widget.status.num == 50
               ? 36.hb
               : 0.hb,
           Offstage(
-            offstage: !(widget.statusNum == 40 ||
-                widget.statusNum == 41 ||
-                widget.statusNum == 50),
+            offstage: !(widget.status.num == 40 ||
+                widget.status.num == 41 ||
+                widget.status.num == 50),
             child: Column(
               children: [
-                widget.statusNum == 40 || widget.statusNum == 40
-                    ? widget.statusNum == 40
+                widget.status.num == 40 || widget.status.num == 40
+                    ? widget.status.num == 40
                         ? _getText(
                             '尾款支付',
                             '¥${_consignmentInfoList.contract.balancePayment}(审核中)',
-                            const Color(0xFF027AFFA))
+                            const Color(0xFF027AFF))
                         : _getText(
                             '尾款支付',
                             '¥${_consignmentInfoList.contract.balancePayment}(审核驳回)',
@@ -339,10 +342,10 @@ class _ReservationPageState extends State<ReservationPage> {
                         BaseStyle.color333333),
                 36.hb,
                 Offstage(
-                  offstage: widget.statusNum != 2222,
+                  offstage: widget.status.num != 2222,
                   child: _getText('驳回理由', '未收到银行汇款款项', const Color(0xFFE62222)),
                 ),
-                widget.statusNum == 222 ? 36.hb : 0.hb,
+                widget.status.num == 222 ? 36.hb : 0.hb,
                 _getText('支付形式', '按揭支付', BaseStyle.color333333),
                 36.hb,
                 _getText(
@@ -462,8 +465,13 @@ class _ReservationPageState extends State<ReservationPage> {
 
 //支付是否成功
   _getPayPass() {
-    switch (widget.statusNum) {
-      case 1:
+    switch (widget.status) {
+      case OrderSaleStatus.cancel:
+        // TODO: Handle this case.
+
+        break;
+      case OrderSaleStatus.unSign:
+        // TODO: Handle this case.
         return Container(
           width: double.infinity,
           color: kForeGroundColor,
@@ -494,7 +502,16 @@ class _ReservationPageState extends State<ReservationPage> {
             ],
           ),
         );
-      case 10:
+
+      case OrderSaleStatus.sign:
+        // TODO: Handle this case.
+
+        break;
+      case OrderSaleStatus.deposit:
+        // TODO: Handle this case.
+        break;
+      case OrderSaleStatus.testReport:
+        // TODO: Handle this case.
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -523,7 +540,12 @@ class _ReservationPageState extends State<ReservationPage> {
                     )),
               ),
             ));
-      case 20:
+
+      case OrderSaleStatus.uploadTestReport:
+        // TODO: Handle this case.
+        break;
+      case OrderSaleStatus.downPaymentAudit:
+        // TODO: Handle this case.
         return Container(
           width: double.infinity,
           color: kForeGroundColor,
@@ -554,7 +576,12 @@ class _ReservationPageState extends State<ReservationPage> {
             ],
           ),
         );
-      case 30:
+        break;
+      case OrderSaleStatus.dowPaymentAdopt:
+        // TODO: Handle this case.
+        break;
+      case OrderSaleStatus.transfer:
+        // TODO: Handle this case.
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -583,7 +610,11 @@ class _ReservationPageState extends State<ReservationPage> {
                     )),
               ),
             ));
-      case 40:
+      case OrderSaleStatus.transferFinal:
+        // TODO: Handle this case.
+        break;
+      case OrderSaleStatus.balancePaymentAudit:
+        // TODO: Handle this case.
         return Container(
           width: double.infinity,
           color: kForeGroundColor,
@@ -614,7 +645,11 @@ class _ReservationPageState extends State<ReservationPage> {
             ],
           ),
         );
-      case 41:
+      case OrderSaleStatus.balancePaymentAdopt:
+        // TODO: Handle this case.
+        break;
+      case OrderSaleStatus.orderFinal:
+        // TODO: Handle this case.
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -645,8 +680,6 @@ class _ReservationPageState extends State<ReservationPage> {
                     )),
               ),
             ));
-      default:
-        return const SizedBox();
     }
   }
 

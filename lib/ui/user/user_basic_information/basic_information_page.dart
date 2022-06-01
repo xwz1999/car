@@ -377,7 +377,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                   editor: false,
                   endIcon: true,
                   tips: '请选择',
-                  value: UserTool.userProvider.userInfo.gender == 1 ? "男" : '女',
+                  value: UserTool.userProvider.userInfo.genderEM.typeStr,
                   widget: Image(
                     image: Assets.icons.icGoto,
                     width: 32.w,
@@ -528,6 +528,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
         ));
   }
 
+  //
   // getGender(int gender) {
   //   switch (gender) {
   //     case 2:

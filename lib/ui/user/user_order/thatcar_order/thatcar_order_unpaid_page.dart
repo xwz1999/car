@@ -1,3 +1,4 @@
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../../utils/user_tool.dart';
 
 class ThatcarUnpaidPage extends StatefulWidget {
-  final int status;
+  final OrderCallCarStatus status;
   final String statusText;
 
   const ThatcarUnpaidPage(
@@ -78,7 +79,7 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
                                       .textTheme
                                       .subtitle2
                                       ?.copyWith(
-                                          fontSize: BaseStyle.fontSize40),
+                                      fontSize: BaseStyle.fontSize40),
                                 ),
                                 16.hb,
                                 Text(
@@ -123,18 +124,18 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
               _getText('上门时间', '2022-01-04 12:00'),
             ],
           )),
-          widget.status == 1
+          widget.status.num == 1
               ? const SizedBox()
               : _getCarBox(Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _getTitle('支付信息'),
-                    32.wb,
-                    _getText('支付方式', '支付宝'),
-                    16.hb,
-                    _getText('支付时间', '2022-01-04 12:00'),
-                  ],
-                ))
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _getTitle('支付信息'),
+              32.wb,
+              _getText('支付方式', '支付宝'),
+              16.hb,
+              _getText('支付时间', '2022-01-04 12:00'),
+            ],
+          ))
         ],
       ),
     );
@@ -160,7 +161,7 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
                 decoration: BoxDecoration(
-                  color: widget.status == 3 || widget.status == 4
+                  color: widget.status.num == 3 || widget.status.num == 4
                       ? const Color(0xFF027AFF).withOpacity(0.1)
                       : const Color(0xFFFE8029).withOpacity(0.1),
                 ),
@@ -168,7 +169,7 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
                   widget.statusText,
                   style: TextStyle(
                     fontSize: BaseStyle.fontSize24,
-                    color: widget.status == 3 || widget.status == 4
+                    color: widget.status.num == 3 || widget.status.num == 4
                         ? const Color(0xFF027AFF)
                         : const Color(0xFFFE8029),
                   ),
@@ -218,14 +219,14 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: widget.status == 4
+              color: widget.status.num == 4
                   ? const Color(0xFF4F5A74).withOpacity(0.08)
                   : const Color(0xFF027AFF).withOpacity(0.08)),
           child: Text(
             num,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize20,
-                color: widget.status == 4
+                color: widget.status.num == 4
                     ? const Color(0xFF4F5A74)
                     : const Color(0xFF027AFF)),
           ),
@@ -264,19 +265,19 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
       title: _getTitle('订单总价'),
       text: SizedBox(
           child: Text.rich(TextSpan(children: [
-        TextSpan(
-            text: '¥',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                ?.copyWith(fontWeight: FontWeight.bold)),
-        TextSpan(
-            text: '100.00',
-            style: Theme.of(context)
-                .textTheme
-                .subtitle2
-                ?.copyWith(fontWeight: FontWeight.bold)),
-      ]))),
+            TextSpan(
+                text: '¥',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(fontWeight: FontWeight.bold)),
+            TextSpan(
+                text: '100.00',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    ?.copyWith(fontWeight: FontWeight.bold)),
+          ]))),
       widget: Container(
           padding: EdgeInsets.only(left: 32.w, top: 16.w),
           child: Row(

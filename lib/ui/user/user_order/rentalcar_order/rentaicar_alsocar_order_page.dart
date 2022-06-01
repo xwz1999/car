@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -205,7 +204,8 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
                             var res =
                                 await OrderFunc.getCarFinal(widget.orderId);
                             //Get.to(() => const RentaicarOrderData());
-                            BotToast.showText(text: '确认成功');
+                            if (res) {}
+                            //BotToast.showText(text: '确认成功');
                           },
                           child: Container(
                               width: 168.w,

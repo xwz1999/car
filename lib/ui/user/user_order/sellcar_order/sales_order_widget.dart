@@ -159,17 +159,18 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
   _getSales(SalelistsModel model) {
     return Offstage(
         //offstage: !(text == '全部') || model.statusEnum.str != text,
-        offstage: text == '全部' ? false : model.statusEnum.str != text,
+        offstage: false, //text == '全部' ? false : model.statusEnum.str != text,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
           child: GestureDetector(
             onTap: () {
               Get.to(() => ReservationPage(
                     //judge: false
-                    statusNumber: model.statusEnum.progressNum,
+                    //statusNumber: model.statusEnum.progressNum,
                     orderId: model.id,
-                    status: model.statusEnum.str,
-                    statusNum: model.statusEnum.num,
+                    status: model.statusEnum,
+                    //status1: model.statusEnum1,
+                    // status1: model.statusEnum,
                   ));
               // switch (_getText(model.status)) {
               //   case '待预定':

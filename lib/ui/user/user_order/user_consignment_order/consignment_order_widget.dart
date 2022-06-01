@@ -154,15 +154,15 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
     return Offstage(
         offstage: model.status == 6 || model.status == 7,
         child: Offstage(
-            offstage: text == '全部' ? false : model.statusEnum.str != text,
+            offstage: false,
+            //text == '全部' ? false : model.statusEnum.str != text,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
               child: GestureDetector(
                 onTap: () {
                   Get.to(() => ConsignmentSignedPage(
                         price: model.price,
-                        statusNumber: model.statusEnum.num,
-                        statusNum: model.statusEnum.progressNum,
+                        statusNumber: model.statusEnum,
                         id: model.id,
                         auditStatus: model.auditStatus,
                         licensingDate: model.licensingDate,

@@ -1,9 +1,8 @@
-// ignore_for_file: dead_code
-
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flustars/flustars.dart';
@@ -14,9 +13,9 @@ import '../../../../widget/button/cloud_back_button.dart';
 
 class ConsignmentSignedPage extends StatefulWidget {
   //final String stat;
-  final int statusNum;
+
   final int id;
-  final int statusNumber;
+  final ConsignmentStatus statusNumber;
   final int auditStatus;
   final int licensingDate;
   final int createdAt;
@@ -25,7 +24,7 @@ class ConsignmentSignedPage extends StatefulWidget {
   const ConsignmentSignedPage(
       {super.key,
       //required this.stat,
-      required this.statusNum,
+
       required this.id,
       required this.statusNumber,
       required this.auditStatus,
@@ -89,15 +88,15 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                 color: Colors.white,
                 child: ProgressBar(
                   length: 6,
-                  num: widget.statusNum,
+                  num: widget.statusNumber.progressNum,
                   direction: false,
-                  cancel: widget.statusNumber != 0,
+                  cancel: widget.statusNumber.num != 0,
                   HW: 96,
                   texts: [
                     _text('预定'),
                     _text('签订'),
                     _text('上架'),
-                    widget.statusNumber == 0 ? _text('交易取消') : _text('出售'),
+                    widget.statusNumber.num == 0 ? _text('交易取消') : _text('出售'),
                     _text('到账'),
                     _text('成交'),
                   ],
@@ -105,7 +104,8 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
               ),
               16.hb,
               Offstage(
-                offstage: widget.statusNumber != 3 && widget.auditStatus != 3,
+                offstage:
+                    widget.statusNumber.num != 3 && widget.auditStatus != 3,
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
                   padding: EdgeInsets.all(28.w),
@@ -127,7 +127,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                   ),
                 ),
               ),
-              widget.statusNumber == 3 && widget.auditStatus == 3
+              widget.statusNumber.num == 3 && widget.auditStatus == 3
                   ? 16.hb
                   : 0.hb,
               Container(
@@ -208,7 +208,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                         ),
                       ])),
               16.hb,
-              widget.statusNumber == 1
+              widget.statusNumber.num == 1
                   ? Container(
                       margin: EdgeInsets.symmetric(horizontal: 32.w),
                       padding: EdgeInsets.all(28.w),
@@ -262,8 +262,8 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
               16.hb,
               _getWidget()
             ]),
-            widget.statusNumber == 2 ||
-                    (widget.statusNumber == 3 && widget.auditStatus == 3)
+            widget.statusNumber.num == 2 ||
+                    (widget.statusNumber.num == 3 && widget.auditStatus == 3)
                 ? Positioned(
                     left: 0,
                     right: 0,
@@ -292,7 +292,9 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                                     color: const Color(0xFF027AFF),
                                     borderRadius: BorderRadius.circular(8.w)),
                                 child: Text(
-                                  widget.statusNumber == 2 ? '发布车辆' : '重新发布',
+                                  widget.statusNumber.num == 2
+                                      ? '发布车辆'
+                                      : '重新发布',
                                   style: TextStyle(
                                       color: kForeGroundColor,
                                       fontSize: BaseStyle.fontSize28),
@@ -307,7 +309,39 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
 
   _getWidget() {
     switch (widget.statusNumber) {
-      case 3:
+      case ConsignmentStatus.cancel:
+        // TODO: Handle this case.
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 32.w),
+          padding: EdgeInsets.all(28.w),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 0.w),
+                child: _getTitle('交易取消信息'),
+              ),
+              36.hb,
+              _getText('取消人员', '云云问车平台'),
+              36.hb,
+              _getText(
+                '取消时间',
+                '2021-12-30 12:00:00',
+              ),
+            ],
+          ),
+        );
+        break;
+      case ConsignmentStatus.unSign:
+        // TODO: Handle this case.
+        break;
+      case ConsignmentStatus.unPublish:
+        // TODO: Handle this case.
+        break;
+      case ConsignmentStatus.publish:
+        // TODO: Handle this case.
         switch (widget.auditStatus) {
           case 1:
             return Container(
@@ -323,7 +357,48 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
             return;
         }
         break;
-      case 6:
+      case ConsignmentStatus.theUpper:
+        // TODO: Handle this case.
+        break;
+      case ConsignmentStatus.sale:
+        // TODO: Handle this case.
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 32.w),
+          padding: EdgeInsets.all(28.w),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 0.w),
+                child: _getTitle('出售信息'),
+              ),
+              36.hb,
+              _getText('购车客户', '莉'),
+              36.hb,
+              _getText(
+                '手机号',
+                '18935263526',
+              ),
+              36.hb,
+              _getText(
+                '出售价格',
+                '¥${widget.price}',
+              ),
+              36.hb,
+              _getText(
+                '出售时间',
+                DateUtil.formatDateMs(_individualList.saleAt.toInt() * 1000,
+                    format: DateFormats.full),
+              ),
+            ],
+          ),
+        );
+        break;
+        break;
+      case ConsignmentStatus.account:
+        // TODO: Handle this case.
         return Column(
           children: [
             Container(
@@ -400,70 +475,12 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
             )
           ],
         );
-      case 5:
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.w),
-          padding: EdgeInsets.all(28.w),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: _getTitle('出售信息'),
-              ),
-              36.hb,
-              _getText('购车客户', '莉'),
-              36.hb,
-              _getText(
-                '手机号',
-                '18935263526',
-              ),
-              36.hb,
-              _getText(
-                '出售价格',
-                '¥${widget.price}',
-              ),
-              36.hb,
-              _getText(
-                '出售时间',
-                DateUtil.formatDateMs(_individualList.saleAt.toInt() * 1000,
-                    format: DateFormats.full),
-              ),
-            ],
-          ),
-        );
         break;
-      case 0:
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.w),
-          padding: EdgeInsets.all(28.w),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: _getTitle('交易取消信息'),
-              ),
-              36.hb,
-              _getText('取消人员', '云云问车平台'),
-              36.hb,
-              _getText(
-                '取消时间',
-                '2021-12-30 12:00:00',
-              ),
-            ],
-          ),
-        );
+      case ConsignmentStatus.uFinal:
+        // TODO: Handle this case.
         break;
-      default:
-        return const SizedBox();
     }
   }
-
   _getPicture(String title, dynamic url) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -502,7 +519,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
         Text(
           text,
           style: TextStyle(
-              color: widget.statusNumber == 3 && widget.auditStatus == 3
+              color: widget.statusNumber.num == 3 && widget.auditStatus == 3
                   ? const Color(0xFFE62222)
                   : BaseStyle.color333333,
               fontSize: BaseStyle.fontSize28),

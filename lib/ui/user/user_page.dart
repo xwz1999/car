@@ -317,7 +317,7 @@ class _UserPageState extends State<UserPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () async {
-              //print("aaaaa:${re.data['count']}");
+              //print(":${re.data['count']}");
               await Get.to(() => const BasicInformationPage());
               setState(() {});
             },

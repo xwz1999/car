@@ -1,6 +1,7 @@
 // ignore_for_file: dead_code
 
 import 'package:cloud_car/model/order/individual_model.dart';
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/backup/consignment_audit.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
@@ -12,17 +13,16 @@ import '../../../../widget/button/cloud_back_button.dart';
 
 class DealerConsignmentSignedPage extends StatefulWidget {
   //final String stat;
-  final int statusNum;
+
   final int id;
   final int auditStatus;
-  final int status;
+  final CarConsignmentStatus status;
   final String price;
 
   const DealerConsignmentSignedPage(
       {super.key,
       //required this.stat,
       required this.auditStatus,
-      required this.statusNum,
       required this.id,
       required this.status,
       required this.price});
@@ -81,21 +81,21 @@ class _DealerConsignmentSignedPageState
                 color: Colors.white,
                 child: ProgressBar(
                   length: 6,
-                  num: widget.statusNum,
+                  num: widget.status.carProgressNum,
                   direction: false,
-                  cancel: widget.status != 0,
+                  cancel: widget.status.num != 0,
                   HW: 96,
                   texts: [
                     _text('发布'),
                     _text('上架'),
-                    widget.status == 0 ? _text('订单取消') : _text('出售'),
+                    widget.status.num == 0 ? _text('订单取消') : _text('出售'),
                     _text('到账'),
                     _text('成交'),
                   ],
                 ),
               ),
               16.hb,
-              widget.status == 1 && widget.auditStatus == 3
+              widget.status.num == 1 && widget.auditStatus == 3
                   ? Container(
                       margin: EdgeInsets.symmetric(horizontal: 32.w),
                       padding: EdgeInsets.all(28.w),
@@ -222,7 +222,7 @@ class _DealerConsignmentSignedPageState
               16.hb,
               _getWidget()
             ]),
-            widget.status == 3 && widget.auditStatus == 3
+            widget.status.num == 3 && widget.auditStatus == 3
                 ? Positioned(
                     left: 0,
                     right: 0,
@@ -260,7 +260,33 @@ class _DealerConsignmentSignedPageState
 
   _getWidget() {
     switch (widget.status) {
-      case 1:
+      case CarConsignmentStatus.cancel:
+        // TODO: Handle this case.
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 32.w),
+          padding: EdgeInsets.all(28.w),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 0.w),
+                child: _getTitle('交易取消信息'),
+              ),
+              36.hb,
+              _getText('取消人员', '云云问车平台'),
+              36.hb,
+              _getText(
+                '取消时间',
+                '2021-12-30 12:00:00',
+              ),
+            ],
+          ),
+        );
+        break;
+      case CarConsignmentStatus.publish:
+        // TODO: Handle this case.
         switch (widget.auditStatus) {
           case 1:
             return Container(
@@ -276,7 +302,48 @@ class _DealerConsignmentSignedPageState
             return const SizedBox();
         }
         break;
-      case 4:
+      case CarConsignmentStatus.theUpper:
+        // TODO: Handle this case.
+        break;
+      case CarConsignmentStatus.sale:
+        // TODO: Handle this case.
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 32.w),
+          padding: EdgeInsets.all(28.w),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 0.w),
+                child: _getTitle('出售信息'),
+              ),
+              36.hb,
+              _getText('购车客户', '莉丝'),
+              36.hb,
+              _getText(
+                '手机号',
+                '18935263526',
+              ),
+              36.hb,
+              _getText(
+                '出售价格',
+                '¥${widget.price}',
+              ),
+              36.hb,
+              _getText(
+                '出售时间',
+                DateUtil.formatDateMs(_individualList.saleAt.toInt() * 1000,
+                    format: DateFormats.full),
+              ),
+            ],
+          ),
+        );
+
+        break;
+      case CarConsignmentStatus.account:
+        // TODO: Handle this case.
         return Column(
           children: [
             Container(
@@ -353,66 +420,10 @@ class _DealerConsignmentSignedPageState
             )
           ],
         );
-      case 3:
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.w),
-          padding: EdgeInsets.all(28.w),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: _getTitle('出售信息'),
-              ),
-              36.hb,
-              _getText('购车客户', '莉丝'),
-              36.hb,
-              _getText(
-                '手机号',
-                '18935263526',
-              ),
-              36.hb,
-              _getText(
-                '出售价格',
-                '¥${widget.price}',
-              ),
-              36.hb,
-              _getText(
-                '出售时间',
-                DateUtil.formatDateMs(_individualList.saleAt.toInt() * 1000,
-                    format: DateFormats.full),
-              ),
-            ],
-          ),
-        );
-
-      case 0:
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.w),
-          padding: EdgeInsets.all(28.w),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: _getTitle('交易取消信息'),
-              ),
-              36.hb,
-              _getText('取消人员', '云云问车平台'),
-              36.hb,
-              _getText(
-                '取消时间',
-                '2021-12-30 12:00:00',
-              ),
-            ],
-          ),
-        );
-      default:
-        return const SizedBox();
+        break;
+      case CarConsignmentStatus.uFinal:
+        // TODO: Handle this case.
+        break;
     }
   }
 
@@ -454,7 +465,7 @@ class _DealerConsignmentSignedPageState
         Text(
           text,
           style: TextStyle(
-              color: widget.status == 1 && widget.auditStatus == 3
+              color: widget.status.num == 1 && widget.auditStatus == 3
                   ? const Color(0xFFE62222)
                   : BaseStyle.color333333,
               fontSize: BaseStyle.fontSize28),

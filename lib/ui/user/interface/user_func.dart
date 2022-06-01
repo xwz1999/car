@@ -20,7 +20,6 @@ class User {
   ///   int count;
   ///   int payType
   ///   BaseListModel res=await apiClient.requestList(API.user.recharge.assessRecharge,data:{'count':10,'payType':2}
-
   ///   );
   ///   if(res.data! == 0) return [];
   /// return res.data!.list!.map((e) => <>.formJson(e)).toList();

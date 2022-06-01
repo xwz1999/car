@@ -1,10 +1,7 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
-import 'package:common_utils/common_utils.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 ///车辆维保查询详情
 class MaintainQueryHistoryDetailPage extends StatefulWidget {
@@ -18,7 +15,7 @@ class MaintainQueryHistoryDetailPage extends StatefulWidget {
 class _MaintainQueryHistoryDetailPageState extends State<MaintainQueryHistoryDetailPage> {
 
 
-  List<MaintainHistoryDetailModel> _list = [
+  final List<MaintainHistoryDetailModel> _list = [
     MaintainHistoryDetailModel(
         id: 123,
         project: '保养',

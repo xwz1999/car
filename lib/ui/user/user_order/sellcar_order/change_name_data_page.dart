@@ -30,7 +30,7 @@ String invoice = '';
 String guaranteeSlip = '';
 
 ///保单
-late double pice;
+late double price;
 // final picker = ImagePicker();
 // ignore: unnecessary_late
 File imagePath = File('');
@@ -188,7 +188,7 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                       height: 35.w,
                       child: TextField(
                           onChanged: (text) {
-                            pice = double.parse(text);
+                            price = double.parse(text);
                           },
                           decoration: InputDecoration(
                             contentPadding:
@@ -222,7 +222,7 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                       vehicleLicense,
                       invoice,
                       guaranteeSlip,
-                      pice);
+                      price);
                   // print(
                   //     '登记证书+$certificate+行驶证+$vehicleLicense+发票+$invoice+保单+$guaranteeSlip+金额+$pice');
                   if (res) {

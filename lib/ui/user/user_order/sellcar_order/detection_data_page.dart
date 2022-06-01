@@ -21,8 +21,7 @@ class DetectionDataPage extends StatefulWidget {
 
 late String img;
 final picker = ImagePicker();
-// ignore: unnecessary_late
-late File imagePath = File(Assets.images.addcar.path);
+File imagePath = File(Assets.images.addcar.path);
 
 class _DetectionDataPageState extends State<DetectionDataPage> {
   // Future getImage() async {

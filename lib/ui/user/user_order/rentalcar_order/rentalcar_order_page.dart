@@ -5,16 +5,16 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flutter/material.dart';
 
-class RentalcarOrder extends StatefulWidget {
-  const RentalcarOrder({
+class RentalcarOrderPage extends StatefulWidget {
+  const RentalcarOrderPage({
     super.key,
   });
 
   @override
-  State<RentalcarOrder> createState() => _RentalcarOrderState();
+  State<RentalcarOrderPage> createState() => _RentalcarOrderPageState();
 }
 
-class _RentalcarOrderState extends State<RentalcarOrder> {
+class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +95,7 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
                                               fontSize: BaseStyle.fontSize28,
                                               color: BaseStyle.color111111)),
                                       32.hb,
-                                      getCaip('自动2.0T', '国VI', '五座')
+                                      _getChap('自动2.0T', '国VI', '五座')
                                     ],
                                   ),
                                 )
@@ -272,7 +272,7 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
   }
 
 //标签
-  getCaip(String num, String time, String distance) {
+  _getChap(String num, String time, String distance) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),

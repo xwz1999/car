@@ -23,6 +23,8 @@ class SalelistsModel extends Equatable {
 
   OrderSaleStatus get statusEnum => OrderSaleStatus.getStatus(status);
 
+  //OrderSaleStatus get statusEnum1 => OrderSaleStatus.getStatus1(statusEnum.str);
+
   @override
   List<Object?> get props => [
         id,
