@@ -33,8 +33,8 @@ class AddEmployeePage extends StatefulWidget {
 }
 
 class _AddEmployeePageState extends State<AddEmployeePage> {
-  late int storeId;
-  late int roleId;
+  late int storeId = 0;
+  late int roleId = 0;
   late String permissions1 = widget.permissions1;
   late String nameText = widget.permissions1;
   late String genderText = widget.permissions1;
@@ -79,13 +79,13 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
       body: Column(
         children: [
           40.hb,
-          getTitle('基本信息'),
+          _getTitle('基本信息'),
           24.hb,
-          getInformation(),
+          _getInformation(),
           40.hb,
-          getTitle('权限分配'),
+          _getTitle('权限分配'),
           24.hb,
-          getpermissions(),
+          _getPermissions(),
           88.hb,
           CloudBottomButton(
             onTap: () async {
@@ -127,7 +127,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
   }
 
 //文字样式
-  getTitle(String title) {
+  _getTitle(String title) {
     return Container(
       padding: EdgeInsets.only(right: 590.w),
       child: Text(
@@ -141,7 +141,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
   }
 
 //基本信息  ///姓名性别手机号组织架构
-  getInformation() {
+  _getInformation() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -193,6 +193,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           TextEditItemWidget(
             title: '性别 ',
             endIcon: true,
+            editor: false,
             tips: '请选择',
             value: genderText,
             widget: Image(
@@ -332,6 +333,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           TextEditItemWidget(
             title: '组织架构',
             endIcon: true,
+            editor: false,
             tips: '请选择',
             value: storeidText,
             widget: Image(
@@ -357,7 +359,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
   }
 
 //权限分配   ///权限配置 销售提成
-  getpermissions() {
+  _getPermissions() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -365,6 +367,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
         TextEditItemWidget(
           title: '权限配置',
           endIcon: true,
+          editor: false,
           tips: '请选择',
           value: permissions1,
           widget: Image(

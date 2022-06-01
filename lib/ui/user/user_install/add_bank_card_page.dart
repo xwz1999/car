@@ -89,7 +89,7 @@ class _AddCardPageState extends State<AddCardPage> {
 //内容
   _getBody() {
     return Container(
-      height: 450.w,
+      height: 450.h,
       color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 32.w),
       child: Column(
@@ -109,7 +109,7 @@ class _AddCardPageState extends State<AddCardPage> {
               ),
               SizedBox(
                 width: 300.w,
-                height: 35.w,
+                height: 35.h,
                 child: TextField(
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(bottom: 23.w), //文字与边框的距离
@@ -139,7 +139,7 @@ class _AddCardPageState extends State<AddCardPage> {
               ),
               SizedBox(
                 width: 300.w,
-                height: 35.w,
+                height: 35.h,
                 child: TextField(
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(bottom: 23.w), //文字与边框的距离
@@ -155,7 +155,7 @@ class _AddCardPageState extends State<AddCardPage> {
               164.wb,
               SizedBox(
                 width: 32.w,
-                height: 32.w,
+                height: 32.h,
                 child:
                     GestureDetector(child: Image.asset(Assets.icons.scan.path)),
               ),
@@ -184,14 +184,14 @@ class _AddCardPageState extends State<AddCardPage> {
                       img = urls;
                       // print(urls);
                     }
-                    print(img);
+                    //print(img);
                     // guaranteeSlip = value!.path;
                     // print(imagePath);
                     setState(() {});
                   },
                   child: SizedBox(
                     width: 200.w,
-                    height: 150.w,
+                    height: 150.h,
                     child: img == ''
                         ? Image.asset(Assets.images.addcar.path)
                         : CloudImageNetworkWidget.car(

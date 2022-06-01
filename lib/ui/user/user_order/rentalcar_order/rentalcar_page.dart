@@ -146,7 +146,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
             child: ListView.builder(
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) {
-                  return getCar(carList[index]);
+                  return _getCar(carList[index]);
                 },
                 itemCount: carList.length),
           )),
@@ -155,7 +155,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
     );
   }
 
-  getCar(item) {
+  _getCar(item) {
     return Offstage(
         offstage: text == '全部' ? false : item['judgename'] != text,
         child: Container(
@@ -218,7 +218,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                                 32.hb,
                                 Padding(
                                   padding: EdgeInsets.only(right: 16.w),
-                                  child: getText(
+                                  child: _getText(
                                     '自动2.0T',
                                     '国VI',
                                     '五座',
@@ -304,7 +304,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
             )));
   }
 
-  getText(String num, String time, String distance) {
+  _getText(String num, String time, String distance) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),

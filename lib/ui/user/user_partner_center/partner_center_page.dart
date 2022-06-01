@@ -49,12 +49,10 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
             isSpecial: true,
           ),
           title: Text('合伙人中心', style: Theme.of(context).textTheme.headline6
-
               // TextStyle(
               //     color: BaseStyle.color111111,
               //     fontSize: BaseStyle.fontSize36,
               //     fontWeight: FontWeight.bold)
-
               ),
         ),
         extendBody: true,
@@ -66,7 +64,6 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
             //
             //   ],
             // )
-
             Stack(
           children: [
             Container(
@@ -80,7 +77,6 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
           ],
         ));
   }
-
   // _topInfo() {
   //   return Container(
   //     width: double.infinity,
@@ -134,7 +130,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                           Alert.dismiss(context);
                           _getSure = false;
                           setState(() {
-                            _getSure;
+                            //_getSure;
                           });
                           //Value = false;
                           //(Value);
@@ -143,7 +139,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                           Alert.dismiss(context);
                           _getSure = true;
                           setState(() {
-                            _getSure;
+                            //_getSure;
                           });
                           //print(_getSure);
                           //Value = true;

@@ -94,12 +94,12 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                   cancel: widget.statusNumber != 0,
                   HW: 96,
                   texts: [
-                    text('预定'),
-                    text('签订'),
-                    text('上架'),
-                    widget.statusNumber == 0 ? text('交易取消') : text('出售'),
-                    text('到账'),
-                    text('成交'),
+                    _text('预定'),
+                    _text('签订'),
+                    _text('上架'),
+                    widget.statusNumber == 0 ? _text('交易取消') : _text('出售'),
+                    _text('到账'),
+                    _text('成交'),
                   ],
                 ),
               ),
@@ -115,7 +115,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      getTitle('审核驳回'),
+                      _getTitle('审核驳回'),
                       36.hb,
                       _getText('审核时间', ''),
                       36.hb,
@@ -139,7 +139,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getTitle('客户信息'),
+                    _getTitle('客户信息'),
                     36.hb,
                     _getText('客户姓名', _individualList.customer.nickname),
                     36.hb,
@@ -193,7 +193,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                                   32.hb,
                                   Padding(
                                     padding: EdgeInsets.only(right: 16.w),
-                                    child: getText(
+                                    child: _getText1(
                                         DateUtil.formatDateMs(
                                             _individualList.car.licensingDate
                                                     .toInt() *
@@ -220,7 +220,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(left: 0.w),
-                            child: getTitle('预约直卖信息'),
+                            child: _getTitle('预约直卖信息'),
                           ),
                           36.hb,
                           _getText('预约地址', '云云问车 浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
@@ -245,7 +245,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(left: 0.w),
-                            child: getTitle('合同信息'),
+                            child: _getTitle('合同信息'),
                           ),
                           36.hb,
                           _getText('合同编号', _individualList.contractSn),
@@ -260,7 +260,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                       ),
                     ),
               16.hb,
-              getWidget()
+              _getWidget()
             ]),
             widget.statusNumber == 2 ||
                     (widget.statusNumber == 3 && widget.auditStatus == 3)
@@ -305,7 +305,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
         ));
   }
 
-  getWidget() {
+  _getWidget() {
     switch (widget.statusNumber) {
       case 3:
         switch (widget.auditStatus) {
@@ -337,7 +337,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('出售信息'),
+                    child: _getTitle('出售信息'),
                   ),
                   36.hb,
                   _getText('购车客户', _individualList.customer.nickname),
@@ -372,7 +372,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 0.w),
-                    child: getTitle('到款信息'),
+                    child: _getTitle('到款信息'),
                   ),
                   36.hb,
                   _getText('到款金额', '¥${widget.price}'),
@@ -411,7 +411,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('出售信息'),
+                child: _getTitle('出售信息'),
               ),
               36.hb,
               _getText('购车客户', '莉'),
@@ -446,7 +446,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('交易取消信息'),
+                child: _getTitle('交易取消信息'),
               ),
               36.hb,
               _getText('取消人员', '云云问车平台'),
@@ -479,7 +479,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
     );
   }
 
-  getTitle(String title) {
+  _getTitle(String title) {
     return Text(
       title,
       style: Theme.of(context).textTheme.subtitle2,
@@ -511,7 +511,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
     );
   }
 
-  getText(String time, String distance) {
+  _getText1(String time, String distance) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
@@ -565,7 +565,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
     );
   }
 
-  text(String text) {
+  _text(String text) {
     return Text(
       text,
       style: TextStyle(

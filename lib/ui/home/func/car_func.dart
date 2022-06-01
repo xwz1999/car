@@ -154,7 +154,8 @@ class CarFunc {
       'modelId': carModel.modelId,
       'licensePlate': carModel.licensePlate,
       'color': carModel.color,
-      'licensingDate': carModel.licensingDate,
+      'licensingDate': DateUtil.formatDate(carModel.licensingDate,
+          format: DateFormats.y_mo_d),
       'mileage': carModel.mileage,
     });
     if (model.code == 0) {
@@ -307,7 +308,6 @@ class CarFunc {
     } else {
       return [];
     }
-
   }
 
 

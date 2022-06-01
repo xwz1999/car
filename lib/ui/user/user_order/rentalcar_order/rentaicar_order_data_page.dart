@@ -32,9 +32,9 @@ class _RentaicarOrderDataPageState extends State<RentaicarOrderDataPage> {
           margin: EdgeInsets.symmetric(horizontal: 32.w),
           child: ListView(
             children: [
-              getText('押金凭证'),
+              _getText('押金凭证'),
               //48.hb,
-              getText('人车合影'),
+              _getText('人车合影'),
               144.hb,
               GestureDetector(
                 onTap: () {
@@ -68,14 +68,14 @@ class _RentaicarOrderDataPageState extends State<RentaicarOrderDataPage> {
     );
   }
 
-  getTitle(String title) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.subtitle2,
-    );
-  }
+  // _getTitle(String title) {
+  //   return Text(
+  //     title,
+  //     style: Theme.of(context).textTheme.subtitle2,
+  //   );
+  // }
 
-  getText(String title) {
+  _getText(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16.w),
       child: Row(

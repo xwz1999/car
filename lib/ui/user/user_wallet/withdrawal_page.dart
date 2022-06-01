@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class WithdrawalPage extends StatefulWidget {
-  final String pice;
+  final String price;
   final String bankName;
   final String time;
 
   const WithdrawalPage(
       {super.key,
-      required this.pice,
+      required this.price,
       required this.bankName,
       required this.time});
 
@@ -51,7 +51,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                     ),
                     const Spacer(),
                     Text(
-                      widget.pice,
+                      widget.price,
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                   ],
@@ -85,8 +85,8 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                   num: 2,
                   HW: 200,
                   texts: [
-                    getText('提交转出提醒', widget.time),
-                    getText('到账时间', widget.time)
+                    _getText('提交转出提醒', widget.time),
+                    _getText('到账时间', widget.time)
                   ],
                 )
               ],
@@ -97,7 +97,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
     );
   }
 
-  getText(String title, String time) {
+  _getText(String title, String time) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

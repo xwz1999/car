@@ -102,7 +102,7 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
               enabled: widget.editor,
               decoration: InputDecoration(
                 //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
-                enabled: widget.endIcon ? false : true,
+                enabled: widget.endIcon,
                 filled: true,
                 isCollapsed: true,
                 fillColor: Colors.white,

@@ -144,7 +144,7 @@ class _DealerConsignmentOrderPageState
                       : ListView.builder(
                           padding: EdgeInsets.zero,
                           itemBuilder: (context, index) {
-                            return getCar(_DealerConsignmentList[index]);
+                            return _getCar(_DealerConsignmentList[index]);
                           },
                           itemCount: _DealerConsignmentList.length),
             ),
@@ -154,7 +154,7 @@ class _DealerConsignmentOrderPageState
     );
   }
 
-  getCar(ListsModel model) {
+  _getCar(ListsModel model) {
     return Offstage(
         offstage:
             text == '全部' ? false : model.carStatusEnum.carProgressNum != text,
@@ -218,7 +218,7 @@ class _DealerConsignmentOrderPageState
                               32.hb,
                               Padding(
                                 padding: EdgeInsets.only(right: 16.w),
-                                child: getText(
+                                child: _getText(
                                     DateUtil.formatDateMs(
                                         model.licensingDate.toInt() * 1000,
                                         format: 'yyyy年MM月'),
@@ -236,7 +236,7 @@ class _DealerConsignmentOrderPageState
         ));
   }
 
-  getText(String time, String distance) {
+  _getText(String time, String distance) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
@@ -304,12 +304,12 @@ class _DealerConsignmentOrderPageState
     }
   }
 
-  getTitle(String title) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.subtitle2,
-    );
-  }
+// getTitle(String title) {
+//   return Text(
+//     title,
+//     style: Theme.of(context).textTheme.subtitle2,
+//   );
+// }
 }
 
 ///

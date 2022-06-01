@@ -2,10 +2,12 @@
 
 import 'dart:async';
 
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/ui/user/user_install/no_withdrawal_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,31 +22,37 @@ class ValidationPage extends StatefulWidget {
 
 class _ValidationPageState extends State<ValidationPage> {
   List<dynamic>? data;
-  bool _getCodeEnable = false;
+  bool _getCodeEnable = true;
 
-  // late Timer _timer;
-  final String _countDownStr = "发送验证码";
+  late Timer _timer;
 
-  // int _countDownNum = 59;
+  ///时钟
+  String _countDownStr = "发送验证码";
+
+  ///初始化文本
+
+  int _countDownNum = 59;
+
+  ///时间倒计数值
   late TextEditingController _phoneController;
   late TextEditingController _smsCodeController;
-  late FocusNode _phoneFocusNode;
+
   late FocusNode _smsCodeFocusNode;
   bool _cantSelected = false;
+
+  ///
 
   @override
   void initState() {
     super.initState();
-    _phoneFocusNode = FocusNode();
-    _smsCodeFocusNode = FocusNode();
 
+    _smsCodeFocusNode = FocusNode();
     _phoneController = TextEditingController();
     _smsCodeController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _phoneFocusNode.dispose();
     _smsCodeFocusNode.dispose();
     _phoneController.dispose();
     _smsCodeController.dispose();
@@ -157,19 +165,20 @@ class _ValidationPageState extends State<ValidationPage> {
                 Expanded(
                   child: TextField(
                     onChanged: (String phone) {
-                      setState(() {
-                        if (phone.length >= 11) {
-                          _getCodeEnable = true;
-                        } else {
-                          _getCodeEnable = false;
-                        }
-                        if (kDebugMode) {
-                          //print(_loginEnable);
-                        }
-                      });
+                      // setState(() {
+                      //   if (phone.length >= 11) {
+                      //     _getCodeEnable = true;
+                      //   } else {
+                      //     _getCodeEnable = false;
+                      //   }
+                      //   if (kDebugMode) {
+                      //     //print(_loginEnable);
+                      //   }
+                      // }); 判断手机号长度
                     },
+                    enabled: false,
                     controller: _phoneController,
-                    focusNode: _phoneFocusNode,
+                    //focusNode: _phoneFocusNode,
                     keyboardType: TextInputType.number,
                     style: TextStyle(
                         fontSize: BaseStyle.fontSize36,
@@ -204,7 +213,8 @@ class _ValidationPageState extends State<ValidationPage> {
                       //   ),
                       // ),
                       //border: InputBorder.none,
-                      hintText: "请输入手机号",
+                      hintText: UserTool.userProvider.userInfo.phone
+                          .replaceFirst(RegExp(r'\d{4}'), '****', 3),
                       hintStyle: TextStyle(
                           color: BaseStyle.colorcccccc,
                           fontSize: BaseStyle.fontSize36),
@@ -262,16 +272,22 @@ class _ValidationPageState extends State<ValidationPage> {
                         suffixIcon: GestureDetector(
                           onTap: !_getCodeEnable
                               ? () {}
-                              : () {
+                              : () async {
+                                  await apiClient
+                                      .request(API.login.phoneCode, data: {
+                                    'phone':
+                                        UserTool.userProvider.userInfo.phone,
+                                  });
+                                  _beginCountDown();
                                   if (_cantSelected) return;
                                   _cantSelected = true;
-                                  Future.delayed(const Duration(seconds: 2),
+                                  Future.delayed(const Duration(seconds: 1),
                                       () {
                                     _cantSelected = false;
                                   });
                                 },
                           child: Container(
-                            width: 160.w,
+                            width: 180.w,
                             alignment: Alignment.centerRight,
                             color: Colors.transparent,
                             child: Text(
@@ -294,6 +310,28 @@ class _ValidationPageState extends State<ValidationPage> {
     );
   }
 
+  _beginCountDown() {
+    ///开始倒计时
+    setState(() {
+      _getCodeEnable = false;
+      _countDownStr = "重新获取($_countDownNum)";
+    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        if (_countDownNum == 0) {
+          _countDownNum = 59;
+          _countDownStr = "获取验证码";
+          _getCodeEnable = true;
+          _timer.cancel();
+          return;
+        }
+        _countDownStr = "重新获取(${_countDownNum--})";
+      });
+    });
+  }
 // _verifyLoginEnable() {
 //   if (!TextUtils.verifyPhone(_phoneController.text)) {
 //     setState(() {});

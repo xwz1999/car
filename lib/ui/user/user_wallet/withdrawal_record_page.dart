@@ -90,12 +90,12 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
                         ],
                       ),
                     ),
-                    getList()
+                    _getList()
                   ],
                 )));
   }
 
-  getList() {
+  _getList() {
     return Offstage(
       offstage: num.isOdd,
       child: SizedBox(
@@ -105,7 +105,7 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
               return GestureDetector(
                   onTap: () {
                     Get.to(() => WithdrawalPage(
-                        pice: timeList[index]['pice'],
+                        price: timeList[index]['pice'],
                         bankName: timeList[index]['bankname'],
                         time: timeList[index]['time']));
                   },

@@ -38,6 +38,7 @@ class _DetectionDataPageState extends State<DetectionDataPage> {
   //   });
   // }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -90,8 +91,8 @@ class _DetectionDataPageState extends State<DetectionDataPage> {
                         child: img == ''
                             ? Image.asset(Assets.images.addcar.path)
                             : CloudImageNetworkWidget.car(
-                                urls: [img],
-                              ),
+                          urls: [img],
+                        ),
                         // Image.asset(
                         //   img == '' ? Assets.images.addcar.path : img,
                         // ),

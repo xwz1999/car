@@ -46,9 +46,7 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
     super.build(context);
     return Scaffold(
         // appBar: AppBar(
-
         // )
-
         // AppBar(
         //   toolbarHeight: 88.w,
         //   backgroundColor: kForeGroundColor,

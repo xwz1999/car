@@ -194,7 +194,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
                         fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
-                  getIncitation(model)
+                  _getInvitationStatus(model)
                 ],
               ),
               32.hb,
@@ -292,7 +292,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
                         color: const Color(0xFF333333), fontSize: 32.w),
                   ),
                   const Spacer(),
-                  getSubscribe(model)
+                  _getSubscribeStatus(model)
                 ],
               ),
               32.hb,
@@ -361,7 +361,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
   }
 
   ///邀约状态
-  getIncitation(TaskInviteListModel model) {
+  _getInvitationStatus(TaskInviteListModel model) {
     var subscribeTime =
         DateTime.fromMillisecondsSinceEpoch(model.inviteAt * 1000);
     var newTime = DateTime.now();
@@ -383,7 +383,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
   }
 
   ///预约状态
-  getSubscribe(TaskInviteListModel model) {
+  _getSubscribeStatus(TaskInviteListModel model) {
     var subscribeTime =
         DateTime.fromMillisecondsSinceEpoch(model.inviteAt * 1000);
     var newTime = DateTime.now();

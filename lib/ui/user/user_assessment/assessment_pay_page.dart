@@ -71,7 +71,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
         color: const Color.fromRGBO(246, 246, 246, 1),
         child: Column(
           children: [
-            _getPice(),
+            _getPrice(),
             56.hb,
             Container(
               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -96,7 +96,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
                                     child: Image.asset(
                                       payWay[currentValue],
                                       width: 40.w,
-                                      height: 40.w,
+                                      height: 40.h,
                                     ),
                                   ),
                                   20.wb,
@@ -160,7 +160,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
   }
 
 //充值金额
-  _getPice() {
+  _getPrice() {
     return Container(
       padding: EdgeInsets.only(top: 74.w, left: 248.w),
       child: Row(

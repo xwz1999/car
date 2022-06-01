@@ -13,10 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SalesOrderPage extends StatefulWidget {
-  ///1售车订单  2个人寄卖 3租车订单 4叫车订单 5=2车商寄卖
-  const SalesOrderPage({
-    super.key,
-  });
+  ///1售车订单  2个人寄卖 3租车订单 4叫车订单 5车商寄卖
+  final String StatusNum;
+
+  const SalesOrderPage({super.key, required this.StatusNum});
 
   @override
   State<SalesOrderPage> createState() => _SalesOrderPageState();
@@ -25,6 +25,9 @@ class SalesOrderPage extends StatefulWidget {
 class _SalesOrderPageState extends State<SalesOrderPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   late List<String> _dropDownHeaderItemStrings1;
+
+  bool isClick = false;
+  String orderName = '';
   TitleScreenControl screenControl1 = TitleScreenControl();
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [
@@ -34,7 +37,6 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
     ChooseItem(name: '叫车订单'),
     ChooseItem(name: '车商寄卖'),
   ];
-  String title = '售车订单';
 
   //String? get status => CustomerMap.orderStatusByInt[widget.type];
 
@@ -42,7 +44,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   void initState() {
     super.initState();
     _dropDownHeaderItemStrings1 = [
-      '售车订单',
+      widget.StatusNum,
     ];
     listWidget = [
       Container(
@@ -56,6 +58,10 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
           childAspectRatio: 200 / 56,
           callback: (String item, int value) {
             _dropDownHeaderItemStrings1 = [item];
+
+            isClick = true;
+            orderName = item;
+            //print(orderName);
             screenControl1.screenHide();
             setState(() {});
           },
@@ -98,15 +104,15 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                           isSpecial: true,
                         ),
                         screenControl: screenControl1,
-                        child: get()))
+                        child: _get(isClick ? orderName : widget.StatusNum)))
               ],
             ),
           ),
         ));
   }
 
-  get() {
-    switch (_dropDownHeaderItemStrings1.first) {
+  _get(String status) {
+    switch (status) {
       case '售车订单':
         return SalesOrderWidget(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
@@ -432,85 +438,84 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   //                                         text: '万',
   //                                         style: Theme.of(context)
   //                                             .textTheme
-  //                                             .subtitle2),
-  //                                   ])),
-  //                                 ),
-  //                               ],
-  //                             )),
-  //             ],
-  //           )),
-  //     ),
-  //   );
-  // }
-
-  getText(String num, String time, String distance, String conditions) {
-    return Row(
-      children: [
-        //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
-          decoration: BoxDecoration(
-              color: conditions != '交易取消'
-                  ? const Color(0xFF027AFF).withOpacity(0.08)
-                  : const Color(0xFF4F5A74).withOpacity(0.08),
-              borderRadius: BorderRadius.circular(4.w)),
-          child: Text(
-            num,
-            style: TextStyle(
-                fontSize: BaseStyle.fontSize20,
-                color: conditions != '交易取消'
-                    ? const Color(0xFF027AFF)
-                    : const Color(0xFF4F5A74)),
-          ),
-        ),
-        16.wb,
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
-          decoration: BoxDecoration(
-              color: const Color(0xFF4F5A74).withOpacity(0.08),
-              borderRadius: BorderRadius.circular(4.w)),
-          child: Text(
-            time,
-            style: TextStyle(
-                fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
-          ),
-        ),
-        16.wb,
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
-          decoration: BoxDecoration(
-              color: const Color(0xFF4F5A74).withOpacity(0.08),
-              borderRadius: BorderRadius.circular(4.w)),
-          child: Text(
-            distance,
-            style: TextStyle(
-                fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
-          ),
-        )
-        // Padding(padding: EdgeInsets.symmetric(horizontal: 24.w)),
-        // Chip(
-        //   label: Text(num),
-        //   labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
-        //   backgroundColor: const Color(0xFF027AFF).withOpacity(0.08),
-        //   labelStyle: TextStyle(
-        //       fontSize: BaseStyle.fontSize20, color: const Color(0xFF027AFF)),
-        //   shape:
-        //       BeveledRectangleBorder(borderRadius: BorderRadius.circular(4.w)),
-        // ),
-        // ChipTheme(
-        //     data: ChipThemeData(
-        //       backgroundColor: const Color(0xFF4F5A74).withOpacity(0.08),
-        //       labelStyle: TextStyle(
-        //           fontSize: BaseStyle.fontSize20,
-        //           color: const Color(0xFF4F5A74)),
-        //       shape: BeveledRectangleBorder(
-        //           borderRadius: BorderRadius.circular(4.w)),
-        //       labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
-        //     ),
-        //     child: Wrap(
-        //       children: [Chip(label: Text(time)), Chip(label: Text(distance))],
-        //     ))
-      ],
-    );
-  }
+//                                             .subtitle2),
+//                                   ])),
+//                                 ),
+//                               ],
+//                             )),
+//             ],
+//           )),
+//     ),
+//   );
+// }
+// _getText(String num, String time, String distance, String conditions) {
+//   return Row(
+//     children: [
+//       //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
+//       Container(
+//         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
+//         decoration: BoxDecoration(
+//             color: conditions != '交易取消'
+//                 ? const Color(0xFF027AFF).withOpacity(0.08)
+//                 : const Color(0xFF4F5A74).withOpacity(0.08),
+//             borderRadius: BorderRadius.circular(4.w)),
+//         child: Text(
+//           num,
+//           style: TextStyle(
+//               fontSize: BaseStyle.fontSize20,
+//               color: conditions != '交易取消'
+//                   ? const Color(0xFF027AFF)
+//                   : const Color(0xFF4F5A74)),
+//         ),
+//       ),
+//       16.wb,
+//       Container(
+//         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
+//         decoration: BoxDecoration(
+//             color: const Color(0xFF4F5A74).withOpacity(0.08),
+//             borderRadius: BorderRadius.circular(4.w)),
+//         child: Text(
+//           time,
+//           style: TextStyle(
+//               fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
+//         ),
+//       ),
+//       16.wb,
+//       Container(
+//         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
+//         decoration: BoxDecoration(
+//             color: const Color(0xFF4F5A74).withOpacity(0.08),
+//             borderRadius: BorderRadius.circular(4.w)),
+//         child: Text(
+//           distance,
+//           style: TextStyle(
+//               fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
+//         ),
+//       )
+//       // Padding(padding: EdgeInsets.symmetric(horizontal: 24.w)),
+//       // Chip(
+//       //   label: Text(num),
+//       //   labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
+//       //   backgroundColor: const Color(0xFF027AFF).withOpacity(0.08),
+//       //   labelStyle: TextStyle(
+//       //       fontSize: BaseStyle.fontSize20, color: const Color(0xFF027AFF)),
+//       //   shape:
+//       //       BeveledRectangleBorder(borderRadius: BorderRadius.circular(4.w)),
+//       // ),
+//       // ChipTheme(
+//       //     data: ChipThemeData(
+//       //       backgroundColor: const Color(0xFF4F5A74).withOpacity(0.08),
+//       //       labelStyle: TextStyle(
+//       //           fontSize: BaseStyle.fontSize20,
+//       //           color: const Color(0xFF4F5A74)),
+//       //       shape: BeveledRectangleBorder(
+//       //           borderRadius: BorderRadius.circular(4.w)),
+//       //       labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
+//       //     ),
+//       //     child: Wrap(
+//       //       children: [Chip(label: Text(time)), Chip(label: Text(distance))],
+//       //     ))
+//     ],
+//   );
+// }
 }

@@ -34,7 +34,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
 
   @override
   void initState() {
-    print(widget.type);
+    //print(widget.type);
     super.initState();
   }
 

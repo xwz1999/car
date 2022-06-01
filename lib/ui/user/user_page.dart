@@ -126,7 +126,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   //type：1 角色名 2 门店名
-  getCiap(String title, int type) {
+  _getChap(String title, int type) {
     return Offstage(
       offstage: title.trim().isEmpty,
       child: Container(
@@ -345,10 +345,10 @@ class _UserPageState extends State<UserPage> {
                       const Padding(padding: EdgeInsets.only(top: 5)),
                       Row(
                         children: [
-                          getCiap(
+                          _getChap(
                               UserTool.userProvider.userInfo.store.roleName, 1),
                           16.wb,
-                          getCiap(
+                          _getChap(
                               UserTool.userProvider.userInfo.store.storeName, 2)
                         ],
                       )
@@ -432,13 +432,13 @@ class _UserPageState extends State<UserPage> {
         childAspectRatio: 1,
       ),
       itemBuilder: (BuildContext context, int index) {
-        return _kingCoinzItem(
+        return _kingCoinItem(
             _kingCoinUserList[index].name, _kingCoinUserList[index].url);
       },
     );
   }
 
-  _kingCoinzItem(String name, String url) {
+  _kingCoinItem(String name, String url) {
     return GestureDetector(
       onTap: () {
         switch (name) {

@@ -20,7 +20,6 @@ class StaffManagementPage extends StatefulWidget {
   @override
   State<StaffManagementPage> createState() => _StaffManagementPageState();
 }
-
 // ignore: non_constant_identifier_names
 List<StoreallModel> Employees = [];
 // List<String> nameList = [];
@@ -94,7 +93,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             footer: MaterialFooter(),
             controller: _easyRefreshController,
             onRefresh: () async {
-              _refresh();
+             await _refresh();
             },
             child:
                 //Employees.isEmpty?
@@ -133,7 +132,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             //     ],
             //   )
           )),
-          _getButtom(),
+          _getButton(),
           34.hb
         ],
       ),
@@ -231,7 +230,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
         ...model.staffs != null
             ? model.staffs!.mapIndexed((e, index) {
                 return GestureDetector(
-                  onTap: () async {
+                  onTap: () {
                     // print(e.id);
 
                     Get.to(() => EmployeeDetailsPage(
@@ -284,13 +283,13 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                 fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
           24.wb,
-          SizedBox(child: judge == 1 ? getBox() : const SizedBox())
+          SizedBox(child: judge == 1 ? _getBox() : const SizedBox())
         ],
       ),
     );
   }
 
-  getBox() {
+  _getBox() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
       decoration: BoxDecoration(
@@ -304,7 +303,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
     );
   }
 
-  _getButtom() {
+  _getButton() {
     return Row(
       children: [
         Padding(padding: EdgeInsets.only(left: 32.w)),

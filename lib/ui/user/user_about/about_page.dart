@@ -31,7 +31,7 @@ class _AboutPageState extends State<AboutPage> {
         backgroundColor: bodyColor,
         extendBody: true,
         body: Container(
-            height: 350.w,
+            height: 350.h,
             color: Colors.white,
             child: ListView(
               children: ListTile.divideTiles(context: context, tiles: [

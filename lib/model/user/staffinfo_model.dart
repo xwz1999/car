@@ -6,6 +6,7 @@ part 'staffinfo_model.g.dart';
 
 @JsonSerializable()
 class StaffinfoModel extends Equatable {
+  //JsonKey(name)
   final int Id;
   final String Name;
   final int Gender;
@@ -26,7 +27,7 @@ class StaffinfoModel extends Equatable {
   RoleN get roleEm => RoleN.getValue(RoleId);
 
   static StaffinfoModel get init => const StaffinfoModel(
-        Id: 0,
+    Id: 0,
         Name: '',
         Gender: 0,
         Phone: '',
@@ -36,7 +37,7 @@ class StaffinfoModel extends Equatable {
         RoleName: '',
         Commission: '',
         Status: 0,
-        AuditStatus: 0,
+        AuditStatus: 2,
       );
 
   const StaffinfoModel({

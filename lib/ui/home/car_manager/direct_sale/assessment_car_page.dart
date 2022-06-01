@@ -54,10 +54,8 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
             footer: MaterialFooter(),
             onRefresh: () async {
               _page = 1;
-
               var list = await CarFunc.getCarEvaluationList(_page, _size,
                   keyWords: _modelName);
-
               carList.clear();
               carList.addAll(list);
               _onLoad = false;
@@ -117,53 +115,51 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
        },
        child: Container(
          margin: EdgeInsets.only(bottom: 16.w),
-         padding: EdgeInsets.symmetric(vertical: 24.w,horizontal: 32.w),
-         decoration: BoxDecoration(
-           color: Colors.white,
-           borderRadius: BorderRadius.circular(8.w),
-
-
-         ),
-         height: 500.w,
-         child: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: [
-             Expanded(
-               child: Row(
-                 children: [
-                   Text(
-                     model.modelName,
-                     style: TextStyle(
-                         color: BaseStyle.color333333,
-                         fontSize: BaseStyle.fontSize32,
-                         fontWeight: FontWeight.bold
-                     ),
-                     maxLines: 1,
-                     overflow: TextOverflow.ellipsis,
-                   ),
-                 ],
-               ),
-             ),
-             16.hb,
-             getText('车架号',model.vin),
-
-             16.hb,
-             getText('首次上牌',DateUtil.formatDateMs(model.licensingDate.toInt() * 1000,
-                 format: 'yyyy-MM')),
-             16.hb,
-             getText('车牌号',model.licensePlate),
-             16.hb,
-             getText('发动机号',model.engine),
-             16.hb,
-             getText('车身颜色',model.color),
-             16.hb,
-             getText('显表里程','${model.mileage}万公里'),
-             16.hb,
-             getText('系统估计','${model.price}万元',isRed: true),
-
-           ],
-         ),
-       ),
+        padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.w),
+        ),
+        height: 500.w,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Text(
+                    model.modelName,
+                    //style: Theme.of(context),
+                    style: TextStyle(
+                        color: BaseStyle.color333333,
+                        fontSize: BaseStyle.fontSize32,
+                        fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            16.hb,
+            getText('车架号', model.vin),
+            16.hb,
+            getText(
+                '首次上牌',
+                DateUtil.formatDateMs(model.licensingDate.toInt() * 1000,
+                    format: 'yyyy-MM')),
+            16.hb,
+            getText('车牌号', model.licensePlate),
+            16.hb,
+            getText('发动机号', model.engine),
+            16.hb,
+            getText('车身颜色', model.color),
+            16.hb,
+            getText('显表里程', '${model.mileage}万公里'),
+            16.hb,
+            getText('系统估计', '${model.price}万元', isRed: true),
+          ],
+        ),
+      ),
      );
      
      

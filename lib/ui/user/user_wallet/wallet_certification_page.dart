@@ -5,7 +5,6 @@ import 'package:cloud_car/ui/user/user_wallet/withdrawal_record_page.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
-
 //import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
@@ -28,7 +27,6 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
     {'title': '出售车辆', 'time': '12月1日 16:34:09', 'pice': '+190000'},
   ];
 
-  @override
   @override
   void dispose() {
     super.dispose();
@@ -76,7 +74,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
           color: const Color(0xFFF6F6F6),
           child: Column(
             children: [
-              _getWalletPice(),
+              _getWalletPrice(),
               16.hb,
               _balance(balanceList),
               const Spacer(),
@@ -117,7 +115,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
   }
 
 //钱包余额
-  _getWalletPice() {
+  _getWalletPrice() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: Colors.white,

@@ -140,7 +140,7 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
                       : ListView.builder(
                           padding: EdgeInsets.zero,
                           itemBuilder: (context, index) {
-                            return getCar(_ConsignmentList[index]);
+                            return _getCar(_ConsignmentList[index]);
                           },
                           itemCount: _ConsignmentList.length),
             ),
@@ -150,7 +150,7 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
     );
   }
 
-  getCar(ListsModel model) {
+  _getCar(ListsModel model) {
     return Offstage(
         offstage: model.status == 6 || model.status == 7,
         child: Offstage(

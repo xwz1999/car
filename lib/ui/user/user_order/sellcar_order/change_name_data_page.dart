@@ -56,7 +56,7 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
           margin: EdgeInsets.symmetric(horizontal: 32.w),
           child: ListView(
             children: [
-              getText(
+              _getText(
                   '登记证书',
                   GestureDetector(
                       onTap: () async {
@@ -85,7 +85,7 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                         // ),
                       ))),
               //48.hb,
-              getText(
+              _getText(
                   '行驶证',
                   GestureDetector(
                       onTap: () async {
@@ -114,7 +114,7 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                         // ),
                       ))),
               //48.hb,
-              getText(
+              _getText(
                   '发票',
                   GestureDetector(
                       onTap: () async {
@@ -144,7 +144,7 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                       ))),
 
               //48.hb,
-              getText(
+              _getText(
                   '保单',
                   GestureDetector(
                       onTap: () async {
@@ -259,14 +259,14 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
     );
   }
 
-  getTitle(String title) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.subtitle2,
-    );
-  }
+  // _getTitle(String title) {
+  //   return Text(
+  //     title,
+  //     style: Theme.of(context).textTheme.subtitle2,
+  //   );
+  // }
 
-  getText(String title, dynamic name) {
+  _getText(String title, dynamic name) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16.w),
       child: Row(

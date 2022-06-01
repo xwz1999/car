@@ -30,54 +30,54 @@ class _CancellationPageState extends State<CancellationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          backgroundColor: kForeGroundColor, //头部颜色
-          title: Text('注销账号',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
+      appBar: AppBar(
+        leading: const CloudBackButton(
+          isSpecial: true,
         ),
-        backgroundColor: kForeGroundColor, //内容颜色
-        extendBody: true,
-        body: SizedBox(
-          width: 750.w,
-          child: Column(
-            children: [
-              98.hb,
-              _getWarning(),
-              40.hb,
-              Row(
-                children: [
-                  Padding(padding: EdgeInsets.only(left: 50.w)),
-                  _getBody(),
-                  // SizedBox(
-                  //   width: 50.w,
-                  // )
-                ],
-              ),
-              const Spacer(),
-              CloudBottomButton(
-                  text: '我了解风险,下一步',
-                  onTap: () {
-                    Get.to(() => const ValidationPage());
-                  }),
-              32.hb,
-            ],
-          ),
-        )
+        backgroundColor: kForeGroundColor, //头部颜色
+        title: Text('注销账号',
+            style: TextStyle(
+                color: BaseStyle.color111111,
+                fontSize: BaseStyle.fontSize36,
+                fontWeight: FontWeight.bold)),
+        //leading:  Container(width: 10.w, child: const CloudBackButton()),
+      ),
+      backgroundColor: kForeGroundColor,
+      //内容颜色
+      extendBody: true,
+      body: SizedBox(
+        width: 750.w,
+        child: Column(
+          children: [
+            98.hb,
+            _getWarning(),
+            40.hb,
+            Row(
+              children: [
+                Padding(padding: EdgeInsets.only(left: 50.w)),
+                _getBody(),
+                // SizedBox(
+                //   width: 50.w,
+                // )
+              ],
+            ),
+            64.hb,
+            CloudBottomButton(
+                text: '我了解风险,下一步',
+                onTap: () {
+                  Get.to(() => const ValidationPage());
+                }),
+          ],
+        ),
+      ),
 
-        // Column(
-        //   color: Colors.red,
+      // Column(
+      //   color: Colors.red,
 
-        //   children[],
+      //   children[],
 
-        // ))
-        );
+      // ))
+    );
   }
 
 //

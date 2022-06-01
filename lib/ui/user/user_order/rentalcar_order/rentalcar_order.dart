@@ -102,7 +102,7 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
                               ],
                             ),
                             40.hb,
-                            getList(),
+                            _getList(),
                           ],
                         )),
                   ),
@@ -193,7 +193,7 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
   }
 
 //车辆信息下拉
-  getList() {
+  _getList() {
     return DropDown(
       title: getTitle('订单总额'),
       text: SizedBox(

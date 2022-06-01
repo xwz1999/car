@@ -45,11 +45,7 @@ class _ProductManualsState extends State<ProductManuals> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('产品手册',
-            style: TextStyle(
-                color: BaseStyle.color111111,
-                fontSize: BaseStyle.fontSize36,
-                fontWeight: FontWeight.bold)),
+        title: Text('产品手册', style: Theme.of(context).textTheme.headline4),
 //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: bodyColor,
@@ -58,7 +54,7 @@ class _ProductManualsState extends State<ProductManuals> {
           ///搜索框
           Container(
             width: 750.w,
-            height: 96.w,
+            height: 96.h,
             color: Colors.white,
             child: _search(),
           ),
@@ -96,7 +92,7 @@ class _ProductManualsState extends State<ProductManuals> {
               borderRadius: BorderRadius.circular(36.w),
               border: Border.all(width: 2.w, color: const Color(0xFFE7E7E7))),
           width: 606.w,
-          height: 72.w,
+          height: 72.h,
           child: TextField(
             keyboardType: TextInputType.text,
             // onEditingComplete: () {
@@ -148,8 +144,7 @@ class _ProductManualsState extends State<ProductManuals> {
         12.wb,
         GestureDetector(
           onTap: () {},
-          child: Text('取消',
-              style: TextStyle(color: BaseStyle.color333333, fontSize: 28.sp)),
+          child: Text('取消', style: Theme.of(context).textTheme.bodyText2),
         ),
         20.wb,
       ],
@@ -157,55 +152,74 @@ class _ProductManualsState extends State<ProductManuals> {
   }
 
   _getList(HandbookModel model) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          40.hb,
-          _getTitle(model.name),
-          24.hb,
-          ...model.items != null
-              ? model.items!.mapIndexed((e, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(() => HandbookInfoPage(
-                              //manualsBack: (int id) {},
-                              itemId: e.id,
-                              name: e.name,
-                            ));
-                      },
-                      child: _getText(
-                          e.name,
-                          DateUtil.formatDateMs(e.updatedAt.toInt() * 1000,
-                              format: 'yyyy-MM-dd')));
-                }).toList()
-              : []
-          //ListView.builder(itemBuilder: (context, index) {})
-          //_getText('销售更多服务', '2021-12-01')
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        40.hb,
+        _getTitle(model.name),
+        24.hb,
+        ...model.items != null
+            ? model.items!.mapIndexed((e, index) {
+                return GestureDetector(
+                    onTap: () {
+                      Get.to(() => HandbookInfoPage(
+                            //manualsBack: (int id) {},
+                            itemId: e.id,
+                            name: e.name,
+                          ));
+                    },
+                    child: _getText(
+                        e.name,
+                        DateUtil.formatDateMs(e.updatedAt.toInt() * 1000,
+                            format: 'yyyy-MM-dd')));
+              }).toList()
+            : []
+        //ListView.builder(itemBuilder: (context, index) {})
+        //_getText('销售更多服务', '2021-12-01')
+      ],
     );
   }
 
   _getText(String text, String time) {
     return Container(
-      width: 750.w,
-      height: 92.w,
-      color: Colors.white,
-      child: ListTile(
-        title: Text(
-          text,
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-        trailing: Text(
-          time,
-          style: Theme.of(context)
-              .textTheme
-              .subtitle2
-              ?.copyWith(color: BaseStyle.color999999),
-        ),
-      ),
-    );
+        width: 750.w,
+        height: 92.h,
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 32.w),
+        child: Row(
+          children: [
+            Text(
+              text,
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
+            const Spacer(),
+            Text(
+              time,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  ?.copyWith(color: BaseStyle.color999999),
+            )
+          ],
+        )
+
+        // ListTile(
+        // title: Text(
+        // text,
+        // style: Theme
+        //     .of(context)
+        //     .textTheme
+        //     .subtitle2,
+        //   ),
+        //   trailing: Text(
+        //     time,
+        //     style: Theme.of(context)
+        //         .textTheme
+        //         .subtitle2
+        //         ?.copyWith(color: BaseStyle.color999999),
+        //   ),
+        // ),
+        );
   }
 
   _getTitle(String title) {

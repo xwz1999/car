@@ -5,6 +5,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class EmployeeDetailsPage extends StatefulWidget {
   final int staffId;
@@ -16,26 +17,36 @@ class EmployeeDetailsPage extends StatefulWidget {
 }
 
 //bool _getSure = false;
-bool audit = true;
-
-StaffinfoModel staffInfo = StaffinfoModel.init;
-
 //List<RoleallModel> roleList = [];
 
 class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
+  bool audit = true;
+
+  StaffinfoModel staffInfo = StaffinfoModel.init;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 0), () {
-      _refresh();
+
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      staffInfo = (await BusinessFunc.getStaffInfo(widget.staffId))!;
+      setState(() {});
+      // _refresh();
       //setState(() {});
     });
   }
 
-  _refresh() async {
-    staffInfo = (await BusinessFunc.getStaffInfo(widget.staffId))!;
-    setState(() {});
+  @override
+  void dispose() {
+    _easyRefreshController.dispose();
+    super.dispose();
   }
+
+  // _refresh() async {
+  //   staffInfo = (await BusinessFunc.getStaffInfo(widget.staffId))!;
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +63,13 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 fontWeight: FontWeight.bold)),
       ),
       backgroundColor: bodyColor,
-      body: ListView(children: [_getUserinfo(), _getPermissions()]), //
+      body: EasyRefresh(
+        firstRefresh: true,
+        header: MaterialHeader(),
+        controller: _easyRefreshController,
+        onRefresh: () async {},
+        child: ListView(children: [_getUserinfo(), _getPermissions()]),
+      ), //
     );
   }
 
@@ -122,7 +139,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 72.hb,
                 Offstage(
                   offstage:
-                      staffInfo.AuditStatus == 1 || staffInfo.AuditStatus == 2,
+                  staffInfo.AuditStatus == 1 || staffInfo.AuditStatus == 2,
                   child: Column(
                     children: [
                       Text(
@@ -151,7 +168,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
             child: Row(
               children: [
                 Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
-                _getBotton(Assets.icons.delete.path, '删除', () {
+                _getButton(Assets.icons.delete.path, '删除', () {
                   setState(() {
                     Alert.show(
                         context,
@@ -190,7 +207,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 }),
                 200.wb,
                 staffInfo.AuditStatus == 2
-                    ? _getBotton(Assets.icons.editor1.path, '编辑', () async {
+                    ? _getButton(Assets.icons.editor1.path, '编辑', () async {
                         await Get.to(() => EditorEmployeePage(
                               roleId: staffInfo.RoleId,
                               storeId: staffInfo.StoreId,
@@ -207,7 +224,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                             ));
                         //print(audit);
                       })
-                    : _getBotton(
+                    : _getButton(
                         Assets.icons.editor1.path,
                         '重新编辑',
                         () => setState(() {
@@ -219,46 +236,46 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                                     content: const Text('确认重新提交员工信息并培训吗?'),
                                     items: const ['取消'],
                                     deleteItem: '确定',
-                                    //监听器
-                                    listener: (index) {
-                                      Alert.dismiss(context);
-                                      //_getSure = false;
-                                      setState(() {
-                                        //_getSure;
-                                      });
-                                      //Value = false;
-                                      //(Value);
-                                    },
-                                    deleteListener: () async {
-                                      Alert.dismiss(context);
-                                      var res = await BusinessFunc.getStaffadd(
-                                          staffInfo.Name,
-                                          staffInfo.Gender,
-                                          staffInfo.Phone,
-                                          staffInfo.StoreId,
-                                          staffInfo.RoleId,
-                                          staffInfo.RoleId == 1 ||
-                                                  staffInfo.RoleId == 3
-                                              ? '0'
-                                              : staffInfo.Commission);
-                                      if (res) {
-                                        Navigator.pop(context);
-                                      }
-                                      // var res =
-                                      //     await BusinessFunc.getStaffDelete(
-                                      //         widget.staffId);
-                                      // if (res) {
-                                      //   Navigator.pop(context);
-                                      // }
-                                      setState(() {
-                                        //_getSure;
-                                      });
-                                      //print(_getSure);
-                                      //Value = true;
-                                      //(Value);
-                                    },
-                                  ));
-                            }))
+                                //监听器
+                                listener: (index) {
+                                  Alert.dismiss(context);
+                                  //_getSure = false;
+                                  setState(() {
+                                    //_getSure;
+                                  });
+                                  //Value = false;
+                                  //(Value);
+                                },
+                                deleteListener: () async {
+                                  Alert.dismiss(context);
+                                  var res = await BusinessFunc.getStaffadd(
+                                      staffInfo.Name,
+                                      staffInfo.Gender,
+                                      staffInfo.Phone,
+                                      staffInfo.StoreId,
+                                      staffInfo.RoleId,
+                                      staffInfo.RoleId == 1 ||
+                                          staffInfo.RoleId == 3
+                                          ? '0'
+                                          : staffInfo.Commission);
+                                  if (res) {
+                                    Navigator.pop(context);
+                                  }
+                                  // var res =
+                                  //     await BusinessFunc.getStaffDelete(
+                                  //         widget.staffId);
+                                  // if (res) {
+                                  //   Navigator.pop(context);
+                                  // }
+                                  setState(() {
+                                    //_getSure;
+                                  });
+                                  //print(_getSure);
+                                  //Value = true;
+                                  //(Value);
+                                },
+                              ));
+                        }))
               ],
             ),
           )
@@ -267,7 +284,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
     );
   }
 
-  getAudit() {
+  _getAudit() {
     return Offstage(
       offstage: staffInfo.AuditStatus == 2,
       child: Image.asset(
@@ -281,7 +298,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   }
 
 //按钮
-  _getBotton(String url, String text, Function() onTap) {
+  _getButton(String url, String text, Function() onTap) {
     return Offstage(
       offstage: !audit,
       child: GestureDetector(
@@ -307,8 +324,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
       ),
     );
   }
-
-//
+  
 //   describe() {
 //     switch (widget.permissions) {
 //       case '销售员':
@@ -377,7 +393,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Padding(
               padding: EdgeInsets.only(left: 32.w),
               child: Text(
@@ -398,7 +414,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
             ///staffinfo.Storeid
           ]),
         ),
-        Positioned(left: 534.w, top: 12.w, child: getAudit())
+        Positioned(left: 534.w, top: 12.w, child: _getAudit())
       ],
     );
   }

@@ -54,7 +54,7 @@ class _ContractPayPageState extends State<ContractPayPage> {
             children: [
               //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
               // Text('data')
-              _getPice(),
+              _getPrice(),
               56.hb,
               _getPay(),
               const Spacer(),
@@ -95,7 +95,7 @@ class _ContractPayPageState extends State<ContractPayPage> {
   }
 
 //充值金额
-  _getPice() {
+  _getPrice() {
     return Container(
       padding: EdgeInsets.only(top: 74.w, left: 248.w),
       child: Row(

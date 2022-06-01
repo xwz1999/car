@@ -16,7 +16,6 @@ class CarDetailItem extends StatelessWidget {
       color: Colors.white,
       child: ListView(
         shrinkWrap: true,
-
         padding: EdgeInsets.only(left: 32.w,right: 32.w),
         children: [
           48.hb,

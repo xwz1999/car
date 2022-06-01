@@ -57,9 +57,9 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
                     direction: false,
                     HW: 251,
                     texts: [
-                      text('下单'),
-                      text('交车'),
-                      text('还车'),
+                      _text('下单'),
+                      _text('交车'),
+                      _text('还车'),
                     ],
                   ),
                 ),
@@ -82,7 +82,7 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(left: 32.w),
-                              child: getTitle('车辆信息'),
+                              child: _getTitle('车辆信息'),
                             ),
                             24.hb,
                             Row(
@@ -103,14 +103,14 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
                                               fontSize: BaseStyle.fontSize28,
                                               color: BaseStyle.color111111)),
                                       32.hb,
-                                      getCaip('自动2.0T', '国VI', '五座')
+                                      _getChip('自动2.0T', '国VI', '五座')
                                     ],
                                   ),
                                 )
                               ],
                             ),
                             40.hb,
-                            getList(),
+                            _getList(),
                           ],
                         )),
                   ),
@@ -127,7 +127,7 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: 0.w),
-                        child: getTitle('订单信息'),
+                        child: _getTitle('订单信息'),
                       ),
                       16.hb,
                       _getText('客户姓名', '莉丝'),
@@ -155,7 +155,7 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: 0.w),
-                        child: getTitle('支付信息'),
+                        child: _getTitle('支付信息'),
                       ),
                       16.hb,
                       _getText('支付方式', '支付宝'),
@@ -176,12 +176,12 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: 0.w),
-                        child: getTitle('交车凭证'),
+                        child: _getTitle('交车凭证'),
                       ),
                       16.hb,
-                      getPicture('押金支付凭证', Assets.images.carBanner.path),
+                      _getPicture('押金支付凭证', Assets.images.carBanner.path),
                       16.hb,
-                      getPicture('人车合影', Assets.images.carBanner.path),
+                      _getPicture('人车合影', Assets.images.carBanner.path),
                       16.hb,
                       _getText('上传时间', '2022-01-03 11:00')
                     ],
@@ -226,7 +226,7 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
         ));
   }
 
-  getPicture(String title, String url) {
+  _getPicture(String title, String url) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -254,9 +254,9 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
   }
 
   //车辆信息下拉
-  getList() {
+  _getList() {
     return DropDown(
-      title: getTitle('订单总额'),
+      title: _getTitle('订单总额'),
       text: SizedBox(
           child: Text.rich(TextSpan(children: [
         TextSpan(
@@ -295,7 +295,7 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
   }
 
 //标题
-  getTitle(String title) {
+  _getTitle(String title) {
     return Text(
       title,
       style: Theme.of(context)
@@ -333,7 +333,7 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
   }
 
 //标签
-  getCaip(String num, String time, String distance) {
+  _getChip(String num, String time, String distance) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
@@ -408,7 +408,7 @@ class _AlsoCarOrderPageState extends State<AlsoCarOrderPage> {
     );
   }
 
-  text(String text) {
+  _text(String text) {
     return Text(
       text,
       style: TextStyle(

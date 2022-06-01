@@ -51,7 +51,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
               32.hb,
               _getText(),
               72.hb,
-              _getButtom(),
+              _getButton(),
             ],
           ),
         ));
@@ -85,7 +85,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
   }
 
 //按钮
-  _getButtom() {
+  _getButton() {
     return Container(
       //padding: EdgeInsets.symmetric(horizontal: 76.w),
       width: 600.w,

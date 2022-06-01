@@ -97,13 +97,13 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
       body: Column(
         children: [
           40.hb,
-          getTitle('基本信息'),
+          _getTitle('基本信息'),
           24.hb,
-          getInformation(),
+          _getInformation(),
           40.hb,
-          getTitle('权限分配'),
+          _getTitle('权限分配'),
           24.hb,
-          getPermissions(),
+          _getPermissions(),
           88.hb,
           CloudBottomButton(
             onTap: () async {
@@ -116,9 +116,10 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                   commissionText);
               if (res) {
                 BotToast.showText(text: '提交成功');
-                //Navigator.pop(context);
-                Get.back();
+
+                //Get.back(result: true);
               }
+
               //print("输出返回值：$zhi");
             },
             text: '提交',
@@ -129,7 +130,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
   }
 
 //文字样式
-  getTitle(String title) {
+  _getTitle(String title) {
     return Container(
       padding: EdgeInsets.only(right: 590.w),
       child: Text(
@@ -143,7 +144,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
   }
 
 //基本信息  ///姓名性别手机号组织架构
-  getInformation() {
+  _getInformation() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -191,7 +192,6 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
           //   ],
           // ),
           32.hb,
-
           TextEditItemWidget(
             title: '性别 ',
             endIcon: true,
@@ -360,7 +360,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
   }
 
 //权限分配   ///权限配置 销售提成
-  getPermissions() {
+  _getPermissions() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -408,14 +408,11 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
       ]),
     );
   }
-
 // _refresh() async {
 //   res = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
 //       phoneText, storeid, roleId, commissionText);
 // }
-
 }
-
 // class Editor {
 //   int? staffId;
 //   String? name;

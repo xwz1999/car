@@ -175,7 +175,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                       : ListView.builder(
                           padding: EdgeInsets.zero,
                           itemBuilder: (context, index) {
-                            return getCar(callCarList[index]);
+                            return _getCar(callCarList[index]);
                           },
                           itemCount: callCarList.length),
             )),
@@ -183,7 +183,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
         ));
   }
 
-  getCar(CallcarlistModel model) {
+  _getCar(CallcarlistModel model) {
     late bool bl = false;
     return Offstage(
         offstage: text == '全部' ? false : model.statusEnum.str != text,
@@ -238,7 +238,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                               32.hb,
                               Padding(
                                 padding: EdgeInsets.only(right: 16.w),
-                                child: getText(
+                                child: _getText(
                                     '过户${model.transfer}次',
                                     DateUtil.formatDateMs(
                                         model.licensingDate.toInt() * 1000,
@@ -308,7 +308,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                 ))));
   }
 
-  getText(String num, String time, String distance, String conditions) {
+  _getText(String num, String time, String distance, String conditions) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),

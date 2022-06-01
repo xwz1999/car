@@ -40,7 +40,7 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
       body: ListView(
         children: [
           _getCarInformation(),
-          getCarBox(Column(
+          _getCarBox(Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -125,10 +125,10 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
           )),
           widget.status == 1
               ? const SizedBox()
-              : getCarBox(Column(
+              : _getCarBox(Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getTitle('支付信息'),
+                    _getTitle('支付信息'),
                     32.wb,
                     _getText('支付方式', '支付宝'),
                     16.hb,
@@ -140,7 +140,7 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
     );
   }
 
-  getCarBox(Widget widget) {
+  _getCarBox(Widget widget) {
     return Container(
       padding: EdgeInsets.all(16.w),
       margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
@@ -151,11 +151,11 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
   }
 
   _getCarInformation() {
-    return getCarBox(Column(
+    return _getCarBox(Column(
       children: [
         Row(
           children: [
-            getTitle('叫车车辆信息'),
+            _getTitle('叫车车辆信息'),
             350.wb,
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
@@ -200,18 +200,18 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
                   ),
                 ),
                 32.hb,
-                getChip('过户0次', '2020年10月', '20.43万公里'),
+                _getChip('过户0次', '2020年10月', '20.43万公里'),
               ],
             )
           ],
         ),
         24.hb,
-        getList(),
+        _getList(),
       ],
     ));
   }
 
-  getChip(String num, String time, String distance) {
+  _getChip(String num, String time, String distance) {
     return Row(
       children: [
         Container(
@@ -259,9 +259,9 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
   }
 
   //车辆信息下拉
-  getList() {
+  _getList() {
     return DropDown(
-      title: getTitle('订单总价'),
+      title: _getTitle('订单总价'),
       text: SizedBox(
           child: Text.rich(TextSpan(children: [
         TextSpan(
@@ -331,7 +331,7 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
   }
 
 //标题
-  getTitle(String title) {
+  _getTitle(String title) {
     return Row(
       children: [
         Text(

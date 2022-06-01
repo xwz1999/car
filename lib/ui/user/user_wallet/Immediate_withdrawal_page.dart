@@ -24,7 +24,7 @@ ConfigurationModel bankCard =
     [ConfigurationModel(subtitle: '', title: '')] as ConfigurationModel;
 final List<int> _selectIndex = [];
 final List<ConfigurationModel> _chooseModels = [];
-// List moddels = [
+// List models = [
 //   {
 //     'icon': Assets.icons.agricultural.path,
 //     'title': '中国农业银行(1278)',
