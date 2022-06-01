@@ -1,3 +1,4 @@
+import 'package:cloud_car/ui/home/search_result_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/hive_store.dart';
 import 'package:cloud_car/utils/text_utils.dart';
@@ -101,6 +102,8 @@ class _SearchPageState extends State<SearchPage> {
                 remember();
                 saveSearchListToSharedPreferences(_searchHistory);
 
+                Get.to(()=>SearchResultPage(keyWords: _searchText,));
+
                 setState(() {});
               },
               style: TextStyle(
@@ -150,6 +153,7 @@ class _SearchPageState extends State<SearchPage> {
               _searchText = _searchText.trimRight();
               remember();
               saveSearchListToSharedPreferences(_searchHistory);
+              Get.to(()=>SearchResultPage(keyWords: _searchText,));
 
               setState(() {});
             },
@@ -250,7 +254,7 @@ class _SearchPageState extends State<SearchPage> {
 
   ///获取搜索记录
   getSearchListFromSharedPreferences() async {
-    _searchHistory = HiveStore.appBox!.get("userSearhHistory") ?? [];
+    _searchHistory = HiveStore.appBox!.get("userSearhHistory}") ?? [];
     if (_searchHistory.isEmpty) {
       _searchHistory = [];
     }

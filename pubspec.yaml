@@ -91,6 +91,8 @@ dependencies:
   path_provider: ^2.0.9
   #工具类
   common_utils: ^2.1.0
+  #日历组件
+  table_calendar: ^3.0.6
 
 
 dev_dependencies:

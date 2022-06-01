@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/app_theme.dart';
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
@@ -327,10 +328,11 @@ class _PushCarPageState extends State<PushCarPage> {
           _function(
             '首次上牌',
             () async {
-              _firstDate = await CarDatePicker.monthPicker(DateTime.now());
-              _publishCarInfo.licensingDate = _firstDate;
-              FocusManager.instance.primaryFocus?.unfocus();
-              setState(() {});
+              await CarDatePicker.calenderPicker(DateTime(2000),DateTime.now());
+              // _firstDate = await CarDatePicker.monthPicker(DateTime.now());
+              // _publishCarInfo.licensingDate = _firstDate;
+              // FocusManager.instance.primaryFocus?.unfocus();
+              // setState(() {});
             },
             _publishCarInfo.licensingDateStr,
             '选择首次上牌时间',
