@@ -77,23 +77,21 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: Stack(
-          children: [
-            ListView(children: [
-              16.hb,
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 32.w),
-                padding: EdgeInsets.only(top: 32.w),
-                height: 120.w,
-                color: Colors.white,
-                child: ProgressBar(
-                  length: 6,
-                  num: widget.statusNumber.progressNum,
-                  direction: false,
-                  cancel: widget.statusNumber.num != 0,
-                  HW: 96,
-                  texts: [
-                    _text('预定'),
+        body: ListView(children: [
+          16.hb,
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 32.w),
+            padding: EdgeInsets.only(top: 32.w),
+            height: 120.w,
+            color: Colors.white,
+            child: ProgressBar(
+              length: 6,
+              num: widget.statusNumber.progressNum,
+              direction: false,
+              cancel: widget.statusNumber.num != 0,
+              HW: 96,
+              texts: [
+                _text('预定'),
                     _text('签订'),
                     _text('上架'),
                     widget.statusNumber.num == 0 ? _text('交易取消') : _text('出售'),
@@ -243,26 +241,28 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 0.w),
-                            child: _getTitle('合同信息'),
-                          ),
-                          36.hb,
-                          _getText('合同编号', _individualList.contractSn),
-                          36.hb,
-                          _getText(
-                            '签订时间',
-                            DateUtil.formatDateMs(
-                                _individualList.contractSignAt.toInt() * 1000,
-                                format: DateFormats.full),
-                          )
-                        ],
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.w),
+                        child: _getTitle('合同信息'),
                       ),
-                    ),
-              16.hb,
-              _getWidget()
-            ]),
-            widget.statusNumber.num == 2 ||
+                      36.hb,
+                      _getText('合同编号', _individualList.contractSn),
+                      36.hb,
+                      _getText(
+                        '签订时间',
+                        DateUtil.formatDateMs(
+                            _individualList.contractSignAt.toInt() * 1000,
+                            format: DateFormats.full),
+                      )
+                    ],
+                  ),
+                ),
+          16.hb,
+          _getWidget()
+        ]),
+        bottomNavigationBar: SizedBox(
+            height: 100.w,
+            child: widget.statusNumber.num == 2 ||
                     (widget.statusNumber.num == 3 && widget.auditStatus == 3)
                 ? Positioned(
                     left: 0,
@@ -302,9 +302,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                           ),
                         )),
                   )
-                : const SizedBox()
-          ],
-        ));
+                : const SizedBox()));
   }
 
   _getWidget() {

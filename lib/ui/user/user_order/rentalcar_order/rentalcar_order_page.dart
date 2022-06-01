@@ -32,19 +32,17 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: Stack(
+        body: ListView(
           children: [
-            ListView(
-              children: [
-                16.hb,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32.w),
-                  padding: EdgeInsets.only(top: 32.w),
-                  height: 120.w,
-                  color: Colors.white,
-                  //padding: e,
-                  child: ProgressBar(
-                    length: 3,
+            16.hb,
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 32.w),
+              padding: EdgeInsets.only(top: 32.w),
+              height: 120.w,
+              color: Colors.white,
+              //padding: e,
+              child: ProgressBar(
+                length: 3,
                     num: 1,
                     direction: false,
                     HW: 250,
@@ -150,46 +148,41 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                       Padding(
                         padding: EdgeInsets.only(left: 0.w),
                         child: getTitle('支付信息'),
-                      ),
-                      16.hb,
-                      _getText('支付方式', '支付宝'),
-                      16.hb,
-                      _getText('支付时间', '2022-01-03 11:00')
-                    ],
                   ),
-                ),
-              ],
+                  16.hb,
+                  _getText('支付方式', '支付宝'),
+                  16.hb,
+                  _getText('支付时间', '2022-01-03 11:00')
+                ],
+              ),
             ),
-            16.hb,
-            Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                    width: double.infinity,
-                    color: kForeGroundColor,
-                    padding: EdgeInsets.only(
-                        top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(() => const RentaicarOrderDataPage());
-                      },
-                      child: Container(
-                          width: 168.w,
-                          height: 68.w,
-                          padding: EdgeInsets.only(left: 38.w, top: 14.w),
-                          decoration: BoxDecoration(
-                              color: const Color(0xFF027AFF),
-                              borderRadius: BorderRadius.circular(8.w)),
-                          child: Text(
-                            '我已交车',
-                            style: TextStyle(
-                                color: kForeGroundColor,
-                                fontSize: BaseStyle.fontSize28),
-                          )),
-                    )))
           ],
-        ));
+        ),
+        bottomNavigationBar: SizedBox(
+            height: 128.w,
+            child: Container(
+                width: double.infinity,
+                color: kForeGroundColor,
+                padding: EdgeInsets.only(
+                    top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => const RentaicarOrderDataPage());
+                  },
+                  child: Container(
+                      width: 168.w,
+                      height: 68.w,
+                      padding: EdgeInsets.only(left: 38.w, top: 14.w),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF027AFF),
+                          borderRadius: BorderRadius.circular(8.w)),
+                      child: Text(
+                        '我已交车',
+                        style: TextStyle(
+                            color: kForeGroundColor,
+                            fontSize: BaseStyle.fontSize28),
+                      )),
+                ))));
   }
 
 //车辆信息下拉

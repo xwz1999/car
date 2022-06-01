@@ -68,19 +68,17 @@ class _ReservationPageState extends State<ReservationPage> {
                   fontWeight: FontWeight.bold)),
         ),
         backgroundColor: bodyColor,
-        body: Stack(
+        body: ListView(
           children: [
-            ListView(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                      left: 32.w, right: 32.w, top: 16.w, bottom: 8.w),
-                  padding: EdgeInsets.only(top: 32.w),
-                  height: 120.w,
-                  color: Colors.white,
-                  child: ProgressBar(
-                    length: 6,
-                    num: widget.status.progressNum,
+            Container(
+              margin: EdgeInsets.only(
+                  left: 32.w, right: 32.w, top: 16.w, bottom: 8.w),
+              padding: EdgeInsets.only(top: 32.w),
+              height: 120.w,
+              color: Colors.white,
+              child: ProgressBar(
+                length: 6,
+                num: widget.status.progressNum,
                     direction: false,
                     cancel: widget.status.num != 0,
                     HW: 96,
@@ -137,82 +135,84 @@ class _ReservationPageState extends State<ReservationPage> {
                                 child: Column(
                                   children: [
                                     Text(_consignmentInfoList.car.modelName,
-                                        style: TextStyle(
-                                            fontSize: BaseStyle.fontSize28,
-                                            color: BaseStyle.color111111)),
-                                    26.hb,
-                                    _getChip(
-                                      '过户${_consignmentInfoList.car.transfer}次',
-                                      DateUtil.formatDateMs(
-                                          _consignmentInfoList.car.licensingDate
-                                                  .toInt() *
-                                              1000,
-                                          format: 'yyyy年 '),
-                                      '${_consignmentInfoList.car.mileage}万公里',
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          40.hb,
-                          _getList(),
-                        ]),
-                  ),
-                ),
-
-                ///合同信息
-                _getContract(widget.status.num),
-
-                ///支付信息
-                Offstage(
-                  offstage: widget.status.num == 1,
-                  child: _getPay(widget.status.num),
-                ),
-
-                ///车辆检测报告
-                Offstage(
-                  offstage: widget.status.num == 1 ||
-                      widget.status.num == 3 ||
-                      widget.status.num == 10,
-                  child: _getReport(),
-                ),
-                widget.status.num == 0
-                    ? _getContainer(
-                        ///订单取消
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 0.w),
-                              child: _getTitle('订单取消信息'),
+                                    style: TextStyle(
+                                        fontSize: BaseStyle.fontSize28,
+                                        color: BaseStyle.color111111)),
+                                26.hb,
+                                _getChip(
+                                  '过户${_consignmentInfoList.car.transfer}次',
+                                  DateUtil.formatDateMs(
+                                      _consignmentInfoList.car.licensingDate
+                                              .toInt() *
+                                          1000,
+                                      format: 'yyyy年 '),
+                                  '${_consignmentInfoList.car.mileage}万公里',
+                                )
+                              ],
                             ),
-                            36.hb,
-                            _getText('取消人员', '云云问车平台', BaseStyle.color333333),
-                            36.hb,
-                            _getText(
-                                '取消时间', '111112112122', BaseStyle.color333333)
-                          ],
-                        ),
-                      )
-                    : const SizedBox(),
-
-                ///车辆检测报告2
-                Offstage(
-                  offstage: !(widget.status.num == 40 ||
-                      widget.status.num == 41 ||
-                      widget.status.num == 50),
-                  child: _getReport2(),
-                ),
-              ],
+                          )
+                        ],
+                      ),
+                      40.hb,
+                      _getList(),
+                    ]),
+              ),
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: _getPayPass(),
-            )
+
+            ///合同信息
+            _getContract(widget.status.num),
+
+            ///支付信息
+            Offstage(
+              offstage: widget.status.num == 1,
+              child: _getPay(),
+            ),
+
+            ///车辆检测报告
+            Offstage(
+              offstage: widget.status.num == 1 ||
+                  widget.status.num == 3 ||
+                  widget.status.num == 10,
+              child: _getReport(),
+            ),
+            widget.status.num == 0
+                ? _getContainer(
+                    ///订单取消
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 0.w),
+                          child: _getTitle('订单取消信息'),
+                        ),
+                        36.hb,
+                        _getText('取消人员', '云云问车平台', BaseStyle.color333333),
+                        36.hb,
+                        _getText('取消时间', '111112112122', BaseStyle.color333333)
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
+
+            ///车辆检测报告2
+            Offstage(
+              offstage: !(widget.status.num == 40 ||
+                  widget.status.num == 41 ||
+                  widget.status.num == 50),
+              child: _getReport2(),
+            ),
           ],
+        ),
+        // Positioned(
+        //   left: 0,
+        //   right: 0,
+        //   bottom: 0,
+        //   child: _getPayPass(),
+        // )
+
+        bottomNavigationBar: SizedBox(
+          height: 128.w,
+          child: _getPayPass(),
         ));
   }
 
@@ -244,7 +244,7 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
 //支付信息
-  _getPay(int number) {
+  _getPay() {
     return _getContainer(
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -434,7 +434,7 @@ class _ReservationPageState extends State<ReservationPage> {
         ),
         SizedBox(
           width: 686.w,
-        )
+        ),
       ],
     ));
   }

@@ -40,24 +40,22 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: Stack(
+        body: ListView(
           children: [
-            ListView(
+            _getCarInformation(),
+            _getCarBox(Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _getCarInformation(),
-                _getCarBox(Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                _getTitle('订单信息'),
+                32.hb,
+                _getText('客户姓名', '**'),
+                16.hb,
+                _getText('联系方式', '189****5432'),
+                16.hb,
+                Row(
                   children: [
-                    _getTitle('订单信息'),
-                    32.hb,
-                    _getText('客户姓名', '**'),
-                    16.hb,
-                    _getText('联系方式', '189****5432'),
-                    16.hb,
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 120.w,
+                    SizedBox(
+                      width: 120.w,
                           child: Text(
                             '绑定销售',
                             style: TextStyle(
@@ -133,53 +131,48 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
                     _getText('上门时间', '2022-01-04 12:00'),
                   ],
                 )),
-                widget.status.num == 1
-                    ? const SizedBox()
-                    : _getCarBox(Column(
-                        children: [
-                          _getTitle('支付信息'),
-                          32.wb,
-                          _getText('支付方式', '支付宝'),
-                          16.hb,
-                          _getText('支付时间', '2022-01-04 12:00'),
-                        ],
-                      )),
-              ],
-            ),
-            widget.status.num == 2
-                ? Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                        width: double.infinity,
-                        color: kForeGroundColor,
-                        padding: EdgeInsets.only(
-                            top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
-                        child: GestureDetector(
-                          onTap: () {
-                            BotToast.showText(text: '订单完成');
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 0.w),
-                            child: Container(
-                                padding: EdgeInsets.only(
-                                    left: 32.w, top: 16.w, bottom: 16.w),
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF027AFF),
-                                    borderRadius: BorderRadius.circular(8.w)),
-                                child: Text(
-                                  '车已上门',
-                                  style: TextStyle(
-                                      color: kForeGroundColor,
-                                      fontSize: BaseStyle.fontSize28),
-                                )),
-                          ),
-                        )),
-                  )
-                : const SizedBox()
+            widget.status.num == 1
+                ? const SizedBox()
+                : _getCarBox(Column(
+                    children: [
+                      _getTitle('支付信息'),
+                      32.wb,
+                      _getText('支付方式', '支付宝'),
+                      16.hb,
+                      _getText('支付时间', '2022-01-04 12:00'),
+                    ],
+                  )),
           ],
-        ));
+        ),
+        bottomNavigationBar: SizedBox(
+            height: 100.w,
+            child: widget.status.num == 2
+                ? Container(
+                    width: double.infinity,
+                    color: kForeGroundColor,
+                    padding: EdgeInsets.only(
+                        top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+                    child: GestureDetector(
+                      onTap: () {
+                        BotToast.showText(text: '订单完成');
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 0.w),
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                left: 32.w, top: 16.w, bottom: 16.w),
+                            decoration: BoxDecoration(
+                                color: const Color(0xFF027AFF),
+                                borderRadius: BorderRadius.circular(8.w)),
+                            child: Text(
+                              '车已上门',
+                              style: TextStyle(
+                                  color: kForeGroundColor,
+                                  fontSize: BaseStyle.fontSize28),
+                            )),
+                      ),
+                    ))
+                : const SizedBox()));
   }
 
   _getCarBox(Widget widget) {

@@ -70,29 +70,28 @@ class _DealerConsignmentSignedPageState
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: Stack(
+        body: ListView(
           children: [
-            ListView(children: [
-              16.hb,
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 32.w),
-                padding: EdgeInsets.only(top: 32.w),
-                height: 120.w,
-                color: Colors.white,
-                child: ProgressBar(
-                  length: 6,
-                  num: widget.status.carProgressNum,
-                  direction: false,
-                  cancel: widget.status.num != 0,
-                  HW: 96,
-                  texts: [
-                    _text('发布'),
-                    _text('上架'),
-                    widget.status.num == 0 ? _text('订单取消') : _text('出售'),
-                    _text('到账'),
-                    _text('成交'),
-                  ],
-                ),
+            16.hb,
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 32.w),
+              padding: EdgeInsets.only(top: 32.w),
+              height: 120.w,
+              color: Colors.white,
+              child: ProgressBar(
+                length: 6,
+                num: widget.status.carProgressNum,
+                direction: false,
+                cancel: widget.status.num != 0,
+                HW: 96,
+                texts: [
+                  _text('发布'),
+                  _text('上架'),
+                  widget.status.num == 0 ? _text('订单取消') : _text('出售'),
+                  _text('到账'),
+                  _text('成交'),
+                ],
+              ),
               ),
               16.hb,
               widget.status.num == 1 && widget.auditStatus == 3
@@ -209,20 +208,23 @@ class _DealerConsignmentSignedPageState
                                         DateUtil.formatDateMs(
                                             _individualList.car.licensingDate
                                                     .toInt() *
-                                                1000,
-                                            format: 'yyyy年MM'),
-                                        '${_individualList.car.mileage}万公里'),
-                                  )
-                                ],
-                              ),
+                                              1000,
+                                          format: 'yyyy年MM'),
+                                      '${_individualList.car.mileage}万公里'),
+                                )
+                              ],
                             ),
-                          ],
-                        ),
-                      ])),
-              16.hb,
-              _getWidget()
-            ]),
-            widget.status.num == 3 && widget.auditStatus == 3
+                          ),
+                        ],
+                      ),
+                    ])),
+            16.hb,
+            _getWidget(),
+          ],
+        ),
+        bottomNavigationBar: SizedBox(
+            height: 128.w,
+            child: widget.status.num == 3 && widget.auditStatus == 3
                 ? Positioned(
                     left: 0,
                     right: 0,
@@ -253,9 +255,7 @@ class _DealerConsignmentSignedPageState
                           ),
                         )),
                   )
-                : const SizedBox()
-          ],
-        ));
+                : const SizedBox()));
   }
 
   _getWidget() {

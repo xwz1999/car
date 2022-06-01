@@ -52,17 +52,26 @@ class _RecommendedPageState extends State<RecommendedPage>
       ;
 
   ///滚动监听设置
-  late ScrollController _scrollController;
+  final ScrollController _scrollController = ScrollController();
+  final ScrollController _controller = ScrollController();
+
   int _page = 1;
   final int _size = 10;
 
   @override
   void initState() {
-    _scrollController = ScrollController();
     _scrollController.addListener(() {
-      setState(() {
-        //headerWhite = _scrollController.offset > 400 ? true : false;
-      });
+      if (_scrollController.offset > 500.w && headerWhite != true) {
+        headerWhite = true;
+        setState(() {});
+      } else if (_scrollController.offset < 500.w && headerWhite != false) {
+        headerWhite = false;
+        setState(() {});
+      }
+
+      // setState(() {
+      //   //print(_scrollController.offset);
+      // });
     });
 
     _tabController = TabController(initialIndex: 0, length: 1, vsync: this);
@@ -93,10 +102,10 @@ class _RecommendedPageState extends State<RecommendedPage>
                 snap: false,
                 elevation: 0,
                 //阴影
-                //toolbarHeight:
-                //MediaQuery.of(context).padding.top + kToolbarHeight,
+                // toolbarHeight:
+                //     MediaQuery.of(context).padding.top + kToolbarHeight,
                 //展开高度
-                expandedHeight: 762.w,
+                expandedHeight: 800.w,
                 //
                 leadingWidth: 0,
                 titleSpacing: 0,
@@ -121,7 +130,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                             color: headerWhite ? Colors.black : Colors.white,
                           ),
                         ),
-                        243.wb,
+                        200.wb,
                         Text(
                           '我的推荐码',
                           style: Theme.of(context)
@@ -148,54 +157,60 @@ class _RecommendedPageState extends State<RecommendedPage>
                   ),
                 ),
                 bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(kToolbarHeight - 12.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 86.w,
-                          width: 750.w,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(16.w),
-                                  bottomRight: Radius.circular(16.w))),
-                          child: TabBar(
-                              onTap: (index) {
-                                setState(() {});
-                              },
-                              isScrollable: true,
-                              //文本间距
-                              labelPadding: EdgeInsets.symmetric(
-                                  vertical: 12.w, horizontal: 48.w),
-                              controller: _tabController,
-                              indicatorWeight: 3,
-                              //选中与未选中的文字颜色
-                              labelColor: kPrimaryColor,
-                              unselectedLabelColor: BaseStyle.color333333,
-                              // indicatorPadding: EdgeInsets.symmetric(
-                              //     horizontal: 30.w, vertical: 30.w),
-                              //indicatorSize: TabBarIndicatorSize.label,
-                              labelStyle: TextStyle(
-                                color: Colors.white.withOpacity(0.85),
-                              ),
-                              indicator: const BoxDecoration(),
-                              indicatorColor: kPrimaryColor,
-                              tabs: [_tab(0, '我邀请的客户')]),
-                        ),
-                        // 24.hb,
-                        // Padding(
-                        //   padding: EdgeInsets.only(left: 32.w),
-                        //   child: Text(
-                        //     '共找到${recommendedList.length}条信息',
-                        //     style: Theme.of(context)
-                        //         .textTheme
-                        //         .subtitle2
-                        //         ?.copyWith(color: const Color(0xFF999999)),
-                        //   ),
-                        // ),
-                      ],
-                    )),
+                  preferredSize: Size.fromHeight(kToolbarHeight + 12.w),
+                  child: Container(
+                      width: 750.w,
+                      height: 138.w,
+                      color: bgColor,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 70.w,
+                            width: 750.w,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(16.w),
+                                    bottomRight: Radius.circular(16.w))),
+                            child: TabBar(
+                                onTap: (index) {
+                                  setState(() {});
+                                },
+                                isScrollable: true,
+                                //文本间距
+                                labelPadding: EdgeInsets.symmetric(
+                                    vertical: 12.w, horizontal: 48.w),
+                                controller: _tabController,
+                                indicatorWeight: 3,
+                                //选中与未选中的文字颜色
+                                labelColor: kPrimaryColor,
+                                unselectedLabelColor: BaseStyle.color333333,
+                                // indicatorPadding: EdgeInsets.symmetric(
+                                //     horizontal: 30.w, vertical: 30.w),
+                                //indicatorSize: TabBarIndicatorSize.label,
+                                labelStyle: TextStyle(
+                                  color: Colors.white.withOpacity(0.85),
+                                ),
+                                indicator: const BoxDecoration(),
+                                indicatorColor: kPrimaryColor,
+                                tabs: [_tab(0, '我邀请的客户')]),
+                          ),
+                          16.hb,
+                          // 24.hb,
+                          Padding(
+                            padding: EdgeInsets.only(left: 32.w),
+                            child: Text(
+                              '共找到${recommendedList.length}条信息',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(color: const Color(0xFF999999)),
+                            ),
+                          ),
+                        ],
+                      )),
+                ),
               ),
             ];
           },
@@ -204,17 +219,17 @@ class _RecommendedPageState extends State<RecommendedPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  16.hb,
-                  Padding(
-                    padding: EdgeInsets.only(left: 32.w),
-                    child: Text(
-                      '共找到${recommendedList.length}条信息',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2
-                          ?.copyWith(color: const Color(0xFF999999)),
-                    ),
-                  ),
+                  // 16.hb,
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 32.w),
+                  //   child: Text(
+                  //     '共找到${recommendedList.length}条信息',
+                  //     style: Theme.of(context)
+                  //         .textTheme
+                  //         .subtitle2
+                  //         ?.copyWith(color: const Color(0xFF999999)),
+                  //   ),
+                  // ),
                   16.hb,
                   Expanded(
                     child: TabBarView(
@@ -224,7 +239,9 @@ class _RecommendedPageState extends State<RecommendedPage>
                             firstRefresh: true,
                             header: MaterialHeader(),
                             footer: MaterialFooter(),
-                            scrollController: _scrollController,
+                            scrollController: _controller,
+
+                            ///_positions.length==1
                             controller: _easyRefreshController,
                             onRefresh: () async {
                               Future.delayed(
@@ -254,6 +271,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                               //     nickname: '世界这么大我想去看看',
                               //     trailContent: '发起客户邀约',
                               //     trailCreatedAt: 1652161448);
+
                               setState(() {});
                             },
                             onLoad: () async {
@@ -589,7 +607,7 @@ class _RecommendedPageState extends State<RecommendedPage>
         Align(
           child: Container(
             width: 750.w,
-            height: 780.w,
+            height: 800.w,
             padding: EdgeInsets.only(bottom: 10.w),
             child: Image.asset(Assets.images.shareFirstFigure.path,
                 fit: BoxFit.fill),
