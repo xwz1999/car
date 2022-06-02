@@ -505,7 +505,7 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
             '【诚信车商】云云问车\n'
             '【车辆详情】${widget.model.first.mainPhoto.imageWithHost}';
       case 1:
-        return '💥好车推荐💥\n${widget.model.first.modelName}，'
+        return '💥好车推荐💥\n${widget.model.first.modelName}， '
             '仅售${NumUtil.divide(num.parse(widget.model.first.price), 10000)}，'
             '${UserTool.userProvider.userInfo.nickname}24小时在线，等你来撩${UserTool.userProvider.userInfo.phone}';
       case 2:

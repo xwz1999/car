@@ -22,20 +22,24 @@ class EmployeeDetailsPage extends StatefulWidget {
 class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   bool audit = true;
-
+  late bool res = false;
   StaffinfoModel staffInfo = StaffinfoModel.init;
 
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(milliseconds: 0), () async {
-      staffInfo = (await BusinessFunc.getStaffInfo(widget.staffId))!;
-      setState(() {});
-      // _refresh();
-      //setState(() {});
-    });
+    // print('页面刷新？');
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   Future.delayed(
+  //       Duration.zero,
+  //       () => setState(() {
+  //             _refresh();
+  //           }));
+  // }
 
   @override
   void dispose() {
@@ -44,7 +48,9 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   }
 
   // _refresh() async {
-  //   staffInfo = (await BusinessFunc.getStaffInfo(widget.staffId))!;
+  //   if (res) {
+  //     _easyRefreshController.callRefresh();
+  //   }
   //   setState(() {});
   // }
 
@@ -67,7 +73,14 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
         firstRefresh: true,
         header: MaterialHeader(),
         controller: _easyRefreshController,
-        onRefresh: () async {},
+        onRefresh: () async {
+          Future.delayed(const Duration(milliseconds: 0), () async {
+            staffInfo = (await BusinessFunc.getStaffInfo(widget.staffId))!;
+            setState(() {});
+            // _refresh();
+            //setState(() {});
+          });
+        },
         child: ListView(children: [_getUserinfo(), _getPermissions()]),
       ), //
     );
@@ -193,7 +206,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                             var res = await BusinessFunc.getStaffDelete(
                                 widget.staffId);
                             if (res) {
-                              Navigator.pop(context);
+                              //Navigator.pop(context);
                             }
                             setState(() {
                               //_getSure;
@@ -208,7 +221,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 200.wb,
                 staffInfo.AuditStatus == 2
                     ? _getButton(Assets.icons.editor1.path, '编辑', () async {
-                        await Get.to(() => EditorEmployeePage(
+                  res = await Get.to(() => EditorEmployeePage(
                               roleId: staffInfo.RoleId,
                               storeId: staffInfo.StoreId,
                               staffId: widget.staffId,
@@ -259,9 +272,10 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                                           ? '0'
                                           : staffInfo.Commission);
                                   if (res) {
-                                    Navigator.pop(context);
-                                  }
-                                  // var res =
+                                        Get.back();
+                                        //Navigator.pop(context);
+                                      }
+                                      // var res =
                                   //     await BusinessFunc.getStaffDelete(
                                   //         widget.staffId);
                                   // if (res) {

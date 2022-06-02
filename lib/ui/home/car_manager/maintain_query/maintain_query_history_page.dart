@@ -4,7 +4,7 @@ import 'package:cloud_car/ui/home/car_manager/maintain_query/maintain_query_hist
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
-import 'package:common_utils/common_utils.dart';
+//import 'package:common_utils/common_utils.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -25,10 +25,22 @@ class _MaintainQueryHistoryPageState extends State<MaintainQueryHistoryPage> {
 
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
-  List<MaintainHistoryModel> _list = [
-    MaintainHistoryModel(title: '奥迪A4L2020款时尚动感型', numb: 'JHRFG34Y8****473', time: '2021-12-01 12:33:43', id: 123),
-    MaintainHistoryModel(title: '奥迪Q32018款时尚运动型', numb: 'JHRFG34Y8****473', time: '2021-12-01 12:33:43', id: 123),
-    MaintainHistoryModel(title: '奥迪A4L2020款时尚动感型', numb: 'JHRFG34Y8****473', time: '2021-12-01 12:33:43', id: 123),
+  final List<MaintainHistoryModel> _list = [
+    MaintainHistoryModel(
+        title: '奥迪A4L2020款时尚动感型',
+        numb: 'JHRFG34Y8****473',
+        time: '2021-12-01 12:33:43',
+        id: 123),
+    MaintainHistoryModel(
+        title: '奥迪Q32018款时尚运动型',
+        numb: 'JHRFG34Y8****473',
+        time: '2021-12-01 12:33:43',
+        id: 123),
+    MaintainHistoryModel(
+        title: '奥迪A4L2020款时尚动感型',
+        numb: 'JHRFG34Y8****473',
+        time: '2021-12-01 12:33:43',
+        id: 123),
   ];
 
   @override

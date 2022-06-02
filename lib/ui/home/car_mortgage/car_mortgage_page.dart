@@ -3,8 +3,8 @@ import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_result_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/picker/car_picker_box.dart';
-import 'package:cloud_car/widget/picker/cloud_list_picker_item_widget.dart';
+// import 'package:cloud_car/widget/picker/car_picker_box.dart';
+// import 'package:cloud_car/widget/picker/cloud_list_picker_item_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:flutter/material.dart';
 

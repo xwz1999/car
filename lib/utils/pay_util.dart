@@ -138,9 +138,11 @@ class PayUtil {
       if (event.errCode == 0) {
         paySuccess();
       } else {
-        LoggerData.addData('errorCode:${event.errCode}    errorStr:${event.errStr??'支付失败'}');
-        CloudToast.show(event.errStr??'支付失败');
-        payError == null ? null : payError(event);
+        LoggerData.addData(
+            'errorCode:${event.errCode}    errorStr:${event.errStr ?? '支付失败'}');
+        CloudToast.show(event.errStr ?? '支付失败');
+        if (payError != null) payError(event);
+        //payError == null ? null : payError(event);
       }
     });
   }

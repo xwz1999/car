@@ -10,7 +10,6 @@ import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract_page.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management_page.dart';
 import 'package:cloud_car/ui/user/user_order/myorder_page.dart';
-import 'package:cloud_car/ui/user/user_partner_center/partner_center_page.dart';
 import 'package:cloud_car/ui/user/user_recommended/user_recommended_page.dart';
 import 'package:cloud_car/ui/user/user_wallet/wallet_certification_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -188,121 +187,121 @@ class _UserPageState extends State<UserPage> {
   }
 
 //banner
-  _getBanner() {
-    return SizedBox(
-      width: double.infinity,
-      height: 160.w,
-      //padding: EdgeInsets.only(left: 20, right: 20),
-      child: Stack(
-        children: [
-          Align(child: Image.asset(Assets.images.bannerUser.path)),
-          Positioned(
-            child: _getBannerFont(),
-          ),
-          Positioned(
-            // width: 90.w,
-            // height: 80.w,
-            left: 566.w,
-            top: 16.w,
-            child: Stack(
-              children: [
-                Container(
-                    width: 112.w,
-                    height: 46.w,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          Assets.images.bubble.path,
-                        ),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: bl
-                        ? Padding(
-                            padding: EdgeInsets.only(bottom: 8.w),
-                            child: Text(
-                              "首月6折",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(color: kForeGroundColor),
-                            ),
-                          )
-                        : const SizedBox())
-              ],
-            ),
-          ),
-        ],
-
-        //
-      ),
-    );
-  }
+//   _getBanner() {
+//     return SizedBox(
+//       width: double.infinity,
+//       height: 160.w,
+//       //padding: EdgeInsets.only(left: 20, right: 20),
+//       child: Stack(
+//         children: [
+//           Align(child: Image.asset(Assets.images.bannerUser.path)),
+//           Positioned(
+//             child: _getBannerFont(),
+//           ),
+//           Positioned(
+//             // width: 90.w,
+//             // height: 80.w,
+//             left: 566.w,
+//             top: 16.w,
+//             child: Stack(
+//               children: [
+//                 Container(
+//                     width: 112.w,
+//                     height: 46.w,
+//                     decoration: BoxDecoration(
+//                       image: DecorationImage(
+//                         image: AssetImage(
+//                           Assets.images.bubble.path,
+//                         ),
+//                         fit: BoxFit.fill,
+//                       ),
+//                     ),
+//                     alignment: Alignment.center,
+//                     child: bl
+//                         ? Padding(
+//                             padding: EdgeInsets.only(bottom: 8.w),
+//                             child: Text(
+//                               "首月6折",
+//                               style: Theme.of(context)
+//                                   .textTheme
+//                                   .bodyText1
+//                                   ?.copyWith(color: kForeGroundColor),
+//                             ),
+//                           )
+//                         : const SizedBox())
+//               ],
+//             ),
+//           ),
+//         ],
+//
+//         //
+//       ),
+//     );
+//   }
 
 //banner内部文字
-  _getBannerFont() {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => const PartnerCenterPage());
-      },
-      child: Container(
-        margin: const EdgeInsets.only(top: 25, right: 20, left: 20),
-        child: Row(
-          children: [
-            Expanded(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    //Get.to(() => const PartnerCenterPage());
-                  },
-                  child: Text(
-                    "合伙人",
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        ?.copyWith(color: kForeGroundColor),
-                    // style: TextStyle(
-                    //     fontSize: 32.sp,
-                    //     color: Colors.white,
-                    //     fontWeight: FontWeight.bold),
-                  ),
-                ),
-                16.wb,
-                Text(bl ? "开通即享5项权益" : '您已享受5项权益',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(color: Colors.white.withOpacity(0.8))
-                    // TextStyle(
-                    //   fontSize: 24.sp,
-                    //   color: Colors.white60,
-                    // ),
-                    ),
-              ],
-            )),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.w),
-                  color: Colors.white),
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
-              child: Text(bl ? "立即开通" : '立即续费',
-                  style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                      color: const Color(0xFF027AFF),
-                      fontWeight: FontWeight.bold)
-                  // TextStyle(
-                  //     color: Colors.blue,
-                  //     fontSize: 13,
-                  //     fontWeight: FontWeight.bold),
-                  ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+//   _getBannerFont() {
+//     return GestureDetector(
+//       onTap: () {
+//         Get.to(() => const PartnerCenterPage());
+//       },
+//       child: Container(
+//         margin: const EdgeInsets.only(top: 25, right: 20, left: 20),
+//         child: Row(
+//           children: [
+//             Expanded(
+//                 child: Row(
+//               mainAxisAlignment: MainAxisAlignment.start,
+//               children: [
+//                 GestureDetector(
+//                   onTap: () {
+//                     //Get.to(() => const PartnerCenterPage());
+//                   },
+//                   child: Text(
+//                     "合伙人",
+//                     style: Theme.of(context)
+//                         .textTheme
+//                         .subtitle1
+//                         ?.copyWith(color: kForeGroundColor),
+//                     // style: TextStyle(
+//                     //     fontSize: 32.sp,
+//                     //     color: Colors.white,
+//                     //     fontWeight: FontWeight.bold),
+//                   ),
+//                 ),
+//                 16.wb,
+//                 Text(bl ? "开通即享5项权益" : '您已享受5项权益',
+//                     style: Theme.of(context)
+//                         .textTheme
+//                         .bodyText1
+//                         ?.copyWith(color: Colors.white.withOpacity(0.8))
+//                     // TextStyle(
+//                     //   fontSize: 24.sp,
+//                     //   color: Colors.white60,
+//                     // ),
+//                     ),
+//               ],
+//             )),
+//             Container(
+//               decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.circular(30.w),
+//                   color: Colors.white),
+//               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
+//               child: Text(bl ? "立即开通" : '立即续费',
+//                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
+//                       color: const Color(0xFF027AFF),
+//                       fontWeight: FontWeight.bold)
+//                   // TextStyle(
+//                   //     color: Colors.blue,
+//                   //     fontSize: 13,
+//                   //     fontWeight: FontWeight.bold),
+//                   ),
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
 
 //头像信息
   _shareUser() {

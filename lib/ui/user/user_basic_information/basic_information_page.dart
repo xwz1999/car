@@ -306,9 +306,13 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                         var res = await User.getUserUpdateName(
                                           name,
                                         );
+                                        UserTool.userProvider.userInfo
+                                            .nickname = name;
+
                                         if (res) {
                                           BotToast.showText(text: '修改名字成功');
-                                          Navigator.pop(context);
+
+                                          Get.back();
                                         }
                                         await UserTool.userProvider
                                             .updateUserInfo();
@@ -345,7 +349,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                         child: TextField(
                                           onChanged: (text) {
                                             name = text;
-                                            print(name);
+                                            //print(name);
                                           },
                                           decoration: InputDecoration(
                                             contentPadding:
@@ -428,7 +432,8 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                                   gender);
                                           if (res) {
                                             BotToast.showText(text: '修改性别成功');
-                                            Navigator.pop(context);
+                                            Get.back();
+                                            // Navigator.pop(context);
                                           }
                                           await UserTool.userProvider
                                               .updateUserInfo();

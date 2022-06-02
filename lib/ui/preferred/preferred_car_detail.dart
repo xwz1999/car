@@ -277,7 +277,7 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
                                   fontSize: 20.sp),
                           recognizer: TapGestureRecognizer()
                             ..onTap = (() {
-                              ('object');
+                              //('object');
                             })))
                     ],
                   ),
@@ -567,7 +567,7 @@ class _PreferredCardDetailPageState extends State<PreferredCardDetailPage>
       pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
-        ('点击$index');
+        //('点击$index');
       },
       //布局方法
       //用户进行操作时停止自动翻页

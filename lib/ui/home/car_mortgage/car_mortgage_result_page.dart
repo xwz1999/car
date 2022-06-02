@@ -1,12 +1,12 @@
-import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
+//import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
+import 'dart:math';
+
 import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-
-import 'dart:math';
 
 ///车辆按揭
 class CarMortgageResultPage extends StatefulWidget {

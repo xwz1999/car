@@ -364,7 +364,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
               widget.type == 3
                   ? GestureDetector(
                       onTap: () {
-                        print('立即导航');
+                        //print('立即导航');
                       },
                       child: Row(
                         children: [

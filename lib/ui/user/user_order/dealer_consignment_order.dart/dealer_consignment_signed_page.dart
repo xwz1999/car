@@ -1,5 +1,3 @@
-// ignore_for_file: dead_code
-
 import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/backup/consignment_audit.dart';
@@ -284,7 +282,7 @@ class _DealerConsignmentSignedPageState
             ],
           ),
         );
-        break;
+
       case CarConsignmentStatus.publish:
         // TODO: Handle this case.
         switch (widget.auditStatus) {
@@ -301,7 +299,7 @@ class _DealerConsignmentSignedPageState
           default:
             return const SizedBox();
         }
-        break;
+
       case CarConsignmentStatus.theUpper:
         // TODO: Handle this case.
         break;
@@ -340,8 +338,6 @@ class _DealerConsignmentSignedPageState
             ],
           ),
         );
-
-        break;
       case CarConsignmentStatus.account:
         // TODO: Handle this case.
         return Column(
@@ -420,7 +416,7 @@ class _DealerConsignmentSignedPageState
             )
           ],
         );
-        break;
+  
       case CarConsignmentStatus.uFinal:
         // TODO: Handle this case.
         break;

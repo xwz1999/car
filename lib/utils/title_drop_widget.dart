@@ -328,9 +328,9 @@ class _TitleDropDownWidgetState extends State<TitleDropDownWidget>
         widgets.add(Expanded(
             flex: 1,
             child: TitleDropDownHeadWidget(
-              widget.titles[i],
-              getRoState(i),
-              () {
+              title: widget.titles[i],
+              isForward: getRoState(i),
+              onClick: () {
                 if (kDebugMode) {
                   print("click${rotateState.length}");
                 }

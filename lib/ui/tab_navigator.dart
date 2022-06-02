@@ -4,7 +4,8 @@ import 'package:cloud_car/ui/user/user_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/hive_store.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
+//import 'package:hive_flutter/hive_flutter.dart';
 
 import 'home/home_page.dart';
 import 'notice/notice_page.dart';
@@ -35,7 +36,7 @@ class _TabNavigatorState extends State<TabNavigator>
     super.initState();
 
     Future.delayed(const Duration(milliseconds: 0), () async {
-      Hive.initFlutter;
+      //Hive.initFlutter;
       await HiveStore.init();
     });
 

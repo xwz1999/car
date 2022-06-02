@@ -116,8 +116,8 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                   commissionText);
               if (res) {
                 BotToast.showText(text: '提交成功');
-
-                //Get.back(result: true);
+                
+                Get.back(result: true);
               }
 
               //print("输出返回值：$zhi");

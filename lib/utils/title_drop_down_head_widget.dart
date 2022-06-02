@@ -8,11 +8,14 @@ class TitleDropDownHeadWidget extends StatefulWidget {
   final double headFontSize;
   final IconData? iconData;
 
-  const TitleDropDownHeadWidget(this.title, this.isForward, this.onClick,
-      {this.headFontSize = 12.0,
-      this.iconData = Icons.arrow_drop_down_outlined,
-      key})
-      : super(key: key);
+  const TitleDropDownHeadWidget({
+    super.key,
+    required this.title,
+    required this.isForward,
+    required this.onClick,
+    this.headFontSize = 12.0,
+    this.iconData = Icons.arrow_drop_down_outlined,
+  });
 
   @override
   State<StatefulWidget> createState() {

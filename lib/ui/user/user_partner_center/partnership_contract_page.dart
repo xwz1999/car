@@ -198,7 +198,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage> {
                           backgroundColor: const Color(0xFFF6F6F6),
                         ),
                         Offstage(
-                          offstage: isEmpty ? false : true,
+                          offstage: !isEmpty,
                           child: Container(
                               padding: EdgeInsets.only(left: 180.w, top: 140.w),
                               child: Row(
@@ -240,7 +240,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage> {
                       27.hb,
                       CloudBottomButton(
                         onTap: () {
-                          print(isEmpty);
+                          //print(isEmpty);
                           // Get.to(() => const SuccessfulPage());
                         },
                         text: '立即签订',

@@ -1,7 +1,6 @@
 import 'package:cloud_car/ui/home/car_manager/maintain_query/maintain_query_history_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
 
 ///车辆维保查询
@@ -85,15 +84,14 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           '¥',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize:28.sp),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 28.sp),
                         ),
                         Text(
                           '1.00',

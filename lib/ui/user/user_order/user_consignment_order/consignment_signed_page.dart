@@ -331,7 +331,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
             ],
           ),
         );
-        break;
+
       case ConsignmentStatus.unSign:
         // TODO: Handle this case.
         break;
@@ -354,7 +354,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
           default:
             return;
         }
-        break;
+
       case ConsignmentStatus.theUpper:
         // TODO: Handle this case.
         break;
@@ -393,8 +393,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
             ],
           ),
         );
-        break;
-        break;
+
       case ConsignmentStatus.account:
         // TODO: Handle this case.
         return Column(
@@ -473,7 +472,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
             )
           ],
         );
-        break;
+
       case ConsignmentStatus.uFinal:
         // TODO: Handle this case.
         break;

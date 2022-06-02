@@ -576,7 +576,7 @@ class _ReservationPageState extends State<ReservationPage> {
             ],
           ),
         );
-        break;
+
       case OrderSaleStatus.dowPaymentAdopt:
         // TODO: Handle this case.
         break;

@@ -61,7 +61,7 @@ class _MaintainQueryHistoryDetailPageState extends State<MaintainQueryHistoryDet
   ];
 
   @override
-  void dispose() {;
+  void dispose() {
     super.dispose();
   }
 
@@ -88,7 +88,7 @@ class _MaintainQueryHistoryDetailPageState extends State<MaintainQueryHistoryDet
                 width: double.infinity,
                 height: 172.w,
                 decoration: BoxDecoration(
-                  color: Color(0xFF134069),
+                  color: const Color(0xFF134069),
                   borderRadius: BorderRadius.circular(8.w),
                 ),
                 child: Row(

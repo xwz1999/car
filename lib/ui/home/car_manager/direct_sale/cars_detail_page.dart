@@ -740,7 +740,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                       ? Assets.icons.editor.path
                       : Assets.icons.noEditor.path,
                   '编辑', () {
-            widget.isSelf ? Get.to(() => const EditCarPage()) : () {};
+            widget.isSelf ? Get.to(() => const EditCarPage()) : empty();
           })),
           Expanded(
               child: _getBottom(
@@ -752,11 +752,11 @@ class _CarsDetailPageState extends State<CarsDetailPage>
           })),
           Expanded(
               child: _getBottom(Assets.icons.upload.path, '出售', () {
-            widget.isSelf
+                widget.isSelf
                 ? Get.to(() => SellCarOrderPage(
                       carModel: widget.carListModel,
                     ))
-                : () {};
+                : empty();
 
             //Get.to(() => const InitiateContractPage());
           })),
@@ -766,7 +766,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                       ? Assets.icons.noDownload.path
                       : Assets.icons.download.path,
                   '下架/退库', () {
-            widget.isSelf ? Get.to(() => const OffCarPage()) : () {};
+                widget.isSelf ? Get.to(() => const OffCarPage()) : empty();
           })),
         ],
       ),
@@ -861,7 +861,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
-        ('点击$index');
+        //('点击$index');
       },
       //布局方法
       //用户进行操作时停止自动翻页
@@ -870,4 +870,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       loop: true,
     );
   }
+
+  empty() {}
 }
