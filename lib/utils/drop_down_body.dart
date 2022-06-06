@@ -91,7 +91,7 @@ class _DropDownState extends State<DropDown> {
   getList() {
     return Offstage(
       offstage: !num.isEven,
-      child: Container(
+      child: ColoredBox(
         color: Colors.white,
         child: widget.widget,
       ),

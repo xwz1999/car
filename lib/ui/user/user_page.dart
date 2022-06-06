@@ -320,7 +320,7 @@ class _UserPageState extends State<UserPage> {
               await Get.to(() => const BasicInformationPage());
               setState(() {});
             },
-            child: Container(
+            child: ColoredBox(
               color: Colors.transparent,
               child: Row(
                 children: [
@@ -464,7 +464,7 @@ class _UserPageState extends State<UserPage> {
             break;
         }
       },
-      child: Container(
+      child: ColoredBox(
         color: Colors.transparent,
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Image.asset(

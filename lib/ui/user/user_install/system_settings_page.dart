@@ -118,7 +118,7 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
 
   ///
   _getView() {
-    return Container(
+    return ColoredBox(
       color: Colors.white,
       child: ListView.separated(
         shrinkWrap: true,

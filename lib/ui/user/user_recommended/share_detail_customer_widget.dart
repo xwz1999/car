@@ -32,7 +32,7 @@ class _ShareDetailCustomerWidgetState extends State<ShareDetailCustomerWidget>
     return RepaintBoundary(
         key: _globalKey,
         child: Scaffold(
-            body: Container(
+            body: DecoratedBox(
                 decoration: const BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topCenter,

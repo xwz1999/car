@@ -405,7 +405,7 @@ class _PushCarPageState extends State<PushCarPage> {
 
   _textarea(String title, String hint, String content,
       TextEditingController contentController, Function(String) callback) {
-    return Container(
+    return ColoredBox(
       color: Colors.transparent,
       child: Row(
         children: [

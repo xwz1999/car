@@ -503,7 +503,7 @@ class _RecommendedPageState extends State<RecommendedPage>
         onTap: () {
           //Get.to(()=>const UserInfoPage());
         },
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.w),
               color: kForeGroundColor),

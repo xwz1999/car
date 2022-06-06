@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage>
             break;
         }
       },
-      child: Container(
+      child: ColoredBox(
         color: Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

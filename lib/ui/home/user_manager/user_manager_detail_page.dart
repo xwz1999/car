@@ -290,7 +290,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
           _refreshController.callRefresh();
         }
       },
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.w), color: kForeGroundColor),
         child: Stack(

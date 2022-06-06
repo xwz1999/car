@@ -34,14 +34,12 @@ class _EditCarOwnerItemState extends State<EditCarOwnerItem> {
   @override
   Widget build(BuildContext context) {
 
-    return Container(
+    return ColoredBox(
       color: Colors.white,
       child: ListView(
         shrinkWrap: true,
-
-        padding: EdgeInsets.only(left: 32.w,right: 32.w),
+        padding: EdgeInsets.only(left: 32.w, right: 32.w),
         children: [
-
           getItem1(1),
           30.hb,
           getImageItem('身份证照'),
@@ -138,10 +136,10 @@ class _EditCarOwnerItemState extends State<EditCarOwnerItem> {
 
 
   getContentItem(String title,String content,{isSpecial = false, path}){
-    return Container(
+    return ColoredBox(
       color: Colors.white,
       child: Padding(
-        padding:  EdgeInsets.only(top: 0.w),
+        padding: EdgeInsets.only(top: 0.w),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

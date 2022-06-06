@@ -32,7 +32,7 @@ class _EnterprisePageState extends State<EnterprisePage> {
       body: Container(
         color: bodyColor,
         margin: EdgeInsets.only(top: 16.w),
-        child: Container(
+        child: ColoredBox(
           color: Colors.white,
           child: ListView(
             shrinkWrap: true,

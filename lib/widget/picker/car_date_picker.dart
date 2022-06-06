@@ -54,7 +54,7 @@ class _CarDatePicker extends StatefulWidget {
   final CupertinoDatePickerMode? mode;
 
   const _CarDatePicker({
-    //super.key,
+    super.key,
     required this.date,
     this.use24H = false,
     this.max,

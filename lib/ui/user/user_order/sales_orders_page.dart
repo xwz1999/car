@@ -86,7 +86,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
           //backgroundColor: Colors.red,
           extendBodyBehindAppBar: true,
           extendBody: true,
-          body: Container(
+          body: ColoredBox(
             color: bodyColor,
             //padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             child: Row(

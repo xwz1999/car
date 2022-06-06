@@ -364,6 +364,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
               widget.type == 3
                   ? GestureDetector(
                       onTap: () {
+                        //_showMap;
                         //print('立即导航');
                       },
                       child: Row(
@@ -510,7 +511,6 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
       ),
     );
   }
-
   _getTextView(String text) {
     return text.isNotEmpty
         ? Container(
@@ -530,4 +530,50 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
           )
         : const SizedBox();
   }
+
+// ///直接进入地图组件
+// _gotoMap() async {
+//   final availableMaps = await MapLauncher.installedMaps;
+//   print(availableMaps);
+//   await availableMaps.first.showMarker(
+//     coords: Coords(31.233568, 121.505504),
+//     title: 'Beach',
+//   );
+// }
+//
+// ///显示手机里所有的地图软件
+// _showMap() async {
+//   try {
+//     final title = 'Beach';
+//     final coords = Coords(31.233568, 121.505504);
+//     final availableMaps = await MapLauncher.installedMaps;
+//     print(availableMaps);
+//     showModalBottomSheet(
+//         context: context,
+//         builder: (context) {
+//           return SafeArea(
+//               child: SingleChildScrollView(
+//             child: Container(
+//               child: Wrap(
+//                 children: [
+//                   for (var map in availableMaps)
+//                     ListTile(
+//                       onTap: () =>
+//                           map.showMarker(coords: coords, title: title),
+//                       title: Text(map.mapName),
+//                       leading: Image(
+//                         image: Assets.icons.map,
+//                         height: 30.0,
+//                         width: 30.0,
+//                       ),
+//                     )
+//                 ],
+//               ),
+//             ),
+//           ));
+//         });
+//   } catch (e) {
+//     print(e);
+//   }
+// }
 }

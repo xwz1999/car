@@ -137,13 +137,10 @@ class _MaintainQueryHistoryDetailPageState extends State<MaintainQueryHistoryDet
 
             Padding(
               padding:  EdgeInsets.symmetric(vertical: 28.w,horizontal: 32.w),
-              child: Container(
-
+              child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.w)
-
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.w)),
                 child: Column(
                   children: [
                     Row(

@@ -157,7 +157,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   _getCar(item) {
     return Offstage(
         offstage: false, //text == '全部' ? false : item['judgename'] != text,
-        child: Container(
+        child: ColoredBox(
             color: bodyColor,
             child: GestureDetector(
               onTap: () {

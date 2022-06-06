@@ -580,7 +580,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   //信息栏
   _informations() {
     return SizedBox(
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.w),
             color: Colors.white,

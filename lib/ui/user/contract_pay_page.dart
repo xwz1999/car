@@ -130,7 +130,7 @@ class _ContractPayPageState extends State<ContractPayPage> {
     return SizedBox(
         height: 324.w,
         //padding: EdgeInsets.only(top: 168.w),
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
           child: ListView.builder(

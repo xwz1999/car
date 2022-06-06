@@ -200,7 +200,7 @@ class _CarDetailPageState extends State<CarDetailPage>
     return SizedBox(
       width: 686.w,
       height: 116.w,
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.w),
             color: Colors.white,
