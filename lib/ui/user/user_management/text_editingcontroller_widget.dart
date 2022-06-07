@@ -11,7 +11,7 @@ class TextEditItemWidget extends StatefulWidget {
   final String title;
   late final String value;
   final TextCallback callback;
-  final Function() ontap;
+  final Function() onTap;
   final String tips;
   final Widget widget;
   final bool editor;
@@ -23,7 +23,7 @@ class TextEditItemWidget extends StatefulWidget {
     this.value = '',
     this.endIcon = false,
     required this.callback,
-    required this.ontap,
+    required this.onTap,
     this.tips = '请输入',
     this.widget = const SizedBox(),
     this.editor = true,
@@ -59,7 +59,7 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.ontap();
+        widget.onTap();
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

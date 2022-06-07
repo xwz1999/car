@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:cloud_car/model/configuration_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';

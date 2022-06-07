@@ -133,8 +133,6 @@ class _MaintainQueryHistoryDetailPageState extends State<MaintainQueryHistoryDet
                 ),
               ),
             ),
-
-
             Padding(
               padding:  EdgeInsets.symmetric(vertical: 28.w,horizontal: 32.w),
               child: DecoratedBox(

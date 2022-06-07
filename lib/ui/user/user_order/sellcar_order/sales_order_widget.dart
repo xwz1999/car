@@ -35,6 +35,7 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
   List<SalelistsModel> _salesList = [];
   int _page = 1;
   final int _size = 10;
+  var a = 0;
 
   @override
   void initState() {
@@ -158,8 +159,8 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
 
   _getSales(SalelistsModel model) {
     return Offstage(
-        //offstage: !(text == '全部') || model.statusEnum.str != text,
-        offstage: false, //text == '全部' ? false : model.statusEnum.str != text,
+        offstage: text == '全部' ? a == 1 : model.statusEnum.str != text,
+        //offstage: false, //text == '全部' ? false : model.statusEnum.str != text,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
           child: GestureDetector(

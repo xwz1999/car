@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
@@ -30,8 +28,8 @@ class _ConsignmentViewState extends State<ConsignmentView>
   final int _size = 10;
   //bool _onload = true;
   @override
-  // ignore: must_call_super
   Widget build(BuildContext context) {
+    super.build(context);
     return EasyRefresh.custom(
         firstRefresh: true,
         controller: widget.refreshController,

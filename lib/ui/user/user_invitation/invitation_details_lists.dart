@@ -50,6 +50,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
         _list = await CustomerFunc.getCustomerTrail(
           widget.customerId,
         );
+
         setState(() {});
       },
       //emptyWidget: const NoDataWidget(text: '暂无客户轨迹信息',),
@@ -405,7 +406,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                   ? Container(
                       width: 560.w,
                       height: 200.w,
-                      child: _getCarItem(
+                      child: getCarItem(
                         model.invite.mainPhoto,
                         model.invite.modelName,
                         DateUtil.formatDate(
@@ -423,7 +424,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                   : Container(
                       width: 560.w,
                       height: 200.w,
-                      child: _getCarItem(
+                child: getCarItem(
                         '',
                         model.reserve.modelName,
                         DateUtil.formatDate(
@@ -442,7 +443,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
           );
   }
 
-  _getCarItem(
+  getCarItem(
       String url, String name, String time, String distance, String price) {
     return Container(
       padding: EdgeInsets.only(left: 24.w),
@@ -482,9 +483,9 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                 16.hb,
                 Row(
                   children: [
-                    _getTextView(time),
+                    getTextView(time),
                     16.wb,
-                    _getTextView(distance),
+                    getTextView(distance),
                   ],
                 ),
                 16.hb,
@@ -511,7 +512,8 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
       ),
     );
   }
-  _getTextView(String text) {
+
+  getTextView(String text) {
     return text.isNotEmpty
         ? Container(
             decoration: BoxDecoration(

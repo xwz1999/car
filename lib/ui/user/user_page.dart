@@ -1,5 +1,4 @@
 import 'package:cloud_car/providers/user_provider.dart';
-import 'package:cloud_car/ui/home/home_page.dart';
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
@@ -21,6 +20,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/user_tool.dart';
 import '../../widget/cloud_avatar_widget.dart';
+import 'home.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -154,6 +154,7 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const UserAssessmentPage());
             break;
           case '钱包':
+          //Get.to(() => const HomePage());
             Get.to(() => const WalletCertificationPage());
             break;
           case '邀请':

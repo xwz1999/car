@@ -51,7 +51,7 @@ class _AddCardPageState extends State<AddCardPage> {
         body: Column(
           children: [
             96.hb,
-            _getTitle(),
+            getTitle(),
             56.hb,
             _getBody(),
             72.hb,
@@ -65,7 +65,7 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
 //标题
-  _getTitle() {
+  getTitle() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

@@ -97,11 +97,11 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
       body: Column(
         children: [
           40.hb,
-          _getTitle('基本信息'),
+          getTitle('基本信息'),
           24.hb,
           _getInformation(),
           40.hb,
-          _getTitle('权限分配'),
+          getTitle('权限分配'),
           24.hb,
           _getPermissions(),
           88.hb,
@@ -116,7 +116,6 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                   commissionText);
               if (res) {
                 BotToast.showText(text: '提交成功');
-                
                 Get.back(result: true);
               }
 
@@ -130,7 +129,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
   }
 
 //文字样式
-  _getTitle(String title) {
+  getTitle(String title) {
     return Container(
       padding: EdgeInsets.only(right: 590.w),
       child: Text(
@@ -152,7 +151,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
         children: [
           TextEditItemWidget(
             title: '姓名',
-            ontap: () {},
+            onTap: () {},
             value: nameText,
             callback: (String content) {
               nameText = content;
@@ -202,7 +201,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
               width: 32.w,
               height: 32.w,
             ),
-            ontap: () {
+            onTap: () {
               showModalBottomSheet(
                   context: context,
                   backgroundColor: const Color.fromRGBO(255, 255, 255, 0),
@@ -324,7 +323,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             title: '手机号',
             editor: false,
             value: phoneText,
-            ontap: () {},
+            onTap: () {},
             callback: (String content) {
               phoneText = content;
             },
@@ -342,7 +341,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
               width: 32.w,
               height: 32.w,
             ),
-            ontap: () async {
+            onTap: () async {
               await Get.to(() => StructurePage(
                     callback: (String city, int id) {
                       storeIdText = city;
@@ -376,7 +375,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             width: 32.w,
             height: 32.w,
           ),
-          ontap: () async {
+          onTap: () async {
             await Get.to(() => AccessConfigurationPage(
                   callback: (String city, int id) {
                     permissions1 = city;
@@ -399,7 +398,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             style: TextStyle(
                 color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
           ),
-          ontap: () async {},
+          onTap: () async {},
           callback: (String content) {
             commissionText = content;
           },

@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/pay/wx_pay_model.dart';

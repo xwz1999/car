@@ -387,7 +387,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                     width: 32.w,
                     height: 32.w,
                   ),
-                  ontap: () {
+                  onTap: () {
                     showModalBottomSheet(
                         context: context,
                         backgroundColor: const Color.fromRGBO(255, 255, 255, 0),

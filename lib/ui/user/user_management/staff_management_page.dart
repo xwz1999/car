@@ -132,7 +132,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             //     ],
             //   )
           )),
-          _getButton(),
+          getButton(),
           34.hb
         ],
       ),
@@ -238,7 +238,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                         ));
                     //Get.to(()=>)
                   },
-                  child: _getText(e.roleName, e.genderEM.typeNum, e.name,
+                  child: getText(e.roleName, e.genderEM.typeNum, e.name,
                       e.phone, e.auditStatus),
                 );
               }).toList()
@@ -247,7 +247,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
     );
   }
 
-  _getText(String position, int gender, String name, String phone, int judge) {
+  getText(String position, int gender, String name, String phone, int judge) {
     return Container(
       color: Colors.white,
       height: 94.w,
@@ -283,13 +283,13 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                 fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
           24.wb,
-          SizedBox(child: judge == 1 ? _getBox() : const SizedBox())
+          SizedBox(child: judge == 1 ? getBox() : const SizedBox())
         ],
       ),
     );
   }
 
-  _getBox() {
+  getBox() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
       decoration: BoxDecoration(
@@ -303,7 +303,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
     );
   }
 
-  _getButton() {
+  getButton() {
     return Row(
       children: [
         Padding(padding: EdgeInsets.only(left: 32.w)),

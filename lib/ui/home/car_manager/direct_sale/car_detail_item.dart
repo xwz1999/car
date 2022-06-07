@@ -129,9 +129,6 @@ class CarDetailItem extends StatelessWidget {
     );
   }
 
-
-
-
   getItem6(String title){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,10 +146,6 @@ class CarDetailItem extends StatelessWidget {
       ],
     );
   }
-
-
-
-
 
   getContentItem(String title,String content){
     return Padding(

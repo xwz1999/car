@@ -136,7 +136,7 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
                         Row(
                           children: [
                             Text(
-                              timeList[index]['pice'],
+                              timeList[index]['price'],
                               style: Theme.of(context).textTheme.subtitle2,
                             ),
                             SizedBox(

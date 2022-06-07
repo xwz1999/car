@@ -155,7 +155,7 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                  child: _getBottom(Assets.icons.icPhone.path, '电话', () {
+                  child: getBottom(Assets.icons.icPhone.path, '电话', () {
                 Alert.show(
                     context,
                     NormalContentDialog(
@@ -192,9 +192,9 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
                       deleteItem: '确定',
                     ));
               })),
-              Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
+              Expanded(child: getBottom(Assets.icons.icWx.path, '微信', () {})),
               Expanded(
-                  child: _getBottom(Assets.icons.icInvite.path, '修改邀约', () {
+                  child: getBottom(Assets.icons.icInvite.path, '修改邀约', () {
                 Get.to(() => InviteDetailPage(
                       id: widget.model.customerId,
                       phone: '',
@@ -202,7 +202,7 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
                     ));
               })),
               Expanded(
-                  child: _getBottom(Assets.icons.icContract.path, '发起合同', () {
+                  child: getBottom(Assets.icons.icContract.path, '发起合同', () {
                 Get.to(() => const InitiateContractPage());
               })),
             ],
@@ -210,7 +210,7 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
         ));
   }
 
-  _getBottom(String url, String text, Function callBack) {
+  getBottom(String url, String text, Function callBack) {
     return GestureDetector(
       onTap: () {
         callBack();

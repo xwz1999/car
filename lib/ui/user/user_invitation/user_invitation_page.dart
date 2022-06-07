@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/task_func.dart';
@@ -228,7 +226,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
                     ),
                     48.wb,
                     Text(
-                      hourLag <= 24 && hourLag > 0 ? '小于${hourLag}小时' : '',
+                      hourLag <= 24 && hourLag > 0 ? '小于$hourLag小时' : '',
                       style: TextStyle(
                           color: BaseStyle.color333333,
                           fontSize: BaseStyle.fontSize28),
@@ -326,7 +324,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
                     ),
                     48.wb,
                     Text(
-                      hourLag <= 24 && hourLag > 0 ? '小于${hourLag}小时' : '',
+                      hourLag <= 24 && hourLag > 0 ? '小于$hourLag小时' : '',
                       style: TextStyle(
                           color: BaseStyle.color333333,
                           fontSize: BaseStyle.fontSize28),

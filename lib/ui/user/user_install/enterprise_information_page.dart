@@ -47,15 +47,15 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
           child: ListView(
             children: [
               20.hb,
-              _title('基本信息'),
+              title('基本信息'),
               24.hb,
               _information(),
               40.hb,
-              _title('企业资料'),
+              title('企业资料'),
               24.hb,
               _data(),
               40.hb,
-              _title('法人资料'),
+              title('法人资料'),
               24.hb,
               _legal(),
               32.hb
@@ -65,7 +65,7 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
   }
 
 //标题
-  _title(String title) {
+  title(String title) {
     return Container(
       padding: EdgeInsets.only(left: 32.w),
       child: Text(
@@ -87,9 +87,9 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.hb,
-            _getText('法人姓名', 'xxxxxx'),
+            getText('法人姓名', 'xxxxxx'),
             16.hb,
-            _getText('身份证号码', 'xxxxxxxx'),
+            getText('身份证号码', 'xxxxxxxx'),
             16.hb,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,21 +140,21 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.hb,
-            _getText('执照公司名', 'xxxxxxx'),
+            getText('执照公司名', 'xxxxxxx'),
             16.hb,
-            _getText('公司性质', 'xx'),
+            getText('公司性质', 'xx'),
             16.hb,
-            _getText('注册资本', 'xxxxxxxxxx'),
+            getText('注册资本', 'xxxxxxxxxx'),
             16.hb,
-            _getText('营业期限', 'xxxxx——xxxxx'),
+            getText('营业期限', 'xxxxx——xxxxx'),
             16.hb,
-            _getText('认证资料', '信用代码'),
+            getText('认证资料', '信用代码'),
             16.hb,
-            _getText('信用代码', 'xxxxxxxxxxx'),
+            getText('信用代码', 'xxxxxxxxxxx'),
             16.hb,
-            _getText2('门店照'),
+            getText2('门店照'),
             16.hb,
-            _getText2('营业执照')
+            getText2('营业执照')
           ],
         ),
       ]),
@@ -172,11 +172,11 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.hb,
-            _getText('公司名称', '云云问车'),
+            getText('公司名称', '云云问车'),
             16.hb,
-            _getText('所在地区', '浙江省宁波市海曙区'),
+            getText('所在地区', '浙江省宁波市海曙区'),
             16.hb,
-            _getText('地址', '宁波保险科技产业园1号楼601—3'),
+            getText('地址', '宁波保险科技产业园1号楼601—3'),
             16.hb,
           ],
         ),
@@ -185,7 +185,7 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
   }
 
 //文本样式
-  _getText(String title, String content) {
+  getText(String title, String content) {
     return Row(
       //mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -209,7 +209,7 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
   }
 
 //文本带图片
-  _getText2(String title) {
+  getText2(String title) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

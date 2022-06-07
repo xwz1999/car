@@ -153,8 +153,9 @@ class _DealerConsignmentOrderPageState
   }
 
   _getCar(ListsModel model) {
+    var a = 0;
     return Offstage(
-        offstage: false,
+        offstage: text == '全部' ? a == 1 : model.carStatusEnum.str != text,
         //text == '全部' ? false : model.carStatusEnum.carProgressNum != text,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
@@ -216,7 +217,7 @@ class _DealerConsignmentOrderPageState
                               32.hb,
                               Padding(
                                 padding: EdgeInsets.only(right: 16.w),
-                                child: _getText(
+                                child: getText(
                                     DateUtil.formatDateMs(
                                         model.licensingDate.toInt() * 1000,
                                         format: 'yyyy年MM月'),
@@ -234,7 +235,7 @@ class _DealerConsignmentOrderPageState
         ));
   }
 
-  _getText(String time, String distance) {
+  getText(String time, String distance) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),

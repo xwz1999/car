@@ -1,4 +1,4 @@
-///需要修改****************
+///
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentaicar_alsocar_order_page.dart';
 import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_transaction_cancelled_order_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -46,25 +46,25 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
     },
     {
       'judge': false,
-      'judgename': '已完成',
+      'judgeName': '已完成',
       'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
       'url': Assets.images.carBanner.path,
-      'pice1name': '租车总价',
-      'pice1': '220.00',
-      'picename': '已付租金',
-      'pice': '220.00',
-      'buttomname': '',
+      'price1name': '租车总价',
+      'price1': '220.00',
+      'priceName': '已付租金',
+      'price': '220.00',
+      'buttonName': '',
     },
     {
       'judge': false,
-      'judgename': '已取消',
+      'judgeName': '已取消',
       'title': '奥迪Q3 2020款 35 TFSI 进取型SUV',
       'url': Assets.images.carBanner.path,
-      'pice1name': '租车总价',
-      'pice1': '220.00',
-      'picename': '已付租金',
-      'pice': '220.00',
-      'buttomname': '',
+      'price1name': '租车总价',
+      'price1': '220.00',
+      'priceName': '已付租金',
+      'price': '220.00',
+      'buttonName': '',
     },
   ];
 
@@ -188,9 +188,9 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                       Padding(
                         padding: EdgeInsets.only(left: 0.w),
                         child: Text(
-                          item['judgename'],
+                          item['judgeName'],
                           style: TextStyle(
-                              color: item['judgename'] != '已取消'
+                              color: item['judgeName'] != '已取消'
                                   ? const Color(0xFF027AFF)
                                   : const Color(0xFF666666),
                               fontSize: BaseStyle.fontSize28),
@@ -238,7 +238,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                             children: [
                               SizedBox(
                                 child: Text(
-                                  item['pice1name'],
+                                  item['price1name'],
                                   style: TextStyle(
                                       fontSize: BaseStyle.fontSize28,
                                       color: BaseStyle.color999999),
@@ -255,7 +255,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                                           ?.copyWith(
                                               fontWeight: FontWeight.bold)),
                                   TextSpan(
-                                      text: item['pice1'],
+                                      text: item['price1'],
                                       style: Theme.of(context)
                                           .textTheme
                                           .subtitle2
@@ -266,7 +266,7 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                               56.wb,
                               SizedBox(
                                 child: Text(
-                                  item['picename'],
+                                  item['priceName'],
                                   style: TextStyle(
                                       fontSize: BaseStyle.fontSize28,
                                       color: BaseStyle.color999999),
@@ -278,15 +278,15 @@ class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
                                   TextSpan(
                                       text: '¥',
                                       style: TextStyle(
-                                          color: item['judgename'] == '已取消'
+                                          color: item['judgeName'] == '已取消'
                                               ? const Color(0xFF333333)
                                               : const Color(0xFFFF3B02),
                                           fontSize: BaseStyle.fontSize24,
                                           fontWeight: FontWeight.bold)),
                                   TextSpan(
-                                      text: item['pice'],
+                                      text: item['price'],
                                       style: TextStyle(
-                                          color: item['judgename'] == '已取消'
+                                          color: item['judgeName'] == '已取消'
                                               ? const Color(0xFF333333)
                                               : const Color(0xFFFF3B02),
                                           fontSize: BaseStyle.fontSize28,

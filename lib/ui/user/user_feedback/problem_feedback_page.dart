@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:io';
 
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_image_page.dart';
@@ -176,7 +174,7 @@ class _ProblemFeedbackPageState extends State<ProblemFeedbackPage> {
               bool res = await FeedbackFunc.getFeedback(
                   widget.title, content, phone, img);
               if (res) {
-                print('标题+${widget.title}+文本$content+手机 $phone+图片+$img');
+                //print('标题+${widget.title}+文本$content+手机 $phone+图片+$img');
                 CloudToast.show('提交成功');
                 Get.back();
               }

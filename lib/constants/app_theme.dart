@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+///主题
 class AppTheme {
   static ThemeData get theme {
     return ThemeData(primarySwatch: Colors.blue).copyWith(

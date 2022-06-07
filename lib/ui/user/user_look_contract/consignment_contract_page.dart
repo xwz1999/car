@@ -27,7 +27,6 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
   final List<ConsignmentListModel> _saleList = [];
 
   @override
-  @override
   void initState() {
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     super.initState();

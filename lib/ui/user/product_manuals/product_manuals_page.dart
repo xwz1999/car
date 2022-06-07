@@ -72,7 +72,7 @@ class _ProductManualsState extends State<ProductManuals> {
             },
             child: ListView.builder(
               itemBuilder: (context, index) {
-                return _getList(productManuals[index]);
+                return getList(productManuals[index]);
               },
               itemCount: productManuals.length,
             ),
@@ -151,12 +151,12 @@ class _ProductManualsState extends State<ProductManuals> {
     );
   }
 
-  _getList(HandbookModel model) {
+  getList(HandbookModel model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         40.hb,
-        _getTitle(model.name),
+        getTitle(model.name),
         24.hb,
         ...model.items != null
             ? model.items!.mapIndexed((e, index) {
@@ -168,7 +168,7 @@ class _ProductManualsState extends State<ProductManuals> {
                             name: e.name,
                           ));
                     },
-                    child: _getText(
+              child: getText(
                         e.name,
                         DateUtil.formatDateMs(e.updatedAt.toInt() * 1000,
                             format: 'yyyy-MM-dd')));
@@ -180,7 +180,7 @@ class _ProductManualsState extends State<ProductManuals> {
     );
   }
 
-  _getText(String text, String time) {
+  getText(String text, String time) {
     return Container(
         width: 750.w,
         height: 92.h,
@@ -222,7 +222,7 @@ class _ProductManualsState extends State<ProductManuals> {
         );
   }
 
-  _getTitle(String title) {
+  getTitle(String title) {
     return Padding(
       padding: EdgeInsets.only(left: 32.w),
       child: Text(

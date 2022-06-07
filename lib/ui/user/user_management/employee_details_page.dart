@@ -181,7 +181,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
             child: Row(
               children: [
                 Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
-                _getButton(Assets.icons.delete.path, '删除', () {
+                getButton(Assets.icons.delete.path, '删除', () {
                   setState(() {
                     Alert.show(
                         context,
@@ -220,13 +220,13 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 }),
                 200.wb,
                 staffInfo.AuditStatus == 2
-                    ? _getButton(Assets.icons.editor1.path, '编辑', () async {
-                  res = await Get.to(() => EditorEmployeePage(
+                    ? getButton(Assets.icons.editor1.path, '编辑', () async {
+                        res = await Get.to(() => EditorEmployeePage(
                               roleId: staffInfo.RoleId,
                               storeId: staffInfo.StoreId,
                               staffId: widget.staffId,
                               nameText: staffInfo.Name,
-                              genderText: staffInfo.genderEM.typeStr,
+                              genderText: staffInfo.genderEm.typeStr,
                               phoneText: staffInfo.Phone,
                               storeIdText: staffInfo.StoreName,
                               roleName: staffInfo.RoleName,
@@ -237,7 +237,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                             ));
                         //print(audit);
                       })
-                    : _getButton(
+                    : getButton(
                         Assets.icons.editor1.path,
                         '重新编辑',
                         () => setState(() {
@@ -312,7 +312,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   }
 
 //按钮
-  _getButton(String url, String text, Function() onTap) {
+  getButton(String url, String text, Function() onTap) {
     return Offstage(
       offstage: !audit,
       child: GestureDetector(
@@ -418,11 +418,11 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                     fontSize: BaseStyle.fontSize36),
               ),
             ),
-            _getText('性别', staffInfo.genderEM.typeStr),
-            _getText('手机号', staffInfo.Phone),
-            _getText('权限配置', staffInfo.RoleName),
-            _getText('所属门店', staffInfo.StoreName),
-            _getText('所属入驻商', '宁波xx4s专营店'),
+            getText('性别', staffInfo.genderEm.typeStr),
+            getText('手机号', staffInfo.Phone),
+            getText('权限配置', staffInfo.RoleName),
+            getText('所属门店', staffInfo.StoreName),
+            getText('所属入驻商', '宁波xx4s专营店'),
 
             ///widget.business
             ///staffinfo.Storeid
@@ -434,7 +434,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   }
 
 //文字样式
-  _getText(String title, String text) {
+  getText(String title, String text) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
       child: Row(
