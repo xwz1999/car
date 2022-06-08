@@ -207,30 +207,30 @@ class _UserPageState extends State<UserPage> {
             top: 16.w,
             child: Stack(
               children: [
-                Container(
-                    width: 112.w,
-                    height: 46.w,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          Assets.images.bubble.path,
-                        ),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: bl
-                        ? Padding(
-                            padding: EdgeInsets.only(bottom: 8.w),
-                            child: Text(
-                              "首月6折",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(color: kForeGroundColor),
+                bl
+                    ? Container(
+                        width: 112.w,
+                        height: 46.w,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              Assets.images.bubble.path,
                             ),
-                          )
-                        : const SizedBox())
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 8.w),
+                          child: Text(
+                            "首月6折",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: kForeGroundColor),
+                          ),
+                        ))
+                    : const SizedBox()
               ],
             ),
           ),
