@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract_page.dart';
 import 'package:cloud_car/ui/user/user_order/myorder_page.dart';
@@ -47,7 +48,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
           leading: const CloudBackButton(
             isSpecial: true,
           ),
-          title: Text('合伙人中心', style: Theme.of(context).textTheme.headline6
+          title: Text('经纪人中心', style: Theme.of(context).textTheme.headline6
               // TextStyle(
               //     color: BaseStyle.color111111,
               //     fontSize: BaseStyle.fontSize36,
@@ -76,6 +77,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
           ],
         ));
   }
+
   // _topInfo() {
   //   return Container(
   //     width: double.infinity,
@@ -196,9 +198,13 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
         ),
         CloudBottomButton(
           onTap: () {
-            Get.to(() => const PartnerShopContractPage());
+            if (_getSure) {
+              Get.to(() => const PartnerShopContractPage());
+            } else {
+              BotToast.showText(text: '请先确定下方协议');
+            }
           },
-          text: '确认协议并续费¥1500.00',
+          text: conditions ? '确认协议并续费¥2500.00/年' : '确认协议并续费¥1500.00/年',
         )
       ]),
     );
@@ -220,7 +226,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
               Container(
                 padding: EdgeInsets.only(left: 24.w),
                 child: Text(
-                  '合伙人享有权益',
+                  '经纪人享有权益',
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
@@ -268,7 +274,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                         Theme.of(context).textTheme.subtitle2,
                                   ),
                                   8.hb,
-                                  Text('海量车源，随心挑选',
+                                  Text('匹配客户，高效工作',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
@@ -313,7 +319,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                         Theme.of(context).textTheme.subtitle2,
                                   ),
                                   8.hb,
-                                  Text('海量车源，随心挑选',
+                                  Text('发展客户，积累客源',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
@@ -358,7 +364,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                         Theme.of(context).textTheme.subtitle2,
                                   ),
                                   8.hb,
-                                  Text('海量车源，随心挑选',
+                                  Text('高付出，高回报',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
@@ -402,7 +408,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                         Theme.of(context).textTheme.subtitle2,
                                   ),
                                   8.hb,
-                                  Text('海量车源，随心挑选',
+                                  Text('权威合同，签约稳定',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
@@ -447,7 +453,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                                         Theme.of(context).textTheme.subtitle2,
                                   ),
                                   8.hb,
-                                  Text('海量车源，随心挑选',
+                                  Text('多种订单，分类清晰',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
@@ -541,7 +547,7 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                 top: 16.w,
               ),
               child: Text(
-                conditions ? '合伙人有效期至2022-11-18' : '还未成为云云问车合伙人',
+                conditions ? '经纪人有效期至2022-11-18' : '还未成为云云问车经纪人',
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1

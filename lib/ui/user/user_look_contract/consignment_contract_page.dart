@@ -86,9 +86,10 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
               callback: (String text) {
                 //sortModel.value.name = text;
                 _refreshController.callRefresh();
+              
                 setState(() {});
               },
-              tips: '请输入客户名称',
+              tips: '合同编号/签订人姓名',
               title: Container(
                 alignment: Alignment.center,
                 child: TabBar(

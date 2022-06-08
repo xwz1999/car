@@ -46,6 +46,16 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
         const SizedBox(
           height: kToolbarHeight + 20,
         ),
+        32.hb,
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.only(left: 32.w),
+          child: Text(
+            '共找到${carList.length}条数据',
+            style: TextStyle(
+                fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
+          ),
+        ),
         Expanded(
           child: EasyRefresh.custom(
             firstRefresh: true,

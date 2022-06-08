@@ -20,7 +20,15 @@ class UserInvitationPage extends StatefulWidget {
 class _UserInvitationPageState extends State<UserInvitationPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List<TaskInviteListModel> invitationList = [];
+  List<TaskInviteListModel> invitationList = [
+    // const TaskInviteListModel(
+    //     id: null,
+    //     customerNickname: '',
+    //     inviteAt: null,
+    //     customerId: null,
+    //     type: null
+    // )
+  ];
 
   List<TaskInviteListModel> subscribeList = [];
   final EasyRefreshController _invitationRefreshController =

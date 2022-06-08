@@ -88,7 +88,8 @@ class _ContractPayPageState extends State<ContractPayPage> {
                         ?.copyWith(color: kForeGroundColor),
                   ),
                 )),
-              )
+              ),
+              32.hb
             ],
           ),
         ));

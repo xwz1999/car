@@ -29,9 +29,8 @@ class CarCollection extends StatefulWidget {
 }
 
 class _CarCollectionState extends State<CarCollection> {
-  late List<String> _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
+  late List<String> _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
   ScreenControl screenControlMy = ScreenControl();
-
 
   List<ChooseItem> _sortList = [];
   List<ChooseItem> _priceList = [];
@@ -50,6 +49,13 @@ class _CarCollectionState extends State<CarCollection> {
 
   List<Widget> get listWidget =>
       [
+        CarListPage(
+          pickCar: _pickCar,
+          carCallback: () {
+            screenControl.screenHide();
+            _refreshController.callRefresh();
+          },
+        ),
         CarListPage(
           pickCar: _pickCar,
           carCallback: () {
@@ -120,7 +126,7 @@ class _CarCollectionState extends State<CarCollection> {
   @override
   void initState() {
     super.initState();
-    _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
+    _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
     _priceList = [
       ChooseItem(name: '不限'),
       ChooseItem(name: '4万以下'),

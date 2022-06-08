@@ -54,7 +54,7 @@ class _ProductManualsState extends State<ProductManuals> {
           ///搜索框
           Container(
             width: 750.w,
-            height: 96.h,
+            height: 96.w,
             color: Colors.white,
             child: _search(),
           ),
@@ -92,7 +92,7 @@ class _ProductManualsState extends State<ProductManuals> {
               borderRadius: BorderRadius.circular(36.w),
               border: Border.all(width: 2.w, color: const Color(0xFFE7E7E7))),
           width: 606.w,
-          height: 72.h,
+          height: 72.w,
           child: TextField(
             keyboardType: TextInputType.text,
             // onEditingComplete: () {

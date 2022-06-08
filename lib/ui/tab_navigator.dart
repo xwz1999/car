@@ -1,12 +1,15 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/preferred/preferred_page.dart';
 import 'package:cloud_car/ui/user/user_page.dart';
+import 'package:cloud_car/ui/user/user_partner_center/partner_center_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/hive_store.dart';
 import 'package:flutter/material.dart';
 
 //import 'package:hive_flutter/hive_flutter.dart';
 
+import '../utils/user_tool.dart';
+import '../widget/alert.dart';
 import 'home/home_page.dart';
 import 'notice/notice_page.dart';
 
@@ -72,6 +75,8 @@ class _TabNavigatorState extends State<TabNavigator>
     );
   }
 
+  late bool isOpen = UserTool.userProvider.userInfo.level < 0;
+
   @override
   Widget build(BuildContext context) {
     //底部导航来
@@ -124,8 +129,35 @@ class _TabNavigatorState extends State<TabNavigator>
         selectedFontSize: 20.sp,
         unselectedFontSize: 20.sp,
         onTap: (index) {
-          _tabController!.animateTo(index, curve: Curves.easeInOutCubic);
-          setState(() => _currentIndex = index);
+          if (isOpen) {
+            _tabController!.animateTo(index, curve: Curves.easeInOutCubic);
+            setState(() => _currentIndex = index);
+          } else {
+            Alert.show(
+                context,
+                NormalContentDialog(
+                  type: NormalTextDialogType.delete,
+                  title: '没有权限',
+                  content: const Text('为成为合伙人,无法享受云云问车带来的便捷服务'),
+                  items: const ['取消'],
+                  deleteItem: '立即开通',
+                  //监听器
+                  listener: (index) {
+                    Alert.dismiss(context);
+                    //Navigator.pop(context);
+                    //Value = false;
+                    //(Value);
+                  },
+                  deleteListener: () {
+                    Alert.dismiss(context);
+                    Get.to(() => const PartnerCenterPage());
+                    //Value = true;
+                    //(Value);
+                  },
+                ));
+            _tabController!.animateTo(index, curve: Curves.easeInOutCubic);
+            setState(() => _currentIndex = index);
+          }
         },
       ),
     );

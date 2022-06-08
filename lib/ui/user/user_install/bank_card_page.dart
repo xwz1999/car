@@ -91,7 +91,8 @@ class _BankCardPageState extends State<BankCardPage> {
               _getCard('中信银行', '储蓄卡', Assets.images.citicbankbg.path,
                   Assets.icons.citicbankHead.path, '1234123412342279'),
               32.hb,
-              _getAdd()
+              _getAdd(),
+              32.hb
             ],
           ),
         ));

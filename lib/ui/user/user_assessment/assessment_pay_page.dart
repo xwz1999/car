@@ -18,9 +18,13 @@ import '../../../widget/button/colud_check_radio.dart';
 class AssessmentPayPage extends StatefulWidget {
   final String price;
   final int count;
+  final String title;
 
   const AssessmentPayPage(
-      {super.key, required this.price, required this.count});
+      {super.key,
+      required this.price,
+      required this.count,
+      this.title = '评估次数充值'});
 
   @override
   _AssessmentPayPageState createState() => _AssessmentPayPageState();
@@ -61,7 +65,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
         leading: const CloudBackButton(
           isSpecial: true,
         ),
-        title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
+        title: Text(widget.title, style: Theme.of(context).textTheme.headline6),
       ),
       extendBody: true,
       body: Container(

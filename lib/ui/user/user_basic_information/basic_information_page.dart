@@ -513,6 +513,20 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                     ),
                   ),
                 ),
+                //所在区域
+                ListTile(
+                  title: Text('所在区域',
+                      style: Theme.of(context).textTheme.bodyText1),
+                  trailing: SizedBox(
+                    child: Text(
+                      '浙江省宁波市鄞州区',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: const Color(0xFF999999)),
+                    ),
+                  ),
+                ),
                 //企业信息
                 ListTile(
                   onTap: () {

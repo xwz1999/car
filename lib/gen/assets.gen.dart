@@ -515,6 +515,10 @@ class $AssetsImagesGen {
   AssetGenImage get invitePartners =>
       const AssetGenImage('assets/images/Invite_partners.png');
 
+  /// File path: assets/images/New_opportunities.png
+  AssetGenImage get newOpportunities =>
+      const AssetGenImage('assets/images/New_opportunities.png');
+
   /// File path: assets/images/Qr_code.png
   AssetGenImage get qrCode => const AssetGenImage('assets/images/Qr_code.png');
 

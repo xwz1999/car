@@ -86,11 +86,11 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            16.hb,
+            32.hb,
             getText('法人姓名', 'xxxxxx'),
-            16.hb,
+            32.hb,
             getText('身份证号码', 'xxxxxxxx'),
-            16.hb,
+            32.hb,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -139,21 +139,21 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            16.hb,
+            32.hb,
             getText('执照公司名', 'xxxxxxx'),
-            16.hb,
+            32.hb,
             getText('公司性质', 'xx'),
-            16.hb,
+            32.hb,
             getText('注册资本', 'xxxxxxxxxx'),
-            16.hb,
+            32.hb,
             getText('营业期限', 'xxxxx——xxxxx'),
-            16.hb,
+            32.hb,
             getText('认证资料', '信用代码'),
-            16.hb,
+            32.hb,
             getText('信用代码', 'xxxxxxxxxxx'),
-            16.hb,
+            32.hb,
             getText2('门店照'),
-            16.hb,
+            32.hb,
             getText2('营业执照')
           ],
         ),
@@ -171,13 +171,13 @@ class _EnterpriseInformationPageState extends State<EnterpriseInformationPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            16.hb,
+            32.hb,
             getText('公司名称', '云云问车'),
-            16.hb,
+            32.hb,
             getText('所在地区', '浙江省宁波市海曙区'),
-            16.hb,
+            32.hb,
             getText('地址', '宁波保险科技产业园1号楼601—3'),
-            16.hb,
+            32.hb,
           ],
         ),
       ]),

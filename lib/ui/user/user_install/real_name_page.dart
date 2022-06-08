@@ -110,7 +110,7 @@ class _RealNamePageState extends State<RealNamePage> {
                 children: [
                   SizedBox(
                     width: 200.w,
-                    height: 150.h,
+                    height: 150.w,
                     child: GestureDetector(
                         onTap: () {
                           getImage();
@@ -129,7 +129,7 @@ class _RealNamePageState extends State<RealNamePage> {
                               child: Container(
                                 padding: EdgeInsets.all(20.w),
                                 width: 72.w,
-                                height: 72.h,
+                                height: 72.w,
                                 decoration: BoxDecoration(
                                     color: const Color.fromRGBO(0, 0, 0, 0.5),
                                     borderRadius: BorderRadius.circular(36.w)),
@@ -141,13 +141,6 @@ class _RealNamePageState extends State<RealNamePage> {
                             )
                           ],
                         )),
-                    // GestureDetector(
-                    //     onTap: () {
-                    //       Get.to(() => const FaceRecognitionPage());
-                    //     },
-                    //     child:
-
-                    //     ),
                   ),
                   24.wb,
                   SizedBox(

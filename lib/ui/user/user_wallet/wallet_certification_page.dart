@@ -23,8 +23,8 @@ class WalletCertificationPage extends StatefulWidget {
 class _WalletCertificationPageState extends State<WalletCertificationPage> {
   List<dynamic>? data;
   List balanceList = [
-    {'title': '余额提现', 'time': '12月1日 16:34:09', 'pice': '-190000'},
-    {'title': '出售车辆', 'time': '12月1日 16:34:09', 'pice': '+190000'},
+    {'title': '余额提现', 'time': '12月1日 16:34:09', 'price': '-190000'},
+    {'title': '出售车辆', 'time': '12月1日 16:34:09', 'price': '+190000'},
   ];
 
   @override
@@ -88,6 +88,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
                             type: NormalTextDialogType.delete,
                             title: '解绑提示',
                             content: const Text('为保障您钱包功能的使用，请先完成实名认证。'),
+
                             items: const ['取消'],
                             deleteItem: '去认证',
                             //监听器
@@ -177,7 +178,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
         widget: SizedBox(
-          height: 300.w,
+          height: 240.w,
           child: ListView.builder(
             itemBuilder: (context, index) {
               return Container(

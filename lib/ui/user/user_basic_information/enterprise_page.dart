@@ -1,5 +1,4 @@
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -50,30 +49,6 @@ class _EnterprisePageState extends State<EnterprisePage> {
                       ?.copyWith(color: BaseStyle.color999999),
                 ),
                 onTap: () {},
-              ),
-              ListTile(
-                title: Text(
-                  '门店',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                trailing: Text(UserTool.userProvider.userInfo.store.storeName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(color: BaseStyle.color999999)),
-                onTap: () {},
-              ),
-              ListTile(
-                onTap: () {},
-                title: Text(
-                  '部门',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                trailing: Text(UserTool.userProvider.userInfo.store.roleName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(color: BaseStyle.color999999)),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 32.w),

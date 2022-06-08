@@ -89,7 +89,7 @@ class _AddCardPageState extends State<AddCardPage> {
 //内容
   _getBody() {
     return Container(
-      height: 450.h,
+      height: 450.w,
       color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 32.w),
       child: Column(
@@ -144,7 +144,7 @@ class _AddCardPageState extends State<AddCardPage> {
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(bottom: 23.w), //文字与边框的距离
                       border: InputBorder.none, //去掉下划线
-                      hintText: '持卡人本热银行卡号',
+                      hintText: '持卡人本人银行卡号',
                       hintStyle: Theme.of(context)
                           .textTheme
                           .subtitle2
@@ -163,7 +163,7 @@ class _AddCardPageState extends State<AddCardPage> {
           ),
           52.hb,
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: 150.w,

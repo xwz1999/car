@@ -30,32 +30,34 @@ class _AboutPageState extends State<AboutPage> {
         ),
         backgroundColor: bodyColor,
         extendBody: true,
-        body: Container(
-            height: 350.h,
-            color: Colors.white,
-            child: ListView(
-              children: ListTile.divideTiles(context: context, tiles: [
-                ListTile(
-                  leading: Text(
-                    '用户协议',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                ),
-                ListTile(
-                  leading: Text(
-                    '隐私政策',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                ),
-                ListTile(
-                  onTap: () {
-                    setState(() {
-                      Alert.show(
-                          context,
-                          NormalContentDialog(
-                            type: NormalTextDialogType.delete,
+        body: Column(
+          children: [
+            Container(
+                height: 350.w,
+                color: Colors.white,
+                child: Column(
+                  children: ListTile.divideTiles(context: context, tiles: [
+                    ListTile(
+                      leading: Text(
+                        '用户协议',
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
+                      trailing: const Icon(Icons.keyboard_arrow_right),
+                    ),
+                    ListTile(
+                      leading: Text(
+                        '隐私政策',
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
+                      trailing: const Icon(Icons.keyboard_arrow_right),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        setState(() {
+                          Alert.show(
+                              context,
+                              NormalContentDialog(
+                                type: NormalTextDialogType.delete,
                             title: '发现新版本',
                             content: const Text('是否前往下载新版本？'),
                             items: const ['取消'],
@@ -66,27 +68,48 @@ class _AboutPageState extends State<AboutPage> {
                               //Value = false;
                               //(Value);
                             },
-                            deleteListener: () {
-                              Alert.dismiss(context);
-                              //Value = true;
-                              //(Value);
-                            },
-                          ));
-                    });
-                  },
-                  leading: Text(
-                    '版本号',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  trailing: Text(
-                    '1.1.0(有新版本)',
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize28,
-                        color: BaseStyle.color999999),
-                  ),
+                                deleteListener: () {
+                                  Alert.dismiss(context);
+                                  //Value = true;
+                                  //(Value);
+                                },
+                              ));
+                        });
+                      },
+                      leading: Text(
+                        '版本号',
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
+                      trailing: Text(
+                        '1.1.0(有新版本)',
+                        style: TextStyle(
+                            fontSize: BaseStyle.fontSize28,
+                            color: BaseStyle.color999999),
+                      ),
+                    ),
+                  ]).toList(),
+                )),
+            const Spacer(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Copyright© 2021-2022',
+                  style: TextStyle(
+                      fontSize: BaseStyle.fontSize24,
+                      color: BaseStyle.color999999),
                 ),
-              ]).toList(),
-            )));
+                Text(
+                  '云云问车 版权所有',
+                  style: TextStyle(
+                      fontSize: BaseStyle.fontSize24,
+                      color: BaseStyle.color999999),
+                ),
+              ],
+            ),
+            32.hb
+          ],
+        ));
   }
 
   //列表
