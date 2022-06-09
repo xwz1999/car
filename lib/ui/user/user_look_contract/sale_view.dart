@@ -1,11 +1,8 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';
-
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -29,8 +26,8 @@ class _SaleViewState extends State<SaleView>
   int _page = 1;
   final int _size = 10;
   @override
-  // ignore: must_call_super
   Widget build(BuildContext context) {
+    super.build(context);
     return EasyRefresh.custom(
         firstRefresh: true,
         controller: widget.refreshController,

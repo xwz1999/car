@@ -52,9 +52,9 @@ class _SingleImagePickWidgetState extends State<SingleImagePickWidget> {
     return GestureDetector(
       onTap: () async {
         var value = await CloudImagePicker.pickSingleImage(title: '选择图片');
-        print(value);
+        //print(value);
         _files.add(value!);
-        print(_files.length);
+        //print(_files.length);
         widget.onChanged(_files);
         setState(() {});
       },

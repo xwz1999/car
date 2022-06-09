@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/pay/wx_pay_model.dart';
@@ -20,9 +18,13 @@ import '../../../widget/button/colud_check_radio.dart';
 class AssessmentPayPage extends StatefulWidget {
   final String price;
   final int count;
+  final String title;
 
   const AssessmentPayPage(
-      {super.key, required this.price, required this.count});
+      {super.key,
+      required this.price,
+      required this.count,
+      this.title = '评估次数充值'});
 
   @override
   _AssessmentPayPageState createState() => _AssessmentPayPageState();
@@ -63,7 +65,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
         leading: const CloudBackButton(
           isSpecial: true,
         ),
-        title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
+        title: Text(widget.title, style: Theme.of(context).textTheme.headline6),
       ),
       extendBody: true,
       body: Container(
@@ -71,7 +73,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
         color: const Color.fromRGBO(246, 246, 246, 1),
         child: Column(
           children: [
-            _getPice(),
+            _getPrice(),
             56.hb,
             Container(
               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -96,7 +98,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
                                     child: Image.asset(
                                       payWay[currentValue],
                                       width: 40.w,
-                                      height: 40.w,
+                                      height: 40.h,
                                     ),
                                   ),
                                   20.wb,
@@ -160,7 +162,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
   }
 
 //充值金额
-  _getPice() {
+  _getPrice() {
     return Container(
       padding: EdgeInsets.only(top: 74.w, left: 248.w),
       child: Row(

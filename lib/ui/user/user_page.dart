@@ -8,7 +8,7 @@ import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
 import 'package:cloud_car/ui/user/user_install/system_settings_page.dart';
 import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract_page.dart';
-import 'package:cloud_car/ui/user/user_management/staff_management_page.dart';
+//import 'package:cloud_car/ui/user/user_management/staff_management_page.dart';
 import 'package:cloud_car/ui/user/user_order/myorder_page.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_center_page.dart';
 import 'package:cloud_car/ui/user/user_recommended/user_recommended_page.dart';
@@ -41,8 +41,8 @@ class _UserPageState extends State<UserPage> {
     super.initState();
     _kingCoinUserList
         .add(KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
-    _kingCoinUserList
-        .add(KingCoin(name: '员工管理', url: Assets.icons.userstaffmangement.path));
+    // _kingCoinUserList
+    //     .add(KingCoin(name: '员工管理', url: Assets.icons.userstaffmangement.path));
     _kingCoinUserList
         .add(KingCoin(name: '查看合同', url: Assets.icons.userviewContract.path));
     _kingCoinUserList
@@ -55,7 +55,7 @@ class _UserPageState extends State<UserPage> {
         .add(KingCoin(name: '我的邀约', url: Assets.icons.userInvitation.path));
   }
 
-  late bool bl = true;
+  late bool bl = UserTool.userProvider.userInfo.level < 0;
 
   @override
   void dispose() {
@@ -106,8 +106,8 @@ class _UserPageState extends State<UserPage> {
                       60.hb,
                       //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
                       _shareUser(),
-                      // 32.hb,
-                      // _getBanner(),
+                      32.hb,
+                      _getBanner(),
                       24.hb,
                       _share(),
                     ],
@@ -126,7 +126,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   //type：1 角色名 2 门店名
-  getCiap(String title, int type) {
+  _getChap(String title, int type) {
     return Offstage(
       offstage: title.trim().isEmpty,
       child: Container(
@@ -155,6 +155,7 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const UserAssessmentPage());
             break;
           case '钱包':
+          //Get.to(() => const HomePage());
             Get.to(() => const WalletCertificationPage());
             break;
           case '邀请':
@@ -206,30 +207,30 @@ class _UserPageState extends State<UserPage> {
             top: 16.w,
             child: Stack(
               children: [
-                Container(
-                    width: 112.w,
-                    height: 46.w,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          Assets.images.bubble.path,
-                        ),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: bl
-                        ? Padding(
-                            padding: EdgeInsets.only(bottom: 8.w),
-                            child: Text(
-                              "首月6折",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(color: kForeGroundColor),
+                bl
+                    ? Container(
+                        width: 112.w,
+                        height: 46.w,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              Assets.images.bubble.path,
                             ),
-                          )
-                        : const SizedBox())
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 8.w),
+                          child: Text(
+                            "首月6折",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: kForeGroundColor),
+                          ),
+                        ))
+                    : const SizedBox()
               ],
             ),
           ),
@@ -259,7 +260,7 @@ class _UserPageState extends State<UserPage> {
                     //Get.to(() => const PartnerCenterPage());
                   },
                   child: Text(
-                    "合伙人",
+                    "经纪人",
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
@@ -317,11 +318,11 @@ class _UserPageState extends State<UserPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () async {
-              //print("aaaaa:${re.data['count']}");
+              //print(":${re.data['count']}");
               await Get.to(() => const BasicInformationPage());
               setState(() {});
             },
-            child: Container(
+            child: ColoredBox(
               color: Colors.transparent,
               child: Row(
                 children: [
@@ -345,10 +346,10 @@ class _UserPageState extends State<UserPage> {
                       const Padding(padding: EdgeInsets.only(top: 5)),
                       Row(
                         children: [
-                          getCiap(
+                          _getChap(
                               UserTool.userProvider.userInfo.store.roleName, 1),
                           16.wb,
-                          getCiap(
+                          _getChap(
                               UserTool.userProvider.userInfo.store.storeName, 2)
                         ],
                       )
@@ -423,22 +424,22 @@ class _UserPageState extends State<UserPage> {
       itemCount: _kingCoinUserList.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         //横轴元素个数
-        crossAxisCount: 4,
+        crossAxisCount: 3,
         //纵轴间距
         mainAxisSpacing: 4,
-        //横纵轴间距
+        //横轴间距
         crossAxisSpacing: 10,
         //子组件宽高长度比例
-        childAspectRatio: 1,
+        childAspectRatio: 1.5,
       ),
       itemBuilder: (BuildContext context, int index) {
-        return _kingCoinzItem(
+        return _kingCoinItem(
             _kingCoinUserList[index].name, _kingCoinUserList[index].url);
       },
     );
   }
 
-  _kingCoinzItem(String name, String url) {
+  _kingCoinItem(String name, String url) {
     return GestureDetector(
       onTap: () {
         switch (name) {
@@ -448,8 +449,8 @@ class _UserPageState extends State<UserPage> {
           case '关于云云':
             Get.to(() => const AboutPage());
             break;
-          case '员工管理':
-            Get.to(() => const StaffManagementPage());
+            // case '员工管理':
+            //   Get.to(() => const StaffManagementPage());
             break;
           case '查看合同':
             Get.to(() => const ConsignmentContractPage());
@@ -465,7 +466,7 @@ class _UserPageState extends State<UserPage> {
             break;
         }
       },
-      child: Container(
+      child: ColoredBox(
         color: Colors.transparent,
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Image.asset(

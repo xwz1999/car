@@ -37,7 +37,7 @@ class Staff extends Equatable {
   const Staff(this.id, this.name, this.phone, this.auditStatus, this.roleName,
       this.gender);
 
-  Gender get genderEM => Gender.getValue(gender);
+  Gender1 get genderEM => Gender1.getValue(gender);
 
   Role get roleEm => Role.getValue(roleName);
 

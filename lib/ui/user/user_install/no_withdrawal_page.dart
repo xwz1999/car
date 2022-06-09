@@ -77,7 +77,7 @@ class _NoWithdrawalPageState extends State<NoWithdrawalPage> {
                                     color: BaseStyle.color333333)),
                             TextSpan(
                                 text:
-                                    '（¥${UserTool.userProvider.userInfo.data.balance}',
+                                    '（¥${UserTool.userProvider.userInfo.data.balance}）',
                                 style: TextStyle(
                                     fontSize: 12 * 2.sp,
                                     color: BaseStyle.color333333))

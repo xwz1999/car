@@ -125,18 +125,18 @@ class NormalTextDialog extends Dialog {
             onTap: () {
               listener(index);
             },
-            child: Container(
-        decoration: BoxDecoration(
+            child: DecoratedBox(
+          decoration: BoxDecoration(
               border: index == items.length - 1 &&
                       type == NormalTextDialogType.normal
                   ? null
                   : Border(
                       right: BorderSide(
                           color: _Styles.lineColor, width: 0.5 * 2.w))),
-        child: Container(
-          color: Colors.transparent,
-          padding: EdgeInsets.only(top: 40.w,bottom: 22.w),
-          child: Text(
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.only(top: 40.w, bottom: 22.w),
+            child: Text(
               title,style: type == NormalTextDialogType.remind
               ? _Styles.remindTextStyle
               : _Styles.normalTextStyle,

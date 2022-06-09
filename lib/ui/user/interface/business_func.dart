@@ -10,8 +10,7 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 class BusinessFunc {
   ///组织架构
   static Future<List<StoreallModel>> getStoreall() async {
-    BaseModel res =
-        await apiClient.request(API.storeManagement.storeAll, data: {});
+    var res = await apiClient.request(API.storeManagement.storeAll, data: {});
 
     if ((res.data as List).isEmpty) return [];
     return (res.data as List).map((e) => StoreallModel.fromJson(e)).toList();

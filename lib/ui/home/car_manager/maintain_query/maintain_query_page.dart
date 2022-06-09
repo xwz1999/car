@@ -1,8 +1,11 @@
 import 'package:cloud_car/ui/home/car_manager/maintain_query/maintain_query_history_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+
+import '../../../../widget/no_data_widget.dart';
+import '../../../user/user_assessment/assessment_pay_page.dart';
 
 ///车辆维保查询
 class MaintainQueryPage extends StatefulWidget {
@@ -13,6 +16,15 @@ class MaintainQueryPage extends StatefulWidget {
 }
 
 class _MaintainQueryPageState extends State<MaintainQueryPage> {
+  List maintainList = [];
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
+
+  @override
+  void dispose() {
+    _easyRefreshController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +55,7 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
           ],
           backgroundColor: const Color(0xFFF6F6F6),
           title: Text(
-            '维护查询',
+            '维保查询',
             style: Theme.of(context).textTheme.headline4,
           ),
         ),
@@ -85,15 +97,14 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           '¥',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize:28.sp),
+                          style:
+                          TextStyle(color: Colors.white, fontSize: 28.sp),
                         ),
                         Text(
                           '1.00',
@@ -118,7 +129,7 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
             Container(
               decoration: BoxDecoration(
                   borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(16.w)),
+                  BorderRadius.vertical(top: Radius.circular(16.w)),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -144,7 +155,13 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
                     height: 84.w,
                     color: kForeGroundColor,
                     child: GestureDetector(
-                      onTap: () async {},
+                      onTap: () async {
+                        Get.to(() => const AssessmentPayPage(
+                              title: '维保查询',
+                              price: '1.00',
+                              count: 1,
+                            ));
+                      },
                       child: Container(
                         width: double.infinity,
                         margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -168,6 +185,31 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
                       ),
                     ),
                   ),
+                  64.hb,
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '—— 维保查询记录 ——',
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                  ),
+                  32.hb,
+                  Expanded(
+                    child: EasyRefresh(
+                      firstRefresh: true,
+                      header: MaterialHeader(),
+                      controller: _easyRefreshController,
+                      onRefresh: () async {
+                        setState(() {});
+                      },
+                      child: maintainList.isEmpty
+                          ? const NoDataWidget(
+                              text: '暂无相关车辆信息',
+                              paddingTop: 32,
+                            )
+                          : const Text(''),
+                    ),
+                  )
                 ],
               ),
             ),

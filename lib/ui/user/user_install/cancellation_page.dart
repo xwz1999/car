@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element
-
 import 'package:cloud_car/ui/user/user_install/validation_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
@@ -30,54 +28,54 @@ class _CancellationPageState extends State<CancellationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          backgroundColor: kForeGroundColor, //头部颜色
-          title: Text('注销账号',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
+      appBar: AppBar(
+        leading: const CloudBackButton(
+          isSpecial: true,
         ),
-        backgroundColor: kForeGroundColor, //内容颜色
-        extendBody: true,
-        body: SizedBox(
-          width: 750.w,
-          child: Column(
-            children: [
-              98.hb,
-              _getWarning(),
-              40.hb,
-              Row(
-                children: [
-                  Padding(padding: EdgeInsets.only(left: 50.w)),
-                  _getBody(),
-                  // SizedBox(
-                  //   width: 50.w,
-                  // )
-                ],
-              ),
-              const Spacer(),
-              CloudBottomButton(
-                  text: '我了解风险,下一步',
-                  onTap: () {
-                    Get.to(() => const ValidationPage());
-                  }),
-              32.hb,
-            ],
-          ),
-        )
+        backgroundColor: kForeGroundColor, //头部颜色
+        title: Text('注销账号',
+            style: TextStyle(
+                color: BaseStyle.color111111,
+                fontSize: BaseStyle.fontSize36,
+                fontWeight: FontWeight.bold)),
+        //leading:  Container(width: 10.w, child: const CloudBackButton()),
+      ),
+      backgroundColor: kForeGroundColor,
+      //内容颜色
+      extendBody: true,
+      body: SizedBox(
+        width: 750.w,
+        child: Column(
+          children: [
+            98.hb,
+            _getWarning(),
+            40.hb,
+            Row(
+              children: [
+                Padding(padding: EdgeInsets.only(left: 50.w)),
+                _getBody(),
+                // SizedBox(
+                //   width: 50.w,
+                // )
+              ],
+            ),
+            64.hb,
+            CloudBottomButton(
+                text: '我了解风险,下一步',
+                onTap: () {
+                  Get.to(() => const ValidationPage());
+                }),
+          ],
+        ),
+      ),
 
-        // Column(
-        //   color: Colors.red,
+      // Column(
+      //   color: Colors.red,
 
-        //   children[],
+      //   children[],
 
-        // ))
-        );
+      // ))
+    );
   }
 
 //
@@ -129,17 +127,17 @@ class _CancellationPageState extends State<CancellationPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Padding(padding: EdgeInsets.symmetric(vertical: 20.w)),
-              _getText('1、账号内公司相关信息'),
+              getText('1、账号内公司相关信息'),
               20.hb,
-              _getText('2、发布车辆信息'),
+              getText('2、发布车辆信息'),
               20.hb,
-              _getText('3、邀请客户信息'),
+              getText('3、邀请客户信息'),
               20.hb,
-              _getText('4、成交合同数据 '),
+              getText('4、成交合同数据 '),
               20.hb,
-              _getText('5、钱包余额'),
+              getText('5、钱包余额'),
               20.hb,
-              _getText('6、绑定银行卡信息')
+              getText('6、绑定银行卡信息')
             ],
           ),
         )
@@ -148,8 +146,7 @@ class _CancellationPageState extends State<CancellationPage> {
   }
 
 //
-//
-  _getText(String text) {
+  getText(String text) {
     return SizedBox(
       child: Text(
         text,

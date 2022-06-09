@@ -30,7 +30,7 @@ class _EditCardInfoItemState extends State<EditCardInfoItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: Colors.white,
       child: ListView(
         shrinkWrap: true,

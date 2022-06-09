@@ -59,9 +59,9 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
         body: Column(
           children: [
             16.hb,
-            _getView(),
+            getView(),
             24.hb,
-            _getBottom(),
+            getBottom(),
             24.hb,
             Row(
               children: [
@@ -91,7 +91,7 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
   }
 
 //按钮
-  _getBottom() {
+  getBottom() {
     return GestureDetector(
       onTap: () async {
         var cancel = CloudToast.loading;
@@ -117,8 +117,8 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
   }
 
   ///
-  _getView() {
-    return Container(
+  getView() {
+    return ColoredBox(
       color: Colors.white,
       child: ListView.separated(
         shrinkWrap: true,

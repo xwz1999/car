@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:cloud_car/model/configuration_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
@@ -24,7 +22,7 @@ ConfigurationModel bankCard =
     [ConfigurationModel(subtitle: '', title: '')] as ConfigurationModel;
 final List<int> _selectIndex = [];
 final List<ConfigurationModel> _chooseModels = [];
-// List moddels = [
+// List models = [
 //   {
 //     'icon': Assets.icons.agricultural.path,
 //     'title': '中国农业银行(1278)',
@@ -40,7 +38,7 @@ final List<ConfigurationModel> _chooseModels = [];
 // ];
 List<ConfigurationModel> moddels = [
   ConfigurationModel(
-      subtitle: Assets.icons.agricultural.path, title: '中国农业银行(1278)'),
+      subtitle: Assets.icons.agricultural.path, title: '中国农业银行 (1278)'),
   ConfigurationModel(subtitle: Assets.icons.bank1.path, title: '中国建设银行（1278）'),
   ConfigurationModel(subtitle: Assets.icons.bank2.path, title: '中国建设银行（1278）'),
 ];

@@ -177,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
               //   ],
               // ),
               56.hb,
-              Container(
+              DecoratedBox(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.w),
                   gradient: const LinearGradient(

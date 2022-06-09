@@ -179,7 +179,7 @@ class _CarOwnerPageState extends State<CarOwnerPage> {
     String title,
     Widget content,
   ) {
-    return Container(
+    return ColoredBox(
       color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

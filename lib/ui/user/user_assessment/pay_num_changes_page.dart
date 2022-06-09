@@ -162,7 +162,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
           children: [
             Container(
               width: 750.w,
-              height: 96.w,
+              height: 96.h,
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 22.w),
               decoration: BoxDecoration(
                   color: kForeGroundColor,
@@ -204,12 +204,12 @@ class _PayChangesPageState extends State<PayChangesPage> {
             ),
             Offstage(
                 offstage: _foldStatus[number], //num % 2 != 0,
-                child: getJubge(models, number))
+                child: _getJudge(models, number))
           ],
         ));
   }
 
-  getJubge(List<HistoryModel> models, int number) {
+  _getJudge(List<HistoryModel> models, int number) {
     // number1.clear();
     // for (var i = 0; i < payNumList.length; i++) {
     //   if (timeList1[number] ==
@@ -225,13 +225,13 @@ class _PayChangesPageState extends State<PayChangesPage> {
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return getSc(models[index]);
+        return _getSc(models[index]);
       },
       itemCount: models.length,
     );
   }
 
-  getSc(HistoryModel model) {
+  _getSc(HistoryModel model) {
     switch (model.type) {
       case 2:
       case 3:

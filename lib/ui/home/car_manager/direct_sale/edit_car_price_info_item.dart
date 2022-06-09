@@ -26,7 +26,7 @@ class _EditCarPriceInfoItemState extends State<EditCarPriceInfoItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: Colors.white,
       child: ListView(
         shrinkWrap: true,

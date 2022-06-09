@@ -62,7 +62,9 @@ class _MyOrderPageState extends State<MyOrderPage> {
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrderPage());
+              Get.to(() => const SalesOrderPage(
+                    StatusNum: '售车订单',
+                  ));
             },
             child: ManagerContainerItem(
               text: '售车订单',
@@ -71,7 +73,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrderPage());
+              Get.to(() => const SalesOrderPage(StatusNum: '个人寄卖'));
             },
             child: ManagerContainerItem(
               text: '个人寄卖',
@@ -80,7 +82,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrderPage());
+              Get.to(() => const SalesOrderPage(StatusNum: '租车订单'));
             },
             child: ManagerContainerItem(
               text: '租车订单',
@@ -89,7 +91,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrderPage());
+              Get.to(() => const SalesOrderPage(StatusNum: '车商寄卖'));
             },
             child: ManagerContainerItem(
               text: '车商寄卖',
@@ -98,7 +100,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrderPage());
+              Get.to(() => const SalesOrderPage(StatusNum: '叫车订单'));
             },
             child: ManagerContainerItem(
               text: '叫车订单',
@@ -109,7 +111,6 @@ class _MyOrderPageState extends State<MyOrderPage> {
       ),
     );
   }
-//
 // _getItem(String text) {
 //   return Column(
 //     crossAxisAlignment: CrossAxisAlignment.start,

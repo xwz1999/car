@@ -26,8 +26,8 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
   }
 
   List timeList = [
-    {'time': '12月2日 12:00:09', 'pice': '¥15,000.00', 'bankname': '工商银行'},
-    {'time': '12月20日 14:00:09', 'pice': '¥15,000.00', 'bankname': '工商银行'}
+    {'time': '12月2日 12:00:09', 'price': '¥15,000.00', 'bankName': '工商银行'},
+    {'time': '12月20日 14:00:09', 'price': '¥15,000.00', 'bankName': '工商银行'}
   ];
 
   @override
@@ -90,12 +90,12 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
                         ],
                       ),
                     ),
-                    getList()
+                    _getList()
                   ],
                 )));
   }
 
-  getList() {
+  _getList() {
     return Offstage(
       offstage: num.isOdd,
       child: SizedBox(
@@ -105,8 +105,8 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
               return GestureDetector(
                   onTap: () {
                     Get.to(() => WithdrawalPage(
-                        pice: timeList[index]['pice'],
-                        bankName: timeList[index]['bankname'],
+                        price: timeList[index]['price'],
+                        bankName: timeList[index]['bankName'],
                         time: timeList[index]['time']));
                   },
                   child: Container(
@@ -136,7 +136,7 @@ class _WithdrawalRecordPageState extends State<WithdrawalRecordPage>
                         Row(
                           children: [
                             Text(
-                              timeList[index]['pice'],
+                              timeList[index]['price'],
                               style: Theme.of(context).textTheme.subtitle2,
                             ),
                             SizedBox(

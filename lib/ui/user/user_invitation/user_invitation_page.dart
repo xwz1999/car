@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
 import 'package:cloud_car/ui/home/func/task_func.dart';
@@ -22,7 +20,15 @@ class UserInvitationPage extends StatefulWidget {
 class _UserInvitationPageState extends State<UserInvitationPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List<TaskInviteListModel> invitationList = [];
+  List<TaskInviteListModel> invitationList = [
+    // const TaskInviteListModel(
+    //     id: null,
+    //     customerNickname: '',
+    //     inviteAt: null,
+    //     customerId: null,
+    //     type: null
+    // )
+  ];
 
   List<TaskInviteListModel> subscribeList = [];
   final EasyRefreshController _invitationRefreshController =
@@ -194,7 +200,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
                         fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
-                  getIncitation(model)
+                  _getInvitationStatus(model)
                 ],
               ),
               32.hb,
@@ -228,7 +234,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
                     ),
                     48.wb,
                     Text(
-                      hourLag <= 24 && hourLag > 0 ? '小于${hourLag}小时' : '',
+                      hourLag <= 24 && hourLag > 0 ? '小于$hourLag小时' : '',
                       style: TextStyle(
                           color: BaseStyle.color333333,
                           fontSize: BaseStyle.fontSize28),
@@ -292,7 +298,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
                         color: const Color(0xFF333333), fontSize: 32.w),
                   ),
                   const Spacer(),
-                  getSubscribe(model)
+                  _getSubscribeStatus(model)
                 ],
               ),
               32.hb,
@@ -326,7 +332,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
                     ),
                     48.wb,
                     Text(
-                      hourLag <= 24 && hourLag > 0 ? '小于${hourLag}小时' : '',
+                      hourLag <= 24 && hourLag > 0 ? '小于$hourLag小时' : '',
                       style: TextStyle(
                           color: BaseStyle.color333333,
                           fontSize: BaseStyle.fontSize28),
@@ -361,7 +367,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
   }
 
   ///邀约状态
-  getIncitation(TaskInviteListModel model) {
+  _getInvitationStatus(TaskInviteListModel model) {
     var subscribeTime =
         DateTime.fromMillisecondsSinceEpoch(model.inviteAt * 1000);
     var newTime = DateTime.now();
@@ -383,7 +389,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
   }
 
   ///预约状态
-  getSubscribe(TaskInviteListModel model) {
+  _getSubscribeStatus(TaskInviteListModel model) {
     var subscribeTime =
         DateTime.fromMillisecondsSinceEpoch(model.inviteAt * 1000);
     var newTime = DateTime.now();

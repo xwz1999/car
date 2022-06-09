@@ -1,10 +1,7 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
-import 'package:common_utils/common_utils.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 ///车辆维保查询详情
 class MaintainQueryHistoryDetailPage extends StatefulWidget {
@@ -18,7 +15,7 @@ class MaintainQueryHistoryDetailPage extends StatefulWidget {
 class _MaintainQueryHistoryDetailPageState extends State<MaintainQueryHistoryDetailPage> {
 
 
-  List<MaintainHistoryDetailModel> _list = [
+  final List<MaintainHistoryDetailModel> _list = [
     MaintainHistoryDetailModel(
         id: 123,
         project: '保养',
@@ -64,7 +61,7 @@ class _MaintainQueryHistoryDetailPageState extends State<MaintainQueryHistoryDet
   ];
 
   @override
-  void dispose() {;
+  void dispose() {
     super.dispose();
   }
 
@@ -91,7 +88,7 @@ class _MaintainQueryHistoryDetailPageState extends State<MaintainQueryHistoryDet
                 width: double.infinity,
                 height: 172.w,
                 decoration: BoxDecoration(
-                  color: Color(0xFF134069),
+                  color: const Color(0xFF134069),
                   borderRadius: BorderRadius.circular(8.w),
                 ),
                 child: Row(
@@ -136,17 +133,12 @@ class _MaintainQueryHistoryDetailPageState extends State<MaintainQueryHistoryDet
                 ),
               ),
             ),
-
-
             Padding(
               padding:  EdgeInsets.symmetric(vertical: 28.w,horizontal: 32.w),
-              child: Container(
-
+              child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.w)
-
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.w)),
                 child: Column(
                   children: [
                     Row(

@@ -1,6 +1,7 @@
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/providers/user_provider.dart';
+import 'package:cloud_car/ui/home/car_manager/maintain_query/maintain_query_page.dart';
 import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_func.dart';
@@ -20,10 +21,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:velocity_x/velocity_x.dart';
+
+//import 'package:velocity_x/velocity_x.dart';
 
 import 'car_manager/car_manager_page.dart';
-import 'car_manager/maintain_query/maintain_query_page.dart';
+//import 'car_manager/maintain_query/maintain_query_page.dart';
 import 'car_manager/publish_car/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
 import 'func/car_func.dart';
@@ -61,14 +63,14 @@ class _HomePageState extends State<HomePage>
         .add(KingCoin(name: '客户管理', url: Assets.icons.customerManager.path));
     _kingCoinList
         .add(KingCoin(name: '车辆估值', url: Assets.icons.carValuation.path));
-    _kingCoinList.add(KingCoin(name: '车辆发布', url: Assets.icons.carPush.path));
+    //_kingCoinList.add(KingCoin(name: '车辆发布', url: Assets.icons.carPush.path));
     _kingCoinList
         .add(KingCoin(name: '车辆按揭', url: Assets.icons.carMortgage.path));
-    _kingCoinList.add(KingCoin(name: '车辆代理', url: Assets.icons.carAgent.path));
+    _kingCoinList.add(KingCoin(name: '车险代理', url: Assets.icons.carAgent.path));
     _kingCoinList
         .add(KingCoin(name: '维护查询', url: Assets.icons.carMaintain.path));
-    _kingCoinList
-        .add(KingCoin(name: '收车(合作)', url: Assets.icons.carRecovery.path));
+    // _kingCoinList
+    //     .add(KingCoin(name: '收车(合作)', url: Assets.icons.carRecovery.path));
   }
 
   @override
@@ -170,13 +172,13 @@ class _HomePageState extends State<HomePage>
         //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             //横轴元素个数
-            crossAxisCount: 4,
+            crossAxisCount: 3,
             //纵轴间距
             mainAxisSpacing: 6,
             //横轴间距
             crossAxisSpacing: 24,
             //子组件宽高长度比例
-            childAspectRatio: 1),
+            childAspectRatio: 1.5),
         itemBuilder: (BuildContext context, int index) {
           //Widget Function(BuildContext context, int index)
           return _kingCoinItem(
@@ -204,11 +206,11 @@ class _HomePageState extends State<HomePage>
             Get.to(() => const CarMortgagePage());
             break;
           case '维护查询':
-            //Get.to(() => const MaintainQueryPage());
+            Get.to(() => const MaintainQueryPage());
             break;
         }
       },
-      child: Container(
+      child: ColoredBox(
         color: Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -231,10 +233,10 @@ class _HomePageState extends State<HomePage>
 
   _getBanner() {
     return Container(
-      width: double.infinity,
-      height: 162.w,
-      padding: EdgeInsets.only(left: 32.w, right: 32.w),
-      child: Image.asset(Assets.images.bannerBg.path),
+      width: 686,
+      height: 172.w,
+      //padding: EdgeInsets.only(left: 32.w, right: 32.w),
+      child: Image.asset(Assets.images.newOpportunities.path),
     );
   }
 

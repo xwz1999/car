@@ -1,5 +1,3 @@
-// ignore_for_file: file_names, avoid_print
-
 import 'dart:io';
 
 import 'package:cloud_car/model/configuration_model.dart';
@@ -79,7 +77,7 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
                   Expanded(
                     child: ListView.separated(
                         itemBuilder: (context, index) {
-                          return _getItem(index, moddels[index]);
+                          return getItem(index, moddels[index]);
                         },
                         separatorBuilder: (BuildContext context, int index) {
                           return Container(
@@ -197,8 +195,8 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
               bool res = await FeedbackFunc.getFeedback(
                   moddels[_selectIndex.first].title!, content, phone, img);
               if (res) {
-                print(
-                    '标题+${moddels[_selectIndex.first].title}+文本$content+手机 $phone+图片+$img');
+                // print(
+                //     '标题+${moddels[_selectIndex.first].title}+文本$content+手机 $phone+图片+$img');
                 CloudToast.show('提交成功');
                 Get.to(() => const VehiclesReleasePage());
               }
@@ -210,7 +208,7 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
     );
   }
 
-  _getItem(
+  getItem(
     int index,
     ConfigurationModel model,
   ) {

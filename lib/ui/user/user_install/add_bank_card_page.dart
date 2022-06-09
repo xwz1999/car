@@ -5,7 +5,7 @@ import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -51,7 +51,7 @@ class _AddCardPageState extends State<AddCardPage> {
         body: Column(
           children: [
             96.hb,
-            _getTitle(),
+            getTitle(),
             56.hb,
             _getBody(),
             72.hb,
@@ -65,7 +65,7 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
 //标题
-  _getTitle() {
+  getTitle() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -109,7 +109,7 @@ class _AddCardPageState extends State<AddCardPage> {
               ),
               SizedBox(
                 width: 300.w,
-                height: 35.w,
+                height: 35.h,
                 child: TextField(
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(bottom: 23.w), //文字与边框的距离
@@ -139,12 +139,12 @@ class _AddCardPageState extends State<AddCardPage> {
               ),
               SizedBox(
                 width: 300.w,
-                height: 35.w,
+                height: 35.h,
                 child: TextField(
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(bottom: 23.w), //文字与边框的距离
                       border: InputBorder.none, //去掉下划线
-                      hintText: '持卡人本热银行卡号',
+                      hintText: '持卡人本人银行卡号',
                       hintStyle: Theme.of(context)
                           .textTheme
                           .subtitle2
@@ -155,7 +155,7 @@ class _AddCardPageState extends State<AddCardPage> {
               164.wb,
               SizedBox(
                 width: 32.w,
-                height: 32.w,
+                height: 32.h,
                 child:
                     GestureDetector(child: Image.asset(Assets.icons.scan.path)),
               ),
@@ -163,7 +163,7 @@ class _AddCardPageState extends State<AddCardPage> {
           ),
           52.hb,
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: 150.w,
@@ -184,14 +184,14 @@ class _AddCardPageState extends State<AddCardPage> {
                       img = urls;
                       // print(urls);
                     }
-                    print(img);
+                    //print(img);
                     // guaranteeSlip = value!.path;
                     // print(imagePath);
                     setState(() {});
                   },
                   child: SizedBox(
                     width: 200.w,
-                    height: 150.w,
+                    height: 150.h,
                     child: img == ''
                         ? Image.asset(Assets.images.addcar.path)
                         : CloudImageNetworkWidget.car(

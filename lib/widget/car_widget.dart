@@ -21,7 +21,7 @@ class _CarWidgetState extends State<CarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       //height: 88.w,
       decoration: BoxDecoration(
           color: kForeGroundColor, borderRadius: BorderRadius.circular(16.w)),

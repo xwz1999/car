@@ -34,7 +34,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
 
   @override
   void initState() {
-    print(widget.type);
+    //print(widget.type);
     super.initState();
   }
 
@@ -50,6 +50,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
         _list = await CustomerFunc.getCustomerTrail(
           widget.customerId,
         );
+
         setState(() {});
       },
       //emptyWidget: const NoDataWidget(text: '暂无客户轨迹信息',),
@@ -364,7 +365,8 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
               widget.type == 3
                   ? GestureDetector(
                       onTap: () {
-                        print('立即导航');
+                        //_showMap;
+                        //print('立即导航');
                       },
                       child: Row(
                         children: [
@@ -404,7 +406,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                   ? Container(
                       width: 560.w,
                       height: 200.w,
-                      child: _getCarItem(
+                      child: getCarItem(
                         model.invite.mainPhoto,
                         model.invite.modelName,
                         DateUtil.formatDate(
@@ -422,7 +424,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                   : Container(
                       width: 560.w,
                       height: 200.w,
-                      child: _getCarItem(
+                child: getCarItem(
                         '',
                         model.reserve.modelName,
                         DateUtil.formatDate(
@@ -441,7 +443,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
           );
   }
 
-  _getCarItem(
+  getCarItem(
       String url, String name, String time, String distance, String price) {
     return Container(
       padding: EdgeInsets.only(left: 24.w),
@@ -481,9 +483,9 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                 16.hb,
                 Row(
                   children: [
-                    _getTextView(time),
+                    getTextView(time),
                     16.wb,
-                    _getTextView(distance),
+                    getTextView(distance),
                   ],
                 ),
                 16.hb,
@@ -511,7 +513,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
     );
   }
 
-  _getTextView(String text) {
+  getTextView(String text) {
     return text.isNotEmpty
         ? Container(
             decoration: BoxDecoration(
@@ -530,4 +532,50 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
           )
         : const SizedBox();
   }
+
+// ///直接进入地图组件
+// _gotoMap() async {
+//   final availableMaps = await MapLauncher.installedMaps;
+//   print(availableMaps);
+//   await availableMaps.first.showMarker(
+//     coords: Coords(31.233568, 121.505504),
+//     title: 'Beach',
+//   );
+// }
+//
+// ///显示手机里所有的地图软件
+// _showMap() async {
+//   try {
+//     final title = 'Beach';
+//     final coords = Coords(31.233568, 121.505504);
+//     final availableMaps = await MapLauncher.installedMaps;
+//     print(availableMaps);
+//     showModalBottomSheet(
+//         context: context,
+//         builder: (context) {
+//           return SafeArea(
+//               child: SingleChildScrollView(
+//             child: Container(
+//               child: Wrap(
+//                 children: [
+//                   for (var map in availableMaps)
+//                     ListTile(
+//                       onTap: () =>
+//                           map.showMarker(coords: coords, title: title),
+//                       title: Text(map.mapName),
+//                       leading: Image(
+//                         image: Assets.icons.map,
+//                         height: 30.0,
+//                         width: 30.0,
+//                       ),
+//                     )
+//                 ],
+//               ),
+//             ),
+//           ));
+//         });
+//   } catch (e) {
+//     print(e);
+//   }
+// }
 }

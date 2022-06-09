@@ -1,5 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/constants/app_theme.dart';
+//import 'package:cloud_car/constants/app_theme.dart';
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
@@ -41,7 +41,8 @@ class _PushCarPageState extends State<PushCarPage> {
   late CarDistinguishModel? carInfoModel;
   final PublishCarInfo _publishCarInfo = PublishCarInfo();
   final TextEditingController _viNumController = TextEditingController();
-  DateTime? _firstDate;
+
+  //DateTime? _firstDate;
   final TextEditingController _carNumController = TextEditingController();
   final TextEditingController _engineController = TextEditingController();
   final TextEditingController _mileController = TextEditingController();
@@ -379,9 +380,10 @@ class _PushCarPageState extends State<PushCarPage> {
                       title: '车辆来源',
                       items: CarSource.values.map((e) => e.sourceName).toList(),
                       onConfirm: (str, index) {
-                        if (index == null) {
-                          return;
-                        }
+                        if (index == null) return;
+                        // if (index == null) {
+                        //   return;
+                        // }
                         _publishCarInfo.carSource =
                             CarSource.values.toList()[index].sourceNum;
                         Get.back();
@@ -403,7 +405,7 @@ class _PushCarPageState extends State<PushCarPage> {
 
   _textarea(String title, String hint, String content,
       TextEditingController contentController, Function(String) callback) {
-    return Container(
+    return ColoredBox(
       color: Colors.transparent,
       child: Row(
         children: [

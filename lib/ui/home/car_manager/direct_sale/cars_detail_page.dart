@@ -4,8 +4,6 @@ import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_page.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/off_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
@@ -580,7 +578,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
   //信息栏
   _informations() {
     return SizedBox(
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.w),
             color: Colors.white,
@@ -734,19 +732,20 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // Expanded(
+          //     child: _getBottom(
+          //         widget.isSelf
+          //             ? Assets.icons.editor.path
+          //             : Assets.icons.noEditor.path,
+          //         '编辑', () {
+          //   widget.isSelf ? Get.to(() => const EditCarPage()) : empty();
+          // })),
           Expanded(
               child: _getBottom(
-                  widget.isSelf
-                      ? Assets.icons.editor.path
-                      : Assets.icons.noEditor.path,
-                  '编辑', () {
-            widget.isSelf ? Get.to(() => const EditCarPage()) : () {};
-          })),
-          Expanded(
-              child: _getBottom(
-                  !widget.isSelf
-                      ? Assets.icons.noTransmission.path
-                      : Assets.icons.transmission.path,
+                  // !widget.isSelf
+                  //     ? Assets.icons.noTransmission.path
+                  //     : Assets.icons.transmission.path,
+                  Assets.icons.transmission.path,
                   '调价', () {
             Get.to(() => const ModifyPricePage());
           })),
@@ -756,18 +755,18 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                 ? Get.to(() => SellCarOrderPage(
                       carModel: widget.carListModel,
                     ))
-                : () {};
+                : empty();
 
             //Get.to(() => const InitiateContractPage());
           })),
-          Expanded(
-              child: _getBottom(
-                  !widget.isSelf
-                      ? Assets.icons.noDownload.path
-                      : Assets.icons.download.path,
-                  '下架/退库', () {
-            widget.isSelf ? Get.to(() => const OffCarPage()) : () {};
-          })),
+          // Expanded(
+          //     child: _getBottom(
+          //         !widget.isSelf
+          //             ? Assets.icons.noDownload.path
+          //             : Assets.icons.download.path,
+          //         '下架/退库', () {
+          //       widget.isSelf ? Get.to(() => const OffCarPage()) : empty();
+          // })),
         ],
       ),
     );
@@ -861,7 +860,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
-        ('点击$index');
+        //('点击$index');
       },
       //布局方法
       //用户进行操作时停止自动翻页
@@ -870,4 +869,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       loop: true,
     );
   }
+
+  empty() {}
 }

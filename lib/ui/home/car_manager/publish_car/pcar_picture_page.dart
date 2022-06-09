@@ -34,7 +34,6 @@ class CarPicturePage extends StatefulWidget {
 class _CarPicturePageState extends State<CarPicturePage> {
   final ValueNotifier<BusinessPushModel> businessPushModel =
       ValueNotifier(BusinessPushModel.init);
-
   final ValueNotifier<CarPhotoModel> carPhotoModel =
       ValueNotifier(CarPhotoModel.init);
 

@@ -27,7 +27,6 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
   final List<ConsignmentListModel> _saleList = [];
 
   @override
-  @override
   void initState() {
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     super.initState();
@@ -46,9 +45,7 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
     super.build(context);
     return Scaffold(
         // appBar: AppBar(
-
         // )
-
         // AppBar(
         //   toolbarHeight: 88.w,
         //   backgroundColor: kForeGroundColor,
@@ -89,9 +86,10 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
               callback: (String text) {
                 //sortModel.value.name = text;
                 _refreshController.callRefresh();
+              
                 setState(() {});
               },
-              tips: '请输入客户名称',
+              tips: '合同编号/签订人姓名',
               title: Container(
                 alignment: Alignment.center,
                 child: TabBar(

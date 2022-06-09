@@ -53,6 +53,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
   //   });
   // }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -72,7 +73,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
         body: Container(
           color: bodyColor,
           margin: EdgeInsets.only(top: 16.w),
-          child: Container(
+          child: ColoredBox(
             color: Colors.white,
             child: ListView(
               shrinkWrap: true,
@@ -99,7 +100,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                   ),
                   trailing: SizedBox(
                       width: 40.w,
-                      height: 40.w,
+                      height: 40.h,
                       child: const Icon(
                         Icons.keyboard_arrow_right,
                       )),
@@ -260,7 +261,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                   ),
                   trailing: SizedBox(
                       width: 40.w,
-                      height: 40.w,
+                      height: 40.h,
                       child: const Icon(
                         Icons.keyboard_arrow_right,
                       )),
@@ -271,7 +272,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                         builder: (BuildContext context) {
                           return Container(
                             width: double.infinity,
-                            height: 1000.w,
+                            height: 1000.h,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:
@@ -281,51 +282,45 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                 32.hb,
                                 Row(
                                   children: [
-                                    30.wb,
-                                    GestureDetector(
-                                      child: SizedBox(
-                                        child: Text(
-                                          '取消',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2
-                                              ?.copyWith(
-                                                  color: BaseStyle.color999999),
+                                    32.wb,
+                                    _buildButton(
+                                      title: '取消',
+                                      onPressed: () => Navigator.pop(context),
+                                      color: Colors.black26,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        '修改姓名',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: const Color(0xFF111111),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 32.sp,
                                         ),
                                       ),
                                     ),
-                                    224.wb,
-                                    Text(
-                                      '修改名字',
-                                      style: TextStyle(
-                                          color: const Color(0xFF111111),
-                                          fontSize: 32.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    210.wb,
-                                    GestureDetector(
-                                      onTap: () async {
+                                    _buildButton(
+                                      title: '确定',
+                                      onPressed: () async {
+                                        //print(gender);
                                         var res = await User.getUserUpdateName(
                                           name,
                                         );
+                                        UserTool.userProvider.userInfo
+                                            .nickname = name;
+
                                         if (res) {
                                           BotToast.showText(text: '修改名字成功');
-                                          Navigator.pop(context);
+
+                                          Get.back();
                                         }
                                         await UserTool.userProvider
                                             .updateUserInfo();
                                         setState(() {});
                                       },
-                                      child: Text(
-                                        '确认',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2
-                                            ?.copyWith(
-                                                color: const Color(0xFF027AFF)),
-                                      ),
+                                      color: Colors.blue,
                                     ),
-                                    30.wb,
+                                    32.wb,
                                   ],
                                 ),
                                 40.hb,
@@ -354,7 +349,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                         child: TextField(
                                           onChanged: (text) {
                                             name = text;
-                                            print(name);
+                                            //print(name);
                                           },
                                           decoration: InputDecoration(
                                             contentPadding:
@@ -383,15 +378,16 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                 TextEditItemWidget(
                   isBold: true,
                   title: '性别 ',
+                  editor: false,
                   endIcon: true,
                   tips: '请选择',
-                  value: UserTool.userProvider.userInfo.gender == 1 ? "男" : '女',
+                  value: UserTool.userProvider.userInfo.genderEM.typeStr,
                   widget: Image(
                     image: Assets.icons.icGoto,
                     width: 32.w,
                     height: 32.w,
                   ),
-                  ontap: () {
+                  onTap: () {
                     showModalBottomSheet(
                         context: context,
                         backgroundColor: const Color.fromRGBO(255, 255, 255, 0),
@@ -410,61 +406,42 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                   32.hb,
                                   Row(
                                     children: [
-                                      30.wb,
-                                      SizedBox(
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text(
-                                            '取消',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle2
-                                                ?.copyWith(
-                                                    color:
-                                                        BaseStyle.color999999),
-                                          ),
-                                        ),
+                                      32.wb,
+                                      _buildButton(
+                                        title: '取消',
+                                        onPressed: () => Navigator.pop(context),
+                                        color: Colors.black26,
                                       ),
-                                      200.wb,
-                                      Text(
-                                        '选择性别',
-                                        style: TextStyle(
+                                      Expanded(
+                                        child: Text(
+                                          '选择性别',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
                                             color: const Color(0xFF111111),
+                                            fontWeight: FontWeight.bold,
                                             fontSize: 32.sp,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const Spacer(),
-                                      GestureDetector(
-                                        child: SizedBox(
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              //print(gender);
-                                              var res = await User
-                                                  .getUserUpdateGender(gender);
-                                              if (res) {
-                                                BotToast.showText(
-                                                    text: '修改性别成功');
-                                                Navigator.pop(context);
-                                              }
-                                              await UserTool.userProvider
-                                                  .updateUserInfo();
-                                              setState(() {});
-                                            },
-                                            child: Text(
-                                              '确认',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2
-                                                  ?.copyWith(
-                                                      color: const Color(
-                                                          0xFF027AFF)),
-                                            ),
                                           ),
                                         ),
                                       ),
-                                      30.wb,
+                                      _buildButton(
+                                        title: '确定',
+                                        onPressed: () async {
+                                          //print(gender);
+                                          var res =
+                                              await User.getUserUpdateGender(
+                                                  gender);
+                                          if (res) {
+                                            BotToast.showText(text: '修改性别成功');
+                                            Get.back();
+                                            // Navigator.pop(context);
+                                          }
+                                          await UserTool.userProvider
+                                              .updateUserInfo();
+                                          setState(() {});
+                                        },
+                                        color: Colors.blue,
+                                      ),
+                                      32.wb,
                                     ],
                                   ),
                                   40.hb,
@@ -536,6 +513,20 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                     ),
                   ),
                 ),
+                //所在区域
+                ListTile(
+                  title: Text('所在区域',
+                      style: Theme.of(context).textTheme.bodyText1),
+                  trailing: SizedBox(
+                    child: Text(
+                      '浙江省宁波市鄞州区',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: const Color(0xFF999999)),
+                    ),
+                  ),
+                ),
                 //企业信息
                 ListTile(
                   onTap: () {
@@ -556,12 +547,30 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
         ));
   }
 
-  getGender(int gender) {
-    switch (gender) {
-      case 2:
-        return '女';
-      case 1:
-        return '男';
-    }
+  //
+  // getGender(int gender) {
+  //   switch (gender) {
+  //     case 2:
+  //       return '女';
+  //     case 1:
+  //       return '男';
+  //   }
+  // }
+
+  _buildButton({
+    required String title,
+    required VoidCallback? onPressed,
+    required Color color,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      // height: 48.w,
+      child: Text(title,
+          style: TextStyle(
+            color: color,
+            fontSize: 28.sp,
+            fontWeight: FontWeight.bold,
+          )),
+    );
   }
 }

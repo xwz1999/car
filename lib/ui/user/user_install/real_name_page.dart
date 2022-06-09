@@ -73,7 +73,7 @@ class _RealNamePageState extends State<RealNamePage> {
                   //Get.to(() => const NoWithddrawalPage());
                 }),
             36.hb,
-            _getBottom()
+            getBottom()
           ],
         ));
   }
@@ -89,9 +89,9 @@ class _RealNamePageState extends State<RealNamePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           12.hb,
-          _getText('姓名', '请填写您的真实姓名'),
+          getText('姓名', '请填写您的真实姓名'),
           64.hb,
-          _getText('身份证号', '请填写身份证号'),
+          getText('身份证号', '请填写身份证号'),
           64.hb,
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,13 +141,6 @@ class _RealNamePageState extends State<RealNamePage> {
                             )
                           ],
                         )),
-                    // GestureDetector(
-                    //     onTap: () {
-                    //       Get.to(() => const FaceRecognitionPage());
-                    //     },
-                    //     child:
-
-                    //     ),
                   ),
                   24.wb,
                   SizedBox(
@@ -196,7 +189,7 @@ class _RealNamePageState extends State<RealNamePage> {
   }
 
 //底部
-  _getBottom() {
+  getBottom() {
     return Row(
       children: [
         Padding(padding: EdgeInsets.only(left: 218.w)),
@@ -237,7 +230,7 @@ class _RealNamePageState extends State<RealNamePage> {
     );
   }
 
-  _getText(String title, String text) {
+  getText(String title, String text) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w),
       color: Colors.white,

@@ -29,17 +29,16 @@ class _EditCarReportPageState extends State<EditCarReportPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: Colors.white,
-      child:
-      Column(
+      child: Column(
         children: [
           20.hb,
           Row(
             children: [
               32.wb,
               Padding(
-                padding: EdgeInsets.only(top:15.w),
+                padding: EdgeInsets.only(top: 15.w),
                 child: Text('*  ',style: TextStyle(
                   fontSize: 28.sp,color: const Color(0xFFE62222),
                 ),),

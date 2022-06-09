@@ -44,11 +44,11 @@ class _DealerConsignmentRejectedPageState
             HW: 96,
             cancel: false,
             texts: [
-              text('发布'),
-              text('上架'),
-              text('订单取消'),
-              text('到账'),
-              text('成交'),
+              _text('发布'),
+              _text('上架'),
+              _text('订单取消'),
+              _text('到账'),
+              _text('成交'),
             ],
           ),
         ),
@@ -63,7 +63,7 @@ class _DealerConsignmentRejectedPageState
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('车商信息'),
+                child: _getTitle('车商信息'),
               ),
               36.hb,
               _getText('车商编号', '莉丝'),
@@ -115,7 +115,7 @@ class _DealerConsignmentRejectedPageState
                         32.hb,
                         Padding(
                           padding: EdgeInsets.only(right: 16.w),
-                          child: getText('2020年10月', '20.43万公里'),
+                          child: _getText1('2020年10月', '20.43万公里'),
                         )
                       ],
                     ),
@@ -134,7 +134,7 @@ class _DealerConsignmentRejectedPageState
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 0.w),
-                child: getTitle('交易取消信息'),
+                child: _getTitle('交易取消信息'),
               ),
               36.hb,
               _getText('取消人员', '9876524612'),
@@ -176,14 +176,14 @@ class _DealerConsignmentRejectedPageState
     );
   }
 
-  getTitle(String title) {
+  _getTitle(String title) {
     return Text(
       title,
       style: Theme.of(context).textTheme.subtitle2,
     );
   }
 
-  getText(String time, String distance) {
+  _getText1(String time, String distance) {
     return Row(
       //mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -238,7 +238,7 @@ class _DealerConsignmentRejectedPageState
     );
   }
 
-  text(String text) {
+  _text(String text) {
     return Text(
       text,
       style: TextStyle(

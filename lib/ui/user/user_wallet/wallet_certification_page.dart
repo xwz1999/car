@@ -5,7 +5,6 @@ import 'package:cloud_car/ui/user/user_wallet/withdrawal_record_page.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
-
 //import 'package:cloud_car/utils/new_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
@@ -24,11 +23,10 @@ class WalletCertificationPage extends StatefulWidget {
 class _WalletCertificationPageState extends State<WalletCertificationPage> {
   List<dynamic>? data;
   List balanceList = [
-    {'title': '余额提现', 'time': '12月1日 16:34:09', 'pice': '-190000'},
-    {'title': '出售车辆', 'time': '12月1日 16:34:09', 'pice': '+190000'},
+    {'title': '余额提现', 'time': '12月1日 16:34:09', 'price': '-190000'},
+    {'title': '出售车辆', 'time': '12月1日 16:34:09', 'price': '+190000'},
   ];
 
-  @override
   @override
   void dispose() {
     super.dispose();
@@ -76,7 +74,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
           color: const Color(0xFFF6F6F6),
           child: Column(
             children: [
-              _getWalletPice(),
+              _getWalletPrice(),
               16.hb,
               _balance(balanceList),
               const Spacer(),
@@ -90,6 +88,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
                             type: NormalTextDialogType.delete,
                             title: '解绑提示',
                             content: const Text('为保障您钱包功能的使用，请先完成实名认证。'),
+
                             items: const ['取消'],
                             deleteItem: '去认证',
                             //监听器
@@ -117,7 +116,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
   }
 
 //钱包余额
-  _getWalletPice() {
+  _getWalletPrice() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: Colors.white,
@@ -179,7 +178,7 @@ class _WalletCertificationPageState extends State<WalletCertificationPage> {
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
         widget: SizedBox(
-          height: 300.w,
+          height: 240.w,
           child: ListView.builder(
             itemBuilder: (context, index) {
               return Container(

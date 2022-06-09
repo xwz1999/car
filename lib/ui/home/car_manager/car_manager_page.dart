@@ -56,7 +56,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
           40.hb,
           // _getItem('收购车辆'),
           // 40.hb,
-          // _getItem('评估车辆'),
+          _getItem('评估车辆'),
         ],
       ),
     );
@@ -74,37 +74,38 @@ class _CarManagerPageState extends State<CarManagerPage> {
         ),
         24.hb,
         GridView.count(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 32.w, right: 32.w),
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 3,
-          mainAxisSpacing: 24.w,
-          //横轴间距
-          crossAxisSpacing: 40.w,
-          childAspectRatio: 200 / 176,
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (text == '评估车辆') {
-                  Get.to(() => const AssessmentPage());
-                } else {
-                  Get.to(() => const DirectSaleManagerPage());
-                }
-              },
-              child: ManagerContainerItem(
-                text: '在售',
-                num: '${_model.sellCount}',
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                if (text == '评估车辆') {
-                  Get.to(() => const AssessmentPage());
-                } else {
-                  Get.to(() => const DirectSaleManagerPage());
-                }
-              },
-              child: ManagerContainerItem(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(left: 32.w, right: 32.w),
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: 3,
+            mainAxisSpacing: 24.w,
+            //横轴间距
+            crossAxisSpacing: 40.w,
+            childAspectRatio: 200 / 176,
+            children: text == '直卖车辆'
+                ? [
+                    GestureDetector(
+                      onTap: () {
+                        if (text == '评估车辆') {
+                          Get.to(() => const AssessmentPage());
+                        } else {
+                          Get.to(() => const DirectSaleManagerPage());
+                        }
+                      },
+                      child: ManagerContainerItem(
+                        text: '在售',
+                        num: '${_model.sellCount}',
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (text == '评估车辆') {
+                          Get.to(() => const AssessmentPage());
+                        } else {
+                          Get.to(() => const DirectSaleManagerPage());
+                        }
+                      },
+                      child: ManagerContainerItem(
                 text: '已预订',
                 num: '${_model.reserveCount}',
               ),
@@ -114,29 +115,65 @@ class _CarManagerPageState extends State<CarManagerPage> {
                 if (text == '评估车辆') {
                   Get.to(() => const AssessmentPage());
                 } else {
-                  Get.to(() => const DirectSaleManagerPage());
-                }
-              },
-              child: ManagerContainerItem(
-                text: '已售',
-                num: '${_model.soldCount}',
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                if (text == '评估车辆') {
-                  Get.to(() => const AssessmentPage());
-                } else {
-                  Get.to(() => const DirectSaleManagerPage());
-                }
-              },
-              child: ManagerContainerItem(
-                text: '退库',
-                num: '${_model.backOutCount}',
-              ),
-            )
-          ],
-        ),
+                          Get.to(() => const DirectSaleManagerPage());
+                        }
+                      },
+                      child: ManagerContainerItem(
+                        text: '已售',
+                        num: '${_model.soldCount}',
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (text == '评估车辆') {
+                          Get.to(() => const AssessmentPage());
+                        } else {
+                          Get.to(() => const DirectSaleManagerPage());
+                        }
+                      },
+                      child: ManagerContainerItem(
+                        text: '退库',
+                        num: '${_model.backOutCount}',
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (text == '评估车辆') {
+                          Get.to(() => const AssessmentPage());
+                        } else {
+                          Get.to(() => const DirectSaleManagerPage());
+                        }
+                      },
+                      child: ManagerContainerItem(
+                        text: '待审核',
+                        num: '${_model.backOutCount}',
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (text == '评估车辆') {
+                          Get.to(() => const AssessmentPage());
+                        } else {
+                          Get.to(() => const DirectSaleManagerPage());
+                        }
+                      },
+                      child: ManagerContainerItem(
+                        text: '已驳回',
+                        num: '${_model.backOutCount}',
+                      ),
+                    ),
+                  ]
+                : [
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => const AssessmentPage());
+                      },
+                      child: ManagerContainerItem(
+                        text: '评估记录',
+                        num: '${_model.sellCount}',
+                      ),
+                    ),
+                  ]),
       ],
     );
   }

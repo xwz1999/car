@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/user/user_management/access_configuration_page.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure_page.dart';
@@ -33,8 +31,8 @@ class AddEmployeePage extends StatefulWidget {
 }
 
 class _AddEmployeePageState extends State<AddEmployeePage> {
-  late int storeId;
-  late int roleId;
+  late int storeId = 0;
+  late int roleId = 0;
   late String permissions1 = widget.permissions1;
   late String nameText = widget.permissions1;
   late String genderText = widget.permissions1;
@@ -81,11 +79,11 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           40.hb,
           getTitle('基本信息'),
           24.hb,
-          getInformation(),
+          _getInformation(),
           40.hb,
           getTitle('权限分配'),
           24.hb,
-          getpermissions(),
+          _getPermissions(),
           88.hb,
           CloudBottomButton(
             onTap: () async {
@@ -141,7 +139,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
   }
 
 //基本信息  ///姓名性别手机号组织架构
-  getInformation() {
+  _getInformation() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -149,7 +147,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
         children: [
           TextEditItemWidget(
             title: '姓名',
-            ontap: () {},
+            onTap: () {},
             value: nameText,
             callback: (String content) {
               nameText = content;
@@ -193,6 +191,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           TextEditItemWidget(
             title: '性别 ',
             endIcon: true,
+            editor: false,
             tips: '请选择',
             value: genderText,
             widget: Image(
@@ -200,7 +199,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
               width: 32.w,
               height: 32.w,
             ),
-            ontap: () {
+            onTap: () {
               showModalBottomSheet(
                   context: context,
                   backgroundColor: const Color.fromRGBO(255, 255, 255, 0),
@@ -322,7 +321,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
             //editor: false,
             title: '手机号',
             value: phoneText,
-            ontap: () {},
+            onTap: () {},
             callback: (String content) {
               phoneText = content;
             },
@@ -332,6 +331,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           TextEditItemWidget(
             title: '组织架构',
             endIcon: true,
+            editor: false,
             tips: '请选择',
             value: storeidText,
             widget: Image(
@@ -339,7 +339,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
               width: 32.w,
               height: 32.w,
             ),
-            ontap: () async {
+            onTap: () async {
               await Get.to(() => StructurePage(
                     callback: (String city, int id) {
                       storeidText = city;
@@ -357,7 +357,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
   }
 
 //权限分配   ///权限配置 销售提成
-  getpermissions() {
+  _getPermissions() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -365,6 +365,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
         TextEditItemWidget(
           title: '权限配置',
           endIcon: true,
+          editor: false,
           tips: '请选择',
           value: permissions1,
           widget: Image(
@@ -372,7 +373,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
             width: 32.w,
             height: 32.w,
           ),
-          ontap: () async {
+          onTap: () async {
             await Get.to(() => AccessConfigurationPage(
                   callback: (String city, int id) {
                     permissions1 = city;
@@ -394,7 +395,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
             style: TextStyle(
                 color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
           ),
-          ontap: () async {},
+          onTap: () async {},
           callback: (String content) {
             commissionText = roleId == 1 || roleId == 3 ? '0' : content;
           },

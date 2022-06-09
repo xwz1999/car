@@ -184,7 +184,7 @@ class _NewCarPageState extends State<NewCarPage>
     return SizedBox(
       width: 686.w,
       height: 116.w,
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.w),
             color: Colors.white,
@@ -539,7 +539,7 @@ class _NewCarPageState extends State<NewCarPage>
       pagination: _bulidPagination(),
       //点击事件
       onTap: (index) {
-        ('点击$index');
+       // ('点击$index');
       },
       //布局方法
       //用户进行操作时停止自动翻页

@@ -81,11 +81,11 @@ class _HandbookInfoPageState extends State<HandbookInfoPage> {
       extendBody: true,
       body:
           //SizedBox()
-          getItem(manualsList),
+          _getItem(manualsList),
     );
   }
 
-  getItem(HandbookInfoModel model) {
+  _getItem(HandbookInfoModel model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [

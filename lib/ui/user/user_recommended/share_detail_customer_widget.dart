@@ -32,7 +32,7 @@ class _ShareDetailCustomerWidgetState extends State<ShareDetailCustomerWidget>
     return RepaintBoundary(
         key: _globalKey,
         child: Scaffold(
-            body: Container(
+            body: DecoratedBox(
                 decoration: const BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topCenter,
@@ -59,7 +59,7 @@ class _ShareDetailCustomerWidgetState extends State<ShareDetailCustomerWidget>
                             ),
                       ),
                     ),
-                    Positioned(left: 72.w, top: 280.w, child: _getbody()),
+                    Positioned(left: 72.w, top: 280.w, child: _getBody()),
                     Positioned(
                         left: 70.w,
                         top: 1246.w,
@@ -259,7 +259,7 @@ class _ShareDetailCustomerWidgetState extends State<ShareDetailCustomerWidget>
 //   }
 
 //
-  _getbody() {
+  _getBody() {
     return SizedBox(
       //padding: EdgeInsets.only(left: 24.w),
       width: 604.w,

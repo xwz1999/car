@@ -20,20 +20,15 @@ class StructurePage extends StatefulWidget {
 class _StructurePageState extends State<StructurePage> {
   //选中的item
   final List<int> _selectIndex = [];
-
   //选中的item内容
   // final List<String> _chooseModels = [];
-
   List<StoreallModel> moddels = [];
-
   //  for (var i = 0; i < 5; i++)
   //               {
   //                 CatWidget.add(ListTile(
   //                   title: Text('门店$i'),
   //                 ));
   //               }
-
-  @override
   @override
   void initState() {
     super.initState();

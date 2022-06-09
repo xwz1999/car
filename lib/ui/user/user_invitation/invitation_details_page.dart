@@ -1,7 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
-import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
-import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
 import 'package:cloud_car/ui/user/user_invitation/invitation_details_lists.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
@@ -121,7 +119,7 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
                   ),
                   indicator: const BoxDecoration(),
                   indicatorColor: kPrimaryColor,
-                  tabs: [_tab(0, '浏览车辆'), _tab(1, '客户轨迹'), _tab(2, '相关资料')]),
+                  tabs: [_tab(0, '浏览车辆'), _tab(1, '订单轨迹'), _tab(2, '相关资料')]),
             ),
             Expanded(
               child: Container(
@@ -155,7 +153,7 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                  child: _getBottom(Assets.icons.icPhone.path, '电话', () {
+                  child: getBottom(Assets.icons.icPhone.path, '电话', () {
                 Alert.show(
                     context,
                     NormalContentDialog(
@@ -192,25 +190,25 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
                       deleteItem: '确定',
                     ));
               })),
-              Expanded(child: _getBottom(Assets.icons.icWx.path, '微信', () {})),
-              Expanded(
-                  child: _getBottom(Assets.icons.icInvite.path, '修改邀约', () {
-                Get.to(() => InviteDetailPage(
-                      id: widget.model.customerId,
-                      phone: '',
-                      name: widget.model.customerNickname,
-                    ));
-              })),
-              Expanded(
-                  child: _getBottom(Assets.icons.icContract.path, '发起合同', () {
-                Get.to(() => const InitiateContractPage());
-              })),
+              Expanded(child: getBottom(Assets.icons.icWx.path, '微信', () {})),
+              // Expanded(
+              //     child: getBottom(Assets.icons.icInvite.path, '修改邀约', () {
+              //   Get.to(() => InviteDetailPage(
+              //         id: widget.model.customerId,
+              //         phone: '',
+              //         name: widget.model.customerNickname,
+              //       ));
+              // })),
+              // Expanded(
+              //     child: getBottom(Assets.icons.icContract.path, '发起邀约', () {
+              //   Get.to(() => const InitiateContractPage());
+              // })),
             ],
           ),
         ));
   }
 
-  _getBottom(String url, String text, Function callBack) {
+  getBottom(String url, String text, Function callBack) {
     return GestureDetector(
       onTap: () {
         callBack();

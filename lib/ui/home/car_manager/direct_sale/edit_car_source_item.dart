@@ -35,14 +35,12 @@ class _EditCarSourceItemState extends State<EditCarSourceItem> {
   @override
   Widget build(BuildContext context) {
 
-    return Container(
+    return ColoredBox(
       color: Colors.white,
       child: ListView(
         shrinkWrap: true,
-
-        padding: EdgeInsets.only(left: 32.w,right: 32.w),
+        padding: EdgeInsets.only(left: 32.w, right: 32.w),
         children: [
-
           getItem1(),
           48.hb,
         ],

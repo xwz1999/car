@@ -34,7 +34,10 @@ class _CalenderPickBodyState extends State<CalenderPickBody> {
         rangeStartDay: _startDay,
         rangeEndDay: _endDay,
         shouldFillViewport: true,
-        availableCalendarFormats: {CalendarFormat.month:'月份',CalendarFormat.twoWeeks:'2'},
+        availableCalendarFormats: const {
+          CalendarFormat.month: '月份',
+          CalendarFormat.twoWeeks: '2'
+        },
         onRangeSelected: (starDay, endDay, day) {
           _startDay = starDay;
           _endDay = endDay;

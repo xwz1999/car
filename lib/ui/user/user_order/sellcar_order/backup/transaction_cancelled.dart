@@ -397,7 +397,7 @@ class _TransactionCancelledState extends State<TransactionCancelled> {
         ],
       ),
       children: [
-        Container(
+        ColoredBox(
             color: kForeGroundColor,
             child: Row(
               children: [

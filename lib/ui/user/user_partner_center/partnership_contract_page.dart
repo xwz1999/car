@@ -2,7 +2,6 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
-
 import 'package:signature/signature.dart';
 
 class PartnershipContractPage extends StatefulWidget {
@@ -17,9 +16,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage> {
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   // List listWidget = [];
-
   //late EasyRefreshController _refreshController;
-
   //手写版控制器
   final SignatureController _signatureController = SignatureController(
     penStrokeWidth: 10.w, //线条宽度
@@ -201,7 +198,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage> {
                           backgroundColor: const Color(0xFFF6F6F6),
                         ),
                         Offstage(
-                          offstage: isEmpty ? false : true,
+                          offstage: !isEmpty,
                           child: Container(
                               padding: EdgeInsets.only(left: 180.w, top: 140.w),
                               child: Row(
@@ -243,7 +240,7 @@ class _PartnershipContractPageState extends State<PartnershipContractPage> {
                       27.hb,
                       CloudBottomButton(
                         onTap: () {
-                          print(isEmpty);
+                          //print(isEmpty);
                           // Get.to(() => const SuccessfulPage());
                         },
                         text: '立即签订',
@@ -261,7 +258,6 @@ class _PartnershipContractPageState extends State<PartnershipContractPage> {
   }
 
 //测试
-
   // _aa() {
   //   return Container(
   //     alignment: Alignment.center,

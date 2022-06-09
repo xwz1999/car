@@ -1,4 +1,4 @@
-import 'package:cloud_car/ui/user/contract_pay_page.dart';
+import 'package:cloud_car/ui/user/user_assessment/assessment_pay_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
               32.hb,
               _getText(),
               72.hb,
-              _getButtom(),
+              _getButton(),
             ],
           ),
         ));
@@ -85,7 +85,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
   }
 
 //按钮
-  _getButtom() {
+  _getButton() {
     return Container(
       //padding: EdgeInsets.symmetric(horizontal: 76.w),
       width: 600.w,
@@ -97,7 +97,12 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
       child: SizedBox(
           child: GestureDetector(
         onTap: () {
-          Get.to(() => const ContractPayPage());
+          Get.to(() => const AssessmentPayPage(
+                title: '合同签订',
+                price: '1500.00',
+                count: 1,
+              ));
+          //Get.to(() => const ContractPayPage());
         },
         child: Text(
           '前往支付',

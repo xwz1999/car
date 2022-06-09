@@ -98,17 +98,16 @@ class _CarReportPageState extends State<CarReportPage> {
                       maxCount: 6,
                       photos: widget.carPhotoModel.value.report.paintsFile!,
                       onChanged: (files) {
-                        widget.carPhotoModel.value.report.paintsFile =files.cast<File>();
+                        widget.carPhotoModel.value.report.paintsFile =
+                            files.cast<File>();
                         // for (var item in files) {
                         //   widget.carPhotoModel.value.report.paintsFile!
                         //       .add(item);
                         // }
-                        setState(() {
-
-                        });
+                        setState(() {});
                         //_files = files;
-                        print(
-                            "aaaa+${widget.carPhotoModel.value.report.paintsFile}");
+                        // print(
+                        //     "aaaa+${widget.carPhotoModel.value.report.paintsFile}");
                       }),
                 ],
               ),

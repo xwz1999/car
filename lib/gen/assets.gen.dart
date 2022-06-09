@@ -2,6 +2,9 @@
 /// *****************************************************
 ///  FlutterGen
 /// *****************************************************
+
+// ignore_for_file: directives_ordering,unnecessary_import
+
 import 'package:flutter/widgets.dart';
 
 class $AssetsDataGen {
@@ -512,6 +515,10 @@ class $AssetsImagesGen {
   AssetGenImage get invitePartners =>
       const AssetGenImage('assets/images/Invite_partners.png');
 
+  /// File path: assets/images/New_opportunities.png
+  AssetGenImage get newOpportunities =>
+      const AssetGenImage('assets/images/New_opportunities.png');
+
   /// File path: assets/images/Qr_code.png
   AssetGenImage get qrCode => const AssetGenImage('assets/images/Qr_code.png');
 
@@ -719,7 +726,7 @@ class Assets {
 }
 
 class AssetGenImage extends AssetImage {
-  const AssetGenImage(super.assetName);
+  const AssetGenImage(String assetName) : super(assetName);
 
   Image image({
     Key? key,

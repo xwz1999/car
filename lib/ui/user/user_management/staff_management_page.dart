@@ -20,7 +20,6 @@ class StaffManagementPage extends StatefulWidget {
   @override
   State<StaffManagementPage> createState() => _StaffManagementPageState();
 }
-
 // ignore: non_constant_identifier_names
 List<StoreallModel> Employees = [];
 // List<String> nameList = [];
@@ -94,7 +93,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             footer: MaterialFooter(),
             controller: _easyRefreshController,
             onRefresh: () async {
-              _refresh();
+             await _refresh();
             },
             child:
                 //Employees.isEmpty?
@@ -133,7 +132,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             //     ],
             //   )
           )),
-          _getButtom(),
+          getButton(),
           34.hb
         ],
       ),
@@ -231,7 +230,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
         ...model.staffs != null
             ? model.staffs!.mapIndexed((e, index) {
                 return GestureDetector(
-                  onTap: () async {
+                  onTap: () {
                     // print(e.id);
 
                     Get.to(() => EmployeeDetailsPage(
@@ -239,7 +238,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                         ));
                     //Get.to(()=>)
                   },
-                  child: _getText(e.roleName, e.genderEM.typeNum, e.name,
+                  child: getText(e.roleName, e.genderEM.typeNum, e.name,
                       e.phone, e.auditStatus),
                 );
               }).toList()
@@ -248,7 +247,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
     );
   }
 
-  _getText(String position, int gender, String name, String phone, int judge) {
+  getText(String position, int gender, String name, String phone, int judge) {
     return Container(
       color: Colors.white,
       height: 94.w,
@@ -304,7 +303,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
     );
   }
 
-  _getButtom() {
+  getButton() {
     return Row(
       children: [
         Padding(padding: EdgeInsets.only(left: 32.w)),

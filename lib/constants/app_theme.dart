@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+///主题
 class AppTheme {
   static ThemeData get theme {
     return ThemeData(primarySwatch: Colors.blue).copyWith(
@@ -13,6 +13,7 @@ class AppTheme {
             fontSize: 30.sp,
             color: const Color(0xFF333333),
           ),
+          ///
         )
       ],
       textTheme: ThemeData.light().textTheme.copyWith(
@@ -167,12 +168,15 @@ class SystemStyle {
 @immutable
 class MyAppStyle extends ThemeExtension<MyAppStyle> {
   final TextStyle? bodyText3;
+
   final Color? mainColor;
+
   @override
   MyAppStyle copyWith({Color? mainColor, TextStyle? bodyText3}) {
     return MyAppStyle(
-        mainColor: mainColor ?? this.mainColor,
-        bodyText3: bodyText3 ?? this.bodyText3);
+      mainColor: mainColor ?? this.mainColor,
+      bodyText3: bodyText3 ?? this.bodyText3,
+    );
   }
 
   @override

@@ -12,12 +12,11 @@ class CarDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: Colors.white,
       child: ListView(
         shrinkWrap: true,
-
-        padding: EdgeInsets.only(left: 32.w,right: 32.w),
+        padding: EdgeInsets.only(left: 32.w, right: 32.w),
         children: [
           48.hb,
           getItem1('基本信息'),
@@ -130,9 +129,6 @@ class CarDetailItem extends StatelessWidget {
     );
   }
 
-
-
-
   getItem6(String title){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,10 +146,6 @@ class CarDetailItem extends StatelessWidget {
       ],
     );
   }
-
-
-
-
 
   getContentItem(String title,String content){
     return Padding(

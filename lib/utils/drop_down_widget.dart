@@ -92,7 +92,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
   @override
   void initState() {
     super.initState();
-    widget.bottomHeight;
+    //widget.bottomHeight;
     //展开隐藏控制器，动画初始化
     widget.screenControl.animateController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200));
@@ -153,23 +153,32 @@ class _DropDownWidgetState extends State<DropDownWidget>
         widgets.add(Expanded(
             flex: 1,
             child: DropDownHeadWidget(
-              widget.titles[i],
-              getRoState(i),
-              () {
+              title: widget.titles[i],
+              isForward: getRoState(i),
+              onClick: () {
                 if (kDebugMode) {
                   print("click${widget.screenControl.rotateState.length}");
                 }
                 setState(() {
                   tabIndex = i;
-                  for (int j = 0; j < widget.screenControl.rotateState.length; j++) {
+                  for (int j = 0;
+                      j < widget.screenControl.rotateState.length;
+                      j++) {
                     if (i == j) {
                       if (widget.screenControl.rotateState[j]) {
-                        widget.screenControl.rotateState = widget.screenControl.rotateState.map((e) => false).toList();
+                        widget.screenControl.rotateState = widget
+                            .screenControl.rotateState
+                            .map((e) => false)
+                            .toList();
 
                         widget.screenControl.animateController.reverse();
                       } else {
-                        widget.screenControl.rotateState = widget.screenControl.rotateState.map((e) => false).toList();
-                        widget.screenControl.rotateState[j] = !widget.screenControl.rotateState[j];
+                        widget.screenControl.rotateState = widget
+                            .screenControl.rotateState
+                            .map((e) => false)
+                            .toList();
+                        widget.screenControl.rotateState[j] =
+                            !widget.screenControl.rotateState[j];
 
                         widget.screenControl.animateController.forward();
                       }
@@ -234,8 +243,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
   }
 
   Widget getBottomIndex() {
-    widget.bottomHeight;
-
+    //widget.bottomHeight;
     return Container(
       margin: EdgeInsets.only(top: widget.height),
       alignment: Alignment.topCenter,

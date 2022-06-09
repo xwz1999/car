@@ -8,18 +8,21 @@ class DropDownHeadWidget extends StatefulWidget {
   final double headFontSize;
   final IconData? iconData;
   final Decoration? decoration;
-  const DropDownHeadWidget(this.title, this.isForward, this.onClick,
-      {this.headFontSize = 12.0,
-      this.iconData = Icons.arrow_drop_down_outlined,
-      this.decoration = const BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.zero,
 
-        ),
-        color: Colors.white,
+  const DropDownHeadWidget({
+    super.key,
+    required this.title,
+    required this.isForward,
+    required this.onClick,
+    this.headFontSize = 12.0,
+    this.iconData = Icons.arrow_drop_down_outlined,
+    this.decoration = const BoxDecoration(
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.zero,
       ),
-      key})
-      : super(key: key);
+      color: Colors.white,
+    ),
+  });
 
   @override
   State<StatefulWidget> createState() {

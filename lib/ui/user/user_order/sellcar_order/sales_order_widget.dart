@@ -35,6 +35,7 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
   List<SalelistsModel> _salesList = [];
   int _page = 1;
   final int _size = 10;
+  var a = 0;
 
   @override
   void initState() {
@@ -141,7 +142,7 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
                   : ListView.builder(
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
-                        return getSales(_salesList[index]);
+                        return _getSales(_salesList[index]);
                       },
                       itemCount: _salesList.length),
             ),
@@ -151,25 +152,26 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
     );
   }
 
-  getDisplay(String state) {
-    switch (state) {
-    }
-  }
+  // getDisplay(String state) {
+  //   switch (state) {
+  //   }
+  // }
 
-  getSales(SalelistsModel model) {
+  _getSales(SalelistsModel model) {
     return Offstage(
-        //offstage: !(text == '全部') || model.statusEnum.str != text,
-        offstage: text == '全部' ? false : model.statusEnum.str != text,
+        offstage: text == '全部' ? a == 1 : model.statusEnum.str != text,
+        //offstage: false, //text == '全部' ? false : model.statusEnum.str != text,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
           child: GestureDetector(
             onTap: () {
               Get.to(() => ReservationPage(
                     //judge: false
-                    statusNumber: model.statusEnum.progressNum,
+                    //statusNumber: model.statusEnum.progressNum,
                     orderId: model.id,
-                    status: model.statusEnum.str,
-                    statusNum: model.statusEnum.num,
+                    status: model.statusEnum,
+                    //status1: model.statusEnum1,
+                    // status1: model.statusEnum,
                   ));
               // switch (_getText(model.status)) {
               //   case '待预定':
@@ -298,7 +300,7 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
                               ///标签
                               Padding(
                                   padding: EdgeInsets.only(right: 16.w),
-                                  child: getText(
+                                  child: _getText(
                                     '过户${0}次',
                                     DateUtil.formatDateMs(
                                         model.licensingDate.toInt() * 1000,
@@ -411,7 +413,7 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
                                             borderRadius:
                                                 BorderRadius.circular(8.w)),
                                         child: Text(
-                                          _getBottonText(model.status),
+                                          _getButtonText(model.status),
                                           style: TextStyle(
                                               color: kForeGroundColor,
                                               fontSize: BaseStyle.fontSize28),
@@ -520,7 +522,7 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
         ));
   }
 
-  getText(String num, String time, String distance, int conditions) {
+  _getText(String num, String time, String distance, int conditions) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
@@ -593,7 +595,7 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
 }
 
 ///状态按钮文字
-_getBottonText(int num) {
+_getButtonText(int num) {
   switch (num) {
     case 10:
       return '上传报告';

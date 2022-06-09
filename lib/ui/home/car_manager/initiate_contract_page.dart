@@ -141,13 +141,10 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                     });
                   },));
                 },
-                child: Container(
-
-                  color: Colors.white,
-
-                  child: const Text('请先选择车辆'),
-
-                ),
+                child: const ColoredBox(
+                        color: Colors.white,
+                        child: Text('请先选择车辆'),
+                      ),
               ),
             ),
           ),

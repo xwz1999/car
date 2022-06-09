@@ -1,7 +1,4 @@
-// ignore_for_file: unused_field
-
 import 'dart:io';
-
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
@@ -37,7 +34,7 @@ class _CarImageItemState extends State<CarImageItem> {
               _files.add(item);
             }
             //_files = files;
-            //print("aaaa+$_files");
+            //print("+$_files");
             widget.imageBack(_files);
           }),
       // GridView.builder(

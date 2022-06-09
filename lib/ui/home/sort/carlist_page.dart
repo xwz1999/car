@@ -146,7 +146,7 @@ class _CarListPageState extends State<CarListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: kForeGroundColor,
       child: Column(
         children: [

@@ -38,7 +38,7 @@ class PreferredPage extends StatefulWidget {
 
 class _PreferredPageState extends State<PreferredPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
-  late List<String> _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
+  late List<String> _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
   List<ChooseItem> _priceList = [];
   ScreenControl screenControl = ScreenControl();
   List<ChooseItem> _sortList = [];
@@ -54,7 +54,17 @@ class _PreferredPageState extends State<PreferredPage>
   final int _size = 10;
   String _pickSort = '';
 
-  List<Widget> get listWidget => [
+  List<Widget> get listWidget =>
+      [
+        CarListPage(
+          pickCar: _pickCar,
+          carCallback: () {
+            screenControl.screenHide();
+            _refreshController.callRefresh();
+          },
+        ),
+
+        ///
         CarListPage(
           pickCar: _pickCar,
           carCallback: () {
@@ -123,7 +133,7 @@ class _PreferredPageState extends State<PreferredPage>
   @override
   void initState() {
     super.initState();
-    _dropDownHeaderItemStrings = ['品牌', '价格', '排序'];
+    _dropDownHeaderItemStrings = ['城市', '品牌', '价格', '排序'];
     _priceList = [
       ChooseItem(name: '不限'),
       ChooseItem(name: '4万以下'),

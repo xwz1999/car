@@ -4,7 +4,7 @@ import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 class FeedbackFunc {
-  //意见反馈=》提交意见
+  //意见反馈=>提交意见
   static Future<bool> getFeedback(
       String title, String content, String phone, String img) async {
     BaseModel res = await apiClient.request(API.feedback.feedbackSubmit,

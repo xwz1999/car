@@ -9,7 +9,6 @@ import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-
 //import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -38,9 +37,7 @@ class _PartnerShopContractPageState extends State<PartnerShopContractPage>
   final SignatureController _signatureController = SignatureController(
       penStrokeWidth: 10.w, //线条宽度
       penColor: Colors.black, //线条颜色
-      onDrawStart: () {
-        //print('aasfadfasfdasdsfasfasfasfasf');
-      });
+      onDrawStart: () {});
 
   @override
   void initState() {

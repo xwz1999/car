@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
@@ -29,7 +27,7 @@ class ConsignmentOrderWidget extends StatefulWidget {
 class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
   List<Widget> listWidget = []; //创建方法列表
   final List<ChooseItem> _sortList = [];
-  List<ListsModel> _ConsignmentList = [];
+  List<ListsModel> _consignmentList = [];
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   int _page = 1;
   final int _size = 10;
@@ -111,7 +109,7 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
               controller: _easyRefreshController,
               onRefresh: () async {
                 _page = 1;
-                _ConsignmentList =
+                _consignmentList =
                     await OrderFunc.getLists(page: _page, size: _size);
                 _onLoad = false;
                 setState(() {});
@@ -121,8 +119,8 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
                 var baseList = await apiClient.requestList(
                     API.order.consignmentLists,
                     data: {'page': _page, 'size': _size});
-                if (baseList.nullSafetyTotal > _ConsignmentList.length) {
-                  _ConsignmentList.addAll(baseList.nullSafetyList
+                if (baseList.nullSafetyTotal > _consignmentList.length) {
+                  _consignmentList.addAll(baseList.nullSafetyList
                       .map((e) => ListsModel.fromJson(e))
                       .toList());
                 } else {
@@ -132,7 +130,7 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
               },
               child: _onLoad
                   ? const SizedBox()
-                  : _ConsignmentList.isEmpty
+                  : _consignmentList.isEmpty
                       ? const NoDataWidget(
                           text: '暂无相关车辆信息',
                           paddingTop: 300,
@@ -140,9 +138,9 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
                       : ListView.builder(
                           padding: EdgeInsets.zero,
                           itemBuilder: (context, index) {
-                            return getCar(_ConsignmentList[index]);
+                            return _getCar(_consignmentList[index]);
                           },
-                          itemCount: _ConsignmentList.length),
+                          itemCount: _consignmentList.length),
             ),
           ),
         ],
@@ -150,19 +148,19 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
     );
   }
 
-  getCar(ListsModel model) {
+  _getCar(ListsModel model) {
     return Offstage(
         offstage: model.status == 6 || model.status == 7,
         child: Offstage(
-            offstage: text == '全部' ? false : model.statusEnum.str != text,
+            offstage: false,
+            //text == '全部' ? false : model.statusEnum.str != text,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
               child: GestureDetector(
                 onTap: () {
                   Get.to(() => ConsignmentSignedPage(
                         price: model.price,
-                        statusNumber: model.statusEnum.num,
-                        statusNum: model.statusEnum.progressNum,
+                        statusNumber: model.statusEnum,
                         id: model.id,
                         auditStatus: model.auditStatus,
                         licensingDate: model.licensingDate,

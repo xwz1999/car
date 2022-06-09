@@ -59,20 +59,6 @@ class _NoticePageState extends State<NoticePage>
       'noreadnum': ''
     },
     {
-      'name': '分账确认提示',
-      'src': 'assets/icons/fashionable.png',
-      'time': '12:22',
-      'msg': '您绑定的客户发来消息，请注意查收',
-      'noreadnum': ''
-    },
-    {
-      'name': '审批提醒',
-      'src': 'assets/icons/examination.png',
-      'time': '12:22',
-      'msg': '您绑定的客户发来消息，请注意查收',
-      'noreadnum': ''
-    },
-    {
       'name': '系统通知',
       'src': 'assets/icons/system.png',
       'time': '12:22',
@@ -115,7 +101,7 @@ class _NoticePageState extends State<NoticePage>
           //padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: ListView.builder(
               padding: EdgeInsets.only(top: 128.w),
-              itemCount: 8,
+              itemCount: noticelist.length,
               itemBuilder: (ctx, index) {
                 return _noticelist(noticelist[index]);
               }),

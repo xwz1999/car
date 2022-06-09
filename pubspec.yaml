@@ -93,6 +93,9 @@ dependencies:
   common_utils: ^2.1.0
   #日历组件
   table_calendar: ^3.0.6
+  #地图组件
+  map_launcher: ^2.2.3
+ 
 
 
 dev_dependencies:

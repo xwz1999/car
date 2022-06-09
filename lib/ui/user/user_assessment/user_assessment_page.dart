@@ -77,7 +77,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
             color: const Color.fromRGBO(246, 246, 246, 1),
           ),
           Positioned(left: 32.w, top: 32.w, right: 32.w, child: _getNum()),
-          Positioned(top: 172.w, child: _getPice())
+          Positioned(top: 172.w, child: _getPrice())
         ],
       ),
       bottomNavigationBar: _confirmBtn(),
@@ -142,7 +142,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
   }
 
 //
-  _getPice() {
+  _getPrice() {
     return Container(
         width: 750.w,
         height: 1350.w,

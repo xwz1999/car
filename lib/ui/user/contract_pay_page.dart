@@ -54,7 +54,7 @@ class _ContractPayPageState extends State<ContractPayPage> {
             children: [
               //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
               // Text('data')
-              _getPice(),
+              _getPrice(),
               56.hb,
               _getPay(),
               const Spacer(),
@@ -88,14 +88,15 @@ class _ContractPayPageState extends State<ContractPayPage> {
                         ?.copyWith(color: kForeGroundColor),
                   ),
                 )),
-              )
+              ),
+              32.hb
             ],
           ),
         ));
   }
 
 //充值金额
-  _getPice() {
+  _getPrice() {
     return Container(
       padding: EdgeInsets.only(top: 74.w, left: 248.w),
       child: Row(
@@ -130,7 +131,7 @@ class _ContractPayPageState extends State<ContractPayPage> {
     return SizedBox(
         height: 324.w,
         //padding: EdgeInsets.only(top: 168.w),
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
           child: ListView.builder(

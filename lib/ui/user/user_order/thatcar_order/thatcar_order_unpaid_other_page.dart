@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
@@ -7,11 +8,14 @@ import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flutter/material.dart';
 
 class UnpaidOtherPage extends StatefulWidget {
-  final int status;
-  final String statusText;
+  final OrderCallCarStatus status;
 
-  const UnpaidOtherPage(
-      {super.key, required this.status, required this.statusText});
+  //final String statusText;
+
+  const UnpaidOtherPage({
+    super.key,
+    required this.status,
+  });
 
   @override
   State<UnpaidOtherPage> createState() => _UnpaidOtherPageState();
@@ -36,24 +40,22 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: Stack(
+        body: ListView(
           children: [
-            ListView(
+            _getCarInformation(),
+            _getCarBox(Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _getCarInformation(),
-                getCarBox(Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                _getTitle('订单信息'),
+                32.hb,
+                _getText('客户姓名', '**'),
+                16.hb,
+                _getText('联系方式', '189****5432'),
+                16.hb,
+                Row(
                   children: [
-                    getTitle('订单信息'),
-                    32.hb,
-                    _getText('客户姓名', '**'),
-                    16.hb,
-                    _getText('联系方式', '189****5432'),
-                    16.hb,
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 120.w,
+                    SizedBox(
+                      width: 120.w,
                           child: Text(
                             '绑定销售',
                             style: TextStyle(
@@ -129,56 +131,51 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
                     _getText('上门时间', '2022-01-04 12:00'),
                   ],
                 )),
-                widget.status == 1
-                    ? const SizedBox()
-                    : getCarBox(Column(
-                        children: [
-                          getTitle('支付信息'),
-                          32.wb,
-                          _getText('支付方式', '支付宝'),
-                          16.hb,
-                          _getText('支付时间', '2022-01-04 12:00'),
-                        ],
-                      )),
-              ],
-            ),
-            widget.status == 2
-                ? Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                        width: double.infinity,
-                        color: kForeGroundColor,
-                        padding: EdgeInsets.only(
-                            top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
-                        child: GestureDetector(
-                          onTap: () {
-                            BotToast.showText(text: '订单完成');
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 0.w),
-                            child: Container(
-                                padding: EdgeInsets.only(
-                                    left: 32.w, top: 16.w, bottom: 16.w),
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF027AFF),
-                                    borderRadius: BorderRadius.circular(8.w)),
-                                child: Text(
-                                  '车已上门',
-                                  style: TextStyle(
-                                      color: kForeGroundColor,
-                                      fontSize: BaseStyle.fontSize28),
-                                )),
-                          ),
-                        )),
-                  )
-                : const SizedBox()
+            widget.status.num == 1
+                ? const SizedBox()
+                : _getCarBox(Column(
+                    children: [
+                      _getTitle('支付信息'),
+                      32.wb,
+                      _getText('支付方式', '支付宝'),
+                      16.hb,
+                      _getText('支付时间', '2022-01-04 12:00'),
+                    ],
+                  )),
           ],
-        ));
+        ),
+        bottomNavigationBar: SizedBox(
+            height: 100.w,
+            child: widget.status.num == 2
+                ? Container(
+                    width: double.infinity,
+                    color: kForeGroundColor,
+                    padding: EdgeInsets.only(
+                        top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+                    child: GestureDetector(
+                      onTap: () {
+                        BotToast.showText(text: '订单完成');
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 0.w),
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                left: 32.w, top: 16.w, bottom: 16.w),
+                            decoration: BoxDecoration(
+                                color: const Color(0xFF027AFF),
+                                borderRadius: BorderRadius.circular(8.w)),
+                            child: Text(
+                              '车已上门',
+                              style: TextStyle(
+                                  color: kForeGroundColor,
+                                  fontSize: BaseStyle.fontSize28),
+                            )),
+                      ),
+                    ))
+                : const SizedBox()));
   }
 
-  getCarBox(Widget widget) {
+  _getCarBox(Widget widget) {
     return Container(
       padding: EdgeInsets.all(16.w),
       margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
@@ -189,24 +186,24 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
   }
 
   _getCarInformation() {
-    return getCarBox(Column(
+    return _getCarBox(Column(
       children: [
         Row(
           children: [
-            getTitle('叫车车辆信息'),
+            _getTitle('叫车车辆信息'),
             350.wb,
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
                 decoration: BoxDecoration(
-                  color: widget.status == 3 || widget.status == 4
+                  color: widget.status.num == 3 || widget.status.num == 4
                       ? const Color(0xFF027AFF).withOpacity(0.1)
                       : const Color(0xFFFE8029).withOpacity(0.1),
                 ),
                 child: Text(
-                  widget.statusText,
+                  widget.status.str,
                   style: TextStyle(
                     fontSize: BaseStyle.fontSize24,
-                    color: widget.status == 3 || widget.status == 4
+                    color: widget.status.num == 3 || widget.status.num == 4
                         ? const Color(0xFF027AFF)
                         : const Color(0xFFFE8029),
                   ),
@@ -237,32 +234,32 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
                   ),
                 ),
                 32.hb,
-                getChip('过户0次', '2020年10月', '20.43万公里'),
+                _getChip('过户0次', '2020年10月', '20.43万公里'),
               ],
             )
           ],
         ),
         24.hb,
-        getList(),
+        _getList(),
       ],
     ));
   }
 
-  getChip(String num, String time, String distance) {
+  _getChip(String num, String time, String distance) {
     return Row(
       children: [
         Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: widget.status == 4
+              color: widget.status.num == 4
                   ? const Color(0xFF4F5A74).withOpacity(0.08)
                   : const Color(0xFF027AFF).withOpacity(0.08)),
           child: Text(
             num,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize20,
-                color: widget.status == 4
+                color: widget.status.num == 4
                     ? const Color(0xFF4F5A74)
                     : const Color(0xFF027AFF)),
           ),
@@ -296,9 +293,9 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
   }
 
   //车辆信息下拉
-  getList() {
+  _getList() {
     return DropDown(
-      title: getTitle('订单总价'),
+      title: _getTitle('订单总价'),
       text: SizedBox(
           child: Text.rich(TextSpan(children: [
         TextSpan(
@@ -368,7 +365,7 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
   }
 
 //标题
-  getTitle(String title) {
+  _getTitle(String title) {
     return Row(
       children: [
         Text(

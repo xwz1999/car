@@ -5,16 +5,16 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flutter/material.dart';
 
-class RentalcarOrder extends StatefulWidget {
-  const RentalcarOrder({
+class RentalcarOrderPage extends StatefulWidget {
+  const RentalcarOrderPage({
     super.key,
   });
 
   @override
-  State<RentalcarOrder> createState() => _RentalcarOrderState();
+  State<RentalcarOrderPage> createState() => _RentalcarOrderPageState();
 }
 
-class _RentalcarOrderState extends State<RentalcarOrder> {
+class _RentalcarOrderPageState extends State<RentalcarOrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,19 +32,17 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
           //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: Stack(
+        body: ListView(
           children: [
-            ListView(
-              children: [
-                16.hb,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32.w),
-                  padding: EdgeInsets.only(top: 32.w),
-                  height: 120.w,
-                  color: Colors.white,
-                  //padding: e,
-                  child: ProgressBar(
-                    length: 3,
+            16.hb,
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 32.w),
+              padding: EdgeInsets.only(top: 32.w),
+              height: 120.w,
+              color: Colors.white,
+              //padding: e,
+              child: ProgressBar(
+                length: 3,
                     num: 1,
                     direction: false,
                     HW: 250,
@@ -95,14 +93,14 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
                                               fontSize: BaseStyle.fontSize28,
                                               color: BaseStyle.color111111)),
                                       32.hb,
-                                      getCaip('自动2.0T', '国VI', '五座')
+                                      _getChap('自动2.0T', '国VI', '五座')
                                     ],
                                   ),
                                 )
                               ],
                             ),
                             40.hb,
-                            getList(),
+                            _getList(),
                           ],
                         )),
                   ),
@@ -150,50 +148,45 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
                       Padding(
                         padding: EdgeInsets.only(left: 0.w),
                         child: getTitle('支付信息'),
-                      ),
-                      16.hb,
-                      _getText('支付方式', '支付宝'),
-                      16.hb,
-                      _getText('支付时间', '2022-01-03 11:00')
-                    ],
                   ),
-                ),
-              ],
+                  16.hb,
+                  _getText('支付方式', '支付宝'),
+                  16.hb,
+                  _getText('支付时间', '2022-01-03 11:00')
+                ],
+              ),
             ),
-            16.hb,
-            Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                    width: double.infinity,
-                    color: kForeGroundColor,
-                    padding: EdgeInsets.only(
-                        top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(() => const RentaicarOrderDataPage());
-                      },
-                      child: Container(
-                          width: 168.w,
-                          height: 68.w,
-                          padding: EdgeInsets.only(left: 38.w, top: 14.w),
-                          decoration: BoxDecoration(
-                              color: const Color(0xFF027AFF),
-                              borderRadius: BorderRadius.circular(8.w)),
-                          child: Text(
-                            '我已交车',
-                            style: TextStyle(
-                                color: kForeGroundColor,
-                                fontSize: BaseStyle.fontSize28),
-                          )),
-                    )))
           ],
-        ));
+        ),
+        bottomNavigationBar: SizedBox(
+            height: 128.w,
+            child: Container(
+                width: double.infinity,
+                color: kForeGroundColor,
+                padding: EdgeInsets.only(
+                    top: 36.w, left: 526.w, bottom: 36.w, right: 32.w),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => const RentaicarOrderDataPage());
+                  },
+                  child: Container(
+                      width: 168.w,
+                      height: 68.w,
+                      padding: EdgeInsets.only(left: 38.w, top: 14.w),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF027AFF),
+                          borderRadius: BorderRadius.circular(8.w)),
+                      child: Text(
+                        '我已交车',
+                        style: TextStyle(
+                            color: kForeGroundColor,
+                            fontSize: BaseStyle.fontSize28),
+                      )),
+                ))));
   }
 
 //车辆信息下拉
-  getList() {
+  _getList() {
     return DropDown(
       title: getTitle('订单总额'),
       text: SizedBox(
@@ -272,7 +265,7 @@ class _RentalcarOrderState extends State<RentalcarOrder> {
   }
 
 //标签
-  getCaip(String num, String time, String distance) {
+  _getChap(String num, String time, String distance) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),

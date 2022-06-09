@@ -99,11 +99,11 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
           40.hb,
           getTitle('基本信息'),
           24.hb,
-          getInformation(),
+          _getInformation(),
           40.hb,
           getTitle('权限分配'),
           24.hb,
-          getPermissions(),
+          _getPermissions(),
           88.hb,
           CloudBottomButton(
             onTap: () async {
@@ -116,9 +116,9 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                   commissionText);
               if (res) {
                 BotToast.showText(text: '提交成功');
-                //Navigator.pop(context);
-                Get.back();
+                Get.back(result: true);
               }
+
               //print("输出返回值：$zhi");
             },
             text: '提交',
@@ -143,7 +143,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
   }
 
 //基本信息  ///姓名性别手机号组织架构
-  getInformation() {
+  _getInformation() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -151,7 +151,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
         children: [
           TextEditItemWidget(
             title: '姓名',
-            ontap: () {},
+            onTap: () {},
             value: nameText,
             callback: (String content) {
               nameText = content;
@@ -191,7 +191,6 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
           //   ],
           // ),
           32.hb,
-
           TextEditItemWidget(
             title: '性别 ',
             endIcon: true,
@@ -202,7 +201,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
               width: 32.w,
               height: 32.w,
             ),
-            ontap: () {
+            onTap: () {
               showModalBottomSheet(
                   context: context,
                   backgroundColor: const Color.fromRGBO(255, 255, 255, 0),
@@ -324,7 +323,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             title: '手机号',
             editor: false,
             value: phoneText,
-            ontap: () {},
+            onTap: () {},
             callback: (String content) {
               phoneText = content;
             },
@@ -342,7 +341,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
               width: 32.w,
               height: 32.w,
             ),
-            ontap: () async {
+            onTap: () async {
               await Get.to(() => StructurePage(
                     callback: (String city, int id) {
                       storeIdText = city;
@@ -360,7 +359,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
   }
 
 //权限分配   ///权限配置 销售提成
-  getPermissions() {
+  _getPermissions() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       color: kForeGroundColor,
@@ -376,7 +375,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             width: 32.w,
             height: 32.w,
           ),
-          ontap: () async {
+          onTap: () async {
             await Get.to(() => AccessConfigurationPage(
                   callback: (String city, int id) {
                     permissions1 = city;
@@ -399,7 +398,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             style: TextStyle(
                 color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
           ),
-          ontap: () async {},
+          onTap: () async {},
           callback: (String content) {
             commissionText = content;
           },
@@ -408,14 +407,11 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
       ]),
     );
   }
-
 // _refresh() async {
 //   res = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
 //       phoneText, storeid, roleId, commissionText);
 // }
-
 }
-
 // class Editor {
 //   int? staffId;
 //   String? name;

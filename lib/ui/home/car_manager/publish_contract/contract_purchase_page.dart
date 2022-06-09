@@ -126,7 +126,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
   }
 
   Column showPushCar(Color fontColor) {
-    print(widget.consignmentContractModel.value.sellPrice);
+   // print(widget.consignmentContractModel.value.sellPrice);
     return Column(
       children: [
         _showarea('车架号', widget.consignmentContractModel.value.publishCarInfo!.viNum, fontColor),

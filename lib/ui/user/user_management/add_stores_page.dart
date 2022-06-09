@@ -77,35 +77,35 @@ class _AddStoresPageState extends State<AddStoresPage> {
   _refresh() async {
     res = await BusinessFunc.getStoreadd(storesName, storesAddress);
   }
-}
 
-_real() {
-  return Container(
-    width: 750.w,
-    color: Colors.white,
-    padding: EdgeInsets.only(top: 16.w, left: 32.w),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextEditItemWidget(
-          callback: (String content) {
-            storesName = content;
-          },
-          ontap: () {},
-          title: '门店名称',
-          tips: '请输入门店名称',
-        ),
-        64.hb,
-        TextEditItemWidget(
-          callback: (String content) {
-            storesAddress = content;
-          },
-          ontap: () {},
-          title: '门店地址',
-          tips: '请输入门店地址',
-        ),
-        64.hb,
-      ],
-    ),
-  );
+  _real() {
+    return Container(
+      width: 750.w,
+      color: Colors.white,
+      padding: EdgeInsets.only(top: 16.w, left: 32.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextEditItemWidget(
+            callback: (String content) {
+              storesName = content;
+            },
+            onTap: () {},
+            title: '门店名称',
+            tips: '请输入门店名称',
+          ),
+          64.hb,
+          TextEditItemWidget(
+            callback: (String content) {
+              storesAddress = content;
+            },
+            onTap: () {},
+            title: '门店地址',
+            tips: '请输入门店地址',
+          ),
+          64.hb,
+        ],
+      ),
+    );
+  }
 }

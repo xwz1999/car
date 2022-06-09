@@ -79,7 +79,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           children: [
             Column(
               children: [
-                Container(
+                ColoredBox(
                   color: Colors.white,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

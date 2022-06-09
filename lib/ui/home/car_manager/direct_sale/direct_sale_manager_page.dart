@@ -7,13 +7,13 @@ import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_widget.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/custom_drawer.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../../../widget/custom_drawer.dart';
 import 'assessment_car_page.dart';
 
 class DirectSaleManagerPage extends StatefulWidget {
@@ -113,41 +113,39 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           body: Row(
             children: [
               Expanded(
-                child: Builder(
-                  builder: (context) {
-                    return TitleDropDownWidget(
-                        _dropDownHeaderItemStrings1, listWidget,
-                        height: kToolbarHeight + 20.w,
-                        bottomHeight: 30.w,
-                        screenControl: screenControl,
-                        headFontSize: 36.sp,
-                        isSearch: true,
-                        callback: (text) {
-                          _pickCar.value.keyWords = text;
-                          _dropDownHeaderItemStrings1.first == '直卖车辆'
-                              ? refreshController.callRefresh()
-                              : asRefreshController.callRefresh();
-                          setState(() {});
-                        },
-                        leftWidget: const CloudBackButton(
-                          isSpecial: true,
-                        ),
-                        // screen: '筛选',
-                        onTap: () {
-                          screenControl.screenHide();
-                          Scaffold.of(context).openEndDrawer();
-                        },
-                        child: _dropDownHeaderItemStrings1.first == '直卖车辆'
-                            ? DirectSalePage(
-                                pickCar: _pickCar,
-                                refreshController: refreshController,
-                              )
-                            : AssessmentCarPage(
-                                refreshController: asRefreshController,
-                                pickCar: _pickCar,
-                              ));
-                  }
-                ),
+                child: Builder(builder: (context) {
+                  return TitleDropDownWidget(
+                      _dropDownHeaderItemStrings1, listWidget,
+                      height: kToolbarHeight + 20.w,
+                      bottomHeight: 30.w,
+                      screenControl: screenControl,
+                      headFontSize: 36.sp,
+                      isSearch: true,
+                      callback: (text) {
+                        _pickCar.value.keyWords = text;
+                        _dropDownHeaderItemStrings1.first == '直卖车辆'
+                            ? refreshController.callRefresh()
+                            : asRefreshController.callRefresh();
+                        setState(() {});
+                      },
+                      leftWidget: const CloudBackButton(
+                        isSpecial: true,
+                      ),
+                      // screen: '筛选',
+                      onTap: () {
+                        screenControl.screenHide();
+                        Scaffold.of(context).openEndDrawer();
+                      },
+                      child: _dropDownHeaderItemStrings1.first == '直卖车辆'
+                          ? DirectSalePage(
+                              pickCar: _pickCar,
+                              refreshController: refreshController,
+                            )
+                          : AssessmentCarPage(
+                              refreshController: asRefreshController,
+                              pickCar: _pickCar,
+                            ));
+                }),
               )
             ],
           ),

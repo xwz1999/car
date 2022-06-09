@@ -21,8 +21,7 @@ class DetectionDataPage extends StatefulWidget {
 
 late String img;
 final picker = ImagePicker();
-// ignore: unnecessary_late
-late File imagePath = File(Assets.images.addcar.path);
+File imagePath = File(Assets.images.addcar.path);
 
 class _DetectionDataPageState extends State<DetectionDataPage> {
   // Future getImage() async {
@@ -38,6 +37,7 @@ class _DetectionDataPageState extends State<DetectionDataPage> {
   //   });
   // }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -90,8 +90,8 @@ class _DetectionDataPageState extends State<DetectionDataPage> {
                         child: img == ''
                             ? Image.asset(Assets.images.addcar.path)
                             : CloudImageNetworkWidget.car(
-                                urls: [img],
-                              ),
+                          urls: [img],
+                        ),
                         // Image.asset(
                         //   img == '' ? Assets.images.addcar.path : img,
                         // ),

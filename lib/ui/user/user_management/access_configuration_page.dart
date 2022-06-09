@@ -1,4 +1,3 @@
-// ignore_for_file: unnecessary_null_comparison, duplicate_ignore
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/user/roleall_model.dart';
@@ -64,7 +63,7 @@ class _AccessConfigurationPageState extends State<AccessConfigurationPage> {
             Expanded(
                 child: ListView.separated(
                     itemBuilder: (context, index) {
-                      return _getItem(index, permissions[index]);
+                      return getItem(index, permissions[index]);
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return Container(
@@ -111,7 +110,7 @@ class _AccessConfigurationPageState extends State<AccessConfigurationPage> {
         ));
   }
 
-  _getItem(int index, RoleallModel model) {
+  getItem(int index, RoleallModel model) {
     // ignore: unnecessary_null_comparison
     return Container(
       padding: EdgeInsets.only(left: 32.w),

@@ -122,7 +122,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
 
                 _onLoad = false;
                 // callCarList = [
-                //   const CallcarlistModel(
+                //   const CallCarListModel(
                 //       amount: '100',
                 //       mileage: '25.5',
                 //       transfer: 1,
@@ -132,7 +132,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                 //       licensingDate: 1136217600,
                 //       id: 9,
                 //       orderSn: '202205180003'),
-                //   const CallcarlistModel(
+                //   const CallCarListModel(
                 //       amount: '100',
                 //       mileage: '25.5',
                 //       transfer: 1,
@@ -142,7 +142,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                 //       licensingDate: 1136217600,
                 //       id: 9,
                 //       orderSn: '202205180003'),
-                //   const CallcarlistModel(
+                //   const CallCarListModel(
                 //       amount: '100',
                 //       mileage: '25.5',
                 //       transfer: 1,
@@ -152,7 +152,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                 //       licensingDate: 1136217600,
                 //       id: 9,
                 //       orderSn: '202205180003'),
-                //   const CallcarlistModel(
+                //   const CallCarListModel(
                 //       amount: '100',
                 //       mileage: '25.5',
                 //       transfer: 1,
@@ -175,7 +175,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                       : ListView.builder(
                           padding: EdgeInsets.zero,
                           itemBuilder: (context, index) {
-                            return getCar(callCarList[index]);
+                            return _getCar(callCarList[index]);
                           },
                           itemCount: callCarList.length),
             )),
@@ -183,19 +183,19 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
         ));
   }
 
-  getCar(CallcarlistModel model) {
-    late bool bl = false;
+  _getCar(CallcarlistModel model) {
+    //late bool bl = false;
     return Offstage(
-        offstage: text == '全部' ? false : model.statusEnum.str != text,
+        offstage: false, //text == '全部' ? false : model.statusEnum.str != text,
         child: GestureDetector(
             onTap: () {
               // model.transfer == 1
               //     ? Get.to(() => UnpaidOther(
               //           status: model.status,
-              //           statusText: model.statusEnum.str,
+              //
               //         ))
               //     : Get.to(() => ThatcarUnpaid(
-              //           statusText: model.statusEnum.str,
+              //
               //           status: model.status,
               //         ));
             },
@@ -211,7 +211,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                     Text(
                       model.statusEnum.str,
                       style: TextStyle(
-                          color: model.status != 4
+                          color: model.statusEnum.num != 4
                               ? const Color(0xFF027AFF)
                               : const Color(0xFF666666),
                           fontSize: BaseStyle.fontSize28),
@@ -238,7 +238,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                               32.hb,
                               Padding(
                                 padding: EdgeInsets.only(right: 16.w),
-                                child: getText(
+                                child: _getText(
                                     '过户${model.transfer}次',
                                     DateUtil.formatDateMs(
                                         model.licensingDate.toInt() * 1000,
@@ -278,7 +278,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                         ])),
                         56.wb,
                         Text(
-                          model.status == 4 ? '退款金额' : '已付金额',
+                          model.statusEnum.num == 4 ? '退款金额' : '已付金额',
                           style: TextStyle(
                               fontSize: BaseStyle.fontSize28,
                               color: BaseStyle.color999999),
@@ -288,13 +288,15 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                           TextSpan(
                               text: '¥',
                               style: TextStyle(
-                                  color: model.status == 4
+                                  color: model.statusEnum.num == 4
                                       ? const Color(0xFF333333)
                                       : const Color(0xFFFF3B02),
                                   fontSize: BaseStyle.fontSize24,
                                   fontWeight: FontWeight.bold)),
                           TextSpan(
-                              text: model.status == 1 ? '0.00' : model.amount,
+                              text: model.statusEnum.num == 1
+                                  ? '0.00'
+                                  : model.amount,
                               style: TextStyle(
                                   color: model.statusEnum.num == 4
                                       ? const Color(0xFF333333)
@@ -308,7 +310,7 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
                 ))));
   }
 
-  getText(String num, String time, String distance, String conditions) {
+  _getText(String num, String time, String distance, String conditions) {
     return Row(
       children: [
         //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
