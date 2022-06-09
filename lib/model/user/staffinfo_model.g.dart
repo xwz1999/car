@@ -10,7 +10,7 @@ StaffinfoModel _$StaffinfoModelFromJson(Map<String, dynamic> json) =>
     StaffinfoModel(
       Id: json['Id'] as int,
       Name: json['Name'] as String,
-      Gender: json['Gender'] as int,
+      gender: json['Gender'] as int,
       Phone: json['Phone'] as String,
       StoreId: json['StoreId'] as int,
       StoreName: json['StoreName'] as String,

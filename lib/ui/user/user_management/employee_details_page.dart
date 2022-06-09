@@ -263,7 +263,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                                   Alert.dismiss(context);
                                   var res = await BusinessFunc.getStaffadd(
                                       staffInfo.Name,
-                                      staffInfo.Gender,
+                                      staffInfo.gender,
                                       staffInfo.Phone,
                                       staffInfo.StoreId,
                                       staffInfo.RoleId,

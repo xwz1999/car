@@ -9,7 +9,8 @@ class StaffinfoModel extends Equatable {
   //JsonKey(name)
   final int Id;
   final String Name;
-  final int Gender;
+  @JsonKey(name: 'Gender')
+  final int gender;
   final String Phone;
   final int StoreId;
   final String StoreName;
@@ -22,14 +23,14 @@ class StaffinfoModel extends Equatable {
   factory StaffinfoModel.fromJson(Map<String, dynamic> json) =>
       _$StaffinfoModelFromJson(json);
 
-  Gender get genderEm => Gender.getValue(Gender);
+  Gender get genderEm => Gender.getValue(gender);
 
   Role get roleEm => Role.getValueN(RoleId);
 
   static StaffinfoModel get init => const StaffinfoModel(
     Id: 0,
         Name: '',
-        Gender: 0,
+        gender: 0,
         Phone: '',
         StoreId: 0,
         StoreName: '',
@@ -43,7 +44,7 @@ class StaffinfoModel extends Equatable {
   const StaffinfoModel({
     required this.Id,
     required this.Name,
-    required this.Gender,
+    required this.gender,
     required this.Phone,
     required this.StoreId,
     required this.StoreName,
