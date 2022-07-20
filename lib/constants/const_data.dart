@@ -1,5 +1,5 @@
 ///微信分享二维码前缀
-const posterCodePrefix = 'https://h5wenche.oa00.com/register/';
+const posterCodePrefix = 'https://h5wenche.oa00.com/register';
 
 ///车牌号码验证正则
 const licensePlateReg =

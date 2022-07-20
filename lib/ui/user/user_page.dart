@@ -20,8 +20,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/user_tool.dart';
 import '../../widget/cloud_avatar_widget.dart';
-import 'home.dart';
-
+import '../home/home_page.dart';
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
 
