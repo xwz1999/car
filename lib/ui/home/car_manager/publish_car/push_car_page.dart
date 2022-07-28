@@ -329,11 +329,11 @@ class _PushCarPageState extends State<PushCarPage> {
           _function(
             '首次上牌',
             () async {
-              await CarDatePicker.calenderPicker(DateTime(2000),DateTime.now());
+              _publishCarInfo.licensingDate=  await CarDatePicker.calenderPicker(DateTime(2000),DateTime.now());
               // _firstDate = await CarDatePicker.monthPicker(DateTime.now());
               // _publishCarInfo.licensingDate = _firstDate;
-              // FocusManager.instance.primaryFocus?.unfocus();
-              // setState(() {});
+              FocusManager.instance.primaryFocus?.unfocus();
+              setState(() {});
             },
             _publishCarInfo.licensingDateStr,
             '选择首次上牌时间',

@@ -25,6 +25,10 @@ class _CalenderPickBodyState extends State<CalenderPickBody> {
   Widget build(BuildContext context) {
     return CarPickerBox(
       height: 800.w,
+      title: '选择日期',
+      onPressed: (){
+        Get.back(result: _selectDay);
+      },
       child: TableCalendar(
         locale: 'zh',
         firstDay: widget.initDate,
@@ -36,19 +40,19 @@ class _CalenderPickBodyState extends State<CalenderPickBody> {
         shouldFillViewport: true,
         availableCalendarFormats: const {
           CalendarFormat.month: '月份',
-          CalendarFormat.twoWeeks: '2'
+          // CalendarFormat.twoWeeks: '2'
         },
-        onRangeSelected: (starDay, endDay, day) {
-          _startDay = starDay;
-          _endDay = endDay;
-          setState(() {});
-        },
-        // onDaySelected: (selectDay, focusDay) {
-        //   setState(() {
-        //     _selectDay = selectDay;
-        //     _focusDay = focusDay;
-        //   });
+        // onRangeSelected: (starDay, endDay, day) {
+        //   _startDay = starDay;
+        //   _endDay = endDay;
+        //   setState(() {});
         // },
+        onDaySelected: (selectDay, focusDay) {
+          setState(() {
+            _selectDay = selectDay;
+            _focusDay = focusDay;
+          });
+        },
         calendarFormat: _calendarFormat,
         selectedDayPredicate: (day) {
           return isSameDay(_selectDay, day);
