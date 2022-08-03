@@ -38,7 +38,7 @@ class UserInfoModel {
         3: '入驻商',
       };
 
-  Gender1 get genderEM => Gender1.getValue(gender);
+  Gender get genderEM => Gender.getValue(gender);
 
 //<editor-fold desc="Data Methods">
 

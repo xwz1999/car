@@ -1,5 +1,5 @@
 ///性别
-enum Gender1 {
+enum Gender {
   unknown(0, '未知'),
   male(1, '男'),
   female(2, '女');
@@ -7,10 +7,10 @@ enum Gender1 {
   final int typeNum;
   final String typeStr;
 
-  static Gender1 getValue(int value) =>
-      Gender1.values.firstWhere((element) => element.typeNum == value);
+  static Gender getValue(int value) =>
+      Gender.values.firstWhere((element) => element.typeNum == value);
 
-  const Gender1(this.typeNum, this.typeStr);
+  const Gender(this.typeNum, this.typeStr);
 }
 
 

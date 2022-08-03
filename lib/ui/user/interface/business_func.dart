@@ -103,11 +103,11 @@ class BusinessFunc {
   }
 
   ///员工详情
-  static Future<StaffinfoModel?> getStaffInfo(int staffId) async {
+  static Future<StaffInfoModel?> getStaffInfo(int staffId) async {
     BaseModel res = await apiClient
         .request(API.storeManagement.staffInfo, data: {'staffId': staffId});
     if (res.code == 0) {
-      return StaffinfoModel.fromJson(res.data);
+      return StaffInfoModel.fromJson(res.data);
     } else {
       CloudToast.show(res.msg);
       return null;

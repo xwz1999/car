@@ -5,66 +5,65 @@ import 'package:json_annotation/json_annotation.dart';
 part 'staffinfo_model.g.dart';
 
 @JsonSerializable()
-class StaffinfoModel extends Equatable {
-  //JsonKey(name)
-  final int Id;
-  final String Name;
-  final int Gender;
-  final String Phone;
-  final int StoreId;
-  final String StoreName;
-  final int RoleId;
-  final String RoleName;
-  final String Commission;
-  final int Status;
-  final int AuditStatus;
+class StaffInfoModel extends Equatable {
+  final int id;
+  final String name;
+  final int gender;
+  final String phone;
+  final int storeId;
+  final String storeName;
+  final int roleId;
+  final String roleName;
+  final String commission;
+  final int status;
+  final int auditStatus;
 
-  factory StaffinfoModel.fromJson(Map<String, dynamic> json) =>
-      _$StaffinfoModelFromJson(json);
+  factory StaffInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$StaffInfoModelFromJson(json);
 
-  Gender1 get genderEm => Gender1.getValue(Gender);
+  Gender get genderEm => Gender.getValue(gender);
 
-  Role get roleEm => Role.getValueN(RoleId);
+  Role get roleEm => Role.getValueN(roleId);
 
-  static StaffinfoModel get init => const StaffinfoModel(
-    Id: 0,
-        Name: '',
-        Gender: 0,
-        Phone: '',
-        StoreId: 0,
-        StoreName: '',
-        RoleId: 1,
-        RoleName: '',
-        Commission: '',
-        Status: 0,
-        AuditStatus: 2,
-      );
-
-  const StaffinfoModel({
-    required this.Id,
-    required this.Name,
-    required this.Gender,
-    required this.Phone,
-    required this.StoreId,
-    required this.StoreName,
-    required this.RoleId,
-    required this.RoleName,
-    required this.Commission,
-    required this.Status,
-    required this.AuditStatus,
-  });
+  static StaffInfoModel get init => const StaffInfoModel(
+      id: 0,
+      name: '',
+      gender: 0,
+      phone: '',
+      storeId: 0,
+      storeName: '',
+      roleId: 0,
+      roleName: '',
+      commission: '',
+      status: 0,
+      auditStatus: 0);
 
   @override
   List<Object?> get props => [
-        Name,
-        Gender,
-        Phone,
-        StoreId,
-        StoreName,
-        RoleId,
-        RoleName,
-        Commission,
-        Status,
-        AuditStatus,
+        id,
+        name,
+        gender,
+        phone,
+        storeId,
+        storeName,
+        roleId,
+        roleName,
+        commission,
+        status,
+        auditStatus,
       ];
+
+  const StaffInfoModel({
+    required this.id,
+    required this.name,
+    required this.gender,
+    required this.phone,
+    required this.storeId,
+    required this.storeName,
+    required this.roleId,
+    required this.roleName,
+    required this.commission,
+    required this.status,
+    required this.auditStatus,
+  });
 }

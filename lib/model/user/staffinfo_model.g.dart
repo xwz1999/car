@@ -6,17 +6,17 @@ part of 'staffinfo_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-StaffinfoModel _$StaffinfoModelFromJson(Map<String, dynamic> json) =>
-    StaffinfoModel(
-      Id: json['Id'] as int,
-      Name: json['Name'] as String,
-      Gender: json['Gender'] as int,
-      Phone: json['Phone'] as String,
-      StoreId: json['StoreId'] as int,
-      StoreName: json['StoreName'] as String,
-      RoleId: json['RoleId'] as int,
-      RoleName: json['RoleName'] as String,
-      Commission: json['Commission'] as String,
-      Status: json['Status'] as int,
-      AuditStatus: json['AuditStatus'] as int,
+StaffInfoModel _$StaffInfoModelFromJson(Map<String, dynamic> json) =>
+    StaffInfoModel(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      gender: json['gender'] as int,
+      phone: json['phone'] as String,
+      storeId: json['storeId'] as int,
+      storeName: json['storeName'] as String,
+      roleId: json['roleId'] as int,
+      roleName: json['roleName'] as String,
+      commission: json['commission'] as String,
+      status: json['status'] as int,
+      auditStatus: json['auditStatus'] as int,
     );

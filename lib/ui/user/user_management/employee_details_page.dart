@@ -23,7 +23,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   bool audit = true;
   late bool res = false;
-  StaffinfoModel staffInfo = StaffinfoModel.init;
+  StaffInfoModel staffInfo = StaffInfoModel.init;
 
   @override
   void initState() {
@@ -137,13 +137,13 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                       color: BaseStyle.color333333,
                       fontSize: BaseStyle.fontSize28),
                 ),
-                staffInfo.RoleId == 1 || staffInfo.RoleId == 3 ? 0.hb : 32.hb,
+                staffInfo.roleId == 1 || staffInfo.roleId == 3 ? 0.hb : 32.hb,
                 Offstage(
-                  offstage: staffInfo.RoleId == 1 || staffInfo.RoleId == 3,
+                  offstage: staffInfo.roleId == 1 || staffInfo.roleId == 3,
                   child: SizedBox(
                       width: 250.w,
                       child: Text(
-                        '销售提成比例${staffInfo.Commission}%',
+                        '销售提成比例${staffInfo.commission}%',
                         style: TextStyle(
                             color: BaseStyle.color666666,
                             fontSize: BaseStyle.fontSize28),
@@ -152,7 +152,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 72.hb,
                 Offstage(
                   offstage:
-                  staffInfo.AuditStatus == 1 || staffInfo.AuditStatus == 2,
+                      staffInfo.auditStatus == 1 || staffInfo.auditStatus == 2,
                   child: Column(
                     children: [
                       Text(
@@ -177,7 +177,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
           const Spacer(),
           const Divider(),
           Offstage(
-            offstage: staffInfo.AuditStatus == 1,
+            offstage: staffInfo.auditStatus == 1,
             child: Row(
               children: [
                 Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
@@ -219,18 +219,18 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                   });
                 }),
                 200.wb,
-                staffInfo.AuditStatus == 2
+                staffInfo.auditStatus == 2
                     ? getButton(Assets.icons.editor1.path, '编辑', () async {
                         res = await Get.to(() => EditorEmployeePage(
-                              roleId: staffInfo.RoleId,
-                              storeId: staffInfo.StoreId,
+                              roleId: staffInfo.roleId,
+                              storeId: staffInfo.storeId,
                               staffId: widget.staffId,
-                              nameText: staffInfo.Name,
+                              nameText: staffInfo.name,
                               genderText: staffInfo.genderEm.typeStr,
-                              phoneText: staffInfo.Phone,
-                              storeIdText: staffInfo.StoreName,
-                              roleName: staffInfo.RoleName,
-                              commissionText: staffInfo.Commission,
+                              phoneText: staffInfo.phone,
+                              storeIdText: staffInfo.storeName,
+                              roleName: staffInfo.roleName,
+                              commissionText: staffInfo.commission,
                               // callback: (bool audit) {
                               //   audit = audit;
                               // },
@@ -249,47 +249,47 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                                     content: const Text('确认重新提交员工信息并培训吗?'),
                                     items: const ['取消'],
                                     deleteItem: '确定',
-                                //监听器
-                                listener: (index) {
-                                  Alert.dismiss(context);
-                                  //_getSure = false;
-                                  setState(() {
-                                    //_getSure;
-                                  });
-                                  //Value = false;
-                                  //(Value);
-                                },
-                                deleteListener: () async {
-                                  Alert.dismiss(context);
-                                  var res = await BusinessFunc.getStaffadd(
-                                      staffInfo.Name,
-                                      staffInfo.Gender,
-                                      staffInfo.Phone,
-                                      staffInfo.StoreId,
-                                      staffInfo.RoleId,
-                                      staffInfo.RoleId == 1 ||
-                                          staffInfo.RoleId == 3
-                                          ? '0'
-                                          : staffInfo.Commission);
-                                  if (res) {
+                                    //监听器
+                                    listener: (index) {
+                                      Alert.dismiss(context);
+                                      //_getSure = false;
+                                      setState(() {
+                                        //_getSure;
+                                      });
+                                      //Value = false;
+                                      //(Value);
+                                    },
+                                    deleteListener: () async {
+                                      Alert.dismiss(context);
+                                      var res = await BusinessFunc.getStaffadd(
+                                          staffInfo.name,
+                                          staffInfo.gender,
+                                          staffInfo.phone,
+                                          staffInfo.storeId,
+                                          staffInfo.roleId,
+                                          staffInfo.roleId == 1 ||
+                                                  staffInfo.roleId == 3
+                                              ? '0'
+                                              : staffInfo.commission);
+                                      if (res) {
                                         Get.back();
                                         //Navigator.pop(context);
                                       }
                                       // var res =
-                                  //     await BusinessFunc.getStaffDelete(
-                                  //         widget.staffId);
-                                  // if (res) {
-                                  //   Navigator.pop(context);
-                                  // }
-                                  setState(() {
-                                    //_getSure;
-                                  });
-                                  //print(_getSure);
-                                  //Value = true;
-                                  //(Value);
-                                },
-                              ));
-                        }))
+                                      //     await BusinessFunc.getStaffDelete(
+                                      //         widget.staffId);
+                                      // if (res) {
+                                      //   Navigator.pop(context);
+                                      // }
+                                      setState(() {
+                                        //_getSure;
+                                      });
+                                      //print(_getSure);
+                                      //Value = true;
+                                      //(Value);
+                                    },
+                                  ));
+                            }))
               ],
             ),
           )
@@ -300,9 +300,9 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
 
   _getAudit() {
     return Offstage(
-      offstage: staffInfo.AuditStatus == 2,
+      offstage: staffInfo.auditStatus == 2,
       child: Image.asset(
-        staffInfo.AuditStatus == 1
+        staffInfo.auditStatus == 1
             ? Assets.icons.inreview.path
             : Assets.icons.hasrejected.path,
         width: 140.w,
@@ -338,7 +338,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
       ),
     );
   }
-  
+
 //   describe() {
 //     switch (widget.permissions) {
 //       case '销售员':
@@ -407,11 +407,11 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
           child:
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Padding(
               padding: EdgeInsets.only(left: 32.w),
               child: Text(
-                staffInfo.Name,
+                staffInfo.name,
                 style: TextStyle(
                     color: BaseStyle.color333333,
                     fontWeight: FontWeight.bold,
@@ -419,9 +419,9 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
               ),
             ),
             getText('性别', staffInfo.genderEm.typeStr),
-            getText('手机号', staffInfo.Phone),
-            getText('权限配置', staffInfo.RoleName),
-            getText('所属门店', staffInfo.StoreName),
+            getText('手机号', staffInfo.phone),
+            getText('权限配置', staffInfo.roleName),
+            getText('所属门店', staffInfo.storeName),
             getText('所属入驻商', '宁波xx4s专营店'),
 
             ///widget.business
