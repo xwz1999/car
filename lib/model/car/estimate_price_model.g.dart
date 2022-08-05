@@ -11,3 +11,9 @@ EstimatePriceModel _$EstimatePriceModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as num,
       price: json['price'] as String,
     );
+
+Map<String, dynamic> _$EstimatePriceModelToJson(EstimatePriceModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'price': instance.price,
+    };

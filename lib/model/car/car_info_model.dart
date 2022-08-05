@@ -31,6 +31,7 @@ class CarInfoModel extends Equatable {
   factory CarInfoModel.fromJson(Map<String, dynamic> json) =>
       _$CarInfoModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CarInfoModelToJson(this);
   const CarInfoModel({
     required this.id,
     required this.modelName,

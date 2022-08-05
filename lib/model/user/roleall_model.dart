@@ -8,8 +8,11 @@ class RoleallModel extends Equatable {
   final int id;
   final String name;
   final String describe;
+
   factory RoleallModel.fromJson(Map<String, dynamic> json) =>
       _$RoleallModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RoleallModelToJson(this);
 
   @override
   List<Object?> get props => [id, name, describe];

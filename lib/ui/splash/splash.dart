@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
 import 'package:jverify/jverify.dart';
+import 'package:power_logger/power_logger.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/environment/environment.dart';
@@ -32,7 +33,7 @@ class _SplashPageState extends State<SplashPage> {
     await HiveStore.init();
     Jverify()
         .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
-    Jverify().setDebugMode(DevEV.instance.dev);
+    Jverify().setDebugMode(AppENV.instance.env != ENVConfig.release);
     var isAndroid = Platform.isAndroid;
     registerWxApi(
         appId: 'wx9bc3ffb23a749254',
@@ -110,11 +111,12 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    var env = const String.fromEnvironment('ENV', defaultValue: 'dev');
+    var env = const String.fromEnvironment('ENV', defaultValue: 'local');
     if (kDebugMode) {
       print('env :$env');
     }
-    DevEV.instance.setEnvironment( context, environment: env == 'dev',);
+    AppENV.instance.setEnv(env);
+    PowerLogger.start(context, debug: AppENV.instance.env != ENVConfig.release);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll();
       if (!await userProvider.init()) {

@@ -14,6 +14,7 @@ class TaskInviteListModel extends Equatable {
   factory TaskInviteListModel.fromJson(Map<String, dynamic> json) =>
       _$TaskInviteListModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$TaskInviteListModelToJson(this);
   const TaskInviteListModel({
     required this.id,
     required this.customerId,

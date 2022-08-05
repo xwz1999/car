@@ -12,6 +12,7 @@ class SortSeriesModel extends Equatable {
   factory SortSeriesModel.fromJson(Map<String, dynamic> json) =>
       _$SortSeriesModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$SortSeriesModelToJson(this);
   static SortSeriesModel get init => const SortSeriesModel(id: 0, name: '', series: []);
   @override
   List<Object?> get props => [id,name,series,];
@@ -30,6 +31,7 @@ class Series extends Equatable {
 
   factory Series.fromJson(Map<String, dynamic> json) =>_$SeriesFromJson(json);
 
+  Map<String, dynamic> toJson() => _$SeriesToJson(this);
   const Series({
     required this.id,
     required this.name,

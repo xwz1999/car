@@ -19,6 +19,7 @@ class CallcarlistModel extends Equatable {
   factory CallcarlistModel.fromJson(Map<String, dynamic> json) =>
       _$CallcarlistModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CallcarlistModelToJson(this);
   OrderCallCarStatus get statusEnum => OrderCallCarStatus.getStatus(status);
 
   const CallcarlistModel({

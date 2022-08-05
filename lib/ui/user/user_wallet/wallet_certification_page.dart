@@ -1,6 +1,6 @@
 //import 'package:cloud_car/constants/api/api.dart';
 
-import 'package:cloud_car/ui/user/user_wallet/Immediate_withdrawal_page.dart';
+import 'package:cloud_car/ui/user/user_wallet/immediate_withdrawal_page.dart';
 import 'package:cloud_car/ui/user/user_wallet/withdrawal_record_page.dart';
 import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';

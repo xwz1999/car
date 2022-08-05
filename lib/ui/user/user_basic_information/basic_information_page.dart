@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/user/interface/user_func.dart';
 import 'package:cloud_car/ui/user/user_basic_information/enterprise_page.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller_widget.dart';
@@ -10,6 +11,7 @@ import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../../../utils/user_tool.dart';
 import '../../../widget/button/cloud_back_button.dart';
@@ -31,30 +33,9 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
   final picker = ImagePicker();
   late File imagePath = File(UserTool.userProvider.userInfo.headImg);
 
-  // Future getImage() async {
-  //   // ignore: deprecated_member_use
-  //   final pickedFile = await picker.getImage(source: ImageSource.camera);
-  //   final File file = File(pickedFile!.path);
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       imagePath = file;
-  //     } else {
-  //       print('no image selected');
-  //     }
-  //   });
-  // }
-  //
-  // void openGallery() async {
-  //   // ignore: deprecated_member_use
-  //   PickedFile? pickedFile = await picker.getImage(source: ImageSource.gallery);
-  //   final File file = File(pickedFile!.path);
-  //   setState(() {
-  //     imagePath = file;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
+    var infoProvider = Provider.of<UserProvider>(context);
     return Scaffold(
         appBar: AppBar(
           leading: const CloudBackButton(
@@ -66,7 +47,6 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize36,
                   fontWeight: FontWeight.bold)),
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: const Color(0xFFF6F6F6),
         extendBody: true,
@@ -115,127 +95,10 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                       if (res) {
                         BotToast.showText(text: '修改头像成功');
                       }
-                      // print(urls);
                     }
                     await UserTool.userProvider.updateUserInfo();
                     setState(() {});
-                    // imagePath = value!;
                   },
-                  // onTap: () {
-                  //   showModalBottomSheet(
-                  //       context: context,
-                  //       backgroundColor: const Color.fromRGBO(255, 255, 255, 0),
-                  //       builder: (BuildContext context) {
-                  //         return Container(
-                  //           width: double.infinity,
-                  //           height: 468.w,
-                  //           decoration: BoxDecoration(
-                  //               color: Colors.white,
-                  //               borderRadius:
-                  //                   BorderRadius.all(Radius.circular(16.w))),
-                  //           child: Column(
-                  //             children: [
-                  //               32.hb,
-                  //               Row(
-                  //                 children: [
-                  //                   300.wb,
-                  //                   Text(
-                  //                     '更换头像',
-                  //                     style: TextStyle(
-                  //                         color: const Color(0xFF111111),
-                  //                         fontSize: 32.sp,
-                  //                         fontWeight: FontWeight.bold),
-                  //                   ),
-                  //                   const Spacer(),
-                  //                   IconButton(
-                  //                       onPressed: () async {
-                  //                         //Get.back();
-                  //                         var zhi = await User.getUserUpdate(
-                  //                             imagePath.path,
-                  //                             name,
-                  //                             UserTool.userProvider.userInfo
-                  //                                 .gender);
-                  //                         if (zhi) {
-                  //                           BotToast.showText(text: '修改头像成功');
-                  //                           Navigator.pop(context);
-                  //                         }
-                  //                         setState(() {});
-                  //                       },
-                  //                       icon: Icon(
-                  //                         CupertinoIcons.clear,
-                  //                         color: BaseStyle.colorcccccc,
-                  //                         size: 30.w,
-                  //                       )),
-                  //                 ],
-                  //               ),
-                  //               40.hb,
-                  //               Row(
-                  //                 mainAxisSize: MainAxisSize.max,
-                  //                 children: [
-                  //                   SizedBox(
-                  //                     width: 40.w,
-                  //                   ),
-                  //                   GestureDetector(
-                  //                     onTap: () {
-                  //                       getImage();
-                  //                     },
-                  //                     child: SizedBox(
-                  //                       child: Column(
-                  //                         children: [
-                  //                           Image.asset(
-                  //                             Assets.images.shooting.path,
-                  //                             width: 96.w,
-                  //                             height: 96.w,
-                  //                           ),
-                  //                           5.hb,
-                  //                           Text(
-                  //                             '拍摄',
-                  //                             style: TextStyle(
-                  //                                 color:
-                  //                                     const Color(0xFF666666),
-                  //                                 fontSize:
-                  //                                     BaseStyle.fontSize24),
-                  //                           )
-                  //                         ],
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   74.wb,
-                  //                   GestureDetector(
-                  //                     onTap: () {
-                  //                       openGallery();
-                  //                     },
-                  //                     child: SizedBox(
-                  //                       child: Column(
-                  //                         children: [
-                  //                           Image.asset(
-                  //                             Assets.images.photo.path,
-                  //                             width: 96.w,
-                  //                             height: 96.w,
-                  //                           ),
-                  //                           5.hb,
-                  //                           Text(
-                  //                             '照片',
-                  //                             style: TextStyle(
-                  //                                 color:
-                  //                                     const Color(0xFF666666),
-                  //                                 fontSize:
-                  //                                     BaseStyle.fontSize24),
-                  //                           )
-                  //                         ],
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   // SizedBox(
-                  //                   //   width: 50.w,
-                  //                   // )
-                  //                 ],
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         );
-                  //       });
-                  // },
                 ),
                 //姓名
                 ListTile(
@@ -249,7 +112,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                         const Spacer(),
                         SizedBox(
                           child: Text(
-                            UserTool.userProvider.userInfo.nickname,
+                            infoProvider.userInfo.nickname,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
@@ -306,9 +169,9 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                         var res = await User.getUserUpdateName(
                                           name,
                                         );
-                                        UserTool.userProvider.userInfo
-                                            .nickname = name;
-
+                                        var info = infoProvider.userInfo;
+                                        UserTool.userProvider.setUserInfo(
+                                            info.copyWith(nickname: name));
                                         if (res) {
                                           BotToast.showText(text: '修改名字成功');
 

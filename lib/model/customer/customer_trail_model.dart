@@ -16,6 +16,8 @@ class CustomerTrailModel extends Equatable {
   factory CustomerTrailModel.fromJson(Map<String, dynamic> json) =>
       _$CustomerTrailModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CustomerTrailModelToJson(this);
+
   const CustomerTrailModel({
     required this.type,
     required this.initiatorName,
@@ -25,14 +27,24 @@ class CustomerTrailModel extends Equatable {
     required this.invite,
     required this.reserve,
   });
-  
+
   @override
-  List<Object?> get props => [type,initiatorName,contentType,content,createdAt,invite,reserve,];
+  List<Object?> get props => [
+        type,
+        initiatorName,
+        contentType,
+        content,
+        createdAt,
+        invite,
+        reserve,
+      ];
 }
 
 @JsonSerializable()
 class Invite extends Equatable {
-  factory Invite.fromJson(Map<String, dynamic> json) =>_$InviteFromJson(json);
+  factory Invite.fromJson(Map<String, dynamic> json) => _$InviteFromJson(json);
+
+  Map<String, dynamic> toJson() => _$InviteToJson(this);
   final int inviteAt;
   final String address;
   final String remark;
@@ -56,13 +68,28 @@ class Invite extends Equatable {
     required this.price,
     required this.carType,
   });
+
   @override
-  List<Object?> get props => [inviteAt,address,remark,carId,mainPhoto,modelName,licensingDate,mileage,price,carType,];
+  List<Object?> get props => [
+        inviteAt,
+        address,
+        remark,
+        carId,
+        mainPhoto,
+        modelName,
+        licensingDate,
+        mileage,
+        price,
+        carType,
+      ];
 }
 
 @JsonSerializable()
 class Reserve extends Equatable {
-  factory Reserve.fromJson(Map<String, dynamic> json) =>_$ReserveFromJson(json);
+  factory Reserve.fromJson(Map<String, dynamic> json) =>
+      _$ReserveFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReserveToJson(this);
   final int reserveAt;
   final String address;
   final String modelName;
@@ -78,7 +105,14 @@ class Reserve extends Equatable {
     required this.mileage,
     required this.price,
   });
-  
+
   @override
-  List<Object?> get props => [reserveAt,address,modelName,licensingDate,mileage,price,];
+  List<Object?> get props => [
+        reserveAt,
+        address,
+        modelName,
+        licensingDate,
+        mileage,
+        price,
+      ];
 }

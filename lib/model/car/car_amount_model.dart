@@ -14,6 +14,8 @@ class CarAmountModel extends Equatable {
   factory CarAmountModel.fromJson(Map<String, dynamic> json) =>
       _$CarAmountModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CarAmountModelToJson(this);
+
   const CarAmountModel({
     required this.deposit,
     required this.downPayment,
@@ -21,6 +23,13 @@ class CarAmountModel extends Equatable {
     required this.serviceFee,
     required this.serviceFeeRate,
   });
+
   @override
-  List<Object?> get props => [deposit,downPayment,balancePayment,serviceFee,serviceFeeRate,];
+  List<Object?> get props => [
+        deposit,
+        downPayment,
+        balancePayment,
+        serviceFee,
+        serviceFeeRate,
+      ];
 }

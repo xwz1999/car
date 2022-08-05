@@ -21,6 +21,7 @@ class StaffInfoModel extends Equatable {
   factory StaffInfoModel.fromJson(Map<String, dynamic> json) =>
       _$StaffInfoModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$StaffInfoModelToJson(this);
   Gender get genderEm => Gender.getValue(gender);
 
   Role get roleEm => Role.getValueN(roleId);

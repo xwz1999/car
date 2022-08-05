@@ -18,3 +18,16 @@ CustomerBrowseListModel _$CustomerBrowseListModelFromJson(
       carType: json['carType'] as int,
       createdAt: json['createdAt'] as int,
     );
+
+Map<String, dynamic> _$CustomerBrowseListModelToJson(
+        CustomerBrowseListModel instance) =>
+    <String, dynamic>{
+      'carId': instance.carId,
+      'mainPhoto': instance.mainPhoto,
+      'modelName': instance.modelName,
+      'licensingDate': instance.licensingDate,
+      'mileage': instance.mileage,
+      'price': instance.price,
+      'carType': instance.carType,
+      'createdAt': instance.createdAt,
+    };

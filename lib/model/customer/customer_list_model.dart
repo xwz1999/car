@@ -17,6 +17,7 @@ class CustomerListModel extends Equatable {
   factory CustomerListModel.fromJson(Map<String, dynamic> json) =>
       _$CustomerListModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CustomerListModelToJson(this);
   const CustomerListModel({
     required this.id,
     required this.nickname,

@@ -15,6 +15,7 @@ class DealerListModel extends Equatable {
   factory DealerListModel.fromJson(Map<String, dynamic> json) =>
       _$DealerListModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$DealerListModelToJson(this);
   @override
   List<Object?> get props => [id,name,];
 

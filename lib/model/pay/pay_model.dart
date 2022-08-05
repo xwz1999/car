@@ -20,6 +20,7 @@ class PayModel extends Equatable {
   factory PayModel.fromJson(Map<String, dynamic> json) =>
       _$PayModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$PayModelToJson(this);
   @override
   List<Object> get props => [aliPayTradeAppPayResponse, sign, signType];
 }
@@ -56,6 +57,7 @@ class AliPayTradeAppPayResponse extends Equatable {
   factory AliPayTradeAppPayResponse.fromJson(Map<String, dynamic> json) =>
       _$AliPayTradeAppPayResponseFromJson(json);
 
+  Map<String, dynamic> toJson() => _$AliPayTradeAppPayResponseToJson(this);
   @override
   List<Object> get props {
     return [

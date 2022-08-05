@@ -17,6 +17,7 @@ class BaseListModel<T> {
   factory BaseListModel.fromJson(Map<String, dynamic> json) =>
       _$BaseListModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$BaseListModelToJson(this);
   List get nullSafetyList {
     if (data == null) {
       return [];
@@ -48,4 +49,6 @@ class ListInnerModel {
 
   factory ListInnerModel.fromJson(Map<String, dynamic> json) =>
       _$ListInnerModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ListInnerModelToJson(this);
 }

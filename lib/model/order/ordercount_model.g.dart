@@ -13,3 +13,11 @@ OrdercountModel _$OrdercountModelFromJson(Map<String, dynamic> json) =>
       dealerConsignmentCount: json['dealerConsignmentCount'] as int,
       callCarCount: json['callCarCount'] as int,
     );
+
+Map<String, dynamic> _$OrdercountModelToJson(OrdercountModel instance) =>
+    <String, dynamic>{
+      'saleCount': instance.saleCount,
+      'consignmentCount': instance.consignmentCount,
+      'dealerConsignmentCount': instance.dealerConsignmentCount,
+      'callCarCount': instance.callCarCount,
+    };

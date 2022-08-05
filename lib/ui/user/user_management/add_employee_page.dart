@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/ui/user/user_management/access_configuration_page.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure_page.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller_widget.dart';
@@ -35,7 +36,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
   late int roleId = 0;
   late String permissions1 = widget.permissions1;
   late String nameText = widget.permissions1;
-  late String genderText = widget.permissions1;
+  Gender? _gender;
   late String phoneText = widget.permissions1;
   late String storeidText = widget.permissions1;
   late String commissionText = widget.permissions1;
@@ -48,8 +49,6 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
   @override
   void initState() {
     super.initState();
-    //添加listener监听
-    // 获取textfie
   }
 
   @override
@@ -70,11 +69,9 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
                 fontWeight: FontWeight.bold)),
-
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: bodyColor,
-      body: Column(
+      body: ListView(
         children: [
           40.hb,
           getTitle('基本信息'),
@@ -87,35 +84,18 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           88.hb,
           CloudBottomButton(
             onTap: () async {
-              // if (zhi) {
-              //   BotToast.showText(text: '提交成功');
-              //   Get.back();
-              //   Future.delayed(const Duration(milliseconds: 0), () async {
-              //     await _refresh();
-              //     setState(() {});
-              //   });
-              //   //print("输出返回值：$zhi");
-              // } else {
-              //   BotToast.showText(text: '请输入内容');
-              // }
               var res = await BusinessFunc.getStaffadd(
-                  nameText,
-                  genderText == '女' ? 2 : 1,
-                  phoneText,
-                  storeId,
-                  roleId,
-                  commissionText);
+                nameText,
+                _gender!.typeNum,
+                phoneText,
+                storeId,
+                roleId,
+                commissionText,
+              );
               if (res) {
                 BotToast.showText(text: '提交成功');
                 Get.back();
               }
-
-              // Future.delayed(const Duration(milliseconds: 0),
-              //     () async {
-              //   await _refresh();
-              //   setState(() {});
-              // });
-              //print("输出返回值：$zhi");
             },
             text: '提交',
           ),
@@ -153,47 +133,13 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
               nameText = content;
             },
           ),
-          // Row(
-          //   children: [
-          //     SizedBox(
-          //       width: 150.w,
-          //       child: Text(
-          //         '姓名',
-          //         style: TextStyle(
-          //             fontSize: BaseStyle.fontSize28,
-          //             color: const Color(0xFF999999)),
-          //       ),
-          //     ),
-          //     SizedBox(
-          //       width: 300.w,
-          //       height: 35.w,
-          //       child: TextField(
-          //         //controller: nameText,
-          //         decoration: InputDecoration(
-          //           contentPadding: EdgeInsets.only(bottom: 23.w), //文字与边框的距离
-          //           border: InputBorder.none, //去掉下划线
-          //           hintText: '请输入',
-          //           hintStyle: TextStyle(
-          //             fontSize: BaseStyle.fontSize28,
-          //             color: BaseStyle.colorcccccc,
-          //           ),
-          //         ),
-          //         onChanged: (value) {
-          //           nameText = value as TextEditingController;
-          //           blText.add(value);
-          //         },
-          //       ),
-          //     ),
-          //   ],
-          // ),
           32.hb,
-
           TextEditItemWidget(
             title: '性别 ',
             endIcon: true,
             editor: false,
             tips: '请选择',
-            value: genderText,
+            value: _gender?.typeStr ?? '请选择',
             widget: Image(
               image: Assets.icons.icGoto,
               width: 32.w,
@@ -246,7 +192,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
                                   child: SizedBox(
                                     child: GestureDetector(
                                       onTap: () async {
-                                        genderText = sexId == 1 ? '男' : "女";
+                                        _gender=Gender.getValue(sexId);
                                         Navigator.pop(context);
                                         setState(() {});
                                         //dialogSetState(() {});
@@ -327,7 +273,6 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
             },
           ),
           32.hb,
-
           TextEditItemWidget(
             title: '组织架构',
             endIcon: true,
@@ -388,7 +333,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
         TextEditItemWidget(
           title: '销售提成',
           endIcon: false,
-          editor: !(roleId == 1 || roleId == 3),
+          editor: true,
           value: commissionText,
           widget: Text(
             '%',
@@ -397,16 +342,12 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           ),
           onTap: () async {},
           callback: (String content) {
-            commissionText = roleId == 1 || roleId == 3 ? '0' : content;
+            commissionText = content;
+            setState(() {});
           },
         ),
         16.hb,
       ]),
     );
   }
-
-// _refresh() async {
-//   res = await BusinessFunc.getStaffadd(nameText, genderText == '女' ? 1 : 2,
-//       phoneText, storeId, roleId, commissionText);
-// }
 }

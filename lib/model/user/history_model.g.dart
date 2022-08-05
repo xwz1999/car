@@ -12,3 +12,11 @@ HistoryModel _$HistoryModelFromJson(Map<String, dynamic> json) => HistoryModel(
       count: json['count'] as num,
       createdAt: json['createdAt'] as int,
     );
+
+Map<String, dynamic> _$HistoryModelToJson(HistoryModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'type': instance.type,
+      'count': instance.count,
+      'createdAt': instance.createdAt,
+    };

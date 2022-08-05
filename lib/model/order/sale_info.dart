@@ -18,7 +18,8 @@ class SaleInfo extends Equatable {
   factory SaleInfo.fromJson(Map<String, dynamic> json) =>
       _$SaleInfoFromJson(json);
 
- static SaleInfo get init => const SaleInfo(
+  Map<String, dynamic> toJson() => _$SaleInfoToJson(this);
+  static SaleInfo get init => const SaleInfo(
       id: 0,
       car: Car(
           licensingDate: 0,
@@ -75,6 +76,7 @@ class Car extends Equatable {
 
   factory Car.fromJson(Map<String, dynamic> json) => _$CarFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CarToJson(this);
   const Car({
     required this.carId,
     required this.mainPhoto,
@@ -103,6 +105,7 @@ class Contract extends Equatable {
   factory Contract.fromJson(Map<String, dynamic> json) =>
       _$ContractFromJson(json);
 
+  Map<String, dynamic> toJson() => _$ContractToJson(this);
   const Contract({
     required this.contract,
     required this.amount,
@@ -136,6 +139,7 @@ class Deposit extends Equatable {
   factory Deposit.fromJson(Map<String, dynamic> json) =>
       _$DepositFromJson(json);
 
+  Map<String, dynamic> toJson() => _$DepositToJson(this);
   const Deposit({
     required this.amount,
     required this.payType,
@@ -155,6 +159,7 @@ class DownPayment extends Equatable {
   factory DownPayment.fromJson(Map<String, dynamic> json) =>
       _$DownPaymentFromJson(json);
 
+  Map<String, dynamic> toJson() => _$DownPaymentToJson(this);
   const DownPayment({
     required this.amount,
     required this.proof,
@@ -174,6 +179,7 @@ class BalancePayment extends Equatable {
   factory BalancePayment.fromJson(Map<String, dynamic> json) =>
       _$BalancePaymentFromJson(json);
 
+  Map<String, dynamic> toJson() => _$BalancePaymentToJson(this);
   const BalancePayment({
     required this.amount,
     required this.proof,
@@ -191,6 +197,7 @@ class Report extends Equatable {
 
   factory Report.fromJson(Map<String, dynamic> json) => _$ReportFromJson(json);
 
+  Map<String, dynamic> toJson() => _$ReportToJson(this);
   const Report({
     required this.reportId,
     required this.path,
@@ -209,6 +216,7 @@ class Means extends Equatable {
 
   factory Means.fromJson(Map<String, dynamic> json) => _$MeansFromJson(json);
 
+  Map<String, dynamic> toJson() => _$MeansToJson(this);
   const Means({
     required this.certificate,
     required this.vehicleLicense,

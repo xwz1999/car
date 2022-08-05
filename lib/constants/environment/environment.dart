@@ -1,16 +1,31 @@
-import 'package:power_logger/power_logger.dart';
+class AppENV {
+  static final AppENV _instance = AppENV._();
 
-class DevEV {
-  static final DevEV _instance = DevEV._();
+  AppENV._();
 
-  DevEV._();
+  static AppENV get instance => _instance;
 
-  static DevEV get instance => _instance;
+  ENVConfig env = ENVConfig.local;
 
-  bool dev = false;
-
-  void setEnvironment(context, {required bool environment}) {
-    dev = environment;
-    PowerLogger.start(context, debug: dev);
+  void setEnv(String environment) {
+    switch (environment) {
+      case 'dev':
+        env = ENVConfig.dev;
+        break;
+      case 'release':
+        env = ENVConfig.release;
+        break;
+      case 'local':
+        env = ENVConfig.local;
+        break;
+      default:
+        env = ENVConfig.local;
+    }
   }
+}
+
+enum ENVConfig {
+  dev,
+  release,
+  local,
 }

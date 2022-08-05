@@ -16,6 +16,7 @@ class HandbookInfoModel extends Equatable {
   factory HandbookInfoModel.fromJson(Map<String, dynamic> json) =>
       _$HandbookInfoModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$HandbookInfoModelToJson(this);
   const HandbookInfoModel({
     required this.id,
     required this.name,

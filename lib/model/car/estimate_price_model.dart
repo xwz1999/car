@@ -11,6 +11,7 @@ class EstimatePriceModel extends Equatable {
   factory EstimatePriceModel.fromJson(Map<String, dynamic> json) =>
       _$EstimatePriceModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$EstimatePriceModelToJson(this);
   const EstimatePriceModel({
     required this.id,
     required this.price,

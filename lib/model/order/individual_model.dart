@@ -3,24 +3,26 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'individual_model.g.dart';
 
-
 @JsonSerializable()
-class IndividualModel extends Equatable{
-    final int id;
-    final int status;
-    final Car car;
-    final String contractSn;
-    final int contractSignAt;
-    final String saleAmount;
-    final int saleAt;
-    final String paymentAmount;
-    final String paymentProof;
-    final int paymentCreatedAt;
-    final Customer customer;
-    factory IndividualModel.fromJson(Map<String, dynamic> json) =>_$IndividualModelFromJson(json);
+class IndividualModel extends Equatable {
+  final int id;
+  final int status;
+  final Car car;
+  final String contractSn;
+  final int contractSignAt;
+  final String saleAmount;
+  final int saleAt;
+  final String paymentAmount;
+  final String paymentProof;
+  final int paymentCreatedAt;
+  final Customer customer;
 
+  factory IndividualModel.fromJson(Map<String, dynamic> json) =>
+      _$IndividualModelFromJson(json);
 
-    const IndividualModel({
+  Map<String, dynamic> toJson() => _$IndividualModelToJson(this);
+
+  const IndividualModel({
     required this.id,
     required this.status,
     required this.car,
@@ -33,11 +35,9 @@ class IndividualModel extends Equatable{
     required this.paymentCreatedAt,
     required this.customer,
   });
-    @override
 
-
-
-    List<Object?> get props => [
+  @override
+  List<Object?> get props => [
         id,
         status,
         car,
@@ -49,46 +49,52 @@ class IndividualModel extends Equatable{
         paymentProof,
         paymentCreatedAt,
         customer
-    ];
-
+      ];
 }
+
 @JsonSerializable()
 class Car extends Equatable {
-    final int id;
-    final String mainPhoto;
-    final String modelName;
-    final int licensingDate;
-    final String mileage;
-    final String price;
-    factory Car.fromJson(Map<String, dynamic> json) => _$CarFromJson(json);
+  final int id;
+  final String mainPhoto;
+  final String modelName;
+  final int licensingDate;
+  final String mileage;
+  final String price;
 
-    const Car({
-        required this.id,
-        required this.mainPhoto,
-        required this.modelName,
-        required this.licensingDate,
-        required this.mileage,
-        required this.price,
-    });
-    @override
-    List<Object?> get props =>
-        [id, mainPhoto, modelName, licensingDate, mileage, price];
+  factory Car.fromJson(Map<String, dynamic> json) => _$CarFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CarToJson(this);
+
+  const Car({
+    required this.id,
+    required this.mainPhoto,
+    required this.modelName,
+    required this.licensingDate,
+    required this.mileage,
+    required this.price,
+  });
+
+  @override
+  List<Object?> get props =>
+      [id, mainPhoto, modelName, licensingDate, mileage, price];
 }
 
 @JsonSerializable()
 class Customer extends Equatable {
-    final int id;
-    final String nickname;
-    final String mobile;
-    factory Customer.fromJson(Map<String, dynamic> json) =>
-        _$CustomerFromJson(json);
+  final int id;
+  final String nickname;
+  final String mobile;
 
-    const Customer({
-        required this.id,
-        required this.nickname,
-        required this.mobile,
-    });
-    @override
-    List<Object?> get props => [id, nickname, mobile];
+  factory Customer.fromJson(Map<String, dynamic> json) =>
+      _$CustomerFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CustomerToJson(this);
+  const Customer({
+    required this.id,
+    required this.nickname,
+    required this.mobile,
+  });
+
+  @override
+  List<Object?> get props => [id, nickname, mobile];
 }
-

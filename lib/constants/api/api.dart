@@ -1,6 +1,7 @@
 import '../environment/environment.dart';
 
 part 'car_api.dart';
+
 part 'user_api.dart';
 
 /// * user  用户接口
@@ -11,18 +12,24 @@ class API {
 
   ///HOST
   static String get host {
-    if (DevEV.instance.dev) {
-      return 'https://apiwenche.oa00.com';
-    } else {
-      return 'https://api.yunyunwenche.com';
+    switch (AppENV.instance.env) {
+      case ENVConfig.dev:
+        return 'https://apiwenche.oa00.com';
+      case ENVConfig.release:
+        return 'https://api.yunyunwenche.com';
+      case ENVConfig.local:
+        return 'http://192.168.50.42:80';
     }
   }
 
   static String get imageHost {
-    if (DevEV.instance.dev) {
-      return 'https://static.oa00.com/wenche';
-    } else {
-      return 'https://static.yunyunwenche.com';
+    switch (AppENV.instance.env) {
+      case ENVConfig.dev:
+        return 'https://static.oa00.com/wenche';
+      case ENVConfig.release:
+        return 'https://static.yunyunwenche.com';
+      case ENVConfig.local:
+        return 'https://static.oa00.com/wenche';
     }
   }
 

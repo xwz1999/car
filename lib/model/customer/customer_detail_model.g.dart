@@ -18,3 +18,17 @@ CustomerDetailModel _$CustomerDetailModelFromJson(Map<String, dynamic> json) =>
       trailCreatedAt: json['trailCreatedAt'] as int,
       createdAt: json['createdAt'] as int,
     );
+
+Map<String, dynamic> _$CustomerDetailModelToJson(
+        CustomerDetailModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'mobile': instance.mobile,
+      'nickname': instance.nickname,
+      'gender': instance.gender,
+      'isImportant': instance.isImportant,
+      'brokerName': instance.brokerName,
+      'trailContent': instance.trailContent,
+      'trailCreatedAt': instance.trailCreatedAt,
+      'createdAt': instance.createdAt,
+    };

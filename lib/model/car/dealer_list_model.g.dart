@@ -15,3 +15,13 @@ DealerListModel _$DealerListModelFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] as int,
       brokerName: json['brokerName'] as String,
     );
+
+Map<String, dynamic> _$DealerListModelToJson(DealerListModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'liaison': instance.liaison,
+      'liaisonPhone': instance.liaisonPhone,
+      'createdAt': instance.createdAt,
+      'brokerName': instance.brokerName,
+    };

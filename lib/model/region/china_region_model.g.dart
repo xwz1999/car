@@ -70,3 +70,13 @@ ChinaRegionModel _$ChinaRegionModelFromJson(Map<String, dynamic> json) =>
           ?.map((e) => ChinaRegionModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
+
+Map<String, dynamic> _$ChinaRegionModelToJson(ChinaRegionModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'parentId': instance.parentId,
+      'name': instance.name,
+      'code': instance.code,
+      'level': instance.level,
+      'children': instance.children,
+    };

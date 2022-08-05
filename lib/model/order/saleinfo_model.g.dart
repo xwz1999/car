@@ -10,3 +10,8 @@ SaleinfoModel _$SaleinfoModelFromJson(Map<String, dynamic> json) =>
     SaleinfoModel(
       id: json['id'] as int,
     );
+
+Map<String, dynamic> _$SaleinfoModelToJson(SaleinfoModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };

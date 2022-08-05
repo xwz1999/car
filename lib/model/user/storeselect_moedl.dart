@@ -12,6 +12,8 @@ class StoreselectMoedl extends Equatable {
 
   factory StoreselectMoedl.fromJson(Map<String, dynamic> json) =>
       _$StoreselectMoedlFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StoreselectMoedlToJson(this);
   @override
   List<Object?> get props => [id, name];
 

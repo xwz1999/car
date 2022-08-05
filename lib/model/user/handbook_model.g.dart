@@ -14,8 +14,20 @@ HandbookModel _$HandbookModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
+Map<String, dynamic> _$HandbookModelToJson(HandbookModel instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'items': instance.items,
+    };
+
 Staff _$StaffFromJson(Map<String, dynamic> json) => Staff(
       id: json['id'] as int,
       name: json['name'] as String,
       updatedAt: json['updatedAt'] as int,
     );
+
+Map<String, dynamic> _$StaffToJson(Staff instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'updatedAt': instance.updatedAt,
+    };

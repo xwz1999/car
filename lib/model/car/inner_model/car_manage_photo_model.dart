@@ -12,6 +12,7 @@ class CarManagePhotoModel {
   factory CarManagePhotoModel.fromJson(Map<String, dynamic> json) =>
       _$CarManagePhotoModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CarManagePhotoModelToJson(this);
   static CarManagePhotoModel get init => CarManagePhotoModel(
       carPhotos: [], interiorPhotos: [], defectPhotos: [], dataPhotos: []);
 

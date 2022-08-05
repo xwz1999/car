@@ -54,4 +54,10 @@ class UserProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  ///更新本地用户信息
+  void setUserInfo(UserInfoModel userInfo) {
+    _userInfo = userInfo;
+    notifyListeners();
+  }
 }

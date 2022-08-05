@@ -12,6 +12,7 @@ class CarSeriesModel extends Equatable {
   factory CarSeriesModel.fromJson(Map<String, dynamic> json) =>
       _$CarSeriesModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CarSeriesModelToJson(this);
   const CarSeriesModel({
     required this.id,
     required this.name,
@@ -28,6 +29,7 @@ class Series extends Equatable {
 
   factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
 
+  Map<String, dynamic> toJson() => _$SeriesToJson(this);
   const Series({
     required this.id,
     required this.name,

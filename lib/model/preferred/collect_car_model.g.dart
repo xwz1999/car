@@ -18,3 +18,16 @@ CollectCarModel _$CollectCarModelFromJson(Map<String, dynamic> json) =>
       downPayment: json['downPayment'] as String,
       createdAt: json['createdAt'] as num,
     );
+
+Map<String, dynamic> _$CollectCarModelToJson(CollectCarModel instance) =>
+    <String, dynamic>{
+      'carId': instance.carId,
+      'modelName': instance.modelName,
+      'mainPhoto': instance.mainPhoto,
+      'type': instance.type,
+      'mileage': instance.mileage,
+      'transfer': instance.transfer,
+      'price': instance.price,
+      'downPayment': instance.downPayment,
+      'createdAt': instance.createdAt,
+    };

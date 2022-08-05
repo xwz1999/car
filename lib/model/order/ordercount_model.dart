@@ -12,7 +12,7 @@ class OrdercountModel extends Equatable{
   final int callCarCount;
     factory OrdercountModel.fromJson(Map<String, dynamic> json) =>_$OrdercountModelFromJson(json);
 
-
+  Map<String, dynamic> toJson() => _$OrdercountModelToJson(this);
   const OrdercountModel({
     required this.saleCount,
     required this.consignmentCount,

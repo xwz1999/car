@@ -15,7 +15,7 @@ class WxPayModel extends Equatable {
   factory WxPayModel.fromJson(Map<String, dynamic> json) =>
       _$WxPayModelFromJson(json);
 
-
+  Map<String, dynamic> toJson() => _$WxPayModelToJson(this);
   const WxPayModel({
     required this.prepayId,
     required this.partnerId,

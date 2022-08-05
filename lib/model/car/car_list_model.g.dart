@@ -19,3 +19,18 @@ CarListModel _$CarListModelFromJson(Map<String, dynamic> json) => CarListModel(
       collect: json['collect'] as int,
       isSelf: json['isSelf'] as int?,
     );
+
+Map<String, dynamic> _$CarListModelToJson(CarListModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'modelName': instance.modelName,
+      'type': instance.type,
+      'mainPhoto': instance.mainPhoto,
+      'licensingDate': instance.licensingDate,
+      'price': instance.price,
+      'downPayment': instance.downPayment,
+      'mileage': instance.mileage,
+      'transfer': instance.transfer,
+      'collect': instance.collect,
+      'isSelf': instance.isSelf,
+    };

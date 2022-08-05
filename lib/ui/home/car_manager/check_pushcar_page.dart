@@ -2,6 +2,7 @@ import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_begin_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -10,10 +11,13 @@ import '../../../widget/publish_car_info_widget.dart';
 
 class CheckPushPage extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
+
   // final PublishCarInfo publishCarInfo;
 
-  const CheckPushPage(
-      {super.key, required this.consignmentContractModel, });
+  const CheckPushPage({
+    super.key,
+    required this.consignmentContractModel,
+  });
 
   @override
   State<CheckPushPage> createState() => _CheckPushPageState();
@@ -69,7 +73,10 @@ class _CheckPushPageState extends State<CheckPushPage> {
                         ).paddingOnly(top: 10.w),
                         20.wb,
                         Text(
-                          (num.parse(widget.consignmentContractModel.value.evaluationPrice!)  / 10000).toString(),
+                          (num.parse(widget.consignmentContractModel.value
+                                      .evaluationPrice!) /
+                                  10000)
+                              .toString(),
                           style: const TextStyle(
                             fontSize: 30,
                             color: Colors.red,
@@ -96,24 +103,27 @@ class _CheckPushPageState extends State<CheckPushPage> {
                     children: [
                       PublishCarInfoWidget(
                         fontColor: Colors.black,
-                        publishCarInfo: widget.consignmentContractModel.value.publishCarInfo!,
+                        publishCarInfo: widget
+                            .consignmentContractModel.value.publishCarInfo!,
                       ),
                       30.heightBox,
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            if ( widget.consignmentContractModel.value.publishCarInfo!.carSource == 1) {
+                            if (UserTool.userProvider.userInfo.businessId ==
+                                1) {
                               ///车商发布车辆
                               Get.to(() => CarPicturePage(
-                                  consignmentContractModel:widget.consignmentContractModel.value, isPersonal: false,
-
-                                ));
+                                    consignmentContractModel:
+                                        widget.consignmentContractModel.value,
+                                    isPersonal: false,
+                                  ));
                             } else {
-
                               ///个人发布车辆先填合同  合同确认后再进行发布操作
                               Get.to(() => ContractBeginPage(
-                                consignmentContractModel:  widget.consignmentContractModel,
+                                    consignmentContractModel:
+                                        widget.consignmentContractModel,
                                   ));
                             }
                           },
@@ -122,7 +132,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                                 MaterialStateProperty.all(Colors.blue),
                           ),
                           child: Text(
-                            widget.consignmentContractModel.value.publishCarInfo!.carSource == 2
+                            !UserTool.userProvider.userInfo.isHomeStore
                                 ? '发起合同'
                                 : '发布车辆',
                             style: TextStyle(
@@ -132,35 +142,6 @@ class _CheckPushPageState extends State<CheckPushPage> {
                           ),
                         ),
                       ),
-                      // widget.consignmentContractModel.value.publishCarInfo!.carSource == 2
-                      //     ? Row(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         children: [
-                      //           '已签订合同？'
-                      //               .text
-                      //               .color(Colors.black.withOpacity(0.45))
-                      //               .textStyle(const TextStyle(
-                      //                   decoration: TextDecoration.none))
-                      //               .normal
-                      //               .size(20.sp)
-                      //               .make(),
-                      //           TextButton(
-                      //             onPressed: () {
-                      //               ///去订单列表进行发布车辆操作
-                      //
-                      //             },
-                      //             child: '继续发布车辆'
-                      //                 .text
-                      //                 .color(Colors.blue)
-                      //                 .textStyle(const TextStyle(
-                      //                     decoration: TextDecoration.none))
-                      //                 .normal
-                      //                 .size(20.sp)
-                      //                 .make(),
-                      //           ).paddingZero
-                      //         ],
-                      //       )
-                      //     : 1.heightBox,
                     ],
                   ),
                 ),

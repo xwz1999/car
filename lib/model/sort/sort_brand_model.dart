@@ -13,6 +13,7 @@ class SortBrandModel extends Equatable {
   factory SortBrandModel.fromJson(Map<String, dynamic> json) =>
       _$SortBrandModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$SortBrandModelToJson(this);
   static SortBrandModel get init =>
       const SortBrandModel(id: 0, icon: '', name: '', initial: '');
 

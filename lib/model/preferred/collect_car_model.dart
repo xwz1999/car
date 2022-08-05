@@ -18,6 +18,8 @@ class CollectCarModel extends Equatable {
 
   factory CollectCarModel.fromJson(Map<String, dynamic> json) =>
       _$CollectCarModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CollectCarModelToJson(this);
   DateTime get createdAtDT => DateUtil.getDateTimeByMs(createdAt.toInt());
 
   num get unitPrice => NumUtil.divide(num.parse(price), 10000);

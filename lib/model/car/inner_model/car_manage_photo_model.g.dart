@@ -20,3 +20,12 @@ CarManagePhotoModel _$CarManagePhotoModelFromJson(Map<String, dynamic> json) =>
           .map((e) => e as String)
           .toList(),
     );
+
+Map<String, dynamic> _$CarManagePhotoModelToJson(
+        CarManagePhotoModel instance) =>
+    <String, dynamic>{
+      'carPhotos': instance.carPhotos,
+      'interiorPhotos': instance.interiorPhotos,
+      'defectPhotos': instance.defectPhotos,
+      'dataPhotos': instance.dataPhotos,
+    };

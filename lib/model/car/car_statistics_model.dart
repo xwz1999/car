@@ -13,7 +13,8 @@ class CarStatisticsModel extends Equatable {
   factory CarStatisticsModel.fromJson(Map<String, dynamic> json) =>
       _$CarStatisticsModelFromJson(json);
 
- static CarStatisticsModel get init => const CarStatisticsModel(sellCount: 0,reserveCount: 0,soldCount: 0,backOutCount: 0);
+  Map<String, dynamic> toJson() => _$CarStatisticsModelToJson(this);
+  static CarStatisticsModel get init => const CarStatisticsModel(sellCount: 0,reserveCount: 0,soldCount: 0,backOutCount: 0);
   const CarStatisticsModel({
     required this.sellCount,
     required this.reserveCount,

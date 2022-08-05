@@ -16,6 +16,7 @@ class HistoryModel extends Equatable {
   factory HistoryModel.fromJson(Map<String, dynamic> json) =>
       _$HistoryModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$HistoryModelToJson(this);
   DateTime get createDateTime => DateUtil.getDateTimeByMs(createdAt * 1000);
 
   ///时间戳传唤格式

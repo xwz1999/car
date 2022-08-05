@@ -17,10 +17,10 @@ class ListsModel extends Equatable {
   final String price;
   final int createdAt;
 
-  // ignore: prefer_const_constructors_in_immutables
-
   factory ListsModel.fromJson(Map<String, dynamic> json) =>
       _$ListsModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ListsModelToJson(this);
 
   ConsignmentStatus get statusEnum => ConsignmentStatus.getStatus(status);
 

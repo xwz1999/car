@@ -16,6 +16,7 @@ class CustomerTrailModel extends Equatable {
   factory CustomerTrailModel.fromJson(Map<String, dynamic> json) =>
       _$CustomerTrailModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CustomerTrailModelToJson(this);
   const CustomerTrailModel({
     required this.type,
     required this.initiatorName,
@@ -33,6 +34,8 @@ class CustomerTrailModel extends Equatable {
 @JsonSerializable()
 class Invite extends Equatable {
   factory Invite.fromJson(Map<String, dynamic> json) =>_$InviteFromJson(json);
+
+  Map<String, dynamic> toJson() => _$InviteToJson(this);
   final int inviteAt;
   final String address;
   final String remark;
@@ -63,6 +66,8 @@ class Invite extends Equatable {
 @JsonSerializable()
 class Reserve extends Equatable {
   factory Reserve.fromJson(Map<String, dynamic> json) =>_$ReserveFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReserveToJson(this);
   final int reserveAt;
   final String address;
   final String modelName;

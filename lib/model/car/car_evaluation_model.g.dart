@@ -19,3 +19,17 @@ CarEvaluationModel _$CarEvaluationModelFromJson(Map<String, dynamic> json) =>
       vin: json['vin'] as String,
       engine: json['engine'] as String,
     );
+
+Map<String, dynamic> _$CarEvaluationModelToJson(CarEvaluationModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'modelName': instance.modelName,
+      'licensePlate': instance.licensePlate,
+      'licensingDate': instance.licensingDate,
+      'color': instance.color,
+      'mileage': instance.mileage,
+      'price': instance.price,
+      'createdAt': instance.createdAt,
+      'vin': instance.vin,
+      'engine': instance.engine,
+    };

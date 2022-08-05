@@ -14,6 +14,7 @@ class PosterListModel extends Equatable {
   factory PosterListModel.fromJson(Map<String, dynamic> json) =>
       _$PosterListModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$PosterListModelToJson(this);
 
   const PosterListModel({
     required this.id,

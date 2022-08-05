@@ -20,3 +20,18 @@ SalelistsModel _$SalelistsModelFromJson(Map<String, dynamic> json) =>
       downPayment: json['downPayment'] as String,
       balancePayment: json['balancePayment'] as String,
     );
+
+Map<String, dynamic> _$SalelistsModelToJson(SalelistsModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'status': instance.status,
+      'createdAt': instance.createdAt,
+      'mainPhoto': instance.mainPhoto,
+      'modelName': instance.modelName,
+      'licensingDate': instance.licensingDate,
+      'mileage': instance.mileage,
+      'amount': instance.amount,
+      'deposit': instance.deposit,
+      'downPayment': instance.downPayment,
+      'balancePayment': instance.balancePayment,
+    };

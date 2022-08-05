@@ -17,6 +17,17 @@ CustomerTrailModel _$CustomerTrailModelFromJson(Map<String, dynamic> json) =>
       reserve: Reserve.fromJson(json['reserve'] as Map<String, dynamic>),
     );
 
+Map<String, dynamic> _$CustomerTrailModelToJson(CustomerTrailModel instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'initiatorName': instance.initiatorName,
+      'contentType': instance.contentType,
+      'content': instance.content,
+      'createdAt': instance.createdAt,
+      'invite': instance.invite,
+      'reserve': instance.reserve,
+    };
+
 Invite _$InviteFromJson(Map<String, dynamic> json) => Invite(
       inviteAt: json['inviteAt'] as int,
       address: json['address'] as String,
@@ -30,6 +41,19 @@ Invite _$InviteFromJson(Map<String, dynamic> json) => Invite(
       carType: json['carType'] as int,
     );
 
+Map<String, dynamic> _$InviteToJson(Invite instance) => <String, dynamic>{
+      'inviteAt': instance.inviteAt,
+      'address': instance.address,
+      'remark': instance.remark,
+      'carId': instance.carId,
+      'mainPhoto': instance.mainPhoto,
+      'modelName': instance.modelName,
+      'licensingDate': instance.licensingDate,
+      'mileage': instance.mileage,
+      'price': instance.price,
+      'carType': instance.carType,
+    };
+
 Reserve _$ReserveFromJson(Map<String, dynamic> json) => Reserve(
       reserveAt: json['reserveAt'] as int,
       address: json['address'] as String,
@@ -38,3 +62,12 @@ Reserve _$ReserveFromJson(Map<String, dynamic> json) => Reserve(
       mileage: json['mileage'] as String,
       price: json['price'] as String,
     );
+
+Map<String, dynamic> _$ReserveToJson(Reserve instance) => <String, dynamic>{
+      'reserveAt': instance.reserveAt,
+      'address': instance.address,
+      'modelName': instance.modelName,
+      'licensingDate': instance.licensingDate,
+      'mileage': instance.mileage,
+      'price': instance.price,
+    };

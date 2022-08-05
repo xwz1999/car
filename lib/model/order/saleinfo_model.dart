@@ -9,6 +9,7 @@ class SaleinfoModel extends Equatable {
   factory SaleinfoModel.fromJson(Map<String, dynamic> json) =>
       _$SaleinfoModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$SaleinfoModelToJson(this);
 
   const SaleinfoModel({
     required this.id,

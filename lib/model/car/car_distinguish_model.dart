@@ -19,6 +19,7 @@ class CarDistinguishModel extends Equatable {
   factory CarDistinguishModel.fromJson(Map<String, dynamic> json) =>
       _$CarDistinguishModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CarDistinguishModelToJson(this);
   const CarDistinguishModel({
     required this.owner,
     required this.engineno,

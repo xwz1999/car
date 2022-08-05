@@ -14,3 +14,12 @@ CarAmountModel _$CarAmountModelFromJson(Map<String, dynamic> json) =>
       serviceFee: json['serviceFee'] as String,
       serviceFeeRate: json['serviceFeeRate'] as String,
     );
+
+Map<String, dynamic> _$CarAmountModelToJson(CarAmountModel instance) =>
+    <String, dynamic>{
+      'deposit': instance.deposit,
+      'downPayment': instance.downPayment,
+      'balancePayment': instance.balancePayment,
+      'serviceFee': instance.serviceFee,
+      'serviceFeeRate': instance.serviceFeeRate,
+    };

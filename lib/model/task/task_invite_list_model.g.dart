@@ -14,3 +14,13 @@ TaskInviteListModel _$TaskInviteListModelFromJson(Map<String, dynamic> json) =>
       customerNickname: json['customerNickname'] as String,
       inviteAt: json['inviteAt'] as int,
     );
+
+Map<String, dynamic> _$TaskInviteListModelToJson(
+        TaskInviteListModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'customerId': instance.customerId,
+      'type': instance.type,
+      'customerNickname': instance.customerNickname,
+      'inviteAt': instance.inviteAt,
+    };

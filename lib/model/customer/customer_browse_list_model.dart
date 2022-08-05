@@ -17,6 +17,7 @@ class CustomerBrowseListModel extends Equatable {
   factory CustomerBrowseListModel.fromJson(Map<String, dynamic> json) =>
       _$CustomerBrowseListModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CustomerBrowseListModelToJson(this);
   const CustomerBrowseListModel({
     required this.carId,
     required this.mainPhoto,

@@ -12,6 +12,7 @@ class WxLoginModel extends Equatable {
   factory WxLoginModel.fromJson(Map<String, dynamic> json) =>
       _$WxLoginModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$WxLoginModelToJson(this);
   const WxLoginModel({
     required this.isBind,
     required this.bindToken,
@@ -34,6 +35,7 @@ class LoginInfo extends Equatable {
   factory LoginInfo.fromJson(Map<String, dynamic> json) =>
       _$LoginInfoFromJson(json);
 
+  Map<String, dynamic> toJson() => _$LoginInfoToJson(this);
   const LoginInfo({
     required this.token,
     required this.user,
@@ -57,6 +59,7 @@ class User extends Equatable {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
+  Map<String, dynamic> toJson() => _$UserToJson(this);
   @override
   List<Object?> get props => [
         nickname,

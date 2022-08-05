@@ -13,6 +13,7 @@ class CustomerStatisticsModel extends Equatable {
   factory CustomerStatisticsModel.fromJson(Map<String, dynamic> json) =>
       _$CustomerStatisticsModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CustomerStatisticsModelToJson(this);
   const CustomerStatisticsModel({
     required this.registerCount,
     required this.browseCount,

@@ -15,7 +15,19 @@ SortSeriesModel _$SortSeriesModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
+Map<String, dynamic> _$SortSeriesModelToJson(SortSeriesModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'series': instance.series,
+    };
+
 Series _$SeriesFromJson(Map<String, dynamic> json) => Series(
       id: json['id'] as int,
       name: json['name'] as String,
     );
+
+Map<String, dynamic> _$SeriesToJson(Series instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };

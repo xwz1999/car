@@ -13,6 +13,7 @@ class OrderStatisticsModel extends Equatable {
   factory OrderStatisticsModel.fromJson(Map<String, dynamic> json) =>
       _$OrderStatisticsModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$OrderStatisticsModelToJson(this);
   static OrderStatisticsModel get init =>
     const  OrderStatisticsModel(saleCount: 0,
           consignmentCount: 0,

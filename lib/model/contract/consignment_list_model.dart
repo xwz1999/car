@@ -14,7 +14,7 @@ class ConsignmentListModel extends Equatable{
   final num signAt;
     factory ConsignmentListModel.fromJson(Map<String, dynamic> json) =>_$ConsignmentListModelFromJson(json);
 
-
+  Map<String, dynamic> toJson() => _$ConsignmentListModelToJson(this);
   const ConsignmentListModel({
     required this.id,
     required this.contractSn,

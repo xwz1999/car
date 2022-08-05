@@ -18,7 +18,7 @@ class CustomerDetailModel extends Equatable {
   factory CustomerDetailModel.fromJson(Map<String, dynamic> json) =>
       _$CustomerDetailModelFromJson(json);
 
-
+  Map<String, dynamic> toJson() => _$CustomerDetailModelToJson(this);
   factory CustomerDetailModel.empty() {
     return const CustomerDetailModel(
         mobile: '',

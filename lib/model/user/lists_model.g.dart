@@ -17,3 +17,16 @@ ListsModel _$ListsModelFromJson(Map<String, dynamic> json) => ListsModel(
       price: json['price'] as String,
       createdAt: json['createdAt'] as int,
     );
+
+Map<String, dynamic> _$ListsModelToJson(ListsModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'orderSn': instance.orderSn,
+      'status': instance.status,
+      'auditStatus': instance.auditStatus,
+      'modeName': instance.modeName,
+      'licensingDate': instance.licensingDate,
+      'mileage': instance.mileage,
+      'price': instance.price,
+      'createdAt': instance.createdAt,
+    };

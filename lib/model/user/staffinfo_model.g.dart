@@ -20,3 +20,18 @@ StaffInfoModel _$StaffInfoModelFromJson(Map<String, dynamic> json) =>
       status: json['status'] as int,
       auditStatus: json['auditStatus'] as int,
     );
+
+Map<String, dynamic> _$StaffInfoModelToJson(StaffInfoModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'gender': instance.gender,
+      'phone': instance.phone,
+      'storeId': instance.storeId,
+      'storeName': instance.storeName,
+      'roleId': instance.roleId,
+      'roleName': instance.roleName,
+      'commission': instance.commission,
+      'status': instance.status,
+      'auditStatus': instance.auditStatus,
+    };

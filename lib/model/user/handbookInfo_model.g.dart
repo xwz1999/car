@@ -14,3 +14,12 @@ HandbookInfoModel _$HandbookInfoModelFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] as int,
       updatedAt: json['updatedAt'] as int,
     );
+
+Map<String, dynamic> _$HandbookInfoModelToJson(HandbookInfoModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'content': instance.content,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };

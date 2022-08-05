@@ -23,7 +23,7 @@ class ChinaRegionModel extends Equatable {
   factory ChinaRegionModel.fromJson(Map<String, dynamic> json) =>
       _$ChinaRegionModelFromJson(json);
 
-
+  Map<String, dynamic> toJson() => _$ChinaRegionModelToJson(this);
   const ChinaRegionModel({
     required this.id,
     required this.parentId,

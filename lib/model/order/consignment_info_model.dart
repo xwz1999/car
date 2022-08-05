@@ -20,6 +20,7 @@ class ConsignmentInfoModel extends Equatable {
   factory ConsignmentInfoModel.fromJson(Map<String, dynamic> json) =>
       _$ConsignmentInfoModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$ConsignmentInfoModelToJson(this);
   @override
   List<Object?> get props => [
         id,
@@ -60,6 +61,7 @@ class Car extends Equatable {
   final String price;
   factory Car.fromJson(Map<String, dynamic> json) => _$CarFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CarToJson(this);
   const Car({
     required this.id,
     required this.mainPhoto,
@@ -81,6 +83,7 @@ class Customer extends Equatable {
   factory Customer.fromJson(Map<String, dynamic> json) =>
       _$CustomerFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CustomerToJson(this);
   const Customer({
     required this.id,
     required this.nickname,

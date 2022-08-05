@@ -21,9 +21,8 @@ class SalelistsModel extends Equatable {
   factory SalelistsModel.fromJson(Map<String, dynamic> json) =>
       _$SalelistsModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$SalelistsModelToJson(this);
   OrderSaleStatus get statusEnum => OrderSaleStatus.getStatus(status);
-
-  //OrderSaleStatus get statusEnum1 => OrderSaleStatus.getStatus1(statusEnum.str);
 
   @override
   List<Object?> get props => [

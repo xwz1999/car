@@ -19,3 +19,18 @@ CarDistinguishModel _$CarDistinguishModelFromJson(Map<String, dynamic> json) =>
       issuedate: json['issuedate'] as String,
       usetype: json['usetype'] as String,
     );
+
+Map<String, dynamic> _$CarDistinguishModelToJson(
+        CarDistinguishModel instance) =>
+    <String, dynamic>{
+      'owner': instance.owner,
+      'engineno': instance.engineno,
+      'cartype': instance.cartype,
+      'address': instance.address,
+      'lstype': instance.lstype,
+      'lsnum': instance.lsnum,
+      'regdate': instance.regdate,
+      'vin': instance.vin,
+      'issuedate': instance.issuedate,
+      'usetype': instance.usetype,
+    };

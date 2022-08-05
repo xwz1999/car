@@ -15,6 +15,13 @@ StoreallModel _$StoreallModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
+Map<String, dynamic> _$StoreallModelToJson(StoreallModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'staffs': instance.staffs,
+    };
+
 Staff _$StaffFromJson(Map<String, dynamic> json) => Staff(
       json['id'] as int,
       json['name'] as String,
@@ -23,3 +30,12 @@ Staff _$StaffFromJson(Map<String, dynamic> json) => Staff(
       json['roleName'] as String,
       json['gender'] as int,
     );
+
+Map<String, dynamic> _$StaffToJson(Staff instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'phone': instance.phone,
+      'auditStatus': instance.auditStatus,
+      'roleName': instance.roleName,
+      'gender': instance.gender,
+    };

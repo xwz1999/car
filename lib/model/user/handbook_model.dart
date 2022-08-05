@@ -13,6 +13,7 @@ class HandbookModel extends Equatable {
   factory HandbookModel.fromJson(Map<String, dynamic> json) =>
       _$HandbookModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$HandbookModelToJson(this);
   const HandbookModel({
     required this.name,
     required this.items,
@@ -30,6 +31,7 @@ class Staff extends Equatable {
 
   factory Staff.fromJson(Map<String, dynamic> json) => _$StaffFromJson(json);
 
+  Map<String, dynamic> toJson() => _$StaffToJson(this);
   const Staff({required this.id, required this.name, required this.updatedAt});
 
   @override

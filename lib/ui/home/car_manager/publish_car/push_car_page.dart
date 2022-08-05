@@ -1,5 +1,4 @@
 import 'package:bot_toast/bot_toast.dart';
-//import 'package:cloud_car/constants/app_theme.dart';
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
@@ -7,7 +6,6 @@ import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
-import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:cloud_car/widget/scan_license_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +39,6 @@ class _PushCarPageState extends State<PushCarPage> {
   late CarDistinguishModel? carInfoModel;
   final PublishCarInfo _publishCarInfo = PublishCarInfo();
   final TextEditingController _viNumController = TextEditingController();
-
-  //DateTime? _firstDate;
   final TextEditingController _carNumController = TextEditingController();
   final TextEditingController _engineController = TextEditingController();
   final TextEditingController _mileController = TextEditingController();
@@ -329,7 +325,9 @@ class _PushCarPageState extends State<PushCarPage> {
           _function(
             '首次上牌',
             () async {
-              _publishCarInfo.licensingDate=  await CarDatePicker.calenderPicker(DateTime(2000),DateTime.now());
+              _publishCarInfo.licensingDate =
+                  await CarDatePicker.calenderPicker(
+                      DateTime(2000), DateTime.now());
               // _firstDate = await CarDatePicker.monthPicker(DateTime.now());
               // _publishCarInfo.licensingDate = _firstDate;
               FocusManager.instance.primaryFocus?.unfocus();
@@ -367,37 +365,33 @@ class _PushCarPageState extends State<PushCarPage> {
             '请输入车身颜色',
           ),
           mile,
-          _function(
-            '车辆来源',
-            () async {
-              await showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(16.w))),
-                builder: (context) {
-                  return CloudListPickerWidget(
-                      title: '车辆来源',
-                      items: CarSource.values.map((e) => e.sourceName).toList(),
-                      onConfirm: (str, index) {
-                        if (index == null) return;
-                        // if (index == null) {
-                        //   return;
-                        // }
-                        _publishCarInfo.carSource =
-                            CarSource.values.toList()[index].sourceNum;
-                        Get.back();
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        setState(() {});
-                      });
-                },
-              );
-            },
-            _publishCarInfo.carSource != null
-                ? CarSource.getValue(_publishCarInfo.carSource!).sourceName
-                : '',
-            '请选择车辆来源',
-          ),
+          // _function(
+          //   '车辆来源',
+          //   () async {
+          //     await showModalBottomSheet(
+          //       context: context,
+          //       shape: RoundedRectangleBorder(
+          //           borderRadius:
+          //               BorderRadius.vertical(top: Radius.circular(16.w))),
+          //       builder: (context) {
+          //         return CloudListPickerWidget(
+          //             title: '车辆来源',
+          //             items: CarSource.values.map((e) => e.sourceName).toList(),
+          //             onConfirm: (str, index) {
+          //               _publishCarInfo.carSource =
+          //                   CarSource.values.toList()[index].sourceNum;
+          //               Get.back();
+          //               FocusManager.instance.primaryFocus?.unfocus();
+          //               setState(() {});
+          //             });
+          //       },
+          //     );
+          //   },
+          //   _publishCarInfo.carSource != null
+          //       ? CarSource.getValue(_publishCarInfo.carSource!).sourceName
+          //       : '',
+          //   '请选择车辆来源',
+          // ),
         ],
       ),
     );
@@ -473,10 +467,6 @@ class _PushCarPageState extends State<PushCarPage> {
       BotToast.showText(text: '请输入行驶里程');
       return false;
     }
-    if (_publishCarInfo.carSource == null) {
-      BotToast.showText(text: '请选择车辆来源');
-      return false;
-    }
     return true;
   }
 
@@ -513,10 +503,10 @@ class RadioModel {
   bool? isSelected;
   String? buttonText;
 
-  RadioModel(
+  RadioModel({
     this.isSelected,
     this.buttonText,
-  );
+  });
 }
 
 class PublishCarInfo {
@@ -545,9 +535,6 @@ class PublishCarInfo {
   ///表现里程
   String? mileage;
 
-  ///车辆来源 1.车商 2.个人直卖 3.收购
-  int? carSource;
-
   PublishCarInfo({
     this.viNum,
     this.carName,
@@ -556,7 +543,6 @@ class PublishCarInfo {
     this.engineNum,
     this.carColor,
     this.mileage,
-    this.carSource,
     this.carModelId,
   });
 }

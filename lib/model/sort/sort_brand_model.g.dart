@@ -13,3 +13,11 @@ SortBrandModel _$SortBrandModelFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       initial: json['initial'] as String,
     );
+
+Map<String, dynamic> _$SortBrandModelToJson(SortBrandModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'icon': instance.icon,
+      'name': instance.name,
+      'initial': instance.initial,
+    };

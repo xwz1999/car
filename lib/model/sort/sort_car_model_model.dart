@@ -12,6 +12,7 @@ class SortCarModelModel extends Equatable {
   factory SortCarModelModel.fromJson(Map<String, dynamic> json) =>
       _$SortCarModelModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$SortCarModelModelToJson(this);
   static SortCarModelModel get init =>
       const SortCarModelModel(id: 0, name: '', year: 0);
 

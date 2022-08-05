@@ -16,3 +16,14 @@ ConsignmentListModel _$ConsignmentListModelFromJson(
       status: json['status'] as int,
       signAt: json['signAt'] as num,
     );
+
+Map<String, dynamic> _$ConsignmentListModelToJson(
+        ConsignmentListModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'contractSn': instance.contractSn,
+      'modelName': instance.modelName,
+      'customerName': instance.customerName,
+      'status': instance.status,
+      'signAt': instance.signAt,
+    };

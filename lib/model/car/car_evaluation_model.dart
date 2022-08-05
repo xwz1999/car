@@ -19,6 +19,8 @@ class CarEvaluationModel extends Equatable {
   factory CarEvaluationModel.fromJson(Map<String, dynamic> json) =>
       _$CarEvaluationModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CarEvaluationModelToJson(this);
+
   const CarEvaluationModel({
     required this.id,
     required this.modelName,
@@ -31,6 +33,18 @@ class CarEvaluationModel extends Equatable {
     required this.vin,
     required this.engine,
   });
+
   @override
-  List<Object?> get props => [id,modelName,licensePlate,licensingDate,color,mileage,price,createdAt,vin,engine,];
+  List<Object?> get props => [
+        id,
+        modelName,
+        licensePlate,
+        licensingDate,
+        color,
+        mileage,
+        price,
+        createdAt,
+        vin,
+        engine,
+      ];
 }

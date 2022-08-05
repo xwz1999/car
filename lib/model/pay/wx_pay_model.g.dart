@@ -14,3 +14,13 @@ WxPayModel _$WxPayModelFromJson(Map<String, dynamic> json) => WxPayModel(
       package: json['package'] as String,
       sign: json['sign'] as String,
     );
+
+Map<String, dynamic> _$WxPayModelToJson(WxPayModel instance) =>
+    <String, dynamic>{
+      'prepayId': instance.prepayId,
+      'partnerId': instance.partnerId,
+      'timeStamp': instance.timeStamp,
+      'nonceStr': instance.nonceStr,
+      'package': instance.package,
+      'sign': instance.sign,
+    };

@@ -33,3 +33,29 @@ CarInfoModel _$CarInfoModelFromJson(Map<String, dynamic> json) => CarInfoModel(
           .map((e) => e as String)
           .toList(),
     );
+
+Map<String, dynamic> _$CarInfoModelToJson(CarInfoModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'modelName': instance.modelName,
+      'collect': instance.collect,
+      'browse': instance.browse,
+      'transfer': instance.transfer,
+      'price': instance.price,
+      'lastPrice': instance.lastPrice,
+      'downPayment': instance.downPayment,
+      'mileage': instance.mileage,
+      'licensingDate': instance.licensingDate,
+      'dischargeStandard': instance.dischargeStandard,
+      'locationCity': instance.locationCity,
+      'gearType': instance.gearType,
+      'color': instance.color,
+      'liter': instance.liter,
+      'keyCount': instance.keyCount,
+      'useCharacter': instance.useCharacter,
+      'compulsoryInsurance': instance.compulsoryInsurance,
+      'compulsoryInsuranceDate': instance.compulsoryInsuranceDate,
+      'condition': instance.condition,
+      'carPhotos': instance.carPhotos,
+      'interiorPhotos': instance.interiorPhotos,
+    };

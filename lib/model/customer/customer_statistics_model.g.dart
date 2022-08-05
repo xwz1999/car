@@ -14,3 +14,12 @@ CustomerStatisticsModel _$CustomerStatisticsModelFromJson(
       intentionCount: json['intentionCount'] as int,
       doneCount: json['doneCount'] as int,
     );
+
+Map<String, dynamic> _$CustomerStatisticsModelToJson(
+        CustomerStatisticsModel instance) =>
+    <String, dynamic>{
+      'registerCount': instance.registerCount,
+      'browseCount': instance.browseCount,
+      'intentionCount': instance.intentionCount,
+      'doneCount': instance.doneCount,
+    };

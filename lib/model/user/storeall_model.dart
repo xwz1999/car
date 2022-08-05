@@ -13,6 +13,7 @@ class StoreallModel extends Equatable {
   factory StoreallModel.fromJson(Map<String, dynamic> json) =>
       _$StoreallModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$StoreallModelToJson(this);
   @override
   List<Object?> get props => [id, name, staffs];
 
@@ -34,6 +35,7 @@ class Staff extends Equatable {
 
   factory Staff.fromJson(Map<String, dynamic> json) => _$StaffFromJson(json);
 
+  Map<String, dynamic> toJson() => _$StaffToJson(this);
   const Staff(this.id, this.name, this.phone, this.auditStatus, this.roleName,
       this.gender);
 

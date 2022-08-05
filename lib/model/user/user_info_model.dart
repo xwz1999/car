@@ -5,33 +5,38 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user_info_model.g.dart';
 
 @JsonSerializable()
-class UserInfoModel {
-  String inviteCode;
-  String nickname;
-  String headImg;
-  int level;
-  String phone;
-  int gender;
-  ExtraData data;
-  StoreInfo store;
+class UserInfoModel extends Equatable {
+  final String inviteCode;
+  final String nickname;
+  final String headImg;
+  final int level;
+  final String phone;
+  final int gender;
+  final ExtraData data;
+  final StoreInfo store;
+  final int businessId;
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);
 
-  static UserInfoModel get fail => UserInfoModel(
+  Map<String, dynamic> toJson() => _$UserInfoModelToJson(this);
+
+  static UserInfoModel get fail => const UserInfoModel(
       inviteCode: '',
       nickname: '',
       headImg: '',
       level: 0,
       phone: '',
       gender: 0,
-      data: const ExtraData(
+      businessId: 0,
+      data: ExtraData(
         assessCount: 0,
         inviteCount: 0,
         balance: '',
       ),
-      store: const StoreInfo(storeName: '', roleName: ''));
+      store: StoreInfo(storeName: '', roleName: ''));
 
+  @Deprecated('已弃用')
   Map<int, String> get levelMap => {
         1: '基础用户',
         2: '独立合伙人',
@@ -40,9 +45,22 @@ class UserInfoModel {
 
   Gender get genderEM => Gender.getValue(gender);
 
-//<editor-fold desc="Data Methods">
+  bool get isHomeStore => businessId == 1;
 
-  UserInfoModel({
+  @override
+  List<Object?> get props => [
+        inviteCode,
+        nickname,
+        headImg,
+        level,
+        phone,
+        gender,
+        data,
+        store,
+        businessId
+      ];
+
+  const UserInfoModel({
     required this.inviteCode,
     required this.nickname,
     required this.headImg,
@@ -51,37 +69,8 @@ class UserInfoModel {
     required this.gender,
     required this.data,
     required this.store,
+    required this.businessId,
   });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is UserInfoModel &&
-          runtimeType == other.runtimeType &&
-          inviteCode == other.inviteCode &&
-          nickname == other.nickname &&
-          headImg == other.headImg &&
-          level == other.level &&
-          phone == other.phone &&
-          gender == other.gender &&
-          data == other.data &&
-          store == other.store);
-
-  @override
-  int get hashCode =>
-      inviteCode.hashCode ^
-      nickname.hashCode ^
-      headImg.hashCode ^
-      level.hashCode ^
-      phone.hashCode ^
-      gender.hashCode ^
-      data.hashCode ^
-      store.hashCode;
-
-  @override
-  String toString() {
-    return 'UserInfoModel{ inviteCode: $inviteCode, nickname: $nickname, headImg: $headImg, level: $level, phone: $phone, gender: $gender, data: $data, store: $store,}';
-  }
 
   UserInfoModel copyWith({
     String? inviteCode,
@@ -92,6 +81,7 @@ class UserInfoModel {
     int? gender,
     ExtraData? data,
     StoreInfo? store,
+    int? businessId,
   }) {
     return UserInfoModel(
       inviteCode: inviteCode ?? this.inviteCode,
@@ -102,10 +92,9 @@ class UserInfoModel {
       gender: gender ?? this.gender,
       data: data ?? this.data,
       store: store ?? this.store,
+      businessId: businessId ?? this.businessId,
     );
   }
-
-//</editor-fold>
 }
 
 @JsonSerializable()
@@ -117,6 +106,7 @@ class ExtraData extends Equatable {
   factory ExtraData.fromJson(Map<String, dynamic> json) =>
       _$ExtraDataFromJson(json);
 
+  Map<String, dynamic> toJson() => _$ExtraDataToJson(this);
   const ExtraData({
     required this.assessCount,
     required this.balance,
@@ -144,6 +134,7 @@ class StoreInfo extends Equatable {
   factory StoreInfo.fromJson(Map<String, dynamic> json) =>
       _$StoreInfoFromJson(json);
 
+  Map<String, dynamic> toJson() => _$StoreInfoToJson(this);
   @override
   List<Object?> get props => [
         storeName,

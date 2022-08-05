@@ -13,6 +13,12 @@ PayModel _$PayModelFromJson(Map<String, dynamic> json) => PayModel(
       signType: json['sign_type'] as String,
     );
 
+Map<String, dynamic> _$PayModelToJson(PayModel instance) => <String, dynamic>{
+      'alipay_trade_app_pay_response': instance.aliPayTradeAppPayResponse,
+      'sign': instance.sign,
+      'sign_type': instance.signType,
+    };
+
 AliPayTradeAppPayResponse _$AliPayTradeAppPayResponseFromJson(
         Map<String, dynamic> json) =>
     AliPayTradeAppPayResponse(
@@ -26,3 +32,17 @@ AliPayTradeAppPayResponse _$AliPayTradeAppPayResponseFromJson(
       charset: json['charset'] as String,
       timestamp: json['timestamp'] as String,
     );
+
+Map<String, dynamic> _$AliPayTradeAppPayResponseToJson(
+        AliPayTradeAppPayResponse instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'msg': instance.msg,
+      'app_id': instance.appId,
+      'out_trade_no': instance.outTradeNo,
+      'trade_no': instance.tradeNo,
+      'total_amount': instance.totalAmount,
+      'seller_id': instance.sellerId,
+      'charset': instance.charset,
+      'timestamp': instance.timestamp,
+    };
