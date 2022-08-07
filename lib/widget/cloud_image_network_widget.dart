@@ -23,9 +23,6 @@ class CloudImageNetworkWidget extends StatelessWidget {
       return urls!.first.imageWithHost;
     }
   }
-
-
-
    const CloudImageNetworkWidget.car(
       {super.key, this.width, this.height, this.urls, this.fit = BoxFit.cover,this.isCar = true });
 

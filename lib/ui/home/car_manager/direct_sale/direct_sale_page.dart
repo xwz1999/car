@@ -19,6 +19,23 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import 'cars_detail_page.dart';
 
+enum CarStatus {
+  onSale(1, '在售'),
+  schedule(2, '预定'),
+  sold(3, '已售'),
+  returnBack(4, '退库'),
+  reviewed(5, '待审核'),
+  reject(6, '已驳回');
+
+  final int typeNum;
+  final String typeStr;
+
+  static CarStatus getValue(int value) =>
+      CarStatus.values.firstWhere((element) => element.typeNum == value);
+
+  const CarStatus(this.typeNum, this.typeStr);
+}
+
 class DirectSalePage extends StatefulWidget {
   final EasyRefreshController refreshController;
   final ValueNotifier<SearchParamModel> pickCar;
@@ -43,6 +60,8 @@ class _DirectSalePageState extends State<DirectSalePage>
   List<ChooseItem> _sortList = [];
   late String sort = '';
   late List<String> _dropDownHeaderItemStrings;
+
+  CarStatus _currentCarStatus = CarStatus.onSale;
 
   Map<String, dynamic> get _params => {
         'keyword': widget.pickCar.value.keyWords,
@@ -114,18 +133,13 @@ class _DirectSalePageState extends State<DirectSalePage>
           height: kToolbarHeight + 50.w,
         ),
         ChooseWidget(
-          callBack: (name) {
+          callBack: (index) {
+            _currentCarStatus = CarStatus.getValue(index + 1);
             setState(() {});
+            widget.refreshController.callRefresh();
           },
-          items: const [
-            '在售',
-            '已预定',
-            '已售',
-            '退库',
-            '待审核',
-            '已驳回',
-          ],
-          item: '',
+          items: CarStatus.values.map((e) => e.typeStr).toList(),
+          item: _currentCarStatus.typeStr,
         ),
         Expanded(
             child: DropDownWidget(
@@ -139,7 +153,6 @@ class _DirectSalePageState extends State<DirectSalePage>
           onTap: () {
             screenControl.screenHide();
             Scaffold.of(context).openEndDrawer();
-            //_scaffoldKey.currentState?.openEndDrawer();
           },
           child: EasyRefresh.custom(
             firstRefresh: true,
@@ -148,11 +161,9 @@ class _DirectSalePageState extends State<DirectSalePage>
             footer: MaterialFooter(),
             onRefresh: () async {
               _page = 1;
-
               var list = await CarFunc.getCarList(_page, _size,
                   order: CarMap.carSortString.getKeyFromValue(sort),
                   searchParams: _params);
-
               carList.clear();
               carList.addAll(list);
               _onLoad = false;
@@ -191,7 +202,8 @@ class _DirectSalePageState extends State<DirectSalePage>
                         )
                       : SliverPadding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 24.w,),
+                            horizontal: 24.w,
+                          ),
                           sliver: SliverList(
                               delegate:
                                   SliverChildBuilderDelegate((context, index) {
@@ -202,12 +214,6 @@ class _DirectSalePageState extends State<DirectSalePage>
                                       isSelf: model.isSelf != 1,
                                       carListModel: model,
                                     ));
-                                // carInfoModel = await CarFunc.getCarInfo(model.id);
-                                // if(carInfoModel!=null){
-                                //   Get.to(()=> CarsDetailPage(isSelf: model.isSelf!=1?false:true,carId: ,));
-                                // }else{
-                                //   CloudToast.show('车辆详情获取失败');
-                                // }
                               },
                               child: CarItemWidget(
                                 widgetPadding: EdgeInsets.symmetric(

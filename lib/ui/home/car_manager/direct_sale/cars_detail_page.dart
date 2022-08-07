@@ -847,12 +847,8 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       scrollDirection: Axis.horizontal,
       //布局构建
       itemBuilder: (context, index) {
-        // return Image.network(
-        //   'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F1910021010125G2-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649300928&t=fff0ffcc2c57eb09695f619918828ca8',
-        //   fit: BoxFit.fill,
-        // );
         return CloudImageNetworkWidget.car(
-          urls: [carInfoModel!.carPhotos[index].imageWithHost],
+          urls: [carInfoModel!.carPhotos[index]],
         );
       },
       //自动翻页

@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/model/customer/customer_statistics_model.dart';
 import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_detail_page.dart';
@@ -8,6 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../manager_container_item.dart';
+
+enum CustomerClassify {
+  normal(1, '浏览客户'),
+  intended(2, '意向客户'),
+  invite(3, '邀请注册'),
+  deal(4, '成交客户');
+
+  static CustomerClassify getValue(int value) =>
+      CustomerClassify.values.firstWhere((element) => element.typeNum == value);
+  final int typeNum;
+  final String typeStr;
+
+  const CustomerClassify(this.typeNum, this.typeStr);
+}
 
 class UserManagerPage extends StatefulWidget {
   const UserManagerPage({super.key});
@@ -19,7 +32,8 @@ class UserManagerPage extends StatefulWidget {
 class _UserManagerPageState extends State<UserManagerPage> {
   List<dynamic>? data;
 
-  late CustomerStatisticsModel? _model = const CustomerStatisticsModel(intentionCount: 0, doneCount: 0, registerCount: 0, browseCount: 0);
+  late CustomerStatisticsModel? _model = const CustomerStatisticsModel(
+      intentionCount: 0, doneCount: 0, registerCount: 0, browseCount: 0);
 
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   final ScrollController _scrollController = ScrollController();
@@ -40,7 +54,6 @@ class _UserManagerPageState extends State<UserManagerPage> {
   void didChangeDependencies() {
     _easyRefreshController.callRefresh();
     super.didChangeDependencies();
-
   }
 
   @override
@@ -83,43 +96,38 @@ class _UserManagerPageState extends State<UserManagerPage> {
                 _model = await CustomerFunc.getCustomerStatistics();
                 setState(() {});
               },
-              child:GridView.builder(
+              child: GridView.builder(
                   shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 32.w,right: 32.w),
-                  physics:const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.only(left: 32.w, right: 32.w),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: 4,
                   //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                    //横轴元素个数
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //横轴元素个数
                       crossAxisCount: 3,
                       //纵轴间距
                       mainAxisSpacing: 24.w,
                       //横轴间距
                       crossAxisSpacing: 40.w,
                       //子组件宽高长度比例
-                      childAspectRatio: 200/176),
+                      childAspectRatio: 200 / 176),
                   itemBuilder: (BuildContext context, int index) {
                     //Widget Function(BuildContext context, int index)
                     return GestureDetector(
-                        onTap: (){
-                          Get.to(()=> UserManagerDetailPage(type: index+1,));
-
+                        onTap: () {
+                          Get.to(() => const UserManagerDetailPage());
                         },
-                        child: getItem(index)
-                    );
+                        child: getItem(index));
                   }),
             ),
           ),
         ],
       ),
     );
-
-
   }
 
-
-  getItem(int index){
-    switch(index){
+  getItem(int index) {
+    switch (index) {
       case 0:
         return ManagerContainerItem(
           text: '浏览客户',
@@ -138,10 +146,8 @@ class _UserManagerPageState extends State<UserManagerPage> {
       case 3:
         return ManagerContainerItem(
           text: '成交客户',
-          num:'${_model?.doneCount}',
+          num: '${_model?.doneCount}',
         );
     }
-    }
-
-
+  }
 }

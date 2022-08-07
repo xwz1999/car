@@ -18,7 +18,7 @@ class API {
       case ENVConfig.release:
         return 'https://api.yunyunwenche.com';
       case ENVConfig.local:
-        return 'http://192.168.50.42:80';
+        return 'http://192.168.50.75:8094';
     }
   }
 

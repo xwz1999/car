@@ -26,9 +26,6 @@ class DirectSaleManagerPage extends StatefulWidget {
 class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   late List<String> _dropDownHeaderItemStrings1;
 
-  // List<dynamic>? data;
-  //
-
   TitleScreenControl screenControl = TitleScreenControl();
   final EasyRefreshController refreshController = EasyRefreshController();
   final EasyRefreshController asRefreshController = EasyRefreshController();
@@ -56,7 +53,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
     _sortList = [
       ChooseItem(name: '直卖车辆'),
       // ChooseItem(name: '收购车辆'),
-      ChooseItem(name: '评估车辆'),
+      // ChooseItem(name: '评估车辆'),
     ];
 
     _dropDownHeaderItemStrings1 = [
@@ -110,46 +107,40 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           backgroundColor: bodyColor,
           extendBodyBehindAppBar: true,
           extendBody: true,
-          body: Row(
-            children: [
-              Expanded(
-                child: Builder(
-                  builder: (context) {
-                    return TitleDropDownWidget(
-                        _dropDownHeaderItemStrings1, listWidget,
-                        height: kToolbarHeight + 20.w,
-                        bottomHeight: 30.w,
-                        screenControl: screenControl,
-                        headFontSize: 36.sp,
-                        isSearch: true,
-                        callback: (text) {
-                          _pickCar.value.keyWords = text;
-                          _dropDownHeaderItemStrings1.first == '直卖车辆'
-                              ? refreshController.callRefresh()
-                              : asRefreshController.callRefresh();
-                          setState(() {});
-                        },
-                        leftWidget: const CloudBackButton(
-                          isSpecial: true,
-                        ),
-                        // screen: '筛选',
-                        onTap: () {
-                          screenControl.screenHide();
-                          Scaffold.of(context).openEndDrawer();
-                        },
-                        child: _dropDownHeaderItemStrings1.first == '直卖车辆'
-                            ? DirectSalePage(
-                                pickCar: _pickCar,
-                                refreshController: refreshController,
-                              )
-                            : AssessmentCarPage(
-                                refreshController: asRefreshController,
-                                pickCar: _pickCar,
-                              ));
-                  }
-                ),
-              )
-            ],
+          body: Builder(
+            builder: (context) {
+              return TitleDropDownWidget(
+                  _dropDownHeaderItemStrings1, listWidget,
+                  height: kToolbarHeight + 20.w,
+                  bottomHeight: 30.w,
+                  screenControl: screenControl,
+                  headFontSize: 36.sp,
+                  isSearch: true,
+                  callback: (text) {
+                    _pickCar.value.keyWords = text;
+                    _dropDownHeaderItemStrings1.first == '直卖车辆'
+                        ? refreshController.callRefresh()
+                        : asRefreshController.callRefresh();
+                    setState(() {});
+                  },
+                  leftWidget: const CloudBackButton(
+                    isSpecial: true,
+                  ),
+                  // screen: '筛选',
+                  onTap: () {
+                    screenControl.screenHide();
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                  child: _dropDownHeaderItemStrings1.first == '直卖车辆'
+                      ? DirectSalePage(
+                          pickCar: _pickCar,
+                          refreshController: refreshController,
+                        )
+                      : AssessmentCarPage(
+                          refreshController: asRefreshController,
+                          pickCar: _pickCar,
+                        ));
+            }
           ),
           endDrawer: CustomDrawer(
               widthPercent: 0.86,

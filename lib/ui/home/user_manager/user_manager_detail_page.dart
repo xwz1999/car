@@ -6,6 +6,7 @@ import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/ui/home/func/customer_map.dart';
 import 'package:cloud_car/ui/home/sort/search_customer_param_model.dart';
 import 'package:cloud_car/ui/home/user_manager/user_info_page.dart';
+import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -23,11 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class UserManagerDetailPage extends StatefulWidget {
-  final int type;
-
-  ///1浏览客户 2意向客户 3 邀请注册 4成交客户
-
-  const UserManagerDetailPage({super.key, required this.type});
+  const UserManagerDetailPage({super.key});
 
   @override
   _UserManagerDetailPageState createState() => _UserManagerDetailPageState();
@@ -53,19 +50,17 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
 
   String title = '客户统计';
 
-  String? get status => CustomerMap.customerStatusByInt[widget.type];
-
   late ValueNotifier<SearchCustomerParamModel> sortModel = ValueNotifier(
       SearchCustomerParamModel(
           name: '',
-          customerStatus: status ?? '',
+          customerClassify: CustomerClassify.normal,
           createdDate: '',
           isImportant: '',
           trailDate: ''));
 
   Map<String, dynamic> get _params => {
         'name': sortModel.value.name,
-        'status': sortModel.value.status,
+        'status': sortModel.value.customerClassify.typeNum,
         'important': sortModel.value.important,
         'createdDateStart': sortModel.value.createdDateStart,
         'createdDateEnd': sortModel.value.createdDateEnd,
@@ -134,114 +129,106 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
           children: [
             _getAppbar(),
             ChooseWidget(
-              callBack: (name) {
-                sortModel.value.customerStatus = name;
+              callBack: (index) {
+                sortModel.value.customerClassify =
+                    CustomerClassify.getValue(index + 1);
                 _refreshController.callRefresh();
-                setState(() {});
               },
-              items: const [
-                '浏览客户',
-                '意向客户',
-                '邀请注册',
-                '成交客户',
-              ],
-              item: sortModel.value.customerStatus,
+              items: CustomerClassify.values.map((e) => e.typeStr).toList(),
+              item: sortModel.value.customerClassify.typeStr,
             ),
             Divider(
               height: 1.w,
               color: BaseStyle.colordddddd,
             ),
             Expanded(
-              child: Builder(
-                builder: (context) {
-                  return DropDownWidget(
-                    _dropDownHeaderItemStrings,
-                    listWidgets,
-                    height: 76.w,
-                    bottomHeight: 400.w,
-                    screenControl: screenControl,
-                    headFontSize: 28.sp,
-                    screen: '筛选',
-                    onTap: () {
-                      screenControl.screenHide();
-                      Scaffold.of(context).openEndDrawer();
+              child: Builder(builder: (context) {
+                return DropDownWidget(
+                  _dropDownHeaderItemStrings,
+                  listWidgets,
+                  height: 76.w,
+                  bottomHeight: 400.w,
+                  screenControl: screenControl,
+                  headFontSize: 28.sp,
+                  screen: '筛选',
+                  onTap: () {
+                    screenControl.screenHide();
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                  child: EasyRefresh.custom(
+                    firstRefresh: true,
+                    controller: _refreshController,
+                    header: MaterialHeader(),
+                    onRefresh: () async {
+                      _page = 1;
+
+                      _list = await CustomerFunc.getCustomerList(
+                          page: _page,
+                          size: 10,
+                          order: sort.isEmpty
+                              ? null
+                              : (CustomerMap.customerSortString
+                                      .getKeyFromValue(sort) as CustomerSort)
+                                  .name
+                                  .toString()
+                                  .toSnake,
+                          searchParams: _params);
+
+                      _onLoad = false;
+
+                      setState(() {});
                     },
-                    child:
-                    EasyRefresh.custom(
-                      firstRefresh: true,
-                      controller: _refreshController,
-                      header: MaterialHeader(),
-                      onRefresh: () async {
-                        _page = 1;
-
-                        _list = await CustomerFunc.getCustomerList(
-                            page: _page,
-                            size: 10,
-                            order: sort.isEmpty
-                                ? null
-                                : (CustomerMap.customerSortString
-                                        .getKeyFromValue(sort) as CustomerSort)
-                                    .name
-                                    .toString()
-                                    .toSnake,
-                            searchParams: _params);
-
-                        _onLoad = false;
-
-                        setState(() {});
-                      },
-                      onLoad: () async {
-                        _page++;
-                        var baseList = await apiClient
-                            .requestList(API.car.getCarSelfLists, data: {
-                          'page': _page,
-                          'size': 10,
-                          'order': (CustomerMap.customerSortString
-                                  .getKeyFromValue(sort) as CustomerSort)
-                              .name
-                              .toString()
-                              .toSnake,
-                          'search': _params
-                        });
-                        if (baseList.nullSafetyTotal > _list.length) {
-                          _list.addAll(baseList.nullSafetyList
-                              .map((e) => CustomerListModel.fromJson(e))
-                              .toList());
-                        } else {
-                          _refreshController.finishLoad(noMore: true);
-                        }
-                        setState(() {});
-                      },
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: 80.hb,
-                        ),
-                        _onLoad
-                            ? SliverToBoxAdapter(
-                                child: 0.hb,
-                              )
-                            : _list.isEmpty
-                                ? const SliverToBoxAdapter(
-                                    child: NoDataWidget(
-                                    text: '暂无客户信息',
-                                    paddingTop: 300,
-                                  ))
-                                : SliverPadding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 24.w, vertical: 20.w),
-                                    sliver: SliverList(
-                                      delegate: SliverChildBuilderDelegate(
-                                          (context, index) {
-                                        var model = _list[index];
-                                        return _getItem(model);
-                                      }, childCount: _list.length),
-                                    ),
-                                  )
-                      ],
-                    ),
-                  );
-                }
-              ),
+                    onLoad: () async {
+                      _page++;
+                      var baseList = await apiClient
+                          .requestList(API.car.getCarSelfLists, data: {
+                        'page': _page,
+                        'size': 10,
+                        'order': (CustomerMap.customerSortString
+                                .getKeyFromValue(sort) as CustomerSort)
+                            .name
+                            .toString()
+                            .toSnake,
+                        'search': _params
+                      });
+                      if (baseList.nullSafetyTotal > _list.length) {
+                        _list.addAll(baseList.nullSafetyList
+                            .map((e) => CustomerListModel.fromJson(e))
+                            .toList());
+                      } else {
+                        _refreshController.finishLoad(noMore: true);
+                      }
+                      setState(() {});
+                    },
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: 80.hb,
+                      ),
+                      _onLoad
+                          ? SliverToBoxAdapter(
+                              child: 0.hb,
+                            )
+                          : _list.isEmpty
+                              ? const SliverToBoxAdapter(
+                                  child: NoDataWidget(
+                                  text: '暂无客户信息',
+                                  paddingTop: 300,
+                                ))
+                              : SliverPadding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 24.w, vertical: 20.w),
+                                  sliver: SliverList(
+                                    delegate: SliverChildBuilderDelegate(
+                                        (context, index) {
+                                      var model = _list[index];
+                                      return _getItem(model);
+                                    }, childCount: _list.length),
+                                  ),
+                                )
+                    ],
+                  ),
+                );
+              }),
             )
           ],
         ));

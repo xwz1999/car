@@ -40,6 +40,14 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
     _editingController = TextEditingController(text: widget.value);
   }
 
+  @override
+  void didUpdateWidget(covariant TextEditItemWidget oldWidget) {
+    if (!widget.editor) {
+      _editingController.text=widget.value;
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
 
   @override
   void dispose() {

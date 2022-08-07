@@ -1,12 +1,12 @@
 import 'package:cloud_car/ui/home/func/customer_map.dart';
+import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 
 
 class SearchCustomerParamModel {
   String name;
 
 
-  String customerStatus;
-  int? get status => CustomerMap.customerStatus[customerStatus];
+  CustomerClassify customerClassify;
 
   String isImportant;
 
@@ -58,7 +58,7 @@ class SearchCustomerParamModel {
 
   SearchCustomerParamModel({
     this.name = '',
-    required this.customerStatus,
+    required this.customerClassify,
     required this.isImportant,
     required this.createdDate,
     required this.trailDate,
