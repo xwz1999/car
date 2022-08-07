@@ -13,14 +13,10 @@ enum Gender {
   const Gender(this.typeNum, this.typeStr);
 }
 
-
-
 ///角色分配
 enum Role {
-  // sales(1, '销售员', '能够查看全店的车，并进行客户跟进、销售下'),
-  // appraiser(2, '评估师/车务', '负责录入车辆信息、编辑店里的车辆'),
-  salesTraffic(3, '销售员/车务', '可以录入车辆信息、编辑车辆，并进行客户跟进'),
-  manager(4, '店长', '能够管理店内的客户、车辆、订单');
+  salesTraffic(2, '车务', '可以录入车辆信息、编辑车辆，并进行客户跟进'),
+  manager(1, '店长', '能够管理店内的客户、车辆、订单');
 
   final int num;
   final String typeStr;

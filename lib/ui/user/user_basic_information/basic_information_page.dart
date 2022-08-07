@@ -174,7 +174,6 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                             info.copyWith(nickname: name));
                                         if (res) {
                                           BotToast.showText(text: '修改名字成功');
-
                                           Get.back();
                                         }
                                         await UserTool.userProvider

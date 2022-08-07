@@ -1,6 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/roleall_model.dart';
-import 'package:cloud_car/model/user/staffinfo_model.dart';
+import 'package:cloud_car/model/user/staff_info_model.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/model/user/storeselect_moedl.dart';
 import 'package:cloud_car/utils/new_work/api_client.dart';

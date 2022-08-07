@@ -1,8 +1,8 @@
 import 'package:cloud_car/constants/enums.dart';
-import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:equatable/equatable.dart';
 
-part 'staffinfo_model.g.dart';
+part 'staff_info_model.g.dart';
 
 @JsonSerializable()
 class StaffInfoModel extends Equatable {
@@ -22,6 +22,7 @@ class StaffInfoModel extends Equatable {
       _$StaffInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$StaffInfoModelToJson(this);
+
   Gender get genderEm => Gender.getValue(gender);
 
   Role get roleEm => Role.getValueN(roleId);
@@ -68,3 +69,4 @@ class StaffInfoModel extends Equatable {
     required this.auditStatus,
   });
 }
+

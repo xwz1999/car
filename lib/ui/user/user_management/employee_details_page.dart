@@ -1,4 +1,4 @@
-import 'package:cloud_car/model/user/staffinfo_model.dart';
+import 'package:cloud_car/model/user/staff_info_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/ui/user/user_management/editor_employee_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -16,43 +16,22 @@ class EmployeeDetailsPage extends StatefulWidget {
   State<EmployeeDetailsPage> createState() => _EmployeeDetailsPageState();
 }
 
-//bool _getSure = false;
-//List<RoleallModel> roleList = [];
-
 class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   bool audit = true;
-  late bool res = false;
-  StaffInfoModel staffInfo = StaffInfoModel.init;
+  bool res = false;
+  StaffInfoModel? staffInfo;
 
   @override
   void initState() {
     super.initState();
-    // print('页面刷新？');
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   Future.delayed(
-  //       Duration.zero,
-  //       () => setState(() {
-  //             _refresh();
-  //           }));
-  // }
 
   @override
   void dispose() {
     _easyRefreshController.dispose();
     super.dispose();
   }
-
-  // _refresh() async {
-  //   if (res) {
-  //     _easyRefreshController.callRefresh();
-  //   }
-  //   setState(() {});
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -75,22 +54,18 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
         controller: _easyRefreshController,
         onRefresh: () async {
           Future.delayed(const Duration(milliseconds: 0), () async {
-            staffInfo = (await BusinessFunc.getStaffInfo(widget.staffId))!;
+            staffInfo = await BusinessFunc.getStaffInfo(widget.staffId);
             setState(() {});
-            // _refresh();
-            //setState(() {});
           });
         },
-        child: ListView(children: [_getUserinfo(), _getPermissions()]),
+        child: staffInfo == null
+            ? const SizedBox.shrink()
+            : ListView(children: [_getUserinfo(), _getPermissions()]),
       ), //
     );
   }
 
-//权限描述
-
   _getPermissions() {
-    // print(staffInfo.RoleId - 1);
-    // print(roleList);
     return Container(
       color: Colors.white,
       height: 1045.w,
@@ -119,7 +94,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 borderRadius: BorderRadius.circular(4.w)),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
             child: Text(
-              staffInfo.roleEm.typeStr,
+              staffInfo!.roleEm.typeStr,
               style: TextStyle(
                   color: const Color(0xFF027AFF),
                   fontSize: BaseStyle.fontSize28),
@@ -132,18 +107,18 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  staffInfo.roleEm.typeText,
+                  staffInfo!.roleEm.typeText,
                   style: TextStyle(
                       color: BaseStyle.color333333,
                       fontSize: BaseStyle.fontSize28),
                 ),
-                staffInfo.roleId == 1 || staffInfo.roleId == 3 ? 0.hb : 32.hb,
+                staffInfo!.roleId == 1 || staffInfo!.roleId == 3 ? 0.hb : 32.hb,
                 Offstage(
-                  offstage: staffInfo.roleId == 1 || staffInfo.roleId == 3,
+                  offstage: staffInfo!.roleId == 1 || staffInfo!.roleId == 3,
                   child: SizedBox(
                       width: 250.w,
                       child: Text(
-                        '销售提成比例${staffInfo.commission}%',
+                        '销售提成比例${staffInfo!.commission}%',
                         style: TextStyle(
                             color: BaseStyle.color666666,
                             fontSize: BaseStyle.fontSize28),
@@ -151,8 +126,8 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 ),
                 72.hb,
                 Offstage(
-                  offstage:
-                      staffInfo.auditStatus == 1 || staffInfo.auditStatus == 2,
+                  offstage: staffInfo!.auditStatus == 1 ||
+                      staffInfo!.auditStatus == 2,
                   child: Column(
                     children: [
                       Text(
@@ -177,7 +152,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
           const Spacer(),
           const Divider(),
           Offstage(
-            offstage: staffInfo.auditStatus == 1,
+            offstage: staffInfo!.auditStatus == 1,
             child: Row(
               children: [
                 Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
@@ -219,18 +194,18 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                   });
                 }),
                 200.wb,
-                staffInfo.auditStatus == 2
+                staffInfo!.auditStatus == 2
                     ? getButton(Assets.icons.editor1.path, '编辑', () async {
                         res = await Get.to(() => EditorEmployeePage(
-                              roleId: staffInfo.roleId,
-                              storeId: staffInfo.storeId,
+                              roleId: staffInfo!.roleId,
+                              storeId: staffInfo!.storeId,
                               staffId: widget.staffId,
-                              nameText: staffInfo.name,
-                              genderText: staffInfo.genderEm.typeStr,
-                              phoneText: staffInfo.phone,
-                              storeIdText: staffInfo.storeName,
-                              roleName: staffInfo.roleName,
-                              commissionText: staffInfo.commission,
+                              nameText: staffInfo!.name,
+                              genderText: staffInfo!.genderEm.typeStr,
+                              phoneText: staffInfo!.phone,
+                              storeIdText: staffInfo!.storeName,
+                              roleName: staffInfo!.roleName,
+                              commissionText: staffInfo!.commission,
                               // callback: (bool audit) {
                               //   audit = audit;
                               // },
@@ -262,15 +237,15 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                                     deleteListener: () async {
                                       Alert.dismiss(context);
                                       var res = await BusinessFunc.getStaffadd(
-                                          staffInfo.name,
-                                          staffInfo.gender,
-                                          staffInfo.phone,
-                                          staffInfo.storeId,
-                                          staffInfo.roleId,
-                                          staffInfo.roleId == 1 ||
-                                                  staffInfo.roleId == 3
+                                          staffInfo!.name,
+                                          staffInfo!.gender,
+                                          staffInfo!.phone,
+                                          staffInfo!.storeId,
+                                          staffInfo!.roleId,
+                                          staffInfo!.roleId == 1 ||
+                                                  staffInfo!.roleId == 3
                                               ? '0'
-                                              : staffInfo.commission);
+                                              : staffInfo!.commission);
                                       if (res) {
                                         Get.back();
                                         //Navigator.pop(context);
@@ -300,9 +275,9 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
 
   _getAudit() {
     return Offstage(
-      offstage: staffInfo.auditStatus == 2,
+      offstage: staffInfo!.auditStatus == 2,
       child: Image.asset(
-        staffInfo.auditStatus == 1
+        staffInfo!.auditStatus == 1
             ? Assets.icons.inreview.path
             : Assets.icons.hasrejected.path,
         width: 140.w,
@@ -411,21 +386,21 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
             Padding(
               padding: EdgeInsets.only(left: 32.w),
               child: Text(
-                staffInfo.name,
+                staffInfo!.name,
                 style: TextStyle(
                     color: BaseStyle.color333333,
                     fontWeight: FontWeight.bold,
                     fontSize: BaseStyle.fontSize36),
               ),
             ),
-            getText('性别', staffInfo.genderEm.typeStr),
-            getText('手机号', staffInfo.phone),
-            getText('权限配置', staffInfo.roleName),
-            getText('所属门店', staffInfo.storeName),
+            getText('性别', staffInfo!.genderEm.typeStr),
+            getText('手机号', staffInfo!.phone),
+            getText('权限配置', staffInfo!.roleName),
+            getText('所属门店', staffInfo!.storeName),
             getText('所属入驻商', '宁波xx4s专营店'),
 
             ///widget.business
-            ///staffinfo.Storeid
+            ///staffInfo!.Storeid
           ]),
         ),
         Positioned(left: 534.w, top: 12.w, child: _getAudit())

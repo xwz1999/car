@@ -4,7 +4,9 @@ import 'package:cloud_car/ui/user/user_management/access_configuration_page.dart
 import 'package:cloud_car/ui/user/user_management/organizational_structure_page.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller_widget.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:power_logger/power_logger.dart';
 
 import '../../../utils/headers.dart';
 import '../../../widget/button/cloud_back_button.dart';
@@ -139,7 +141,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
             endIcon: true,
             editor: false,
             tips: '请选择',
-            value: _gender?.typeStr ?? '请选择',
+            value: _gender?.typeStr ?? '',
             widget: Image(
               image: Assets.icons.icGoto,
               width: 32.w,
@@ -193,9 +195,9 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
                                     child: GestureDetector(
                                       onTap: () async {
                                         _gender=Gender.getValue(sexId);
+                                        LoggerData.addData(_gender?.typeStr);
                                         Navigator.pop(context);
                                         setState(() {});
-                                        //dialogSetState(() {});
                                       },
                                       child: Text(
                                         '确认',

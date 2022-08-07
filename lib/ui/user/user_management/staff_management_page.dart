@@ -1,9 +1,11 @@
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/ui/user/user_management/add_employee_page.dart';
-import 'package:cloud_car/ui/user/user_management/add_stores_page.dart';
 import 'package:cloud_car/ui/user/user_management/permissions_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:cloud_car/widget/cloud_tag.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,16 +15,14 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import 'employee_details_page.dart';
 
-//getStoreall()
 class StaffManagementPage extends StatefulWidget {
   const StaffManagementPage({super.key});
 
   @override
   State<StaffManagementPage> createState() => _StaffManagementPageState();
 }
-// ignore: non_constant_identifier_names
-List<StoreallModel> Employees = [];
-// List<String> nameList = [];
+
+List<StoreallModel> employees = [];
 
 class _StaffManagementPageState extends State<StaffManagementPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
@@ -42,7 +42,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
   }
 
   _refresh() async {
-    Employees = await BusinessFunc.getStoreall();
+    employees = await BusinessFunc.getStoreall();
     setState(() {});
   }
 
@@ -78,7 +78,6 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             ],
           )
         ],
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: kForeGroundColor,
       body: Column(
@@ -93,44 +92,19 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             footer: MaterialFooter(),
             controller: _easyRefreshController,
             onRefresh: () async {
-             await _refresh();
+              await _refresh();
             },
-            child:
-                //Employees.isEmpty?
-                Employees.isEmpty
-                    ? const NoDataWidget(
-                        text: '暂无客户信息',
-                        paddingTop: 0,
-                      )
-                    : ListView.builder(
-                        itemBuilder: (context, index) {
-                          return _getList(Employees[index]);
-                        },
-                        itemCount: Employees.length,
-                      ),
-            // ListView.builder(
-            //     itemBuilder: (context, index) {
-            //       return _getList(Employees[index]);
-            //     },
-            //     itemCount: Employees.length,
-            //   )
-            // : Column(
-            //     children: [
-            //       294.hb,
-            //       Image.asset(
-            //         Assets.icons.record.path,
-            //         width: 328.w,
-            //         height: 328.w,
-            //       ),
-            //       48.wb,
-            //       Text(
-            //         '暂无相关员工信息',
-            //         style: TextStyle(
-            //             color: BaseStyle.color333333,
-            //             fontSize: BaseStyle.fontSize28),
-            //       )
-            //     ],
-            //   )
+            child: employees.isEmpty
+                ? const NoDataWidget(
+                    text: '暂无客户信息',
+                    paddingTop: 0,
+                  )
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      return _getList(employees[index]);
+                    },
+                    itemCount: employees.length,
+                  ),
           )),
           getButton(),
           34.hb
@@ -152,13 +126,6 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
           width: 606.w,
           height: 72.w,
           child: TextField(
-            //keyboardType: TextInputType.text,
-            // onEditingComplete: () {
-            //   setState(() {});
-            //   // _refreshController.callRefresh();
-            // },
-            // // focusNode: _contentFocusNode,
-            // onTap: () {},
             style: TextStyle(
               textBaseline: TextBaseline.ideographic,
               fontSize: 32.sp,
@@ -231,15 +198,13 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             ? model.staffs!.mapIndexed((e, index) {
                 return GestureDetector(
                   onTap: () {
-                    // print(e.id);
-
                     Get.to(() => EmployeeDetailsPage(
                           staffId: e.id,
                         ));
                     //Get.to(()=>)
                   },
                   child: getText(e.roleName, e.genderEM.typeNum, e.name,
-                      e.phone, e.auditStatus),
+                      e.phone, e.auditStatus, e.roleEm),
                 );
               }).toList()
             : []
@@ -247,19 +212,14 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
     );
   }
 
-  getText(String position, int gender, String name, String phone, int judge) {
+  getText(String position, int gender, String name, String phone, int judge,
+      Role role) {
     return Container(
       color: Colors.white,
       height: 94.w,
       padding: EdgeInsets.symmetric(horizontal: 64.w, vertical: 18.w),
       child: Row(
         children: [
-          Text(
-            position,
-            style: TextStyle(
-                fontSize: BaseStyle.fontSize28, fontWeight: FontWeight.bold),
-          ),
-          20.wb,
           SizedBox(
             width: 32.w,
             height: 32.w,
@@ -283,6 +243,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                 fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
           24.wb,
+          if (role == Role.manager) CloudTag.blue(text: '店长'),
           SizedBox(child: judge == 1 ? getBox() : const SizedBox())
         ],
       ),
@@ -303,44 +264,13 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
     );
   }
 
+  /// 新建员工
   getButton() {
-    return Row(
-      children: [
-        Padding(padding: EdgeInsets.only(left: 32.w)),
-        GestureDetector(
-          onTap: () {
-            Get.to(() => const AddStoresPage());
-          },
-          child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 102.w, vertical: 22.w),
-              decoration: BoxDecoration(
-                  border:
-                      Border.all(width: 2.w, color: const Color(0xFF027AFF)),
-                  borderRadius: BorderRadius.circular(8.w)),
-              child: Text(
-                '新建门店',
-                style: TextStyle(
-                    color: const Color(0xFF027AFF),
-                    fontSize: BaseStyle.fontSize28),
-              )),
-        ),
-        46.wb,
-        GestureDetector(
-          onTap: () {
-            Get.to(() => const AddEmployeePage());
-          },
-          child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 102.w, vertical: 22.w),
-              decoration: BoxDecoration(
-                  color: const Color(0xFF027AFF),
-                  borderRadius: BorderRadius.circular(8.w)),
-              child: Text(
-                '新建员工',
-                style: TextStyle(
-                    color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
-              )),
-        )
-      ],
+    return CloudBottomButton(
+      onTap: () {
+        Get.to(() => const AddEmployeePage());
+      },
+      text: '新建员工',
     );
   }
 }
