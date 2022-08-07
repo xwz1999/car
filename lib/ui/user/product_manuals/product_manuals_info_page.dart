@@ -2,7 +2,9 @@ import 'package:cloud_car/model/user/handbookInfo_model.dart';
 import 'package:cloud_car/ui/user/interface/manuals_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flustars/flustars.dart';
+
 // import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
@@ -58,27 +60,10 @@ class _HandbookInfoPageState extends State<HandbookInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
-        ),
-        backgroundColor: kForeGroundColor,
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              manualsList.name,
-              style: TextStyle(
-                color: const Color(0xFF333333),
-                fontSize: 32.sp,
-              ),
-            ),
-          ],
-        ),
-      ),
-      backgroundColor: kForeGroundColor,
-      extendBody: true,
+    return CloudScaffold.normal(
+      title: manualsList.name,
+      barHeight: 88.w,
+      extendBody: false,
       body:
           //SizedBox()
           _getItem(manualsList),
@@ -87,27 +72,35 @@ class _HandbookInfoPageState extends State<HandbookInfoPage> {
 
   _getItem(HandbookInfoModel model) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // GestureDetector(
-        //   onTap: () {
-        //     //widget.manualsBack(model.id);
-        //   },
-        // ),
         Text(
           model.content,
           style: Theme.of(context).textTheme.subtitle1,
         ),
-        Text(
-          DateUtil.formatDateMs(model.createdAt.toInt() * 1000,
-              format: 'yyyy-MM-dd'),
-          style: Theme.of(context).textTheme.subtitle1,
+        const Spacer(),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.end,
+        //   children: [
+        //     Text(
+        //       DateUtil.formatDateMs(model.createdAt.toInt() * 1000,
+        //           format: 'yyyy-MM-dd'),
+        //       style: Theme.of(context).textTheme.subtitle1,
+        //     ),
+        //     20.wb,
+        //   ],
+        // ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              '更新日期：${DateUtil.formatDateMs(model.updatedAt.toInt() * 1000, format: 'yyyy-MM-dd')}',
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+            20.wb,
+          ],
         ),
-        Text(
-          DateUtil.formatDateMs(model.updatedAt.toInt() * 1000,
-              format: 'yyyy-MM-dd'),
-          style: Theme.of(context).textTheme.subtitle1,
-        ),
+        40.hb,
       ],
     );
   }

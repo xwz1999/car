@@ -21,6 +21,7 @@ class CloudScaffold extends StatelessWidget {
   final Color? appBarBackColor;
   final PreferredSizeWidget? appBarBottom;
   final Widget? endDrawer;
+  final double? barHeight;
 
   const CloudScaffold({
     super.key,
@@ -32,7 +33,7 @@ class CloudScaffold extends StatelessWidget {
     this.systemStyle = SystemStyle.initial,
     this.extendBody = false,
     this.path,
-    this.endDrawer,
+    this.endDrawer, this.barHeight,
   })  : normal = false,
         title = '',
         actions = const [],
@@ -48,7 +49,7 @@ class CloudScaffold extends StatelessWidget {
     this.extendBody = false,
     this.appbar,
     this.path,
-    this.endDrawer,
+    this.endDrawer, this.barHeight,
   })  : bodyColor = Colors.white,
         normal = false,
         title = '',
@@ -70,7 +71,7 @@ class CloudScaffold extends StatelessWidget {
       this.appBarBackColor = Colors.white,
       this.appBarBottom,
       this.actions = const [],
-      this.endDrawer})
+      this.endDrawer, this.barHeight})
       : normal = true,
         assert(title != null || appbar != null);
 
@@ -115,7 +116,7 @@ class CloudScaffold extends StatelessWidget {
               extendBody: extendBody,
               body: body,
               appBar: PreferredSize(
-                preferredSize: Size.fromHeight(176.w),
+                preferredSize: Size.fromHeight(barHeight??176.w),
                 child: title == null
                     ? appbar!
                     : AppBar(

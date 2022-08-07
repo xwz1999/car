@@ -56,8 +56,6 @@ class _SplashPageState extends State<SplashPage> {
     //获取包信息
     UserTool.appProvider.init();
   }
-
-  // ignore: unused_element
   Future<bool?> _showLoginVerify() async {
     return await showCupertinoDialog(
       barrierDismissible: false,
@@ -75,7 +73,6 @@ class _SplashPageState extends State<SplashPage> {
                       style: const TextStyle(color: Colors.blue),
                       recognizer: _agreementRecognizer
                         ..onTap = () {
-                          // Get.to(() => AgreementPage());
                         }),
                   TextSpan(
                       text: '《隐私政策》',

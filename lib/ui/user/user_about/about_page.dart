@@ -1,3 +1,4 @@
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
@@ -25,15 +26,13 @@ class _AboutPageState extends State<AboutPage> {
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize36,
                   fontWeight: FontWeight.bold)),
-
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
         extendBody: true,
-        body: Container(
-            height: 350.h,
+        body: ColoredBox(
             color: Colors.white,
-            child: ListView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: ListTile.divideTiles(context: context, tiles: [
                 ListTile(
                   leading: Text(
@@ -79,7 +78,7 @@ class _AboutPageState extends State<AboutPage> {
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                   trailing: Text(
-                    '1.1.0(有新版本)',
+                    UserTool.appProvider.packageInfo.version,
                     style: TextStyle(
                         fontSize: BaseStyle.fontSize28,
                         color: BaseStyle.color999999),
@@ -88,30 +87,4 @@ class _AboutPageState extends State<AboutPage> {
               ]).toList(),
             )));
   }
-
-  //列表
-  // _getList(item) {
-  //   return ListTile(
-  //     onTap: () {
-  //       switch (item['title']) {
-  //         case '用户协议':
-  //           // Get.to(() => const EnterpriseInformationPage());
-  //           //print("1111111");
-  //           break;
-  //         case '隐私政策':
-  //           // Get.to(() => const RealNamePage());
-  //           break;
-  //         case '版本号':
-  //           //Get.to(() => const BankCardPage());
-  //           break;
-  //       }
-  //     },
-  //
-  //     //绘制消息主体
-  //     title: Text(item['title'], style: Theme.of(context).textTheme.subtitle2),
-  //
-  //     trailing: const Icon(Icons.keyboard_arrow_right),
-  //     //contentPadding: ,
-  //   );
-  // }
 }

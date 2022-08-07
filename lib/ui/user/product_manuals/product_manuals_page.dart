@@ -92,23 +92,15 @@ class _ProductManualsState extends State<ProductManuals> {
               borderRadius: BorderRadius.circular(36.w),
               border: Border.all(width: 2.w, color: const Color(0xFFE7E7E7))),
           width: 606.w,
-          height: 72.h,
+          height: 72.w,
           child: TextField(
             keyboardType: TextInputType.text,
-            // onEditingComplete: () {
-            //   setState(() {});
-            //   // _refreshController.callRefresh();
-            // },
-            // // focusNode: _contentFocusNode,
-
             onTap: () {},
-
             style: TextStyle(
               textBaseline: TextBaseline.ideographic,
               fontSize: 32.sp,
               color: Colors.black,
             ),
-            // controller: _editingController,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: 20.w, bottom: 10.w),
               filled: true,
