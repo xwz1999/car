@@ -1,3 +1,5 @@
+import 'package:cloud_car/ui/splash/agreement_page.dart';
+import 'package:cloud_car/ui/splash/privacy_page.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +37,9 @@ class _AboutPageState extends State<AboutPage> {
               mainAxisSize: MainAxisSize.min,
               children: ListTile.divideTiles(context: context, tiles: [
                 ListTile(
+                  onTap: (){
+                    Get.to(()=>const AgreementPage());
+                  },
                   leading: Text(
                     '用户协议',
                     style: Theme.of(context).textTheme.subtitle2,
@@ -42,6 +47,9 @@ class _AboutPageState extends State<AboutPage> {
                   trailing: const Icon(Icons.keyboard_arrow_right),
                 ),
                 ListTile(
+                  onTap: (){
+                    Get.to(()=> const PrivacyPage());
+                  },
                   leading: Text(
                     '隐私政策',
                     style: Theme.of(context).textTheme.subtitle2,

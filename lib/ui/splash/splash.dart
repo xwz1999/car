@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_car/ui/splash/agreement_page.dart';
+import 'package:cloud_car/ui/splash/privacy_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/hive_store.dart';
 import 'package:cloud_car/utils/user_tool.dart';
@@ -56,6 +58,7 @@ class _SplashPageState extends State<SplashPage> {
     //获取包信息
     UserTool.appProvider.init();
   }
+
   Future<bool?> _showLoginVerify() async {
     return await showCupertinoDialog(
       barrierDismissible: false,
@@ -73,13 +76,14 @@ class _SplashPageState extends State<SplashPage> {
                       style: const TextStyle(color: Colors.blue),
                       recognizer: _agreementRecognizer
                         ..onTap = () {
+                          Get.to(() => const AgreementPage());
                         }),
                   TextSpan(
                       text: '《隐私政策》',
                       style: const TextStyle(color: Colors.blue),
                       recognizer: _privacyRecognizer
                         ..onTap = () {
-                          // Get.to(() => PrivacyPage());
+                          Get.to(() => const PrivacyPage());
                         }),
                   const TextSpan(
                       style: TextStyle(color: Colors.black),

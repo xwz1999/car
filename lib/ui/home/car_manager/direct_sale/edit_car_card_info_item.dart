@@ -67,7 +67,7 @@ class _EditCardInfoItemState extends State<EditCardInfoItem> {
       children: [
         EditItemWidget(
           title: '过户次数',
-          value: '1',
+           value: '1',
           callback: (String content) {},
           endText: '次',
           topIcon: false,
