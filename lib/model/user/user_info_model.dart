@@ -34,7 +34,7 @@ class UserInfoModel extends Equatable {
         inviteCount: 0,
         balance: '',
       ),
-      store: StoreInfo(storeName: '', roleName: ''));
+      store: StoreInfo(storeName: '', roleName: '', roleId: 0));
 
   @Deprecated('已弃用')
   Map<int, String> get levelMap => {
@@ -107,6 +107,7 @@ class ExtraData extends Equatable {
       _$ExtraDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$ExtraDataToJson(this);
+
   const ExtraData({
     required this.assessCount,
     required this.balance,
@@ -125,19 +126,21 @@ class ExtraData extends Equatable {
 class StoreInfo extends Equatable {
   final String storeName;
   final String roleName;
+  final int roleId;
 
   const StoreInfo({
     required this.storeName,
     required this.roleName,
+    required this.roleId,
   });
 
   factory StoreInfo.fromJson(Map<String, dynamic> json) =>
       _$StoreInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$StoreInfoToJson(this);
+
+  Role get roleEM => Role.getValueN(roleId);
+
   @override
-  List<Object?> get props => [
-        storeName,
-        roleName,
-      ];
+  List<Object?> get props => [storeName, roleName, roleId];
 }

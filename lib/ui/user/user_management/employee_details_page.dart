@@ -1,7 +1,9 @@
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/user/staff_info_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/ui/user/user_management/editor_employee_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,12 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   bool audit = true;
   bool res = false;
   StaffInfoModel? staffInfo;
+
+  bool get _deletePermission {
+    return UserTool.userProvider.userInfo.store.roleEM != Role.manager ||
+        staffInfo?.roleId == UserTool.userProvider.userInfo.store.roleId ||
+        UserTool.userProvider.userInfo.store.storeName != staffInfo?.storeName;
+  }
 
   @override
   void initState() {
@@ -152,7 +160,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
           const Spacer(),
           const Divider(),
           Offstage(
-            offstage: staffInfo!.auditStatus == 1,
+            offstage: _deletePermission,
             child: Row(
               children: [
                 Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
@@ -194,77 +202,61 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                   });
                 }),
                 200.wb,
-                staffInfo!.auditStatus == 2
-                    ? getButton(Assets.icons.editor1.path, '编辑', () async {
-                        res = await Get.to(() => EditorEmployeePage(
-                              roleId: staffInfo!.roleId,
-                              storeId: staffInfo!.storeId,
-                              staffId: widget.staffId,
-                              nameText: staffInfo!.name,
-                              genderText: staffInfo!.genderEm.typeStr,
-                              phoneText: staffInfo!.phone,
-                              storeIdText: staffInfo!.storeName,
-                              roleName: staffInfo!.roleName,
-                              commissionText: staffInfo!.commission,
-                              // callback: (bool audit) {
-                              //   audit = audit;
-                              // },
-                            ));
-                        //print(audit);
-                      })
-                    : getButton(
-                        Assets.icons.editor1.path,
-                        '重新编辑',
-                        () => setState(() {
-                              Alert.show(
-                                  context,
-                                  NormalContentDialog(
-                                    type: NormalTextDialogType.delete,
-                                    title: '确认提示',
-                                    content: const Text('确认重新提交员工信息并培训吗?'),
-                                    items: const ['取消'],
-                                    deleteItem: '确定',
-                                    //监听器
-                                    listener: (index) {
-                                      Alert.dismiss(context);
-                                      //_getSure = false;
-                                      setState(() {
-                                        //_getSure;
-                                      });
-                                      //Value = false;
-                                      //(Value);
-                                    },
-                                    deleteListener: () async {
-                                      Alert.dismiss(context);
-                                      var res = await BusinessFunc.getStaffadd(
-                                          staffInfo!.name,
-                                          staffInfo!.gender,
-                                          staffInfo!.phone,
-                                          staffInfo!.storeId,
-                                          staffInfo!.roleId,
-                                          staffInfo!.roleId == 1 ||
-                                                  staffInfo!.roleId == 3
-                                              ? '0'
-                                              : staffInfo!.commission);
-                                      if (res) {
-                                        Get.back();
-                                        //Navigator.pop(context);
-                                      }
-                                      // var res =
-                                      //     await BusinessFunc.getStaffDelete(
-                                      //         widget.staffId);
-                                      // if (res) {
-                                      //   Navigator.pop(context);
-                                      // }
-                                      setState(() {
-                                        //_getSure;
-                                      });
-                                      //print(_getSure);
-                                      //Value = true;
-                                      //(Value);
-                                    },
-                                  ));
-                            }))
+                Offstage(
+                  offstage: _deletePermission,
+                  child: getButton(Assets.icons.editor1.path, '编辑', () async {
+                    res = await Get.to(() => EditorEmployeePage(
+                          roleId: staffInfo!.roleId,
+                          storeId: staffInfo!.storeId,
+                          staffId: widget.staffId,
+                          nameText: staffInfo!.name,
+                          gender: staffInfo!.genderEm,
+                          phoneText: staffInfo!.phone,
+                          storeIdText: staffInfo!.storeName,
+                          roleName: staffInfo!.roleName,
+                          commissionText: staffInfo!.commission,
+                        ));
+                    //print(audit);
+                  }),
+                )
+                // : getButton(
+                //     Assets.icons.editor1.path,
+                //     '重新编辑',
+                //     () => setState(() {
+                //           Alert.show(
+                //               context,
+                //               NormalContentDialog(
+                //                 type: NormalTextDialogType.delete,
+                //                 title: '确认提示',
+                //                 content: const Text('确认重新提交员工信息并培训吗?'),
+                //                 items: const ['取消'],
+                //                 deleteItem: '确定',
+                //                 //监听器
+                //                 listener: (index) {
+                //                   Alert.dismiss(context);
+                //                   setState(() {
+                //                   });
+                //                 },
+                //                 deleteListener: () async {
+                //                   Alert.dismiss(context);
+                //                   var res = await BusinessFunc.getStaffadd(
+                //                       staffInfo!.name,
+                //                       staffInfo!.gender,
+                //                       staffInfo!.phone,
+                //                       staffInfo!.storeId,
+                //                       staffInfo!.roleId,
+                //                       staffInfo!.roleId == 1 ||
+                //                               staffInfo!.roleId == 3
+                //                           ? '0'
+                //                           : staffInfo!.commission);
+                //                   if (res) {
+                //                     Get.back();
+                //                   }
+                //                   setState(() {
+                //                   });
+                //                 },
+                //               ));
+                //         }))
               ],
             ),
           )

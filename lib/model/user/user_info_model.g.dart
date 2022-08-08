@@ -47,9 +47,11 @@ Map<String, dynamic> _$ExtraDataToJson(ExtraData instance) => <String, dynamic>{
 StoreInfo _$StoreInfoFromJson(Map<String, dynamic> json) => StoreInfo(
       storeName: json['storeName'] as String,
       roleName: json['roleName'] as String,
+      roleId: json['roleId'] as int,
     );
 
 Map<String, dynamic> _$StoreInfoToJson(StoreInfo instance) => <String, dynamic>{
       'storeName': instance.storeName,
       'roleName': instance.roleName,
+      'roleId': instance.roleId,
     };

@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/ui/user/user_management/access_configuration_page.dart';
 import 'package:cloud_car/ui/user/user_management/organizational_structure_page.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller_widget.dart';
@@ -12,10 +13,9 @@ import '../interface/business_func.dart';
 typedef TextCallback = Function(bool audit);
 
 class EditorEmployeePage extends StatefulWidget {
-  //final TextCallback callback;
   final String roleName;
   final String nameText;
-  final String genderText;
+  final Gender gender;
   final String phoneText;
   final String storeIdText;
   final String commissionText;
@@ -23,22 +23,21 @@ class EditorEmployeePage extends StatefulWidget {
   final int staffId;
   final int roleId;
 
-  const EditorEmployeePage({
-    super.key,
-    required this.roleId,
-    required this.storeId,
-    // required this.callback,
-    this.roleName = '',
-    this.nameText = '',
-    this.genderText = '',
-    this.phoneText = '',
-    this.storeIdText = '',
-    this.commissionText = '',
-    required this.staffId,
-  });
-
   @override
   State<EditorEmployeePage> createState() => _EditorEmployeePageState();
+
+  const EditorEmployeePage({
+    super.key,
+    required this.roleName,
+    required this.nameText,
+    required this.gender,
+    required this.phoneText,
+    required this.storeIdText,
+    required this.commissionText,
+    required this.storeId,
+    required this.staffId,
+    required this.roleId,
+  });
 }
 
 class _EditorEmployeePageState extends State<EditorEmployeePage> {
@@ -52,7 +51,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
   late String nameText = widget.nameText;
 
   ///
-  late String genderText = widget.genderText;
+  late Gender gender = widget.gender;
 
   ///
   late String phoneText = widget.phoneText;
@@ -65,7 +64,6 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
 
   ///所属门店id
   late int storeId = widget.storeId;
-  int sexId = 1;
 
   @override
   void initState() {
@@ -107,13 +105,8 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
           88.hb,
           CloudBottomButton(
             onTap: () async {
-              var res = await BusinessFunc.getStaffEdit(
-                  widget.staffId,
-                  nameText,
-                  genderText == '女' ? 2 : 1,
-                  storeId,
-                  roleId,
-                  commissionText);
+              var res = await BusinessFunc.getStaffEdit(widget.staffId,
+                  nameText, gender.typeNum, storeId, roleId, commissionText);
               if (res) {
                 BotToast.showText(text: '提交成功');
                 Get.back(result: true);
@@ -195,7 +188,8 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             title: '性别 ',
             endIcon: true,
             tips: '请选择',
-            value: genderText,
+            editor: false,
+            value: gender.typeStr,
             widget: Image(
               image: Assets.icons.icGoto,
               width: 32.w,
@@ -248,10 +242,8 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                                   child: SizedBox(
                                     child: GestureDetector(
                                       onTap: () async {
-                                        genderText = sexId == 1 ? '男' : "女";
                                         Navigator.pop(context);
                                         setState(() {});
-                                        //dialogSetState(() {});
                                       },
                                       child: Text(
                                         '确认',
@@ -273,7 +265,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                                 50.hb,
                                 GestureDetector(
                                   onTap: () {
-                                    sexId = 1;
+                                    gender = Gender.male;
                                     dialogSetState(() {});
                                   },
                                   child: Container(
@@ -283,7 +275,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                                     color: Colors.white,
                                     child: Text('男',
                                         style: TextStyle(
-                                            color: sexId == 1
+                                            color: gender.typeNum == 1
                                                 ? const Color(0xFF027AFF)
                                                 : const Color(0xFF330000),
                                             fontSize: BaseStyle.fontSize28)),
@@ -291,7 +283,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    sexId = 2;
+                                    gender = Gender.female;
                                     dialogSetState(() {});
                                   },
                                   child: Container(
@@ -301,7 +293,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
                                     color: Colors.white,
                                     child: Text('女',
                                         style: TextStyle(
-                                            color: sexId == 2
+                                            color: gender.typeNum == 2
                                                 ? const Color(0xFF027AFF)
                                                 : const Color(0xFF330000),
                                             fontSize: BaseStyle.fontSize28)),
