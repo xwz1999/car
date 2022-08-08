@@ -21,7 +21,7 @@ class _AboutPageState extends State<AboutPage> {
             isSpecial: true,
           ),
           backgroundColor: kForeGroundColor,
-          title: Text('系统设置',
+          title: Text('关于云云',
               style: TextStyle(
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize36,
@@ -62,13 +62,9 @@ class _AboutPageState extends State<AboutPage> {
                             //监听器
                             listener: (index) {
                               Alert.dismiss(context);
-                              //Value = false;
-                              //(Value);
                             },
                             deleteListener: () {
                               Alert.dismiss(context);
-                              //Value = true;
-                              //(Value);
                             },
                           ));
                     });

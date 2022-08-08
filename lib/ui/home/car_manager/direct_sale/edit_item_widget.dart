@@ -6,7 +6,8 @@ typedef TextCallback = Function(String content);
 class EditItemWidget extends StatefulWidget {
   final bool topIcon;
   final String title;
-  final String value;
+  @Deprecated('not good,replace it')
+  final String? value;
   final bool canChange;
   final TextCallback callback;
   final String endText;
@@ -16,16 +17,23 @@ class EditItemWidget extends StatefulWidget {
   final Widget? endIcon;
   final double? titleWidth;
   final TextInputType? keyboardType;
+  final TextEditingController? controller;
 
-
-  const EditItemWidget(
-      {super.key,
-      required this.title,
-      required this.value,
-      this.canChange = true,
-      required this.callback,
-      this.endText = '',
-      this.topIcon = true, this.paddingTop=0, this.tips = '请输入', this.paddingStart = 28, this.endIcon, this.titleWidth, this.keyboardType = TextInputType.text,});
+  const EditItemWidget({
+    super.key,
+    required this.title,
+    this.canChange = true,
+    required this.callback,
+    this.endText = '',
+    this.topIcon = true,
+    this.paddingTop = 0,
+    this.tips = '请输入',
+    this.paddingStart = 28,
+    this.endIcon,
+    this.titleWidth,
+    this.keyboardType = TextInputType.text,
+    this.controller, this.value,
+  });
 
   @override
   _EditItemWidgetState createState() => _EditItemWidgetState();
@@ -34,28 +42,32 @@ class EditItemWidget extends StatefulWidget {
 class _EditItemWidgetState extends State<EditItemWidget> {
   late TextEditingController _editingController;
   late double paddingTop = 0;
+
   @override
   void initState() {
-    if(widget.paddingTop==0){
+    if (widget.paddingTop == 0) {
       paddingTop = 40.w;
-    }else{
+    } else {
       paddingTop = widget.paddingTop;
     }
-    _editingController = TextEditingController(text: widget.value);
+    _editingController =
+        widget.controller ?? TextEditingController(text: widget.value);
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant EditItemWidget oldWidget) {
-    if (!widget.canChange) {
-        _editingController.text=widget.value;
+    if (!widget.canChange&&widget.value!=null) {
+      _editingController.text = widget.value!;
     }
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   void dispose() {
-    _editingController.dispose();
+    if (widget.controller == null) {
+      _editingController.dispose();
+    }
     super.dispose();
   }
 
@@ -65,23 +77,25 @@ class _EditItemWidgetState extends State<EditItemWidget> {
       padding: EdgeInsets.only(top: paddingTop),
       child: Row(
         children: [
-         widget.topIcon? Padding(
-            padding: EdgeInsets.only(top: 10.w),
-            child: Text(
-              '*  ',
-              style: TextStyle(
-                fontSize: 28.sp,
-                color: const Color(0xFFE62222),
-              ),
-            ),
-          ):Padding(
-           padding: EdgeInsets.only(top: 10.w),
-           child: SizedBox(
-             width: widget.paddingStart.w,
-           ),
-         ),
+          widget.topIcon
+              ? Padding(
+                  padding: EdgeInsets.only(top: 10.w),
+                  child: Text(
+                    '*  ',
+                    style: TextStyle(
+                      fontSize: 28.sp,
+                      color: const Color(0xFFE62222),
+                    ),
+                  ),
+                )
+              : Padding(
+                  padding: EdgeInsets.only(top: 10.w),
+                  child: SizedBox(
+                    width: widget.paddingStart.w,
+                  ),
+                ),
           SizedBox(
-            width: widget.titleWidth?? 170.w,
+            width: widget.titleWidth ?? 170.w,
             child: Text(
               widget.title,
               style: TextStyle(
@@ -95,14 +109,13 @@ class _EditItemWidgetState extends State<EditItemWidget> {
               enabled: widget.canChange,
               keyboardType: widget.keyboardType,
               onSubmitted: (text) {
-
                 // _refreshController.callRefresh();
               },
               onChanged: (text) {
                 widget.callback(text);
               },
               style: TextStyle(
-                color:  BaseStyle.color333333,
+                color: BaseStyle.color333333,
                 fontSize: BaseStyle.fontSize28,
               ),
               maxLines: null,
@@ -121,22 +134,27 @@ class _EditItemWidgetState extends State<EditItemWidget> {
               ),
             ),
           ),
-
-          widget.endIcon!=null?
-              Padding(padding: EdgeInsets.only(right: 32.w,),child:widget.endIcon! ,)
-              :
-          (widget.endText.isNotEmpty
+          widget.endIcon != null
               ? Padding(
-            padding: EdgeInsets.only(right: 32.w,),
-                child: Text(
-            widget.endText,
-            style: TextStyle(
-                fontSize: 28.sp,
-                color: const Color(0xFF333333),
-            ),
-          ),
-              )
-              : const SizedBox()),
+                  padding: EdgeInsets.only(
+                    right: 32.w,
+                  ),
+                  child: widget.endIcon!,
+                )
+              : (widget.endText.isNotEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                        right: 32.w,
+                      ),
+                      child: Text(
+                        widget.endText,
+                        style: TextStyle(
+                          fontSize: 28.sp,
+                          color: const Color(0xFF333333),
+                        ),
+                      ),
+                    )
+                  : const SizedBox()),
         ],
       ),
     );

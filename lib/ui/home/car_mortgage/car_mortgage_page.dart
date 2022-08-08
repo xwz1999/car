@@ -3,18 +3,26 @@ import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_result_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+
 // import 'package:cloud_car/widget/picker/car_picker_box.dart';
 // import 'package:cloud_car/widget/picker/cloud_list_picker_item_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
 import 'choose_time_widget.dart';
 
 enum LoanType {
+  ///等额本息
   equalPrincipalInterest(0, '等额本息', '月供每月相同，本金逐月递增，利息逐月增加'),
+
+  ///等额本金
   equalPrincipal(1, '等额本金', '月供逐月递减，本金每月相同，利息逐月递减'),
   // equalInterest(2, '等额等息', '月供、本金、利息每月相同'),
+  ///先息后本
   interestFirstPrincipalNext(3, '先息后本', '每月固定还利息，到期还全部本金'),
+
+  ///到期本息
   duePrincipalInterest(4, '到期本息', '到期一次性还清全部本金和利息');
 
   final int typeNum;
@@ -36,18 +44,28 @@ class CarMortgagePage extends StatefulWidget {
 }
 
 class _CarMortgagePageState extends State<CarMortgagePage> {
-  num? loanAmount;
+  final TextEditingController _loanAmountController = TextEditingController();
+  final TextEditingController _loanTermController = TextEditingController();
+  final TextEditingController _interestRateController = TextEditingController();
 
   ///期限类型 1为月 2为日
-  int termType = 1;
-  num? loanTerm;
+  int _termType = 1;
 
-  int get finalTerm => termType == 1 ? loanTerm!.toInt() : loanTerm! ~/ 30;
-  num? interestRate;
+  int get _finalTerm => _termType == 1
+      ? int.parse(_loanTermController.text)
+      : int.parse(_loanTermController.text) ~/ 30;
 
   ///利率类型 1为年 2为日
   int rateType = 1;
   LoanType? _pickLoanType;
+
+  @override
+  void dispose() {
+    _loanAmountController.dispose();
+    _loanTermController.dispose();
+    _interestRateController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,15 +92,12 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
           EditItemWidget(
             paddingTop: 30.w,
             keyboardType: TextInputType.number,
+            controller: _loanAmountController,
             title: '贷款金额',
-            value: loanAmount == null ? '' : loanAmount.toString(),
-            callback: (String content) {
-              loanAmount = double.parse(content);
-              setState(() {});
-            },
             endText: '万元',
             canChange: true,
             tips: '限制1000万以内',
+            callback: (String content) {},
           ),
           30.hb,
           Divider(
@@ -95,11 +110,8 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
             keyboardType: TextInputType.number,
             paddingTop: 30.w,
             title: '贷款期限',
-            value: loanTerm == null ? '' : loanTerm.toString(),
-            callback: (String content) {
-              loanTerm = double.parse(content);
-              setState(() {});
-            },
+            controller: _loanTermController,
+            callback: (String content) {},
             canChange: true,
             tips: '限制600月以内',
             endIcon: ChooseTimeWidget(
@@ -107,9 +119,9 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
                 second: '天',
                 callBack: (String text) {
                   if (text == '月') {
-                    termType = 1;
+                    _termType = 1;
                   } else {
-                    termType = 2;
+                    _termType = 2;
                   }
                 }),
           ),
@@ -124,11 +136,8 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
             paddingTop: 30.w,
             keyboardType: TextInputType.number,
             title: '利率',
-            value: interestRate == null ? '' : interestRate.toString(),
-            callback: (String content) {
-              interestRate = double.parse(content);
-              setState(() {});
-            },
+            controller: _interestRateController,
+            callback: (String content) {},
             endIcon: Row(
               children: [
                 Text(
@@ -198,19 +207,20 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
             color: kForeGroundColor,
             child: GestureDetector(
               onTap: () async {
-                if (loanTerm == null ||
-                    loanAmount == null ||
-                    interestRate == null ||
+                if (_loanAmountController.text.isEmpty ||
+                    _loanTermController.text.isEmpty ||
+                    _interestRateController.text.isEmpty ||
                     _pickLoanType == null) {
                   CloudToast.show('请先填写数据！');
                   return;
                 }
                 Get.to(() => CarMortgageResultPage(
                       rateType: rateType,
-                      loanTerm: finalTerm,
+                      loanTerm: _finalTerm,
                       loanType: _pickLoanType!,
-                      loanAmount: loanAmount!*10000,
-                      interestRate: interestRate!/100.0,
+                      loanAmount: int.parse(_loanAmountController.text) * 10000,
+                      interestRate: NumUtil.divide(
+                          int.parse(_interestRateController.text), 100.0),
                     ));
               },
               child: Container(
@@ -241,7 +251,13 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
             height: 84.w,
             color: kForeGroundColor,
             child: GestureDetector(
-              onTap: () async {},
+              onTap: () async {
+                _loanTermController.clear();
+                _loanAmountController.clear();
+                _interestRateController.clear();
+                _pickLoanType = null;
+                setState(() {});
+              },
               child: Container(
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(horizontal: 32.w),

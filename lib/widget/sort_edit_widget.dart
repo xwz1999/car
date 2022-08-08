@@ -43,7 +43,7 @@ class _SortEditWidgetState extends State<SortEditWidget> {
         borderRadius: BorderRadius.circular(4.w),
         // border: Border.all(width: 1.w,color: const Color(0xFFDDDDDD))
       ),
-      width: 104.w,
+      width: 140.w,
       height: 42.w,
       child: TextField(
         keyboardType: TextInputType.text,
@@ -62,7 +62,7 @@ class _SortEditWidgetState extends State<SortEditWidget> {
         },
         style: TextStyle(
           textBaseline: TextBaseline.ideographic,
-          fontSize: 32.sp,
+          fontSize: 24.sp,
           color: Colors.black,
         ),
         controller: _editingController,

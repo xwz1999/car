@@ -1,5 +1,4 @@
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';

@@ -1,31 +1,18 @@
 import 'package:cloud_car/model/user/handbookInfo_model.dart';
 import 'package:cloud_car/ui/user/interface/manuals_func.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flustars/flustars.dart';
 
-// import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
-//typedef ManualsBack = Function(int id);
-
 class HandbookInfoPage extends StatefulWidget {
-  //final ManualsBack manualsBack;
   final String name;
   final int itemId;
-
-  // final String text;
-  // final String startTime;
-  // final String endTime;
   const HandbookInfoPage({
     super.key,
-    //required this.manualsBack,
     required this.itemId,
     required this.name,
-    // required this.endTime,
-    // required this.startTime,
-    // required this.text,
   });
 
   @override
