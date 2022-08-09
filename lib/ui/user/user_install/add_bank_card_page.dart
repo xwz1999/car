@@ -1,11 +1,10 @@
 //  银行卡添加 35
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
-//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';

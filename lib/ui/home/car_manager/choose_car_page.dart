@@ -4,8 +4,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
-import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
@@ -95,7 +95,6 @@ class _ChooseCarPageState extends State<ChooseCarPage> {
                 },
                 onLoad: () async {
                   _page++;
-                  // models = await CarFunc.getCarList(_page);
                   BaseListModel baseList = await apiClient.requestList(
                       API.car.getCarLists,
                       data: {'page': _page, 'size': 10});

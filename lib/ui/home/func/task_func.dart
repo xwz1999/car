@@ -1,7 +1,7 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
-import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 class TaskFunc {

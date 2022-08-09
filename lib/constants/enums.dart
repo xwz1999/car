@@ -30,3 +30,24 @@ enum Role {
 
   const Role(this.num, this.typeStr, this.typeText);
 }
+
+enum CarSource {
+  carDealer(1, '车商'),
+  individual(2, '个人直卖');
+
+  final int typeNum;
+  final String typeStr;
+
+  static CarSource getValue(int value) =>
+      CarSource.values.firstWhere((element) => element.typeNum == value);
+
+  static CarSource getValueByBusinessId(int businessId) {
+    switch (businessId) {
+      case 1:
+        return CarSource.carDealer;
+      default:
+        return CarSource.individual;
+    }
+  }
+  const CarSource(this.typeNum, this.typeStr);
+}

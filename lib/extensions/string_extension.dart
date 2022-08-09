@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:lpinyin/lpinyin.dart';
 
 import '../constants/api/api.dart';
@@ -65,5 +66,15 @@ extension ImageOnString on String? {
     } else {
       return int.parse(this!.substring(0, this!.length - 4));
     }
+  }
+
+  /// 单位万元
+  String? get priceFormat {
+    if (this != null) {
+      return (Decimal.parse(this!) / Decimal.fromInt(10000))
+          .toDouble()
+          .toString();
+    }
+    return null;
   }
 }

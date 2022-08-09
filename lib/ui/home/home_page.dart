@@ -24,6 +24,7 @@ import 'package:screenshot/screenshot.dart';
 //import 'package:velocity_x/velocity_x.dart';
 
 import 'car_manager/car_manager_page.dart';
+
 //import 'car_manager/maintain_query/maintain_query_page.dart';
 import 'car_manager/publish_car/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage>
     _kingCoinList
         .add(KingCoin(name: '维护查询', url: Assets.icons.carMaintain.path));
     _kingCoinList
-        .add(KingCoin(name: '收车(合作)', url: Assets.icons.carRecovery.path));
+        .add(KingCoin(name: '新商机', url: Assets.icons.carRecovery.path));
   }
 
   @override

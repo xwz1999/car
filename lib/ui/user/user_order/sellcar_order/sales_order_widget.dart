@@ -5,7 +5,7 @@ import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data_page
 import 'package:cloud_car/ui/user/user_order/sellcar_order/detection_data_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/widget/car_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';

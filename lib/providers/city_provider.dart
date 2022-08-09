@@ -1,9 +1,9 @@
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import '../constants/api/api.dart';
 import '../model/region/china_region_model.dart';
-import '../utils/new_work/api_client.dart';
 
 class CityProvider extends ChangeNotifier {
   late Box _regionBox;

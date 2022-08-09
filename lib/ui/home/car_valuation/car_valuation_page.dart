@@ -392,9 +392,6 @@ class CarInfo {
   ///发动机号
   String? engineNo;
 
-  ///车辆来源
-  int? source;
-
   ///真实公里数
   int? shamMileage;
 
@@ -420,7 +417,6 @@ class CarInfo {
     this.maintain,
     this.vin,
     this.engineNo,
-    this.source,
     this.shamMileage,
   });
 }

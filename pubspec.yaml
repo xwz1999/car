@@ -97,7 +97,8 @@ dependencies:
   table_calendar: ^3.0.6
   #地图组件
   map_launcher: ^2.2.3
- 
+  # 精度丢失
+  decimal: ^2.2.0
 
 
 dev_dependencies:

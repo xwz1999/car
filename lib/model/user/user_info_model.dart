@@ -14,7 +14,7 @@ class UserInfoModel extends Equatable {
   final int gender;
   final ExtraData data;
   final StoreInfo store;
-  final int businessId;
+  final int businessId;// 1= 云云问车 2=其他
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);

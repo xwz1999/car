@@ -13,10 +13,11 @@ import 'package:cloud_car/model/car/estimate_price_model.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
-import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
-import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
+import 'package:cloud_car/utils/net_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flustars/flustars.dart';
 
 import '../../../model/car/dealer_list_model.dart';
@@ -186,7 +187,7 @@ class CarFunc {
       'Maintain': carInfo.maintain,
       'vin': carInfo.vin,
       'engineNo': carInfo.engineNo,
-      'source': carInfo.source,
+      'source': UserTool.userProvider.userInfo.businessId==1?1:2,
       'shamMileage': carInfo.shamMileage
     });
 

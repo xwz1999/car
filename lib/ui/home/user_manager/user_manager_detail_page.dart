@@ -10,7 +10,7 @@ import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/choose_widget.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
@@ -269,11 +269,11 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
   _getItem(CustomerListModel model) {
     return GestureDetector(
       onTap: () async {
-        bool isSuccess = await Get.to(() => UserInfoPage(
+        bool? isSuccess = await Get.to(() => UserInfoPage(
               customerId: model.id,
               model: model,
             ));
-        if (isSuccess) {
+        if (isSuccess ?? false) {
           _refreshController.callRefresh();
         }
       },

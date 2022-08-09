@@ -1,11 +1,11 @@
 import 'package:cloud_car/model/login/wx_login_model.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/api/api.dart';
 import '../model/user/user_info_model.dart';
 import '../utils/hive_store.dart';
-import '../utils/new_work/api_client.dart';
 import '../utils/toast/cloud_toast.dart';
 
 class UserProvider extends ChangeNotifier {

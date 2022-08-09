@@ -5,7 +5,7 @@ import 'package:cloud_car/ui/user/user_install/cancellation_page.dart';
 import 'package:cloud_car/ui/user/user_install/enterprise_information_page.dart';
 import 'package:cloud_car/ui/user/user_install/real_name_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/gestures.dart';

@@ -7,9 +7,9 @@ import 'package:cloud_car/model/order/ordercount_model.dart';
 import 'package:cloud_car/model/order/publish_car_model.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/model/user/salelists_model.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
-import 'package:cloud_car/utils/new_work/inner_model/base_list_model.dart';
-import 'package:cloud_car/utils/new_work/inner_model/base_model.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
+import 'package:cloud_car/utils/net_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 import '../../../model/order/callcarlist_model.dart';

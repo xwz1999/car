@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
@@ -9,7 +10,7 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.da
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/new_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -18,7 +19,6 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
-
 import 'modify_price_page.dart';
 
 class CarsDetailPage extends StatefulWidget {
@@ -52,9 +52,6 @@ class _CarsDetailPageState extends State<CarsDetailPage>
 
   @override
   void initState() {
-
-
-
     ///自己发布的 tab2个 否则1个
     tabs = [
       '车辆详情',
@@ -83,7 +80,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
 
   _refresh() async {
     carInfoModel = await CarFunc.getCarInfo(widget.carListModel.id);
-    collect = carInfoModel?.collect??0;
+    collect = carInfoModel?.collect ?? 0;
     setState(() {});
   }
 
@@ -150,20 +147,20 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                                         data: {'carId': carInfoModel?.id},
                                         showMessage: true);
                                     if (re.code == 0) {
-                                      collect==0?collect=1:collect=0;
-                                      setState(() {
-
-                                      });
+                                      collect == 0 ? collect = 1 : collect = 0;
+                                      setState(() {});
                                     }
                                   },
-                      child: SizedBox(
-                      width: 48.w,
-                      height: 48.w,
-                      child: Image.asset(collect == 1
-                                      ? Assets.icons.alreadyCollected.path
-                                      : Assets.icons.collection.path, height: 48.w, width: 48.w),
-                                )
-                                  )
+                                  child: SizedBox(
+                                    width: 48.w,
+                                    height: 48.w,
+                                    child: Image.asset(
+                                        collect == 1
+                                            ? Assets.icons.alreadyCollected.path
+                                            : Assets.icons.collection.path,
+                                        height: 48.w,
+                                        width: 48.w),
+                                  ))
                               : const SizedBox(),
                           24.wb,
                           GestureDetector(
@@ -549,7 +546,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       children: [
         Text.rich(TextSpan(children: [
           TextSpan(
-              text: carInfoModel!.price,
+              text: carInfoModel!.price.priceFormat,
               style: TextStyle(
                   color: const Color(0xFFFF3B02),
                   fontSize: BaseStyle.fontSize40)),
@@ -739,7 +736,9 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                       ? Assets.icons.editor.path
                       : Assets.icons.noEditor.path,
                   '编辑', () {
-            widget.isSelf ? Get.to(() => const EditCarPage()) : empty();
+            if (widget.isSelf) {
+              Get.to(() => const EditCarPage());
+            }
           })),
           Expanded(
               child: _getBottom(
@@ -747,17 +746,15 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                       ? Assets.icons.noTransmission.path
                       : Assets.icons.transmission.path,
                   '调价', () {
-            Get.to(() => const ModifyPricePage());
+            if (widget.isSelf) {
+              Get.to(() => const ModifyPricePage());
+            }
           })),
           Expanded(
               child: _getBottom(Assets.icons.upload.path, '出售', () {
-                widget.isSelf
-                ? Get.to(() => SellCarOrderPage(
-                      carModel: widget.carListModel,
-                    ))
-                : empty();
-
-            //Get.to(() => const InitiateContractPage());
+            Get.to(() => SellCarOrderPage(
+                  carModel: widget.carListModel,
+                ));
           })),
           Expanded(
               child: _getBottom(
@@ -765,7 +762,9 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                       ? Assets.icons.noDownload.path
                       : Assets.icons.download.path,
                   '下架/退库', () {
-                widget.isSelf ? Get.to(() => const OffCarPage()) : empty();
+            if (widget.isSelf) {
+              Get.to(() => const OffCarPage());
+            }
           })),
         ],
       ),
@@ -865,6 +864,4 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       loop: true,
     );
   }
-
-  empty() {}
 }
