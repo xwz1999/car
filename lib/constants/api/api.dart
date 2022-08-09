@@ -141,6 +141,12 @@ class _Login {
 
   ///退出登陆
   String get logout => '/login/logout';
+
+  ///获取验证码
+  String get smsCode => '/login/sms';
+
+  /// 验证码登录
+  String get smsCodeLogin => '/login/code';
 }
 
 class _Order {

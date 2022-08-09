@@ -1,11 +1,12 @@
-
 import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:cloud_car/ui/login/jverify_error_code.dart';
+import 'package:cloud_car/ui/login/login_by_password.dart';
 import 'package:cloud_car/ui/login/wx_login_page.dart';
+import 'package:cloud_car/ui/splash/privacy_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
@@ -19,6 +20,7 @@ import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:jverify/jverify.dart';
 import 'package:power_logger/power_logger.dart';
 
+import '../splash/agreement_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,8 +30,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // String _operator = '';
-  // String _phone = '';
   bool _chooseAgreement = false;
   late StreamSubscription _fluwxListenObjcet;
   Map<String, String> simOperator = {
@@ -149,10 +149,15 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               250.hb,
-              Image.asset(
-                Assets.images.loginBg.path,
-                width: 308.w,
-                height: 60.w,
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const LoginByPassword());
+                },
+                child: Image.asset(
+                  Assets.images.loginBg.path,
+                  width: 308.w,
+                  height: 60.w,
+                ),
               ),
               120.hb,
               // Row(
@@ -208,8 +213,6 @@ class _LoginPageState extends State<LoginPage> {
                           LoggerData.addData(map.toString());
                         }
                         if (map['code'] == 2000) {
-                          // var token = map['message'];
-
                           await _authToken();
                         } else {
                           CloudToast.show(
@@ -322,8 +325,11 @@ class _LoginPageState extends State<LoginPage> {
       if (kDebugMode) {
         print("点击协议了");
       }
-
-      ///跳转到用户协议页面
+      if (type == 1) {
+        Get.to(() => const PrivacyPage());
+      } else {
+        Get.to(() => const AgreementPage());
+      }
     };
     return recognizer;
   }

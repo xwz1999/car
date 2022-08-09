@@ -171,6 +171,7 @@ class MyAppStyle extends ThemeExtension<MyAppStyle> {
 
   final Color? mainColor;
 
+
   @override
   MyAppStyle copyWith({Color? mainColor, TextStyle? bodyText3}) {
     return MyAppStyle(
