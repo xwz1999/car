@@ -32,18 +32,18 @@ class _SplashPageState extends State<SplashPage> {
   final TapGestureRecognizer _privacyRecognizer = TapGestureRecognizer();
 
   Future initialAll() async {
+    await HiveStore.init();
     var agreement = await HiveStore.appBox?.get('agreement') ?? false;
     if (!agreement) {
       var result = await _showLoginVerify();
       if (result == null || !result) {
-        await SystemNavigator.pop();
         await HiveStore.appBox?.put('agreement', false);
+        await SystemNavigator.pop();
       } else {
         await HiveStore.appBox?.put('agreement', true);
       }
     }
     ///第三方加载
-    await HiveStore.init();
     Jverify()
         .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
     Jverify().setDebugMode(AppENV.instance.env != ENVConfig.release);

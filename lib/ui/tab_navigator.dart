@@ -34,12 +34,6 @@ class _TabNavigatorState extends State<TabNavigator>
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(milliseconds: 0), () async {
-      //Hive.initFlutter;
-      await HiveStore.init();
-    });
-
     _pages = [
       const HomePage(),
       const PreferredPage(),
