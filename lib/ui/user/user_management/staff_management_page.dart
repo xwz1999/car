@@ -197,11 +197,11 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
         ...model.staffs != null
             ? model.staffs!.mapIndexed((e, index) {
                 return GestureDetector(
-                  onTap: () {
-                    Get.to(() => EmployeeDetailsPage(
+                  onTap: () async {
+                    await Get.to(() => EmployeeDetailsPage(
                           staffId: e.id,
                         ));
-                    //Get.to(()=>)
+                    _easyRefreshController.callRefresh();
                   },
                   child: getText(e.roleName, e.genderEM.typeNum, e.name,
                       e.phone, e.auditStatus, e.roleEm),
@@ -267,8 +267,9 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
   /// 新建员工
   getButton() {
     return CloudBottomButton(
-      onTap: () {
-        Get.to(() => const AddEmployeePage());
+      onTap: () async {
+        await Get.to(() => const AddEmployeePage());
+        _easyRefreshController.callRefresh();
       },
       text: '新建员工',
     );

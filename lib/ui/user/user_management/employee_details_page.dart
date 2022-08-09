@@ -164,42 +164,27 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
             child: Row(
               children: [
                 Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
-                getButton(Assets.icons.delete.path, '删除', () {
-                  setState(() {
-                    Alert.show(
-                        context,
-                        NormalContentDialog(
-                          type: NormalTextDialogType.delete,
-                          title: '确认提示',
-                          content: const Text('确认删除该员工吗？'),
-                          items: const ['取消'],
-                          deleteItem: '确定',
-                          //监听器
-                          listener: (index) {
-                            Alert.dismiss(context);
-                            //_getSure = false;
-                            setState(() {
-                              //_getSure;
-                            });
-                            //Value = false;
-                            //(Value);
-                          },
-                          deleteListener: () async {
-                            Alert.dismiss(context);
-                            var res = await BusinessFunc.getStaffDelete(
-                                widget.staffId);
-                            if (res) {
-                              //Navigator.pop(context);
-                            }
-                            setState(() {
-                              //_getSure;
-                            });
-                            //print(_getSure);
-                            //Value = true;
-                            //(Value);
-                          },
-                        ));
-                  });
+                getButton(Assets.icons.delete.path, '删除', () async {
+                  await Get.dialog(NormalContentDialog(
+                    type: NormalTextDialogType.delete,
+                    title: '确认提示',
+                    content: const Text('确认删除该员工吗？'),
+                    items: const ['取消'],
+                    deleteItem: '确定',
+                    //监听器
+                    listener: (index) {
+                      Alert.dismiss(context);
+                      setState(() {});
+                    },
+                    deleteListener: () async {
+                      var res =
+                          await BusinessFunc.getStaffDelete(widget.staffId);
+                      if (res) {
+                        Get.back();
+                      }
+                      Get.back();
+                    },
+                  ));
                 }),
                 200.wb,
                 Offstage(
