@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
 import 'package:jverify/jverify.dart';
@@ -31,6 +32,16 @@ class _SplashPageState extends State<SplashPage> {
   final TapGestureRecognizer _privacyRecognizer = TapGestureRecognizer();
 
   Future initialAll() async {
+    var agreement = await HiveStore.appBox?.get('agreement') ?? false;
+    if (!agreement) {
+      var result = await _showLoginVerify();
+      if (result == null || !result) {
+        await SystemNavigator.pop();
+        await HiveStore.appBox?.put('agreement', false);
+      } else {
+        await HiveStore.appBox?.put('agreement', true);
+      }
+    }
     ///第三方加载
     await HiveStore.init();
     Jverify()
@@ -42,16 +53,6 @@ class _SplashPageState extends State<SplashPage> {
         doOnIOS: !isAndroid,
         doOnAndroid: isAndroid,
         universalLink: 'https://apiwenche.oa00.com/');
-    // var agreement = await HiveStore.appBox?.get('agreement') ?? false;
-    // if (!agreement) {
-    //   var result = await _showLoginVerify();
-    //   if (result == null || !result) {
-    //     await SystemNavigator.pop();
-    //     await HiveStore.appBox?.put('agreement', false);
-    //   } else {
-    //     await HiveStore.appBox?.put('agreement', true);
-    //   }
-    // }
     ///Providers 初始化
     //初始化省市区版本
     UserTool.cityProvider.init();

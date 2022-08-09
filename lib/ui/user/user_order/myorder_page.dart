@@ -19,6 +19,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
 
   Future _getStatisticsNum() async {
     _model = await OrderFunc.getStatisticNum();
+    print('11111');
     setState(() {});
   }
 

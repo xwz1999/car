@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/user/interface/user_func.dart';
 import 'package:cloud_car/ui/user/user_basic_information/enterprise_page.dart';
-import 'package:cloud_car/ui/user/user_management/text_editingcontroller_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
@@ -24,12 +24,8 @@ class BasicInformationPage extends StatefulWidget {
 }
 
 class _BasicInformationPageState extends State<BasicInformationPage> {
-  int sexId = 1;
-
-  // late String genderText =
-  //     UserTool.userProvider.userInfo.gender == 0 ? '女' : '男';
   String name = '';
-  late int gender;
+  Gender gender = Gender.unknown;
   final picker = ImagePicker();
   late File imagePath = File(UserTool.userProvider.userInfo.headImg);
 
@@ -237,18 +233,34 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                   },
                 ),
                 //性别
-                TextEditItemWidget(
-                  isBold: true,
-                  title: '性别 ',
-                  editor: false,
-                  endIcon: true,
-                  tips: '请选择',
-                  value: UserTool.userProvider.userInfo.genderEM.typeStr,
-                  widget: Image(
-                    image: Assets.icons.icGoto,
-                    width: 32.w,
-                    height: 32.w,
+
+                ListTile(
+                  title: SizedBox(
+                    child: Row(
+                      children: [
+                        Text(
+                          '性别',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                        const Spacer(),
+                        SizedBox(
+                          child: Text(
+                            infoProvider.userInfo.genderEM.typeStr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: const Color(0xFF999999)),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
+                  trailing: SizedBox(
+                      width: 40.w,
+                      height: 40.h,
+                      child: const Icon(
+                        Icons.keyboard_arrow_right,
+                      )),
                   onTap: () {
                     showModalBottomSheet(
                         context: context,
@@ -288,14 +300,16 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                       _buildButton(
                                         title: '确定',
                                         onPressed: () async {
-                                          //print(gender);
+                                          if (gender == Gender.unknown) {
+                                            Get.back();
+                                            return;
+                                          }
                                           var res =
                                               await User.getUserUpdateGender(
-                                                  gender);
+                                                  gender.typeNum);
                                           if (res) {
                                             BotToast.showText(text: '修改性别成功');
                                             Get.back();
-                                            // Navigator.pop(context);
                                           }
                                           await UserTool.userProvider
                                               .updateUserInfo();
@@ -312,8 +326,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                       50.hb,
                                       GestureDetector(
                                         onTap: () {
-                                          sexId = 1;
-                                          gender = sexId;
+                                          gender = Gender.male;
                                           dialogSetState(() {});
                                         },
                                         child: Container(
@@ -323,7 +336,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                           color: Colors.white,
                                           child: Text('男',
                                               style: TextStyle(
-                                                  color: sexId == 1
+                                                  color: gender == Gender.male
                                                       ? const Color(0xFF027AFF)
                                                       : const Color(0xFF330000),
                                                   fontSize:
@@ -332,8 +345,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          sexId = 2;
-                                          gender = sexId;
+                                          gender = Gender.female;
                                           dialogSetState(() {});
                                         },
                                         child: Container(
@@ -343,7 +355,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                           color: Colors.white,
                                           child: Text('女',
                                               style: TextStyle(
-                                                  color: sexId == 2
+                                                  color: gender == Gender.female
                                                       ? const Color(0xFF027AFF)
                                                       : const Color(0xFF330000),
                                                   fontSize:
@@ -359,7 +371,6 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                           });
                         });
                   },
-                  callback: (String content) {},
                 ),
                 //手机号
                 ListTile(

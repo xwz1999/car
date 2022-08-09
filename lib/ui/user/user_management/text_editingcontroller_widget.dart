@@ -43,11 +43,10 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
   @override
   void didUpdateWidget(covariant TextEditItemWidget oldWidget) {
     if (!widget.editor) {
-      _editingController.text=widget.value;
+      _editingController.text = widget.value;
     }
     super.didUpdateWidget(oldWidget);
   }
-
 
   @override
   void dispose() {
@@ -58,9 +57,7 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        widget.onTap();
-      },
+      onTap: widget.onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
