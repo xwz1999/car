@@ -310,10 +310,12 @@ class OrderFunc {
 
   ///完结订单
   static Future<bool> getFinal(int orderId) async {
-    BaseModel res = await apiClient.request(API.order.saleFinal, data: {
-      'orderId': orderId,
-    },showMessage: true);
-    return res.code==0;
+    BaseModel res = await apiClient.request(API.order.saleFinal,
+        data: {
+          'orderId': orderId,
+        },
+        showMessage: true);
+    return res.code == 0;
   }
 
   ///获取客户统计
@@ -391,7 +393,7 @@ class OrderFunc {
   ///订单统计数据
   static Future<OrderStatisticsModel> getStatisticNum() async {
     BaseModel res = await apiClient.request(
-      API.order.orderCount.data,
+      API.order.orderCount,
     );
     if (res.code == 0) {
       return OrderStatisticsModel.fromJson(res.data);

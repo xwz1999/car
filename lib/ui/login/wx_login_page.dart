@@ -166,8 +166,6 @@ class _WxLoginPageState extends State<WxLoginPage> {
                     ],
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                      // contentPadding: EdgeInsets.only(
-                      //     left: rSize(10), top: rSize(13)),
                       prefixIcon: Container(
                         width: 10.w,
                         alignment: Alignment.centerLeft,
