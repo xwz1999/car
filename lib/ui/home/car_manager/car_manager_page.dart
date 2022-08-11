@@ -93,7 +93,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
               },
               child: ManagerContainerItem(
                 text: '在售',
-                num: '${_model.sellCount}',
+                num: '${_model.allSellCount}',
               ),
             ),
             GestureDetector(

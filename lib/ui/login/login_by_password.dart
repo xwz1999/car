@@ -86,6 +86,7 @@ class _LoginByPasswordState extends State<LoginByPassword> {
                   var cancel = CloudToast.loading;
                   if (!RegexUtil.isMobileSimple(_accountController.text)) {
                     CloudToast.show('手机号错误');
+                    cancel();
                     return;
                   }
                   await apiClient.request(API.login.smsCode, data: {

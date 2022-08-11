@@ -296,7 +296,10 @@ class _LoginPageState extends State<LoginPage> {
                               text: '《用户服务协议》',
                               style: TextStyle(
                                   color: kPrimaryColor, fontSize: 12 * 2.sp),
-                              recognizer: _recognizer(context, 2)),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.to(() => const AgreementPage());
+                                }),
                           TextSpan(
                             text: "和",
                             style: TextStyle(
@@ -307,7 +310,10 @@ class _LoginPageState extends State<LoginPage> {
                               text: '《隐私协议》',
                               style: TextStyle(
                                   color: kPrimaryColor, fontSize: 12 * 2.sp),
-                              recognizer: _recognizer(context, 1)),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.to(() => const PrivacyPage());
+                                }),
                         ])),
                   ],
                 ),
@@ -317,21 +323,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  _recognizer(context, int type) {
-    final TapGestureRecognizer recognizer = TapGestureRecognizer();
-    recognizer.onTap = () {
-      if (kDebugMode) {
-        print("点击协议了");
-      }
-      if (type == 1) {
-        Get.to(() => const PrivacyPage());
-      } else {
-        Get.to(() => const AgreementPage());
-      }
-    };
-    return recognizer;
   }
 
   ///调起一键登录页面
@@ -389,7 +380,7 @@ class _LoginPageState extends State<LoginPage> {
     // uiConfig.loginBtnPressedImage = "login_btn_press";//图片必须存在
     // uiConfig.loginBtnUnableImage = "login_btn_unable";//图片必须存在
 
-    uiConfig.privacyState = true; //设置默认勾选
+    uiConfig.privacyState = false; //设置默认勾选
     uiConfig.privacyCheckboxSize = 16;
     // uiConfig.checkedImgPath = "check_image";//图片必须存在
     // uiConfig.uncheckedImgPath = "uncheck_image";//图片必须存在
@@ -401,10 +392,11 @@ class _LoginPageState extends State<LoginPage> {
     uiConfig.privacyOffsetX = 12;
     uiConfig.privacyVerticalLayoutItem = JVIOSLayoutItem.ItemSuper;
     uiConfig.clauseName = "用户协议";
-    uiConfig.clauseUrl = "http://www.baidu.com";
+    uiConfig.clauseUrl =
+        "https://static.yunyunwenche.com/html/useragreement.html";
     uiConfig.clauseBaseColor = Colors.black.value;
     uiConfig.clauseNameTwo = "隐私政策";
-    uiConfig.clauseUrlTwo = "http://www.hao123.com";
+    uiConfig.clauseUrlTwo = "https://static.yunyunwenche.com/html/privacy.html";
     uiConfig.clauseColor = Colors.blue.value;
     uiConfig.privacyText = ["同意", "以及", "和", ""];
     uiConfig.privacyTextSize = 13;
