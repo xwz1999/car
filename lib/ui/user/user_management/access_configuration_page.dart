@@ -1,4 +1,3 @@
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/user/roleall_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
@@ -111,49 +110,48 @@ class _AccessConfigurationPageState extends State<AccessConfigurationPage> {
   }
 
   getItem(int index, RoleallModel model) {
-    // ignore: unnecessary_null_comparison
-    return Container(
-      padding: EdgeInsets.only(left: 32.w),
-      color: Colors.white,
-      height: 150.w,
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              if (_selectIndex.contains(index)) {
-                _selectIndex.remove(index);
-                _chooseModels.remove(model);
-              } else {
-                _selectIndex.clear();
-                _selectIndex.add(index);
-                _chooseModels.add(model);
-              }
-              setState(() {});
-            }, //点击获取点击选项的下标
-            child: SizedBox(
+    return GestureDetector(
+      onTap: () {
+        if (_selectIndex.contains(index)) {
+          _selectIndex.remove(index);
+          _chooseModels.remove(model);
+        } else {
+          _selectIndex.clear();
+          _selectIndex.add(index);
+          _chooseModels.add(model);
+        }
+        setState(() {});
+      },
+      child: Container(
+        padding: EdgeInsets.only(left: 32.w),
+        color: Colors.white,
+        height: 150.w,
+        child: Row(
+          children: [
+            SizedBox(
                 child: BeeCheckRadio(
               value: index,
               groupValue: _selectIndex,
             )),
-          ),
-          Expanded(
-              child: Column(
-            children: [
-              ListTile(
-                title: Text(
-                  model.name,
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-                subtitle: Text(
-                  model.describe,
-                  style: TextStyle(
-                      fontSize: BaseStyle.fontSize24,
-                      color: const Color(0xFF999999)),
-                ),
-              )
-            ],
-          ))
-        ],
+            Expanded(
+                child: Column(
+              children: [
+                ListTile(
+                  title: Text(
+                    model.name,
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                  subtitle: Text(
+                    model.describe,
+                    style: TextStyle(
+                        fontSize: BaseStyle.fontSize24,
+                        color: const Color(0xFF999999)),
+                  ),
+                )
+              ],
+            ))
+          ],
+        ),
       ),
     );
   }

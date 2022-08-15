@@ -127,6 +127,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
       child: Column(
         children: [
           TextEditItemWidget(
+            padding: EdgeInsets.only(bottom: 32.w),
             title: '姓名',
             onTap: () {},
             value: nameText,
@@ -134,8 +135,8 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
               nameText = content;
             },
           ),
-          32.hb,
           TextEditItemWidget(
+            padding: EdgeInsets.only(bottom: 32.w),
             title: '性别 ',
             endIcon: true,
             editor: false,
@@ -193,7 +194,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
                                   child: SizedBox(
                                     child: GestureDetector(
                                       onTap: () async {
-                                        _gender=Gender.getValue(sexId);
+                                        _gender = Gender.getValue(sexId);
                                         LoggerData.addData(_gender?.typeStr);
                                         Navigator.pop(context);
                                         setState(() {});
@@ -263,9 +264,8 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
             },
             callback: (String content) {},
           ),
-          32.hb,
           TextEditItemWidget(
-            //editor: false,
+            padding: EdgeInsets.only(bottom: 32.w),
             title: '手机号',
             value: phoneText,
             onTap: () {},
@@ -273,8 +273,8 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
               phoneText = content;
             },
           ),
-          32.hb,
           TextEditItemWidget(
+            padding: EdgeInsets.only(bottom: 16.w),
             title: '组织架构',
             endIcon: true,
             editor: false,
@@ -296,7 +296,6 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
             },
             callback: (String content) {},
           ),
-          16.hb,
         ],
       ),
     );
