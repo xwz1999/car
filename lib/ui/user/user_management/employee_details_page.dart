@@ -24,8 +24,10 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   bool res = false;
   StaffInfoModel? staffInfo;
 
+  /// 无权限为true
   bool get _deletePermission {
-    return UserTool.userProvider.userInfo.store.roleEM != Role.manager ||
+    var userRole = UserTool.userProvider.userInfo.store.roleEM;
+    return (userRole != Role.manager && userRole != Role.defaultRole) ||
         staffInfo?.roleId == UserTool.userProvider.userInfo.store.roleId ||
         UserTool.userProvider.userInfo.store.storeName != staffInfo?.storeName;
   }

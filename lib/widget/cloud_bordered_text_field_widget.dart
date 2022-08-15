@@ -1,32 +1,34 @@
-// ignore_for_file: unused_field
-
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
-typedef TextCallback = Function(String content);
-@Deprecated('use CloudBorderedTextFieldWidget instead')
-class SortEditWidget extends StatefulWidget {
-  final TextCallback callback;
+class CloudBorderedTextFieldWidget extends StatefulWidget {
+  final TextEditingController? controller;
+  final double? width;
+  final double? height;
+  final String? hintText;
 
-  const SortEditWidget({
+  const CloudBorderedTextFieldWidget({
     super.key,
-    required this.callback,
+    this.controller,
+    this.width,
+    this.height, this.hintText,
   });
 
   @override
-  _SortEditWidgetState createState() => _SortEditWidgetState();
+  _CloudBorderedTextFieldWidgetState createState() =>
+      _CloudBorderedTextFieldWidgetState();
 }
 
-class _SortEditWidgetState extends State<SortEditWidget> {
+class _CloudBorderedTextFieldWidgetState
+    extends State<CloudBorderedTextFieldWidget> {
   late TextEditingController _editingController;
-  final String _text = "";
   late FocusNode _contentFocusNode;
 
   @override
   void initState() {
     super.initState();
     _contentFocusNode = FocusNode();
-    _editingController = TextEditingController();
+    _editingController = widget.controller ?? TextEditingController();
   }
 
   @override
@@ -38,36 +40,28 @@ class _SortEditWidgetState extends State<SortEditWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.w),
-        // border: Border.all(width: 1.w,color: const Color(0xFFDDDDDD))
-      ),
-      width: 140.w,
-      height: 42.w,
+    return SizedBox(
+      width: widget.width ?? 140.w,
+      height: widget.height ?? 42.w,
       child: TextField(
         keyboardType: TextInputType.text,
         textAlign: TextAlign.center,
-        onEditingComplete: () {
-          setState(() {});
-          // _refreshController.callRefresh();
-        },
         focusNode: _contentFocusNode,
-        onChanged: (text) {
-          setState(() {});
-        },
-        onTap: () {},
-        onSubmitted: (submitted) async {
-          setState(() {});
-        },
         style: TextStyle(
           textBaseline: TextBaseline.ideographic,
           fontSize: 24.sp,
           color: Colors.black,
         ),
         controller: _editingController,
+        textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           filled: true,
+          contentPadding: EdgeInsets.zero,
+          hintText: widget.hintText??'请输入',
+          hintStyle: TextStyle(
+            color: const Color(0xFFCCCCCC),
+            fontSize: 24.sp,
+          ),
           fillColor: Colors.white,
           //
           enabledBorder: OutlineInputBorder(

@@ -63,6 +63,7 @@ class _AddStoresPageState extends State<AddStoresPage> {
                     await _refresh();
                     setState(() {});
                     BotToast.showText(text: '新增成功');
+                    Get.back();
                   });
                 }
               }

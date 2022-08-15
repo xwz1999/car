@@ -7,6 +7,7 @@ import 'package:cloud_car/ui/home/poster/poster_func.dart';
 import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
+import 'package:cloud_car/ui/home/split_account/split_account_page.dart';
 import 'package:cloud_car/ui/home/task/task_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -26,6 +27,7 @@ import 'package:screenshot/screenshot.dart';
 import 'car_manager/car_manager_page.dart';
 
 //import 'car_manager/maintain_query/maintain_query_page.dart';
+import 'car_manager/maintain_query/maintain_query_page.dart';
 import 'car_manager/publish_car/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
 import 'func/car_func.dart';
@@ -206,8 +208,10 @@ class _HomePageState extends State<HomePage>
             Get.to(() => const CarMortgagePage());
             break;
           case '维护查询':
-            //Get.to(() => const MaintainQueryPage());
+            Get.to(() => const MaintainQueryPage());
             break;
+          case '收车/(合作)':
+            Get.to(() => const SplitAccountPage());
         }
       },
       child: ColoredBox(

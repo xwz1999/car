@@ -1,4 +1,5 @@
-import 'package:cloud_car/model/user/storeall_model.dart';
+
+import 'package:cloud_car/model/user/storeselect_moedl.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/ui/user/user_management/add_stores_page.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +19,10 @@ class StructurePage extends StatefulWidget {
 }
 
 class _StructurePageState extends State<StructurePage> {
-  //选中的item
   final List<int> _selectIndex = [];
-  //选中的item内容
-  // final List<String> _chooseModels = [];
-  List<StoreallModel> moddels = [];
-  //  for (var i = 0; i < 5; i++)
-  //               {
-  //                 CatWidget.add(ListTile(
-  //                   title: Text('门店$i'),
-  //                 ));
-  //               }
+
+  List<StoreselectMoedl> moddels = [];
+
   @override
   void initState() {
     super.initState();
@@ -38,7 +32,7 @@ class _StructurePageState extends State<StructurePage> {
   }
 
   _refresh() async {
-    moddels = await BusinessFunc.getStoreall();
+    moddels = await BusinessFunc.getStoreselect();
     setState(() {});
   }
 
@@ -59,8 +53,9 @@ class _StructurePageState extends State<StructurePage> {
           Row(
             children: [
               GestureDetector(
-                onTap: () {
-                  Get.to(() => const AddStoresPage());
+                onTap: () async{
+                 await Get.to(() => const AddStoresPage());
+                  _refresh();
                 },
                 child: Text(
                   '新增门店',
@@ -102,7 +97,6 @@ class _StructurePageState extends State<StructurePage> {
                   }
 
                   setState(() {});
-                  //print("我点击了：${_selectIndex.first}");
                   widget.callback(moddels[_selectIndex.first].name,
                       moddels[_selectIndex.first].id);
                   Get.back();

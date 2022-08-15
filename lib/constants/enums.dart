@@ -16,7 +16,9 @@ enum Gender {
 ///角色分配
 enum Role {
   salesTraffic(2, '车务', '可以录入车辆信息、编辑车辆，并进行客户跟进'),
-  manager(1, '店长', '能够管理店内的客户、车辆、订单');
+  manager(1, '店长', '能够管理店内的客户、车辆、订单'),
+  //
+  defaultRole(0, '入驻商', '');
 
   final int num;
   final String typeStr;
@@ -49,5 +51,6 @@ enum CarSource {
         return CarSource.individual;
     }
   }
+
   const CarSource(this.typeNum, this.typeStr);
 }

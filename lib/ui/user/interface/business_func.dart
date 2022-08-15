@@ -4,13 +4,15 @@ import 'package:cloud_car/model/user/staff_info_model.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/model/user/storeselect_moedl.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/net_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 class BusinessFunc {
   ///组织架构
-  static Future<List<StoreallModel>> getStoreall() async {
-    var res = await apiClient.request(API.storeManagement.storeAll, data: {});
+  static Future<List<StoreallModel>> getStoreall(Map params) async {
+    var res =
+        await apiClient.request(API.storeManagement.storeAll, data: params);
 
     if ((res.data as List).isEmpty) return [];
     return (res.data as List).map((e) => StoreallModel.fromJson(e)).toList();
@@ -26,14 +28,14 @@ class BusinessFunc {
   }
 
   ///门店筛选
-  static Future<StoreselectMoedl?> getStoreselect() async {
+  static Future<List<StoreselectMoedl>> getStoreselect() async {
     BaseModel res =
-        await apiClient.request(API.storeManagement.storeSelect, data: {});
+        await apiClient.request(API.storeManagement.storeSelect,);
     if (res.code == 0) {
-      return StoreselectMoedl.fromJson(res.data);
+      return (res.data as List).map((e) => StoreselectMoedl.fromJson(e)).toList();
     } else {
       CloudToast.show(res.msg);
-      return null;
+      return [];
     }
   }
 

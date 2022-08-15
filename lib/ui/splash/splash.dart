@@ -113,7 +113,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    var env = const String.fromEnvironment('ENV', defaultValue: 'local');
+    var env = const String.fromEnvironment('ENV', defaultValue: 'dev');
     if (kDebugMode) {
       print('env :$env');
     }

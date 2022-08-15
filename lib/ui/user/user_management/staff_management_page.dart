@@ -5,6 +5,8 @@ import 'package:cloud_car/ui/user/user_management/add_employee_page.dart';
 import 'package:cloud_car/ui/user/user_management/permissions_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:cloud_car/widget/cloud_search_head_widget.dart';
+import 'package:cloud_car/widget/cloud_status_tag.dart';
 import 'package:cloud_car/widget/cloud_tag.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,23 +29,19 @@ List<StoreallModel> employees = [];
 class _StaffManagementPageState extends State<StaffManagementPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   late TextEditingController _editingController;
-  String searchText = '';
+
+  Map _params = {};
 
   @override
   void initState() {
     super.initState();
-    _editingController = TextEditingController(text: searchText);
+    _editingController = TextEditingController();
   }
 
   @override
   void dispose() {
     _easyRefreshController.dispose();
     super.dispose();
-  }
-
-  _refresh() async {
-    employees = await BusinessFunc.getStoreall();
-    setState(() {});
   }
 
   @override
@@ -83,7 +81,12 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
       body: Column(
         children: [
           8.hb,
-          _search(),
+          CloudSearchHeadWidget(onSearch: (text) {
+            _params = {
+              'name': text,
+            };
+            _easyRefreshController.callRefresh();
+          }),
           32.hb,
           Expanded(
               child: EasyRefresh(
@@ -92,7 +95,8 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             footer: MaterialFooter(),
             controller: _easyRefreshController,
             onRefresh: () async {
-              await _refresh();
+              employees = await BusinessFunc.getStoreall(_params);
+              setState(() {});
             },
             child: employees.isEmpty
                 ? const NoDataWidget(
@@ -106,72 +110,16 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                     itemCount: employees.length,
                   ),
           )),
-          getButton(),
+          CloudBottomButton(
+            onTap: () async {
+              await Get.to(() => const AddEmployeePage());
+              _easyRefreshController.callRefresh();
+            },
+            text: '新建员工',
+          ),
           34.hb
         ],
       ),
-    );
-  }
-
-//输入框
-  _search() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        32.wb,
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(36.w),
-              border: Border.all(width: 2.w, color: const Color(0xFFE7E7E7))),
-          width: 606.w,
-          height: 72.w,
-          child: TextField(
-            style: TextStyle(
-              textBaseline: TextBaseline.ideographic,
-              fontSize: 32.sp,
-              color: Colors.black,
-            ),
-            controller: _editingController,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 20.w, bottom: 10.w),
-              filled: true,
-              fillColor: Colors.white,
-              hintText: "请输入员工名称",
-              hintStyle: TextStyle(
-                  color: Colors.grey.shade500,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              prefixIcon: const Icon(
-                CupertinoIcons.search,
-                size: 16,
-              ),
-              enabledBorder: UnderlineInputBorder(
-                //
-                // 不是焦点的时候颜色
-                borderRadius: BorderRadius.circular(36.w),
-                borderSide: const BorderSide(
-                  color: kForeGroundColor,
-                ),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                // 焦点集中的时候颜色
-                borderRadius: BorderRadius.circular(36.w),
-                borderSide: const BorderSide(color: kForeGroundColor),
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(36.w),
-                  borderSide: const BorderSide(color: kForeGroundColor)),
-            ),
-          ),
-        ),
-        12.wb,
-        GestureDetector(
-          onTap: () {},
-          child: Text('取消',
-              style: TextStyle(color: BaseStyle.color333333, fontSize: 28.sp)),
-        ),
-        20.wb,
-      ],
     );
   }
 
@@ -244,34 +192,12 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
           ),
           24.wb,
           if (role == Role.manager) CloudTag.blue(text: '店长'),
-          SizedBox(child: judge == 1 ? getBox() : const SizedBox())
+          SizedBox(
+              child: judge == 1
+                  ? const CloudStatusTag(text: '待审核')
+                  : const SizedBox())
         ],
       ),
-    );
-  }
-
-  getBox() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-      decoration: BoxDecoration(
-          color: const Color(0xFFFF3B02).withOpacity(0.08),
-          borderRadius: BorderRadius.circular(4.w)),
-      child: Text(
-        '待审核',
-        style: TextStyle(
-            fontSize: BaseStyle.fontSize20, color: const Color(0xFFFF3B02)),
-      ),
-    );
-  }
-
-  /// 新建员工
-  getButton() {
-    return CloudBottomButton(
-      onTap: () async {
-        await Get.to(() => const AddEmployeePage());
-        _easyRefreshController.callRefresh();
-      },
-      text: '新建员工',
     );
   }
 }

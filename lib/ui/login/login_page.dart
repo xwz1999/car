@@ -60,10 +60,10 @@ class _LoginPageState extends State<LoginPage> {
           if (kDebugMode) {
             print('极光一键登录：  ${base.data}');
           }
-
           await UserTool.userProvider.setToken(base.data['token']);
           Get.offAll(() => const TabNavigator());
         } else {
+          Jverify().dismissLoginAuthView();
           CloudToast.show(base.msg);
         }
       } else {

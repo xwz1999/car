@@ -41,6 +41,26 @@ class $AssetsIconsGen {
   AssetGenImage get systemEstimate =>
       const AssetGenImage('assets/icons/System_estimate.png');
 
+  /// File path: assets/icons/account_blue.png
+  AssetGenImage get accountBlue =>
+      const AssetGenImage('assets/icons/account_blue.png');
+
+  /// File path: assets/icons/account_green.png
+  AssetGenImage get accountGreen =>
+      const AssetGenImage('assets/icons/account_green.png');
+
+  /// File path: assets/icons/account_orange.png
+  AssetGenImage get accountOrange =>
+      const AssetGenImage('assets/icons/account_orange.png');
+
+  /// File path: assets/icons/account_purple.png
+  AssetGenImage get accountPurple =>
+      const AssetGenImage('assets/icons/account_purple.png');
+
+  /// File path: assets/icons/account_red.png
+  AssetGenImage get accountRed =>
+      const AssetGenImage('assets/icons/account_red.png');
+
   /// File path: assets/icons/advice.png
   AssetGenImage get advice => const AssetGenImage('assets/icons/advice.png');
 

@@ -72,6 +72,9 @@ class API {
   ///意见提交
   static _Feedback feedback = _Feedback();
 
+  /// 分账
+  static _Split split = _Split();
+
   ///二级分类
   static _UserApi user = _UserApi();
 }
@@ -257,4 +260,27 @@ class _Broker {
 ///意见反馈
 class _Feedback {
   get feedbackSubmit => '/app/feedback/submit';
+}
+
+class _Split {
+  /// 创建分账
+  String get create => '/split/account/create';
+
+  /// 分账列表
+  String get list => '/split/account/list';
+
+  /// 分账明细
+  String get info => '/split/account/info';
+
+  /// 添加账单
+  String get addBill => '/split/account/addBill';
+
+  /// 编辑名称
+  String get editName => '/split/account/editName';
+
+  ///利润统计
+  String get profit => '/split/account/profit';
+
+  ///结束分账
+  String get finish => '/split/account/finish';
 }
