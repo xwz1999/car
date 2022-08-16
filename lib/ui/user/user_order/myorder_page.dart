@@ -19,7 +19,6 @@ class _MyOrderPageState extends State<MyOrderPage> {
 
   Future _getStatisticsNum() async {
     _model = await OrderFunc.getStatisticNum();
-    print('11111');
     setState(() {});
   }
 
@@ -81,15 +80,15 @@ class _MyOrderPageState extends State<MyOrderPage> {
               num: '${_model.consignmentCount}',
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => const SalesOrderPage(StatusNum: '租车订单'));
-            },
-            child: ManagerContainerItem(
-              text: '租车订单',
-              num: '${_model.dealerConsignmentCount}',
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Get.to(() => const SalesOrderPage(StatusNum: '租车订单'));
+          //   },
+          //   child: ManagerContainerItem(
+          //     text: '租车订单',
+          //     num: '${_model.dealerConsignmentCount}',
+          //   ),
+          // ),
           GestureDetector(
             onTap: () {
               Get.to(() => const SalesOrderPage(StatusNum: '车商寄卖'));

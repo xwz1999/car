@@ -79,62 +79,62 @@ class _ReservationPageState extends State<ReservationPage> {
               child: ProgressBar(
                 length: 6,
                 num: widget.status.progressNum,
-                    direction: false,
-                    cancel: widget.status.num != 0,
-                    HW: 96,
-                    texts: [
-                      _text('预定'),
-                      _text('检测'),
-                      widget.status.num == 0 ? _text('订单取消') : _text('首付'),
-                      _text('过户'),
-                      _text('尾款'),
-                      _text('完成'),
-                    ],
+                direction: false,
+                cancel: widget.status.num != 0,
+                HW: 96,
+                texts: [
+                  _text('预定'),
+                  _text('检测'),
+                  widget.status.num == 0 ? _text('订单取消') : _text('首付'),
+                  _text('过户'),
+                  _text('尾款'),
+                  _text('完成'),
+                ],
+              ),
+            ),
+            _getContainer(
+              ///客户信息
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 0.w),
+                    child: _getTitle('客户信息'),
                   ),
-                ),
-                _getContainer(
-                  ///客户信息
-                  Column(
+                  36.hb,
+                  _getText('客户姓名', '莉丝', BaseStyle.color333333),
+                  36.hb,
+                  _getText('手机号', '111112112122', BaseStyle.color333333)
+                ],
+              ),
+            ),
+
+            ///车辆信息
+            _getContainer(
+              GestureDetector(
+                onTap: () {
+                  //Get.to(() => const Reservation(judge: null,));
+                },
+                child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 0.w),
-                        child: _getTitle('客户信息'),
-                      ),
-                      36.hb,
-                      _getText('客户姓名', '莉丝', BaseStyle.color333333),
-                      36.hb,
-                      _getText('手机号', '111112112122', BaseStyle.color333333)
-                    ],
-                  ),
-                ),
-
-                ///车辆信息
-                _getContainer(
-                  GestureDetector(
-                    onTap: () {
-                      //Get.to(() => const Reservation(judge: null,));
-                    },
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      _getTitle('车辆信息'),
+                      24.hb,
+                      Row(
                         children: [
-                          _getTitle('车辆信息'),
-                          24.hb,
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 196.w,
-                                height: 150.w,
-                                child: CloudImageNetworkWidget.car(urls: [
-                                  _consignmentInfoList.car.modelName,
-                                ]),
-                              ),
-                              20.wb,
-                              SizedBox(
-                                width: 406.w,
-                                child: Column(
-                                  children: [
-                                    Text(_consignmentInfoList.car.modelName,
+                          SizedBox(
+                            width: 196.w,
+                            height: 150.w,
+                            child: CloudImageNetworkWidget.car(urls: [
+                              _consignmentInfoList.car.modelName,
+                            ]),
+                          ),
+                          20.wb,
+                          SizedBox(
+                            width: 406.w,
+                            child: Column(
+                              children: [
+                                Text(_consignmentInfoList.car.modelName,
                                     style: TextStyle(
                                         fontSize: BaseStyle.fontSize28,
                                         color: BaseStyle.color111111)),
@@ -467,11 +467,8 @@ class _ReservationPageState extends State<ReservationPage> {
   _getPayPass() {
     switch (widget.status) {
       case OrderSaleStatus.cancel:
-        // TODO: Handle this case.
-
-        break;
+        return const SizedBox.shrink();
       case OrderSaleStatus.unSign:
-        // TODO: Handle this case.
         return Container(
           width: double.infinity,
           color: kForeGroundColor,
@@ -504,14 +501,10 @@ class _ReservationPageState extends State<ReservationPage> {
         );
 
       case OrderSaleStatus.sign:
-        // TODO: Handle this case.
-
-        break;
+        return const SizedBox.shrink();
       case OrderSaleStatus.deposit:
-        // TODO: Handle this case.
-        break;
+        return const SizedBox.shrink();
       case OrderSaleStatus.testReport:
-        // TODO: Handle this case.
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -542,10 +535,8 @@ class _ReservationPageState extends State<ReservationPage> {
             ));
 
       case OrderSaleStatus.uploadTestReport:
-        // TODO: Handle this case.
-        break;
+        return const SizedBox.shrink();
       case OrderSaleStatus.downPaymentAudit:
-        // TODO: Handle this case.
         return Container(
           width: double.infinity,
           color: kForeGroundColor,
@@ -578,10 +569,8 @@ class _ReservationPageState extends State<ReservationPage> {
         );
 
       case OrderSaleStatus.dowPaymentAdopt:
-        // TODO: Handle this case.
-        break;
+        return const SizedBox.shrink();
       case OrderSaleStatus.transfer:
-        // TODO: Handle this case.
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -611,10 +600,8 @@ class _ReservationPageState extends State<ReservationPage> {
               ),
             ));
       case OrderSaleStatus.transferFinal:
-        // TODO: Handle this case.
-        break;
+        return const SizedBox.shrink();
       case OrderSaleStatus.balancePaymentAudit:
-        // TODO: Handle this case.
         return Container(
           width: double.infinity,
           color: kForeGroundColor,
@@ -646,10 +633,6 @@ class _ReservationPageState extends State<ReservationPage> {
           ),
         );
       case OrderSaleStatus.balancePaymentAdopt:
-        // TODO: Handle this case.
-        break;
-      case OrderSaleStatus.orderFinal:
-        // TODO: Handle this case.
         return Container(
             width: double.infinity,
             color: kForeGroundColor,
@@ -658,7 +641,6 @@ class _ReservationPageState extends State<ReservationPage> {
             margin: EdgeInsets.only(top: 16.w),
             child: GestureDetector(
               onTap: () async {
-                // Get.to(() => const MakeDealData());
                 var re = await OrderFunc.getFinal(widget.orderId);
                 if (re) {
                   Get.back();
@@ -680,6 +662,8 @@ class _ReservationPageState extends State<ReservationPage> {
                     )),
               ),
             ));
+      case OrderSaleStatus.orderFinal:
+        return const SizedBox.shrink();
     }
   }
 

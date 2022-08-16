@@ -92,19 +92,119 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
               HW: 96,
               texts: [
                 _text('预定'),
-                    _text('签订'),
-                    _text('上架'),
-                    widget.statusNumber.num == 0 ? _text('交易取消') : _text('出售'),
-                    _text('到账'),
-                    _text('成交'),
-                  ],
-                ),
+                _text('签订'),
+                _text('上架'),
+                widget.statusNumber.num == 0 ? _text('交易取消') : _text('出售'),
+                _text('到账'),
+                _text('成交'),
+              ],
+            ),
+          ),
+          16.hb,
+          Offstage(
+            offstage: widget.statusNumber.num != 3 && widget.auditStatus != 3,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 32.w),
+              padding: EdgeInsets.all(28.w),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.w)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _getTitle('审核驳回'),
+                  36.hb,
+                  _getText('审核时间', ''),
+                  36.hb,
+                  _getText(
+                    '驳回理由',
+                    '车辆信息填写有误，重新提交',
+                  )
+                ],
               ),
-              16.hb,
-              Offstage(
-                offstage:
-                    widget.statusNumber.num != 3 && widget.auditStatus != 3,
-                child: Container(
+            ),
+          ),
+          widget.statusNumber.num == 3 && widget.auditStatus == 3
+              ? 16.hb
+              : 0.hb,
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 32.w),
+            padding: EdgeInsets.all(28.w),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _getTitle('客户信息'),
+                36.hb,
+                _getText('客户姓名', _individualList.customer.nickname),
+                36.hb,
+                _getText(
+                  '手机号',
+                  _individualList.customer.mobile,
+                )
+              ],
+            ),
+          ),
+          16.hb,
+
+          ///车辆信息
+          Container(
+              padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+              margin: EdgeInsets.symmetric(horizontal: 32.w),
+              decoration: BoxDecoration(
+                  color: kForeGroundColor,
+                  borderRadius: BorderRadius.circular(16.w)),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 0.w),
+                      child: Text(
+                        '车辆信息',
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
+                    ),
+                    24.hb,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 196.w,
+                          height: 150.w,
+                          child: CloudImageNetworkWidget.car(
+                            urls: [_individualList.car.mainPhoto],
+                          ),
+                        ),
+                        20.wb,
+                        SizedBox(
+                          width: 406.w,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(_individualList.car.modelName,
+                                  style: TextStyle(
+                                      fontSize: BaseStyle.fontSize28,
+                                      color: BaseStyle.color111111)),
+                              32.hb,
+                              Padding(
+                                padding: EdgeInsets.only(right: 16.w),
+                                child: _getText1(
+                                    DateUtil.formatDateMs(
+                                        _individualList.car.licensingDate
+                                                .toInt() *
+                                            1000,
+                                        format: 'yyyy年MM'),
+                                    '${_individualList.car.mileage}万公里'),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ])),
+          16.hb,
+          widget.statusNumber.num == 1
+              ? Container(
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
                   padding: EdgeInsets.all(28.w),
                   decoration: BoxDecoration(
@@ -113,134 +213,31 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _getTitle('审核驳回'),
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.w),
+                        child: _getTitle('预约直卖信息'),
+                      ),
                       36.hb,
-                      _getText('审核时间', ''),
+                      _getText('预约地址', '云云问车 浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
                       36.hb,
                       _getText(
-                        '驳回理由',
-                        '车辆信息填写有误，重新提交',
+                        '预约时间',
+                        DateUtil.formatDateMs(
+                            widget.licensingDate.toInt() * 1000,
+                            format: DateFormats.full),
                       )
                     ],
                   ),
-                ),
-              ),
-              widget.statusNumber.num == 3 && widget.auditStatus == 3
-                  ? 16.hb
-                  : 0.hb,
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 32.w),
-                padding: EdgeInsets.all(28.w),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.w)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _getTitle('客户信息'),
-                    36.hb,
-                    _getText('客户姓名', _individualList.customer.nickname),
-                    36.hb,
-                    _getText(
-                      '手机号',
-                      _individualList.customer.mobile,
-                    )
-                  ],
-                ),
-              ),
-              16.hb,
-
-              ///车辆信息
-              Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+                )
+              : Container(
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
+                  padding: EdgeInsets.all(28.w),
                   decoration: BoxDecoration(
-                      color: kForeGroundColor,
-                      borderRadius: BorderRadius.circular(16.w)),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.w)),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 0.w),
-                          child: Text(
-                            '车辆信息',
-                            style: Theme.of(context).textTheme.subtitle2,
-                          ),
-                        ),
-                        24.hb,
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 196.w,
-                              height: 150.w,
-                              child: CloudImageNetworkWidget.car(
-                                urls: [_individualList.car.mainPhoto],
-                              ),
-                            ),
-                            20.wb,
-                            SizedBox(
-                              width: 406.w,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(_individualList.car.modelName,
-                                      style: TextStyle(
-                                          fontSize: BaseStyle.fontSize28,
-                                          color: BaseStyle.color111111)),
-                                  32.hb,
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 16.w),
-                                    child: _getText1(
-                                        DateUtil.formatDateMs(
-                                            _individualList.car.licensingDate
-                                                    .toInt() *
-                                                1000,
-                                            format: 'yyyy年MM'),
-                                        '${_individualList.car.mileage}万公里'),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ])),
-              16.hb,
-              widget.statusNumber.num == 1
-                  ? Container(
-                      margin: EdgeInsets.symmetric(horizontal: 32.w),
-                      padding: EdgeInsets.all(28.w),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.w)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 0.w),
-                            child: _getTitle('预约直卖信息'),
-                          ),
-                          36.hb,
-                          _getText('预约地址', '云云问车 浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
-                          36.hb,
-                          _getText(
-                            '预约时间',
-                            DateUtil.formatDateMs(
-                                widget.licensingDate.toInt() * 1000,
-                                format: DateFormats.full),
-                          )
-                        ],
-                      ),
-                    )
-                  : Container(
-                      margin: EdgeInsets.symmetric(horizontal: 32.w),
-                      padding: EdgeInsets.all(28.w),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.w)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Padding(
                         padding: EdgeInsets.only(left: 0.w),
                         child: _getTitle('合同信息'),
@@ -333,11 +330,9 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
         );
 
       case ConsignmentStatus.unSign:
-        // TODO: Handle this case.
-        break;
+        return const SizedBox.shrink();
       case ConsignmentStatus.unPublish:
-        // TODO: Handle this case.
-        break;
+        return const SizedBox.shrink();
       case ConsignmentStatus.publish:
         // TODO: Handle this case.
         switch (widget.auditStatus) {
@@ -356,10 +351,8 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
         }
 
       case ConsignmentStatus.theUpper:
-        // TODO: Handle this case.
-        break;
+        return const SizedBox.shrink();
       case ConsignmentStatus.sale:
-        // TODO: Handle this case.
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),
           padding: EdgeInsets.all(28.w),
@@ -395,7 +388,6 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
         );
 
       case ConsignmentStatus.account:
-        // TODO: Handle this case.
         return Column(
           children: [
             Container(
@@ -474,10 +466,10 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
         );
 
       case ConsignmentStatus.uFinal:
-        // TODO: Handle this case.
-        break;
+        return const SizedBox.shrink();
     }
   }
+
   _getPicture(String title, dynamic url) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -496,7 +488,10 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
   _getTitle(String title) {
     return Text(
       title,
-      style: Theme.of(context).textTheme.subtitle2,
+      style: Theme.of(context)
+          .textTheme
+          .subtitle2
+          ?.copyWith(fontWeight: FontWeight.bold),
     );
   }
 

@@ -33,7 +33,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
       TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
-  Map _params = {'status': 1};
+  Map _params = {'status': 2};
 
   final List<int> _selectIndex = [];
   final Map<int, TextEditingController> _mapTextController = {};

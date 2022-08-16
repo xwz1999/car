@@ -19,7 +19,7 @@ class DetectionDataPage extends StatefulWidget {
   State<DetectionDataPage> createState() => _DetectionDataPageState();
 }
 
-late String img;
+String img = '';
 final picker = ImagePicker();
 File imagePath = File(Assets.images.addcar.path);
 
@@ -90,8 +90,8 @@ class _DetectionDataPageState extends State<DetectionDataPage> {
                         child: img == ''
                             ? Image.asset(Assets.images.addcar.path)
                             : CloudImageNetworkWidget.car(
-                          urls: [img],
-                        ),
+                                urls: [img],
+                              ),
                         // Image.asset(
                         //   img == '' ? Assets.images.addcar.path : img,
                         // ),

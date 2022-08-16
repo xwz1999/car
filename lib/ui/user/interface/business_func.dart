@@ -14,7 +14,7 @@ class BusinessFunc {
     var res =
         await apiClient.request(API.storeManagement.storeAll, data: params);
 
-    if ((res.data as List).isEmpty) return [];
+    if (res.data==null) return [];
     return (res.data as List).map((e) => StoreallModel.fromJson(e)).toList();
   }
 
