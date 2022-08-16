@@ -1,6 +1,8 @@
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
+import 'package:cloud_car/ui/tab_navigator.dart';
+import 'package:cloud_car/ui/user/user_order/sales_orders_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -11,6 +13,7 @@ import '../../../../widget/button/cloud_back_button.dart';
 
 class ContactCondition extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
+
   const ContactCondition({super.key, required this.consignmentContractModel});
 
   @override
@@ -48,31 +51,36 @@ class _ContactConditionState extends State<ContactCondition> {
             ),
             Container(
               color: Colors.white,
-              padding: EdgeInsets.only(left: 34.w,bottom: 40.w),
+              padding: EdgeInsets.only(left: 34.w, bottom: 40.w),
               child: Column(
                 children: [
                   EditItemWidget(
                     titleWidth: 120.w,
                     title: '外观',
-                    value:  widget.consignmentContractModel.value.exterior??'',
+                    value: widget.consignmentContractModel.value.exterior ?? '',
                     callback: (String content) {
-                      widget.consignmentContractModel.value.exterior = content ;
+                      widget.consignmentContractModel.value.exterior = content;
                     },
                   ),
                   EditItemWidget(
                     titleWidth: 120.w,
                     title: '内饰',
-                    value:  widget.consignmentContractModel.value.interiorTrim??'',
+                    value: widget.consignmentContractModel.value.interiorTrim ??
+                        '',
                     callback: (String content) {
-                      widget.consignmentContractModel.value.interiorTrim = content ;
+                      widget.consignmentContractModel.value.interiorTrim =
+                          content;
                     },
                   ),
                   EditItemWidget(
                     titleWidth: 120.w,
                     title: '工况',
-                    value:  widget.consignmentContractModel.value.workingCondition??'',
+                    value: widget
+                            .consignmentContractModel.value.workingCondition ??
+                        '',
                     callback: (String content) {
-                      widget.consignmentContractModel.value.workingCondition = content ;
+                      widget.consignmentContractModel.value.workingCondition =
+                          content;
                     },
                   ),
                 ],
@@ -84,13 +92,21 @@ class _ContactConditionState extends State<ContactCondition> {
             ),
             Container(
               color: Colors.white,
-              padding: EdgeInsets.only(left: 34.w,bottom: 40.w),
+              padding: EdgeInsets.only(left: 34.w, bottom: 40.w),
               child: EditItemWidget(
                 title: '服务费比列',
-                keyboardType:TextInputType.number ,
-                value: widget.consignmentContractModel.value.serviceFeeRate==null?'':  (num.parse(widget.consignmentContractModel.value.serviceFeeRate ??'0')*100 ).toString() ,
+                keyboardType: TextInputType.number,
+                value:
+                    widget.consignmentContractModel.value.serviceFeeRate == null
+                        ? ''
+                        : (num.parse(widget.consignmentContractModel.value
+                                        .serviceFeeRate ??
+                                    '0') *
+                                100)
+                            .toString(),
                 callback: (String content) {
-                  widget.consignmentContractModel.value.serviceFeeRate = (num.parse(content)/100).toString() ;
+                  widget.consignmentContractModel.value.serviceFeeRate =
+                      (num.parse(content) / 100).toString();
                 },
                 endText: '%',
               ),
@@ -99,39 +115,51 @@ class _ContactConditionState extends State<ContactCondition> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: ()async {
-                  if(widget.consignmentContractModel.value.exterior==null||widget.consignmentContractModel.value.interiorTrim==null||
-                  widget.consignmentContractModel.value.workingCondition==null||widget.consignmentContractModel.value.serviceFeeRate==null
-                  ){
+                onPressed: () async {
+                  if (widget.consignmentContractModel.value.exterior == null ||
+                      widget.consignmentContractModel.value.interiorTrim ==
+                          null ||
+                      widget.consignmentContractModel.value.workingCondition ==
+                          null ||
+                      widget.consignmentContractModel.value.serviceFeeRate ==
+                          null) {
                     CloudToast.show('请先完善合同信息');
-                  }else{
-
-
-
+                  } else {
                     var cancel = CloudToast.loading;
-                    widget.consignmentContractModel.value.masterInfo.idCardBack =
-                    await apiClient.uploadImage(widget.consignmentContractModel.value.idBack!.first);
+                    widget.consignmentContractModel.value.masterInfo
+                            .idCardBack =
+                        await apiClient.uploadImage(widget
+                            .consignmentContractModel.value.idBack!.first);
 
-                    widget.consignmentContractModel.value.masterInfo.idCardFront =
-                    await apiClient.uploadImage(widget.consignmentContractModel.value.idFront!.first);
+                    widget.consignmentContractModel.value.masterInfo
+                            .idCardFront =
+                        await apiClient.uploadImage(widget
+                            .consignmentContractModel.value.idFront!.first);
 
                     widget.consignmentContractModel.value.masterInfo.photo =
-                    await apiClient.uploadImage(widget.consignmentContractModel.value.bust!.first);
+                        await apiClient.uploadImage(
+                            widget.consignmentContractModel.value.bust!.first);
 
-
-                    bool success = await CarFunc.addConsignment(widget.consignmentContractModel.value);
+                    bool success = await CarFunc.addConsignment(
+                        widget.consignmentContractModel.value);
                     cancel();
 
-                    if(success){
+                    if (success) {
                       CloudToast.show('合同发布成功');
-                      Get.close(5);///关闭估价和发布合同的所有页面 跳转到寄卖订单列表
+                      Get.offUntil(
+                          GetPageRoute(
+                              page: () =>
+                                  const SalesOrderPage(StatusNum: '个人寄卖')),
+                          (route) =>
+                              (route as GetPageRoute).routeName ==
+                              '/TabNavigator');
 
-                    }else{
+                      ///关闭估价和发布合同的所有页面 跳转到寄卖订单列表
+
+                    } else {
                       CloudToast.show('合同发布失败');
                     }
                   }
-
-
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -145,46 +173,46 @@ class _ContactConditionState extends State<ContactCondition> {
     );
   }
 
-  // _showDescription(
-  //   String title,
-  //   TextEditingController contentController,
-  // ) {
-  //   return Container(
-  //     padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-  //     color: Colors.transparent,
-  //     child: Row(
-  //       children: [
-  //         '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
-  //         10.wb,
-  //         SizedBox(
-  //           width: 160.w,
-  //           child: title.text
-  //               .size(28.sp)
-  //               .normal
-  //               .textStyle(const TextStyle(decoration: TextDecoration.none))
-  //               .color(Colors.black.withOpacity(0.45))
-  //               .make(),
-  //         ),
-  //         Expanded(
-  //           child: TextField(
-  //             textAlign: TextAlign.start,
-  //             onChanged: (text) => setState(() {}),
-  //             autofocus: false,
-  //             controller: contentController,
-  //             decoration: InputDecoration(
-  //                 contentPadding: EdgeInsets.zero,
-  //                 isDense: true,
-  //                 border: InputBorder.none,
-  //                 hintText: '请输入',
-  //                 hintStyle: TextStyle(
-  //                   fontSize: 30.sp,
-  //                   color: Colors.black.withOpacity(0.25),
-  //                 )),
-  //           ),
-  //         ),
-  //         24.wb,
-  //       ],
-  //     ),
-  //   );
-  // }
+// _showDescription(
+//   String title,
+//   TextEditingController contentController,
+// ) {
+//   return Container(
+//     padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
+//     color: Colors.transparent,
+//     child: Row(
+//       children: [
+//         '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
+//         10.wb,
+//         SizedBox(
+//           width: 160.w,
+//           child: title.text
+//               .size(28.sp)
+//               .normal
+//               .textStyle(const TextStyle(decoration: TextDecoration.none))
+//               .color(Colors.black.withOpacity(0.45))
+//               .make(),
+//         ),
+//         Expanded(
+//           child: TextField(
+//             textAlign: TextAlign.start,
+//             onChanged: (text) => setState(() {}),
+//             autofocus: false,
+//             controller: contentController,
+//             decoration: InputDecoration(
+//                 contentPadding: EdgeInsets.zero,
+//                 isDense: true,
+//                 border: InputBorder.none,
+//                 hintText: '请输入',
+//                 hintStyle: TextStyle(
+//                   fontSize: 30.sp,
+//                   color: Colors.black.withOpacity(0.25),
+//                 )),
+//           ),
+//         ),
+//         24.wb,
+//       ],
+//     ),
+//   );
+// }
 }

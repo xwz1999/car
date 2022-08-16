@@ -34,18 +34,27 @@ class Staff extends Equatable {
   final String roleName;
   final int roleId;
   final int gender;
+  final int brokerId;
 
   factory Staff.fromJson(Map<String, dynamic> json) => _$StaffFromJson(json);
 
   Map<String, dynamic> toJson() => _$StaffToJson(this);
-
-  const Staff(this.id, this.name, this.phone, this.auditStatus, this.roleName,
-      this.gender, this.roleId);
 
   Gender get genderEM => Gender.getValue(gender);
 
   Role get roleEm => Role.getValue(roleName);
 
   @override
-  List<Object?> get props => [id, name, phone, auditStatus, roleName, gender];
+  List<Object?> get props => [id, name, phone, auditStatus, roleName, gender,brokerId];
+
+  const Staff({
+    required this.id,
+    required this.name,
+    required this.phone,
+    required this.auditStatus,
+    required this.roleName,
+    required this.roleId,
+    required this.gender,
+    required this.brokerId,
+  });
 }

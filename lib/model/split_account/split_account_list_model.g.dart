@@ -12,7 +12,7 @@ SplitAccountListModel _$SplitAccountListModelFromJson(
       id: json['id'] as int,
       name: json['name'] as String,
       lastBill: json['lastBill'] as String,
-      createdAt: json['createdAt'] as int,
+      createAt: json['createAt'] as int,
     );
 
 Map<String, dynamic> _$SplitAccountListModelToJson(
@@ -21,5 +21,5 @@ Map<String, dynamic> _$SplitAccountListModelToJson(
       'id': instance.id,
       'name': instance.name,
       'lastBill': instance.lastBill,
-      'createdAt': instance.createdAt,
+      'createAt': instance.createAt,
     };

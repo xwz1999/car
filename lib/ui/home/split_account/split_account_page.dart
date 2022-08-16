@@ -53,8 +53,9 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
       title: '收车合作',
       actions: [
         IconButton(
-            onPressed: () {
-              Get.to(() => const AddSplitAccountPage());
+            onPressed: () async {
+              await Get.to(() => const AddSplitAccountPage());
+              _easyRefreshController.callRefresh();
             },
             icon: Icon(
               CupertinoIcons.add,
@@ -71,6 +72,11 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
                 _easyRefreshController.callRefresh();
               },
               item: _currentStatus.typeStr),
+          Container(
+            color: Colors.black12,
+            height: 2.w,
+            width: double.infinity,
+          ),
           Expanded(
             child: EasyRefresh(
               firstRefresh: true,
@@ -112,13 +118,14 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
               child: _models.isEmpty
                   ? const SizedBox()
                   : ListView(
-                      children: ListTile.divideTiles(
-                              tiles: _models
-                                  .mapIndexed((currentValue, index) =>
-                                      _listCard(currentValue, index))
-                                  .toList())
-                          .toList(),
-                    ),
+                    children: ListTile.divideTiles(
+                            context: context,
+                            tiles: _models
+                                .mapIndexed((currentValue, index) =>
+                                    _listCard(currentValue, index))
+                                .toList())
+                        .toList(),
+                  ),
             ),
           ),
         ],
@@ -135,17 +142,23 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
   ];
 
   Widget _listCard(SplitAccountListModel model, index) {
-    return ListTile(
-      leading: _iconPaths[index % 5].image(width: 88.w, height: 88.w),
-      title: model.name.text.size(28.sp).color(const Color(0xFF111111)).make(),
-      subtitle:
-          model.lastBill.text.size(28.sp).color(const Color(0xFFAAAAAA)).make(),
-      trailing: DateUtil.formatDateMs(model.createdAt * 1000,
-              format: DateFormats.mo_d_h_m)
-          .text
-          .size(20.sp)
-          .color(const Color(0xFFAAAAAA))
-          .make(),
+    return Material(
+      color: Colors.white,
+      child: ListTile(
+        leading: _iconPaths[index % 5].image(width: 88.w, height: 88.w),
+        title:
+            model.name.text.size(28.sp).color(const Color(0xFF111111)).make(),
+        subtitle: model.lastBill.text
+            .size(28.sp)
+            .color(const Color(0xFFAAAAAA))
+            .make(),
+        trailing: DateUtil.formatDateMs(model.createAt * 1000,
+                format: DateFormats.mo_d_h_m)
+            .text
+            .size(20.sp)
+            .color(const Color(0xFFAAAAAA))
+            .make(),
+      ),
     );
   }
 }

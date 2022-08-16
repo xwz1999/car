@@ -23,13 +23,14 @@ Map<String, dynamic> _$StoreallModelToJson(StoreallModel instance) =>
     };
 
 Staff _$StaffFromJson(Map<String, dynamic> json) => Staff(
-      json['id'] as int,
-      json['name'] as String,
-      json['phone'] as String,
-      json['auditStatus'] as int,
-      json['roleName'] as String,
-      json['gender'] as int,
-      json['roleId'] as int,
+      id: json['id'] as int,
+      name: json['name'] as String,
+      phone: json['phone'] as String,
+      auditStatus: json['auditStatus'] as int,
+      roleName: json['roleName'] as String,
+      roleId: json['roleId'] as int,
+      gender: json['gender'] as int,
+      brokerId: json['brokerId'] as int,
     );
 
 Map<String, dynamic> _$StaffToJson(Staff instance) => <String, dynamic>{
@@ -40,4 +41,5 @@ Map<String, dynamic> _$StaffToJson(Staff instance) => <String, dynamic>{
       'roleName': instance.roleName,
       'roleId': instance.roleId,
       'gender': instance.gender,
+      'brokerId': instance.brokerId,
     };

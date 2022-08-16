@@ -24,12 +24,14 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   bool res = false;
   StaffInfoModel? staffInfo;
 
-  /// 无权限为true
+  /// 有权限为true
   bool get _deletePermission {
-    var userRole = UserTool.userProvider.userInfo.store.roleEM;
-    return (userRole != Role.manager && userRole != Role.defaultRole) ||
-        staffInfo?.roleId == UserTool.userProvider.userInfo.store.roleId ||
-        UserTool.userProvider.userInfo.store.storeName != staffInfo?.storeName;
+    var userRole = UserTool.userProvider.userInfo;
+
+    return (userRole.store.roleEM == Role.defaultRole) ||
+        (userRole.store.roleEM == Role.manager &&
+            staffInfo?.roleId != userRole.store.roleId &&
+            userRole.store.storeName == staffInfo?.storeName);
   }
 
   @override
@@ -162,7 +164,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
           const Spacer(),
           const Divider(),
           Offstage(
-            offstage: _deletePermission,
+            offstage: !_deletePermission,
             child: Row(
               children: [
                 Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
@@ -190,7 +192,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 }),
                 200.wb,
                 Offstage(
-                  offstage: _deletePermission,
+                  offstage: !_deletePermission,
                   child: getButton(Assets.icons.editor1.path, '编辑', () async {
                     res = await Get.to(() => EditorEmployeePage(
                           roleId: staffInfo!.roleId,

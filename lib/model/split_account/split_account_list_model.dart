@@ -8,7 +8,7 @@ class SplitAccountListModel extends Equatable {
   final int id;
   final String name;
   final String lastBill;
-  final int createdAt;
+  final int createAt;
 
   factory SplitAccountListModel.fromJson(Map<String, dynamic> json) =>
       _$SplitAccountListModelFromJson(json);
@@ -20,27 +20,27 @@ class SplitAccountListModel extends Equatable {
         id,
         name,
         lastBill,
-        createdAt,
+        createAt,
       ];
 
   const SplitAccountListModel({
     required this.id,
     required this.name,
     required this.lastBill,
-    required this.createdAt,
+    required this.createAt,
   });
 
   SplitAccountListModel copyWith({
     int? id,
     String? name,
     String? lastBill,
-    int? createdAt,
+    int? createAt,
   }) {
     return SplitAccountListModel(
       id: id ?? this.id,
       name: name ?? this.name,
       lastBill: lastBill ?? this.lastBill,
-      createdAt: createdAt ?? this.createdAt,
+      createAt: createAt ?? this.createAt,
     );
   }
 }

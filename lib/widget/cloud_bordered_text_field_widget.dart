@@ -1,17 +1,21 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CloudBorderedTextFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
   final double? width;
   final double? height;
   final String? hintText;
+  final TextInputType inputType;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CloudBorderedTextFieldWidget({
     super.key,
     this.controller,
     this.width,
-    this.height, this.hintText,
+    this.height,
+    this.hintText, this.inputType=TextInputType.text, this.inputFormatters,
   });
 
   @override
@@ -33,7 +37,9 @@ class _CloudBorderedTextFieldWidgetState
 
   @override
   void dispose() {
-    _editingController.dispose();
+    if (widget.controller == null) {
+      _editingController.dispose();
+    }
     _contentFocusNode.dispose();
     super.dispose();
   }
@@ -44,7 +50,8 @@ class _CloudBorderedTextFieldWidgetState
       width: widget.width ?? 140.w,
       height: widget.height ?? 42.w,
       child: TextField(
-        keyboardType: TextInputType.text,
+        keyboardType: widget.inputType,
+        inputFormatters: widget.inputFormatters,
         textAlign: TextAlign.center,
         focusNode: _contentFocusNode,
         style: TextStyle(
@@ -57,7 +64,7 @@ class _CloudBorderedTextFieldWidgetState
         decoration: InputDecoration(
           filled: true,
           contentPadding: EdgeInsets.zero,
-          hintText: widget.hintText??'请输入',
+          hintText: widget.hintText ?? '请输入',
           hintStyle: TextStyle(
             color: const Color(0xFFCCCCCC),
             fontSize: 24.sp,

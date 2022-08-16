@@ -1,13 +1,19 @@
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_bordered_text_field_widget.dart';
+import 'package:cloud_car/widget/cloud_check_box.dart';
+import 'package:cloud_car/widget/cloud_dialog_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/cloud_search_head_widget.dart';
 import 'package:cloud_car/widget/cloud_tag.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -23,9 +29,22 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
 
   List<StoreallModel> employees = [];
 
-  final TextEditingController _editingController = TextEditingController();
+  final TextEditingController _amountEditingController =
+      TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   Map _params = {'status': 1};
+
+  final List<int> _selectIndex = [];
+  final Map<int, TextEditingController> _mapTextController = {};
+
+  @override
+  void dispose() {
+    _mapTextController.forEach((key, value) {
+      value.dispose();
+    });
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,19 +99,71 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             '我的出资额'.text.size(28.sp).color(const Color(0xFF333333)).make(),
             12.wb,
             CloudBorderedTextFieldWidget(
-              controller: _editingController,
+              controller: _amountEditingController,
               hintText: '请输入金额',
               width: 200.w,
               height: 60.w,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              inputType: TextInputType.number,
             ),
             8.wb,
             '元'.text.size(28.sp).color(const Color(0xFF333333)).make(),
             const Spacer(),
-            _subButton('发起', () {})
+            _subButton('发起', () async {
+              var result = await Get.dialog(_getNameDialog());
+              if (_nameController.text.trim().isEmpty) {
+                CloudToast.show('名称不能为空！');
+                return;
+              }
+              var cancel = CloudToast.loading;
+              var brokerData = [];
+              _mapTextController.forEach((key, value) {
+                brokerData.add({
+                  'brokerId': key,
+                  'amount': double.parse(value.text),
+                });
+              });
+              var res = await apiClient.request(API.split.create, data: {
+                'ownAmount': double.parse(_amountEditingController.text),
+                'name': _nameController.text,
+                'brokerAmounts': brokerData,
+              });
+              if (res.code == 0) {
+                Get.back();
+              } else {
+                CloudToast.show(res.msg);
+              }
+              cancel();
+            }),
+            32.wb,
           ],
         ),
       ),
     );
+  }
+
+  Widget _getNameDialog() {
+    return CloudDialogWidget(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            40.hb,
+            '账目名称'.text.size(36.sp).color(Colors.black).bold.isIntrinsic.make(),
+            24.hb,
+            CloudBorderedTextFieldWidget(
+              width: 400.w,
+              height: 60.w,
+              controller: _nameController,
+              hintText: '请输入名称',
+            ),
+          ],
+        ),
+        onConfirm: () {
+          Get.back();
+        },
+        onCancel: () {
+          Get.back();
+        });
   }
 
   Widget _subButton(String text, VoidCallback onTap) {
@@ -101,6 +172,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
       child: Container(
         width: 120.w,
         height: 60.w,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
               begin: Alignment.centerLeft,
@@ -130,8 +202,10 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             ? model.staffs!.mapIndexed((e, index) {
                 return GestureDetector(
                   onTap: () async {},
-                  child: _listTile(e.roleName, e.genderEM.typeNum, e.name,
-                      e.phone, e.auditStatus, e.roleEm),
+                  child: _listTile(
+                    e,
+                    index,
+                  ),
                 );
               }).toList()
             : []
@@ -139,21 +213,32 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
     );
   }
 
-  _listTile(String position, int gender, String name, String phone, int judge,
-      Role role) {
+  _listTile(Staff staff, int index) {
     return GestureDetector(
-      onTap: (){},
+      onTap: () {
+        if (_selectIndex.contains(index)) {
+          _selectIndex.remove(index);
+          _mapTextController[index]?.dispose();
+          _mapTextController.remove(index);
+        } else {
+          _selectIndex.add(index);
+          _mapTextController.putIfAbsent(index, () => TextEditingController());
+        }
+        setState(() {});
+      },
       child: Container(
         color: Colors.white,
         height: 94.w,
         padding: EdgeInsets.symmetric(horizontal: 64.w, vertical: 18.w),
         child: Row(
           children: [
+            CloudCheckBox(value: index, groupValue: _selectIndex),
+            16.wb,
             SizedBox(
               width: 32.w,
               height: 32.w,
               child: Image.asset(
-                gender == 2
+                staff.gender == 2
                     ? Assets.icons.icUserWoman.path
                     : Assets.icons.icUser.path,
                 fit: BoxFit.fill,
@@ -161,18 +246,25 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             ),
             16.wb,
             Text(
-              name,
+              staff.name,
               style: TextStyle(
                   fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
             ),
             16.wb,
-            Text(
-              phone,
-              style: TextStyle(
-                  fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
-            ),
-            24.wb,
-            if (role == Role.manager) CloudTag.blue(text: '店长'),
+            if (staff.roleEm == Role.manager) CloudTag.blue(text: '店长'),
+            if (_selectIndex.contains(index))
+              Row(
+                children: [
+                  20.wb,
+                  CloudBorderedTextFieldWidget(
+                    controller: _mapTextController[index],
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    inputType: TextInputType.number,
+                  ),
+                  20.wb,
+                  const Text('元')
+                ],
+              )
           ],
         ),
       ),

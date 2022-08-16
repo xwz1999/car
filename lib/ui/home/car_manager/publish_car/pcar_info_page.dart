@@ -6,6 +6,7 @@ import 'package:cloud_car/ui/home/car_manager/choose_dealer_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_box_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_report_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -96,12 +97,14 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
               padding: EdgeInsets.all(32.w),
               child: Column(
                 children: [
-                  widget.orderId!=null?const SizedBox():
-                  PublishCarInfoWidget(
-                    fontColor: const Color(0xFF999999),
-                    publishCarInfo:
-                        widget.consignmentContractModel.publishCarInfo!,
-                  ),
+                  widget.orderId != null
+                      ? const SizedBox()
+                      : PublishCarInfoWidget(
+                          fontColor: const Color(0xFF999999),
+                          publishCarInfo:
+                              widget.consignmentContractModel.publishCarInfo ??
+                                  PublishCarInfo.empty,
+                        ),
                   GestureDetector(
                     onTap: () async {
                       await showModalBottomSheet(
@@ -336,7 +339,6 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                     topIcon: true,
                     value:
                         widget.carPhotoModel.value.baseInfo.conditionIn ?? '',
-
                     callback: (String content) {
                       widget.carPhotoModel.value.baseInfo.conditionIn = content;
                     },
@@ -347,7 +349,6 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                     topIcon: true,
                     value:
                         widget.carPhotoModel.value.baseInfo.conditionOut ?? '',
-
                     callback: (String content) {
                       widget.carPhotoModel.value.baseInfo.conditionOut =
                           content;
@@ -370,13 +371,16 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                           null ||
                       widget.carPhotoModel.value.baseInfo.useCharacter ==
                           null ||
-                      widget.carPhotoModel.value.baseInfo.location==null||
-                      widget.carPhotoModel.value.baseInfo.attribution==null||
-                      (widget.carPhotoModel.value.baseInfo.conditionIn==null||
-                          widget.carPhotoModel.value.baseInfo.conditionIn!.isEmpty)
-                      ||
-                      (widget.carPhotoModel.value.baseInfo.conditionOut==null||
-                          widget.carPhotoModel.value.baseInfo.conditionOut!.isEmpty)||
+                      widget.carPhotoModel.value.baseInfo.location == null ||
+                      widget.carPhotoModel.value.baseInfo.attribution == null ||
+                      (widget.carPhotoModel.value.baseInfo.conditionIn ==
+                              null ||
+                          widget.carPhotoModel.value.baseInfo.conditionIn!
+                              .isEmpty) ||
+                      (widget.carPhotoModel.value.baseInfo.conditionOut ==
+                              null ||
+                          widget.carPhotoModel.value.baseInfo.conditionOut!
+                              .isEmpty) ||
                       (widget.orderId == null &&
                           widget.businessPushModel.value.dealerId == null)) {
                     CloudToast.show('请先完善客户信息');
@@ -386,7 +390,7 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                               widget.consignmentContractModel,
                           businessPushModel: widget.businessPushModel,
                           carPhotoModel: widget.carPhotoModel,
-                      orderId: widget.orderId,
+                          orderId: widget.orderId,
                         ));
                   }
                 },

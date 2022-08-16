@@ -535,6 +535,17 @@ class PublishCarInfo {
   ///表现里程
   String? mileage;
 
+ static PublishCarInfo get empty => PublishCarInfo(
+        viNum: '',
+        carNum: '',
+        carName: '',
+        carColor: '',
+        carModelId: 0,
+        licensingDate: DateTime.now(),
+        engineNum: '',
+        mileage: '',
+      );
+
   PublishCarInfo({
     this.viNum,
     this.carName,
