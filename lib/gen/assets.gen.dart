@@ -705,6 +705,10 @@ class $AssetsImagesGen {
   AssetGenImage get realNameHead =>
       const AssetGenImage('assets/images/real_name_head.png');
 
+  /// File path: assets/images/sawtooth.png
+  AssetGenImage get sawtooth =>
+      const AssetGenImage('assets/images/sawtooth.png');
+
   /// File path: assets/images/shanghaibankbg.png
   AssetGenImage get shanghaibankbg =>
       const AssetGenImage('assets/images/shanghaibankbg.png');
@@ -716,6 +720,18 @@ class $AssetsImagesGen {
   /// File path: assets/images/signed_bg.png
   AssetGenImage get signedBg =>
       const AssetGenImage('assets/images/signed_bg.png');
+
+  /// File path: assets/images/split_bar_above.png
+  AssetGenImage get splitBarAbove =>
+      const AssetGenImage('assets/images/split_bar_above.png');
+
+  /// File path: assets/images/split_bar_botttom.png
+  AssetGenImage get splitBarBotttom =>
+      const AssetGenImage('assets/images/split_bar_botttom.png');
+
+  /// File path: assets/images/split_finish_tag.png
+  AssetGenImage get splitFinishTag =>
+      const AssetGenImage('assets/images/split_finish_tag.png');
 
   /// File path: assets/images/system_update.png
   AssetGenImage get systemUpdate =>

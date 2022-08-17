@@ -1,6 +1,7 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/split_account/split_account_list_model.dart';
 import 'package:cloud_car/ui/home/split_account/add_split_account_page.dart';
+import 'package:cloud_car/ui/home/split_account/split_info_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/widget/choose_widget.dart';
@@ -118,14 +119,14 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
               child: _models.isEmpty
                   ? const SizedBox()
                   : ListView(
-                    children: ListTile.divideTiles(
-                            context: context,
-                            tiles: _models
-                                .mapIndexed((currentValue, index) =>
-                                    _listCard(currentValue, index))
-                                .toList())
-                        .toList(),
-                  ),
+                      children: ListTile.divideTiles(
+                              context: context,
+                              tiles: _models
+                                  .mapIndexed((currentValue, index) =>
+                                      _listCard(currentValue, index))
+                                  .toList())
+                          .toList(),
+                    ),
             ),
           ),
         ],
@@ -144,20 +145,28 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
   Widget _listCard(SplitAccountListModel model, index) {
     return Material(
       color: Colors.white,
-      child: ListTile(
-        leading: _iconPaths[index % 5].image(width: 88.w, height: 88.w),
-        title:
-            model.name.text.size(28.sp).color(const Color(0xFF111111)).make(),
-        subtitle: model.lastBill.text
-            .size(28.sp)
-            .color(const Color(0xFFAAAAAA))
-            .make(),
-        trailing: DateUtil.formatDateMs(model.createAt * 1000,
-                format: DateFormats.mo_d_h_m)
-            .text
-            .size(20.sp)
-            .color(const Color(0xFFAAAAAA))
-            .make(),
+      child: InkWell(
+        onTap: () {
+          Get.to(() => SplitInfoPage(
+                title: model.name,
+                accountId: model.id,
+              ));
+        },
+        child: ListTile(
+          leading: _iconPaths[index % 5].image(width: 88.w, height: 88.w),
+          title:
+              model.name.text.size(28.sp).color(const Color(0xFF111111)).make(),
+          subtitle: model.lastBill.text
+              .size(28.sp)
+              .color(const Color(0xFFAAAAAA))
+              .make(),
+          trailing: DateUtil.formatDateMs(model.createAt * 1000,
+                  format: DateFormats.mo_d_h_m)
+              .text
+              .size(20.sp)
+              .color(const Color(0xFFAAAAAA))
+              .make(),
+        ),
       ),
     );
   }

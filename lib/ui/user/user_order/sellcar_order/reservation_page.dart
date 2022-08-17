@@ -281,10 +281,10 @@ class _ReservationPageState extends State<ReservationPage> {
                   '¥${_consignmentInfoList.contract.downPayment}',
                   BaseStyle.color333333),
           widget.status.num == 20 ? 36.hb : 0.hb,
-          Offstage(
-            offstage: widget.status.num != 20,
-            child: _getText('驳回理由', '凭证金额与汇款金额不符', const Color(0xFFE62222)),
-          ),
+          // Offstage(
+          //   offstage: widget.status.num != 20,
+          //   child: _getText('驳回理由', '凭证金额与汇款金额不符', const Color(0xFFE62222)),
+          // ),
           36.hb,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

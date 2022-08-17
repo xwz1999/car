@@ -109,32 +109,35 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             8.wb,
             '元'.text.size(28.sp).color(const Color(0xFF333333)).make(),
             const Spacer(),
-            _subButton('发起', () async {
-              var result = await Get.dialog(_getNameDialog());
-              if (_nameController.text.trim().isEmpty) {
-                CloudToast.show('名称不能为空！');
-                return;
-              }
-              var cancel = CloudToast.loading;
-              var brokerData = [];
-              _mapTextController.forEach((key, value) {
-                brokerData.add({
-                  'brokerId': key,
-                  'amount': double.parse(value.text),
-                });
-              });
-              var res = await apiClient.request(API.split.create, data: {
-                'ownAmount': double.parse(_amountEditingController.text),
-                'name': _nameController.text,
-                'brokerAmounts': brokerData,
-              });
-              if (res.code == 0) {
-                Get.back();
-              } else {
-                CloudToast.show(res.msg);
-              }
-              cancel();
-            }),
+            _subButton(
+                text: '发起',
+                onTap: () async {
+                  var result = await Get.dialog(_getNameDialog());
+                  if (!result) return;
+                  if (_nameController.text.trim().isEmpty) {
+                    CloudToast.show('名称不能为空！');
+                    return;
+                  }
+                  var cancel = CloudToast.loading;
+                  var brokerData = [];
+                  _mapTextController.forEach((key, value) {
+                    brokerData.add({
+                      'brokerId': key,
+                      'amount': double.parse(value.text),
+                    });
+                  });
+                  var res = await apiClient.request(API.split.create, data: {
+                    'ownAmount': double.parse(_amountEditingController.text),
+                    'name': _nameController.text,
+                    'brokerAmounts': brokerData,
+                  });
+                  if (res.code == 0) {
+                    Get.back();
+                  } else {
+                    CloudToast.show(res.msg);
+                  }
+                  cancel();
+                }),
             32.wb,
           ],
         ),
@@ -159,14 +162,14 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
           ],
         ),
         onConfirm: () {
-          Get.back();
+          Get.back(result: true);
         },
         onCancel: () {
-          Get.back();
+          Get.back(result: false);
         });
   }
 
-  Widget _subButton(String text, VoidCallback onTap) {
+  Widget _subButton({required String text, required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -218,11 +221,12 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
       onTap: () {
         if (_selectIndex.contains(index)) {
           _selectIndex.remove(index);
-          _mapTextController[index]?.dispose();
-          _mapTextController.remove(index);
+          _mapTextController[staff.brokerId]?.dispose();
+          _mapTextController.remove(staff.brokerId);
         } else {
           _selectIndex.add(index);
-          _mapTextController.putIfAbsent(index, () => TextEditingController());
+          _mapTextController.putIfAbsent(
+              staff.brokerId, () => TextEditingController());
         }
         setState(() {});
       },

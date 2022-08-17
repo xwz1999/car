@@ -1,5 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 typedef TextCallback = Function(String content);
 
@@ -18,6 +19,7 @@ class EditItemWidget extends StatefulWidget {
   final double? titleWidth;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
+  final List<TextInputFormatter>? inputFormatters;
 
   const EditItemWidget({
     super.key,
@@ -32,7 +34,9 @@ class EditItemWidget extends StatefulWidget {
     this.endIcon,
     this.titleWidth,
     this.keyboardType = TextInputType.text,
-    this.controller, this.value,
+    this.controller,
+    this.value,
+    this.inputFormatters,
   });
 
   @override
@@ -57,7 +61,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
 
   @override
   void didUpdateWidget(covariant EditItemWidget oldWidget) {
-    if (!widget.canChange&&widget.value!=null) {
+    if (!widget.canChange && widget.value != null) {
       _editingController.text = widget.value!;
     }
     super.didUpdateWidget(oldWidget);
@@ -107,6 +111,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
           Expanded(
             child: TextField(
               enabled: widget.canChange,
+              inputFormatters: widget.inputFormatters,
               keyboardType: widget.keyboardType,
               onSubmitted: (text) {
                 // _refreshController.callRefresh();

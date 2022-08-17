@@ -15,6 +15,7 @@ import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:cloud_car/widget/publish_car_info_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../model/car/car_photo_model.dart';
@@ -204,6 +205,8 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                   EditItemWidget(
                     title: '排放标准',
                     tips: '请输入',
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     value:
                         widget.carPhotoModel.value.baseInfo.emissionStandard ??
                             '',

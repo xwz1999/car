@@ -9,4 +9,5 @@ extension NumExt on num {
 
   String get priceFormat =>
       (Decimal.parse(toString()) / Decimal.fromInt(10000)).toString();
+
 }

@@ -9,7 +9,6 @@ import 'package:cloud_car/widget/cloud_search_head_widget.dart';
 import 'package:cloud_car/widget/cloud_status_tag.dart';
 import 'package:cloud_car/widget/cloud_tag.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:velocity_x/velocity_x.dart';

@@ -3,7 +3,6 @@ import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_begin_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 

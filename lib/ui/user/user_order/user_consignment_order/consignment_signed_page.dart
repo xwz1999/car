@@ -37,14 +37,7 @@ class ConsignmentSignedPage extends StatefulWidget {
 }
 
 class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
-  //late String stat = widget.stat;
-  //late Widget methods;
-  // late bool bl = true;
-
-  // getConsignmentInfo
-  late IndividualModel _individualList;
-
-  //bool _onLoad = true;
+  IndividualModel? _individualList;
 
   @override
   void initState() {
@@ -56,8 +49,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
   }
 
   _refresh() async {
-    _individualList = (await OrderFunc.getConsignmentInfo(widget.id))!;
-    //_onLoad = false;
+    _individualList = await OrderFunc.getConsignmentInfo(widget.id);
   }
 
   @override
@@ -73,163 +65,64 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize36,
                   fontWeight: FontWeight.bold)),
-
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
-        body: ListView(children: [
-          16.hb,
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            padding: EdgeInsets.only(top: 32.w),
-            height: 120.w,
-            color: Colors.white,
-            child: ProgressBar(
-              length: 6,
-              num: widget.statusNumber.progressNum,
-              direction: false,
-              cancel: widget.statusNumber.num != 0,
-              HW: 96,
-              texts: [
-                _text('预定'),
-                _text('签订'),
-                _text('上架'),
-                widget.statusNumber.num == 0 ? _text('交易取消') : _text('出售'),
-                _text('到账'),
-                _text('成交'),
-              ],
-            ),
-          ),
-          16.hb,
-          Offstage(
-            offstage: widget.statusNumber.num != 3 && widget.auditStatus != 3,
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 32.w),
-              padding: EdgeInsets.all(28.w),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.w)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _getTitle('审核驳回'),
-                  36.hb,
-                  _getText('审核时间', ''),
-                  36.hb,
-                  _getText(
-                    '驳回理由',
-                    '车辆信息填写有误，重新提交',
-                  )
-                ],
-              ),
-            ),
-          ),
-          widget.statusNumber.num == 3 && widget.auditStatus == 3
-              ? 16.hb
-              : 0.hb,
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 32.w),
-            padding: EdgeInsets.all(28.w),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _getTitle('客户信息'),
-                36.hb,
-                _getText('客户姓名', _individualList.customer.nickname),
-                36.hb,
-                _getText(
-                  '手机号',
-                  _individualList.customer.mobile,
-                )
-              ],
-            ),
-          ),
-          16.hb,
-
-          ///车辆信息
-          Container(
-              padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
-              margin: EdgeInsets.symmetric(horizontal: 32.w),
-              decoration: BoxDecoration(
-                  color: kForeGroundColor,
-                  borderRadius: BorderRadius.circular(16.w)),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 0.w),
-                      child: Text(
-                        '车辆信息',
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                    ),
-                    24.hb,
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 196.w,
-                          height: 150.w,
-                          child: CloudImageNetworkWidget.car(
-                            urls: [_individualList.car.mainPhoto],
-                          ),
-                        ),
-                        20.wb,
-                        SizedBox(
-                          width: 406.w,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(_individualList.car.modelName,
-                                  style: TextStyle(
-                                      fontSize: BaseStyle.fontSize28,
-                                      color: BaseStyle.color111111)),
-                              32.hb,
-                              Padding(
-                                padding: EdgeInsets.only(right: 16.w),
-                                child: _getText1(
-                                    DateUtil.formatDateMs(
-                                        _individualList.car.licensingDate
-                                                .toInt() *
-                                            1000,
-                                        format: 'yyyy年MM'),
-                                    '${_individualList.car.mileage}万公里'),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ])),
-          16.hb,
-          widget.statusNumber.num == 1
-              ? Container(
+        body: _individualList == null
+            ? const SizedBox.shrink()
+            : ListView(children: [
+                16.hb,
+                Container(
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
-                  padding: EdgeInsets.all(28.w),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.w)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 0.w),
-                        child: _getTitle('预约直卖信息'),
-                      ),
-                      36.hb,
-                      _getText('预约地址', '云云问车 浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
-                      36.hb,
-                      _getText(
-                        '预约时间',
-                        DateUtil.formatDateMs(
-                            widget.licensingDate.toInt() * 1000,
-                            format: DateFormats.full),
-                      )
+                  padding: EdgeInsets.only(top: 32.w),
+                  height: 120.w,
+                  color: Colors.white,
+                  child: ProgressBar(
+                    length: 6,
+                    num: widget.statusNumber.progressNum,
+                    direction: false,
+                    cancel: widget.statusNumber.num != 0,
+                    HW: 96,
+                    texts: [
+                      _text('预定'),
+                      _text('签订'),
+                      _text('上架'),
+                      widget.statusNumber.num == 0
+                          ? _text('交易取消')
+                          : _text('出售'),
+                      _text('到账'),
+                      _text('成交'),
                     ],
                   ),
-                )
-              : Container(
+                ),
+                16.hb,
+                Offstage(
+                  offstage:
+                      widget.statusNumber.num != 3 && widget.auditStatus != 3,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 32.w),
+                    padding: EdgeInsets.all(28.w),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.w)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _getTitle('审核驳回'),
+                        36.hb,
+                        _getText('审核时间', ''),
+                        36.hb,
+                        _getText(
+                          '驳回理由',
+                          '车辆信息填写有误，重新提交',
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                widget.statusNumber.num == 3 && widget.auditStatus == 3
+                    ? 16.hb
+                    : 0.hb,
+                Container(
                   margin: EdgeInsets.symmetric(horizontal: 32.w),
                   padding: EdgeInsets.all(28.w),
                   decoration: BoxDecoration(
@@ -238,25 +131,130 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 0.w),
-                        child: _getTitle('合同信息'),
-                      ),
+                      _getTitle('客户信息'),
                       36.hb,
-                      _getText('合同编号', _individualList.contractSn),
+                      _getText('客户姓名', _individualList!.customer.nickname),
                       36.hb,
                       _getText(
-                        '签订时间',
-                        DateUtil.formatDateMs(
-                            _individualList.contractSignAt.toInt() * 1000,
-                            format: DateFormats.full),
+                        '手机号',
+                        _individualList!.customer.mobile,
                       )
                     ],
                   ),
                 ),
-          16.hb,
-          _getWidget()
-        ]),
+                16.hb,
+
+                ///车辆信息
+                Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+                    margin: EdgeInsets.symmetric(horizontal: 32.w),
+                    decoration: BoxDecoration(
+                        color: kForeGroundColor,
+                        borderRadius: BorderRadius.circular(16.w)),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 0.w),
+                            child: Text(
+                              '车辆信息',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                          ),
+                          24.hb,
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 196.w,
+                                height: 150.w,
+                                child: CloudImageNetworkWidget.car(
+                                  urls: [_individualList!.car.mainPhoto],
+                                ),
+                              ),
+                              20.wb,
+                              SizedBox(
+                                width: 406.w,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(_individualList!.car.modelName,
+                                        style: TextStyle(
+                                            fontSize: BaseStyle.fontSize28,
+                                            color: BaseStyle.color111111)),
+                                    32.hb,
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 16.w),
+                                      child: _getText1(
+                                          DateUtil.formatDateMs(
+                                              _individualList!.car.licensingDate
+                                                      .toInt() *
+                                                  1000,
+                                              format: 'yyyy年MM'),
+                                          '${_individualList!.car.mileage}万公里'),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ])),
+                16.hb,
+                widget.statusNumber.num == 1
+                    ? Container(
+                        margin: EdgeInsets.symmetric(horizontal: 32.w),
+                        padding: EdgeInsets.all(28.w),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.w)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 0.w),
+                              child: _getTitle('预约直卖信息'),
+                            ),
+                            36.hb,
+                            _getText('预约地址', '云云问车 浙江省宁波市海曙区宁波保险科技产业园1号楼601-3'),
+                            36.hb,
+                            _getText(
+                              '预约时间',
+                              DateUtil.formatDateMs(
+                                  widget.licensingDate.toInt() * 1000,
+                                  format: DateFormats.full),
+                            )
+                          ],
+                        ),
+                      )
+                    : Container(
+                        margin: EdgeInsets.symmetric(horizontal: 32.w),
+                        padding: EdgeInsets.all(28.w),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.w)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 0.w),
+                              child: _getTitle('合同信息'),
+                            ),
+                            36.hb,
+                            _getText('合同编号', _individualList!.contractSn),
+                            36.hb,
+                            _getText(
+                              '签订时间',
+                              DateUtil.formatDateMs(
+                                  _individualList!.contractSignAt.toInt() *
+                                      1000,
+                                  format: DateFormats.full),
+                            )
+                          ],
+                        ),
+                      ),
+                16.hb,
+                _getWidget()
+              ]),
         bottomNavigationBar: SizedBox(
             height: 100.w,
             child: widget.statusNumber.num == 2 ||
@@ -380,7 +378,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
               36.hb,
               _getText(
                 '出售时间',
-                DateUtil.formatDateMs(_individualList.saleAt.toInt() * 1000,
+                DateUtil.formatDateMs(_individualList!.saleAt.toInt() * 1000,
                     format: DateFormats.full),
               ),
             ],
@@ -404,21 +402,22 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                     child: _getTitle('出售信息'),
                   ),
                   36.hb,
-                  _getText('购车客户', _individualList.customer.nickname),
+                  _getText('购车客户', _individualList!.customer.nickname),
                   36.hb,
                   _getText(
                     '手机号',
-                    _individualList.customer.mobile,
+                    _individualList!.customer.mobile,
                   ),
                   36.hb,
                   _getText(
                     '出售价格',
-                    '¥${_individualList.saleAmount}',
+                    '¥${_individualList!.saleAmount}',
                   ),
                   36.hb,
                   _getText(
                     '出售时间',
-                    DateUtil.formatDateMs(_individualList.saleAt.toInt() * 1000,
+                    DateUtil.formatDateMs(
+                        _individualList!.saleAt.toInt() * 1000,
                         format: DateFormats.full),
                   ),
                 ],
@@ -444,7 +443,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                   _getText(
                     '到款时间',
                     DateUtil.formatDateMs(
-                        _individualList.paymentCreatedAt.toInt() * 1000,
+                        _individualList!.paymentCreatedAt.toInt() * 1000,
                         format: DateFormats.full),
                   ),
                   36.hb,
@@ -456,7 +455,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                   _getPicture(
                     '到款凭证',
                     CloudImageNetworkWidget.car(
-                      urls: [_individualList.car.mainPhoto],
+                      urls: [_individualList!.car.mainPhoto],
                     ),
                   )
                 ],

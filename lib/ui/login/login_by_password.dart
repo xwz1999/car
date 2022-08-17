@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class LoginByPassword extends StatefulWidget {
-  const LoginByPassword({Key? key}) : super(key: key);
+  const LoginByPassword({super.key});
 
   @override
   _LoginByPasswordState createState() => _LoginByPasswordState();

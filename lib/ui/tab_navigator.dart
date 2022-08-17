@@ -2,7 +2,6 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/preferred/preferred_page.dart';
 import 'package:cloud_car/ui/user/user_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/hive_store.dart';
 import 'package:flutter/material.dart';
 
 //import 'package:hive_flutter/hive_flutter.dart';
