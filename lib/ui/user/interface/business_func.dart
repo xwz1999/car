@@ -1,7 +1,7 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/user/roleall_model.dart';
+import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/model/user/staff_info_model.dart';
-import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/model/user/storeselect_moedl.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/net_work/inner_model/base_model.dart';
@@ -9,12 +9,12 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
 class BusinessFunc {
   ///组织架构
-  static Future<List<StoreallModel>> getStoreall(Map params) async {
+  static Future<List<StaffAllModel>> getStoreall(Map params) async {
     var res =
-        await apiClient.request(API.storeManagement.storeAll, data: params);
+        await apiClient.request(API.storeManagement.staffAll, data: params);
 
     if (res.data==null) return [];
-    return (res.data as List).map((e) => StoreallModel.fromJson(e)).toList();
+    return (res.data as List).map((e) => StaffAllModel.fromJson(e)).toList();
   }
 
   ///全部角色
@@ -61,7 +61,7 @@ class BusinessFunc {
     String name,
     int gender,
     String phone,
-    int storeId,
+    // int storeId,
     int roleId,
     String commission,
   ) async {
@@ -70,7 +70,7 @@ class BusinessFunc {
       'name': name,
       'gender': gender,
       'phone': phone,
-      'storeId': storeId,
+      // 'storeId': storeId,
       'roleId': roleId,
       'commission': commission
     });

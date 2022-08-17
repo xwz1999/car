@@ -17,6 +17,7 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
       data: ExtraData.fromJson(json['data'] as Map<String, dynamic>),
       store: StoreInfo.fromJson(json['store'] as Map<String, dynamic>),
       businessId: json['businessId'] as int,
+      businessName: json['businessName'] as String,
     );
 
 Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
@@ -30,6 +31,7 @@ Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
       'data': instance.data,
       'store': instance.store,
       'businessId': instance.businessId,
+      'businessName': instance.businessName,
     };
 
 ExtraData _$ExtraDataFromJson(Map<String, dynamic> json) => ExtraData(

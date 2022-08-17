@@ -226,6 +226,9 @@ class _StoreManagement {
   ///组织架构
   get storeAll => '/business/store/all';
 
+  ///全部员工
+  String get staffAll => '/business/staff/all';
+
   ///全部角色
   get roleAll => '/business/role/all';
 

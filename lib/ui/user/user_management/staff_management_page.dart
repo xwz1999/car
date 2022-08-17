@@ -1,5 +1,5 @@
 import 'package:cloud_car/constants/enums.dart';
-import 'package:cloud_car/model/user/storeall_model.dart';
+import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/ui/user/user_management/add_employee_page.dart';
 import 'package:cloud_car/ui/user/user_management/permissions_page.dart';
@@ -11,10 +11,8 @@ import 'package:cloud_car/widget/cloud_tag.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
-import 'employee_details_page.dart';
 
 class StaffManagementPage extends StatefulWidget {
   const StaffManagementPage({super.key});
@@ -23,18 +21,16 @@ class StaffManagementPage extends StatefulWidget {
   State<StaffManagementPage> createState() => _StaffManagementPageState();
 }
 
-List<StoreallModel> employees = [];
+List<StaffAllModel> employees = [];
 
 class _StaffManagementPageState extends State<StaffManagementPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
-  late TextEditingController _editingController;
 
   Map _params = {};
 
   @override
   void initState() {
     super.initState();
-    _editingController = TextEditingController();
   }
 
   @override
@@ -56,34 +52,32 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
                 fontWeight: FontWeight.bold)),
-        actions: [
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => const PermissionsPage());
-                },
-                child: Text(
-                  '权限',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(color: BaseStyle.color111111),
-                ),
-              ),
-              32.wb,
-            ],
-          )
-        ],
+        // actions: [
+        //   Row(
+        //     children: [
+        //       GestureDetector(
+        //         onTap: () {
+        //           Get.to(() => const PermissionsPage());
+        //         },
+        //         child: Text(
+        //           '权限',
+        //           style: Theme.of(context)
+        //               .textTheme
+        //               .subtitle2
+        //               ?.copyWith(color: BaseStyle.color111111),
+        //         ),
+        //       ),
+        //       32.wb,
+        //     ],
+        //   )
+        // ],
       ),
       backgroundColor: kForeGroundColor,
       body: Column(
         children: [
           8.hb,
           CloudSearchHeadWidget(onSearch: (text) {
-            _params = {
-              'name': text,
-            };
+            _params = {'name': text};
             _easyRefreshController.callRefresh();
           }),
           32.hb,
@@ -104,7 +98,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                   )
                 : ListView.builder(
                     itemBuilder: (context, index) {
-                      return _getList(employees[index]);
+                      return getText(employees[index]);
                     },
                     itemCount: employees.length,
                   ),
@@ -122,45 +116,43 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
     );
   }
 
-  _getList(StoreallModel model) {
-    return ExpansionTile(
-      backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
-      //leading: Icon(Icons.),
-      collapsedBackgroundColor: const Color(0xFF333333).withOpacity(0.1),
-      title: Row(
-        children: [
-          Text(model.name,
-              style: TextStyle(
-                  fontSize: BaseStyle.fontSize32,
-                  color: const Color(0xFF027AFF))),
-          24.wb,
-          Text((model.staffs != null ? model.staffs!.length : 0).toString(),
-              style: TextStyle(
-                  fontSize: BaseStyle.fontSize28,
-                  color: const Color.fromRGBO(2, 122, 255, 0.8)))
-        ],
-      ),
-      children: [
-        ...model.staffs != null
-            ? model.staffs!.mapIndexed((e, index) {
-                return GestureDetector(
-                  onTap: () async {
-                    await Get.to(() => EmployeeDetailsPage(
-                          staffId: e.id,
-                        ));
-                    _easyRefreshController.callRefresh();
-                  },
-                  child: getText(e.roleName, e.genderEM.typeNum, e.name,
-                      e.phone, e.auditStatus, e.roleEm),
-                );
-              }).toList()
-            : []
-      ],
-    );
-  }
+  // _getList(StaffAllModel model) {
+  //   return ExpansionTile(
+  //     backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
+  //     collapsedBackgroundColor: const Color(0xFF333333).withOpacity(0.1),
+  //     title: Row(
+  //       children: [
+  //         Text(model.name,
+  //             style: TextStyle(
+  //                 fontSize: BaseStyle.fontSize32,
+  //                 color: const Color(0xFF027AFF))),
+  //         24.wb,
+  //         Text((model.staffs != null ? model.staffs!.length : 0).toString(),
+  //             style: TextStyle(
+  //                 fontSize: BaseStyle.fontSize28,
+  //                 color: const Color.fromRGBO(2, 122, 255, 0.8)))
+  //       ],
+  //     ),
+  //     children: [
+  //       ...model.staffs != null
+  //           ? model.staffs!.mapIndexed((e, index) {
+  //               return GestureDetector(
+  //                 onTap: () async {
+  //                   await Get.to(() => EmployeeDetailsPage(
+  //                         staffId: e.id,
+  //                       ));
+  //                   _easyRefreshController.callRefresh();
+  //                 },
+  //                 child: getText(e.roleName, e.genderEM.typeNum, e.name,
+  //                     e.phone, e.auditStatus, e.roleEm),
+  //               );
+  //             }).toList()
+  //           : []
+  //     ],
+  //   );
+  // }
 
-  getText(String position, int gender, String name, String phone, int judge,
-      Role role) {
+  getText(StaffAllModel model) {
     return Container(
       color: Colors.white,
       height: 94.w,
@@ -171,7 +163,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
             width: 32.w,
             height: 32.w,
             child: Image.asset(
-              gender == 2
+              model.genderEM == Gender.female
                   ? Assets.icons.icUserWoman.path
                   : Assets.icons.icUser.path,
               fit: BoxFit.fill,
@@ -179,20 +171,20 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
           ),
           16.wb,
           Text(
-            name,
+            model.name,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
           ),
           16.wb,
           Text(
-            phone,
+            model.phone,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
           24.wb,
-          if (role == Role.manager) CloudTag.blue(text: '店长'),
+          if (model.roleEM == Role.defaultRole) CloudTag.blue(text: '店长'),
           SizedBox(
-              child: judge == 1
+              child: model.auditStatus == 1
                   ? const CloudStatusTag(text: '待审核')
                   : const SizedBox())
         ],

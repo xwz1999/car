@@ -1,6 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/constants/enums.dart';
-import 'package:cloud_car/model/user/storeall_model.dart';
+import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
@@ -27,7 +27,7 @@ class AddSplitAccountPage extends StatefulWidget {
 class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
-  List<StoreallModel> employees = [];
+  List<StaffAllModel> employees = [];
 
   final TextEditingController _amountEditingController =
       TextEditingController();
@@ -77,7 +77,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
                   )
                 : ListView.builder(
                     itemBuilder: (context, index) {
-                      return _getList(employees[index], index);
+                      return _listTile(employees[index], index);
                     },
                     itemCount: employees.length,
                   ),
@@ -188,35 +188,35 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
     );
   }
 
-  _getList(StoreallModel model, int index) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            32.wb,
-            ('门店${index + 1}')
-                .text
-                .size(24.sp)
-                .color(const Color(0xFF999999))
-                .make(),
-          ],
-        ),
-        ...model.staffs != null
-            ? model.staffs!.mapIndexed((e, index) {
-                return GestureDetector(
-                  onTap: () async {},
-                  child: _listTile(
-                    e,
-                    index,
-                  ),
-                );
-              }).toList()
-            : []
-      ],
-    );
-  }
+  // _getList(StoreallModel model, int index) {
+  //   return Column(
+  //     children: [
+  //       Row(
+  //         children: [
+  //           32.wb,
+  //           ('门店${index + 1}')
+  //               .text
+  //               .size(24.sp)
+  //               .color(const Color(0xFF999999))
+  //               .make(),
+  //         ],
+  //       ),
+  //       ...model.staffs != null
+  //           ? model.staffs!.mapIndexed((e, index) {
+  //               return GestureDetector(
+  //                 onTap: () async {},
+  //                 child: _listTile(
+  //                   e,
+  //                   index,
+  //                 ),
+  //               );
+  //             }).toList()
+  //           : []
+  //     ],
+  //   );
+  // }
 
-  _listTile(Staff staff, int index) {
+  _listTile(StaffAllModel staff, int index) {
     return GestureDetector(
       onTap: () {
         if (_selectIndex.contains(index)) {
@@ -255,7 +255,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
                   fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
             ),
             16.wb,
-            if (staff.roleEm == Role.manager) CloudTag.blue(text: '店长'),
+            if (staff.roleEM == Role.manager) CloudTag.blue(text: '店长'),
             if (_selectIndex.contains(index))
               Row(
                 children: [

@@ -14,7 +14,8 @@ class UserInfoModel extends Equatable {
   final int gender;
   final ExtraData data;
   final StoreInfo store;
-  final int businessId;// 1= 云云问车 2=其他
+  final int businessId; // 1= 云云问车 2=其他
+  final String businessName;
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);
@@ -29,6 +30,7 @@ class UserInfoModel extends Equatable {
       phone: '',
       gender: 0,
       businessId: 0,
+      businessName: '',
       data: ExtraData(
         assessCount: 0,
         inviteCount: 0,
@@ -70,6 +72,7 @@ class UserInfoModel extends Equatable {
     required this.data,
     required this.store,
     required this.businessId,
+    required this.businessName,
   });
 
   UserInfoModel copyWith({
@@ -82,6 +85,7 @@ class UserInfoModel extends Equatable {
     ExtraData? data,
     StoreInfo? store,
     int? businessId,
+    String? businessName,
   }) {
     return UserInfoModel(
       inviteCode: inviteCode ?? this.inviteCode,
@@ -93,6 +97,7 @@ class UserInfoModel extends Equatable {
       data: data ?? this.data,
       store: store ?? this.store,
       businessId: businessId ?? this.businessId,
+      businessName: businessName ?? this.businessName,
     );
   }
 }
