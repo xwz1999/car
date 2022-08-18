@@ -653,13 +653,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  jpush_flutter:
-    dependency: "direct main"
-    description:
-      name: jpush_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.4"
   js:
     dependency: transitive
     description:
@@ -687,7 +680,7 @@ packages:
       name: jverify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2"
+    version: "2.2.5"
   lints:
     dependency: transitive
     description:

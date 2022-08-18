@@ -16,8 +16,8 @@ enum Gender {
 ///角色分配
 enum Role {
   salesTraffic(2, '经纪人', '可以录入车辆信息、编辑车辆，并进行客户跟进'),
-  manager(1, '', ''),
-  defaultRole(0, '店长', '能够管理店内的客户、车辆、订单');
+  manager(1, '店长', '能够管理店内的客户、车辆、订单'),
+  defaultRole(0, '', '');
 
   final int num;
   final String typeStr;

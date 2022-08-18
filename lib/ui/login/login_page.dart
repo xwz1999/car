@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
           CloudToast.show(base.msg);
         }
       } else {
-        CloudToast.show(JverifyErrorCode.getmsg(event.code));
+        CloudToast.show(JverifyErrorCode.getmsg(event.code??0));
       }
     });
   }

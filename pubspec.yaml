@@ -67,9 +67,9 @@ dependencies:
   #日志输出
   power_logger: ^1.2.2
   #极光认证
-  jverify: 2.1.2
+  jverify: 2.2.5
   #极光推送
-  jpush_flutter: ^2.3.4
+#  jpush_flutter: ^2.3.4
   #微信登录及支付
   fluwx: ^3.8.3
   #支付宝支付
