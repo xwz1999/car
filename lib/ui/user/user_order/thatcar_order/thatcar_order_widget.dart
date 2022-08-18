@@ -184,7 +184,6 @@ class _ThatcarOrderWidgetState extends State<ThatcarOrderWidget> {
   }
 
   _getCar(CallcarlistModel model) {
-    //late bool bl = false;
     return Offstage(
         offstage: false, //text == '全部' ? false : model.statusEnum.str != text,
         child: GestureDetector(

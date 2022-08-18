@@ -1,6 +1,7 @@
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/choose_customer_page.dart';
+import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -99,63 +100,65 @@ class _CallOrderPageState extends State<CallOrderPage> {
                         conditions: true,
                         headline: '叫车订单',
                         body: Text(
-                          '发起成功，点击下方联系车务',
+                          '发起成功',
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         bottom: CloudBottomButton(
                           onTap: () {
-                            Alert.show(
-                                context,
-                                NormalContentDialog(
-                                  type: NormalTextDialogType.delete,
-                                  title: '',
-                                  content: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      30.hb,
-                                      SizedBox(
-                                        width: 238.w,
-                                        height: 174.w,
-                                        child: Image.asset(
-                                          Assets.images.immediately.path,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                      48.hb,
-                                      Text(
-                                        callOrderModel.phone!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2
-                                            ?.copyWith(
-                                                fontSize: BaseStyle.fontSize40),
-                                      ),
-                                      16.hb,
-                                      Text(
-                                        '使用虚拟号联系绑定销售',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2,
-                                      ),
-                                      30.hb,
-                                    ],
-                                  ),
-                                  items: const ['取消'],
-                                  deleteItem: '立即联系',
-                                  //监听器
-                                  listener: (index) {
-                                    Alert.dismiss(context);
-                                  },
-                                  deleteListener: () {
-                                    Alert.dismiss(context);
-                                    launchUrl(Uri(
-                                        scheme: 'tel',
-                                        path: callOrderModel.phone!));
-                                  },
-                                ));
+                            Get.until((route) =>
+                                Get.currentRoute == '/CarsDetailPage');
+                            // Alert.show(
+                            //     context,
+                            //     NormalContentDialog(
+                            //       type: NormalTextDialogType.delete,
+                            //       title: '',
+                            //       content: Column(
+                            //         crossAxisAlignment:
+                            //             CrossAxisAlignment.center,
+                            //         children: [
+                            //           30.hb,
+                            //           SizedBox(
+                            //             width: 238.w,
+                            //             height: 174.w,
+                            //             child: Image.asset(
+                            //               Assets.images.immediately.path,
+                            //               fit: BoxFit.fill,
+                            //             ),
+                            //           ),
+                            //           48.hb,
+                            //           Text(
+                            //             callOrderModel.phone!,
+                            //             style: Theme.of(context)
+                            //                 .textTheme
+                            //                 .subtitle2
+                            //                 ?.copyWith(
+                            //                     fontSize: BaseStyle.fontSize40),
+                            //           ),
+                            //           16.hb,
+                            //           Text(
+                            //             '使用虚拟号联系绑定销售',
+                            //             style: Theme.of(context)
+                            //                 .textTheme
+                            //                 .subtitle2,
+                            //           ),
+                            //           30.hb,
+                            //         ],
+                            //       ),
+                            //       items: const ['取消'],
+                            //       deleteItem: '返回汽车详情',
+                            //       //监听器
+                            //       listener: (index) {
+                            //         Alert.dismiss(context);
+                            //       },
+                            //       deleteListener: () {
+                            //         Alert.dismiss(context);
+                            //         launchUrl(Uri(
+                            //             scheme: 'tel',
+                            //             path: callOrderModel.phone!));
+                            //       },
+                            //     ));
                           },
-                          text: '立即联系',
+                          text: '返回汽车详情',
                         )))
                     : CloudToast.show('叫车订单创建失败');
               });

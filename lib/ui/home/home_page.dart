@@ -126,13 +126,13 @@ class _HomePageState extends State<HomePage>
                   height: 48.w, width: 48.w),
             ),
             24.wb,
-            GestureDetector(
-              onTap: () {
-                Get.to(() => const TaskPage());
-              },
-              child: Image.asset(Assets.icons.mainMenu.path,
-                  height: 48.w, width: 48.w),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Get.to(() => const TaskPage());
+            //   },
+            //   child: Image.asset(Assets.icons.mainMenu.path,
+            //       height: 48.w, width: 48.w),
+            // ),
             32.wb,
           ],
         ),
