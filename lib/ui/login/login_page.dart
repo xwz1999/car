@@ -53,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
         print(result);
         LoggerData.addData(result);
       }
+      var cancel = CloudToast.loading;
       if (event.code == 6000) {
         var base = await apiClient.request(API.login.phone,
             data: {'token': event.message, 'inviteCode': ''});
@@ -63,12 +64,12 @@ class _LoginPageState extends State<LoginPage> {
           await UserTool.userProvider.setToken(base.data['token']);
           Get.offAll(() => const TabNavigator());
         } else {
-          Jverify().dismissLoginAuthView();
           CloudToast.show(base.msg);
         }
       } else {
         CloudToast.show(JverifyErrorCode.getmsg(event.code??0));
       }
+      cancel();
     });
   }
 
@@ -398,12 +399,17 @@ class _LoginPageState extends State<LoginPage> {
     uiConfig.clauseNameTwo = "隐私政策";
     uiConfig.clauseUrlTwo = "https://static.yunyunwenche.com/html/privacy.html";
     uiConfig.clauseColor = Colors.blue.value;
-    uiConfig.privacyText = ["同意", "以及", "和", ""];
+    uiConfig.privacyText = ["", "", "", ""];
     uiConfig.privacyTextSize = 13;
     //uiConfig.privacyWithBookTitleMark = true;
     //uiConfig.privacyTextCenterGravity = false;
     uiConfig.authStatusBarStyle = JVIOSBarStyle.StatusBarStyleDarkContent;
     uiConfig.privacyStatusBarStyle = JVIOSBarStyle.StatusBarStyleDefault;
+    uiConfig.privacyItem = [
+      JVPrivacy("《用户协议》", "https://static.yunyunwenche.com/html/useragreement.html",
+          beforeName: "==", afterName: "++", separator: "、"),
+      JVPrivacy("《隐私政策》", "https://static.yunyunwenche.com/html/privacy.html", separator: "、")
+    ];
 
     uiConfig.statusBarColorWithNav = true;
     uiConfig.virtualButtonTransparent = true;
@@ -429,6 +435,6 @@ class _LoginPageState extends State<LoginPage> {
         .setCustomAuthorizationView(true, uiConfig, landscapeConfig: uiConfig);
 
     /// 步骤 2：调用一键登录接口
-    Jverify().loginAuthSyncApi(autoDismiss: false);
+    Jverify().loginAuthSyncApi(autoDismiss: true);
   }
 }

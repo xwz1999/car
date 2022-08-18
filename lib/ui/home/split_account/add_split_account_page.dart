@@ -123,7 +123,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
                   _mapTextController.forEach((key, value) {
                     brokerData.add({
                       'brokerId': key,
-                      'amount': double.parse(value.text),
+                      'amount': num.parse(value.text),
                     });
                   });
                   var res = await apiClient.request(API.split.create, data: {
@@ -261,7 +261,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
                 children: [
                   20.wb,
                   CloudBorderedTextFieldWidget(
-                    controller: _mapTextController[index],
+                    controller: _mapTextController[staff.brokerId],
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     inputType: TextInputType.number,
                   ),

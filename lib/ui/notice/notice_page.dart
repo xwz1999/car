@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:cloud_car/ui/home/split_account/split_account_page.dart';
 import 'package:cloud_car/ui/home/task/customer_page.dart';
 import 'package:cloud_car/ui/notice/car_system_informs.dart';
 import 'package:cloud_car/ui/notice/notice_examination.dart';
@@ -23,27 +24,27 @@ class _NoticePageState extends State<NoticePage>
 
   //final _num = number > 99 ? "99+" : number;
   List noticelist = [
-    {
-      'name': '客户消息提示',
-      'src': 'assets/icons/message.png',
-      'time': '12:22',
-      'msg': '您绑定的客户发来消息，请注意查收',
-      'noreadnum': '1'
-    },
-    {
-      'name': '客户付款',
-      'src': 'assets/icons/payment.png',
-      'time': '12:22',
-      'msg': '您绑定的客户发来消息，请注意查收',
-      'noreadnum': '99'
-    },
-    {
-      'name': '客户跟踪',
-      'src': 'assets/icons/tracking.png',
-      'time': '12:22',
-      'msg': '您绑定的客户发来消息，请注意查收',
-      'noreadnum': ''
-    },
+    // {
+    //   'name': '客户消息提示',
+    //   'src': 'assets/icons/message.png',
+    //   'time': '12:22',
+    //   'msg': '您绑定的客户发来消息，请注意查收',
+    //   'noreadnum': '1'
+    // },
+    // {
+    //   'name': '客户付款',
+    //   'src': 'assets/icons/payment.png',
+    //   'time': '12:22',
+    //   'msg': '您绑定的客户发来消息，请注意查收',
+    //   'noreadnum': '99'
+    // },
+    // {
+    //   'name': '客户跟踪',
+    //   'src': 'assets/icons/tracking.png',
+    //   'time': '12:22',
+    //   'msg': '您绑定的客户发来消息，请注意查收',
+    //   'noreadnum': ''
+    // },
     {
       'name': '客户邀约提醒',
       'src': 'assets/icons/invitation.png',
@@ -51,32 +52,32 @@ class _NoticePageState extends State<NoticePage>
       'msg': '您绑定的客户发来消息，请注意查收',
       'noreadnum': ''
     },
-    {
-      'name': '客户关怀提醒',
-      'src': 'assets/icons/care.png',
-      'time': '12:22',
-      'msg': '您绑定的客户发来消息，请注意查收',
-      'noreadnum': ''
-    },
+    // {
+    //   'name': '客户关怀提醒',
+    //   'src': 'assets/icons/care.png',
+    //   'time': '12:22',
+    //   'msg': '您绑定的客户发来消息，请注意查收',
+    //   'noreadnum': ''
+    // },
     {
       'name': '分账确认提示',
       'src': 'assets/icons/fashionable.png',
       'time': '12:22',
-      'msg': '您绑定的客户发来消息，请注意查收',
+      'msg': '有新的账单',
       'noreadnum': ''
     },
-    {
-      'name': '审批提醒',
-      'src': 'assets/icons/examination.png',
-      'time': '12:22',
-      'msg': '您绑定的客户发来消息，请注意查收',
-      'noreadnum': ''
-    },
+    // {
+    //   'name': '审批提醒',
+    //   'src': 'assets/icons/examination.png',
+    //   'time': '12:22',
+    //   'msg': '您绑定的客户发来消息，请注意查收',
+    //   'noreadnum': ''
+    // },
     {
       'name': '系统通知',
       'src': 'assets/icons/system.png',
       'time': '12:22',
-      'msg': '您绑定的客户发来消息，请注意查收',
+      'msg': '新版本可用',
       'noreadnum': ''
     },
   ];
@@ -115,7 +116,7 @@ class _NoticePageState extends State<NoticePage>
           //padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: ListView.builder(
               padding: EdgeInsets.only(top: 128.w),
-              itemCount: 8,
+              itemCount: noticelist.length,
               itemBuilder: (ctx, index) {
                 return _noticelist(noticelist[index]);
               }),
@@ -128,7 +129,7 @@ class _NoticePageState extends State<NoticePage>
         onTap: () {
           switch (item['name']) {
             case '分账确认提示':
-              Get.to(() => const FashionablePage());
+              Get.to(() => const SplitAccountPage());
               //print("1111111");
               break;
             case '审批提醒':

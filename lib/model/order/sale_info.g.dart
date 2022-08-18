@@ -17,6 +17,7 @@ SaleInfo _$SaleInfoFromJson(Map<String, dynamic> json) => SaleInfo(
           json['balancePayment'] as Map<String, dynamic>),
       report: Report.fromJson(json['report'] as Map<String, dynamic>),
       means: Means.fromJson(json['means'] as Map<String, dynamic>),
+      customer: SaleCustomer.fromJson(json['customer'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SaleInfoToJson(SaleInfo instance) => <String, dynamic>{
@@ -28,6 +29,7 @@ Map<String, dynamic> _$SaleInfoToJson(SaleInfo instance) => <String, dynamic>{
       'balancePayment': instance.balancePayment,
       'report': instance.report,
       'means': instance.means,
+      'customer': instance.customer,
     };
 
 Car _$CarFromJson(Map<String, dynamic> json) => Car(
@@ -131,4 +133,15 @@ Map<String, dynamic> _$MeansToJson(Means instance) => <String, dynamic>{
       'vehicleLicense': instance.vehicleLicense,
       'invoice': instance.invoice,
       'guaranteeSlip': instance.guaranteeSlip,
+    };
+
+SaleCustomer _$SaleCustomerFromJson(Map<String, dynamic> json) => SaleCustomer(
+      name: json['name'] as String,
+      phone: json['phone'] as String,
+    );
+
+Map<String, dynamic> _$SaleCustomerToJson(SaleCustomer instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'phone': instance.phone,
     };

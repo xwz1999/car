@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller_widget.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:power_logger/power_logger.dart';
@@ -309,7 +312,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           title: '权限配置',
           endIcon: true,
           editor: false,
-          tips: '经纪人',
+          tips: UserTool.userProvider.userInfo.businessId == 1 ? '车务' : '经纪人',
           value: permissions1,
           // widget: Image(
           //   image: Assets.icons.icGoto,

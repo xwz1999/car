@@ -31,12 +31,11 @@ class ReservationPage extends StatefulWidget {
 }
 
 class _ReservationPageState extends State<ReservationPage> {
-  //late bool judge = widget.judge;
   late Widget methods;
 
   late String audit = '3';
 
-  SaleInfo _consignmentInfoList = SaleInfo.init;
+  SaleInfo _consignmentInfo = SaleInfo.init;
 
   @override
   void initState() {
@@ -49,7 +48,7 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   _refresh() async {
-    _consignmentInfoList = await OrderFunc.getSaleInfo(widget.orderId);
+    _consignmentInfo = await OrderFunc.getSaleInfo(widget.orderId);
     setState(() {});
   }
 
@@ -102,9 +101,11 @@ class _ReservationPageState extends State<ReservationPage> {
                     child: _getTitle('客户信息'),
                   ),
                   36.hb,
-                  _getText('客户姓名', '莉丝', BaseStyle.color333333),
+                  _getText('客户姓名', _consignmentInfo.customer.name,
+                      BaseStyle.color333333),
                   36.hb,
-                  _getText('手机号', '111112112122', BaseStyle.color333333)
+                  _getText('手机号', _consignmentInfo.customer.phone,
+                      BaseStyle.color333333)
                 ],
               ),
             ),
@@ -125,28 +126,27 @@ class _ReservationPageState extends State<ReservationPage> {
                           SizedBox(
                             width: 196.w,
                             height: 150.w,
-                            child: CloudImageNetworkWidget.car(urls: [
-                              _consignmentInfoList.car.modelName,
-                            ]),
+                            child: CloudImageNetworkWidget.car(
+                                urls: [_consignmentInfo.car.mainPhoto]),
                           ),
                           20.wb,
                           SizedBox(
                             width: 406.w,
                             child: Column(
                               children: [
-                                Text(_consignmentInfoList.car.modelName,
+                                Text(_consignmentInfo.car.modelName,
                                     style: TextStyle(
                                         fontSize: BaseStyle.fontSize28,
                                         color: BaseStyle.color111111)),
                                 26.hb,
                                 _getChip(
-                                  '过户${_consignmentInfoList.car.transfer}次',
+                                  '过户${_consignmentInfo.car.transfer}次',
                                   DateUtil.formatDateMs(
-                                      _consignmentInfoList.car.licensingDate
+                                      _consignmentInfo.car.licensingDate
                                               .toInt() *
                                           1000,
                                       format: 'yyyy年 '),
-                                  '${_consignmentInfoList.car.mileage}万公里',
+                                  '${_consignmentInfo.car.mileage}万公里',
                                 )
                               ],
                             ),
@@ -175,24 +175,24 @@ class _ReservationPageState extends State<ReservationPage> {
                   widget.status.num == 10,
               child: _getReport(),
             ),
-            widget.status.num == 0
-                ? _getContainer(
-                    ///订单取消
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 0.w),
-                          child: _getTitle('订单取消信息'),
-                        ),
-                        36.hb,
-                        _getText('取消人员', '云云问车平台', BaseStyle.color333333),
-                        36.hb,
-                        _getText('取消时间', '111112112122', BaseStyle.color333333)
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
+            // widget.status.num == 0
+            //     ? _getContainer(
+            //         ///订单取消
+            //         Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             Padding(
+            //               padding: EdgeInsets.only(left: 0.w),
+            //               child: _getTitle('订单取消信息'),
+            //             ),
+            //             36.hb,
+            //             _getText('取消人员', '云云问车平台', BaseStyle.color333333),
+            //             36.hb,
+            //             _getText('取消时间', '111112112122', BaseStyle.color333333)
+            //           ],
+            //         ),
+            //       )
+            //     : const SizedBox(),
 
             ///车辆检测报告2
             Offstage(
@@ -227,7 +227,7 @@ class _ReservationPageState extends State<ReservationPage> {
             child: _getTitle('合同信息'),
           ),
           36.hb,
-          _getText('合同编号', (_consignmentInfoList.contract.contract).toString(),
+          _getText('合同编号', (_consignmentInfo.contract.contract).toString(),
               BaseStyle.color333333),
           36.hb,
           _getText(
@@ -235,7 +235,7 @@ class _ReservationPageState extends State<ReservationPage> {
               number == 1
                   ? '-'
                   : DateUtil.formatDateMs(
-                      (_consignmentInfoList.contract.signAt.toInt()) * 1000,
+                      (_consignmentInfo.contract.signAt.toInt()) * 1000,
                       format: DateFormats.full),
               BaseStyle.color333333)
         ],
@@ -254,7 +254,7 @@ class _ReservationPageState extends State<ReservationPage> {
             child: _getTitle('支付信息'),
           ),
           36.hb,
-          _getText('定金支付', '¥${_consignmentInfoList.contract.deposit}',
+          _getText('定金支付', '¥${_consignmentInfo.contract.deposit}',
               BaseStyle.color333333),
           36.hb,
           _getText('支付方式', '支付宝', BaseStyle.color333333),
@@ -262,7 +262,7 @@ class _ReservationPageState extends State<ReservationPage> {
           _getText(
               '支付时间',
               DateUtil.formatDateMs(
-                  _consignmentInfoList.deposit.createdAt.toInt() * 1000,
+                  _consignmentInfo.deposit.createdAt.toInt() * 1000,
                   format: DateFormats.full),
               BaseStyle.color333333),
           40.hb,
@@ -270,15 +270,13 @@ class _ReservationPageState extends State<ReservationPage> {
               ? widget.status.num == 20
                   ? _getText(
                       '首付支付',
-                      '¥${_consignmentInfoList.contract.downPayment}(审核中)',
+                      '¥${_consignmentInfo.contract.downPayment}(审核中)',
                       const Color(0xFF027AFF))
                   : _getText(
                       '首付支付',
-                      '¥${_consignmentInfoList.contract.downPayment}(审核驳回)',
+                      '¥${_consignmentInfo.contract.downPayment}(审核驳回)',
                       const Color(0xFFE62222))
-              : _getText(
-                  '首付支付',
-                  '¥${_consignmentInfoList.contract.downPayment}',
+              : _getText('首付支付', '¥${_consignmentInfo.contract.downPayment}',
                   BaseStyle.color333333),
           widget.status.num == 20 ? 36.hb : 0.hb,
           // Offstage(
@@ -312,7 +310,7 @@ class _ReservationPageState extends State<ReservationPage> {
           _getText(
               '支付时间',
               DateUtil.formatDateMs(
-                  _consignmentInfoList.downPayment.createdAt.toInt() * 1000,
+                  _consignmentInfo.downPayment.createdAt.toInt() * 1000,
                   format: DateFormats.full),
               BaseStyle.color333333),
           widget.status.num == 40 ||
@@ -330,15 +328,15 @@ class _ReservationPageState extends State<ReservationPage> {
                     ? widget.status.num == 40
                         ? _getText(
                             '尾款支付',
-                            '¥${_consignmentInfoList.contract.balancePayment}(审核中)',
+                            '¥${_consignmentInfo.contract.balancePayment}(审核中)',
                             const Color(0xFF027AFF))
                         : _getText(
                             '尾款支付',
-                            '¥${_consignmentInfoList.contract.balancePayment}(审核驳回)',
+                            '¥${_consignmentInfo.contract.balancePayment}(审核驳回)',
                             const Color(0xFFE62222))
                     : _getText(
                         '尾款支付',
-                        '¥${_consignmentInfoList.contract.balancePayment}',
+                        '¥${_consignmentInfo.contract.balancePayment}',
                         BaseStyle.color333333),
                 36.hb,
                 Offstage(
@@ -351,7 +349,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 _getText(
                     '支付时间',
                     DateUtil.formatDateMs(
-                        _consignmentInfoList.balancePayment.createdAt.toInt() *
+                        _consignmentInfo.balancePayment.createdAt.toInt() *
                             1000,
                         format: DateFormats.full),
                     BaseStyle.color333333),
@@ -388,7 +386,7 @@ class _ReservationPageState extends State<ReservationPage> {
           width: 200.w,
           height: 150.w,
           child: CloudImageNetworkWidget.car(
-            urls: [_consignmentInfoList.report.path],
+            urls: [_consignmentInfo.report.path],
           ),
         ),
         SizedBox(
@@ -408,28 +406,28 @@ class _ReservationPageState extends State<ReservationPage> {
         _getPhoto(
           '登记证书',
           CloudImageNetworkWidget.car(
-            urls: [_consignmentInfoList.means.certificate],
+            urls: [_consignmentInfo.means.certificate],
           ),
         ),
         36.hb,
         _getPhoto(
           '行驶证',
           CloudImageNetworkWidget.car(
-            urls: [_consignmentInfoList.means.vehicleLicense],
+            urls: [_consignmentInfo.means.vehicleLicense],
           ),
         ),
         36.hb,
         _getPhoto(
           '发票',
           CloudImageNetworkWidget.car(
-            urls: [_consignmentInfoList.means.invoice],
+            urls: [_consignmentInfo.means.invoice],
           ),
         ),
         36.hb,
         _getPhoto(
           '保单',
           CloudImageNetworkWidget.car(
-            urls: [_consignmentInfoList.means.guaranteeSlip],
+            urls: [_consignmentInfo.means.guaranteeSlip],
           ),
         ),
         SizedBox(
@@ -491,7 +489,7 @@ class _ReservationPageState extends State<ReservationPage> {
                         fontSize: BaseStyle.fontSize28,
                         color: const Color(0xFFFF3B02))),
                 TextSpan(
-                    text: _consignmentInfoList.contract.deposit,
+                    text: _consignmentInfo.contract.deposit,
                     style: TextStyle(
                         fontSize: BaseStyle.fontSize32,
                         color: const Color(0xFFFF3B02)))
@@ -559,7 +557,7 @@ class _ReservationPageState extends State<ReservationPage> {
                         fontSize: BaseStyle.fontSize28,
                         color: const Color(0xFFFF3B02))),
                 TextSpan(
-                    text: _consignmentInfoList.contract.downPayment,
+                    text: _consignmentInfo.contract.downPayment,
                     style: TextStyle(
                         fontSize: BaseStyle.fontSize32,
                         color: const Color(0xFFFF3B02)))
@@ -624,7 +622,7 @@ class _ReservationPageState extends State<ReservationPage> {
                         fontSize: BaseStyle.fontSize28,
                         color: const Color(0xFFFF3B02))),
                 TextSpan(
-                    text: _consignmentInfoList.contract.balancePayment,
+                    text: _consignmentInfo.contract.balancePayment,
                     style: TextStyle(
                         fontSize: BaseStyle.fontSize32,
                         color: const Color(0xFFFF3B02)))
@@ -824,7 +822,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 .bodyText1
                 ?.copyWith(fontWeight: FontWeight.bold)),
         TextSpan(
-            text: _consignmentInfoList.contract.totalAmount,
+            text: _consignmentInfo.contract.totalAmount,
             style: Theme.of(context)
                 .textTheme
                 .subtitle2
@@ -838,7 +836,7 @@ class _ReservationPageState extends State<ReservationPage> {
               _getCar(
                   '车辆定金',
                   //(_consignmentInfoList.contractSignAt).toString()),
-                  _consignmentInfoList.contract.deposit),
+                  _consignmentInfo.contract.deposit),
               46.wb,
               Container(
                 width: 1.w,
@@ -846,7 +844,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 color: BaseStyle.coloreeeeee,
               ),
               46.wb,
-              _getCar('车辆首付', _consignmentInfoList.contract.downPayment),
+              _getCar('车辆首付', _consignmentInfo.contract.downPayment),
               46.wb,
               Container(
                 width: 1.w,
@@ -854,7 +852,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 color: BaseStyle.coloreeeeee,
               ),
               46.wb,
-              _getCar('车辆尾款', _consignmentInfoList.contract.balancePayment),
+              _getCar('车辆尾款', _consignmentInfo.contract.balancePayment),
             ],
           )),
     );

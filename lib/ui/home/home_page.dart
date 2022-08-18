@@ -12,6 +12,7 @@ import 'package:cloud_car/ui/home/task/task_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/share_util.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -212,6 +213,9 @@ class _HomePageState extends State<HomePage>
             break;
           case '收车/(合作)':
             Get.to(() => const SplitAccountPage());
+            break;
+          case '车辆代理':
+            CloudToast.show('此功能未开通');
         }
       },
       child: ColoredBox(
