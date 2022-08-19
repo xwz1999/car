@@ -150,15 +150,10 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               250.hb,
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => const LoginByPassword());
-                },
-                child: Image.asset(
-                  Assets.images.loginBg.path,
-                  width: 308.w,
-                  height: 60.w,
-                ),
+              Image.asset(
+                Assets.images.loginBg.path,
+                width: 308.w,
+                height: 60.w,
               ),
               120.hb,
               // Row(
@@ -319,6 +314,16 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
+              24.hb,
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const LoginByPassword());
+                },
+                child: Text(
+                  '账号登录',
+                  style: TextStyle(color: Colors.black26, fontSize: 24.w),
+                ),
+              ),
             ],
           ),
         ),
@@ -406,9 +411,11 @@ class _LoginPageState extends State<LoginPage> {
     uiConfig.authStatusBarStyle = JVIOSBarStyle.StatusBarStyleDarkContent;
     uiConfig.privacyStatusBarStyle = JVIOSBarStyle.StatusBarStyleDefault;
     uiConfig.privacyItem = [
-      JVPrivacy("《用户协议》", "https://static.yunyunwenche.com/html/useragreement.html",
+      JVPrivacy(
+          "《用户协议》", "https://static.yunyunwenche.com/html/useragreement.html",
           beforeName: "==", afterName: "++", separator: "、"),
-      JVPrivacy("《隐私政策》", "https://static.yunyunwenche.com/html/privacy.html", separator: "、")
+      JVPrivacy("《隐私政策》", "https://static.yunyunwenche.com/html/privacy.html",
+          separator: "、")
     ];
 
     uiConfig.statusBarColorWithNav = true;
