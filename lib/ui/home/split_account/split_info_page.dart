@@ -170,7 +170,7 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
           Assets.images.splitBarAbove.image(),
         ],
       ),
-      bottomNavi: _infoModel.finish ? const SizedBox.shrink() : bottom,
+      bottomNavi:  (_onLoad || _infoModel.finish) ? const SizedBox.shrink() : bottom,
     );
   }
 

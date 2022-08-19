@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage>
           controller: _refreshController,
           onRefresh: () async {
             _posterList = await PosterFunc.getPosterList(page: 1);
-            _shareCarList = await CarFunc.getMyCarList(page: 1);
+            _shareCarList = await CarFunc.getCarList(1, 5);
             setState(() {});
           },
           child: ListView(
@@ -346,6 +346,7 @@ class _HomePageState extends State<HomePage>
                 20.hb,
                 Text(
                   model.modelName,
+                  maxLines: 2,
                   style: TextStyle(
                       color: const Color(0xFF111111),
                       fontSize: 24.sp,

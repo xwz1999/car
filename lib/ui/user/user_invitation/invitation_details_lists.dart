@@ -5,6 +5,7 @@ import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 ///客户轨迹
 class InvitationDetailsList extends StatefulWidget {
@@ -53,7 +54,6 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
 
         setState(() {});
       },
-      //emptyWidget: const NoDataWidget(text: '暂无客户轨迹信息',),
       child: ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -175,7 +175,6 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                       fontSize: 28.sp,
                     ),
                   ),
-                  //model.contentType == 1 ? const SizedBox() : 16.hb,
                   _getContent(model),
                   50.hb,
                 ],
@@ -313,8 +312,8 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
             children: [
               Text(
                 widget.type == 3
-                    ? '邀约时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(model.invite.inviteAt.toInt() * 1000), format: 'yyyy-MM-dd HH:mm:ss')}'
-                    : '邀约到店时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(model.invite.inviteAt.toInt() * 1000), format: 'yyyy-MM-dd HH:mm:ss')}',
+                    ? '邀约时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(model.invite.inviteAt * 1000), format: 'yyyy-MM-dd HH:mm:ss')}'
+                    : '邀约到店时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(model.invite.inviteAt * 1000), format: 'yyyy-MM-dd HH:mm:ss')}',
                 style: TextStyle(
                   color: const Color(0xFF333333),
                   fontSize: 28.sp,
@@ -364,9 +363,12 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                   : const SizedBox(),
               widget.type == 3
                   ? GestureDetector(
-                      onTap: () {
-                        //_showMap;
-                        //print('立即导航');
+                      onTap: () async {
+                        var mapList = await MapLauncher.installedMaps;
+                        MapLauncher.showMarker(
+                            mapType: mapList.first.mapType,
+                            coords: Coords(0, 0),
+                            title: '');
                       },
                       child: Row(
                         children: [
@@ -424,7 +426,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                   : Container(
                       width: 560.w,
                       height: 200.w,
-                child: getCarItem(
+                      child: getCarItem(
                         '',
                         model.reserve.modelName,
                         DateUtil.formatDate(

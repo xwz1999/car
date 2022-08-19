@@ -1,6 +1,8 @@
+import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/maintain_query/maintain_query_history_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/scan_license_widget.dart';
 import 'package:flutter/material.dart';
 
 ///车辆维保查询
@@ -12,6 +14,8 @@ class MaintainQueryPage extends StatefulWidget {
 }
 
 class _MaintainQueryPageState extends State<MaintainQueryPage> {
+  CarDistinguishModel? _carInfoModel;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +66,6 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
                 alignment: Alignment.center,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-
                   children: [
                     48.wb,
                     Column(
@@ -71,9 +74,8 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
                       children: [
                         Text(
                           '车辆维修保养记录查询',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 32.sp),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 32.sp),
                         ),
                         16.hb,
                         Text(
@@ -95,20 +97,17 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
                         ),
                         Text(
                           '1.00',
-                          style: TextStyle(
-                              color:  Colors.white,
-                              fontSize:42.sp),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 42.sp),
                         ),
                         Text(
                           '/次',
-                          style: TextStyle(
-                              color:  Colors.white,
-                              fontSize: 28.sp),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 28.sp),
                         ),
                       ],
                     ),
                     28.wb,
-
                   ],
                 ),
               ),
@@ -128,14 +127,10 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
               margin: EdgeInsets.only(top: 140.w),
               child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32.w),
-                    child: Image.asset(
-                      Assets.images.drivingLicense2.path,
-                      width: double.infinity,
-                      height: 460.w,
-                    ),
-                  ),
+                  ScanLicenseWidget(onLoadComplete: (carInfoModel) {
+                    _carInfoModel = carInfoModel;
+                    setState(() {});
+                  }),
                   32.hb,
                   Container(
                     width: double.infinity,

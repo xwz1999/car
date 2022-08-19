@@ -13,9 +13,16 @@ class SortSeriesModel extends Equatable {
       _$SortSeriesModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SortSeriesModelToJson(this);
-  static SortSeriesModel get init => const SortSeriesModel(id: 0, name: '', series: []);
+
+  static SortSeriesModel get init =>
+      const SortSeriesModel(id: 0, name: '', series: []);
+
   @override
-  List<Object?> get props => [id,name,series,];
+  List<Object?> get props => [
+        id,
+        name,
+        series,
+      ];
 
   const SortSeriesModel({
     required this.id,
@@ -27,16 +34,31 @@ class SortSeriesModel extends Equatable {
 @JsonSerializable()
 class Series extends Equatable {
   final int id;
+  final int seriesId;
   final String name;
 
-  factory Series.fromJson(Map<String, dynamic> json) =>_$SeriesFromJson(json);
+  factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
 
   Map<String, dynamic> toJson() => _$SeriesToJson(this);
+
+  @override
+  List<Object?> get props => [id, name, seriesId];
+
   const Series({
     required this.id,
+    required this.seriesId,
     required this.name,
   });
-  
-  @override
-  List<Object?> get props => [id,name,];
+
+  Series copyWith({
+    int? id,
+    int? seriesId,
+    String? name,
+  }) {
+    return Series(
+      id: id ?? this.id,
+      seriesId: seriesId ?? this.seriesId,
+      name: name ?? this.name,
+    );
+  }
 }

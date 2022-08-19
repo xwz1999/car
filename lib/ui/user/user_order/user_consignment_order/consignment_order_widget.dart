@@ -151,231 +151,219 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
   }
 
   _getCar(ListsModel model) {
-    return Offstage(
-        offstage: model.status == 6 || model.status == 7,
-        child: Offstage(
-            offstage: false,
-            //text == '全部' ? false : model.statusEnum.str != text,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(() => ConsignmentSignedPage(
-                        price: model.price,
-                        statusNumber: model.statusEnum,
-                        id: model.id,
-                        auditStatus: model.auditStatus,
-                        licensingDate: model.licensingDate,
-                        createdAt: model.createdAt,
-                      ));
-
-                  // case 0:
-                  //   Get.to(() => ConsignmentRejected(
-                  //         orderId: model.id,
-                  //       ));
-                  //   break;
-                  //}
-                },
-                child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
-                    decoration: BoxDecoration(
-                        color: kForeGroundColor,
-                        borderRadius: BorderRadius.circular(16.w)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 0.w),
-                          child: Text(
-                            model.status == 3 && model.auditStatus == 3
-                                ? '已驳回'
-                                : model.statusEnum.str,
-                            style: TextStyle(
-                                color: getColor(
-                                  model,
-                                ),
-                                fontSize: BaseStyle.fontSize28),
-                          ),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+      child: GestureDetector(
+        onTap: () {
+          Get.to(() => ConsignmentSignedPage(
+                price: model.price,
+                statusNumber: model.statusEnum,
+                id: model.id,
+                auditStatus: model.auditStatus,
+                licensingDate: model.licensingDate,
+                createdAt: model.createdAt,
+              ));
+        },
+        child: Container(
+            padding:
+                EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+            decoration: BoxDecoration(
+                color: kForeGroundColor,
+                borderRadius: BorderRadius.circular(16.w)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 0.w),
+                  child: Text(
+                    model.status == 3 && model.auditStatus == 3
+                        ? '已驳回'
+                        : model.statusEnum.str,
+                    style: TextStyle(
+                        color: getColor(
+                          model,
                         ),
-                        // 24.hb,
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 196.w,
-                              height: 150.w,
-                              child: const CloudImageNetworkWidget.car(
-                                urls: [],
-                              ),
-                            ),
-                            20.wb,
-                            SizedBox(
-                              width: 406.w,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(model.modeName,
-                                      style: TextStyle(
-                                          fontSize: BaseStyle.fontSize28,
-                                          color: BaseStyle.color111111)),
-                                  32.hb,
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 16.w),
-                                    child: getText(
-                                        DateUtil.formatDateMs(
-                                            model.licensingDate.toInt() * 1000,
-                                            format: 'yyyy年MM月'),
-                                        '${model.mileage}万公里'),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        32.hb,
-                        SizedBox(
-                            child: model.statusEnum.num == 2
-                                ? Padding(
-                                    padding: EdgeInsets.only(left: 452.w),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        // switch (_getStatusText(model)) {
-                                        //   case '待发布':
-                                        //     Get.to(() => ConsignmentSigned(
-                                        //           price: model.price,
-                                        //           auditStatus:
-                                        //               model.auditStatus,
-                                        //           id: model.id,
-                                        //           stat: '待发布',
-                                        //           statusNumber: 1,
-                                        //           licensingDate:
-                                        //               model.licensingDate,
-                                        //           createdAt: model.createdAt,
-                                        //           statusNum: _getStatusNum(
-                                        //               model.status),
-                                        //         ));
-                                        //     break;
-                                        //   default:
-                                        // }
+                        fontSize: BaseStyle.fontSize28),
+                  ),
+                ),
+                // 24.hb,
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 196.w,
+                      height: 150.w,
+                      child: const CloudImageNetworkWidget.car(
+                        urls: [],
+                      ),
+                    ),
+                    20.wb,
+                    SizedBox(
+                      width: 406.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(model.modeName,
+                              style: TextStyle(
+                                  fontSize: BaseStyle.fontSize28,
+                                  color: BaseStyle.color111111)),
+                          32.hb,
+                          Padding(
+                            padding: EdgeInsets.only(right: 16.w),
+                            child: getText(
+                                DateUtil.formatDateMs(
+                                    model.licensingDate.toInt() * 1000,
+                                    format: 'yyyy年MM月'),
+                                '${model.mileage}万公里'),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                32.hb,
+                SizedBox(
+                    child: model.statusEnum.num == 2
+                        ? Padding(
+                            padding: EdgeInsets.only(left: 452.w),
+                            child: GestureDetector(
+                              onTap: () {
+                                // switch (_getStatusText(model)) {
+                                //   case '待发布':
+                                //     Get.to(() => ConsignmentSigned(
+                                //           price: model.price,
+                                //           auditStatus:
+                                //               model.auditStatus,
+                                //           id: model.id,
+                                //           stat: '待发布',
+                                //           statusNumber: 1,
+                                //           licensingDate:
+                                //               model.licensingDate,
+                                //           createdAt: model.createdAt,
+                                //           statusNum: _getStatusNum(
+                                //               model.status),
+                                //         ));
+                                //     break;
+                                //   default:
+                                // }
 
-                                        Get.to(() => CarPicturePage(
-                                              isPersonal: true,
-                                              orderId: model.id,
-                                              consignmentContractModel:
-                                                  ConsignmentContractModel(
-                                                      masterInfo: MasterInfo()),
-                                            ));
-                                      },
-                                      child: Container(
-                                          width: 168.w,
-                                          height: 68.w,
-                                          padding: EdgeInsets.only(
-                                              left: 28.w, top: 14.w),
-                                          decoration: BoxDecoration(
-                                              color: const Color(0xFF027AFF),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.w)),
-                                          child: Text(
-                                            '发布车辆',
-                                            style: TextStyle(
-                                                color: kForeGroundColor,
-                                                fontSize: BaseStyle.fontSize28),
-                                          )),
-                                    ),
-                                  )
-                                : const SizedBox()
-                            //item['judgename'] != '交易取消'
-                            //     ? Row(
-                            //         mainAxisAlignment: MainAxisAlignment.end,
-                            //         children: [
-                            //           SizedBox(
-                            //             child: Text(
-                            //               '车辆总价',
-                            //               style: TextStyle(
-                            //                   fontSize: BaseStyle.fontSize28,
-                            //                   color: BaseStyle.color999999),
-                            //             ),
-                            //           ),
-                            //           16.wb,
-                            //           SizedBox(
-                            //             child: Text.rich(TextSpan(children: [
-                            //               TextSpan(
-                            //                   text: '30.00',
-                            //                   style: Theme.of(context)
-                            //                       .textTheme
-                            //                       .subtitle2),
-                            //               TextSpan(
-                            //                   text: '万',
-                            //                   style: Theme.of(context)
-                            //                       .textTheme
-                            //                       .subtitle2),
-                            //             ])),
-                            //           ),
-                            //           56.wb,
-                            //           SizedBox(
-                            //             child: Text(
-                            //               item['picename'],
-                            //               style: TextStyle(
-                            //                   fontSize: BaseStyle.fontSize28,
-                            //                   color: BaseStyle.color999999),
-                            //             ),
-                            //           ),
-                            //           16.wb,
-                            //           SizedBox(
-                            //             child: Text.rich(TextSpan(children: [
-                            //               TextSpan(
-                            //                   text: item['pice'],
-                            //                   style: Theme.of(context)
-                            //                       .textTheme
-                            //                       .subtitle2
-                            //                       ?.copyWith(
-                            //                           color:
-                            //                               const Color(0xFFFF3B02))),
-                            //               TextSpan(
-                            //                   text: '万',
-                            //                   style: Theme.of(context)
-                            //                       .textTheme
-                            //                       .subtitle2
-                            //                       ?.copyWith(
-                            //                           color:
-                            //                               const Color(0xFFFF3B02))),
-                            //             ])),
-                            //           ),
-                            //         ],
-                            //       )
-                            //     : Row(
-                            //         mainAxisAlignment: MainAxisAlignment.end,
-                            //         children: [
-                            //           SizedBox(
-                            //             child: Text(
-                            //               '车辆总价',
-                            //               style: TextStyle(
-                            //                   fontSize: BaseStyle.fontSize28,
-                            //                   color: BaseStyle.color999999),
-                            //             ),
-                            //           ),
-                            //           16.wb,
-                            //           SizedBox(
-                            //             child: Text.rich(TextSpan(children: [
-                            //               TextSpan(
-                            //                   text: '30.00',
-                            //                   style: Theme.of(context)
-                            //                       .textTheme
-                            //                       .subtitle2),
-                            //               TextSpan(
-                            //                   text: '万',
-                            //                   style: Theme.of(context)
-                            //                       .textTheme
-                            //                       .subtitle2),
-                            //             ])),
-                            //           ),
-                            //         ],
-                            // )
+                                Get.to(() => CarPicturePage(
+                                      isPersonal: true,
+                                      orderId: model.id,
+                                      consignmentContractModel:
+                                          ConsignmentContractModel(
+                                              masterInfo: MasterInfo()),
+                                    ));
+                              },
+                              child: Container(
+                                  width: 168.w,
+                                  height: 68.w,
+                                  padding: EdgeInsets.only(
+                                      left: 28.w, top: 14.w),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xFF027AFF),
+                                      borderRadius:
+                                          BorderRadius.circular(8.w)),
+                                  child: Text(
+                                    '发布车辆',
+                                    style: TextStyle(
+                                        color: kForeGroundColor,
+                                        fontSize: BaseStyle.fontSize28),
+                                  )),
                             ),
-                      ],
-                    )),
-              ),
-            )));
+                          )
+                        : const SizedBox()
+                    //item['judgename'] != '交易取消'
+                    //     ? Row(
+                    //         mainAxisAlignment: MainAxisAlignment.end,
+                    //         children: [
+                    //           SizedBox(
+                    //             child: Text(
+                    //               '车辆总价',
+                    //               style: TextStyle(
+                    //                   fontSize: BaseStyle.fontSize28,
+                    //                   color: BaseStyle.color999999),
+                    //             ),
+                    //           ),
+                    //           16.wb,
+                    //           SizedBox(
+                    //             child: Text.rich(TextSpan(children: [
+                    //               TextSpan(
+                    //                   text: '30.00',
+                    //                   style: Theme.of(context)
+                    //                       .textTheme
+                    //                       .subtitle2),
+                    //               TextSpan(
+                    //                   text: '万',
+                    //                   style: Theme.of(context)
+                    //                       .textTheme
+                    //                       .subtitle2),
+                    //             ])),
+                    //           ),
+                    //           56.wb,
+                    //           SizedBox(
+                    //             child: Text(
+                    //               item['picename'],
+                    //               style: TextStyle(
+                    //                   fontSize: BaseStyle.fontSize28,
+                    //                   color: BaseStyle.color999999),
+                    //             ),
+                    //           ),
+                    //           16.wb,
+                    //           SizedBox(
+                    //             child: Text.rich(TextSpan(children: [
+                    //               TextSpan(
+                    //                   text: item['pice'],
+                    //                   style: Theme.of(context)
+                    //                       .textTheme
+                    //                       .subtitle2
+                    //                       ?.copyWith(
+                    //                           color:
+                    //                               const Color(0xFFFF3B02))),
+                    //               TextSpan(
+                    //                   text: '万',
+                    //                   style: Theme.of(context)
+                    //                       .textTheme
+                    //                       .subtitle2
+                    //                       ?.copyWith(
+                    //                           color:
+                    //                               const Color(0xFFFF3B02))),
+                    //             ])),
+                    //           ),
+                    //         ],
+                    //       )
+                    //     : Row(
+                    //         mainAxisAlignment: MainAxisAlignment.end,
+                    //         children: [
+                    //           SizedBox(
+                    //             child: Text(
+                    //               '车辆总价',
+                    //               style: TextStyle(
+                    //                   fontSize: BaseStyle.fontSize28,
+                    //                   color: BaseStyle.color999999),
+                    //             ),
+                    //           ),
+                    //           16.wb,
+                    //           SizedBox(
+                    //             child: Text.rich(TextSpan(children: [
+                    //               TextSpan(
+                    //                   text: '30.00',
+                    //                   style: Theme.of(context)
+                    //                       .textTheme
+                    //                       .subtitle2),
+                    //               TextSpan(
+                    //                   text: '万',
+                    //                   style: Theme.of(context)
+                    //                       .textTheme
+                    //                       .subtitle2),
+                    //             ])),
+                    //           ),
+                    //         ],
+                    // )
+                    ),
+              ],
+            )),
+      ),
+    );
   }
 
   getText(String time, String distance) {

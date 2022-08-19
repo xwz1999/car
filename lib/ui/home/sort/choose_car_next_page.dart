@@ -72,7 +72,6 @@ class _ChooseCarNextPageState extends State<ChooseCarNextPage> {
             ),
           ],
         ),
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
@@ -117,7 +116,7 @@ class _ChooseCarNextPageState extends State<ChooseCarNextPage> {
               }
               Get.to(() => ChooseCarLastPage(
                     callback: widget.callback,
-                    id: e.id,
+                    id: e.seriesId,
                     name: '$name >> ${e.name}',
                     pickCar: widget.pickCar,
                   ));

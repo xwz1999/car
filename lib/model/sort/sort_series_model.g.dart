@@ -24,10 +24,12 @@ Map<String, dynamic> _$SortSeriesModelToJson(SortSeriesModel instance) =>
 
 Series _$SeriesFromJson(Map<String, dynamic> json) => Series(
       id: json['id'] as int,
+      seriesId: json['seriesId'] as int,
       name: json['name'] as String,
     );
 
 Map<String, dynamic> _$SeriesToJson(Series instance) => <String, dynamic>{
       'id': instance.id,
+      'seriesId': instance.seriesId,
       'name': instance.name,
     };

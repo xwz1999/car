@@ -52,12 +52,12 @@ class _ProductManualsState extends State<ProductManuals> {
       body: Column(
         children: [
           ///搜索框
-          Container(
-            width: 750.w,
-            height: 96.h,
-            color: Colors.white,
-            child: _search(),
-          ),
+          // Container(
+          //   width: 750.w,
+          //   height: 96.h,
+          //   color: Colors.white,
+          //   child: _search(),
+          // ),
 
           ///列表
           Expanded(

@@ -193,18 +193,18 @@ class _InvitaionDetailsPageState extends State<InvitaionDetailsPage>
                     ));
               })),
               Expanded(child: getBottom(Assets.icons.icWx.path, '微信', () {})),
-              Expanded(
-                  child: getBottom(Assets.icons.icInvite.path, '修改邀约', () {
-                Get.to(() => InviteDetailPage(
-                      id: widget.model.customerId,
-                      phone: '',
-                      name: widget.model.customerNickname,
-                    ));
-              })),
-              Expanded(
-                  child: getBottom(Assets.icons.icContract.path, '发起合同', () {
-                Get.to(() => const InitiateContractPage());
-              })),
+              // Expanded(
+              //     child: getBottom(Assets.icons.icInvite.path, '修改邀约', () {
+              //   Get.to(() => InviteDetailPage(
+              //         id: widget.model.customerId,
+              //         phone: '',
+              //         name: widget.model.customerNickname,
+              //       ));
+              // })),
+              // Expanded(
+              //     child: getBottom(Assets.icons.icContract.path, '发起合同', () {
+              //   Get.to(() => const InitiateContractPage());
+              // })),
             ],
           ),
         ));
