@@ -1,12 +1,10 @@
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/choose_customer_page.dart';
-import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
-import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
@@ -14,7 +12,6 @@ import 'package:cloud_car/widget/picker/car_date_picker.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CallOrderPage extends StatefulWidget {
   final CarListModel carListModel;

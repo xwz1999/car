@@ -42,7 +42,6 @@ class _LookAtCarViewState extends State<LookAtCarView> {
           _page = 1;
           var list = await TaskFunc.getCarList(page: _page, size: _size);
           invitationList = list;
-          print(invitationList.length);
           setState(() {});
         },
         onLoad: () async {

@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import 'notice_fashionable.dart';
-
 class NoticePage extends StatefulWidget {
   const NoticePage({super.key});
 

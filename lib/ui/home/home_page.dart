@@ -8,7 +8,6 @@ import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
 import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/split_account/split_account_page.dart';
-import 'package:cloud_car/ui/home/task/task_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/share_util.dart';
