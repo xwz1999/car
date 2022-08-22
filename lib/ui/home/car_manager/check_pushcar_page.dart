@@ -1,3 +1,4 @@
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_begin_page.dart';
@@ -132,7 +133,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                                 MaterialStateProperty.all(Colors.blue),
                           ),
                           child: Text(
-                            !UserTool.userProvider.userInfo.isHomeStore
+                            UserTool.userProvider.userInfo.businessAscription!=BusinessAscription.yywc
                                 ? '发起合同'
                                 : '发布车辆',
                             style: TextStyle(

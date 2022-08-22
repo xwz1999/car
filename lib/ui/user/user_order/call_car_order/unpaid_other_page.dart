@@ -8,9 +8,8 @@ import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flutter/material.dart';
 
 class UnpaidOtherPage extends StatefulWidget {
-  final OrderCallCarStatus status;
+  final CallCarStatus status;
 
-  //final String statusText;
 
   const UnpaidOtherPage({
     super.key,
@@ -22,7 +21,6 @@ class UnpaidOtherPage extends StatefulWidget {
 }
 
 class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
-  //late String stat = widget.stat;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,7 +129,7 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
                     _getText('上门时间', '2022-01-04 12:00'),
                   ],
                 )),
-            widget.status.num == 1
+            widget.status.typeNum == 1
                 ? const SizedBox()
                 : _getCarBox(Column(
                     children: [
@@ -146,7 +144,7 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
         ),
         bottomNavigationBar: SizedBox(
             height: 100.w,
-            child: widget.status.num == 2
+            child: widget.status.typeNum == 2
                 ? Container(
                     width: double.infinity,
                     color: kForeGroundColor,
@@ -195,15 +193,15 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
                 decoration: BoxDecoration(
-                  color: widget.status.num == 3 || widget.status.num == 4
+                  color: widget.status.typeNum == 3 || widget.status.typeNum == 4
                       ? const Color(0xFF027AFF).withOpacity(0.1)
                       : const Color(0xFFFE8029).withOpacity(0.1),
                 ),
                 child: Text(
-                  widget.status.str,
+                  widget.status.typeStr,
                   style: TextStyle(
                     fontSize: BaseStyle.fontSize24,
-                    color: widget.status.num == 3 || widget.status.num == 4
+                    color: widget.status.typeNum == 3 || widget.status.typeNum == 4
                         ? const Color(0xFF027AFF)
                         : const Color(0xFFFE8029),
                   ),
@@ -252,14 +250,14 @@ class _UnpaidOtherPageState extends State<UnpaidOtherPage> {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: widget.status.num == 4
+              color: widget.status.typeNum == 4
                   ? const Color(0xFF4F5A74).withOpacity(0.08)
                   : const Color(0xFF027AFF).withOpacity(0.08)),
           child: Text(
             num,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize20,
-                color: widget.status.num == 4
+                color: widget.status.typeNum == 4
                     ? const Color(0xFF4F5A74)
                     : const Color(0xFF027AFF)),
           ),

@@ -16,6 +16,7 @@ ListsModel _$ListsModelFromJson(Map<String, dynamic> json) => ListsModel(
       mileage: json['mileage'] as String,
       price: json['price'] as String,
       createdAt: json['createdAt'] as int,
+      carPhoto: json['carPhoto'] as String,
     );
 
 Map<String, dynamic> _$ListsModelToJson(ListsModel instance) =>
@@ -29,4 +30,5 @@ Map<String, dynamic> _$ListsModelToJson(ListsModel instance) =>
       'mileage': instance.mileage,
       'price': instance.price,
       'createdAt': instance.createdAt,
+      'carPhoto': instance.carPhoto,
     };

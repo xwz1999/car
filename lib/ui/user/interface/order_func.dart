@@ -53,10 +53,10 @@ class OrderFunc {
 
   ///寄卖订单列表
   static Future<List<ListsModel>> getLists(
-      {int size = 10, required int page}) async {
+      {int size = 10, required int page, Map? data}) async {
     BaseListModel baseList = await apiClient.requestList(
         API.order.consignmentLists,
-        data: {'size': size, 'page': page});
+        data: {'size': size, 'page': page,data:data});
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
@@ -69,7 +69,7 @@ class OrderFunc {
 
   ///车商寄卖订单列表
   static Future<List<ListsModel>> getDealerLists(
-      {int size = 10, required int page}) async {
+      {int size = 10, required int page,Map? data}) async {
     BaseListModel baseList = await apiClient.requestList(
         API.order.dealerConsignmentOrderPage,
         data: {'size': size, 'page': page});
@@ -238,7 +238,7 @@ class OrderFunc {
 
   ///售车订单列表
   static Future<List<SalelistsModel>> getSaleList(
-      {required int page, int size = 10}) async {
+      {required int page, int size = 10,Map? data}) async {
     BaseListModel baseList =
         await apiClient.requestList(API.order.saleLists, data: {
       'page': page,
@@ -338,7 +338,7 @@ class OrderFunc {
 
   ///叫车订单列表
   static Future<List<CallcarlistModel>> getCallCar(
-      {required int page, int size = 10}) async {
+      {required int page, int size = 10,Map? data}) async {
     BaseListModel res = await apiClient
         .requestList(API.order.callCar, data: {'page': page, 'size': size});
 

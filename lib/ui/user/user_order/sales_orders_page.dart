@@ -1,8 +1,7 @@
-// ignore_for_file: non_constant_identifier_names, unused_field
+
 import 'package:cloud_car/ui/user/user_order/dealer_consignment_order.dart/dealer_consignment_order_page.dart';
-import 'package:cloud_car/ui/user/user_order/rentalcar_order/rentalcar_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_order_widget.dart';
-import 'package:cloud_car/ui/user/user_order/thatcar_order/thatcar_order_widget.dart';
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/title_drop_widget.dart';
@@ -12,11 +11,12 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class SalesOrderPage extends StatefulWidget {
-  ///1售车订单  2个人寄卖 3租车订单 4叫车订单 5车商寄卖
-  final String StatusNum;
+import 'call_car_order/call_car_order_page.dart';
 
-  const SalesOrderPage({super.key, required this.StatusNum});
+class SalesOrderPage extends StatefulWidget {
+  final OrderType orderType;
+
+  const SalesOrderPage({super.key, required this.orderType});
 
   @override
   State<SalesOrderPage> createState() => _SalesOrderPageState();
@@ -38,13 +38,11 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
     ChooseItem(name: '车商寄卖'),
   ];
 
-  //String? get status => CustomerMap.orderStatusByInt[widget.type];
-
   @override
   void initState() {
     super.initState();
     _dropDownHeaderItemStrings1 = [
-      widget.StatusNum,
+      widget.orderType.typeStr,
     ];
     listWidget = [
       Container(
@@ -58,10 +56,8 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
           childAspectRatio: 200 / 56,
           callback: (String item, int value) {
             _dropDownHeaderItemStrings1 = [item];
-
             isClick = true;
             orderName = item;
-            //print(orderName);
             screenControl1.screenHide();
             setState(() {});
           },
@@ -95,7 +91,6 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                 Expanded(
                     child: TitleDropDownWidget(
                         _dropDownHeaderItemStrings1, listWidget,
-                        //isNotSearch: false,
                         isSearch: false,
                         height: kToolbarHeight + 30.w,
                         bottomHeight: 30.w,
@@ -104,7 +99,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
                           isSpecial: true,
                         ),
                         screenControl: screenControl1,
-                        child: _get(isClick ? orderName : widget.StatusNum)))
+                        child: _get(isClick ? orderName : widget.orderType.typeStr)))
               ],
             ),
           ),
@@ -117,32 +112,24 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
         return SalesOrderWidget(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });
-        // ignore: dead_code
-        break;
       case '个人寄卖':
         return ConsignmentOrderWidget(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });
-        // ignore: dead_code
-        break;
-      case '租车订单':
-        return RentalcarOrderPage(callBack: () {
-          _scaffoldKey.currentState?.openDrawer();
-        });
-        // ignore: dead_code
-        break;
+      // case '租车订单':
+      //   return RentalcarOrderPage(callBack: () {
+      //     _scaffoldKey.currentState?.openDrawer();
+      //   });
+      //   // ignore: dead_code
+      //   break;
       case '叫车订单':
-        return ThatcarOrderWidget(callBack: () {
+        return CallCarOrderPage(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });
-        // ignore: dead_code
-        break;
       case '车商寄卖':
         return DealerConsignmentOrderPage(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });
-        // ignore: dead_code
-        break;
     }
   }
 

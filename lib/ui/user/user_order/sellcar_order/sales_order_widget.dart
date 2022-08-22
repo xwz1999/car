@@ -4,6 +4,7 @@ import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/change_name_data_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/detection_data_page.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/reservation_page.dart';
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/widget/car_widget.dart';
@@ -12,7 +13,6 @@ import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -37,6 +37,12 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
   final int _size = 10;
   var a = 0;
 
+  ConsignmentSearchStatus _currentStatus = ConsignmentSearchStatus.all;
+
+  Map<String,dynamic> get _params => {
+        'status': _currentStatus.typeNum,
+      };
+
   @override
   void initState() {
     super.initState();
@@ -51,12 +57,6 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
           pickString: '',
           childAspectRatio: 200 / 56,
           callback: (String item, int value) {
-            if (kDebugMode) {
-              print(item);
-            }
-
-            ///调研接口 按照item进行排序
-            // screenControl.screenHide();
             setState(() {});
           },
           mainAxisSpacing: 10.w,
@@ -67,8 +67,6 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
       ),
     ];
   }
-
-  String text = '全部';
 
   @override
   void dispose() {
@@ -90,20 +88,12 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
           SizedBox(
               height: 88.w,
               child: CarWidget(
-                items: const [
-                  '全部',
-                  '待签订',
-                  '已签订',
-                  '待检测',
-                  '支付首付',
-                  '待过户',
-                  '支付尾款',
-                  '交易完成',
-                  '交易取消'
-                ],
-                callBack: (name) {
-                  text = name;
-                  setState(() {});
+                items: ConsignmentSearchStatus.values
+                    .map((e) => e.typeStr)
+                    .toList(),
+                callBack: (index) {
+                  _currentStatus = ConsignmentSearchStatus.values[index];
+                  _easyRefreshController.callRefresh();
                 },
               )),
           Expanded(
@@ -114,17 +104,19 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
               controller: _easyRefreshController,
               onRefresh: () async {
                 _page = 1;
-                _salesList =
-                    await OrderFunc.getSaleList(page: _page, size: _size);
+                _salesList = await OrderFunc.getSaleList(
+                    page: _page, size: _size, data: _params);
                 setState(() {});
               },
               onLoad: () async {
                 _page++;
-                var baseList =
-                    await apiClient.requestList(API.order.saleLists, data: {
+                var data = <String,dynamic>{
                   'page': _page,
                   'size': _size,
-                });
+                };
+                data.addAll(_params);
+                var baseList =
+                    await apiClient.requestList(API.order.saleLists, data:data );
                 if (baseList.nullSafetyTotal > _salesList.length) {
                   _salesList.addAll(baseList.nullSafetyList
                       .map((e) => SalelistsModel.fromJson(e))
@@ -158,368 +150,365 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
   // }
 
   _getSales(SalelistsModel model) {
-    return Offstage(
-        offstage: text == '全部' ? a == 1 : model.statusEnum.str != text,
-        //offstage: false, //text == '全部' ? false : model.statusEnum.str != text,
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+      child: GestureDetector(
+        onTap: () {
+          Get.to(() => ReservationPage(
+                //judge: false
+                //statusNumber: model.statusEnum.progressNum,
+                orderId: model.id,
+                status: model.statusEnum,
+                //status1: model.statusEnum1,
+                // status1: model.statusEnum,
+              ));
+          // switch (_getText(model.status)) {
+          //   case '待预定':
+          //     Get.to(() => Reservation(
+          //           judge: false,
+          //           orderId: model.id,
+          //           status: _getText(model.status),
+          //           statusNum: _getStatusNum(model.status),
+          //         ));
+          //     break;
+          //   case '已预定':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           orderId: model.id,
+          //           status: _getText(model.status),
+          //           judge: true,
+          //         ));
+          //     break;
+          //   case '申请检测':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           status: _getText(model.status),
+          //           judge: true,
+          //           orderId: model.id,
+          //         ));
+          //     break;
+          //   case '上传检测报告':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           status: _getText(model.status),
+          //           judge: false,
+          //           orderId: model.id,
+          //         ));
+          //     break;
+          //   case '首付审核':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           status: _getText(model.status),
+          //           judge: true,
+          //           orderId: model.id,
+          //         ));
+          //     break;
+          //   case '首付审核通过':
+          //   case '过户':
+          //     Get.to(() => Reservation(
+          //           statusNum: _getStatusNum(model.status),
+          //           status: _getText(model.status),
+          //           judge: true,
+          //           orderId: model.id,
+          //         ));
+          //     break;
+          //       case '过户完成':
+          //         Get.to(() => Reservation(
+          //               statusNum: _getStatusNum(model.status),
+          //               orderId: model.id,
+          //               judge: false,
+          //               status: _getText(model.status),
+          //             ));
+          //         break;
+          //       case '尾款审核通过':
+          //         Get.to(() => Reservation(
+          //               statusNum: _getStatusNum(model.status),
+          //               status: _getText(model.status),
+          //               judge: true,
+          //               orderId: model.id,
+          //             ));
+          //         break;
+          //   case '交易完成':
+          //     Get.to(() => MakeDealData(
+          //           id: model.id,
+          //           statusNum: _getStatusNum(model.status),
+          //         ));
+          //     break;
+          //   case '交易取消':
+          //     Get.to(() => const TransactionCancelled());
+          //     break;
+          // }
+        },
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-          child: GestureDetector(
-            onTap: () {
-              Get.to(() => ReservationPage(
-                    //judge: false
-                    //statusNumber: model.statusEnum.progressNum,
-                    orderId: model.id,
-                    status: model.statusEnum,
-                    //status1: model.statusEnum1,
-                    // status1: model.statusEnum,
-                  ));
-              // switch (_getText(model.status)) {
-              //   case '待预定':
-              //     Get.to(() => Reservation(
-              //           judge: false,
-              //           orderId: model.id,
-              //           status: _getText(model.status),
-              //           statusNum: _getStatusNum(model.status),
-              //         ));
-              //     break;
-              //   case '已预定':
-              //     Get.to(() => Reservation(
-              //           statusNum: _getStatusNum(model.status),
-              //           orderId: model.id,
-              //           status: _getText(model.status),
-              //           judge: true,
-              //         ));
-              //     break;
-              //   case '申请检测':
-              //     Get.to(() => Reservation(
-              //           statusNum: _getStatusNum(model.status),
-              //           status: _getText(model.status),
-              //           judge: true,
-              //           orderId: model.id,
-              //         ));
-              //     break;
-              //   case '上传检测报告':
-              //     Get.to(() => Reservation(
-              //           statusNum: _getStatusNum(model.status),
-              //           status: _getText(model.status),
-              //           judge: false,
-              //           orderId: model.id,
-              //         ));
-              //     break;
-              //   case '首付审核':
-              //     Get.to(() => Reservation(
-              //           statusNum: _getStatusNum(model.status),
-              //           status: _getText(model.status),
-              //           judge: true,
-              //           orderId: model.id,
-              //         ));
-              //     break;
-              //   case '首付审核通过':
-              //   case '过户':
-              //     Get.to(() => Reservation(
-              //           statusNum: _getStatusNum(model.status),
-              //           status: _getText(model.status),
-              //           judge: true,
-              //           orderId: model.id,
-              //         ));
-              //     break;
-              //       case '过户完成':
-              //         Get.to(() => Reservation(
-              //               statusNum: _getStatusNum(model.status),
-              //               orderId: model.id,
-              //               judge: false,
-              //               status: _getText(model.status),
-              //             ));
-              //         break;
-              //       case '尾款审核通过':
-              //         Get.to(() => Reservation(
-              //               statusNum: _getStatusNum(model.status),
-              //               status: _getText(model.status),
-              //               judge: true,
-              //               orderId: model.id,
-              //             ));
-              //         break;
-              //   case '交易完成':
-              //     Get.to(() => MakeDealData(
-              //           id: model.id,
-              //           statusNum: _getStatusNum(model.status),
-              //         ));
-              //     break;
-              //   case '交易取消':
-              //     Get.to(() => const TransactionCancelled());
-              //     break;
-              // }
-            },
-            child: Container(
-                padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
-                decoration: BoxDecoration(
-                    color: kForeGroundColor,
-                    borderRadius: BorderRadius.circular(16.w)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
+            decoration: BoxDecoration(
+                color: kForeGroundColor,
+                borderRadius: BorderRadius.circular(16.w)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ///状态
+                Padding(
+                  padding: EdgeInsets.only(left: 0.w),
+                  child: Text(
+                    //StatusPage(num: model.status),
+                    //item['judgename'],
+                    model.statusEnum.str,
+                    style: TextStyle(
+                        color: model.status != 0
+                            ? const Color(0xFF027AFF)
+                            : const Color(0xFF666666),
+                        fontSize: BaseStyle.fontSize28),
+                  ),
+                ),
+                // 24.hb,
+                Row(
                   children: [
-                    ///状态
-                    Padding(
-                      padding: EdgeInsets.only(left: 0.w),
-                      child: Text(
-                        //StatusPage(num: model.status),
-                        //item['judgename'],
-                        model.statusEnum.str,
-                        style: TextStyle(
-                            color: model.status != 0
-                                ? const Color(0xFF027AFF)
-                                : const Color(0xFF666666),
-                            fontSize: BaseStyle.fontSize28),
+                    ///图片
+                    SizedBox(
+                      width: 196.w,
+                      height: 150.w,
+                      child: CloudImageNetworkWidget.car(
+                        urls: [model.mainPhoto],
                       ),
                     ),
-                    // 24.hb,
-                    Row(
-                      children: [
-                        ///图片
-                        SizedBox(
-                          width: 196.w,
-                          height: 150.w,
-                          child: CloudImageNetworkWidget.car(
-                            urls: [model.mainPhoto],
-                          ),
-                        ),
-                        20.wb,
+                    20.wb,
 
-                        ///右侧内容
-                        SizedBox(
-                          width: 406.w,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(model.modelName,
-                                  style: TextStyle(
-                                      fontSize: BaseStyle.fontSize28,
-                                      color: BaseStyle.color111111)),
-                              32.hb,
-
-                              ///标签
-                              Padding(
-                                  padding: EdgeInsets.only(right: 16.w),
-                                  child: _getText(
-                                    '过户${0}次',
-                                    DateUtil.formatDateMs(
-                                        model.licensingDate.toInt() * 1000,
-                                        format: 'yyyy年MM月'),
-                                    '${model.mileage}万公里',
-                                    model.status,
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    40.hb,
+                    ///右侧内容
                     SizedBox(
-                        child: model.status == 10 &&
-                                model.status == 30 &&
-                                model.status == 40
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                      width: 406.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(model.modelName,
+                              style: TextStyle(
+                                  fontSize: BaseStyle.fontSize28,
+                                  color: BaseStyle.color111111)),
+                          32.hb,
+
+                          ///标签
+                          Padding(
+                              padding: EdgeInsets.only(right: 16.w),
+                              child: _getText(
+                                '过户${0}次',
+                                DateUtil.formatDateMs(
+                                    model.licensingDate.toInt() * 1000,
+                                    format: 'yyyy年MM月'),
+                                '${model.mileage}万公里',
+                                model.status,
+                              ))
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                40.hb,
+                SizedBox(
+                    child: model.status == 10 &&
+                            model.status == 30 &&
+                            model.status == 40
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      ///汽车总价
-                                      SizedBox(
-                                        child: Text(
-                                          '车辆总价',
-                                          style: TextStyle(
-                                              fontSize: BaseStyle.fontSize28,
-                                              color: BaseStyle.color999999),
-                                        ),
-                                      ),
-                                      16.wb,
-                                      SizedBox(
-                                        child: Text.rich(TextSpan(children: [
-                                          TextSpan(
-                                              text: (num.parse(model.amount) /
-                                                      10000)
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2),
-                                          TextSpan(
-                                              text: '万',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2),
-                                        ])),
-                                      ),
-                                      56.wb,
-                                      SizedBox(
-                                        child: Text(
-                                          model.statusEnum.str,
-                                          style: TextStyle(
-                                              fontSize: BaseStyle.fontSize28,
-                                              color: BaseStyle.color999999),
-                                        ),
-                                      ),
-                                      16.wb,
-                                      SizedBox(
-                                        child: Text.rich(TextSpan(children: [
-                                          TextSpan(
-                                              text: (num.parse(model.deposit) /
-                                                      10000)
-                                                  .toString(), //item['pice'],
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2
-                                                  ?.copyWith(
-                                                      color: const Color(
-                                                          0xFFFF3B02))),
-                                          TextSpan(
-                                              text: '万',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2
-                                                  ?.copyWith(
-                                                      color: const Color(
-                                                          0xFFFF3B02))),
-                                        ])),
-                                      ),
-                                    ],
+                                  ///汽车总价
+                                  SizedBox(
+                                    child: Text(
+                                      '车辆总价',
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
                                   ),
-                                  32.hb,
-                                  GestureDetector(
-                                    onTap: () {
-                                      switch (model.status) {
-                                        case 10:
-                                          Get.to(() => DetectionDataPage(
-                                                orderId: model.id,
-                                              ));
-                                          break;
-                                        case 30:
-                                          Get.to(() => ChangeNameDataPage(
-                                                orderId: model.id,
-                                              ));
-                                          break;
-                                        case 41:
-                                          //Get.to(() => const ());
-                                          break;
-                                      }
-                                    },
-                                    child: Container(
-                                        width: 168.w,
-                                        height: 68.w,
-                                        padding: EdgeInsets.only(
-                                            left: 28.w, top: 14.w),
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xFF027AFF),
-                                            borderRadius:
-                                                BorderRadius.circular(8.w)),
-                                        child: Text(
-                                          _getButtonText(model.status),
-                                          style: TextStyle(
-                                              color: kForeGroundColor,
-                                              fontSize: BaseStyle.fontSize28),
-                                        )),
-                                  )
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text:
+                                              (num.parse(model.amount) / 10000)
+                                                  .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                    ])),
+                                  ),
+                                  56.wb,
+                                  SizedBox(
+                                    child: Text(
+                                      model.statusEnum.str,
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
+                                  ),
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text:
+                                              (num.parse(model.deposit) / 10000)
+                                                  .toString(), //item['pice'],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                  color:
+                                                      const Color(0xFFFF3B02))),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                  color:
+                                                      const Color(0xFFFF3B02))),
+                                    ])),
+                                  ),
+                                ],
+                              ),
+                              32.hb,
+                              GestureDetector(
+                                onTap: () {
+                                  switch (model.status) {
+                                    case 10:
+                                      Get.to(() => DetectionDataPage(
+                                            orderId: model.id,
+                                          ));
+                                      break;
+                                    case 30:
+                                      Get.to(() => ChangeNameDataPage(
+                                            orderId: model.id,
+                                          ));
+                                      break;
+                                    case 41:
+                                      //Get.to(() => const ());
+                                      break;
+                                  }
+                                },
+                                child: Container(
+                                    width: 168.w,
+                                    height: 68.w,
+                                    padding:
+                                        EdgeInsets.only(left: 28.w, top: 14.w),
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFF027AFF),
+                                        borderRadius:
+                                            BorderRadius.circular(8.w)),
+                                    child: Text(
+                                      _getButtonText(model.status),
+                                      style: TextStyle(
+                                          color: kForeGroundColor,
+                                          fontSize: BaseStyle.fontSize28),
+                                    )),
+                              )
+                            ],
+                          )
+                        : model.status != 0
+
+                            ///判断交易是否取消
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SizedBox(
+                                    child: Text(
+                                      '车辆总价',
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
+                                  ),
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text:
+                                              (num.parse(model.amount) / 10000)
+                                                  .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                    ])),
+                                  ),
+                                  56.wb,
+                                  SizedBox(
+                                    child: Text(
+                                      model.statusEnum.str,
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
+                                  ),
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text:
+                                              (num.parse(model.deposit) / 10000)
+                                                  .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                  color:
+                                                      const Color(0xFFFF3B02))),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                  color:
+                                                      const Color(0xFFFF3B02))),
+                                    ])),
+                                  ),
                                 ],
                               )
-                            : model.status != 0
-
-                                ///判断交易是否取消
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      SizedBox(
-                                        child: Text(
-                                          '车辆总价',
-                                          style: TextStyle(
-                                              fontSize: BaseStyle.fontSize28,
-                                              color: BaseStyle.color999999),
-                                        ),
-                                      ),
-                                      16.wb,
-                                      SizedBox(
-                                        child: Text.rich(TextSpan(children: [
-                                          TextSpan(
-                                              text: (num.parse(model.amount) /
-                                                      10000)
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SizedBox(
+                                    child: Text(
+                                      '车辆总价',
+                                      style: TextStyle(
+                                          fontSize: BaseStyle.fontSize28,
+                                          color: BaseStyle.color999999),
+                                    ),
+                                  ),
+                                  16.wb,
+                                  SizedBox(
+                                    child: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text:
+                                              (num.parse(model.amount) / 10000)
                                                   .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2),
-                                          TextSpan(
-                                              text: '万',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2),
-                                        ])),
-                                      ),
-                                      56.wb,
-                                      SizedBox(
-                                        child: Text(
-                                          model.statusEnum.str,
-                                          style: TextStyle(
-                                              fontSize: BaseStyle.fontSize28,
-                                              color: BaseStyle.color999999),
-                                        ),
-                                      ),
-                                      16.wb,
-                                      SizedBox(
-                                        child: Text.rich(TextSpan(children: [
-                                          TextSpan(
-                                              text: (num.parse(model.deposit) /
-                                                      10000)
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2
-                                                  ?.copyWith(
-                                                      color: const Color(
-                                                          0xFFFF3B02))),
-                                          TextSpan(
-                                              text: '万',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2
-                                                  ?.copyWith(
-                                                      color: const Color(
-                                                          0xFFFF3B02))),
-                                        ])),
-                                      ),
-                                    ],
-                                  )
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      SizedBox(
-                                        child: Text(
-                                          '车辆总价',
-                                          style: TextStyle(
-                                              fontSize: BaseStyle.fontSize28,
-                                              color: BaseStyle.color999999),
-                                        ),
-                                      ),
-                                      16.wb,
-                                      SizedBox(
-                                        child: Text.rich(TextSpan(children: [
-                                          TextSpan(
-                                              text: (num.parse(model.amount) /
-                                                      10000)
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2),
-                                          TextSpan(
-                                              text: '万',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2),
-                                        ])),
-                                      ),
-                                    ],
-                                  )),
-                  ],
-                )),
-          ),
-        ));
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                      TextSpan(
+                                          text: '万',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2),
+                                    ])),
+                                  ),
+                                ],
+                              )),
+              ],
+            )),
+      ),
+    );
   }
 
   _getText(String num, String time, String distance, int conditions) {

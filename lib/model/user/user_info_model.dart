@@ -47,7 +47,8 @@ class UserInfoModel extends Equatable {
 
   Gender get genderEM => Gender.getValue(gender);
 
-  bool get isHomeStore => businessId == 1;
+  BusinessAscription get businessAscription =>
+      BusinessAscription.getValue(businessId);
 
   @override
   List<Object?> get props => [

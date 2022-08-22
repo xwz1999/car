@@ -16,6 +16,7 @@ class UserProvider extends ChangeNotifier {
 
   UserInfoModel get userInfo => _userInfo;
 
+
   Future<bool> init() async {
     if (HiveStore.appBox?.containsKey('token') ?? false) {
       final token = HiveStore.appBox?.get('token') as String;

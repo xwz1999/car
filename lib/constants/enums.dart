@@ -32,6 +32,7 @@ enum Role {
   const Role(this.num, this.typeStr, this.typeText);
 }
 
+///车辆来源
 enum CarSource {
   carDealer(1, '车商'),
   individual(2, '个人直卖');
@@ -52,4 +53,25 @@ enum CarSource {
   }
 
   const CarSource(this.typeNum, this.typeStr);
+}
+
+/// 所属入驻商
+enum BusinessAscription {
+  ///云云问车
+  yywc,
+
+  /// 一般入驻商
+  normal;
+
+
+  static BusinessAscription getValue(int value) {
+    switch (value) {
+      case 1:
+        return BusinessAscription.yywc;
+      default:
+        return BusinessAscription.normal;
+    }
+  }
+
+  const BusinessAscription();
 }

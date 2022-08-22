@@ -1,7 +1,10 @@
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/order/order_statistics_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/sales_orders_page.dart';
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
@@ -63,7 +66,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
           GestureDetector(
             onTap: () {
               Get.to(() => const SalesOrderPage(
-                    StatusNum: '售车订单',
+                    orderType: OrderType.sale,
                   ));
             },
             child: ManagerContainerItem(
@@ -71,36 +74,31 @@ class _MyOrderPageState extends State<MyOrderPage> {
               num: '${_model.saleCount}',
             ),
           ),
+          UserTool.userProvider.userInfo.businessAscription ==
+                  BusinessAscription.normal
+              ? GestureDetector(
+                  onTap: () {
+                    Get.to(() =>
+                        const SalesOrderPage(orderType: OrderType.personal));
+                  },
+                  child: ManagerContainerItem(
+                    text: '个人寄卖',
+                    num: '${_model.consignmentCount}',
+                  ),
+                )
+              : GestureDetector(
+                  onTap: () {
+                    Get.to(() =>
+                        const SalesOrderPage(orderType: OrderType.carDealer));
+                  },
+                  child: ManagerContainerItem(
+                    text: '车商寄卖',
+                    num: '${_model.consignmentCount}',
+                  ),
+                ),
           GestureDetector(
             onTap: () {
-              Get.to(() => const SalesOrderPage(StatusNum: '个人寄卖'));
-            },
-            child: ManagerContainerItem(
-              text: '个人寄卖',
-              num: '${_model.consignmentCount}',
-            ),
-          ),
-          // GestureDetector(
-          //   onTap: () {
-          //     Get.to(() => const SalesOrderPage(StatusNum: '租车订单'));
-          //   },
-          //   child: ManagerContainerItem(
-          //     text: '租车订单',
-          //     num: '${_model.dealerConsignmentCount}',
-          //   ),
-          // ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => const SalesOrderPage(StatusNum: '车商寄卖'));
-            },
-            child: ManagerContainerItem(
-              text: '车商寄卖',
-              num: '${_model.consignmentCount}',
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => const SalesOrderPage(StatusNum: '叫车订单'));
+              Get.to(() => const SalesOrderPage(orderType:OrderType.callCar));
             },
             child: ManagerContainerItem(
               text: '叫车订单',
@@ -111,47 +109,4 @@ class _MyOrderPageState extends State<MyOrderPage> {
       ),
     );
   }
-// _getItem(String text) {
-//   return Column(
-//     crossAxisAlignment: CrossAxisAlignment.start,
-//     children: [
-//       Padding(
-//         padding: const EdgeInsets.only(left: 12),
-//         child: Text(text,
-//             style: TextStyle(
-//                 color: BaseStyle.color333333,
-//                 fontSize: BaseStyle.fontSize32,
-//                 fontWeight: FontWeight.bold)),
-//       ),
-//       24.hb,
-//       GridView.builder(
-//           shrinkWrap: true,
-//           padding: EdgeInsets.only(left: 32.w, right: 32.w),
-//           physics: const NeverScrollableScrollPhysics(),
-//           itemCount: 5,
-//           //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-//           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//               //横轴元素个数
-//               crossAxisCount: 3,
-//               //纵轴间距
-//               mainAxisSpacing: 10,
-//               //横轴间距
-//               crossAxisSpacing: 15,
-//               //子组件宽高长度比例
-//               childAspectRatio: 200 / 176),
-//           itemBuilder: (BuildContext context, int index) {
-//             //Widget Function(BuildContext context, int index)
-//             return GestureDetector(
-//               onTap: () {
-//                 Get.to(() => const SalesOrders());
-//               },
-//               child: const ManagerContainerItem(
-//                 text: '浏览客户',
-//                 num: '12',
-//               ),
-//             );
-//           }),
-//     ],
-//   );
-// }
 }

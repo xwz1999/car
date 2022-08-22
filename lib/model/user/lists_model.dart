@@ -16,6 +16,7 @@ class ListsModel extends Equatable {
   final String mileage;
   final String price;
   final int createdAt;
+  final String carPhoto;
 
   factory ListsModel.fromJson(Map<String, dynamic> json) =>
       _$ListsModelFromJson(json);
@@ -26,18 +27,6 @@ class ListsModel extends Equatable {
 
   CarConsignmentStatus get carStatusEnum =>
       CarConsignmentStatus.getStatus(status);
-
-  const ListsModel({
-    required this.id,
-    required this.orderSn,
-    required this.status,
-    required this.auditStatus,
-    required this.modeName,
-    required this.licensingDate,
-    required this.mileage,
-    required this.price,
-    required this.createdAt,
-  });
 
   @override
   List<Object?> get props => [
@@ -50,5 +39,45 @@ class ListsModel extends Equatable {
         mileage,
         price,
         createdAt,
+        carPhoto,
       ];
+
+  const ListsModel({
+    required this.id,
+    required this.orderSn,
+    required this.status,
+    required this.auditStatus,
+    required this.modeName,
+    required this.licensingDate,
+    required this.mileage,
+    required this.price,
+    required this.createdAt,
+    required this.carPhoto,
+  });
+
+  ListsModel copyWith({
+    int? id,
+    String? orderSn,
+    int? status,
+    int? auditStatus,
+    String? modeName,
+    int? licensingDate,
+    String? mileage,
+    String? price,
+    int? createdAt,
+    String? carPhoto,
+  }) {
+    return ListsModel(
+      id: id ?? this.id,
+      orderSn: orderSn ?? this.orderSn,
+      status: status ?? this.status,
+      auditStatus: auditStatus ?? this.auditStatus,
+      modeName: modeName ?? this.modeName,
+      licensingDate: licensingDate ?? this.licensingDate,
+      mileage: mileage ?? this.mileage,
+      price: price ?? this.price,
+      createdAt: createdAt ?? this.createdAt,
+      carPhoto: carPhoto ?? this.carPhoto,
+    );
+  }
 }

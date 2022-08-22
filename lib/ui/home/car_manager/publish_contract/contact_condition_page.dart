@@ -2,6 +2,7 @@ import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/user/user_order/sales_orders_page.dart';
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -148,7 +149,7 @@ class _ContactConditionState extends State<ContactCondition> {
                       Get.offUntil(
                           GetPageRoute(
                               page: () =>
-                                  const SalesOrderPage(StatusNum: '个人寄卖')),
+                                  const SalesOrderPage(orderType: OrderType.personal)),
                           (route) =>
                               (route as GetPageRoute).routeName ==
                               '/TabNavigator');

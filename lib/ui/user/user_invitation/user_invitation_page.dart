@@ -31,6 +31,7 @@ class _UserInvitationPageState extends State<UserInvitationPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
             leading: const CloudBackButton(

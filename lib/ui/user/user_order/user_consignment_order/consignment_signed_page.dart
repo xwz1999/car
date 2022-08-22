@@ -466,6 +466,8 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
 
       case ConsignmentStatus.uFinal:
         return const SizedBox.shrink();
+      case ConsignmentStatus.theDown:
+        return const SizedBox.shrink();
     }
   }
 

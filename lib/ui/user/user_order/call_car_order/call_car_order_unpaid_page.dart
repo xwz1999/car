@@ -7,18 +7,18 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/user_tool.dart';
 
-class ThatcarUnpaidPage extends StatefulWidget {
-  final OrderCallCarStatus status;
+class CallCarUnpaidPage extends StatefulWidget {
+  final CallCarStatus status;
   final String statusText;
 
-  const ThatcarUnpaidPage(
+  const CallCarUnpaidPage(
       {super.key, required this.status, required this.statusText});
 
   @override
-  State<ThatcarUnpaidPage> createState() => _ThatcarUnpaidPageState();
+  State<CallCarUnpaidPage> createState() => _CallCarUnpaidPageState();
 }
 
-class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
+class _CallCarUnpaidPageState extends State<CallCarUnpaidPage> {
   //late String stat = widget.stat;
 
   @override
@@ -124,7 +124,7 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
               _getText('上门时间', '2022-01-04 12:00'),
             ],
           )),
-          widget.status.num == 1
+          widget.status.typeNum == 1
               ? const SizedBox()
               : _getCarBox(Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +161,7 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
                 decoration: BoxDecoration(
-                  color: widget.status.num == 3 || widget.status.num == 4
+                  color: widget.status.typeNum == 3 || widget.status.typeNum == 4
                       ? const Color(0xFF027AFF).withOpacity(0.1)
                       : const Color(0xFFFE8029).withOpacity(0.1),
                 ),
@@ -169,7 +169,7 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
                   widget.statusText,
                   style: TextStyle(
                     fontSize: BaseStyle.fontSize24,
-                    color: widget.status.num == 3 || widget.status.num == 4
+                    color: widget.status.typeNum == 3 || widget.status.typeNum == 4
                         ? const Color(0xFF027AFF)
                         : const Color(0xFFFE8029),
                   ),
@@ -219,14 +219,14 @@ class _ThatcarUnpaidPageState extends State<ThatcarUnpaidPage> {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: widget.status.num == 4
+              color: widget.status.typeNum == 4
                   ? const Color(0xFF4F5A74).withOpacity(0.08)
                   : const Color(0xFF027AFF).withOpacity(0.08)),
           child: Text(
             num,
             style: TextStyle(
                 fontSize: BaseStyle.fontSize20,
-                color: widget.status.num == 4
+                color: widget.status.typeNum == 4
                     ? const Color(0xFF4F5A74)
                     : const Color(0xFF027AFF)),
           ),

@@ -4,7 +4,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 class CarWidget extends StatefulWidget {
   final List items;
-  final Function(String) callBack;
+  final Function(int index) callBack;
 
   const CarWidget({
     super.key,
@@ -34,7 +34,7 @@ class _CarWidgetState extends State<CarWidget> {
                 child: GestureDetector(
               onTap: () {
                 _isChoose = index;
-                widget.callBack(e);
+                widget.callBack(index);
               },
               child: Container(
                   width: 160.w,

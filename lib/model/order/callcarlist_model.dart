@@ -20,7 +20,7 @@ class CallcarlistModel extends Equatable {
       _$CallcarlistModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CallcarlistModelToJson(this);
-  OrderCallCarStatus get statusEnum => OrderCallCarStatus.getStatus(status);
+  CallCarStatus get statusEnum => CallCarStatus.getValue(status);
 
   const CallcarlistModel({
     required this.id,

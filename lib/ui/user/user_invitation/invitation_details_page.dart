@@ -1,7 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/task/task_invite_list_model.dart';
-import 'package:cloud_car/ui/home/car_manager/Initiate_contract_page.dart';
-import 'package:cloud_car/ui/home/car_manager/invite_detail_page.dart';
 import 'package:cloud_car/ui/user/user_invitation/invitation_details_lists.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';

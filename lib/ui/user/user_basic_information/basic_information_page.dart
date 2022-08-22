@@ -4,7 +4,6 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/user/interface/user_func.dart';
-import 'package:cloud_car/ui/user/user_basic_information/enterprise_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
