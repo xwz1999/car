@@ -6,6 +6,7 @@ import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/text_utils.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,10 @@ class _WxLoginPageState extends State<WxLoginPage> {
     return Scaffold(
       // title: '',
       // bodyColor:
+      appBar: AppBar(
+        leading: const CloudBackButton(),
+        backgroundColor: kForeGroundColor,
+      ),
       backgroundColor: kForeGroundColor,
       body: SafeArea(
         child: Column(
