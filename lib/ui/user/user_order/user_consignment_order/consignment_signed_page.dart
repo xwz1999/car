@@ -332,7 +332,6 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
       case ConsignmentStatus.unPublish:
         return const SizedBox.shrink();
       case ConsignmentStatus.publish:
-        // TODO: Handle this case.
         switch (widget.auditStatus) {
           case 1:
             return Container(
@@ -468,6 +467,9 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
         return const SizedBox.shrink();
       case ConsignmentStatus.theDown:
         return const SizedBox.shrink();
+      case ConsignmentStatus.defaultValue:
+
+        return const SizedBox.shrink();
     }
   }
 
@@ -509,13 +511,16 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
           ),
         ),
         32.wb,
-        Text(
-          text,
-          style: TextStyle(
-              color: widget.statusNumber.num == 3 && widget.auditStatus == 3
-                  ? const Color(0xFFE62222)
-                  : BaseStyle.color333333,
-              fontSize: BaseStyle.fontSize28),
+        SizedBox(
+          width: 450.w,
+          child: Text(
+            text,
+            style: TextStyle(
+                color: widget.statusNumber.num == 3 && widget.auditStatus == 3
+                    ? const Color(0xFFE62222)
+                    : BaseStyle.color333333,
+                fontSize: BaseStyle.fontSize28),
+          ),
         ),
       ],
     );

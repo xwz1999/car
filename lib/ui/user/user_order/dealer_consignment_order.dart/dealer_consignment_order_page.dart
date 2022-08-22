@@ -34,10 +34,12 @@ class _DealerConsignmentOrderPageState
   final int _size = 10;
   bool _onLoad = true;
 
-  CarConsignmentSearchStatus _currenStatus = CarConsignmentSearchStatus.all;
+  CarConsignmentSearchStatus _currentStatus = CarConsignmentSearchStatus.all;
 
-  Map <String,dynamic> get _params => {
-        'status': _currenStatus.num,
+  Map<String, dynamic> get _params => {
+        'page': _page,
+        'size': _size,
+        'status': _currentStatus.num,
       };
 
   @override
@@ -91,7 +93,7 @@ class _DealerConsignmentOrderPageState
                     .map((e) => e.str)
                     .toList(),
                 callBack: (index) {
-                  _currenStatus = CarConsignmentSearchStatus.values[index];
+                  _currentStatus = CarConsignmentSearchStatus.values[index];
                   _easyRefreshController.callRefresh();
                 }),
           ),
@@ -104,17 +106,15 @@ class _DealerConsignmentOrderPageState
               onRefresh: () async {
                 _page = 1;
                 _dealerConsignmentList = await OrderFunc.getDealerLists(
-                    page: _page, size: _size, data: _params);
+                   data: _params);
                 _onLoad = false;
                 setState(() {});
               },
               onLoad: () async {
                 _page++;
-                var data = <String,dynamic>{'page': _page, 'size': _size};
-                data.addAll(_params);
                 var baseList = await apiClient.requestList(
                     API.order.dealerConsignmentOrderPage,
-                    data:data );
+                    data: _params);
                 if (baseList.nullSafetyTotal > _dealerConsignmentList.length) {
                   _dealerConsignmentList.addAll(baseList.nullSafetyList
                       .map((e) => ListsModel.fromJson(e))

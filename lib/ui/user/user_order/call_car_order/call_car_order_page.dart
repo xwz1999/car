@@ -38,6 +38,8 @@ class _CallCarOrderPageState extends State<CallCarOrderPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   Map<String, dynamic> get _params => {
+        'page': _page,
+        'size': _size,
         'status': _currentStatus.typeNum,
       };
 
@@ -94,10 +96,8 @@ class _CallCarOrderPageState extends State<CallCarOrderPage> {
               controller: _easyRefreshController,
               onLoad: () async {
                 _page++;
-                var data = <String, dynamic>{'page': _page, 'size': _size};
-                data.addAll(_params);
-                var baseList =
-                    await apiClient.requestList(API.order.callCar, data: data);
+                var baseList = await apiClient.requestList(API.order.callCar,
+                    data: _params);
                 if (baseList.nullSafetyTotal > callCarList.length) {
                   callCarList.addAll(baseList.nullSafetyList
                       .map((e) => CallcarlistModel.fromJson(e))
@@ -109,8 +109,7 @@ class _CallCarOrderPageState extends State<CallCarOrderPage> {
               },
               onRefresh: () async {
                 _page = 1;
-                callCarList = await OrderFunc.getCallCar(
-                    page: _page, size: _size, data: _params);
+                callCarList = await OrderFunc.getCallCar(data: _params);
 
                 _onLoad = false;
                 setState(() {});
@@ -135,17 +134,7 @@ class _CallCarOrderPageState extends State<CallCarOrderPage> {
 
   _getCar(CallcarlistModel model) {
     return GestureDetector(
-        onTap: () {
-          // model.transfer == 1
-          //     ? Get.to(() => UnpaidOther(
-          //           status: model.status,
-          //
-          //         ))
-          //     : Get.to(() => ThatcarUnpaid(
-          //
-          //           status: model.status,
-          //         ));
-        },
+        onTap: () {},
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
             margin: EdgeInsets.only(left: 32.w, right: 32.w, top: 16.w),

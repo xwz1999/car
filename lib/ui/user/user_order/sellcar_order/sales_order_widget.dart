@@ -39,7 +39,9 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
 
   ConsignmentSearchStatus _currentStatus = ConsignmentSearchStatus.all;
 
-  Map<String,dynamic> get _params => {
+  Map<String, dynamic> get _params => {
+        'page': _page,
+        'size': _size,
         'status': _currentStatus.typeNum,
       };
 
@@ -105,18 +107,14 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
               onRefresh: () async {
                 _page = 1;
                 _salesList = await OrderFunc.getSaleList(
-                    page: _page, size: _size, data: _params);
+                     data: _params);
                 setState(() {});
               },
               onLoad: () async {
                 _page++;
-                var data = <String,dynamic>{
-                  'page': _page,
-                  'size': _size,
-                };
-                data.addAll(_params);
-                var baseList =
-                    await apiClient.requestList(API.order.saleLists, data:data );
+
+                var baseList = await apiClient.requestList(API.order.saleLists,
+                    data: _params);
                 if (baseList.nullSafetyTotal > _salesList.length) {
                   _salesList.addAll(baseList.nullSafetyList
                       .map((e) => SalelistsModel.fromJson(e))

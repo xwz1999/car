@@ -79,6 +79,7 @@ enum OrderSaleSearchStatus {
 
 ///个人寄卖订单
 enum ConsignmentStatus {
+  defaultValue(0,''),
   unSign(1, '待签订'),
   unPublish(2, '待发布'),
   publish(3, '提交审核'),
