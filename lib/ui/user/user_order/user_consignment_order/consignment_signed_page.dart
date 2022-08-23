@@ -363,16 +363,16 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                 child: _getTitle('出售信息'),
               ),
               36.hb,
-              _getText('购车客户', '莉'),
+              _getText('购车客户', _individualList!.customer.nickname),
               36.hb,
               _getText(
                 '手机号',
-                '18935263526',
+                _individualList!.customer.mobile,
               ),
               36.hb,
               _getText(
                 '出售价格',
-                '¥${widget.price}',
+                '¥${_individualList!.saleAmount}',
               ),
               36.hb,
               _getText(

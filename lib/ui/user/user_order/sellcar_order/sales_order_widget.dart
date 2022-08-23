@@ -37,7 +37,7 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
   final int _size = 10;
   var a = 0;
 
-  ConsignmentSearchStatus _currentStatus = ConsignmentSearchStatus.all;
+  OrderSaleSearchStatus _currentStatus = OrderSaleSearchStatus.all;
 
   Map<String, dynamic> get _params => {
         'page': _page,
@@ -90,11 +90,11 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
           SizedBox(
               height: 88.w,
               child: CarWidget(
-                items: ConsignmentSearchStatus.values
+                items: OrderSaleSearchStatus.values
                     .map((e) => e.typeStr)
                     .toList(),
                 callBack: (index) {
-                  _currentStatus = ConsignmentSearchStatus.values[index];
+                  _currentStatus = OrderSaleSearchStatus.values[index];
                   _easyRefreshController.callRefresh();
                 },
               )),

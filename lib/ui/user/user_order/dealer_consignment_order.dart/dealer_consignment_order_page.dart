@@ -67,8 +67,6 @@ class _DealerConsignmentOrderPageState
     ];
   }
 
-  String text = '全部';
-
   @override
   void dispose() {
     _easyRefreshController.dispose();
