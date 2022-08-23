@@ -101,7 +101,9 @@ class _CarManagerPageState extends State<CarManagerPage> {
                 if (text == '评估车辆') {
                   Get.to(() => const AssessmentPage());
                 } else {
-                  Get.to(() => const DirectSaleManagerPage());
+                  Get.to(() => const DirectSaleManagerPage(
+                    initIndex: 1,
+                  ));
                 }
               },
               child: ManagerContainerItem(
@@ -114,7 +116,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
                 if (text == '评估车辆') {
                   Get.to(() => const AssessmentPage());
                 } else {
-                  Get.to(() => const DirectSaleManagerPage());
+                  Get.to(() => const DirectSaleManagerPage(initIndex: 2,));
                 }
               },
               child: ManagerContainerItem(
@@ -127,7 +129,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
                 if (text == '评估车辆') {
                   Get.to(() => const AssessmentPage());
                 } else {
-                  Get.to(() => const DirectSaleManagerPage());
+                  Get.to(() => const DirectSaleManagerPage(initIndex: 3,));
                 }
               },
               child: ManagerContainerItem(

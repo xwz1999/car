@@ -170,7 +170,8 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
           Assets.images.splitBarAbove.image(),
         ],
       ),
-      bottomNavi:  (_onLoad || _infoModel.finish) ? const SizedBox.shrink() : bottom,
+      bottomNavi:
+          (_onLoad || _infoModel.finish) ? const SizedBox.shrink() : bottom,
     );
   }
 
@@ -250,8 +251,8 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
         Container(
           width: 686.w,
           color: Colors.white,
-          child: Column(
-            children: ListTile.divideTiles(
+          child: Column(children: [
+            ...ListTile.divideTiles(
                     context: context,
                     tiles: item.bills
                         .map((e) => ListTile(
@@ -260,10 +261,24 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                                   '${e.brokerName} | ${DateUtil.formatDateMs(e.createAt * 1000)}'
                                       .text
                                       .make(),
+                              trailing: '${e.symbol ? '+' : '—'}¥ '
+                                  .richText
+                                  .withTextSpanChildren([
+                                    e.amount.textSpan
+                                        .size(32.sp)
+                                        .color(e.symbol
+                                            ? Colors.red
+                                            : Colors.black87)
+                                        .make()
+                                  ])
+                                  .size(24.sp)
+                                  .color(e.symbol ? Colors.red : Colors.black87)
+                                  .make(),
                             ))
                         .toList())
                 .toList(),
-          ),
+            (260.w + MediaQuery.of(context).padding.bottom).hb
+          ]),
         ),
       ],
     );

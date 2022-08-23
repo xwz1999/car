@@ -17,7 +17,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'assessment_car_page.dart';
 
 class DirectSaleManagerPage extends StatefulWidget {
-  const DirectSaleManagerPage({super.key});
+  final int initIndex;
+
+  const DirectSaleManagerPage({super.key, this.initIndex = 0});
 
   @override
   _DirectSaleManagerPageState createState() => _DirectSaleManagerPageState();
@@ -49,7 +51,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   @override
   void initState() {
     super.initState();
-
     _sortList = [
       ChooseItem(name: '直卖车辆'),
       // ChooseItem(name: '收购车辆'),
@@ -78,7 +79,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                   ? refreshController.callRefresh()
                   : asRefreshController.callRefresh();
               setState(() {});
-
             },
             mainAxisSpacing: 10.w,
             crossAxisSpacing: 24.w,
@@ -107,41 +107,39 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           backgroundColor: bodyColor,
           extendBodyBehindAppBar: true,
           extendBody: true,
-          body: Builder(
-            builder: (context) {
-              return TitleDropDownWidget(
-                  _dropDownHeaderItemStrings1, listWidget,
-                  height: kToolbarHeight + 20.w,
-                  bottomHeight: 30.w,
-                  screenControl: screenControl,
-                  headFontSize: 36.sp,
-                  isSearch: true,
-                  callback: (text) {
-                    _pickCar.value.keyWords = text;
-                    _dropDownHeaderItemStrings1.first == '直卖车辆'
-                        ? refreshController.callRefresh()
-                        : asRefreshController.callRefresh();
-                    setState(() {});
-                  },
-                  leftWidget: const CloudBackButton(
-                    isSpecial: true,
-                  ),
-                  // screen: '筛选',
-                  onTap: () {
-                    screenControl.screenHide();
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                  child: _dropDownHeaderItemStrings1.first == '直卖车辆'
-                      ? DirectSalePage(
-                          pickCar: _pickCar,
-                          refreshController: refreshController,
-                        )
-                      : AssessmentCarPage(
-                          refreshController: asRefreshController,
-                          pickCar: _pickCar,
-                        ));
-            }
-          ),
+          body: Builder(builder: (context) {
+            return TitleDropDownWidget(_dropDownHeaderItemStrings1, listWidget,
+                height: kToolbarHeight + 20.w,
+                bottomHeight: 30.w,
+                screenControl: screenControl,
+                headFontSize: 36.sp,
+                isSearch: true,
+                callback: (text) {
+                  _pickCar.value.keyWords = text;
+                  _dropDownHeaderItemStrings1.first == '直卖车辆'
+                      ? refreshController.callRefresh()
+                      : asRefreshController.callRefresh();
+                  setState(() {});
+                },
+                leftWidget: const CloudBackButton(
+                  isSpecial: true,
+                ),
+                // screen: '筛选',
+                onTap: () {
+                  screenControl.screenHide();
+                  Scaffold.of(context).openEndDrawer();
+                },
+                child: _dropDownHeaderItemStrings1.first == '直卖车辆'
+                    ? DirectSalePage(
+                        initIndex: widget.initIndex,
+                        pickCar: _pickCar,
+                        refreshController: refreshController,
+                      )
+                    : AssessmentCarPage(
+                        refreshController: asRefreshController,
+                        pickCar: _pickCar,
+                      ));
+          }),
           endDrawer: CustomDrawer(
               widthPercent: 0.86,
               backgroundColor: Colors.white,

@@ -39,11 +39,12 @@ enum CarStatus {
 class DirectSalePage extends StatefulWidget {
   final EasyRefreshController refreshController;
   final ValueNotifier<SearchParamModel> pickCar;
+  final int initIndex;
 
   const DirectSalePage({
     super.key,
     required this.refreshController,
-    required this.pickCar,
+    required this.pickCar,  this.initIndex=0,
   });
 
   @override
@@ -61,7 +62,7 @@ class _DirectSalePageState extends State<DirectSalePage>
   late String sort = '';
   late List<String> _dropDownHeaderItemStrings;
 
-  CarStatus _currentCarStatus = CarStatus.onSale;
+ late CarStatus _currentCarStatus ;
 
   Map<String, dynamic> get _params => {
         'keyword': widget.pickCar.value.keyWords,
@@ -86,6 +87,7 @@ class _DirectSalePageState extends State<DirectSalePage>
   @override
   void initState() {
     super.initState();
+    _currentCarStatus = CarStatus.values[widget.initIndex];
     _sortList = [
       ChooseItem(name: '最新创建'),
       ChooseItem(name: '标价最高'),
@@ -134,8 +136,7 @@ class _DirectSalePageState extends State<DirectSalePage>
         ),
         ChooseWidget(
           callBack: (index) {
-            _currentCarStatus = CarStatus.getValue(index + 1);
-            setState(() {});
+            _currentCarStatus = CarStatus.values[index];
             widget.refreshController.callRefresh();
           },
           items: CarStatus.values.map((e) => e.typeStr).toList(),
