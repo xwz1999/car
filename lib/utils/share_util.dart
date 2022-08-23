@@ -7,6 +7,7 @@ import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class ShareUtil {
+  ///分享图片
   static Future shareNetWorkImage(String url,
       {fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
     var data = await getNetworkImageData(url.imageWithHost);
@@ -23,6 +24,23 @@ class ShareUtil {
       if (!re) {
         CloudToast.show('分享失败');
       }
+    }
+  }
+
+  ///分享web链接
+  static Future shareWebPage(String webUrl,
+      {fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION,
+      String? image}) async {
+    var re = await fluwx.shareToWeChat(
+      fluwx.WeChatShareWebPageModel(
+        webUrl,
+        thumbnail: fluwx.WeChatImage.network(image.imageWithHost ?? ''),
+        compressThumbnail: true,
+        scene: fluwx.WeChatScene.SESSION,
+      ),
+    );
+    if (!re) {
+      CloudToast.show('分享失败');
     }
   }
 
