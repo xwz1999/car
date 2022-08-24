@@ -99,6 +99,8 @@ dependencies:
   map_launcher: ^2.2.3
   # 精度丢失
   decimal: ^2.2.0
+  # 图片压缩
+  flutter_image_compress: ^1.0.0-nullsafety
 
 
 dev_dependencies:

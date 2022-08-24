@@ -1,16 +1,22 @@
+import 'dart:typed_data';
+
+import 'package:cloud_car/constants/const_data.dart';
+import 'package:cloud_car/constants/environment/environment.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class ShareUtil {
   ///分享图片
-  static Future shareNetWorkImage(String url,
+  static Future shareNetWorkImage(String imgUrl,
       {fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
-    var data = await getNetworkImageData(url.imageWithHost);
+    var data = await getNetworkImageData(imgUrl.imageWithHost);
     if (data == null) {
       CloudToast.show('图片不存在');
       return;
@@ -34,9 +40,38 @@ class ShareUtil {
     var re = await fluwx.shareToWeChat(
       fluwx.WeChatShareWebPageModel(
         webUrl,
-        thumbnail: fluwx.WeChatImage.network(image.imageWithHost ?? ''),
+        thumbnail: fluwx.WeChatImage.network(image.imageWithHost),
         compressThumbnail: true,
         scene: fluwx.WeChatScene.SESSION,
+      ),
+    );
+    if (!re) {
+      CloudToast.show('分享失败');
+    }
+  }
+
+  ///分享跳转小程序链接
+  static Future shareMiniProgram(
+    String imgUrl,
+  ) async {
+    var data = await getNetworkImageData(imgUrl.imageWithHost);
+    if (data == null) {
+      CloudToast.show('图片不存在');
+      return;
+    }
+    if (data.length>500000){
+      data = await compressImageList(data);
+    }
+    var re = await fluwx.shareToWeChat(
+      fluwx.WeChatShareMiniProgramModel(
+        userName: wxOriginId,
+        path: '?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
+        webPageUrl: 'https://h5wenche.oa00.com/register',
+        thumbnail: fluwx.WeChatImage.binary(data),
+        compressThumbnail: false,
+        miniProgramType: AppENV.instance.env == ENVConfig.release
+            ? fluwx.WXMiniProgramType.RELEASE
+            : fluwx.WXMiniProgramType.PREVIEW,
       ),
     );
     if (!re) {
@@ -61,5 +96,19 @@ class ShareUtil {
   static copyToClipboard(String text) {
     Clipboard.setData(ClipboardData(text: text));
     CloudToast.show('已复制到粘贴板');
+  }
+
+  /// 压缩图片
+ static Future<Uint8List> compressImageList(Uint8List data) async {
+    var result = await FlutterImageCompress.compressWithList(
+      data,
+      minHeight: 300,
+      minWidth: 500,
+      quality: 96,
+    );
+    if (result.length > 500000) {
+      result = await compressImageList(result);
+    }
+    return result;
   }
 }

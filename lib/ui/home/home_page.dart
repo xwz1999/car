@@ -385,9 +385,7 @@ class _HomePageState extends State<HomePage>
                     const Spacer(),
                     GestureDetector(
                       onTap: () async {
-                        ShareUtil.shareWebPage(
-                            '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
-                            image: model.mainPhoto);
+                        ShareUtil.shareMiniProgram(model.mainPhoto);
                       },
                       child: Image.asset(
                         Assets.icons.homeShare.path,

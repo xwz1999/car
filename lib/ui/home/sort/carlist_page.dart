@@ -48,7 +48,7 @@ class _CarListPageState extends State<CarListPage> {
     brandList = await SortFunc.getBrandList();
     if (brandList.isNotEmpty) {
       for (var v in brandList) {
-        cityList.add(CityModel(name: v.name, id: v.id));
+        cityList.add(CityModel(name: v.name, id: v.brandId));
       }
       _handleList(cityList);
       setState(() {});
@@ -170,9 +170,6 @@ class _CarListPageState extends State<CarListPage> {
                         pickCar: widget.pickCar,
                       ));
                 });
-
-                // Utils.getListItem(context, model,
-                //   susHeight: susItemHeight);
               },
               susItemHeight: susItemHeight,
               susItemBuilder: (BuildContext context, int index) {

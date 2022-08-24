@@ -317,6 +317,10 @@ class _LoginPageState extends State<LoginPage> {
               24.hb,
               GestureDetector(
                 onTap: () {
+                  if (!_chooseAgreement) {
+                    CloudToast.show('请阅读并同意用户协议和隐私政策');
+                    return;
+                  }
                   Get.to(() => const LoginByPassword());
                 },
                 child: Text(

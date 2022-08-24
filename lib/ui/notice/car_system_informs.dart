@@ -1,5 +1,6 @@
 
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 
 import '../../widget/button/cloud_back_button.dart';
@@ -98,7 +99,7 @@ class _SystemPageState extends State<SystemPage>
                           color: const Color.fromRGBO(255, 255, 255, 0.8)),
                     ),
                     Text(
-                      'V1.0.1',
+                      UserTool.appProvider.packageInfo.version,
                       style: Theme.of(context).textTheme.headline6?.copyWith(
                           fontSize: 48.sp, color: const Color(0xffffffff)),
                     ),

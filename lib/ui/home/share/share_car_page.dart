@@ -247,7 +247,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
                   format: DateFormats.zh_y_mo),
               distance: model.mileage,
               standard: '国六',
-              url: Assets.images.homeBg.path,
+              url: model.mainPhoto,
               price: '${(double.parse(model.price) / 10000)}万元',
             ),
           ),
