@@ -410,7 +410,7 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                       child: GestureDetector(
                         onTap: () {
                           ShareUtil.shareMiniProgram(
-                              widget.model.first.mainPhoto);
+                              widget.model.first.mainPhoto,widget.model.first.id);
                         },
                         child: Column(
                           children: [

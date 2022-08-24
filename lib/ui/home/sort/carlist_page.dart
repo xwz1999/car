@@ -3,6 +3,7 @@ import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
@@ -30,21 +31,23 @@ class _CarListPageState extends State<CarListPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 0), () {
-      loadData();
+    Future.delayed(const Duration(milliseconds: 0), () async{
+    var cancel =   CloudToast.loading;
+     await loadData();
+     cancel();
     });
   }
 
   SortBrandModel? getBranModel(CityModel model) {
     for (var item in brandList) {
-      if (item.name == model.name && item.id == model.id) {
+      if (item.name == model.name && item.brandId == model.id) {
         return item;
       }
     }
     return null;
   }
 
-  void loadData() async {
+  Future loadData() async {
     brandList = await SortFunc.getBrandList();
     if (brandList.isNotEmpty) {
       for (var v in brandList) {
@@ -155,7 +158,6 @@ class _CarListPageState extends State<CarListPage> {
               data: cityList,
               itemCount: cityList.length,
               itemBuilder: (BuildContext context, int index) {
-                // if (index == 0) return _buildHeader();
                 CityModel model = cityList[index];
                 return Utils.getListItem(context, model, (name, id) async {
                   widget.pickCar.value.brand = getBranModel(model)!;

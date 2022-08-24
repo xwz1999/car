@@ -51,21 +51,19 @@ class ShareUtil {
   }
 
   ///分享跳转小程序链接
-  static Future shareMiniProgram(
-    String imgUrl,
-  ) async {
+  static Future shareMiniProgram(String imgUrl, int carId) async {
     var data = await getNetworkImageData(imgUrl.imageWithHost);
     if (data == null) {
       CloudToast.show('图片不存在');
       return;
     }
-    if (data.length>500000){
+    if (data.length > 128000) {
       data = await compressImageList(data);
     }
     var re = await fluwx.shareToWeChat(
       fluwx.WeChatShareMiniProgramModel(
         userName: wxOriginId,
-        path: '?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
+        path: 'pages/index/carBuying/secHandCar/carDetail/index/index?carId=$carId',
         webPageUrl: 'https://h5wenche.oa00.com/register',
         thumbnail: fluwx.WeChatImage.binary(data),
         compressThumbnail: false,
@@ -99,14 +97,14 @@ class ShareUtil {
   }
 
   /// 压缩图片
- static Future<Uint8List> compressImageList(Uint8List data) async {
+  static Future<Uint8List> compressImageList(Uint8List data) async {
     var result = await FlutterImageCompress.compressWithList(
       data,
       minHeight: 300,
       minWidth: 500,
       quality: 96,
     );
-    if (result.length > 500000) {
+    if (result.length > 128000) {
       result = await compressImageList(result);
     }
     return result;

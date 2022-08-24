@@ -385,7 +385,7 @@ class _HomePageState extends State<HomePage>
                     const Spacer(),
                     GestureDetector(
                       onTap: () async {
-                        ShareUtil.shareMiniProgram(model.mainPhoto);
+                        ShareUtil.shareMiniProgram(model.mainPhoto,model.id);
                       },
                       child: Image.asset(
                         Assets.icons.homeShare.path,
