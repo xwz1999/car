@@ -63,47 +63,39 @@ class _MyOrderPageState extends State<MyOrderPage> {
         crossAxisSpacing: 40.w,
         childAspectRatio: 200 / 176,
         children: [
-          GestureDetector(
+          ManagerContainerItem(
             onTap: () {
               Get.to(() => const SalesOrderPage(
                     orderType: OrderType.sale,
                   ));
             },
-            child: ManagerContainerItem(
-              text: '售车订单',
-              num: '${_model.saleCount}',
-            ),
+            text: '售车订单',
+            num: '${_model.saleCount}',
           ),
           UserTool.userProvider.userInfo.businessAscription ==
                   BusinessAscription.normal
-              ? GestureDetector(
+              ? ManagerContainerItem(
                   onTap: () {
                     Get.to(() =>
                         const SalesOrderPage(orderType: OrderType.personal));
                   },
-                  child: ManagerContainerItem(
-                    text: '个人寄卖',
-                    num: '${_model.consignmentCount}',
-                  ),
+                  text: '个人寄卖',
+                  num: '${_model.consignmentCount}',
                 )
-              : GestureDetector(
+              : ManagerContainerItem(
                   onTap: () {
                     Get.to(() =>
                         const SalesOrderPage(orderType: OrderType.carDealer));
                   },
-                  child: ManagerContainerItem(
-                    text: '车商寄卖',
-                    num: '${_model.consignmentCount}',
-                  ),
+                  text: '车商寄卖',
+                  num: '${_model.consignmentCount}',
                 ),
-          GestureDetector(
+          ManagerContainerItem(
             onTap: () {
-              Get.to(() => const SalesOrderPage(orderType:OrderType.callCar));
+              Get.to(() => const SalesOrderPage(orderType: OrderType.callCar));
             },
-            child: ManagerContainerItem(
-              text: '叫车订单',
-              num: '${_model.callCarCount}',
-            ),
+            text: '叫车订单',
+            num: '${_model.callCarCount}',
           )
         ],
       ),

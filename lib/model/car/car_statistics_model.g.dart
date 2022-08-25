@@ -12,7 +12,6 @@ CarStatisticsModel _$CarStatisticsModelFromJson(Map<String, dynamic> json) =>
       reserveCount: json['reserveCount'] as int,
       soldCount: json['soldCount'] as int,
       backOutCount: json['backOutCount'] as int,
-      allSellCount: json['allSellCount'] as int,
     );
 
 Map<String, dynamic> _$CarStatisticsModelToJson(CarStatisticsModel instance) =>
@@ -21,5 +20,4 @@ Map<String, dynamic> _$CarStatisticsModelToJson(CarStatisticsModel instance) =>
       'reserveCount': instance.reserveCount,
       'soldCount': instance.soldCount,
       'backOutCount': instance.backOutCount,
-      'allSellCount': instance.allSellCount,
     };

@@ -51,7 +51,8 @@ class ShareUtil {
   }
 
   ///分享跳转小程序链接
-  static Future shareMiniProgram(String imgUrl, int carId) async {
+  static Future shareMiniProgram(
+      {required String title, required String imgUrl, required int carId}) async {
     var data = await getNetworkImageData(imgUrl.imageWithHost);
     if (data == null) {
       CloudToast.show('图片不存在');
@@ -62,8 +63,11 @@ class ShareUtil {
     }
     var re = await fluwx.shareToWeChat(
       fluwx.WeChatShareMiniProgramModel(
-        userName: wxOriginId,//小程序 原始id 并非appid
-        path: 'pages/index/carBuying/secHandCar/carDetail/index/index?carId=$carId',
+        title: title,
+        userName: wxOriginId,
+        //小程序 原始id 并非appid
+        path:
+            'pages/index/carBuying/secHandCar/carDetail/index/index?carId=$carId',
         webPageUrl: 'https://h5wenche.oa00.com/register',
         thumbnail: fluwx.WeChatImage.binary(data),
         compressThumbnail: false,

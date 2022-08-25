@@ -113,11 +113,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
                       childAspectRatio: 200 / 176),
                   itemBuilder: (BuildContext context, int index) {
                     //Widget Function(BuildContext context, int index)
-                    return GestureDetector(
-                        onTap: () {
-                          Get.to(() => const UserManagerDetailPage());
-                        },
-                        child: getItem(index));
+                    return getItem(index);
                   }),
             ),
           ),
@@ -130,21 +126,33 @@ class _UserManagerPageState extends State<UserManagerPage> {
     switch (index) {
       case 0:
         return ManagerContainerItem(
+          onTap: () {
+            Get.to(() => const UserManagerDetailPage());
+          },
           text: '浏览客户',
           num: '${_model?.browseCount}',
         );
       case 1:
         return ManagerContainerItem(
+          onTap: () {
+            Get.to(() => const UserManagerDetailPage());
+          },
           text: '意向客户',
           num: '${_model?.intentionCount}',
         );
       case 2:
         return ManagerContainerItem(
+          onTap: () {
+            Get.to(() => const UserManagerDetailPage());
+          },
           text: '邀请注册',
           num: '${_model?.registerCount}',
         );
       case 3:
         return ManagerContainerItem(
+          onTap: () {
+            Get.to(() => const UserManagerDetailPage());
+          },
           text: '成交客户',
           num: '${_model?.doneCount}',
         );

@@ -10,3 +10,13 @@ enum CarSource {
 
   const CarSource(this.sourceNum, this.sourceName);
 }
+
+enum CarManageType {
+  all(0, '直卖车辆'),
+  personal(1, '我的车辆');
+
+  final int typeNum;
+  final String typeStr;
+
+  const CarManageType(this.typeNum, this.typeStr);
+}

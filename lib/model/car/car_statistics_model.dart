@@ -9,7 +9,6 @@ class CarStatisticsModel extends Equatable {
   final int reserveCount;
   final int soldCount;
   final int backOutCount;
-  final int allSellCount;
 
   factory CarStatisticsModel.fromJson(Map<String, dynamic> json) =>
       _$CarStatisticsModelFromJson(json);
@@ -20,8 +19,7 @@ class CarStatisticsModel extends Equatable {
       sellCount: 0,
       reserveCount: 0,
       soldCount: 0,
-      backOutCount: 0,
-      allSellCount: 0);
+      backOutCount: 0,);
 
   @override
   List<Object?> get props => [
@@ -29,7 +27,6 @@ class CarStatisticsModel extends Equatable {
         reserveCount,
         soldCount,
         backOutCount,
-        allSellCount,
       ];
 
   const CarStatisticsModel({
@@ -37,6 +34,5 @@ class CarStatisticsModel extends Equatable {
     required this.reserveCount,
     required this.soldCount,
     required this.backOutCount,
-    required this.allSellCount,
   });
 }

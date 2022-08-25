@@ -1,7 +1,9 @@
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/sort/sort_car_model_model.dart';
 import 'package:cloud_car/model/sort/sort_series_model.dart';
+import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/direct_sale_page.dart';
+import 'package:cloud_car/ui/home/car_manager/self_sale/self_sale_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -14,19 +16,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import 'assessment_car_page.dart';
-
 class DirectSaleManagerPage extends StatefulWidget {
   final int initIndex;
+  final CarManageType initType;
 
-  const DirectSaleManagerPage({super.key, this.initIndex = 0});
+  const DirectSaleManagerPage(
+      {super.key, this.initIndex = 0, this.initType = CarManageType.all});
 
   @override
   _DirectSaleManagerPageState createState() => _DirectSaleManagerPageState();
 }
 
 class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
-  late List<String> _dropDownHeaderItemStrings1;
+  late CarManageType _currentType;
 
   TitleScreenControl screenControl = TitleScreenControl();
   final EasyRefreshController refreshController = EasyRefreshController();
@@ -36,8 +38,6 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   late String brand;
   late String price;
   late String sort;
-
-  String title = '直卖车辆';
 
   List<ChooseItem> _sortList = [];
 
@@ -51,15 +51,9 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   @override
   void initState() {
     super.initState();
-    _sortList = [
-      ChooseItem(name: '直卖车辆'),
-      // ChooseItem(name: '收购车辆'),
-      // ChooseItem(name: '评估车辆'),
-    ];
-
-    _dropDownHeaderItemStrings1 = [
-      '直卖车辆',
-    ];
+    _currentType = widget.initType;
+    _sortList =
+        CarManageType.values.map((e) => ChooseItem(name: e.typeStr)).toList();
   }
 
   List<Widget> get listWidget => [
@@ -70,15 +64,14 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
               color: kForeGroundColor),
           clipBehavior: Clip.antiAlias,
           child: ScreenWidget(
-            pickString: _dropDownHeaderItemStrings1.first,
+            pickString: _currentType.typeStr,
             childAspectRatio: 200 / 56,
             callback: (String item, int value) {
               screenControl.screenHide();
-              _dropDownHeaderItemStrings1.first = item;
-              _dropDownHeaderItemStrings1.first != '直卖车辆'
-                  ? refreshController.callRefresh()
-                  : asRefreshController.callRefresh();
-              setState(() {});
+              _currentType = CarManageType.values[value];
+              if (mounted) {
+                setState(() {});
+              }
             },
             mainAxisSpacing: 10.w,
             crossAxisSpacing: 24.w,
@@ -108,7 +101,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           extendBodyBehindAppBar: true,
           extendBody: true,
           body: Builder(builder: (context) {
-            return TitleDropDownWidget(_dropDownHeaderItemStrings1, listWidget,
+            return TitleDropDownWidget([_currentType.typeStr], listWidget,
                 height: kToolbarHeight + 20.w,
                 bottomHeight: 30.w,
                 screenControl: screenControl,
@@ -116,10 +109,17 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                 isSearch: true,
                 callback: (text) {
                   _pickCar.value.keyWords = text;
-                  _dropDownHeaderItemStrings1.first == '直卖车辆'
-                      ? refreshController.callRefresh()
-                      : asRefreshController.callRefresh();
-                  setState(() {});
+                  switch (_currentType) {
+                    case CarManageType.all:
+                      refreshController.callRefresh();
+                      break;
+                    case CarManageType.personal:
+                      asRefreshController.callRefresh();
+                      break;
+                  }
+                  if (mounted) {
+                    setState(() {});
+                  }
                 },
                 leftWidget: const CloudBackButton(
                   isSpecial: true,
@@ -129,16 +129,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                   screenControl.screenHide();
                   Scaffold.of(context).openEndDrawer();
                 },
-                child: _dropDownHeaderItemStrings1.first == '直卖车辆'
-                    ? DirectSalePage(
-                        initIndex: widget.initIndex,
-                        pickCar: _pickCar,
-                        refreshController: refreshController,
-                      )
-                    : AssessmentCarPage(
-                        refreshController: asRefreshController,
-                        pickCar: _pickCar,
-                      ));
+                child: _getCurrentPage());
           }),
           endDrawer: CustomDrawer(
               widthPercent: 0.86,
@@ -146,6 +137,23 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
               callback: (bool isOpened) {},
               child: _getSortList())),
     );
+  }
+
+  Widget _getCurrentPage() {
+    switch (_currentType) {
+      case CarManageType.all:
+        return DirectSalePage(
+          initIndex: widget.initIndex,
+          pickCar: _pickCar,
+          refreshController: refreshController,
+        );
+
+      case CarManageType.personal:
+        return SelfSalePage(
+            initIndex: widget.initIndex,
+            refreshController: asRefreshController,
+            pickCar: _pickCar);
+    }
   }
 
   _getSortList() {

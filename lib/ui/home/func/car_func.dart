@@ -93,12 +93,6 @@ class CarFunc {
     }
   }
 
-
-
-
-
-
-
   ///获取我的⻋辆列表 new_create=最新创建 max_price=标价最⾼ min_price=标价最低 min_age=⻋龄最短 min_mileage=⾥程最少 new_update=最近更新
   static Future<List<CarListModel>> getMyCarList(
       {required int page,
@@ -432,7 +426,14 @@ class CarFunc {
     } else {
       return CarStatisticsModel.init;
     }
-
   }
-
+  ///个人车辆管理统计数据
+  static Future<CarStatisticsModel> getPersonalStatisticNum() async {
+    BaseModel res = await apiClient.request(API.car.personalStatisticNum,);
+    if (res.code == 0) {
+      return CarStatisticsModel.fromJson(res.data);
+    } else {
+      return CarStatisticsModel.init;
+    }
+  }
 }

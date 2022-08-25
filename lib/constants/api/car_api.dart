@@ -39,8 +39,11 @@ class _Car {
   ///车商列表///暂时用这个
   String get dealerList => '/dealer/select';
 
-  ///车辆统计
+  ///全部车辆统计
   String get statisticsNum => '/car/self/count';
+
+  ///个人车辆统计
+  String get personalStatisticNum => '/car/self/count';
 }
 
 class _Collect {

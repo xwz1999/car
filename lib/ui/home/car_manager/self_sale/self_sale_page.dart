@@ -2,6 +2,7 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/cars_detail_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
@@ -17,39 +18,40 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import 'cars_detail_page.dart';
-
-enum AllCarStatus {
+enum SelfCarStatus {
   onSale(1, '在售'),
   schedule(2, '预定'),
   sold(3, '已售'),
-  returnBack(4, '退库');
+  returnBack(4, '退库'),
+  reviewed(5, '待审核'),
+  reject(6, '已驳回');
 
   final int typeNum;
   final String typeStr;
 
-  static AllCarStatus getValue(int value) =>
-      AllCarStatus.values.firstWhere((element) => element.typeNum == value);
+  static SelfCarStatus getValue(int value) =>
+      SelfCarStatus.values.firstWhere((element) => element.typeNum == value);
 
-  const AllCarStatus(this.typeNum, this.typeStr);
+  const SelfCarStatus(this.typeNum, this.typeStr);
 }
 
-class DirectSalePage extends StatefulWidget {
+class SelfSalePage extends StatefulWidget {
   final EasyRefreshController refreshController;
   final ValueNotifier<SearchParamModel> pickCar;
   final int initIndex;
 
-  const DirectSalePage({
+  const SelfSalePage({
     super.key,
     required this.refreshController,
-    required this.pickCar,  this.initIndex=0,
+    required this.pickCar,
+    this.initIndex = 0,
   });
 
   @override
-  _DirectSalePageState createState() => _DirectSalePageState();
+  _SelfSalePageState createState() => _SelfSalePageState();
 }
 
-class _DirectSalePageState extends State<DirectSalePage>
+class _SelfSalePageState extends State<SelfSalePage>
     with AutomaticKeepAliveClientMixin {
   bool _onLoad = true;
   late List<CarListModel> carList = [];
@@ -60,7 +62,7 @@ class _DirectSalePageState extends State<DirectSalePage>
   late String sort = '';
   late List<String> _dropDownHeaderItemStrings;
 
- late AllCarStatus _currentCarStatus ;
+  late SelfCarStatus _currentCarStatus;
 
   Map<String, dynamic> get _params => {
         'keyword': widget.pickCar.value.keyWords,
@@ -85,7 +87,7 @@ class _DirectSalePageState extends State<DirectSalePage>
   @override
   void initState() {
     super.initState();
-    _currentCarStatus = AllCarStatus.values[widget.initIndex];
+    _currentCarStatus = SelfCarStatus.values[widget.initIndex];
     _sortList = [
       ChooseItem(name: '最新创建'),
       ChooseItem(name: '标价最高'),
@@ -114,10 +116,7 @@ class _DirectSalePageState extends State<DirectSalePage>
               sort = item;
               screenControl.screenHide();
               widget.refreshController.callRefresh();
-              if (mounted){
-
-                setState(() {});
-              }
+              setState(() {});
             },
             mainAxisSpacing: 40.w,
             crossAxisSpacing: 44.w,
@@ -137,10 +136,10 @@ class _DirectSalePageState extends State<DirectSalePage>
         ),
         ChooseWidget(
           callBack: (index) {
-            _currentCarStatus = AllCarStatus.values[index];
+            _currentCarStatus = SelfCarStatus.values[index];
             widget.refreshController.callRefresh();
           },
-          items: AllCarStatus.values.map((e) => e.typeStr).toList(),
+          items: SelfCarStatus.values.map((e) => e.typeStr).toList(),
           item: _currentCarStatus.typeStr,
         ),
         Expanded(
@@ -163,20 +162,20 @@ class _DirectSalePageState extends State<DirectSalePage>
             footer: MaterialFooter(),
             onRefresh: () async {
               _page = 1;
-              var list = await CarFunc.getCarList(_page, _size,
+              var list = await CarFunc.getMyCarList(
+                  page: _page,
+                  size: _size,
                   order: CarMap.carSortString.getKeyFromValue(sort),
                   searchParams: _params);
               carList.clear();
               carList.addAll(list);
               _onLoad = false;
-              if(mounted){
-                setState(() {});
-              }
+              setState(() {});
             },
             onLoad: () async {
               _page++;
               var baseList =
-                  await apiClient.requestList(API.car.getCarLists, data: {
+                  await apiClient.requestList(API.car.getCarSelfLists, data: {
                 'page': _page,
                 'size': _size,
                 'order': CarMap.carSortString.getKeyFromValue(sort),
@@ -189,7 +188,9 @@ class _DirectSalePageState extends State<DirectSalePage>
               } else {
                 widget.refreshController.finishLoad(noMore: true);
               }
-              setState(() {});
+              if (mounted) {
+                setState(() {});
+              }
             },
             slivers: [
               SliverToBoxAdapter(
