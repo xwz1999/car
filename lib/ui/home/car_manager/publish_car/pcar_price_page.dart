@@ -117,9 +117,8 @@ class _CarPricePageState extends State<CarPricePage> {
                     }else{
                       CloudToast.show('车辆发布失败');
                     }
-                  }else{
-                    cancel();
                   }
+                  cancel();
 
                 },
                 style: ButtonStyle(

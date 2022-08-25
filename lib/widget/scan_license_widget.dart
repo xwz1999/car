@@ -4,6 +4,7 @@ import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -28,11 +29,14 @@ class _ScanLicenseWidgetState extends State<ScanLicenseWidget> {
       onTap: () async {
         _file = await CloudImagePicker.pickSingleImage(title: '选择图片');
         if (_file != null) {
+          setState(() {});
+          var cancel = CloudToast.loading;
           String urls = await apiClient.uploadImage(_file!);
           var carInfoModel = await CarFunc.carDistinguish(urls);
           if (carInfoModel != null) {
             widget.onLoadComplete(carInfoModel);
           }
+          cancel();
         }
       },
       child: SizedBox(

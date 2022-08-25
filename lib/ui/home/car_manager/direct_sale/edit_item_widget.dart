@@ -10,7 +10,7 @@ class EditItemWidget extends StatefulWidget {
   @Deprecated('not good,replace it')
   final String? value;
   final bool canChange;
-  final TextCallback callback;
+  final TextCallback? callback;
   final String endText;
   final double paddingTop;
   final String tips;
@@ -25,7 +25,7 @@ class EditItemWidget extends StatefulWidget {
     super.key,
     required this.title,
     this.canChange = true,
-    required this.callback,
+     this.callback,
     this.endText = '',
     this.topIcon = true,
     this.paddingTop = 0,
@@ -117,7 +117,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                 // _refreshController.callRefresh();
               },
               onChanged: (text) {
-                widget.callback(text);
+                widget.callback?.call(text);
               },
               style: TextStyle(
                 color: BaseStyle.color333333,

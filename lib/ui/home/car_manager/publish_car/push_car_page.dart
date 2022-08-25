@@ -66,10 +66,6 @@ class _PushCarPageState extends State<PushCarPage> {
 
   @override
   void initState() {
-    _publishCarInfo.mileage = _mileController.text;
-    _publishCarInfo.viNum = _viNumController.text;
-    _publishCarInfo.engineNum = _engineController.text;
-    _publishCarInfo.carNum = _carNumController.text;
     super.initState();
   }
 
@@ -214,12 +210,21 @@ class _PushCarPageState extends State<PushCarPage> {
                       child: Column(
                         children: [
                           ScanLicenseWidget(onLoadComplete: (carInfoModel) {
-                            _publishCarInfo.viNum = carInfoModel.vin;
-                            _publishCarInfo.carName = carInfoModel.cartype;
+                            if (carInfoModel.vinModel != null) {
+                              _publishCarInfo.carName =
+                                  carInfoModel.vinModel!.first.brandName;
+                              _publishCarInfo.carModelId =
+                                  carInfoModel.vinModel!.first.modelId;
+                              _publishCarInfo.carColor =
+                                  carInfoModel.vinModel!.first.color;
+                            }
+                            _viNumController.text = carInfoModel.vehicle.vin;
                             _publishCarInfo.licensingDate =
-                                DateUtil.getDateTime(carInfoModel.issuedate);
-                            _publishCarInfo.carNum = carInfoModel.lsnum;
-                            _publishCarInfo.engineNum = carInfoModel.engineno;
+                                DateUtil.getDateTime(
+                                    carInfoModel.vehicle.issuedate);
+                            _carNumController.text = carInfoModel.vehicle.lsnum;
+                            _engineController.text =
+                                carInfoModel.vehicle.engineno;
                             setState(() {});
                           }),
                           _rewardWidget(),
@@ -260,34 +265,35 @@ class _PushCarPageState extends State<PushCarPage> {
   }
 
   Container _rewardWidget() {
-    var vinum = _textarea(
-        '车架号',
-        '请输入车架号',
-        _publishCarInfo.viNum!,
-        _viNumController,
-        (text) => setState(() {
-              _publishCarInfo.viNum = _viNumController.text;
-            }));
-    var carnum = _textarea(
-        '车牌号',
-        '请输入车牌号',
-        _publishCarInfo.carNum!,
-        _carNumController,
-        (text) => setState(() {
-              _publishCarInfo.carNum = _carNumController.text;
-            }));
-    var version = _textarea(
-        '发动机号',
-        '请输入发动机号',
-        _publishCarInfo.engineNum!,
-        _engineController,
-        (text) => setState(() {
-              _publishCarInfo.engineNum = _engineController.text;
-            }));
+    var vinNum = EditItemWidget(
+      title: '车架号',
+      tips: '请输入车架号',
+      controller: _viNumController,
+    );
+    var carNum = EditItemWidget(
+      title: '车牌号',
+      tips: '请输入车牌号',
+      controller: _carNumController,
+    );
+    // var version = _textarea(
+    //     '发动机号',
+    //     '请输入发动机号',
+    //     _publishCarInfo.engineNum??'',
+    //     _engineController,
+    //     (text) => setState(() {
+    //           _publishCarInfo.engineNum = _engineController.text;
+    //         }));
+    var engineNum = EditItemWidget(
+      title: '发动机号',
+      tips: '请输入发动机号',
+      controller: _engineController,
+    );
+
     var mile = EditItemWidget(
       topIcon: true,
       title: '表现里程',
-      value: _publishCarInfo.mileage.toString(),
+      tips: '请输入里程',
+      controller: _mileController,
       canChange: true,
       callback: (String content) {
         _publishCarInfo.mileage = content;
@@ -304,7 +310,7 @@ class _PushCarPageState extends State<PushCarPage> {
       child: Column(
         children: [
           20.heightBox,
-          vinum,
+          vinNum,
           _function(
             '品牌车型',
             () async {
@@ -312,7 +318,7 @@ class _PushCarPageState extends State<PushCarPage> {
                     callback: () {
                       Get.back();
                       _publishCarInfo.carName = _pickCar.value.car.name;
-                      _publishCarInfo.carModelId = _pickCar.value.car.id;
+                      _publishCarInfo.carModelId = _pickCar.value.car.modelId;
                       FocusManager.instance.primaryFocus?.unfocus();
                     },
                     pickCar: _pickCar,
@@ -328,7 +334,7 @@ class _PushCarPageState extends State<PushCarPage> {
               // _publishCarInfo.licensingDate =
               //     await CarDatePicker.calenderPicker(
               //         DateTime(2000), DateTime.now());
-             var firstDate = await CarDatePicker.monthPicker(DateTime.now());
+              var firstDate = await CarDatePicker.monthPicker(DateTime.now());
               _publishCarInfo.licensingDate = firstDate;
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
@@ -336,10 +342,8 @@ class _PushCarPageState extends State<PushCarPage> {
             _publishCarInfo.licensingDateStr,
             '选择首次上牌时间',
           ),
-          20.heightBox,
-          carnum,
-          20.heightBox,
-          version,
+          carNum,
+          engineNum,
           _function(
             '车身颜色',
             () async {
@@ -437,7 +441,7 @@ class _PushCarPageState extends State<PushCarPage> {
   }
 
   bool get canTap {
-    if (_publishCarInfo.viNum.isEmptyOrNull) {
+    if (_viNumController.text.trim().isEmpty) {
       BotToast.showText(text: '请输入车架号');
       return false;
     }
@@ -450,12 +454,12 @@ class _PushCarPageState extends State<PushCarPage> {
       return false;
     }
 
-    if (!RegexUtil.matches(licensePlateReg, _publishCarInfo.carNum ?? '')) {
+    if (!RegexUtil.matches(licensePlateReg, _carNumController.text)) {
       BotToast.showText(text: '请输入正确的车牌号');
       return false;
     }
 
-    if (_publishCarInfo.engineNum.isEmptyOrNull) {
+    if (_engineController.text.trim().isEmpty) {
       BotToast.showText(text: '请输入发动机号');
       return false;
     }
@@ -463,10 +467,15 @@ class _PushCarPageState extends State<PushCarPage> {
       BotToast.showText(text: '请选择车身颜色');
       return false;
     }
-    if (_publishCarInfo.mileage.isEmptyOrNull) {
+    if (_mileController.text.trim().isEmpty) {
       BotToast.showText(text: '请输入行驶里程');
       return false;
     }
+
+    _publishCarInfo.mileage = _mileController.text;
+    _publishCarInfo.viNum = _viNumController.text;
+    _publishCarInfo.engineNum = _engineController.text;
+    _publishCarInfo.carNum = _carNumController.text;
     return true;
   }
 
@@ -535,7 +544,7 @@ class PublishCarInfo {
   ///表现里程
   String? mileage;
 
- static PublishCarInfo get empty => PublishCarInfo(
+  static PublishCarInfo get empty => PublishCarInfo(
         viNum: '',
         carNum: '',
         carName: '',

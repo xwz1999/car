@@ -62,7 +62,7 @@ class ShareUtil {
     }
     var re = await fluwx.shareToWeChat(
       fluwx.WeChatShareMiniProgramModel(
-        userName: wxOriginId,
+        userName: wxOriginId,//小程序 原始id 并非appid
         path: 'pages/index/carBuying/secHandCar/carDetail/index/index?carId=$carId',
         webPageUrl: 'https://h5wenche.oa00.com/register',
         thumbnail: fluwx.WeChatImage.binary(data),

@@ -37,6 +37,9 @@ class _CarValuationPageState extends State<CarValuationPage> {
           brand: SortBrandModel.init,
           car: SortCarModelModel.init,
           returnType: 3));
+
+  final TextEditingController _licensePlateController = TextEditingController();
+
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
     ChooseItem(name: '紫色'),
@@ -54,6 +57,12 @@ class _CarValuationPageState extends State<CarValuationPage> {
     ChooseItem(name: '黄色'),
     ChooseItem(name: '其他'),
   ];
+
+  @override
+  void dispose() {
+    _licensePlateController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -197,12 +206,19 @@ class _CarValuationPageState extends State<CarValuationPage> {
         child: Column(
           children: [
             ScanLicenseWidget(onLoadComplete: (carInfoModel) {
-              _carInfo.name = carInfoModel.cartype;
-
-              _carInfo.address = carInfoModel.address;
+              // _carInfo.name = carInfoModel.cartype;
+              if (carInfoModel.vinModel != null) {
+                _carInfo.name = carInfoModel.vinModel!.first.brandName;
+                _carInfo.modelId = carInfoModel.vinModel!.first.modelId;
+                _carInfo.color =
+                    carInfoModel.vinModel!.first.color;
+              }
+              _carInfo.licensePlate = carInfoModel.vehicle.lsnum;
+              _licensePlateController.text = carInfoModel.vehicle.lsnum;
+              _carInfo.address = carInfoModel.vehicle.address;
 
               _carInfo.licensingDate =
-                  DateUtil.getDateTime(carInfoModel.regdate);
+                  DateUtil.getDateTime(carInfoModel.vehicle.regdate);
               setState(() {});
             }),
             GestureDetector(
@@ -211,7 +227,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
                       callback: () {
                         Get.back();
                         _carInfo.name = _pickCar.value.car.name;
-                        _carInfo.modelId = _pickCar.value.car.id;
+                        _carInfo.modelId = _pickCar.value.car.modelId;
                         _carInfo.brand = _pickCar.value.brand.name;
                       },
                       pickCar: _pickCar,
@@ -236,13 +252,13 @@ class _CarValuationPageState extends State<CarValuationPage> {
             EditItemWidget(
               title: '车牌号',
               callback: (String content) {
-                _carInfo.licensePlate = content;
+                // _carInfo.licensePlate = content;
+                _carInfo.licensePlate = _licensePlateController.text;
               },
-              value: _carInfo.licensePlate ?? '',
               tips: '请输入车牌号',
               topIcon: false,
               paddingStart: 32,
-              canChange: true,
+              controller: _licensePlateController,
             ),
             GestureDetector(
               onTap: () async {

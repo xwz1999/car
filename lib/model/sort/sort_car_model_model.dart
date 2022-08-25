@@ -6,6 +6,7 @@ part 'sort_car_model_model.g.dart';
 @JsonSerializable()
 class SortCarModelModel extends Equatable {
   final int id;
+  final int modelId;
   final String name;
   final int year;
 
@@ -13,19 +14,17 @@ class SortCarModelModel extends Equatable {
       _$SortCarModelModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SortCarModelModelToJson(this);
+
   static SortCarModelModel get init =>
-      const SortCarModelModel(id: 0, name: '', year: 0);
+      const SortCarModelModel(id: 0, name: '', year: 0, modelId: 0);
+
+  @override
+  List<Object?> get props => [id, name, year, modelId];
 
   const SortCarModelModel({
     required this.id,
+    required this.modelId,
     required this.name,
     required this.year,
   });
-
-  @override
-  List<Object?> get props => [
-        id,
-        name,
-        year,
-      ];
 }

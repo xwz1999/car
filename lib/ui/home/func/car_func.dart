@@ -376,7 +376,7 @@ class CarFunc {
 
 
 
-  ///车商发布车辆
+  ///个人发布车辆
   static Future<bool> personalPushCar(
       {required int orderId,required CarPhotoModel carPhotoModel,}) async {
     Map<String, dynamic> baseInfo = {
