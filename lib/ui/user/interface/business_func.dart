@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/split_account/business_all_model.dart';
 import 'package:cloud_car/model/user/roleall_model.dart';
 import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/model/user/staff_info_model.dart';
@@ -15,6 +16,15 @@ class BusinessFunc {
 
     if (res.data==null) return [];
     return (res.data as List).map((e) => StaffAllModel.fromJson(e)).toList();
+  }
+
+  ///组织架构
+  static Future<List<BusinessAllModel>> getBusinessAll(Map params) async {
+    var res =
+    await apiClient.request(API.storeManagement.businessAll, data: params);
+
+    if (res.data==null) return [];
+    return (res.data as List).map((e) => BusinessAllModel.fromJson(e)).toList();
   }
 
   ///全部角色

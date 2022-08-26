@@ -216,7 +216,6 @@ class _SelfSalePageState extends State<SelfSalePage>
                             return GestureDetector(
                               onTap: () async {
                                 Get.to(() => CarsDetailPage(
-                                      isSelf: model.isSelf == 1,
                                       carListModel: model,
                                     ));
                               },

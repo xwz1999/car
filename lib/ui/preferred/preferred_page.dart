@@ -428,7 +428,7 @@ class _PreferredPageState extends State<PreferredPage>
   _carItem(CarListModel model) {
     return GestureDetector(
       onTap: (){
-          Get.to(()=>CarsDetailPage(carListModel: model, isSelf: model.isSelf==1,));
+          Get.to(()=>CarsDetailPage(carListModel: model,));
       },
       child: Container(
         decoration: BoxDecoration(

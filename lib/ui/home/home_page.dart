@@ -29,6 +29,7 @@ import 'package:screenshot/screenshot.dart';
 import 'car_manager/car_manager_page.dart';
 
 //import 'car_manager/maintain_query/maintain_query_page.dart';
+import 'car_manager/direct_sale/cars_detail_page.dart';
 import 'car_manager/maintain_query/maintain_query_page.dart';
 import 'car_manager/publish_car/push_car_page.dart';
 import 'car_valuation/car_valuation_page.dart';
@@ -327,84 +328,89 @@ class _HomePageState extends State<HomePage>
   }
 
   _shareItem(CarListModel model) {
-    return Container(
-      width: 240.w,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.w), color: Colors.white),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CloudImageNetworkWidget.car(
-            width: 240.w,
-            height: 180.w,
-            urls: [model.mainPhoto],
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                20.hb,
-                Text(
-                  model.modelName,
-                  maxLines: 2,
-                  style: TextStyle(
-                      color: const Color(0xFF111111),
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold),
-                ),
-                12.hb,
-                Row(
-                  children: [
-                    _getTextView(DateUtil.getDateTimeByMs(
-                            model.licensingDate.toInt() * 1000)
-                        .year
-                        .toString()),
-                    12.wb,
-                    _getTextView('${model.mileage}万公里'),
-                  ],
-                ),
-                14.hb,
-                Row(
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                          text:
-                              '${NumUtil.divide(num.parse(model.price), 10000)}',
-                          style: TextStyle(
-                              color: const Color(0xFFFF3E02), fontSize: 32.sp),
-                          children: [
-                            TextSpan(
-                                text: '万',
-                                style: TextStyle(
-                                    color: const Color(0xFFFF3E02),
-                                    fontSize: 26.sp))
-                          ]),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () async {
-                        ShareUtil.shareMiniProgram(
-                          title: model.modelName,
-                          imgUrl: model.mainPhoto,
-                          carId: model.id,
-                        );
-                      },
-                      child: Image.asset(
-                        Assets.icons.homeShare.path,
-                        width: 28.w,
-                        height: 28.w,
-                      ),
-                    ),
-                    16.wb,
-                  ],
-                ),
-                20.hb,
-              ],
+    return GestureDetector(
+      onTap: (){
+        Get.to(()=>CarsDetailPage(carListModel: model,));
+      },
+      child: Container(
+        width: 240.w,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.w), color: Colors.white),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CloudImageNetworkWidget.car(
+              width: 240.w,
+              height: 180.w,
+              urls: [model.mainPhoto],
             ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.only(left: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  20.hb,
+                  Text(
+                    model.modelName,
+                    maxLines: 2,
+                    style: TextStyle(
+                        color: const Color(0xFF111111),
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  12.hb,
+                  Row(
+                    children: [
+                      _getTextView(DateUtil.getDateTimeByMs(
+                              model.licensingDate.toInt() * 1000)
+                          .year
+                          .toString()),
+                      12.wb,
+                      _getTextView('${model.mileage}万公里'),
+                    ],
+                  ),
+                  14.hb,
+                  Row(
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                            text:
+                                '${NumUtil.divide(num.parse(model.price), 10000)}',
+                            style: TextStyle(
+                                color: const Color(0xFFFF3E02), fontSize: 32.sp),
+                            children: [
+                              TextSpan(
+                                  text: '万',
+                                  style: TextStyle(
+                                      color: const Color(0xFFFF3E02),
+                                      fontSize: 26.sp))
+                            ]),
+                      ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () async {
+                          ShareUtil.shareMiniProgram(
+                            title: model.modelName,
+                            imgUrl: model.mainPhoto,
+                            carId: model.id,
+                          );
+                        },
+                        child: Image.asset(
+                          Assets.icons.homeShare.path,
+                          width: 28.w,
+                          height: 28.w,
+                        ),
+                      ),
+                      16.wb,
+                    ],
+                  ),
+                  20.hb,
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

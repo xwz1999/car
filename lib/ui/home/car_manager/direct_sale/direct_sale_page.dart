@@ -215,7 +215,6 @@ class _DirectSalePageState extends State<DirectSalePage>
                             return GestureDetector(
                               onTap: () async {
                                 Get.to(() => CarsDetailPage(
-                                      isSelf: model.isSelf == 1,
                                       carListModel: model,
                                     ));
                               },

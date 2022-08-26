@@ -1,5 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/constants/enums.dart';
+import 'package:cloud_car/model/split_account/business_all_model.dart';
 import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -27,7 +28,7 @@ class AddSplitAccountPage extends StatefulWidget {
 class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
-  List<StaffAllModel> employees = [];
+  List<BusinessAllModel> employees = [];
 
   final TextEditingController _amountEditingController =
       TextEditingController();
@@ -35,8 +36,9 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
 
   Map _params = {'status': 2};
 
-  final List<int> _selectIndex = [];
+  final List<int> _selectBrokerId = [];
   final Map<int, TextEditingController> _mapTextController = {};
+  List<bool> _openValues = [];
 
   @override
   void dispose() {
@@ -56,7 +58,9 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
         children: [
           8.hb,
           CloudSearchHeadWidget(onSearch: (text) {
-            _params = {'name': text, 'status': 2};
+            _params = {
+              "staff": {"name": text, 'status': 2},
+            };
             _easyRefreshController.callRefresh();
           }),
           32.hb,
@@ -67,7 +71,9 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             footer: MaterialFooter(),
             controller: _easyRefreshController,
             onRefresh: () async {
-              employees = await BusinessFunc.getStoreall(_params);
+              employees = await BusinessFunc.getBusinessAll(_params);
+              _openValues.clear();
+              _initOpenValue();
               setState(() {});
             },
             child: employees.isEmpty
@@ -77,7 +83,14 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
                   )
                 : ListView.builder(
                     itemBuilder: (context, index) {
-                      return _listTile(employees[index], index);
+                      return ExpansionTile(
+                        title: Text(employees[index].name),
+                        children: employees[index]
+                            .staffs
+                            .mapIndexed((currentValue, index) =>
+                                _listTile(currentValue, index))
+                            .toList(),
+                      );
                     },
                     itemCount: employees.length,
                   ),
@@ -188,43 +201,21 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
     );
   }
 
-  // _getList(StoreallModel model, int index) {
-  //   return Column(
-  //     children: [
-  //       Row(
-  //         children: [
-  //           32.wb,
-  //           ('门店${index + 1}')
-  //               .text
-  //               .size(24.sp)
-  //               .color(const Color(0xFF999999))
-  //               .make(),
-  //         ],
-  //       ),
-  //       ...model.staffs != null
-  //           ? model.staffs!.mapIndexed((e, index) {
-  //               return GestureDetector(
-  //                 onTap: () async {},
-  //                 child: _listTile(
-  //                   e,
-  //                   index,
-  //                 ),
-  //               );
-  //             }).toList()
-  //           : []
-  //     ],
-  //   );
-  // }
+  /// 初始化折叠组件折叠值
+  void _initOpenValue() {
+    _openValues = List.filled(employees.length, false);
+  }
 
-  _listTile(StaffAllModel staff, int index) {
+  Widget _listTile(StaffAllModel staff, int index) {
+    print(staff.brokerId);
     return GestureDetector(
       onTap: () {
-        if (_selectIndex.contains(index)) {
-          _selectIndex.remove(index);
+        if (_selectBrokerId.contains(staff.brokerId)) {
+          _selectBrokerId.remove(staff.brokerId);
           _mapTextController[staff.brokerId]?.dispose();
           _mapTextController.remove(staff.brokerId);
         } else {
-          _selectIndex.add(index);
+          _selectBrokerId.add(staff.brokerId);
           _mapTextController.putIfAbsent(
               staff.brokerId, () => TextEditingController());
         }
@@ -236,7 +227,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
         padding: EdgeInsets.symmetric(horizontal: 64.w, vertical: 18.w),
         child: Row(
           children: [
-            CloudCheckBox(value: index, groupValue: _selectIndex),
+            CloudCheckBox(value: staff.brokerId, groupValue: _selectBrokerId),
             16.wb,
             SizedBox(
               width: 32.w,
@@ -256,7 +247,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             ),
             16.wb,
             if (staff.roleEM == Role.manager) CloudTag.blue(text: '店长'),
-            if (_selectIndex.contains(index))
+            if (_selectBrokerId.contains(staff.brokerId))
               Row(
                 children: [
                   20.wb,

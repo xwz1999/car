@@ -285,7 +285,6 @@ class _AllCarState extends State<AllCar> {
       onTap: () {
         Get.to(() => CarsDetailPage(
               carListModel: model,
-              isSelf: model.isSelf == 1,
             ));
       },
       child: Container(

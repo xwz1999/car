@@ -22,13 +22,13 @@ import 'package:flutter_swiper_tv/flutter_swiper.dart';
 import 'modify_price_page.dart';
 
 class CarsDetailPage extends StatefulWidget {
-  final bool isSelf;
+  // final bool isSelf;
   final CarListModel carListModel;
 
   const CarsDetailPage({
     super.key,
     required this.carListModel,
-    required this.isSelf,
+    // required this.isSelf,
   });
 
   @override
@@ -137,7 +137,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                           24.wb,
 
                           ///收藏按钮 自己发布的车辆没有该按钮
-                          !widget.isSelf
+                          !(widget.carListModel.isSelf == 1)
                               ? GestureDetector(
                                   onTap: () async {
                                     var re = await apiClient.request(
@@ -732,21 +732,21 @@ class _CarsDetailPageState extends State<CarsDetailPage>
         children: [
           Expanded(
               child: _getBottom(
-                  widget.isSelf
+                  widget.carListModel.isSelf == 1
                       ? Assets.icons.editor.path
                       : Assets.icons.noEditor.path,
                   '编辑', () {
-            if (widget.isSelf) {
+            if (widget.carListModel.isSelf == 1) {
               Get.to(() => const EditCarPage());
             }
           })),
           Expanded(
               child: _getBottom(
-                  !widget.isSelf
+                  !(widget.carListModel.isSelf == 1)
                       ? Assets.icons.noTransmission.path
                       : Assets.icons.transmission.path,
                   '调价', () {
-            if (widget.isSelf) {
+            if (widget.carListModel.isSelf == 1) {
               Get.to(() => const ModifyPricePage());
             }
           })),
@@ -758,11 +758,11 @@ class _CarsDetailPageState extends State<CarsDetailPage>
           })),
           Expanded(
               child: _getBottom(
-                  !widget.isSelf
+                  !(widget.carListModel.isSelf == 1)
                       ? Assets.icons.noDownload.path
                       : Assets.icons.download.path,
                   '下架/退库', () {
-            if (widget.isSelf) {
+            if (widget.carListModel.isSelf == 1) {
               Get.to(() => const OffCarPage());
             }
           })),

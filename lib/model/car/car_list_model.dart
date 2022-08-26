@@ -26,7 +26,7 @@ class CarListModel extends Equatable {
 
   ///是否收藏 0未收藏 1收藏
   final int collect;
-
+  /// 1 = 是
   final int? isSelf;
 
   factory CarListModel.fromJson(Map<String, dynamic> json) =>
