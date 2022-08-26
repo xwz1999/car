@@ -18,10 +18,19 @@ class BusinessFunc {
     return (res.data as List).map((e) => StaffAllModel.fromJson(e)).toList();
   }
 
-  ///组织架构
+  ///全部入驻商
   static Future<List<BusinessAllModel>> getBusinessAll(Map params) async {
     var res =
     await apiClient.request(API.storeManagement.businessAll, data: params);
+
+    if (res.data==null) return [];
+    return (res.data as List).map((e) => BusinessAllModel.fromJson(e)).toList();
+  }
+
+  ///全部入驻商员工
+  static Future<List<BusinessAllModel>> getBusinessStaffAll(Map params) async {
+    var res =
+    await apiClient.request(API.storeManagement.businessStaffAll, data: params);
 
     if (res.data==null) return [];
     return (res.data as List).map((e) => BusinessAllModel.fromJson(e)).toList();

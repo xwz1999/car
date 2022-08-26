@@ -71,7 +71,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             footer: MaterialFooter(),
             controller: _easyRefreshController,
             onRefresh: () async {
-              employees = await BusinessFunc.getBusinessAll(_params);
+              employees = await BusinessFunc.getBusinessStaffAll(_params);
               _openValues.clear();
               _initOpenValue();
               setState(() {});
@@ -84,6 +84,8 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
                 : ListView.builder(
                     itemBuilder: (context, index) {
                       return ExpansionTile(
+                        collapsedBackgroundColor:
+                            index.isEven ? Colors.black12 : Colors.transparent,
                         title: Text(employees[index].name),
                         children: employees[index]
                             .staffs
