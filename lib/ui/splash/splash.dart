@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
 import 'package:jverify/jverify.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:provider/provider.dart';
 
@@ -118,7 +119,8 @@ class _SplashPageState extends State<SplashPage> {
       print('env :$env');
     }
     AppENV.instance.setEnv(env);
-    PowerLogger.start(context, debug: AppENV.instance.env!=ENVConfig.release);
+    // PowerLogger.start(context, debug: AppENV.instance.env!=ENVConfig.release);
+    PowerLogger.start(context, debug: true);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll();
       if (!await userProvider.init()) {

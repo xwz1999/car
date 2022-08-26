@@ -24,14 +24,46 @@ class CarInfoModel extends Equatable {
   final String useCharacter;
   final num compulsoryInsurance;
   final num compulsoryInsuranceDate;
-  final String condition;
+  final String conditionIn;
+  final String conditionOut;
   final List<String> carPhotos;
   final List<String> interiorPhotos;
+  final String carSn;
 
   factory CarInfoModel.fromJson(Map<String, dynamic> json) =>
       _$CarInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CarInfoModelToJson(this);
+
+  @override
+  List<Object?> get props =>
+      [
+        id,
+        modelName,
+        collect,
+        browse,
+        transfer,
+        price,
+        lastPrice,
+        downPayment,
+        mileage,
+        licensingDate,
+        dischargeStandard,
+        locationCity,
+        gearType,
+        color,
+        liter,
+        keyCount,
+        useCharacter,
+        compulsoryInsurance,
+        compulsoryInsuranceDate,
+        conditionIn,
+        conditionOut,
+        carPhotos,
+        interiorPhotos,
+        carSn,
+      ];
+
   const CarInfoModel({
     required this.id,
     required this.modelName,
@@ -52,34 +84,10 @@ class CarInfoModel extends Equatable {
     required this.useCharacter,
     required this.compulsoryInsurance,
     required this.compulsoryInsuranceDate,
-    required this.condition,
+    required this.conditionIn,
+    required this.conditionOut,
     required this.carPhotos,
     required this.interiorPhotos,
+    required this.carSn,
   });
-
-  @override
-  List<Object?> get props => [
-        id,
-        modelName,
-        collect,
-        browse,
-        transfer,
-        price,
-        lastPrice,
-        downPayment,
-        mileage,
-        licensingDate,
-        dischargeStandard,
-        locationCity,
-        gearType,
-        color,
-        liter,
-        keyCount,
-        useCharacter,
-        compulsoryInsurance,
-        compulsoryInsuranceDate,
-        condition,
-        carPhotos,
-        interiorPhotos,
-      ];
 }

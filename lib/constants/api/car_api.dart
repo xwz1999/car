@@ -40,7 +40,7 @@ class _Car {
   String get dealerList => '/dealer/select';
 
   ///全部车辆统计
-  String get statisticsNum => '/car/self/count';
+  String get statisticsNum => '/car/count';
 
   ///个人车辆统计
   String get personalStatisticNum => '/car/self/count';

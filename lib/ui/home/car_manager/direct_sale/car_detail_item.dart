@@ -52,13 +52,13 @@ class CarDetailItem extends StatelessWidget {
         getContentItem('车身颜色',carInfoModel.color),
         getContentItem('车牌号',''),
         getContentItem('车商编号',''),
-        getContentItem('车辆编号',''),
+        getContentItem('车辆编号',carInfoModel.carSn),
         getContentItem('内饰颜色',''),
         getContentItem('使用性质',carInfoModel.useCharacter),
         getContentItem('车辆所在地',carInfoModel.locationCity),
         getContentItem('车辆归属地',''),
-        getContentItem('车况(对内)',carInfoModel.condition),
-        getContentItem('车况(对外)',carInfoModel.condition),
+        getContentItem('车况(对内)',carInfoModel.conditionIn),
+        getContentItem('车况(对外)',carInfoModel.conditionOut),
 
       ],
     );

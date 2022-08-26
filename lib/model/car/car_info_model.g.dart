@@ -26,12 +26,14 @@ CarInfoModel _$CarInfoModelFromJson(Map<String, dynamic> json) => CarInfoModel(
       useCharacter: json['useCharacter'] as String,
       compulsoryInsurance: json['compulsoryInsurance'] as num,
       compulsoryInsuranceDate: json['compulsoryInsuranceDate'] as num,
-      condition: json['condition'] as String,
+      conditionIn: json['conditionIn'] as String,
+      conditionOut: json['conditionOut'] as String,
       carPhotos:
           (json['carPhotos'] as List<dynamic>).map((e) => e as String).toList(),
       interiorPhotos: (json['interiorPhotos'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      carSn: json['carSn'] as String,
     );
 
 Map<String, dynamic> _$CarInfoModelToJson(CarInfoModel instance) =>
@@ -55,7 +57,9 @@ Map<String, dynamic> _$CarInfoModelToJson(CarInfoModel instance) =>
       'useCharacter': instance.useCharacter,
       'compulsoryInsurance': instance.compulsoryInsurance,
       'compulsoryInsuranceDate': instance.compulsoryInsuranceDate,
-      'condition': instance.condition,
+      'conditionIn': instance.conditionIn,
+      'conditionOut': instance.conditionOut,
       'carPhotos': instance.carPhotos,
       'interiorPhotos': instance.interiorPhotos,
+      'carSn': instance.carSn,
     };
