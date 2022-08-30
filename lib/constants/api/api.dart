@@ -137,7 +137,9 @@ class _Login {
   String get weixin => '/login/wechat';
 
   ///微信登录绑定账号
-  String get weixinBind => '/login/bind';
+  String get weixinBind => '/login/bind/wechat';
+  ///苹果登录绑定账号
+  String get appleBind => '/login/bind/apple';
 
   ///微信绑定手机号发送验证码
   String get phoneCode => '/login/sms';
@@ -150,6 +152,9 @@ class _Login {
 
   /// 验证码登录
   String get smsCodeLogin => '/login/code';
+
+  /// 验证码登录
+  String get appleLogin => '/login/apple';
 }
 
 class _Order {

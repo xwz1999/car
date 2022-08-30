@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/login/apple_login_model.dart';
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:cloud_car/ui/login/jverify_error_code.dart';
 import 'package:cloud_car/ui/login/login_by_password.dart';
-import 'package:cloud_car/ui/login/wx_login_page.dart';
+import 'package:cloud_car/ui/login/login_bind_page.dart';
 import 'package:cloud_car/ui/splash/privacy_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:jverify/jverify.dart';
 import 'package:power_logger/power_logger.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../splash/agreement_page.dart';
 
@@ -67,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
           CloudToast.show(base.msg);
         }
       } else {
-        CloudToast.show(JverifyErrorCode.getmsg(event.code??0));
+        CloudToast.show(JverifyErrorCode.getmsg(event.code ?? 0));
       }
       cancel();
     });
@@ -91,8 +93,8 @@ class _LoginPageState extends State<LoginPage> {
             if (base.code == 0) {
               var wxLoginResponse = WxLoginModel.fromJson(base.data);
               if (!wxLoginResponse.isBind) {
-                Get.to(() => WxLoginPage(
-                      token: wxLoginResponse.bindToken,
+                Get.to(() => LoginBindPage(
+                      token: wxLoginResponse.bindToken, bindType: 1,
                     ));
               } else {
                 await UserTool.userProvider
@@ -262,6 +264,68 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                         fontSize: BaseStyle.fontSize28, color: kPrimaryColor),
                   )),
+              Offstage(
+                offstage: !Platform.isIOS,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 40.w),
+                  child: MaterialButton(
+                      onPressed: () async {
+                        if (!_chooseAgreement) {
+                          CloudToast.show('请阅读并同意用户协议和隐私政策');
+                          return;
+                        }
+                        final credential =
+                            await SignInWithApple.getAppleIDCredential(
+                          scopes: [
+                            AppleIDAuthorizationScopes.email,
+                            AppleIDAuthorizationScopes.fullName,
+                          ],
+                        );
+                        var cancel = CloudToast.loading;
+                        var res = await apiClient
+                            .request(API.login.appleLogin, data: {
+                          'authorizationCode': credential.authorizationCode,
+                          'userIdentifier': credential.userIdentifier,
+                          'identityToken': credential.identityToken,
+                        });
+                        if (res.code == 0) {
+                          var appleLoginModel =
+                              AppleLoginModel.fromJson(res.data);
+                          if (!appleLoginModel.isBind) {
+                            Get.to(() => LoginBindPage(
+                              token: appleLoginModel.bindToken, bindType: 2,
+                            ));
+                          } else {
+                            await UserTool.userProvider
+                                .setToken(appleLoginModel.loginInfo.token);
+                            Get.offAll(() => const TabNavigator());
+                          }
+                        } else {
+                          CloudToast.show(res.msg);
+                        }
+                      },
+                      elevation: 0,
+                      height: 72.w,
+                      minWidth: 590.w,
+                      color: kForeGroundColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.w),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Assets.icons.appleLogin
+                              .image(width: 60.w, height: 60.w),
+                          Text(
+                            'Sign in with Apple',
+                            style: TextStyle(
+                                fontSize: BaseStyle.fontSize28,
+                                color: kPrimaryColor),
+                          ),
+                        ],
+                      )),
+                ),
+              ),
               42.hb,
               GestureDetector(
                 onTap: () {

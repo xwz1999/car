@@ -72,6 +72,10 @@ class $AssetsIconsGen {
   AssetGenImage get alreadyCollected =>
       const AssetGenImage('assets/icons/already_collected.png');
 
+  /// File path: assets/icons/apple_login.png
+  AssetGenImage get appleLogin =>
+      const AssetGenImage('assets/icons/apple_login.png');
+
   /// File path: assets/icons/back.png
   AssetGenImage get back => const AssetGenImage('assets/icons/back.png');
 

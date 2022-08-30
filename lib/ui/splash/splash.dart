@@ -119,8 +119,8 @@ class _SplashPageState extends State<SplashPage> {
       print('env :$env');
     }
     AppENV.instance.setEnv(env);
-    // PowerLogger.start(context, debug: AppENV.instance.env!=ENVConfig.release);
-    PowerLogger.start(context, debug: true);
+    PowerLogger.start(context, debug: AppENV.instance.env!=ENVConfig.release);
+    // PowerLogger.start(context, debug: true);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll();
       if (!await userProvider.init()) {
