@@ -270,118 +270,25 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                       ),
                       _function(
                         '过户次数',
-                        () async {
-                          await showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(16.w))),
-                            builder: (context) {
-                              return CarListPicker(
-                                carString:
-                                    _transferListMap[_carInfo.transfer] ?? '',
-                                items: transferList,
-                                callback: (String content, int value) {
-                                  Get.back();
-                                  _carInfo.transfer =
-                                      _transferListMap.keys.toList()[value];
-                                  setState(() {});
-                                },
-                                title: '过户次数',
-                              );
-                            },
-                          );
-                        },
+                        _transferOnTap,
                         _transferListMap[_carInfo.transfer] ?? '',
                         '请选择',
                       ),
                       _function(
                         '油漆面修复',
-                        () async {
-                          await showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(16.w))),
-                            builder: (context) {
-                              return CarListPicker(
-                                carString: _paintListMap[_carInfo.paint] ?? '',
-                                items: paintList,
-                                callback: (String content, int value) {
-                                  Get.back();
-                                  _carInfo.paint =
-                                      _paintListMap.keys.toList()[value];
-                                  _carInfo.paint = value;
-                                  setState(() {});
-                                },
-                                title: '油漆面修复',
-                              );
-                            },
-                          );
-                        },
+                        _paintOnTap,
                         _paintListMap[_carInfo.paint] ?? '',
                         '请选择',
                       ),
                       _function(
                         '钣金面修复',
-                        () async {
-                          await showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(16.w))),
-                            builder: (context) {
-                              return CarListPicker(
-                                carString: _paintListMap[_carInfo.plate] ?? "",
-                                items: paintList,
-                                callback: (String content, int value) {
-                                  Get.back();
-                                  _carInfo.plate =
-                                      _paintListMap.keys.toList()[value];
-                                  setState(() {});
-                                },
-                                title: '钣金面修复',
-                              );
-                            },
-                          );
-                        },
+                        _plateOnTap,
                         _paintListMap[_carInfo.plate] ?? "",
                         '请选择',
                       ),
                       _function(
                         '更换件情况',
-                        () async {
-                          await showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(16.w))),
-                            builder: (context) {
-                              return CloudListPickerWidget(
-                                title: '更换件情况',
-                                items: replaceList.map((e) => e.name).toList(),
-                                onConfirm: (String? content, int? value) {
-                                  Get.back();
-                                  _carInfo.hasParts = value;
-                                  if (value == 0) {
-                                    Get.bottomSheet(CloudGridPickerWidget.multi(
-                                        title: '更换件情况',
-                                        items: replaceDetailList
-                                            .map((e) => e.name)
-                                            .toList(),
-                                        onConfirm: (strList, indexList) {
-                                          Get.back();
-                                          _carInfo.parts = indexList
-                                              .map((e) => e + 1)
-                                              .toList();
-                                        }));
-                                  }
-                                  setState(() {});
-                                },
-                              );
-                            },
-                          );
-                        },
+                        _hasPartsOnTap,
                         _carInfo.hasParts != null
                             ? _carInfo.hasParts == 1
                                 ? replaceList[_carInfo.hasParts!].name
@@ -391,39 +298,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                       ),
                       _function(
                         '变速箱情况',
-                        () async {
-                          await showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(16.w))),
-                            builder: (context) {
-                              return CloudListPickerWidget(
-                                title: '变速箱情况',
-                                items: fixList.map((e) => e.name).toList(),
-                                onConfirm: (str, index) async {
-                                  Get.back();
-                                  _carInfo.hasSituation = index;
-                                  if (index == 0) {
-                                    await Get.bottomSheet(
-                                      CloudListPickerWidget(
-                                        title: '变速箱情况',
-                                        items: haveFixList,
-                                        onConfirm: (str, index) {
-                                          Get.back();
-                                          _carInfo.engine =
-                                              fixType.keys.toList()[index];
-                                        },
-                                      ),
-                                    );
-                                  }
-
-                                  setState(() {});
-                                },
-                              );
-                            },
-                          );
-                        },
+                        _situationOnTap,
                         _carInfo.hasSituation != null
                             ? _carInfo.hasSituation == 1
                                 ? fixList[_carInfo.hasSituation!].name
@@ -433,39 +308,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                       ),
                       _function(
                         '重大事故',
-                        () async {
-                          await showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(16.w))),
-                            builder: (context) {
-                              return CloudListPickerWidget(
-                                  title: '重大事故',
-                                  items:
-                                      accidentList.map((e) => e.name).toList(),
-                                  onConfirm: (str, index) async {
-                                    Get.back();
-                                    _carInfo.hasAccident = index;
-                                    if (index == 0) {
-                                      await Get.bottomSheet(
-                                          CloudListPickerWidget(
-                                              title: '重大事故',
-                                              items: accidentDetailList,
-                                              onConfirm: (str, index) {
-                                                _carInfo.accidents = [];
-                                                _carInfo.accidents!.add(
-                                                    accidentDetailType.keys
-                                                        .toList()[index]);
-                                                Get.back();
-                                              }));
-                                    }
-
-                                    setState(() {});
-                                  });
-                            },
-                          );
-                        },
+                        _accidentOnTap,
                         _carInfo.hasAccident != null
                             ? _carInfo.hasAccident == 1
                                 ? accidentList[_carInfo.hasAccident!].name
@@ -473,47 +316,17 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                             : '',
                         '请选择',
                       ),
-                      _function('全程4s按时保养', () async {
-                        await showModalBottomSheet(
-                          context: context,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(16.w))),
-                          builder: (context) {
-                            return CloudListPickerWidget(
-                                title: '全程4s按时保养',
-                                items: maintainList.map((e) => e.name).toList(),
-                                onConfirm: (str, index) {
-                                  _carInfo.maintain = index;
-                                  Get.back();
-                                  setState(() {});
-                                });
-                          },
-                        );
-                      },
+                      _function(
+                          '全程4s按时保养',
+                          _maintainOnTap,
                           _carInfo.maintain != null
                               ? maintainList[_carInfo.maintain!].name
                               : '',
                           '请选择',
                           titleWidth: 220.w),
-                      _function('有无更改真实公里数', () async {
-                        await showModalBottomSheet(
-                          context: context,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(16.w))),
-                          builder: (context) {
-                            return CloudListPickerWidget(
-                                title: '有无更改真实公里数',
-                                items: shamMileage,
-                                onConfirm: (str, index) {
-                                  _carInfo.shamMileage = index + 1;
-                                  Get.back();
-                                  setState(() {});
-                                });
-                          },
-                        );
-                      },
+                      _function(
+                          '有无更改真实公里数',
+                          _mileageOnTap,
                           _carInfo.shamMileage != null
                               ? shamMileageType[_carInfo.shamMileage!]
                               : '',
@@ -583,6 +396,207 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
           ),
         ),
       ),
+    );
+  }
+
+  // 过户次数点击事件
+  void _transferOnTap() async {
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+      builder: (context) {
+        return CarListPicker(
+          carString: _transferListMap[_carInfo.transfer] ?? '',
+          items: transferList,
+          callback: (String content, int value) {
+            _carInfo.transfer = _transferListMap.keys.toList()[value];
+            Get.back();
+            _paintOnTap.call();
+            setState(() {});
+          },
+          title: '过户次数',
+        );
+      },
+    );
+  }
+
+  // 油漆面点击事件
+  void _paintOnTap() async {
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+      builder: (context) {
+        return CarListPicker(
+          carString: _paintListMap[_carInfo.paint] ?? '',
+          items: paintList,
+          callback: (String content, int value) {
+            Get.back();
+            _carInfo.paint = _paintListMap.keys.toList()[value];
+            _carInfo.paint = value;
+            _plateOnTap.call();
+            setState(() {});
+          },
+          title: '油漆面修复',
+        );
+      },
+    );
+  }
+
+  //   钣金面点击事件
+  void _plateOnTap() async {
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+      builder: (context) {
+        return CarListPicker(
+          carString: _paintListMap[_carInfo.plate] ?? "",
+          items: paintList,
+          callback: (String content, int value) {
+            Get.back();
+            _carInfo.plate = _paintListMap.keys.toList()[value];
+            _hasPartsOnTap.call();
+            setState(() {});
+          },
+          title: '钣金面修复',
+        );
+      },
+    );
+  }
+
+  // 更换件点击事件
+  void _hasPartsOnTap() async {
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+      builder: (context) {
+        return CloudListPickerWidget(
+          title: '更换件情况',
+          items: replaceList.map((e) => e.name).toList(),
+          onConfirm: (String? content, int? value) {
+            Get.back();
+            _carInfo.hasParts = value;
+            if (value == 0) {
+              Get.bottomSheet(CloudGridPickerWidget.multi(
+                  title: '更换件情况',
+                  items: replaceDetailList.map((e) => e.name).toList(),
+                  onConfirm: (strList, indexList) {
+                    Get.back();
+                    _carInfo.parts = indexList.map((e) => e + 1).toList();
+                  }));
+            }
+            _situationOnTap.call();
+            setState(() {});
+          },
+        );
+      },
+    );
+  }
+
+  // 变速箱情况点击事件
+  void _situationOnTap() async {
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+      builder: (context) {
+        return CloudListPickerWidget(
+          title: '变速箱情况',
+          items: fixList.map((e) => e.name).toList(),
+          onConfirm: (str, index) async {
+            Get.back();
+            _carInfo.hasSituation = index;
+            if (index == 0) {
+              await Get.bottomSheet(
+                CloudListPickerWidget(
+                  title: '变速箱情况',
+                  items: haveFixList,
+                  onConfirm: (str, index) {
+                    Get.back();
+                    _carInfo.engine = fixType.keys.toList()[index];
+                  },
+                ),
+              );
+            }
+            _accidentOnTap.call();
+            setState(() {});
+          },
+        );
+      },
+    );
+  }
+
+  // 重大事故点击事件
+  void _accidentOnTap() async {
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+      builder: (context) {
+        return CloudListPickerWidget(
+            title: '重大事故',
+            items: accidentList.map((e) => e.name).toList(),
+            onConfirm: (str, index) async {
+              Get.back();
+              _carInfo.hasAccident = index;
+              if (index == 0) {
+                await Get.bottomSheet(CloudListPickerWidget(
+                    title: '重大事故',
+                    items: accidentDetailList,
+                    onConfirm: (str, index) {
+                      _carInfo.accidents = [];
+                      _carInfo.accidents!
+                          .add(accidentDetailType.keys.toList()[index]);
+                      Get.back();
+                    }));
+              }
+
+              _maintainOnTap.call();
+              setState(() {});
+            });
+      },
+    );
+  }
+
+  // 4s保养点击事件
+  void _maintainOnTap() async {
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+      builder: (context) {
+        return CloudListPickerWidget(
+            title: '全程4s按时保养',
+            items: maintainList.map((e) => e.name).toList(),
+            onConfirm: (str, index) {
+              _carInfo.maintain = index;
+              Get.back();
+              _mileageOnTap.call();
+              setState(() {});
+            });
+      },
+    );
+  }
+
+  // 真是公里数点击事件
+  void _mileageOnTap() async {
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+      builder: (context) {
+        return CloudListPickerWidget(
+            title: '有无更改真实公里数',
+            items: shamMileage,
+            onConfirm: (str, index) {
+              _carInfo.shamMileage = index + 1;
+              Get.back();
+              setState(() {});
+            });
+      },
     );
   }
 }

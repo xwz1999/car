@@ -98,13 +98,15 @@ class _CarListPickerState extends State<CarListPicker> {
   }) {
     return GestureDetector(
       onTap: onPressed,
-      // height: 48.w,
-      child: Text(title,
-          style: TextStyle(
-            color: color,
-            fontSize: 28.sp,
-            fontWeight: FontWeight.bold,
-          )),
+      child: Padding(
+        padding: EdgeInsets.only(left: 60.w),
+        child: Text(title,
+            style: TextStyle(
+              color: color,
+              fontSize: 28.sp,
+              fontWeight: FontWeight.bold,
+            )),
+      ),
     );
   }
 }
