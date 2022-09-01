@@ -24,7 +24,7 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
   List<dynamic>? data;
   List list = [
     {'title': '企业信息'},
-    {'title': '认证身份'},
+    // {'title': '认证身份'},
     {'title': '我的银行卡'},
   ];
 

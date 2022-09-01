@@ -111,7 +111,7 @@ class _DealerConsignmentOrderPageState
               onLoad: () async {
                 _page++;
                 var baseList = await apiClient.requestList(
-                    API.order.dealerConsignmentOrderPage,
+                    API.order.dealerConsignmentList,
                     data: _params);
                 if (baseList.nullSafetyTotal > _dealerConsignmentList.length) {
                   _dealerConsignmentList.addAll(baseList.nullSafetyList

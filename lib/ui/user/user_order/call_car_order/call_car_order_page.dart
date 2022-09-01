@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/order/callcarlist_model.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
+import 'package:cloud_car/ui/user/user_order/call_car_order/call_car_info_page.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
@@ -80,7 +81,8 @@ class _CallCarOrderPageState extends State<CallCarOrderPage> {
             SizedBox(
               height: 88.w,
               child: CarWidget(
-                items: CallCarStatus.values.map((e) => e.typeStr).toList(),
+                items:
+                    CallCarSearchStatus.values.map((e) => e.typeStr).toList(),
                 callBack: (index) {
                   _currentStatus = CallCarSearchStatus.values[index];
                   setState(() {});
@@ -134,7 +136,9 @@ class _CallCarOrderPageState extends State<CallCarOrderPage> {
 
   _getCar(CallcarlistModel model) {
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Get.to(() => CallCarInfoPage(orderId: model.id));
+        },
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
             margin: EdgeInsets.only(left: 32.w, right: 32.w, top: 16.w),

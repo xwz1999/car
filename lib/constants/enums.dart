@@ -63,7 +63,6 @@ enum BusinessAscription {
   /// 一般入驻商
   normal;
 
-
   static BusinessAscription getValue(int value) {
     switch (value) {
       case 1:
@@ -74,4 +73,18 @@ enum BusinessAscription {
   }
 
   const BusinessAscription();
+}
+
+enum PayType {
+  aliPay(1, '支付宝'),
+  wxPay(2, '微信支付'),
+  wxApp(3, '微信小程序');
+
+  final int typeNum;
+  final String typeStr;
+
+  static PayType getValue(int value) =>
+      PayType.values.firstWhere((element) => element.typeNum == value);
+
+  const PayType(this.typeNum, this.typeStr);
 }

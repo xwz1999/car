@@ -138,6 +138,7 @@ class _Login {
 
   ///微信登录绑定账号
   String get weixinBind => '/login/bind/wechat';
+
   ///苹果登录绑定账号
   String get appleBind => '/login/bind/apple';
 
@@ -188,8 +189,8 @@ class _Order {
   ///添加车商寄卖订单 车商发布订单
   get addConsignment => '/order/dealer/consignment/add';
 
-  ///车商寄卖订单
-  get dealerConsignmentOrderPage => '/order/dealer/consignment/lists';
+  ///车商寄卖订单列表
+  get dealerConsignmentList => '/order/dealer/consignment/lists';
 
   ///寄卖订单详情
   get consignmentInfo => '/order/consignment/info';
@@ -208,6 +209,9 @@ class _Order {
 
   ///叫车订单
   get callCar => '/order/call/car/lists';
+
+  /// 寄卖订单详情
+  String get callCarInfo => '/order/call/car/info';
 }
 
 class _Poster {
@@ -233,8 +237,10 @@ class _StoreManagement {
 
   ///全部入驻商
   String get businessAll => '/business/allBusiness';
+
   ///全部入驻商员工
   String get businessStaffAll => '/business/allStaff';
+
   ///全部员工
   String get staffAll => '/business/staff/all';
 

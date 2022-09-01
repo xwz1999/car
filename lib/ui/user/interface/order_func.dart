@@ -68,7 +68,7 @@ class OrderFunc {
   ///车商寄卖订单列表
   static Future<List<ListsModel>> getDealerLists({Map? data}) async {
     BaseListModel baseList = await apiClient
-        .requestList(API.order.dealerConsignmentOrderPage, data: data);
+        .requestList(API.order.dealerConsignmentList, data: data);
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
