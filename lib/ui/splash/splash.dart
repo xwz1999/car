@@ -32,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
   final TapGestureRecognizer _agreementRecognizer = TapGestureRecognizer();
   final TapGestureRecognizer _privacyRecognizer = TapGestureRecognizer();
 
-  Future initialAll() async {
+  Future initialAll(context) async {
     await HiveStore.init();
     var agreement = await HiveStore.appBox?.get('agreement') ?? false;
     if (!agreement) {
@@ -44,6 +44,8 @@ class _SplashPageState extends State<SplashPage> {
         await HiveStore.appBox?.put('agreement', true);
       }
     }
+
+    PowerLogger.start(context, debug: AppENV.instance.env!=ENVConfig.release);
     ///第三方加载
     Jverify()
         .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
@@ -119,10 +121,9 @@ class _SplashPageState extends State<SplashPage> {
       print('env :$env');
     }
     AppENV.instance.setEnv(env);
-    PowerLogger.start(context, debug: AppENV.instance.env!=ENVConfig.release);
     // PowerLogger.start(context, debug: true);
     Future.delayed(const Duration(milliseconds: 1000), () async {
-      await initialAll();
+      await initialAll(context);
       if (!await userProvider.init()) {
         await Get.offAll(() => const LoginPage());
       } else {

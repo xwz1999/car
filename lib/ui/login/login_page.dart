@@ -5,8 +5,9 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/login/apple_login_model.dart';
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:cloud_car/ui/login/jverify_error_code.dart';
-import 'package:cloud_car/ui/login/login_by_password.dart';
+import 'package:cloud_car/ui/login/login_by_password_page.dart';
 import 'package:cloud_car/ui/login/login_bind_page.dart';
+import 'package:cloud_car/ui/login/login_by_sms_page.dart';
 import 'package:cloud_car/ui/splash/privacy_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -385,10 +386,10 @@ class _LoginPageState extends State<LoginPage> {
                     CloudToast.show('请阅读并同意用户协议和隐私政策');
                     return;
                   }
-                  Get.to(() => const LoginByPassword());
+                  Get.to(() => const LoginBySmsPage());
                 },
                 child: Text(
-                  '账号登录',
+                  '验证码登录',
                   style: TextStyle(color: Colors.black26, fontSize: 24.w),
                 ),
               ),

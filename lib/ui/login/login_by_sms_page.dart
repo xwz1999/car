@@ -14,17 +14,15 @@ import 'package:flutter/services.dart';
 
 import '../../constants/api/api.dart';
 
-class LoginBindPage extends StatefulWidget {
-  final String token;
-  final int bindType; // 1 = 微信 2 = 苹果
+class LoginBySmsPage extends StatefulWidget {
 
-  const LoginBindPage({super.key, required this.token, required this.bindType});
+  const LoginBySmsPage({super.key, });
 
   @override
-  _LoginBindPageState createState() => _LoginBindPageState();
+  _LoginBySmsPageState createState() => _LoginBySmsPageState();
 }
 
-class _LoginBindPageState extends State<LoginBindPage> {
+class _LoginBySmsPageState extends State<LoginBySmsPage> {
   bool _getCodeEnable = false;
 
   late Timer _timer;
@@ -69,10 +67,10 @@ class _LoginBindPageState extends State<LoginBindPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             250.hb,
-            Text(
-              '${widget.bindType==1?'微信':'苹果'}账号绑定手机号',
-              style: TextStyle(
-                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize48),
+            Image.asset(
+              Assets.images.loginBg.path,
+              width: 308.w,
+              height: 60.w,
             ),
             100.hb,
             _phoneTFWidget(),
@@ -99,14 +97,10 @@ class _LoginBindPageState extends State<LoginBindPage> {
                     return;
                   }
                   var base = await apiClient.request(
-                      widget.bindType == 1
-                          ? API.login.weixinBind
-                          : API.login.appleBind,
+                    API.login.smsCodeLogin,
                       data: {
                         'phone': _phoneController.text,
                         'code': _smsCodeController.text,
-                        'bindToken': widget.token,
-                        'inviteCode': '',
                       });
 
                   if (base.code == 0) {
@@ -122,7 +116,7 @@ class _LoginBindPageState extends State<LoginBindPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.w)),
                 child: Text(
-                  '提       交',
+                  '登      录',
                   style: TextStyle(
                       color: kForeGroundColor, fontSize: BaseStyle.fontSize28),
                 ),
@@ -257,17 +251,17 @@ class _LoginBindPageState extends State<LoginBindPage> {
                         onTap: !_getCodeEnable
                             ? () {}
                             : () async {
-                                await apiClient
-                                    .request(API.login.phoneCode, data: {
-                                  'phone': _phoneController.text,
-                                });
-                                _beginCountDown();
-                                if (_cantSelected) return;
-                                _cantSelected = true;
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  _cantSelected = false;
-                                });
-                              },
+                          await apiClient
+                              .request(API.login.phoneCode, data: {
+                            'phone': _phoneController.text,
+                          });
+                          _beginCountDown();
+                          if (_cantSelected) return;
+                          _cantSelected = true;
+                          Future.delayed(const Duration(seconds: 2), () {
+                            _cantSelected = false;
+                          });
+                        },
                         child: Container(
                           width: 180.w,
                           alignment: Alignment.centerRight,

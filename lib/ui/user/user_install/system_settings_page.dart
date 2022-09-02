@@ -122,7 +122,7 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
       color: Colors.white,
       child: ListView.separated(
         shrinkWrap: true,
-        itemCount: 3,
+        itemCount: list.length,
         itemBuilder: (context, index) {
           return _getList(list[index]);
         },
