@@ -42,7 +42,7 @@ class CloudImageNetworkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isCar!
+    return isCar
         ? ClipRRect(
             borderRadius: borderRadius,
             child: FadeInImage.assetNetwork(
