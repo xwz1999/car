@@ -11,6 +11,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../../constants/api/api.dart';
 
@@ -173,8 +174,11 @@ class _LoginBindPageState extends State<LoginBindPage> {
                     ],
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.zero,
+                      prefixIconConstraints: const BoxConstraints(minHeight: 0,minWidth: 0),
                       prefixIcon: Container(
-                        width: 10.w,
+                        width: 100.w,
+                        margin: EdgeInsets.only(bottom: 10.w),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "+86",
@@ -243,6 +247,7 @@ class _LoginBindPageState extends State<LoginBindPage> {
                     ],
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.zero,
                       enabledBorder: const UnderlineInputBorder(
                         // 不是焦点的时候颜色
                         borderSide: BorderSide(

@@ -88,3 +88,17 @@ enum PayType {
 
   const PayType(this.typeNum, this.typeStr);
 }
+
+enum PermissionLevel {
+  normal(1, '普通用户'),
+  independentPartner(2, '独立合伙人'),
+  settledMerchants(3, '经纪人');
+
+  final int typeNum;
+  final String typeStr;
+
+  static PermissionLevel getValue(int value) =>
+      PermissionLevel.values.firstWhere((element) => element.typeNum == value);
+
+  const PermissionLevel(this.typeNum, this.typeStr);
+}

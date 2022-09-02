@@ -46,6 +46,7 @@ class _SplashPageState extends State<SplashPage> {
     }
 
     PowerLogger.start(context, debug: AppENV.instance.env!=ENVConfig.release);
+    // PowerLogger.start(context, debug: true);
     ///第三方加载
     Jverify()
         .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
@@ -55,7 +56,7 @@ class _SplashPageState extends State<SplashPage> {
         appId: 'wx9bc3ffb23a749254',
         doOnIOS: !isAndroid,
         doOnAndroid: isAndroid,
-        universalLink: 'https://apiwenche.oa00.com/');
+        universalLink:'https://manage.yunyunwenche.com/');
     ///Providers 初始化
     //初始化省市区版本
     UserTool.cityProvider.init();
@@ -121,7 +122,6 @@ class _SplashPageState extends State<SplashPage> {
       print('env :$env');
     }
     AppENV.instance.setEnv(env);
-    // PowerLogger.start(context, debug: true);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll(context);
       if (!await userProvider.init()) {
