@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage>
         .add(KingCoin(name: '车辆按揭', url: Assets.icons.carMortgage.path));
     _kingCoinList.add(KingCoin(name: '车辆代理', url: Assets.icons.carAgent.path));
     _kingCoinList
-        .add(KingCoin(name: '维护查询', url: Assets.icons.carMaintain.path));
+        .add(KingCoin(name: '维保查询', url: Assets.icons.carMaintain.path));
     _kingCoinList
         .add(KingCoin(name: '收车/(合作)', url: Assets.icons.carRecovery.path));
   }
@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage>
           case '车辆按揭':
             Get.to(() => const CarMortgagePage());
             break;
-          case '维护查询':
+          case '维保查询':
             Get.to(() => const MaintainQueryPage());
             break;
           case '收车/(合作)':

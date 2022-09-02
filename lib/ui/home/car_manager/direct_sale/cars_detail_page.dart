@@ -80,7 +80,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
 
   _refresh() async {
     carInfoModel = await CarFunc.getCarInfo(widget.carListModel.id);
-    collect = carInfoModel?.collect ?? 0;
+    collect = carInfoModel?.carInfo.collect ?? 0;
     setState(() {});
   }
 
@@ -115,7 +115,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                         centerTitle: false,
                         title: headerWhite
                             ? Text(
-                                carInfoModel?.modelName ?? '',
+                                carInfoModel?.carInfo.modelName ?? '',
                                 style: TextStyle(
                                   color: const Color(0xFF333333),
                                   fontWeight: FontWeight.w700,
@@ -144,7 +144,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                                         collect == 0
                                             ? API.car.collect.add
                                             : API.car.collect.cancel,
-                                        data: {'carId': carInfoModel?.id},
+                                        data: {'carId': carInfoModel?.carInfo.id},
                                         showMessage: true);
                                     if (re.code == 0) {
                                       collect == 0 ? collect = 1 : collect = 0;
@@ -503,7 +503,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       children: [
         Flexible(
             child: Text(
-          carInfoModel?.modelName ?? '',
+          carInfoModel?.carInfo.modelName ?? '',
           style: Theme.of(context)
               .textTheme
               .headline6
@@ -526,12 +526,12 @@ class _CarsDetailPageState extends State<CarsDetailPage>
               _noRelease('在厅'),
               16.wb,
               _textview(DateUtil.formatDateMs(
-                  carInfoModel!.licensingDate.toInt() * 1000,
+                 ( carInfoModel?.carInfo.licensingDate.toInt()??0) * 1000,
                   format: 'yyyy-MM')),
               16.wb,
-              _textview('${carInfoModel?.mileage}万公里'),
+              _textview('${carInfoModel?.carInfo.mileage}万公里'),
               16.wb,
-              _textview(carInfoModel?.dischargeStandard ?? ""),
+              _textview(carInfoModel?.carInfo.modelInfo.dischargeStandard ?? ""),
             ],
           ),
         ),
@@ -546,7 +546,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
       children: [
         Text.rich(TextSpan(children: [
           TextSpan(
-              text: carInfoModel!.price.priceFormat,
+              text: carInfoModel!.carInfo.price.priceFormat,
               style: TextStyle(
                   color: const Color(0xFFFF3B02),
                   fontSize: BaseStyle.fontSize40)),
@@ -599,7 +599,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${carInfoModel!.price}万',
+                      '${carInfoModel!.carInfo.price}万',
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                     Row(
@@ -643,7 +643,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                     Row(
                       children: [
                         Text(
-                          carInfoModel!.color,
+                          carInfoModel!.carInfo.color,
                           style: Theme.of(context).textTheme.subtitle2,
                         ),
                       ],
@@ -840,13 +840,13 @@ class _CarsDetailPageState extends State<CarsDetailPage>
 //图片样式
   _bannerStyle() {
     return Swiper(
-      itemCount: carInfoModel!.carPhotos.length,
+      itemCount: carInfoModel!.carInfo.carPhotos.length,
       //横向
       scrollDirection: Axis.horizontal,
       //布局构建
       itemBuilder: (context, index) {
         return CloudImageNetworkWidget.car(
-          urls: [carInfoModel!.carPhotos[index]],
+          urls: [carInfoModel!.carInfo.carPhotos[index]],
         );
       },
       //自动翻页

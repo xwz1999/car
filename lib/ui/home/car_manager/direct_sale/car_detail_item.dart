@@ -43,22 +43,22 @@ class CarDetailItem extends StatelessWidget {
         Text(title,style: TextStyle(
           fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
         ),),
-        getContentItem('车架号',''),
-        getContentItem('车辆类型','二手车(中规)'),
-        getContentItem('品牌车型',carInfoModel.modelName),
-        getContentItem('表显里程','${carInfoModel.mileage}万公里'),
-        getContentItem('首次上牌',DateUtil.formatDateMs(carInfoModel.licensingDate.toInt() * 1000,
+        getContentItem('车架号',carInfoModel.carInfo.contractInfo.vin),
+        getContentItem('车辆类型',carInfoModel.carInfo.modelInfo.bodyType),
+        getContentItem('品牌车型',carInfoModel.carInfo.modelName),
+        getContentItem('表显里程','${carInfoModel.carInfo.mileage}万公里'),
+        getContentItem('首次上牌',DateUtil.formatDateMs(carInfoModel.carInfo.licensingDate.toInt() * 1000,
             format: 'yyyy-MM')),
-        getContentItem('车身颜色',carInfoModel.color),
-        getContentItem('车牌号',''),
+        getContentItem('车身颜色',carInfoModel.carInfo.color),
+        getContentItem('车牌号',carInfoModel.carInfo.contractInfo.licensePlate),
         getContentItem('车商编号',''),
-        getContentItem('车辆编号',carInfoModel.carSn),
-        getContentItem('内饰颜色',''),
-        getContentItem('使用性质',carInfoModel.useCharacter),
-        getContentItem('车辆所在地',carInfoModel.locationCity),
-        getContentItem('车辆归属地',''),
-        getContentItem('车况(对内)',carInfoModel.conditionIn),
-        getContentItem('车况(对外)',carInfoModel.conditionOut),
+        getContentItem('车辆编号',carInfoModel.carInfo.carSn),
+        getContentItem('内饰颜色',carInfoModel.carInfo.orderInfo.interiorColor),
+        getContentItem('使用性质',carInfoModel.carInfo.orderInfo.useCharacter),
+        getContentItem('车辆所在地',carInfoModel.carInfo.orderInfo.locationCity),
+        getContentItem('车辆归属地',carInfoModel.carInfo.orderInfo.attributionCity),
+        getContentItem('车况(对内)',carInfoModel.carInfo.orderInfo.conditionIn),
+        getContentItem('车况(对外)',carInfoModel.carInfo.orderInfo.conditionOut),
 
       ],
     );
@@ -71,12 +71,12 @@ class CarDetailItem extends StatelessWidget {
         Text(title,style: TextStyle(
             fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
         ),),
-        getContentItem('排量','${carInfoModel.liter}L'),
-        getContentItem('变速箱类型',''),
-        getContentItem('燃料形式',''),
-        getContentItem('车身结构',''),
-        getContentItem('座位数',''),
-        getContentItem('排放标准',carInfoModel.dischargeStandard),
+        getContentItem('排量','${carInfoModel.carInfo.modelInfo.liter}L'),
+        getContentItem('变速箱类型',carInfoModel.carInfo.modelInfo.gearType),
+        getContentItem('燃料形式',carInfoModel.carInfo.modelInfo.fuelTypeName),
+        getContentItem('车身结构',carInfoModel.carInfo.modelInfo.carStruct),
+        getContentItem('座位数',carInfoModel.carInfo.modelInfo.seatNumber),
+        getContentItem('排放标准',carInfoModel.carInfo.modelInfo.dischargeStandard),
 
       ],
     );
@@ -90,27 +90,27 @@ class CarDetailItem extends StatelessWidget {
         Text(title,style: TextStyle(
             fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
         ),),
-        getContentItem('展示价格',carInfoModel.price),
-        getContentItem('系统估价',carInfoModel.lastPrice),
+        getContentItem('展示价格',carInfoModel.carInfo.price),
+        getContentItem('系统估价',carInfoModel.carInfo.lastPrice),
 
       ],
     );
   }
 
-  getItem4(String title){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title,style: TextStyle(
-            fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
-        ),),
-        getContentItem('采购日期','2021-12-09'),
-        getContentItem('评估师','张斯斯'),
-        getContentItem('门店','云云问车'),
-
-      ],
-    );
-  }
+  // getItem4(String title){
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(title,style: TextStyle(
+  //           fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
+  //       ),),
+  //       getContentItem('采购日期','2021-12-09'),
+  //       getContentItem('评估师',carInfoModel.carInfo.brokerInfo.brokerNickname),
+  //       getContentItem('门店','云云问车'),
+  //
+  //     ],
+  //   );
+  // }
 
 
   getItem5(String title){
@@ -137,12 +137,12 @@ class CarDetailItem extends StatelessWidget {
             fontSize: 28.sp,fontWeight: FontWeight.bold,color: BaseStyle.color333333
         ),),
         getContentItem('过户次数',''),
-        getContentItem('钥匙数量','${carInfoModel.keyCount}把'),
-        getContentItem('交强险',carInfoModel.compulsoryInsurance==1?'有':'无'),
-        getContentItem('交强险到期',DateUtil.formatDateMs(carInfoModel.licensingDate.toInt() * 1000,
+        getContentItem('钥匙数量','${carInfoModel.carInfo.contractInfo.keyCount}把'),
+        getContentItem('交强险',carInfoModel.carInfo.contractInfo.commercialInsurance==1?'有':'无'),
+        getContentItem('交强险到期',DateUtil.formatDateMs(carInfoModel.carInfo.contractInfo.compulsoryInsuranceDate.toInt() * 1000,
             format: 'yyyy-MM')),
-        // getContentItem('商业险','无'),
-        // getContentItem('商业险到期',''),
+        getContentItem('商业险',carInfoModel.carInfo.contractInfo.compulsoryInsurance==1?'有':'无'),
+        getContentItem('商业险到期',DateUtil.formatDateMs(carInfoModel.carInfo.contractInfo.commercialInsuranceDate.toInt() * 1000),)
       ],
     );
   }

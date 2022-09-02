@@ -78,13 +78,13 @@ class _UserPageState extends State<UserPage> {
         margin: EdgeInsets.only(
           top: 78.w,
         ),
-        child: GestureDetector(
-          onTap: () {
-            Get.to(() => const SystemSettingPage());
-          },
-          child: Image.asset(Assets.icons.userSetUp.path,
-              height: 48.w, width: 48.w),
-        ),
+        // child: GestureDetector(
+        //   onTap: () {
+        //     Get.to(() => const SystemSettingPage());
+        //   },
+        //   child: Image.asset(Assets.icons.userSetUp.path,
+        //       height: 48.w, width: 48.w),
+        // ),
       ),
       body: Expanded(
         child: Column(

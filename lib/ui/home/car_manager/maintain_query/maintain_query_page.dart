@@ -46,7 +46,7 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
           ],
           backgroundColor: const Color(0xFFF6F6F6),
           title: Text(
-            '维护查询',
+            '维保查询',
             style: Theme.of(context).textTheme.headline4,
           ),
         ),
