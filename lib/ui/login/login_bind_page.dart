@@ -66,14 +66,15 @@ class _LoginBindPageState extends State<LoginBindPage> {
       ),
       backgroundColor: kForeGroundColor,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
           children: [
             250.hb,
-            Text(
-              '${widget.bindType==1?'微信':'苹果'}账号绑定手机号',
-              style: TextStyle(
-                  color: BaseStyle.color333333, fontSize: BaseStyle.fontSize48),
+            Center(
+              child: Text(
+                '${widget.bindType == 1 ? '微信' : '苹果'}账号绑定手机号',
+                style: TextStyle(
+                    color: BaseStyle.color333333, fontSize: BaseStyle.fontSize48),
+              ),
             ),
             100.hb,
             _phoneTFWidget(),
@@ -175,31 +176,39 @@ class _LoginBindPageState extends State<LoginBindPage> {
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.zero,
+                      isDense: true,
+                      border: const UnderlineInputBorder(),
                       prefixIconConstraints: const BoxConstraints(minHeight: 0,minWidth: 0),
-                      prefixIcon: Container(
-                        width: 100.w,
-                        margin: EdgeInsets.only(bottom: 10.w),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "+86",
-                          style: TextStyle(
-                            fontSize: BaseStyle.fontSize36,
-                            color: BaseStyle.color999999,
+                      // prefixIcon: Container(
+                      //   width: 100.w,
+                      //   margin: EdgeInsets.only(bottom: 10.w),
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Text(
+                      //     "+86",
+                      //     style: TextStyle(
+                      //       fontSize: BaseStyle.fontSize36,
+                      //       color: BaseStyle.color999999,
+                      //     ),
+                      //   ),
+                      // ),
+                      prefix:  Text(
+                            "+86",
+                            style: TextStyle(
+                              fontSize: BaseStyle.fontSize36,
+                              color: BaseStyle.color999999,
+                            ),
                           ),
-                        ),
-                      ),
+                      // prefixText: '+86  ',
+                      // prefixStyle: TextStyle(
+                      //         fontSize: BaseStyle.fontSize36,
+                      //         color: BaseStyle.color999999,
+                      //       ),
                       enabledBorder: const UnderlineInputBorder(
                         // 不是焦点的时候颜色
                         borderSide: BorderSide(
                           color: BaseStyle.colordddddd,
                         ),
                       ),
-                      // focusedBorder:  const UnderlineInputBorder( // 焦点集中的时候颜色
-                      //   borderSide: BorderSide(
-                      //       color: Color(0x19000000)
-                      //   ),
-                      // ),
-                      //border: InputBorder.none,
                       hintText: "请输入手机号",
                       hintStyle: TextStyle(
                           color: BaseStyle.colorcccccc,
@@ -217,83 +226,65 @@ class _LoginBindPageState extends State<LoginBindPage> {
   }
 
   _codeWidget() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      //margin: EdgeInsets.symmetric(horizontal: 20.w),
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 72.w),
-      height: 40 * 2.h,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    onChanged: (String phone) {
-                      setState(() {
-                        _loginEnable = _verifyLoginEnable();
-                      });
-                    },
-                    controller: _smsCodeController,
-                    focusNode: _smsCodeFocusNode,
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize36,
-                        color: BaseStyle.color999999),
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(6),
-                    ],
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      enabledBorder: const UnderlineInputBorder(
-                        // 不是焦点的时候颜色
-                        borderSide: BorderSide(
-                          color: BaseStyle.colordddddd,
-                        ),
-                      ),
-                      hintText: "请输入验证码",
-                      hintStyle: TextStyle(
-                          color: BaseStyle.colorcccccc,
-                          fontSize: BaseStyle.fontSize36),
-                      suffixIcon: GestureDetector(
-                        onTap: !_getCodeEnable
-                            ? () {}
-                            : () async {
-                                await apiClient
-                                    .request(API.login.phoneCode, data: {
-                                  'phone': _phoneController.text,
-                                });
-                                _beginCountDown();
-                                if (_cantSelected) return;
-                                _cantSelected = true;
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  _cantSelected = false;
-                                });
-                              },
-                        child: Container(
-                          width: 180.w,
-                          alignment: Alignment.centerRight,
-                          color: Colors.transparent,
-                          child: Text(
-                            _countDownStr,
-                            style: TextStyle(
-                                color: _getCodeEnable
-                                    ? kPrimaryColor
-                                    : BaseStyle.colorcccccc),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+      child: TextField(
+        onChanged: (String phone) {
+          setState(() {
+            _loginEnable = _verifyLoginEnable();
+          });
+        },
+        controller: _smsCodeController,
+        focusNode: _smsCodeFocusNode,
+        keyboardType: TextInputType.number,
+        style: TextStyle(
+            fontSize: BaseStyle.fontSize36,
+            color: BaseStyle.color999999),
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(6),
+        ],
+        cursorColor: Colors.black,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
+          enabledBorder: const UnderlineInputBorder(
+            // 不是焦点的时候颜色
+            borderSide: BorderSide(
+              color: BaseStyle.colordddddd,
             ),
           ),
-          //_bottomLineWidget(),
-        ],
+          hintText: "请输入验证码",
+          hintStyle: TextStyle(
+              color: BaseStyle.colorcccccc,
+              fontSize: BaseStyle.fontSize36),
+          suffixIcon: GestureDetector(
+            onTap: !_getCodeEnable
+                ? () {}
+                : () async {
+                    await apiClient
+                        .request(API.login.phoneCode, data: {
+                      'phone': _phoneController.text,
+                    });
+                    _beginCountDown();
+                    if (_cantSelected) return;
+                    _cantSelected = true;
+                    Future.delayed(const Duration(seconds: 2), () {
+                      _cantSelected = false;
+                    });
+                  },
+            child: Container(
+              width: 180.w,
+              alignment: Alignment.centerRight,
+              color: Colors.transparent,
+              child: Text(
+                _countDownStr,
+                style: TextStyle(
+                    color: _getCodeEnable
+                        ? kPrimaryColor
+                        : BaseStyle.colorcccccc),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

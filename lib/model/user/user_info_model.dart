@@ -38,12 +38,7 @@ class UserInfoModel extends Equatable {
       ),
       store: StoreInfo(storeName: '', roleName: '', roleId: 0));
 
-  @Deprecated('已弃用')
-  Map<int, String> get levelMap => {
-        1: '基础用户',
-        2: '独立合伙人',
-        3: '入驻商',
-      };
+  PermissionLevel get levelEM => PermissionLevel.getValue(level);
 
   Gender get genderEM => Gender.getValue(gender);
 

@@ -5,6 +5,8 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'assessment_pay_page.dart';
 
@@ -69,15 +71,13 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
         ],
         title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
       ),
-      body: Stack(
+      body: ListView(
         children: [
-          Container(
-            width: 750.w,
-            height: 1495.w,
-            color: const Color.fromRGBO(246, 246, 246, 1),
+          Padding(
+            padding: EdgeInsets.all(32.w),
+            child: _getNum(),
           ),
-          Positioned(left: 32.w, top: 32.w, right: 32.w, child: _getNum()),
-          Positioned(top: 172.w, child: _getPrice())
+          _getPrice(),
         ],
       ),
       bottomNavigationBar: _confirmBtn(),
@@ -87,6 +87,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
 //评估次数
   _getNum() {
     return Stack(
+      alignment: Alignment.center,
       children: [
         SizedBox(
           width: 750.w,
@@ -185,11 +186,24 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                       pickItem: _chooseItem,
                     ),
                   ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        launchUrlString('tel:(0574) 8716 7365');
+                      },
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: 150.w,
+                          height: 100.w,
+                          child:
+                              '联系客服'.richText.color(Colors.blueAccent).make()),
+                    ),
+                  ),
                   762.hb,
                   //40.hb,
                 ],
               ),
-            )
+            ),
           ],
         ));
   }

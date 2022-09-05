@@ -1,4 +1,6 @@
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/providers/user_provider.dart';
+import 'package:cloud_car/ui/login/login_bind_page.dart';
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
@@ -21,6 +23,7 @@ import 'package:provider/provider.dart';
 import '../../utils/user_tool.dart';
 import '../../widget/cloud_avatar_widget.dart';
 import '../home/home_page.dart';
+
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
 
@@ -37,8 +40,11 @@ class _UserPageState extends State<UserPage> {
   @override
   void initState() {
     super.initState();
-    _kingCoinUserList
-        .add(KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
+    if (UserTool.userProvider.userInfo.levelEM ==
+        PermissionLevel.settledMerchants) {
+      _kingCoinUserList
+          .add(KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
+    }
     _kingCoinUserList
         .add(KingCoin(name: '员工管理', url: Assets.icons.userstaffmangement.path));
     _kingCoinUserList
@@ -70,6 +76,9 @@ class _UserPageState extends State<UserPage> {
       systemStyle: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
       ),
+      fab: FloatingActionButton(onPressed: (){
+        Get.to(()=>const LoginBindPage(token: '', bindType: 1));
+      },),
       appbar: Container(
         //height: kToolbarHeight + MediaQuery.of(context).padding.top,
         //height: 334.w,
@@ -153,7 +162,7 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const UserAssessmentPage());
             break;
           case '钱包':
-          //Get.to(() => const HomePage());
+            //Get.to(() => const HomePage());
             Get.to(() => const WalletCertificationPage());
             break;
           case '邀请':

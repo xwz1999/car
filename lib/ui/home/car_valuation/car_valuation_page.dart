@@ -39,6 +39,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
           returnType: 3));
 
   final TextEditingController _licensePlateController = TextEditingController();
+  final TextEditingController _carModelController = TextEditingController();
 
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
@@ -208,10 +209,12 @@ class _CarValuationPageState extends State<CarValuationPage> {
             ScanLicenseWidget(onLoadComplete: (carInfoModel) {
               // _carInfo.name = carInfoModel.cartype;
               if (carInfoModel.vinModel != null) {
-                _carInfo.name = carInfoModel.vinModel!.first.brandName;
+                _carModelController.text =
+                    carInfoModel.vinModel!.first.modelName;
+                print(_carModelController.text);
+                _carInfo.name = carInfoModel.vinModel!.first.modelName;
                 _carInfo.modelId = carInfoModel.vinModel!.first.modelId;
-                _carInfo.color =
-                    carInfoModel.vinModel!.first.color;
+                _carInfo.color = carInfoModel.vinModel!.first.color;
               }
               _carInfo.licensePlate = carInfoModel.vehicle.lsnum;
               _licensePlateController.text = carInfoModel.vehicle.lsnum;
@@ -226,6 +229,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
                 await Get.to(() => ChooseCarPage(
                       callback: () {
                         Get.back();
+                        _carModelController.text = _pickCar.value.car.name;
                         _carInfo.name = _pickCar.value.car.name;
                         _carInfo.modelId = _pickCar.value.car.modelId;
                         _carInfo.brand = _pickCar.value.brand.name;
@@ -236,8 +240,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
               },
               child: EditItemWidget(
                 title: '具体车型',
-                callback: (String content) {},
-                value: _carInfo.name ?? '',
+                controller: _carModelController,
                 tips: '请选择具体车型',
                 topIcon: false,
                 paddingStart: 32,
@@ -339,9 +342,11 @@ class _CarValuationPageState extends State<CarValuationPage> {
                   String price = await CarFunc.getQuickAmount(_carInfo);
                   if (price.isNotEmpty) {
                     _carInfo.price = price;
-                    Get.to(() => CarValuationResultPage(
-                          carInfo: _carInfo,
-                        ));
+                    Get.to(
+                      () => CarValuationResultPage(
+                        carInfo: _carInfo,
+                      ),
+                    );
                   }
                 },
                 style: ButtonStyle(

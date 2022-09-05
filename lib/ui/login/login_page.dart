@@ -321,7 +321,7 @@ class _LoginPageState extends State<LoginPage> {
                             'Sign in with Apple',
                             style: TextStyle(
                                 fontSize: BaseStyle.fontSize28,
-                                color: kPrimaryColor),
+                                color: Colors.black),
                           ),
                         ],
                       )),

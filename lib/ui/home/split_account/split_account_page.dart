@@ -51,7 +51,7 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
   @override
   Widget build(BuildContext context) {
     return CloudScaffold.normal(
-      title: '收车合作',
+      title: '收车账单',
       actions: [
         IconButton(
             onPressed: () async {

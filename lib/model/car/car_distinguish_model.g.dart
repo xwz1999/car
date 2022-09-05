@@ -9,7 +9,7 @@ part of 'car_distinguish_model.dart';
 CarDistinguishModel _$CarDistinguishModelFromJson(Map<String, dynamic> json) =>
     CarDistinguishModel(
       vehicle: VechicleModel.fromJson(json['vehicle'] as Map<String, dynamic>),
-      vinModel: (json['vinModel'] as List<dynamic>?)
+      vinModel: (json['vin_model'] as List<dynamic>?)
           ?.map((e) => VinModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -18,7 +18,7 @@ Map<String, dynamic> _$CarDistinguishModelToJson(
         CarDistinguishModel instance) =>
     <String, dynamic>{
       'vehicle': instance.vehicle,
-      'vinModel': instance.vinModel,
+      'vin_model': instance.vinModel,
     };
 
 VechicleModel _$VechicleModelFromJson(Map<String, dynamic> json) =>
@@ -50,39 +50,39 @@ Map<String, dynamic> _$VechicleModelToJson(VechicleModel instance) =>
     };
 
 VinModel _$VinModelFromJson(Map<String, dynamic> json) => VinModel(
-      seriesGroupName: json['seriesGroupName'] as String,
+      seriesGroupName: json['series_group_name'] as String,
       color: json['color'] as String,
-      modelLiter: json['modelLiter'] as String,
-      modelYear: json['modelYear'] as int,
-      brandName: json['brandName'] as String,
-      modelId: json['modelId'] as int,
-      brandId: json['brandId'] as int,
-      seriesId: json['seriesId'] as int,
-      modelName: json['modelName'] as String,
-      modelPrice: json['modelPrice'] as String,
-      modelEmissionStandard: json['modelEmissionStandard'] as String,
-      modelGear: json['modelGear'] as String,
-      seriesName: json['seriesName'] as String,
-      minRegYear: json['minRegYear'] as int,
-      maxRegYear: json['maxRegYear'] as int,
-      extModelId: json['extModelId'] as int,
+      modelLiter: json['model_liter'] as String,
+      modelYear: json['model_year'] as int,
+      brandName: json['brand_name'] as String,
+      modelId: json['model_id'] as int,
+      brandId: json['brand_id'] as int,
+      seriesId: json['series_id'] as int,
+      modelName: json['model_name'] as String,
+      modelPrice: json['model_price'] as num,
+      modelEmissionStandard: json['model_emission_standard'] as String,
+      modelGear: json['model_gear'] as String,
+      seriesName: json['series_name'] as String,
+      minRegYear: json['min_reg_year'] as int,
+      maxRegYear: json['max_reg_year'] as int,
+      extModelId: json['ext_model_id'] as int,
     );
 
 Map<String, dynamic> _$VinModelToJson(VinModel instance) => <String, dynamic>{
-      'seriesGroupName': instance.seriesGroupName,
+      'series_group_name': instance.seriesGroupName,
       'color': instance.color,
-      'modelLiter': instance.modelLiter,
-      'modelYear': instance.modelYear,
-      'brandName': instance.brandName,
-      'modelId': instance.modelId,
-      'brandId': instance.brandId,
-      'seriesId': instance.seriesId,
-      'modelName': instance.modelName,
-      'modelPrice': instance.modelPrice,
-      'modelEmissionStandard': instance.modelEmissionStandard,
-      'modelGear': instance.modelGear,
-      'seriesName': instance.seriesName,
-      'minRegYear': instance.minRegYear,
-      'maxRegYear': instance.maxRegYear,
-      'extModelId': instance.extModelId,
+      'model_liter': instance.modelLiter,
+      'model_year': instance.modelYear,
+      'brand_name': instance.brandName,
+      'model_id': instance.modelId,
+      'brand_id': instance.brandId,
+      'series_id': instance.seriesId,
+      'model_name': instance.modelName,
+      'model_price': instance.modelPrice,
+      'model_emission_standard': instance.modelEmissionStandard,
+      'model_gear': instance.modelGear,
+      'series_name': instance.seriesName,
+      'min_reg_year': instance.minRegYear,
+      'max_reg_year': instance.maxRegYear,
+      'ext_model_id': instance.extModelId,
     };

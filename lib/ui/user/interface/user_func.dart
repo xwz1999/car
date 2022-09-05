@@ -24,7 +24,6 @@ class User {
   ///   if(res.data! == 0) return [];
   /// return res.data!.list!.map((e) => <>.formJson(e)).toList();
   /// }
-
   ///评估记录
   static Future<List<HistoryModel>> getHistory(
       {required int page, int size = 10}) async {

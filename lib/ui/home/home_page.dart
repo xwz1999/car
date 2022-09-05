@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage>
     _kingCoinList
         .add(KingCoin(name: '维保查询', url: Assets.icons.carMaintain.path));
     _kingCoinList
-        .add(KingCoin(name: '收车/(合作)', url: Assets.icons.carRecovery.path));
+        .add(KingCoin(name: '收车账单', url: Assets.icons.carRecovery.path));
   }
 
   @override
@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage>
           case '维保查询':
             Get.to(() => const MaintainQueryPage());
             break;
-          case '收车/(合作)':
+          case '收车账单':
             Get.to(() => const SplitAccountPage());
             break;
           case '车辆代理':
