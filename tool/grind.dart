@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:grinder/grinder.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' hide context;
 import 'package:pub_semver/pub_semver.dart';
 import 'package:yaml/yaml.dart';
 
@@ -16,6 +16,9 @@ main(args) => grind(args);
 
 @Task('add minor version number')
 void addVersion() async {
+  TaskArgs args = context.invocation.arguments;
+  bool addTag = args.hasFlag('tag');
+  String tag = args.getOption('tag')??'';
   String projectPath = Directory('.').absolute.path;
   String yamlPath = join(projectPath, 'pubspec.yaml');
   String yamlContent = await File(yamlPath).readAsString();
@@ -23,7 +26,7 @@ void addVersion() async {
   String version = content['version'];
   //rename version
 
-  Version resultVersion = VersionTool.fromText(version).nextMinorTag('dev');
+  Version resultVersion = VersionTool.fromText(version).nextMinorTag(tag,addTag: addTag);
 
   String result = yamlContent.replaceFirst(version, resultVersion.toString());
   await File(yamlPath).writeAsString(result);
@@ -31,6 +34,9 @@ void addVersion() async {
 
 @Task('add path version number')
 void addVersionPatch() async {
+  TaskArgs args = context.invocation.arguments;
+  bool addTag = args.hasFlag('tag');
+  String tag = args.getOption('tag')??'';
   String projectPath = Directory('.').absolute.path;
   String yamlPath = join(projectPath, 'pubspec.yaml');
   String yamlContent = await File(yamlPath).readAsString();
@@ -38,7 +44,7 @@ void addVersionPatch() async {
   String version = content['version'];
   //rename version
 
-  Version resultVersion = VersionTool.fromText(version).nextPatchTag('dev');
+  Version resultVersion = VersionTool.fromText(version).nextPatchTag(tag,addTag: addTag);
 
   String result = yamlContent.replaceFirst(version, resultVersion.toString());
   await File(yamlPath).writeAsString(result);
@@ -46,6 +52,9 @@ void addVersionPatch() async {
 
 @Task('add major version number')
 void addVersionMajor() async {
+  TaskArgs args = context.invocation.arguments;
+  bool addTag = args.hasFlag('tag');
+  String tag = args.getOption('tag')??'';
   String projectPath = Directory('.').absolute.path;
   String yamlPath = join(projectPath, 'pubspec.yaml');
   String yamlContent = await File(yamlPath).readAsString();
@@ -53,7 +62,7 @@ void addVersionMajor() async {
   String version = content['version'];
   //rename version
 
-  Version resultVersion = VersionTool.fromText(version).nextMajorTag('dev');
+  Version resultVersion = VersionTool.fromText(version).nextMajorTag(tag,addTag: addTag);
 
   String result = yamlContent.replaceFirst(version, resultVersion.toString());
   await File(yamlPath).writeAsString(result);
