@@ -139,88 +139,57 @@ class _LoginBindPageState extends State<LoginBindPage> {
   _phoneTFWidget() {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: 72.w),
-      height: 40 * 2.h,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    onChanged: (String phone) {
-                      setState(() {
-                        if (phone.length >= 11) {
-                          _getCodeEnable = true;
-                          _loginEnable = _verifyLoginEnable();
-                        } else {
-                          _getCodeEnable = false;
-                          _loginEnable = false;
-                        }
-                        if (kDebugMode) {
-                          print(_loginEnable);
-                        }
-                      });
-                    },
-                    controller: _phoneController,
-                    focusNode: _phoneFocusNode,
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize36,
-                        color: BaseStyle.color999999),
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(11),
-                    ],
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      isDense: true,
-                      border: const UnderlineInputBorder(),
-                      prefixIconConstraints: const BoxConstraints(minHeight: 0,minWidth: 0),
-                      // prefixIcon: Container(
-                      //   width: 100.w,
-                      //   margin: EdgeInsets.only(bottom: 10.w),
-                      //   alignment: Alignment.centerLeft,
-                      //   child: Text(
-                      //     "+86",
-                      //     style: TextStyle(
-                      //       fontSize: BaseStyle.fontSize36,
-                      //       color: BaseStyle.color999999,
-                      //     ),
-                      //   ),
-                      // ),
-                      prefix:  Text(
-                            "+86",
-                            style: TextStyle(
-                              fontSize: BaseStyle.fontSize36,
-                              color: BaseStyle.color999999,
-                            ),
-                          ),
-                      // prefixText: '+86  ',
-                      // prefixStyle: TextStyle(
-                      //         fontSize: BaseStyle.fontSize36,
-                      //         color: BaseStyle.color999999,
-                      //       ),
-                      enabledBorder: const UnderlineInputBorder(
-                        // 不是焦点的时候颜色
-                        borderSide: BorderSide(
-                          color: BaseStyle.colordddddd,
-                        ),
-                      ),
-                      hintText: "请输入手机号",
-                      hintStyle: TextStyle(
-                          color: BaseStyle.colorcccccc,
-                          fontSize: BaseStyle.fontSize36),
-                    ),
-                  ),
+      padding: EdgeInsets.symmetric(horizontal: 72.w,vertical: 20.w),
+      margin: EdgeInsets.only(bottom: 20.w),
+      child: TextField(
+        onChanged: (String phone) {
+          setState(() {
+            if (phone.length >= 11) {
+              _getCodeEnable = true;
+              _loginEnable = _verifyLoginEnable();
+            } else {
+              _getCodeEnable = false;
+              _loginEnable = false;
+            }
+            if (kDebugMode) {
+              print(_loginEnable);
+            }
+          });
+        },
+        controller: _phoneController,
+        focusNode: _phoneFocusNode,
+        keyboardType: TextInputType.number,
+        style: TextStyle(
+            fontSize: BaseStyle.fontSize36,
+            color: BaseStyle.color999999),
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(11),
+        ],
+        cursorColor: Colors.black,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
+          isDense: true,
+          border: const UnderlineInputBorder(),
+          prefixIconConstraints: const BoxConstraints(minHeight: 0,minWidth: 0),
+          prefixIcon:  Text(
+                "+86  ",
+                style: TextStyle(
+                  fontSize: BaseStyle.fontSize36,
+                  color: BaseStyle.color999999,
+                  height: 1.4
                 ),
-              ],
+              ),
+          enabledBorder: const UnderlineInputBorder(
+            // 不是焦点的时候颜色
+            borderSide: BorderSide(
+              color: BaseStyle.colordddddd,
             ),
           ),
-          //_bottomLineWidget(),
-        ],
+          hintText: "请输入手机号",
+          hintStyle: TextStyle(
+              color: BaseStyle.colorcccccc,
+              fontSize: BaseStyle.fontSize36),
+        ),
       ),
     );
   }
@@ -256,6 +225,8 @@ class _LoginBindPageState extends State<LoginBindPage> {
           hintStyle: TextStyle(
               color: BaseStyle.colorcccccc,
               fontSize: BaseStyle.fontSize36),
+          isDense: true,
+          suffixIconConstraints:const BoxConstraints(minWidth: 0,minHeight: 0),
           suffixIcon: GestureDetector(
             onTap: !_getCodeEnable
                 ? () {}
@@ -271,17 +242,13 @@ class _LoginBindPageState extends State<LoginBindPage> {
                       _cantSelected = false;
                     });
                   },
-            child: Container(
-              width: 180.w,
-              alignment: Alignment.centerRight,
-              color: Colors.transparent,
-              child: Text(
-                _countDownStr,
-                style: TextStyle(
-                    color: _getCodeEnable
-                        ? kPrimaryColor
-                        : BaseStyle.colorcccccc),
-              ),
+            child: Text(
+              _countDownStr,
+              style: TextStyle(
+                  fontSize: BaseStyle.fontSize30,
+                  color: _getCodeEnable
+                      ? kPrimaryColor
+                      : BaseStyle.colorcccccc),
             ),
           ),
         ),
