@@ -5,7 +5,6 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/login/apple_login_model.dart';
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:cloud_car/ui/login/jverify_error_code.dart';
-import 'package:cloud_car/ui/login/login_by_password_page.dart';
 import 'package:cloud_car/ui/login/login_bind_page.dart';
 import 'package:cloud_car/ui/login/login_by_sms_page.dart';
 import 'package:cloud_car/ui/splash/privacy_page.dart';
@@ -242,6 +241,12 @@ class _LoginPageState extends State<LoginPage> {
                       return;
                     }
                     var cancel = CloudToast.loading;
+                    var res = await fluwx.isWeChatInstalled;
+                    if (!res){
+                      CloudToast.show("未安装微信!");
+                      cancel();
+                      return;
+                    }
                     try {
                       await fluwx.sendWeChatAuth(
                           scope: "snsapi_userinfo",

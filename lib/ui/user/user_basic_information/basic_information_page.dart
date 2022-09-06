@@ -6,11 +6,13 @@ import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/login/login_page.dart';
 import 'package:cloud_car/ui/user/interface/user_func.dart';
+import 'package:cloud_car/ui/user/user_install/cancellation_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -93,9 +95,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                               width: 72.w,
                               height: 72.w,
                               child: CloudAvatarWidget(
-                                urls: [
-                                  UserTool.userProvider.userInfo.headImg
-                                ],
+                                urls: [UserTool.userProvider.userInfo.headImg],
                               ),
                             )
                           ],
@@ -139,8 +139,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
-                                    ?.copyWith(
-                                        color: const Color(0xFF999999)),
+                                    ?.copyWith(color: const Color(0xFF999999)),
                               ),
                             )
                           ],
@@ -198,11 +197,9 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                             );
                                             var info = infoProvider.userInfo;
                                             UserTool.userProvider.setUserInfo(
-                                                info.copyWith(
-                                                    nickname: name));
+                                                info.copyWith(nickname: name));
                                             if (res) {
-                                              BotToast.showText(
-                                                  text: '修改名字成功');
+                                              BotToast.showText(text: '修改名字成功');
                                               Get.back();
                                             }
                                             await UserTool.userProvider
@@ -237,8 +234,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                                     color: const Color(
                                                         0xFFE7E7E7)),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        2.w)),
+                                                    BorderRadius.circular(2.w)),
                                             child: TextField(
                                               onChanged: (text) {
                                                 name = text;
@@ -246,18 +242,14 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                               },
                                               decoration: InputDecoration(
                                                 contentPadding:
-                                                    EdgeInsets.only(
-                                                        left: 16.w),
+                                                    EdgeInsets.only(left: 16.w),
                                                 filled: true,
                                                 isDense: true,
                                                 fillColor: Colors.white,
-                                                hintText: UserTool
-                                                    .userProvider
-                                                    .userInfo
-                                                    .nickname,
+                                                hintText: UserTool.userProvider
+                                                    .userInfo.nickname,
                                                 hintStyle: TextStyle(
-                                                    color:
-                                                        Colors.grey.shade500,
+                                                    color: Colors.grey.shade500,
                                                     fontSize: 14,
                                                     fontWeight:
                                                         FontWeight.w300),
@@ -288,8 +280,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
-                                    ?.copyWith(
-                                        color: const Color(0xFF999999)),
+                                    ?.copyWith(color: const Color(0xFF999999)),
                               ),
                             )
                           ],
@@ -333,8 +324,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                               '选择性别',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                color:
-                                                    const Color(0xFF111111),
+                                                color: const Color(0xFF111111),
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 32.sp,
                                               ),
@@ -380,12 +370,12 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                                               color: Colors.white,
                                               child: Text('男',
                                                   style: TextStyle(
-                                                      color: gender ==
-                                                              Gender.male
-                                                          ? const Color(
-                                                              0xFF027AFF)
-                                                          : const Color(
-                                                              0xFF330000),
+                                                      color:
+                                                          gender == Gender.male
+                                                              ? const Color(
+                                                                  0xFF027AFF)
+                                                              : const Color(
+                                                                  0xFF330000),
                                                       fontSize: BaseStyle
                                                           .fontSize28)),
                                             ),
@@ -456,6 +446,30 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
             ),
             20.hb,
             bottom,
+            12.hb,
+            Row(
+              children: [
+                Padding(padding: EdgeInsets.only(left: 204.w)),
+                Text.rich(TextSpan(children: [
+                  TextSpan(
+                      text: '不再使用云云问车了？',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: const Color(0xFFAAAAAA))),
+                  TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = (() {
+                          Get.to(() => const CancellationPage());
+                        }),
+                      text: '注销账号',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: const Color(0xFF027AFF)))
+                ]))
+              ],
+            )
           ],
         ));
   }

@@ -112,7 +112,7 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                       child: GestureDetector(
                         onTap: () async {
                           await ShareUtil.shareNetWorkImage(
-                              widget.model.first.mainPhoto);
+                              title: widget.model.first.modelName,imgUrl: widget.model.first.mainPhoto,);
                         },
                         child: Column(
                           children: [
@@ -136,31 +136,25 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                       child: GestureDetector(
                         onTap: () async {
                           ShareUtil.shareNetWorkImage(
-                              widget.model.first.mainPhoto,
+                            title: widget.model.first.modelName,
+                             imgUrl: widget.model.first.mainPhoto,
                               scene: fluwx.WeChatScene.TIMELINE);
                         },
-                        child: GestureDetector(
-                          onTap: () {
-                            ShareUtil.shareNetWorkImage(
-                                widget.model.first.mainPhoto,
-                                scene: fluwx.WeChatScene.TIMELINE);
-                          },
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                Assets.icons.icShareWxCircle.path,
-                                width: 96.w,
-                                height: 96.w,
-                              ),
-                              5.hb,
-                              Text(
-                                '朋友圈',
-                                style: TextStyle(
-                                    color: const Color(0xFF666666),
-                                    fontSize: BaseStyle.fontSize24),
-                              )
-                            ],
-                          ),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              Assets.icons.icShareWxCircle.path,
+                              width: 96.w,
+                              height: 96.w,
+                            ),
+                            5.hb,
+                            Text(
+                              '朋友圈',
+                              style: TextStyle(
+                                  color: const Color(0xFF666666),
+                                  fontSize: BaseStyle.fontSize24),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -437,7 +431,8 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                       child: GestureDetector(
                         onTap: () {
                           ShareUtil.shareNetWorkImage(
-                              widget.model.first.mainPhoto,
+                              title: widget.model.first.modelName,
+                             imgUrl: widget.model.first.mainPhoto,
                               scene: fluwx.WeChatScene.TIMELINE);
                         },
                         child: Column(

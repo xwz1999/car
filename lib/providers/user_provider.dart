@@ -12,7 +12,7 @@ class UserProvider extends ChangeNotifier {
   bool _isLogin = false;
 
   bool get isLogin => _isLogin;
-  late UserInfoModel _userInfo;
+   UserInfoModel _userInfo=UserInfoModel.fail;
 
   UserInfoModel get userInfo => _userInfo;
 

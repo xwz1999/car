@@ -1,4 +1,4 @@
-import 'package:cloud_car/constants/const_data.dart';
+
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/providers/user_provider.dart';
@@ -13,7 +13,6 @@ import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/share_util.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
-import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';

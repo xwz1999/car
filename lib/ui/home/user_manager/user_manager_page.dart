@@ -127,7 +127,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
       case 0:
         return ManagerContainerItem(
           onTap: () {
-            Get.to(() => const UserManagerDetailPage());
+            Get.to(() => const UserManagerDetailPage(initIndex: 0,));
           },
           text: '浏览客户',
           num: '${_model?.browseCount}',
@@ -135,7 +135,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
       case 1:
         return ManagerContainerItem(
           onTap: () {
-            Get.to(() => const UserManagerDetailPage());
+            Get.to(() => const UserManagerDetailPage(initIndex: 1,));
           },
           text: '意向客户',
           num: '${_model?.intentionCount}',
@@ -143,7 +143,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
       case 2:
         return ManagerContainerItem(
           onTap: () {
-            Get.to(() => const UserManagerDetailPage());
+            Get.to(() => const UserManagerDetailPage(initIndex: 2,));
           },
           text: '邀请注册',
           num: '${_model?.registerCount}',
@@ -151,7 +151,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
       case 3:
         return ManagerContainerItem(
           onTap: () {
-            Get.to(() => const UserManagerDetailPage());
+            Get.to(() => const UserManagerDetailPage(initIndex: 3,));
           },
           text: '成交客户',
           num: '${_model?.doneCount}',

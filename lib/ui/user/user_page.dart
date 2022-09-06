@@ -6,7 +6,6 @@ import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/ui/user/user_basic_information/basic_information_page.dart';
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
-import 'package:cloud_car/ui/user/user_install/system_settings_page.dart';
 import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract_page.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management_page.dart';

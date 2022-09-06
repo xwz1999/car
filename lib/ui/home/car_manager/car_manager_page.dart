@@ -6,7 +6,6 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 
 import '../manager_container_item.dart';
-import 'assessment_page.dart';
 import 'direct_sale/direct_sale_manager_page.dart';
 
 class CarManagerPage extends StatefulWidget {

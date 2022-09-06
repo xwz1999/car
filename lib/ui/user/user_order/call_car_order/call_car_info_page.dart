@@ -1,5 +1,4 @@
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/gen/assets.gen.dart';
 import 'package:cloud_car/model/user/call_car_order_info_model.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -10,7 +9,6 @@ import 'package:cloud_car/widget/cloud_chip.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/cloud_status_tag.dart';
-import 'package:cloud_car/widget/cloud_tag.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';

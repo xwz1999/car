@@ -211,7 +211,6 @@ class _CarValuationPageState extends State<CarValuationPage> {
               if (carInfoModel.vinModel != null) {
                 _carModelController.text =
                     carInfoModel.vinModel!.first.modelName;
-                print(_carModelController.text);
                 _carInfo.name = carInfoModel.vinModel!.first.modelName;
                 _carInfo.modelId = carInfoModel.vinModel!.first.modelId;
                 _carInfo.color = carInfoModel.vinModel!.first.color;
