@@ -16,7 +16,7 @@ class NetworkInterceptor extends Interceptor {
     switch (code) {
       //登录超时
       case 100000:
-        await userProvider.logout();
+        await userProvider.cleanToken();
         CloudToast.show(response.data['msg']);
         await Get.offAll(() => const LoginPage());
         break;

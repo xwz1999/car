@@ -38,7 +38,7 @@ class UserProvider extends ChangeNotifier {
     await updateUserInfo();
   }
 
-  Future logout() async {
+  Future cleanToken() async {
     // await apiClient.request(API.user.signOut);
     apiClient.clearToken();
     _isLogin = false;

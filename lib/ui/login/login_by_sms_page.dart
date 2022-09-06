@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:cloud_car/ui/tab_navigator.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -7,6 +6,8 @@ import 'package:cloud_car/utils/text_utils.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/cloud_phone_text_field_widget.dart';
+import 'package:cloud_car/widget/cloud_sms_code_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,9 @@ import 'package:flutter/services.dart';
 import '../../constants/api/api.dart';
 
 class LoginBySmsPage extends StatefulWidget {
-
-  const LoginBySmsPage({super.key, });
+  const LoginBySmsPage({
+    super.key,
+  });
 
   @override
   _LoginBySmsPageState createState() => _LoginBySmsPageState();
@@ -25,16 +27,12 @@ class LoginBySmsPage extends StatefulWidget {
 class _LoginBySmsPageState extends State<LoginBySmsPage> {
   bool _getCodeEnable = false;
 
-  late Timer _timer;
-  String _countDownStr = "发送验证码";
   int seconds = 60;
-  int _countDownNum = 59;
   late TextEditingController _phoneController;
   late TextEditingController _smsCodeController;
   late FocusNode _phoneFocusNode;
   late FocusNode _smsCodeFocusNode;
   bool _loginEnable = false;
-  bool _cantSelected = false;
 
   @override
   void initState() {
@@ -73,9 +71,33 @@ class _LoginBySmsPageState extends State<LoginBySmsPage> {
               height: 60.w,
             ),
             100.hb,
-            _phoneTFWidget(),
+            CloudPhoneTextFieldWidget(
+                controller: _phoneController,
+                focusNode: _phoneFocusNode,
+                onChange: (phone) {
+                  setState(() {
+                    if (phone.length >= 11) {
+                      _getCodeEnable = true;
+                      _loginEnable = _verifyLoginEnable();
+                    } else {
+                      _getCodeEnable = false;
+                      _loginEnable = false;
+                    }
+                    if (kDebugMode) {
+                      print(_loginEnable);
+                    }
+                  });
+                }),
             20.hb,
-            _codeWidget(),
+            CloudSmsCodeWidget(
+              onChange: (code) {
+                setState(() {
+                  _loginEnable = _verifyLoginEnable();
+                });
+              },
+              controller: _smsCodeController,
+              focusNode: _smsCodeFocusNode, phone: _phoneController.text,getCodeEnable: _getCodeEnable,
+            ),
             94.hb,
             Container(
               width: double.infinity,
@@ -96,12 +118,11 @@ class _LoginBySmsPageState extends State<LoginBySmsPage> {
                     CloudToast.show('请输入验证码！');
                     return;
                   }
-                  var base = await apiClient.request(
-                    API.login.smsCodeLogin,
-                      data: {
-                        'phone': _phoneController.text,
-                        'code': _smsCodeController.text,
-                      });
+                  var base =
+                      await apiClient.request(API.login.smsCodeLogin, data: {
+                    'phone': _phoneController.text,
+                    'code': _smsCodeController.text,
+                  });
 
                   if (base.code == 0) {
                     UserTool.userProvider.setToken(base.data['token']);
@@ -127,155 +148,11 @@ class _LoginBySmsPageState extends State<LoginBySmsPage> {
       ),
     );
   }
-
-  _phoneTFWidget() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: 72.w,vertical: 20.w),
-      margin: EdgeInsets.only(bottom: 20.w),
-      child: TextField(
-        onChanged: (String phone) {
-          setState(() {
-            if (phone.length >= 11) {
-              _getCodeEnable = true;
-              _loginEnable = _verifyLoginEnable();
-            } else {
-              _getCodeEnable = false;
-              _loginEnable = false;
-            }
-            if (kDebugMode) {
-              print(_loginEnable);
-            }
-          });
-        },
-        controller: _phoneController,
-        focusNode: _phoneFocusNode,
-        keyboardType: TextInputType.number,
-        style: TextStyle(
-            fontSize: BaseStyle.fontSize36,
-            color: BaseStyle.color999999),
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(11),
-        ],
-        cursorColor: Colors.black,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
-          isDense: true,
-          border: const UnderlineInputBorder(),
-          prefixIconConstraints: const BoxConstraints(minHeight: 0,minWidth: 0),
-          prefixIcon:  Text(
-            "+86  ",
-            style: TextStyle(
-                fontSize: BaseStyle.fontSize36,
-                color: BaseStyle.color999999,
-                height: 1.4
-            ),
-          ),
-          enabledBorder: const UnderlineInputBorder(
-            // 不是焦点的时候颜色
-            borderSide: BorderSide(
-              color: BaseStyle.colordddddd,
-            ),
-          ),
-          hintText: "请输入手机号",
-          hintStyle: TextStyle(
-              color: BaseStyle.colorcccccc,
-              fontSize: BaseStyle.fontSize36),
-        ),
-      ),
-    );
-  }
-
-  _codeWidget() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 72.w),
-      child: TextField(
-        onChanged: (String phone) {
-          setState(() {
-            _loginEnable = _verifyLoginEnable();
-          });
-        },
-        controller: _smsCodeController,
-        focusNode: _smsCodeFocusNode,
-        keyboardType: TextInputType.number,
-        style: TextStyle(
-            fontSize: BaseStyle.fontSize36,
-            color: BaseStyle.color999999),
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(6),
-        ],
-        cursorColor: Colors.black,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
-          enabledBorder: const UnderlineInputBorder(
-            // 不是焦点的时候颜色
-            borderSide: BorderSide(
-              color: BaseStyle.colordddddd,
-            ),
-          ),
-          hintText: "请输入验证码",
-          hintStyle: TextStyle(
-              color: BaseStyle.colorcccccc,
-              fontSize: BaseStyle.fontSize36),
-          isDense: true,
-          suffixIconConstraints:const BoxConstraints(minWidth: 0,minHeight: 0),
-          suffixIcon: GestureDetector(
-            onTap: !_getCodeEnable
-                ? () {}
-                : () async {
-              await apiClient
-                  .request(API.login.phoneCode, data: {
-                'phone': _phoneController.text,
-              });
-              _beginCountDown();
-              if (_cantSelected) return;
-              _cantSelected = true;
-              Future.delayed(const Duration(seconds: 2), () {
-                _cantSelected = false;
-              });
-            },
-            child: Text(
-              _countDownStr,
-              style: TextStyle(
-                  fontSize: BaseStyle.fontSize30,
-                  color: _getCodeEnable
-                      ? kPrimaryColor
-                      : BaseStyle.colorcccccc),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   _verifyLoginEnable() {
     if (!TextUtils.verifyPhone(_phoneController.text)) {
       setState(() {});
       return false;
     }
     return _smsCodeController.text.length == 6;
-  }
-
-  _beginCountDown() {
-    ///开始倒计时
-    setState(() {
-      _getCodeEnable = false;
-      _countDownStr = "重新获取($_countDownNum)";
-    });
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        if (_countDownNum == 0) {
-          _countDownNum = 59;
-          _countDownStr = "获取验证码";
-          _getCodeEnable = true;
-          _timer.cancel();
-          return;
-        }
-        _countDownStr = "重新获取(${_countDownNum--})";
-      });
-    });
   }
 }

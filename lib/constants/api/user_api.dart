@@ -12,6 +12,9 @@ class _UserApi {
 
   ///修改用户信息
   String get userUpdate => '/user/update';
+
+  /// 注销账户
+  String get logOff => '/user/logoff';
 }
 
 class _Wallet {
