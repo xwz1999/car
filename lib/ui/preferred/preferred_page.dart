@@ -247,7 +247,8 @@ class _PreferredPageState extends State<PreferredPage>
                           ),
                           //controller: _editingController,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 0.w),
+                            contentPadding: EdgeInsets.zero,
+                            isDense: true,
                             filled: true,
                             fillColor: Colors.white,
                             hintText: "请输入车辆名称",
@@ -255,9 +256,13 @@ class _PreferredPageState extends State<PreferredPage>
                                 color: Colors.grey.shade500,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w300),
-                            prefixIcon: const Icon(
-                              CupertinoIcons.search,
-                              size: 16,
+                            prefixIconConstraints: const BoxConstraints(minHeight: 0,minWidth: 0),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 12.w),
+                              child: const Icon(
+                                CupertinoIcons.search,
+                                size: 16,
+                              ),
                             ),
                             enabledBorder: UnderlineInputBorder(
                               //
