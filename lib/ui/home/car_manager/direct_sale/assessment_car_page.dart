@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/car_evaluation_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
@@ -10,25 +9,28 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-
 ///评估车辆页面
 
 class AssessmentCarPage extends StatefulWidget {
   final EasyRefreshController refreshController;
   final ValueNotifier<SearchParamModel> pickCar;
-  const AssessmentCarPage({super.key, required this.refreshController, required this.pickCar, });
+
+  const AssessmentCarPage({
+    super.key,
+    required this.refreshController,
+    required this.pickCar,
+  });
 
   @override
   _AssessmentCarPageState createState() => _AssessmentCarPageState();
 }
 
-class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKeepAliveClientMixin {
+class _AssessmentCarPageState extends State<AssessmentCarPage>
+    with AutomaticKeepAliveClientMixin {
+  String? get _modelName => widget.pickCar.value.keyWords;
 
-   String? get _modelName => widget.pickCar.value.keyWords;
-
-
-   int _page = 1;
-   final int _size = 10;
+  int _page = 1;
+  final int _size = 10;
 
   bool _onLoad = true;
   late List<CarEvaluationModel> carList = [];
@@ -83,38 +85,38 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
                 child: 10.hb,
               ),
               _onLoad
-                  ? const  SliverToBoxAdapter(
-              )
+                  ? const SliverToBoxAdapter()
                   : carList.isEmpty
-                  ? const SliverToBoxAdapter(
-                child: NoDataWidget(
-                  text: '暂无相关车辆信息',
-                  paddingTop: 300,
-                ),
-              )
-                  :
-              SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
-                sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      var model = carList[index];
-                      return getItem(model);
-                    }, childCount: carList.length)),
-              ),
+                      ? const SliverToBoxAdapter(
+                          child: NoDataWidget(
+                            text: '暂无相关车辆信息',
+                            paddingTop: 300,
+                          ),
+                        )
+                      : SliverPadding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.w, vertical: 20.w),
+                          sliver: SliverList(
+                              delegate:
+                                  SliverChildBuilderDelegate((context, index) {
+                            var model = carList[index];
+                            return getItem(model);
+                          }, childCount: carList.length)),
+                        ),
             ],
           ),
         )
       ],
     );
   }
-  
-  getItem(CarEvaluationModel model){
-     return GestureDetector(
-       onTap: (){
-         // Get.to(()=>  CarsDetailPage(isSelf: null,));
-       },
-       child: Container(
-         margin: EdgeInsets.only(bottom: 16.w),
+
+  getItem(CarEvaluationModel model) {
+    return GestureDetector(
+      onTap: () {
+        // Get.to(()=>  CarsDetailPage(isSelf: null,));
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 16.w),
         padding: EdgeInsets.symmetric(vertical: 24.w, horizontal: 32.w),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -148,8 +150,6 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
                 DateUtil.formatDateMs(model.licensingDate.toInt() * 1000,
                     format: 'yyyy-MM')),
             16.hb,
-            getText('车牌号', model.licensePlate),
-            16.hb,
             getText('发动机号', model.engine),
             16.hb,
             getText('车身颜色', model.color),
@@ -160,44 +160,37 @@ class _AssessmentCarPageState extends State<AssessmentCarPage> with AutomaticKee
           ],
         ),
       ),
-     );
-     
-     
+    );
   }
 
-
-  getText(String title,String content,{bool isRed = false,}){
-     return           Row(
-       children: [
-         SizedBox(
-           width: 180.w,
-           child: Text(
-             title,
-             style: TextStyle(
-                 color: BaseStyle.color666666,
-                 fontSize: BaseStyle.fontSize28,
-
-             ),
-           ),
-         ),
-
-         Text(
-           content,
-           style: TextStyle(
-               color:isRed?const Color(0xFFFF3B02): BaseStyle.color333333,
-               fontSize: BaseStyle.fontSize28,
-
-           ),
-
-         ),
-       ],
-     );
+  getText(
+    String title,
+    String content, {
+    bool isRed = false,
+  }) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 180.w,
+          child: Text(
+            title,
+            style: TextStyle(
+              color: BaseStyle.color666666,
+              fontSize: BaseStyle.fontSize28,
+            ),
+          ),
+        ),
+        Text(
+          content,
+          style: TextStyle(
+            color: isRed ? const Color(0xFFFF3B02) : BaseStyle.color333333,
+            fontSize: BaseStyle.fontSize28,
+          ),
+        ),
+      ],
+    );
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
-  
-  
-  
 }

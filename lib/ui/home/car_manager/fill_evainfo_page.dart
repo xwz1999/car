@@ -140,7 +140,9 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
     _carInfo.color = widget.publishCarInfo.carColor;
     _carInfo.mileage = widget.publishCarInfo.mileage;
     _carInfo.licensingDate = widget.publishCarInfo.licensingDate;
-    _carInfo.licensePlate = widget.publishCarInfo.carNum;
+    // _carInfo.licensePlate = widget.publishCarInfo.carNum;
+    _carInfo.locationCityId = widget.publishCarInfo.locationCityId;
+    _carInfo.locationCity = widget.publishCarInfo.locationCity;
     _carInfo.engineNo = widget.publishCarInfo.engineNum;
     _carInfo.vin = widget.publishCarInfo.viNum;
     super.initState();

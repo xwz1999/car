@@ -7,7 +7,6 @@ part 'car_distinguish_model.g.dart';
 @JsonSerializable()
 class CarDistinguishModel extends Equatable {
   final VechicleModel vehicle;
-  @JsonKey(name:'vin_model')
   final List<VinModel>? vinModel;
 
   factory CarDistinguishModel.fromJson(Map<String, dynamic> json) =>

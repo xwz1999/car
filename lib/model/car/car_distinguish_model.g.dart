@@ -9,7 +9,7 @@ part of 'car_distinguish_model.dart';
 CarDistinguishModel _$CarDistinguishModelFromJson(Map<String, dynamic> json) =>
     CarDistinguishModel(
       vehicle: VechicleModel.fromJson(json['vehicle'] as Map<String, dynamic>),
-      vinModel: (json['vin_model'] as List<dynamic>?)
+      vinModel: (json['vinModel'] as List<dynamic>?)
           ?.map((e) => VinModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -18,7 +18,7 @@ Map<String, dynamic> _$CarDistinguishModelToJson(
         CarDistinguishModel instance) =>
     <String, dynamic>{
       'vehicle': instance.vehicle,
-      'vin_model': instance.vinModel,
+      'vinModel': instance.vinModel,
     };
 
 VechicleModel _$VechicleModelFromJson(Map<String, dynamic> json) =>

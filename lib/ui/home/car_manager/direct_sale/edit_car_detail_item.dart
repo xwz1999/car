@@ -2,7 +2,7 @@
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
-
+@Deprecated('')
 class EditCarDetailItem extends StatefulWidget {
   const EditCarDetailItem({super.key});
 
@@ -60,7 +60,7 @@ class _EditCarDetailItemState extends State<EditCarDetailItem> {
 
         EditItemWidget(title: '首次上牌', value: '2020-03',canChange: false, callback: (String content) {  },),
 
-        EditItemWidget(title: '车牌号', value: '浙B562T8',canChange: false, callback: (String content) {  },),
+        // EditItemWidget(title: '车牌号', value: '浙B562T8',canChange: false, callback: (String content) {  },),
 
         EditItemWidget(title: '发动机号', value: '647382',canChange: false, callback: (String content) {  },),
 

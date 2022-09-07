@@ -2,6 +2,7 @@ import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_result_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
+import 'package:cloud_car/ui/home/sort/car_three_city_list_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
@@ -208,6 +209,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
           children: [
             ScanLicenseWidget(onLoadComplete: (carInfoModel) {
               // _carInfo.name = carInfoModel.cartype;
+              print(carInfoModel.vinModel==null);
               if (carInfoModel.vinModel != null) {
                 _carModelController.text =
                     carInfoModel.vinModel!.first.modelName;
@@ -215,7 +217,6 @@ class _CarValuationPageState extends State<CarValuationPage> {
                 _carInfo.modelId = carInfoModel.vinModel!.first.modelId;
                 _carInfo.color = carInfoModel.vinModel!.first.color;
               }
-              _carInfo.licensePlate = carInfoModel.vehicle.lsnum;
               _licensePlateController.text = carInfoModel.vehicle.lsnum;
               _carInfo.address = carInfoModel.vehicle.address;
 
@@ -251,16 +252,44 @@ class _CarValuationPageState extends State<CarValuationPage> {
                 ),
               ),
             ),
-            EditItemWidget(
-              title: '车牌号',
-              callback: (String content) {
-                // _carInfo.licensePlate = content;
-                _carInfo.licensePlate = _licensePlateController.text;
+            // EditItemWidget(
+            //   title: '车牌号',
+            //   callback: (String content) {
+            //     // _carInfo.licensePlate = content;
+            //     _carInfo.licensePlate = _licensePlateController.text;
+            //   },
+            //   tips: '请输入车牌号',
+            //   topIcon: false,
+            //   paddingStart: 32,
+            //   controller: _licensePlateController,
+            // ),
+            GestureDetector(
+              onTap: () async {
+                Get.to(
+                  () => CarThreeCityListPage(
+                    onSelect: (city) {
+                      Get.back();
+                      _carInfo.locationCity = city.cityName;
+                      _carInfo.locationCityId = city.cityId;
+                      setState(() {});
+                    },
+                  ),
+                );
               },
-              tips: '请输入车牌号',
-              topIcon: false,
-              paddingStart: 32,
-              controller: _licensePlateController,
+              child: EditItemWidget(
+                title: '上牌地区',
+                callback: (String content) {},
+                value: _carInfo.locationCity,
+                tips: '请选择上牌地区',
+                topIcon: false,
+                paddingStart: 32,
+                canChange: false,
+                endIcon: Image.asset(
+                  Assets.icons.icGoto.path,
+                  width: 32.w,
+                  height: 32.w,
+                ),
+              ),
             ),
             GestureDetector(
               onTap: () async {
@@ -368,8 +397,13 @@ class CarInfo {
   ///车型id
   int? modelId;
 
-  ///牌照
-  String? licensePlate;
+  // ///牌照
+  // String? licensePlate;
+  /// 所在地区
+  String? locationCity;
+
+  /// 所在地区id
+  int? locationCityId;
 
   ///上牌照时间
   DateTime? licensingDate;
@@ -425,7 +459,8 @@ class CarInfo {
     this.name,
     this.address,
     this.modelId,
-    this.licensePlate,
+    this.locationCity,
+    this.locationCityId,
     this.licensingDate,
     this.mileage,
     this.transfer,

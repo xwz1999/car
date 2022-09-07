@@ -72,9 +72,9 @@ class CarFunc {
     }
   }
 
-
   ///获取评估列表
-  static Future<List<CarEvaluationModel>> getCarEvaluationList(int page, int size,
+  static Future<List<CarEvaluationModel>> getCarEvaluationList(
+      int page, int size,
       {String? keyWords}) async {
     var data = {
       'page': page,
@@ -82,7 +82,7 @@ class CarFunc {
       'modelName': keyWords,
     };
     BaseListModel baseList =
-    await apiClient.requestList(API.car.getCarEvaluationList, data: data);
+        await apiClient.requestList(API.car.getCarEvaluationList, data: data);
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
@@ -141,19 +141,19 @@ class CarFunc {
     }
   }
 
-
-
   ///快速估价
   static Future<String> getQuickAmount(CarInfo carModel) async {
     BaseModel model = await apiClient.request(API.car.fastEstimatePrice, data: {
       'modelId': carModel.modelId,
-      'licensePlate': carModel.licensePlate,
+      // 'licensePlate': carModel.licensePlate,
+      'cityId': carModel.locationCityId,
       'color': carModel.color,
       'licensingDate': DateUtil.formatDate(carModel.licensingDate,
           format: DateFormats.y_mo_d),
       'mileage': carModel.mileage,
     });
     if (model.code == 0) {
+      UserTool.userProvider.updateUserInfo();
       return model.data['price'];
     } else {
       CloudToast.show(model.msg);
@@ -161,16 +161,15 @@ class CarFunc {
     }
   }
 
-
-
-
   ///估算价格
   static Future<EstimatePriceModel?> getEstimatePrice(CarInfo carInfo) async {
     BaseModel model = await apiClient.request(API.car.estimatePrice, data: {
       'modelId': carInfo.modelId,
-      'licensePlate': carInfo.licensePlate,
+      // 'licensePlate': carInfo.licensePlate,
+      'cityId': carInfo.locationCityId,
       'color': carInfo.color,
-      'licensingDate': DateUtil.formatDate(carInfo.licensingDate,format: DateFormats.y_mo_d),
+      'licensingDate': DateUtil.formatDate(carInfo.licensingDate,
+          format: DateFormats.y_mo_d),
       'Mileage': carInfo.mileage,
       'Transfer': carInfo.transfer,
       'Paint': carInfo.paint,
@@ -181,11 +180,12 @@ class CarFunc {
       'Maintain': carInfo.maintain,
       'vin': carInfo.vin,
       'engineNo': carInfo.engineNo,
-      'source': UserTool.userProvider.userInfo.businessId==1?1:2,
+      'source': UserTool.userProvider.userInfo.businessId == 1 ? 1 : 2,
       'shamMileage': carInfo.shamMileage
     });
 
     if (model.code == 0) {
+      UserTool.userProvider.updateUserInfo();
       return EstimatePriceModel.fromJson(model.data);
     } else {
       CloudToast.show(model.msg);
@@ -291,11 +291,12 @@ class CarFunc {
     }
   }
 
-
   ///获取车商列表
 
   static Future<List<DealerListModel>> getDealerList() async {
-    BaseModel res = await apiClient.request(API.car.dealerList,);
+    BaseModel res = await apiClient.request(
+      API.car.dealerList,
+    );
     if (res.code == 0) {
       return (res.data as List)
           .map((e) => DealerListModel.fromJson(e))
@@ -305,10 +306,11 @@ class CarFunc {
     }
   }
 
-
   ///车商发布车辆
-  static Future<bool> dealerPushCar(
-  {required BusinessPushModel businessPushModel,required CarPhotoModel carPhotoModel,}) async {
+  static Future<bool> dealerPushCar({
+    required BusinessPushModel businessPushModel,
+    required CarPhotoModel carPhotoModel,
+  }) async {
     Map<String, dynamic> baseInfo = {
       "type": carPhotoModel.baseInfo.type,
       "interiorColor": carPhotoModel.baseInfo.interiorColor,
@@ -316,42 +318,48 @@ class CarFunc {
       "gearbox": carPhotoModel.baseInfo.gearbox,
       "emissionStandard": carPhotoModel.baseInfo.emissionStandard,
       "useCharacter": carPhotoModel.baseInfo.useCharacter,
-      "location":carPhotoModel.baseInfo.location,
+      "location": carPhotoModel.baseInfo.location,
       "attribution": carPhotoModel.baseInfo.attribution,
       "conditionIn": carPhotoModel.baseInfo.conditionIn,
       "conditionOut": carPhotoModel.baseInfo.conditionOut,
     };
 
     Map<String, dynamic> photos = {
-      "carPhotos":carPhotoModel.photos.carPhotos,
+      "carPhotos": carPhotoModel.photos.carPhotos,
       "interiorPhotos": carPhotoModel.photos.interiorPhotos,
       "defectPhotos": carPhotoModel.photos.defectPhotos,
       "dataPhotos": carPhotoModel.photos.dataPhotos,
     };
 
     Map<String, dynamic> report = {
-      "paints":carPhotoModel.report.paints,
+      "paints": carPhotoModel.report.paints,
     };
 
     Map<String, dynamic> other = {
       "price": businessPushModel.other.price,
       "keyCount": businessPushModel.other.keyCount,
       "compulsoryInsurance": businessPushModel.other.compulsoryInsurance,
-      "compulsoryInsuranceDate": businessPushModel.other.compulsoryInsuranceDate==''?null:businessPushModel.other.compulsoryInsuranceDate,
-      "commercialInsurance":businessPushModel.other.commercialInsurance,
-      "commercialInsuranceDate": businessPushModel.other.commercialInsuranceDate==''?null:businessPushModel.other.commercialInsuranceDate,
-      "commercialInsurancePrice": businessPushModel.other.commercialInsurancePrice==''?null:businessPushModel.other.commercialInsurancePrice,
+      "compulsoryInsuranceDate":
+          businessPushModel.other.compulsoryInsuranceDate == ''
+              ? null
+              : businessPushModel.other.compulsoryInsuranceDate,
+      "commercialInsurance": businessPushModel.other.commercialInsurance,
+      "commercialInsuranceDate":
+          businessPushModel.other.commercialInsuranceDate == ''
+              ? null
+              : businessPushModel.other.commercialInsuranceDate,
+      "commercialInsurancePrice":
+          businessPushModel.other.commercialInsurancePrice == ''
+              ? null
+              : businessPushModel.other.commercialInsurancePrice,
     };
 
-
-
-    BaseModel model =
-    await apiClient.request(API.order.addConsignment, data: {
+    BaseModel model = await apiClient.request(API.order.addConsignment, data: {
       'priceId': businessPushModel.priceId,
       'dealerId': businessPushModel.dealerId,
       'photos': photos,
       'baseInfo': baseInfo,
-      'report':report,
+      'report': report,
       'other': other,
     });
     if (model.code == 0) {
@@ -366,13 +374,11 @@ class CarFunc {
     }
   }
 
-
-
-
-
   ///个人发布车辆
-  static Future<bool> personalPushCar(
-      {required int orderId,required CarPhotoModel carPhotoModel,}) async {
+  static Future<bool> personalPushCar({
+    required int orderId,
+    required CarPhotoModel carPhotoModel,
+  }) async {
     Map<String, dynamic> baseInfo = {
       "type": carPhotoModel.baseInfo.type,
       "interiorColor": carPhotoModel.baseInfo.interiorColor,
@@ -380,31 +386,29 @@ class CarFunc {
       "gearbox": carPhotoModel.baseInfo.gearbox,
       "emissionStandard": carPhotoModel.baseInfo.emissionStandard,
       "useCharacter": carPhotoModel.baseInfo.useCharacter,
-      "location":carPhotoModel.baseInfo.location,
+      "location": carPhotoModel.baseInfo.location,
       "attribution": carPhotoModel.baseInfo.attribution,
       "conditionIn": carPhotoModel.baseInfo.conditionIn,
       "conditionOut": carPhotoModel.baseInfo.conditionOut,
     };
 
     Map<String, dynamic> photos = {
-      "carPhotos":carPhotoModel.photos.carPhotos,
+      "carPhotos": carPhotoModel.photos.carPhotos,
       "interiorPhotos": carPhotoModel.photos.interiorPhotos,
       "defectPhotos": carPhotoModel.photos.defectPhotos,
       "dataPhotos": carPhotoModel.photos.dataPhotos,
     };
 
     Map<String, dynamic> report = {
-      "paints":carPhotoModel.report.paints,
+      "paints": carPhotoModel.report.paints,
     };
 
-
-
     BaseModel model =
-    await apiClient.request(API.order.consignmentPublish, data: {
+        await apiClient.request(API.order.consignmentPublish, data: {
       'orderId': orderId,
       'photos': photos,
       'baseInfo': baseInfo,
-      'report':report,
+      'report': report,
     });
     if (model.code == 0) {
       if (model.msg == '操作成功') {
@@ -420,16 +424,21 @@ class CarFunc {
 
   ///车辆管理统计数据
   static Future<CarStatisticsModel> getStatisticNum() async {
-    BaseModel res = await apiClient.request(API.car.statisticsNum,);
+    BaseModel res = await apiClient.request(
+      API.car.statisticsNum,
+    );
     if (res.code == 0) {
       return CarStatisticsModel.fromJson(res.data);
     } else {
       return CarStatisticsModel.init;
     }
   }
+
   ///个人车辆管理统计数据
   static Future<CarStatisticsModel> getPersonalStatisticNum() async {
-    BaseModel res = await apiClient.request(API.car.personalStatisticNum,);
+    BaseModel res = await apiClient.request(
+      API.car.personalStatisticNum,
+    );
     if (res.code == 0) {
       return CarStatisticsModel.fromJson(res.data);
     } else {

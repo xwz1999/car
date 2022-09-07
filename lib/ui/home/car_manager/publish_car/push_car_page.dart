@@ -2,8 +2,10 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
+import 'package:cloud_car/ui/home/sort/car_three_city_list_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
 import 'package:cloud_car/widget/scan_license_widget.dart';
@@ -270,11 +272,11 @@ class _PushCarPageState extends State<PushCarPage> {
       tips: '请输入车架号',
       controller: _viNumController,
     );
-    var carNum = EditItemWidget(
-      title: '车牌号',
-      tips: '请输入车牌号',
-      controller: _carNumController,
-    );
+    // var carNum = EditItemWidget(
+    //   title: '车牌号',
+    //   tips: '请输入车牌号',
+    //   controller: _carNumController,
+    // );
     // var version = _textarea(
     //     '发动机号',
     //     '请输入发动机号',
@@ -329,6 +331,20 @@ class _PushCarPageState extends State<PushCarPage> {
             '请输入具体车型',
           ),
           _function(
+            '选择地区',
+            () async {
+              Get.to(CarThreeCityListPage(onSelect: (city) {
+                _publishCarInfo.locationCity = city.cityName;
+                _publishCarInfo.locationCityId = city.cityId;
+                Get.back();
+              }));
+              FocusManager.instance.primaryFocus?.unfocus();
+              setState(() {});
+            },
+            _publishCarInfo.locationCity,
+            '选择所在地区',
+          ),
+          _function(
             '首次上牌',
             () async {
               // _publishCarInfo.licensingDate =
@@ -342,7 +358,7 @@ class _PushCarPageState extends State<PushCarPage> {
             _publishCarInfo.licensingDateStr,
             '选择首次上牌时间',
           ),
-          carNum,
+          // carNum,
           engineNum,
           _function(
             '车身颜色',
@@ -454,8 +470,13 @@ class _PushCarPageState extends State<PushCarPage> {
       return false;
     }
 
-    if (!RegexUtil.matches(licensePlateReg, _carNumController.text)) {
-      BotToast.showText(text: '请输入正确的车牌号');
+    // if (!RegexUtil.matches(licensePlateReg, _carNumController.text)) {
+    //   BotToast.showText(text: '请输入正确的车牌号');
+    //   return false;
+    // }
+
+    if (_publishCarInfo.locationCity.isEmptyOrNotNull) {
+      CloudToast.show('请选择所在地区');
       return false;
     }
 
@@ -475,7 +496,7 @@ class _PushCarPageState extends State<PushCarPage> {
     _publishCarInfo.mileage = _mileController.text;
     _publishCarInfo.viNum = _viNumController.text;
     _publishCarInfo.engineNum = _engineController.text;
-    _publishCarInfo.carNum = _carNumController.text;
+    // _publishCarInfo.carNum = _carNumController.text;
     return true;
   }
 
@@ -532,8 +553,13 @@ class PublishCarInfo {
   String get licensingDateStr =>
       DateUtil.formatDate(licensingDate, format: 'yyyy-MM');
 
-  ///车牌号
-  String? carNum;
+  // ///车牌号
+  // String? carNum;
+  /// 所在地区
+  String? locationCity;
+
+  /// 所在地区id
+  int? locationCityId;
 
   ///发动机号
   String? engineNum;
@@ -546,7 +572,9 @@ class PublishCarInfo {
 
   static PublishCarInfo get empty => PublishCarInfo(
         viNum: '',
-        carNum: '',
+        // carNum: '',
+        locationCity: '',
+        locationCityId: 0,
         carName: '',
         carColor: '',
         carModelId: 0,
@@ -559,7 +587,8 @@ class PublishCarInfo {
     this.viNum,
     this.carName,
     this.licensingDate,
-    this.carNum,
+    this.locationCity,
+    this.locationCityId,
     this.engineNum,
     this.carColor,
     this.mileage,

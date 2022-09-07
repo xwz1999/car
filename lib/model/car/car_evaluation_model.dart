@@ -7,7 +7,6 @@ part 'car_evaluation_model.g.dart';
 class CarEvaluationModel extends Equatable {
   final int id;
   final String modelName;
-  final String licensePlate;
   final int licensingDate;
   final String color;
   final String mileage;
@@ -24,7 +23,6 @@ class CarEvaluationModel extends Equatable {
   const CarEvaluationModel({
     required this.id,
     required this.modelName,
-    required this.licensePlate,
     required this.licensingDate,
     required this.color,
     required this.mileage,
@@ -38,7 +36,6 @@ class CarEvaluationModel extends Equatable {
   List<Object?> get props => [
         id,
         modelName,
-        licensePlate,
         licensingDate,
         color,
         mileage,

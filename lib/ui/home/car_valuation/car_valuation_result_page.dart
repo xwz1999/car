@@ -358,37 +358,68 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               16.wb,
+              // Expanded(
+              //     child: Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text(
+              //       widget.carInfo.licensePlate??'',
+              //       style: TextStyle(
+              //         color: const Color(0xFF333333),
+              //         fontSize: 28.w,
+              //       ),
+              //     ),
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       children: [
+              //         Image.asset(
+              //           Assets.icons.estimateLocation.path,
+              //           width: 24.w,
+              //           height: 24.w,
+              //         ),
+              //         12.wb,
+              //         Text(
+              //           '牌照',
+              //           style: TextStyle(
+              //             color: const Color(0xFF999999),
+              //             fontSize: 24.w,
+              //           ),
+              //         ),
+              //       ],
+              //     )
+              //   ],
+              // )),
               Expanded(
                   child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.carInfo.licensePlate??'',
-                    style: TextStyle(
-                      color: const Color(0xFF333333),
-                      fontSize: 28.w,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.asset(
-                        Assets.icons.estimateLocation.path,
-                        width: 24.w,
-                        height: 24.w,
-                      ),
-                      12.wb,
                       Text(
-                        '牌照',
+                        widget.carInfo.locationCity??'',
                         style: TextStyle(
-                          color: const Color(0xFF999999),
-                          fontSize: 24.w,
+                          color: const Color(0xFF333333),
+                          fontSize: 28.w,
                         ),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            Assets.icons.estimateDate.path,
+                            width: 24.w,
+                            height: 24.w,
+                          ),
+                          12.wb,
+                          Text(
+                            '所在地区',
+                            style: TextStyle(
+                              color: const Color(0xFF999999),
+                              fontSize: 24.w,
+                            ),
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
-              )),
+                  )),
               Container(
                 alignment: Alignment.center,
                 width: 44.w,
