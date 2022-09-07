@@ -228,6 +228,9 @@ class _Region {
 
   ///微信绑定手机号发送验证码
   String get phoneCode => '/login/sms';
+
+  /// 获取车300城市数据
+  String get cities => '/city/all';
 }
 
 ///门店管理

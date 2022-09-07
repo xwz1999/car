@@ -43,7 +43,7 @@ class _SplashPageState extends State<SplashPage> {
       }
     }
 
-    PowerLogger.start(context, debug: AppENV.instance.env!=ENVConfig.release);
+    PowerLogger.start(context, debug: AppENV.instance.env != ENVConfig.release);
     // PowerLogger.start(context, debug: true);
     ///第三方加载
     var isAndroid = Platform.isAndroid;
@@ -51,10 +51,12 @@ class _SplashPageState extends State<SplashPage> {
         appId: 'wx9bc3ffb23a749254',
         doOnIOS: !isAndroid,
         doOnAndroid: isAndroid,
-        universalLink:'https://manage.yunyunwenche.com/');
+        universalLink: 'https://manage.yunyunwenche.com/');
+
     ///Providers 初始化
     //初始化省市区版本
     UserTool.cityProvider.init();
+    UserTool.cityProvider.initCities();
     //获取包信息
     UserTool.appProvider.init();
   }

@@ -3,10 +3,11 @@ import 'package:cloud_car/model/region/china_region_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/utils/utils.dart';
+import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
 
-import '../models.dart';
+import '../az_region_model.dart';
 
 ///适配新数据
 typedef CityCallback = Function(ChinaRegionModel model);
@@ -20,13 +21,13 @@ class CityListPage extends StatefulWidget {
 }
 
 class _CityListPageState extends State<CityListPage> {
-  List<CityModel> cityList = [];
+  List<AzRegionModel> cityList = [];
   List<ChinaRegionModel> chinaLists = [];
   List<ChinaRegionModel> hotLists = [];
 
   double susItemHeight = 36;
   String imgFavorite = Assets.icons.barToTop.path;
-  List<CityModel> hotCityList = [];
+  List<AzRegionModel> hotCityList = [];
 
   @override
   void initState() {
@@ -43,7 +44,7 @@ class _CityListPageState extends State<CityListPage> {
 
 
     for (var element in hotLists) {
-      hotCityList.add(CityModel(name: element.name, model: element));
+      hotCityList.add(AzRegionModel(name: element.name, model: element));
     }
 
     //加载城市列表
@@ -51,7 +52,7 @@ class _CityListPageState extends State<CityListPage> {
 
     for (ChinaRegionModel element in chinaLists) {
       for(int i=0;i<element.children!.length;i++){
-        cityList.add(CityModel(name: element.children![i].name, model: element.children![i]));
+        cityList.add(AzRegionModel(name: element.children![i].name, model: element.children![i]));
       }
 
     }
@@ -59,7 +60,7 @@ class _CityListPageState extends State<CityListPage> {
     _handleList(cityList);
   }
 
-  void _handleList(List<CityModel> list) {
+  void _handleList(List<AzRegionModel> list) {
     if (list.isEmpty) return;
     for (int i = 0, length = list.length; i < length; i++) {
       String pinyin = PinyinHelper.getPinyinE(list[i].name);
@@ -80,7 +81,7 @@ class _CityListPageState extends State<CityListPage> {
     // add header.
     cityList.insert(
         0,
-        CityModel(
+        AzRegionModel(
             name: 'header',
             tagIndex: imgFavorite)); //index bar support local images.
 
@@ -115,7 +116,7 @@ class _CityListPageState extends State<CityListPage> {
     );
   }
 
-  _getCityView(CityModel model, {bool isLocation = false}) {
+  _getCityView(AzRegionModel model, {bool isLocation = false}) {
     return GestureDetector(
       onTap: () {
         widget.cityCallback(model.model!);
@@ -143,67 +144,70 @@ class _CityListPageState extends State<CityListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
-          child: Text(
-            "热门城市",
-            style: TextStyle(color: BaseStyle.color999999, fontSize: 24.sp),
-          ),
-        ),
-        Expanded(
-          child: AzListView(
-            data: cityList,
-            itemCount: cityList.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 0) return _buildHeader();
-              CityModel model = cityList[index];
-              return Utils.getListItem(context, model, (name, id) {
-                widget.cityCallback(model.model!);
-              });
-            },
-            susItemHeight: susItemHeight,
-            susItemBuilder: (BuildContext context, int index) {
-              CityModel model = cityList[index];
-              String tag = model.getSuspensionTag();
-              if (imgFavorite == tag) {
-                return Container();
-              }
-              return Utils.getSusItem(context, tag, susHeight: susItemHeight);
-            },
-            indexBarData: SuspensionUtil.getTagIndexList(cityList),
-            indexBarOptions: IndexBarOptions(
-              needRebuild: true,
-              color: Colors.transparent,
-              downColor: const Color(0xFFEEEEEE),
-
-              indexHintDecoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(Assets.icons.barBubbleGray.path),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              selectTextStyle: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500),
-              selectItemDecoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: kPrimaryColor),
-              indexHintAlignment: Alignment.centerRight,
-              indexHintChildAlignment: Alignment.center,
-              indexHintTextStyle:
-                  TextStyle(fontSize: 40.sp, color: Colors.black87),
-
-              indexHintOffset: const Offset(-10, 0),
-              indexHintWidth: 100.w,
-              indexHintHeight: 100.w,
-              localImages: [imgFavorite], //local images.
+    return CloudScaffold.normal(
+      appbar:  SizedBox(height: 88.w,),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
+            child: Text(
+              "热门城市",
+              style: TextStyle(color: BaseStyle.color999999, fontSize: 24.sp),
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: AzListView(
+              data: cityList,
+              itemCount: cityList.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0) return _buildHeader();
+                AzRegionModel model = cityList[index];
+                return Utils.getListItem(context, model, (name, id) {
+                  widget.cityCallback(model.model!);
+                });
+              },
+              susItemHeight: susItemHeight,
+              susItemBuilder: (BuildContext context, int index) {
+                AzRegionModel model = cityList[index];
+                String tag = model.getSuspensionTag();
+                if (imgFavorite == tag) {
+                  return Container();
+                }
+                return Utils.getSusItem(context, tag, susHeight: susItemHeight);
+              },
+              indexBarData: SuspensionUtil.getTagIndexList(cityList),
+              indexBarOptions: IndexBarOptions(
+                needRebuild: true,
+                color: Colors.transparent,
+                downColor: const Color(0xFFEEEEEE),
+
+                indexHintDecoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(Assets.icons.barBubbleGray.path),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                selectTextStyle: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500),
+                selectItemDecoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: kPrimaryColor),
+                indexHintAlignment: Alignment.centerRight,
+                indexHintChildAlignment: Alignment.center,
+                indexHintTextStyle:
+                    TextStyle(fontSize: 40.sp, color: Colors.black87),
+
+                indexHintOffset: const Offset(-10, 0),
+                indexHintWidth: 100.w,
+                indexHintHeight: 100.w,
+                localImages: [imgFavorite], //local images.
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

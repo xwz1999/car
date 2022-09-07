@@ -8,7 +8,7 @@ import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
 
-import '../models.dart';
+import '../az_region_model.dart';
 import 'choose_car_next_page.dart';
 
 class CarListPage extends StatefulWidget {
@@ -23,7 +23,7 @@ class CarListPage extends StatefulWidget {
 }
 
 class _CarListPageState extends State<CarListPage> {
-  List<CityModel> cityList = [];
+  List<AzRegionModel> cityList = [];
   List<SortBrandModel> brandList = [];
   double susItemHeight = 36;
   String imgFavorite = Assets.icons.barToTop.path;
@@ -38,7 +38,7 @@ class _CarListPageState extends State<CarListPage> {
     });
   }
 
-  SortBrandModel? getBranModel(CityModel model) {
+  SortBrandModel? getBranModel(AzRegionModel model) {
     for (var item in brandList) {
       if (item.name == model.name && item.brandId == model.id) {
         return item;
@@ -51,7 +51,7 @@ class _CarListPageState extends State<CarListPage> {
     brandList = await SortFunc.getBrandList();
     if (brandList.isNotEmpty) {
       for (var v in brandList) {
-        cityList.add(CityModel(name: v.name, id: v.brandId));
+        cityList.add(AzRegionModel(name: v.name, id: v.brandId));
       }
       _handleList(cityList);
       setState(() {});
@@ -69,7 +69,7 @@ class _CarListPageState extends State<CarListPage> {
     // });
   }
 
-  void _handleList(List<CityModel> list) {
+  void _handleList(List<AzRegionModel> list) {
     if (list.isEmpty) return;
     for (int i = 0, length = list.length; i < length; i++) {
       String pinyin = PinyinHelper.getPinyinE(list[i].name);
@@ -158,7 +158,7 @@ class _CarListPageState extends State<CarListPage> {
               data: cityList,
               itemCount: cityList.length,
               itemBuilder: (BuildContext context, int index) {
-                CityModel model = cityList[index];
+                AzRegionModel model = cityList[index];
                 return Utils.getListItem(context, model, (name, id) async {
                   widget.pickCar.value.brand = getBranModel(model)!;
                   if (widget.pickCar.value.returnType == 1) {
@@ -175,7 +175,7 @@ class _CarListPageState extends State<CarListPage> {
               },
               susItemHeight: susItemHeight,
               susItemBuilder: (BuildContext context, int index) {
-                CityModel model = cityList[index];
+                AzRegionModel model = cityList[index];
                 String tag = model.getSuspensionTag();
                 if (imgFavorite == tag) {
                   return Container();

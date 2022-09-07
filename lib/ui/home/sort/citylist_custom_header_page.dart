@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
 
-import '../models.dart';
+import '../az_region_model.dart';
 
 class CityListCustomHeaderPage extends StatefulWidget {
   const CityListCustomHeaderPage({super.key});
@@ -18,7 +18,7 @@ class CityListCustomHeaderPage extends StatefulWidget {
 }
 
 class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
-  List<CityModel> cityList = [];
+  List<AzRegionModel> cityList = [];
   double susItemHeight = 36;
   String imgFavorite = Utils.getImgPath('ic_favorite');
 
@@ -37,13 +37,13 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
       Map countyMap = json.decode(value);
       List list = countyMap['china'];
       for (var v in list) {
-        cityList.add(CityModel.fromJson(v));
+        cityList.add(AzRegionModel.fromJson(v));
       }
       _handleList(cityList);
     });
   }
 
-  void _handleList(List<CityModel> list) {
+  void _handleList(List<AzRegionModel> list) {
     if (list.isEmpty) return;
     for (int i = 0, length = list.length; i < length; i++) {
       String pinyin = PinyinHelper.getPinyinE(list[i].name);
@@ -64,7 +64,7 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
     // add header.
     cityList.insert(
         0,
-        CityModel(
+        AzRegionModel(
             name: 'header',
             tagIndex: imgFavorite)); //index bar support local images.
 
@@ -72,14 +72,14 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
   }
 
   Widget _buildHeader() {
-    List<CityModel> hotCityList = [];
+    List<AzRegionModel> hotCityList = [];
     hotCityList.addAll([
-      CityModel(name: "北京市"),
-      CityModel(name: "广州市"),
-      CityModel(name: "成都市"),
-      CityModel(name: "深圳市"),
-      CityModel(name: "杭州市"),
-      CityModel(name: "武汉市"),
+      AzRegionModel(name: "北京市"),
+      AzRegionModel(name: "广州市"),
+      AzRegionModel(name: "成都市"),
+      AzRegionModel(name: "深圳市"),
+      AzRegionModel(name: "杭州市"),
+      AzRegionModel(name: "武汉市"),
     ]);
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -133,14 +133,14 @@ class _CityListCustomHeaderPageState extends State<CityListCustomHeaderPage> {
             itemCount: cityList.length,
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) return _buildHeader();
-              CityModel model = cityList[index];
+              AzRegionModel model = cityList[index];
               return Utils.getListItem(context, model, (name, id) {
 
               });
             },
             susItemHeight: susItemHeight,
             susItemBuilder: (BuildContext context, int index) {
-              CityModel model = cityList[index];
+              AzRegionModel model = cityList[index];
               String tag = model.getSuspensionTag();
               if (imgFavorite == tag) {
                 return Container();

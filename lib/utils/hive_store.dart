@@ -1,3 +1,4 @@
+import 'package:cloud_car/model/region/az_city_model.dart';
 import 'package:cloud_car/model/region/china_region_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
@@ -19,6 +20,7 @@ class HiveStore {
       var dir = await getApplicationDocumentsDirectory();
       Hive.init(dir.path);
       Hive.registerAdapter(ChinaRegionModelAdapter()); //type 0
+      Hive.registerAdapter(AzCityModelAdapter());
       _appBox = await Hive.openBox('app');
       _userBox = await Hive.openBox('userBox');
       _dataBox = await Hive.openBox('dataBox');

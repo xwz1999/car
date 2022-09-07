@@ -1,4 +1,8 @@
+import 'package:azlistview/azlistview.dart';
+import 'package:cloud_car/model/region/az_city_model.dart';
+import 'package:cloud_car/model/region/city_model.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -97,6 +101,70 @@ class CityProvider extends ChangeNotifier {
         }
       }
       return list;
+    }
+  }
+
+  /// 车300城市数据
+  List<CityModel> _cities = [];
+  List<AzCityModel> _azCities = [];
+
+  List<CityModel> get cities => _cities;
+
+  List<AzCityModel> get azCities => _azCities;
+
+  Future initCities() async {
+    final cityBox = await Hive.openBox('cities');
+    _azCities = cityBox.values.cast<AzCityModel>().toList();
+    if (_azCities.isEmpty) {
+      try {
+        var base = await apiClient.request(API.region.cities);
+        if (base.code == 0) {
+          _cities = (base.data as List)
+              .map((e) => CityModel.fromJson(e))
+              .toList();
+          _azCities = _cities
+              .map((e) => AzCityModel(
+                  cityId: e.id,
+                  cityName: e.cityName,
+                  provId: e.provId,
+                  provName: e.provName))
+              .toList();
+          SuspensionUtil.sortListBySuspensionTag(_azCities);
+          SuspensionUtil.setShowSuspensionStatus(_azCities);
+          cityBox.addAll(_azCities);
+        } else {
+          CloudToast.show(base.msg);
+        }
+      } catch (e) {
+        CloudToast.show('获取城市数据失败');
+      }
+    }
+  }
+
+  List<AzCityModel> get hotCarThreeCities {
+    final hots = [
+      '宁波',
+      '北京',
+      '上海',
+      '广州',
+      '深圳',
+      '成都',
+      '重庆',
+      '天津',
+      '南京',
+      '武汉',
+      '苏州',
+      '西安'
+    ];
+    return _handleCities<AzCityModel>(
+            (e) => hots.contains(e.cityName), _azCities)
+        .toList();
+  }
+
+  Iterable<T> _handleCities<T>(bool Function(T e) filter, List<T> list) sync* {
+    final it = list.iterator;
+    while (it.moveNext()) {
+      if (filter(it.current)) yield it.current;
     }
   }
 }

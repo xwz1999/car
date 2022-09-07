@@ -24,7 +24,6 @@ class _ChartPageState extends State<ChartPage> {
                   color: BaseStyle.color111111,
                   fontSize: BaseStyle.fontSize36,
                   fontWeight: FontWeight.bold)),
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
         backgroundColor: bodyColor,
         body: Stack(

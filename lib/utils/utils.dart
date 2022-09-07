@@ -1,5 +1,5 @@
 //
-import 'package:cloud_car/ui/home/models.dart';
+import 'package:cloud_car/ui/home/az_region_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 //
 import 'package:flustars/flustars.dart';
@@ -42,7 +42,7 @@ class Utils {
     );
   }
 
-  static Widget getListItem(BuildContext context,CityModel model, Function(String name,int id) callBack,
+  static Widget getListItem(BuildContext context,AzRegionModel model, Function(String name,int id) callBack,
       {double susHeight = 40}) {
     return ListTile(
       title: Text(model.name),
@@ -71,7 +71,7 @@ class Utils {
 
   static Widget getWeChatListItem(
     BuildContext context,
-    ContactInfo model, {
+    AzContactInfoModel model, {
     double susHeight = 40,
     Color? defHeaderBgColor,
   }) {
@@ -91,7 +91,7 @@ class Utils {
 
   static Widget getWeChatItem(
     BuildContext context,
-    ContactInfo model, {
+    AzContactInfoModel model, {
     Color? defHeaderBgColor,
   }) {
     DecorationImage? image;
