@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/constants/environment/environment.dart';
 import 'package:cloud_car/model/login/apple_login_model.dart';
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:cloud_car/ui/login/jverify_error_code.dart';
@@ -129,6 +130,9 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     // _operator = '中国移动认证';
     // _phone = '12345678909';
+    Jverify()
+        .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
+    Jverify().setDebugMode(AppENV.instance.env != ENVConfig.release);
     getPrePhone();
     addFluwxListen();
     addJverifyListen();

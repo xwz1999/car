@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
-import 'package:jverify/jverify.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:provider/provider.dart';
 
@@ -47,9 +46,6 @@ class _SplashPageState extends State<SplashPage> {
     PowerLogger.start(context, debug: AppENV.instance.env!=ENVConfig.release);
     // PowerLogger.start(context, debug: true);
     ///第三方加载
-    Jverify()
-        .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
-    Jverify().setDebugMode(AppENV.instance.env != ENVConfig.release);
     var isAndroid = Platform.isAndroid;
     registerWxApi(
         appId: 'wx9bc3ffb23a749254',

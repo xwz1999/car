@@ -81,6 +81,7 @@ class _NoticePageState extends State<NoticePage>
   ];
   late EasyRefreshController _refreshController;
   List num = [];
+
   @override
   void initState() {
     super.initState();
@@ -178,15 +179,16 @@ class _NoticePageState extends State<NoticePage>
             Badge(
               //文本内容为空时子组件为null时则返回一个红点
               badgeContent: const Text(
-                '1'
-                // item['noreadnum'].toString()
-                ,
+                '1',
                 style: TextStyle(color: Colors.white),
               ),
               //child: Icon(Icons.settings), //子组件
-              badgeColor: const Color.fromRGBO(230, 34, 34, 1), //小红点颜色
-              showBadge: true, //刷新时会在右侧摆动
-              animationDuration: const Duration(seconds: 10), //摆动时间
+              badgeColor: const Color.fromRGBO(230, 34, 34, 1),
+              //小红点颜色
+              showBadge: true,
+              //刷新时会在右侧摆动
+              animationDuration: const Duration(seconds: 10),
+              //摆动时间
               toAnimate: false, //允许摆动
             )
           ]),

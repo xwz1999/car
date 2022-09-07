@@ -53,6 +53,7 @@ class _PreferredPageState extends State<PreferredPage>
   int _page = 1;
   final int _size = 10;
   String _pickSort = '';
+  TextEditingController _searchController = TextEditingController();
 
   List<Widget> get listWidget => [
         CarListPage(
@@ -70,7 +71,7 @@ class _PreferredPageState extends State<PreferredPage>
           clipBehavior: Clip.antiAlias,
           child: ScreenWidget(
             pickString: _pickCar.value.price,
-            callback: (String item,int value) {
+            callback: (String item, int value) {
               screenControl.screenHide();
               _pickCar.value.price = item;
               _refreshController.callRefresh();
@@ -92,7 +93,7 @@ class _PreferredPageState extends State<PreferredPage>
           child: ScreenWidget(
             pickString: _pickSort,
             childAspectRatio: 144 / 56,
-            callback: (String item,int value) {
+            callback: (String item, int value) {
               screenControl.screenHide();
               _pickSort = item;
               _refreshController.callRefresh();
@@ -118,6 +119,7 @@ class _PreferredPageState extends State<PreferredPage>
         'minMileage': _pickCar.value.finalMinMile,
         'maxMileage': _pickCar.value.finalMaxMile,
         'dischargeStandard': _pickCar.value.dischargeStandard,
+        'keyword': _searchController.text,
       };
 
   @override
@@ -148,6 +150,7 @@ class _PreferredPageState extends State<PreferredPage>
   void dispose() {
     _refreshController.dispose();
     screenControl.disPose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -231,14 +234,12 @@ class _PreferredPageState extends State<PreferredPage>
                       Expanded(
                         child: TextField(
                           keyboardType: TextInputType.text,
+                          controller: _searchController,
                           onEditingComplete: () {
-                            setState(() {});
-                            // _refreshController.callRefresh();
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            _refreshController.callRefresh();
                           },
-                          //focusNode: _contentFocusNode,
-
                           onTap: () {},
-                          //
                           style: TextStyle(
                             textBaseline: TextBaseline.ideographic,
                             fontSize: 32.sp,
@@ -247,7 +248,6 @@ class _PreferredPageState extends State<PreferredPage>
                           //controller: _editingController,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 0.w),
-
                             filled: true,
                             fillColor: Colors.white,
                             hintText: "请输入车辆名称",
@@ -324,9 +324,7 @@ class _PreferredPageState extends State<PreferredPage>
       ),
       //extendBody: true,
       body: Expanded(
-        child: _myCar(
-
-            EasyRefresh.custom(
+        child: _myCar(EasyRefresh.custom(
             firstRefresh: true,
             header: MaterialHeader(),
             footer: MaterialFooter(),
@@ -375,16 +373,24 @@ class _PreferredPageState extends State<PreferredPage>
       onTap: () {
         switch (title) {
           case '全部车源':
-            Get.to(() => AllCar(title: title,));
+            Get.to(() => AllCar(
+                  title: title,
+                ));
             break;
           case '直卖车':
-            Get.to(() => AllCar(title: title,));
+            Get.to(() => AllCar(
+                  title: title,
+                ));
             break;
           case '最新上架':
-            Get.to(() => AllCar(title: title,));
+            Get.to(() => AllCar(
+                  title: title,
+                ));
             break;
           case '4s认证车':
-            Get.to(() => AllCar(title: title,));
+            Get.to(() => AllCar(
+                  title: title,
+                ));
             break;
         }
       },
@@ -419,23 +425,24 @@ class _PreferredPageState extends State<PreferredPage>
             screen: '筛选', onTap: () {
           screenControl.screenHide();
           Scaffold.of(context).openEndDrawer();
-        },
-            child: child);
+        }, child: child);
       },
     );
   }
 
   _carItem(CarListModel model) {
     return GestureDetector(
-      onTap: (){
-          Get.to(()=>CarsDetailPage(carListModel: model,));
+      onTap: () {
+        Get.to(() => CarsDetailPage(
+              carListModel: model,
+            ));
       },
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.w),
             color: const Color(0xFFFFFFFF)),
 
-        padding: EdgeInsets.only(left: 24.w, right: 24.w,top: 16.w),
+        padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 16.w),
         // width: 702.w,
         height: 235.w,
         margin: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.w),
