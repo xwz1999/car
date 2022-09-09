@@ -40,14 +40,14 @@ class _LookAtCarViewState extends State<LookAtCarView> {
         footer: MaterialFooter(),
         onRefresh: () async {
           _page = 1;
-          var list = await TaskFunc.getCarList(page: _page, size: _size);
+          var list = await TaskFunc.getCarList(page: _page, size: _size,type: 1);
           invitationList = list;
           setState(() {});
         },
         onLoad: () async {
           _page++;
           var baseList = await apiClient.requestList(API.task.getInviteLists,
-              data: {'page': _page, 'size': 10});
+              data: {'page': _page, 'size': 10,'inviteType':1});
           if (baseList.nullSafetyTotal > invitationList.length) {
             invitationList.addAll(baseList.nullSafetyList
                 .map((e) => TaskInviteListModel.fromJson(e)));

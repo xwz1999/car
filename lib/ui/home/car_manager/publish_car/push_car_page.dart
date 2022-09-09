@@ -69,6 +69,8 @@ class _PushCarPageState extends State<PushCarPage> {
   @override
   void initState() {
     super.initState();
+    _publishCarInfo.locationCity = '宁波';
+    _publishCarInfo.locationCityId = 42;
   }
 
   @override
@@ -496,7 +498,6 @@ class _PushCarPageState extends State<PushCarPage> {
     _publishCarInfo.mileage = _mileController.text;
     _publishCarInfo.viNum = _viNumController.text;
     _publishCarInfo.engineNum = _engineController.text;
-    // _publishCarInfo.carNum = _carNumController.text;
     return true;
   }
 

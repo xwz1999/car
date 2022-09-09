@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_car/ui/splash/agreement_page.dart';
 import 'package:cloud_car/ui/splash/privacy_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
+import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/hive_store.dart';
 import 'package:cloud_car/utils/user_tool.dart';
+import 'package:cloud_car/utils/web_socket/websocket_message_model.dart';
+import 'package:cloud_car/utils/web_socket/websocket_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -14,6 +18,8 @@ import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:provider/provider.dart';
+import 'package:velocity_x/velocity_x.dart';
+import 'package:web_socket_channel/io.dart';
 
 import '../../constants/environment/environment.dart';
 import '../../providers/user_provider.dart';
@@ -59,6 +65,21 @@ class _SplashPageState extends State<SplashPage> {
     UserTool.cityProvider.initCities();
     //获取包信息
     UserTool.appProvider.init();
+    // 初始化websocket
+    WebsocketUtil().initWebSocket(
+        heartConsole: true,
+        onReceive: (message) {
+          var model = WebsocketMessageModel.fromJson(jsonDecode(message));
+          Get.dialog(SimpleDialog(
+            title: model.title.text.size(36.sp).isIntrinsic.make(),
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 32.w),
+                child: model.content.text.isIntrinsic.make(),
+              ),
+            ],
+          ));
+        });
   }
 
   Future<bool?> _showLoginVerify() async {

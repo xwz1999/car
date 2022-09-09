@@ -61,6 +61,13 @@ class _CarValuationPageState extends State<CarValuationPage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _carInfo.locationCity = '宁波';
+    _carInfo.locationCityId = 42;
+  }
+
+  @override
   void dispose() {
     _licensePlateController.dispose();
     super.dispose();
@@ -209,7 +216,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
           children: [
             ScanLicenseWidget(onLoadComplete: (carInfoModel) {
               // _carInfo.name = carInfoModel.cartype;
-              print(carInfoModel.vinModel==null);
+              print(carInfoModel.vinModel == null);
               if (carInfoModel.vinModel != null) {
                 _carModelController.text =
                     carInfoModel.vinModel!.first.modelName;

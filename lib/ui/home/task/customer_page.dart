@@ -61,13 +61,13 @@ class _CustomerPageState extends State<CustomerPage> {
             controller: _easyRefreshController,
             onRefresh: () async {
               _page = 1;
-              lists = await TaskFunc.getCarList(page: _page, size: _size);
+              lists = await TaskFunc.getCarList(page: _page, size: _size, type: 1);
               _onLoad = false;
               setState(() {});
             },
             onLoad: () async {
               _page++;
-              await TaskFunc.getCarList(page: _page, size: _size).then((value) {
+              await TaskFunc.getCarList(page: _page, size: _size, type: 1).then((value) {
                 if (value.isEmpty) {
                   _easyRefreshController.finishLoad(noMore: true);
                 } else {

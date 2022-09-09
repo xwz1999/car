@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/web_socket/websocket_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class UserProvider extends ChangeNotifier {
       _isLogin = true;
       apiClient.setToken(token);
       await updateUserInfo();
+      WebsocketUtil().startWebSocket();
       return true;
     } else {
       _isLogin = false;

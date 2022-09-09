@@ -41,7 +41,7 @@ class _DirectSaleViewState extends State<DirectSaleView> {
         onRefresh: () async {
           _page = 1;
           var list =
-          await TaskFunc.getCarList(page: _page, size: _size);
+          await TaskFunc.getCarList(page: _page, size: _size, type: 2);
           subscribeList = list;
           setState(() {});
         },
@@ -49,7 +49,7 @@ class _DirectSaleViewState extends State<DirectSaleView> {
           _page++;
           var baseList = await apiClient.requestList(
               API.task.getInviteLists,
-              data: {'page': _page, 'size': 10});
+              data: {'page': _page, 'size': 10,'inviteType':2});
           if (baseList.nullSafetyTotal > subscribeList.length) {
             subscribeList.addAll(baseList.nullSafetyList
                 .map((e) => TaskInviteListModel.fromJson(e)));
