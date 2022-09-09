@@ -75,6 +75,9 @@ class API {
   /// 分账
   static _Split split = _Split();
 
+  /// 消息
+  static _Message message = _Message();
+
   ///二级分类
   static _UserApi user = _UserApi();
 }
@@ -304,4 +307,9 @@ class _Split {
 
   ///结束分账
   String get finish => '/split/account/finish';
+}
+
+class _Message {
+  /// 未读消息统计
+  String get unReadMessage => '/message/count';
 }

@@ -1,13 +1,17 @@
 import 'package:badges/badges.dart';
+import 'package:cloud_car/providers/message_provider.dart';
 import 'package:cloud_car/ui/home/split_account/split_account_page.dart';
 import 'package:cloud_car/ui/home/task/customer_page.dart';
 import 'package:cloud_car/ui/notice/car_system_informs.dart';
 import 'package:cloud_car/ui/notice/notice_examination.dart';
+import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:provider/provider.dart';
 
 class NoticePage extends StatefulWidget {
   const NoticePage({super.key});
@@ -96,71 +100,63 @@ class _NoticePageState extends State<NoticePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    // padding:
-    // EdgeInsets.symmetric(vertical: 32.w);
+    final message = Provider.of<MessageProvider>(context);
     return CloudScaffold(
         path: Assets.images.homeBg.path,
         systemStyle: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
         ),
-        // appbar: Container(
-        //   color: Colors.transparent,
-        //   height: kToolbarHeight + MediaQuery.of(context).padding.top,
-        //   alignment: Alignment.centerLeft,
-        //   padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        // ),
         extendBody: true,
-        // extendBodyBehindAppBar: true,
         body: Expanded(
-          //padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: ListView.builder(
-              padding: EdgeInsets.only(top: 128.w),
-              itemCount: noticelist.length,
-              itemBuilder: (ctx, index) {
-                return _noticelist(noticelist[index]);
-              }),
+          child: ListView(
+            padding: EdgeInsets.only(top: 120.w),
+            children: [
+              _noticelist(
+                  title: '客户邀约提醒',
+                  content: message.unReadMesCount.customerInviteCount == 0
+                      ? '暂无新的邀约'
+                      : '您绑定的客户有新的邀约，请注意处理',
+                  count: message.unReadMesCount.customerInviteCount,
+                  iconPath: Assets.icons.invitation.path),
+              _noticelist(
+                  title: '分账确认提示',
+                  content: message.unReadMesCount.billCount == 0
+                      ? '暂无新的分账需要确认'
+                      : '您有新的账单',
+                  count: message.unReadMesCount.billCount,
+                  iconPath: Assets.icons.fashionable.path),
+            ],
+          ),
         ));
   }
 
-//
-  _noticelist(item) {
-    return ListTile(
-        onTap: () {
-          switch (item['name']) {
-            case '分账确认提示':
-              Get.to(() => const SplitAccountPage());
-              //print("1111111");
-              break;
-            case '审批提醒':
-              Get.to(() => const ExaminationPage());
-              break;
-            case '系统通知':
-              Get.to(() => const SystemPage());
-              break;
-            case '客户邀约提醒':
-              Get.to(() => const CustomerPage());
-          }
-        },
-        //头像
 
+  _noticelist(
+      {required String title,
+      required String content,
+      required int count,
+      required String iconPath,
+      VoidCallback? onTap}) {
+    return ListTile(
+        onTap: onTap,
         leading: Container(
           width: 88.w,
           height: 88.w,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
               image: DecorationImage(
-                  image: ExactAssetImage(item['src']), fit: BoxFit.cover)),
+                  image: ExactAssetImage(iconPath), fit: BoxFit.cover)),
         ),
         //绘制消息主体
         title: Row(children: [
-          Expanded(flex: 1, child: Text(item['name'])),
-          Text(
-            item['time'],
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                ?.copyWith(fontSize: 20.sp, color: const Color(0xFFAAAAAA)),
-          )
+          Expanded(flex: 1, child: Text(title)),
+          // Text(
+          //   item['time'],
+          //   style: Theme.of(context)
+          //       .textTheme
+          //       .bodyText1
+          //       ?.copyWith(fontSize: 20.sp, color: const Color(0xFFAAAAAA)),
+          // )
         ]),
         //子标题
         subtitle: Padding(
@@ -168,7 +164,7 @@ class _NoticePageState extends State<NoticePage>
           child: Row(children: [
             Expanded(
                 child: Text(
-              item['msg'],
+              content,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
@@ -178,9 +174,9 @@ class _NoticePageState extends State<NoticePage>
             //小红点组件
             Badge(
               //文本内容为空时子组件为null时则返回一个红点
-              badgeContent: const Text(
-                '1',
-                style: TextStyle(color: Colors.white),
+              badgeContent: Text(
+                count.toString(),
+                style: const TextStyle(color: Colors.white),
               ),
               //child: Icon(Icons.settings), //子组件
               badgeColor: const Color.fromRGBO(230, 34, 34, 1),

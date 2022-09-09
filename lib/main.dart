@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/providers/app_provider.dart';
 import 'package:cloud_car/providers/city_provider.dart';
+import 'package:cloud_car/providers/message_provider.dart';
 import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/splash/splash.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => CityProvider()),
         ChangeNotifierProvider(create: (context) => AppProvider()),
+        ChangeNotifierProvider(create: (context) => MessageProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(750, 1334),
@@ -65,7 +67,8 @@ class MyApp extends StatelessWidget {
               ScreenUtil.setContext(context);
               return MediaQuery(
                 //设置文字大小不随系统设置改变
-                data: MediaQueryData.fromWindow(WidgetsBinding.instance.window).copyWith(textScaleFactor: 1.0),
+                data: MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+                    .copyWith(textScaleFactor: 1.0),
                 child: BotToastInit().call(context, child),
               );
             },
@@ -76,4 +79,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
