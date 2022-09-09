@@ -104,7 +104,7 @@ class _AllCarViewState extends State<AllCarView>
                 // standard: '国六',
                 url: model.mainPhoto,
                 price:
-                    '${NumUtil.divide(num.parse(model.price), 10000)}万元',
+                    '${NumUtil.divide(num.parse(model.price), 10000)}',
               );
             }, childCount: widget.allCarList.length),
           ),

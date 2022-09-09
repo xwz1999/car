@@ -131,7 +131,7 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
                       children: [
                         56.hb,
                         Text(
-                          '您的${widget.carInfo.brand}预估',
+                          '您的 ${widget.carInfo.name} 预估',
                           style: TextStyle(
                             color: const Color(0xFF999999),
                             fontSize: 32.w,

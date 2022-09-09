@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:cloud_car/constants/const_data.dart';
@@ -59,10 +58,7 @@ class ShareUtil {
       required List<int> carIds}) async {
     var data = await handleImage(imgUrl);
     if (data == null) return;
-    print(carIds);
-    var str = carIds.map((e) =>e.toString()).join(',');
-    print('pages/buy/buy?carIds=$str');
-    print('carid=$str');
+    var str = carIds.map((e) => e.toString()).join(',');
     String path = carIds.length == 1
         ? 'pages/index/carBuying/secHandCar/carDetail/index/index?carId=${carIds.first}'
         : 'pages/buy/buy?carIds=$str';
@@ -71,8 +67,7 @@ class ShareUtil {
         title: title,
         userName: wxOriginId,
         //小程序 原始id 并非appid
-        path:
-            'pages/index/carBuying/secHandCar/carDetail/index/index?carId=$carIds',
+        path: path,
         webPageUrl: 'https://h5wenche.oa00.com/register',
         thumbnail: fluwx.WeChatImage.binary(data),
         compressThumbnail: false,
@@ -113,7 +108,8 @@ class ShareUtil {
       minWidth: 500,
       quality: 96,
     );
-    if (result.length > 128000) {
+    print(result.length);
+    if (result.length > 128000 && result.length < data.length) {
       result = await compressImageList(result);
     }
     return result;

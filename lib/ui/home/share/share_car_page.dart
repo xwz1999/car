@@ -249,7 +249,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
               distance: model.mileage,
               standard: '国六',
               url: model.mainPhoto,
-              price: '${(double.parse(model.price) / 10000)}万元',
+              price: '${(double.parse(model.price) / 10000)}',
             ),
           ),
         ],
