@@ -392,7 +392,7 @@ class _HomePageState extends State<HomePage>
                           ShareUtil.shareMiniProgram(
                             title: model.modelName,
                             imgUrl: model.mainPhoto,
-                            carId: model.id,
+                            carIds: [model.id],
                           );
                         },
                         child: Image.asset(

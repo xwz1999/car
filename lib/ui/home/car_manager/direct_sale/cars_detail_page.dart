@@ -8,7 +8,7 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/off_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
-import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
+import 'package:cloud_car/ui/home/share/share_car_dialog.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -174,7 +174,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                                           topLeft: Radius.circular(15),
                                           topRight: Radius.circular(15))),
                                   builder: (BuildContext context) {
-                                    return ShareCarDetailPage(
+                                    return ShareCarDialog(
                                       model: _chooseModels,
                                       isMore: false,
                                     );

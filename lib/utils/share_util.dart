@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:cloud_car/constants/const_data.dart';
@@ -55,16 +56,23 @@ class ShareUtil {
   static Future shareMiniProgram(
       {required String title,
       required String imgUrl,
-      required int carId}) async {
+      required List<int> carIds}) async {
     var data = await handleImage(imgUrl);
-    if (data ==null) return;
+    if (data == null) return;
+    print(carIds);
+    var str = carIds.map((e) =>e.toString()).join(',');
+    print('pages/buy/buy?carIds=$str');
+    print('carid=$str');
+    String path = carIds.length == 1
+        ? 'pages/index/carBuying/secHandCar/carDetail/index/index?carId=${carIds.first}'
+        : 'pages/buy/buy?carIds=$str';
     var re = await fluwx.shareToWeChat(
       fluwx.WeChatShareMiniProgramModel(
         title: title,
         userName: wxOriginId,
         //小程序 原始id 并非appid
         path:
-            'pages/index/carBuying/secHandCar/carDetail/index/index?carId=$carId',
+            'pages/index/carBuying/secHandCar/carDetail/index/index?carId=$carIds',
         webPageUrl: 'https://h5wenche.oa00.com/register',
         thumbnail: fluwx.WeChatImage.binary(data),
         compressThumbnail: false,

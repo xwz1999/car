@@ -1,8 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
-import 'package:cloud_car/ui/home/share/share_car_detail_page.dart';
+import 'package:cloud_car/ui/home/share/share_car_dialog.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:common_utils/common_utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widget/button/cloud_back_button.dart';
@@ -28,8 +29,8 @@ class _ShareCarPageState extends State<ShareCarPage> {
   final List<int> _selectIndex = [];
   final List<CarListModel> _chooseModels = [];
 
-  // bool get _allSelect =>
-  //     _selectIndex.length == widget.models.length && _selectIndex.isNotEmpty;
+  bool get _allSelect =>
+      _selectIndex.length == widget.models.length && _selectIndex.isNotEmpty;
 
   @override
   void initState() {
@@ -76,60 +77,60 @@ class _ShareCarPageState extends State<ShareCarPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             50.wb,
-            // GestureDetector(
-            //   onTap: () {
-            //     if (_allSelect) {
-            //       _selectIndex.clear();
-            //       _chooseModels.clear();
-            //     } else {
-            //       _selectIndex.clear();
-            //       _chooseModels.clear();
-            //       _chooseModels.addAll(models);
-            //       _selectIndex
-            //           .addAll(List.generate(models.length, (index) => index));
-            //     }
-            //     setState(() {});
-            //   },
-            //   child: Container(
-            //     width: 50.w,
-            //     height: 60.w,
-            //     color: Colors.transparent,
-            //     alignment: Alignment.center,
-            //     child: Row(
-            //       children: [
-            //         Container(
-            //           width: 44.w,
-            //           height: 44.w,
-            //           alignment: Alignment.center,
-            //           decoration: BoxDecoration(
-            //             color: kPrimaryColor.withOpacity(_allSelect ? 1 : 0),
-            //             borderRadius: BorderRadius.circular(22.w),
-            //             border: Border.all(
-            //               color: (_allSelect
-            //                   ? kPrimaryColor
-            //                   : const Color(0xFF979797)),
-            //               width: 2.w,
-            //             ),
-            //           ),
-            //           child: AnimatedOpacity(
-            //               duration: const Duration(milliseconds: 500),
-            //               opacity: _allSelect ? 1 : 0,
-            //               child: Icon(
-            //                 CupertinoIcons.checkmark,
-            //                 color: Colors.white,
-            //                 size: 28.w,
-            //               )),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            // 10.wb,
-            // Text('全选',
-            //     style: TextStyle(
-            //         color: kPrimaryColor,
-            //         fontSize: BaseStyle.fontSize28,
-            //         fontWeight: FontWeight.bold)),
+            GestureDetector(
+              onTap: () {
+                if (_allSelect) {
+                  _selectIndex.clear();
+                  _chooseModels.clear();
+                } else {
+                  _selectIndex.clear();
+                  _chooseModels.clear();
+                  _chooseModels.addAll(widget.models);
+                  _selectIndex.addAll(
+                      List.generate(widget.models.length, (index) => index));
+                }
+                setState(() {});
+              },
+              child: Container(
+                width: 50.w,
+                height: 60.w,
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 44.w,
+                      height: 44.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: kPrimaryColor.withOpacity(_allSelect ? 1 : 0),
+                        borderRadius: BorderRadius.circular(22.w),
+                        border: Border.all(
+                          color: (_allSelect
+                              ? kPrimaryColor
+                              : const Color(0xFF979797)),
+                          width: 2.w,
+                        ),
+                      ),
+                      child: AnimatedOpacity(
+                          duration: const Duration(milliseconds: 500),
+                          opacity: _allSelect ? 1 : 0,
+                          child: Icon(
+                            CupertinoIcons.checkmark,
+                            color: Colors.white,
+                            size: 28.w,
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            10.wb,
+            Text('全选',
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: BaseStyle.fontSize28,
+                    fontWeight: FontWeight.bold)),
             8.wb,
             const Spacer(),
             GestureDetector(
@@ -146,7 +147,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15))),
                       builder: (BuildContext context) {
-                        return ShareCarDetailPage(
+                        return ShareCarDialog(
                           model: _chooseModels,
                           isMore: false,
                         );
@@ -161,7 +162,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15))),
                       builder: (BuildContext context) {
-                        return ShareCarDetailPage(
+                        return ShareCarDialog(
                           model: _chooseModels,
                           isMore: true,
                         );

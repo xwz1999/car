@@ -12,21 +12,21 @@ import 'package:fluwx/fluwx.dart' as fluwx;
 
 import 'edit_item_widget.dart';
 
-class ShareCarDetailPage extends StatefulWidget {
+class ShareCarDialog extends StatefulWidget {
   final bool isMore;
   final List<CarListModel> model;
 
-  const ShareCarDetailPage({
+  const ShareCarDialog({
     super.key,
     required this.isMore,
     required this.model,
   });
 
   @override
-  _ShareCarDetailPageState createState() => _ShareCarDetailPageState();
+  _ShareCarDialogState createState() => _ShareCarDialogState();
 }
 
-class _ShareCarDetailPageState extends State<ShareCarDetailPage>
+class _ShareCarDialogState extends State<ShareCarDialog>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool isKeyBord = false;
@@ -72,9 +72,14 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                           fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
-                    Icon(
-                      CupertinoIcons.clear,
-                      size: 30.w,
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Icon(
+                        CupertinoIcons.clear,
+                        size: 30.w,
+                      ),
                     ),
                     30.wb,
                   ],
@@ -111,8 +116,12 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
-                          await ShareUtil.shareNetWorkImage(
-                              title: widget.model.first.modelName,imgUrl: widget.model.first.mainPhoto,);
+                          ShareUtil.shareMiniProgram(
+                            title:
+                                '${UserTool.userProvider.userInfo.nickname}分享了${widget.model.length}辆好车',
+                            imgUrl: widget.model.first.mainPhoto,
+                            carIds: widget.model.map((e) => e.id).toList(),
+                          );
                         },
                         child: Column(
                           children: [
@@ -132,50 +141,55 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () async {
-                          ShareUtil.shareNetWorkImage(
-                            title: widget.model.first.modelName,
-                             imgUrl: widget.model.first.mainPhoto,
-                              scene: fluwx.WeChatScene.TIMELINE);
-                        },
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              Assets.icons.icShareWxCircle.path,
-                              width: 96.w,
-                              height: 96.w,
-                            ),
-                            5.hb,
-                            Text(
-                              '朋友圈',
-                              style: TextStyle(
-                                  color: const Color(0xFF666666),
-                                  fontSize: BaseStyle.fontSize24),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Expanded(
+                    //   child: GestureDetector(
+                    //     onTap: () async {
+                    //       ShareUtil.shareNetWorkImage(
+                    //           title: widget.model.first.modelName,
+                    //           imgUrl: widget.model.first.mainPhoto,
+                    //           scene: fluwx.WeChatScene.TIMELINE);
+                    //     },
+                    //     child: Column(
+                    //       children: [
+                    //         Image.asset(
+                    //           Assets.icons.icShareWxCircle.path,
+                    //           width: 96.w,
+                    //           height: 96.w,
+                    //         ),
+                    //         5.hb,
+                    //         Text(
+                    //           '朋友圈',
+                    //           style: TextStyle(
+                    //               color: const Color(0xFF666666),
+                    //               fontSize: BaseStyle.fontSize24),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 40.hb,
-                Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 32.w),
-                  height: 72.w,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(8.w)),
-                  ),
-                  child: Text(
-                    '取  消',
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize28,
-                        fontWeight: FontWeight.bold,
-                        color: BaseStyle.color333333),
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(horizontal: 32.w),
+                    height: 72.w,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                    ),
+                    child: Text(
+                      '取  消',
+                      style: TextStyle(
+                          fontSize: BaseStyle.fontSize28,
+                          fontWeight: FontWeight.bold,
+                          color: BaseStyle.color333333),
+                    ),
                   ),
                 ),
                 50.hb,
@@ -406,7 +420,7 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                           ShareUtil.shareMiniProgram(
                             title: widget.model.first.modelName,
                             imgUrl: widget.model.first.mainPhoto,
-                            carId: widget.model.first.id,
+                            carIds: [widget.model.first.id],
                           );
                         },
                         child: Column(
@@ -432,7 +446,7 @@ class _ShareCarDetailPageState extends State<ShareCarDetailPage>
                         onTap: () {
                           ShareUtil.shareNetWorkImage(
                               title: widget.model.first.modelName,
-                             imgUrl: widget.model.first.mainPhoto,
+                              imgUrl: widget.model.first.mainPhoto,
                               scene: fluwx.WeChatScene.TIMELINE);
                         },
                         child: Column(
