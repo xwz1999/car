@@ -29,7 +29,7 @@ class CarListPicker extends StatefulWidget {
 
 class _CarListPickerState extends State<CarListPicker> {
   late String _chooseItem = widget.carString;
-  late int _value;
+   int _value=0;
 
   @override
   Widget build(BuildContext context) {

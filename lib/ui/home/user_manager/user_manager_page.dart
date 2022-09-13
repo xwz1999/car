@@ -9,9 +9,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../manager_container_item.dart';
 
 enum CustomerClassify {
-  normal(1, '浏览客户'),
-  intended(2, '意向客户'),
-  invite(3, '邀请注册'),
+  normal(2, '浏览客户'),
+  intended(3, '意向客户'),
+  invite(1, '邀请注册'),
   deal(4, '成交客户');
 
   static CustomerClassify getValue(int value) =>
@@ -127,7 +127,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
       case 0:
         return ManagerContainerItem(
           onTap: () {
-            Get.to(() => const UserManagerDetailPage(initIndex: 0,));
+            Get.to(() => const UserManagerDetailPage(customerClassify: CustomerClassify.normal,));
           },
           text: '浏览客户',
           num: '${_model?.browseCount}',
@@ -135,7 +135,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
       case 1:
         return ManagerContainerItem(
           onTap: () {
-            Get.to(() => const UserManagerDetailPage(initIndex: 1,));
+            Get.to(() => const UserManagerDetailPage(customerClassify: CustomerClassify.intended,));
           },
           text: '意向客户',
           num: '${_model?.intentionCount}',
@@ -143,7 +143,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
       case 2:
         return ManagerContainerItem(
           onTap: () {
-            Get.to(() => const UserManagerDetailPage(initIndex: 2,));
+            Get.to(() => const UserManagerDetailPage(customerClassify: CustomerClassify.invite,));
           },
           text: '邀请注册',
           num: '${_model?.registerCount}',
@@ -151,7 +151,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
       case 3:
         return ManagerContainerItem(
           onTap: () {
-            Get.to(() => const UserManagerDetailPage(initIndex: 3,));
+            Get.to(() => const UserManagerDetailPage(customerClassify: CustomerClassify.deal,));
           },
           text: '成交客户',
           num: '${_model?.doneCount}',

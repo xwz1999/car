@@ -22,9 +22,9 @@ enum SelfCarStatus {
   onSale(1, '在售'),
   schedule(2, '预定'),
   sold(3, '已售'),
-  returnBack(4, '退库'),
-  reviewed(5, '待审核'),
-  reject(6, '已驳回');
+  returnBack(4, '退库');
+  // reviewed(5, '待审核'),
+  // reject(6, '已驳回');
 
   final int typeNum;
   final String typeStr;
@@ -77,6 +77,7 @@ class _SelfSalePageState extends State<SelfSalePage>
         'minMileage': widget.pickCar.value.finalMinMile,
         'maxMileage': widget.pickCar.value.finalMaxMile,
         'dischargeStandard': widget.pickCar.value.dischargeStandard,
+        'selfCarStatus': _currentCarStatus.typeNum,
       };
 
   int _page = 1;

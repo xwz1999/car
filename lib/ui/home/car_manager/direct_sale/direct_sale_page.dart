@@ -42,7 +42,8 @@ class DirectSalePage extends StatefulWidget {
   const DirectSalePage({
     super.key,
     required this.refreshController,
-    required this.pickCar,  this.initIndex=0,
+    required this.pickCar,
+    this.initIndex = 0,
   });
 
   @override
@@ -60,7 +61,7 @@ class _DirectSalePageState extends State<DirectSalePage>
   late String sort = '';
   late List<String> _dropDownHeaderItemStrings;
 
- late AllCarStatus _currentCarStatus ;
+  late AllCarStatus _currentCarStatus;
 
   Map<String, dynamic> get _params => {
         'keyword': widget.pickCar.value.keyWords,
@@ -75,6 +76,7 @@ class _DirectSalePageState extends State<DirectSalePage>
         'minMileage': widget.pickCar.value.finalMinMile,
         'maxMileage': widget.pickCar.value.finalMaxMile,
         'dischargeStandard': widget.pickCar.value.dischargeStandard,
+        'selfCarStatus': _currentCarStatus.typeNum,
       };
 
   int _page = 1;
@@ -114,8 +116,7 @@ class _DirectSalePageState extends State<DirectSalePage>
               sort = item;
               screenControl.screenHide();
               widget.refreshController.callRefresh();
-              if (mounted){
-
+              if (mounted) {
                 setState(() {});
               }
             },
@@ -169,7 +170,7 @@ class _DirectSalePageState extends State<DirectSalePage>
               carList.clear();
               carList.addAll(list);
               _onLoad = false;
-              if(mounted){
+              if (mounted) {
                 setState(() {});
               }
             },

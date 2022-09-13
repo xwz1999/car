@@ -478,11 +478,11 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
         return CloudListPickerWidget(
           title: '更换件情况',
           items: replaceList.map((e) => e.name).toList(),
-          onConfirm: (String? content, int? value) {
+          onConfirm: (String? content, int? value) async {
             Get.back();
             _carInfo.hasParts = value;
             if (value == 0) {
-              Get.bottomSheet(CloudGridPickerWidget.multi(
+              await Get.bottomSheet(CloudGridPickerWidget.multi(
                   title: '更换件情况',
                   items: replaceDetailList.map((e) => e.name).toList(),
                   onConfirm: (strList, indexList) {

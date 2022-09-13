@@ -24,9 +24,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class UserManagerDetailPage extends StatefulWidget {
-  final int initIndex;
+  final CustomerClassify customerClassify;
 
-  const UserManagerDetailPage({super.key, required this.initIndex});
+  const UserManagerDetailPage({super.key, required this.customerClassify});
 
   @override
   _UserManagerDetailPageState createState() => _UserManagerDetailPageState();
@@ -55,7 +55,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
   late ValueNotifier<SearchCustomerParamModel> sortModel = ValueNotifier(
       SearchCustomerParamModel(
           name: '',
-          customerClassify: CustomerClassify.normal,
+          customerClassify: widget.customerClassify,
           createdDate: '',
           isImportant: '',
           trailDate: ''));
@@ -133,7 +133,7 @@ class _UserManagerDetailPageState extends State<UserManagerDetailPage> {
             ChooseWidget(
               callBack: (index) {
                 sortModel.value.customerClassify =
-                    CustomerClassify.getValue(index + 1);
+                    CustomerClassify.values[index];
                 _refreshController.callRefresh();
               },
               items: CustomerClassify.values.map((e) => e.typeStr).toList(),

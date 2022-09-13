@@ -76,6 +76,7 @@ enum BusinessAscription {
 }
 
 enum PayType {
+  unKnown(0, '-'),
   aliPay(1, '支付宝'),
   wxPay(2, '微信支付'),
   wxApp(3, '微信小程序');
