@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_car/providers/app_provider.dart';
 import 'package:cloud_car/ui/splash/agreement_page.dart';
 import 'package:cloud_car/ui/splash/privacy_page.dart';
 import 'package:cloud_car/ui/tab_navigator.dart';
@@ -19,7 +20,7 @@ import 'package:get/get.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:web_socket_channel/io.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 import '../../constants/environment/environment.dart';
 import '../../providers/user_provider.dart';
@@ -135,6 +136,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final app = Provider.of<AppProvider>(context,listen: false);
     var env = const String.fromEnvironment('ENV', defaultValue: 'dev');
     if (kDebugMode) {
       print('env :$env');
@@ -142,6 +144,10 @@ class _SplashPageState extends State<SplashPage> {
     AppENV.instance.setEnv(env);
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll(context);
+
+      /// 苹果上架审核 先检测微信是否安装 若未安装则隐藏微信登录
+      var wxInstall = await fluwx.isWeChatInstalled;
+      app.wxInstall = wxInstall;
       if (!await userProvider.init()) {
         await Get.offAll(() => const LoginPage());
       } else {

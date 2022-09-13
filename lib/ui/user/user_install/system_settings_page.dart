@@ -98,7 +98,7 @@ class _SystemSettingPageState extends State<SystemSettingPage> {
         var base = await apiClient.request(API.login.logout, showMessage: true);
         if (base.code == 0) {
           UserTool.userProvider.cleanToken();
-          Get.offAll(const LoginPage());
+          Get.offAll(()=>const LoginPage());
         }
         cancel();
       },

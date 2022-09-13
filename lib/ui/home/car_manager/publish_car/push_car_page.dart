@@ -335,11 +335,11 @@ class _PushCarPageState extends State<PushCarPage> {
           _function(
             '选择地区',
             () async {
-              Get.to(CarThreeCityListPage(onSelect: (city) {
-                _publishCarInfo.locationCity = city.cityName;
-                _publishCarInfo.locationCityId = city.cityId;
-                Get.back();
-              }));
+              await Get.to(() => CarThreeCityListPage(onSelect: (city) {
+                    _publishCarInfo.locationCity = city.cityName;
+                    _publishCarInfo.locationCityId = city.cityId;
+                    Get.back();
+                  }));
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
             },
@@ -477,7 +477,7 @@ class _PushCarPageState extends State<PushCarPage> {
     //   return false;
     // }
 
-    if (_publishCarInfo.locationCity.isEmptyOrNotNull) {
+    if (_publishCarInfo.locationCity.isEmptyOrNull) {
       CloudToast.show('请选择所在地区');
       return false;
     }

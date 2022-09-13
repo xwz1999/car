@@ -5,6 +5,7 @@ import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/constants/environment/environment.dart';
 import 'package:cloud_car/model/login/apple_login_model.dart';
 import 'package:cloud_car/model/login/wx_login_model.dart';
+import 'package:cloud_car/providers/app_provider.dart';
 import 'package:cloud_car/ui/login/jverify_error_code.dart';
 import 'package:cloud_car/ui/login/login_bind_page.dart';
 import 'package:cloud_car/ui/login/login_by_sms_page.dart';
@@ -21,12 +22,13 @@ import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:jverify/jverify.dart';
 import 'package:power_logger/power_logger.dart';
+import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../splash/agreement_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key,  });
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -147,6 +149,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final app = Provider.of<AppProvider>(context);
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -237,43 +240,44 @@ class _LoginPageState extends State<LoginPage> {
                           color: kForeGroundColor),
                     )),
               ),
-              40.hb,
-              MaterialButton(
-                  onPressed: () async {
-                    if (!_chooseAgreement) {
-                      CloudToast.show('请阅读并同意用户协议和隐私政策');
-                      return;
-                    }
-                    var cancel = CloudToast.loading;
-                    var res = await fluwx.isWeChatInstalled;
-                    if (!res){
-                      CloudToast.show("未安装微信!");
-                      cancel();
-                      return;
-                    }
-                    try {
-                      await fluwx.sendWeChatAuth(
-                          scope: "snsapi_userinfo",
-                          state: 'wechat_sdk_demo_test');
-                    } catch (e) {
-                      CloudToast.show('fluwx初始化失败');
-                      LoggerData.addData(e.toString());
-                    }
-                    cancel();
-                  },
-                  elevation: 0,
-                  height: 72.w,
-                  minWidth: 590.w,
-                  color: kForeGroundColor,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2.w, color: kPrimaryColor),
-                    borderRadius: BorderRadius.circular(8.w),
-                  ),
-                  child: Text(
-                    '微信授权登录',
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize28, color: kPrimaryColor),
-                  )),
+              Offstage(
+                offstage: !app.wxInstall,
+                child: Column(
+                  children: [
+                    40.hb,
+                    MaterialButton(
+                        onPressed: () async {
+                          if (!_chooseAgreement) {
+                            CloudToast.show('请阅读并同意用户协议和隐私政策');
+                            return;
+                          }
+                          var cancel = CloudToast.loading;
+                          try {
+                            await fluwx.sendWeChatAuth(
+                                scope: "snsapi_userinfo",
+                                state: 'wechat_sdk_demo_test');
+                          } catch (e) {
+                            CloudToast.show('fluwx初始化失败');
+                            LoggerData.addData(e.toString());
+                          }
+                          cancel();
+                        },
+                        elevation: 0,
+                        height: 72.w,
+                        minWidth: 590.w,
+                        color: kForeGroundColor,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 2.w, color: kPrimaryColor),
+                          borderRadius: BorderRadius.circular(8.w),
+                        ),
+                        child: Text(
+                          '微信授权登录',
+                          style: TextStyle(
+                              fontSize: BaseStyle.fontSize28, color: kPrimaryColor),
+                        )),
+                  ],
+                ),
+              ),
               Offstage(
                 offstage: !Platform.isIOS,
                 child: Padding(

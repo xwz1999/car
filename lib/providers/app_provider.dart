@@ -9,4 +9,8 @@ class AppProvider extends ChangeNotifier {
   Future init() async {
     _packageInfo = await PackageInfo.fromPlatform();
   }
+
+
+  /// 微信是否安装
+   bool wxInstall=false;
 }

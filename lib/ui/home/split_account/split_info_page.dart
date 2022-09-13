@@ -325,7 +325,7 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                           .color(const Color(0xFF666666))
                           .make(),
                       16.hb,
-                      '收车价格  '
+                      '售出价格  '
                           .text
                           .size(28.sp)
                           .color(const Color(0xFF666666))
