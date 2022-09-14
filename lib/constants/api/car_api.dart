@@ -44,6 +44,9 @@ class _Car {
 
   ///个人车辆统计
   String get personalStatisticNum => '/car/self/count';
+
+  ///下架/退库
+  String get offShelf => '/order/consignment/down';
 }
 
 class _Collect {

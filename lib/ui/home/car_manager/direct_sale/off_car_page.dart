@@ -1,14 +1,22 @@
+import 'dart:io';
+
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 import 'package:flutter/material.dart';
 
 ///下架退库页面
 class OffCarPage extends StatefulWidget {
-  const OffCarPage({super.key});
+  final int carId;
+
+  const OffCarPage({super.key, required this.carId});
 
   @override
   _OffCarPageState createState() => _OffCarPageState();
@@ -16,6 +24,8 @@ class OffCarPage extends StatefulWidget {
 
 class _OffCarPageState extends State<OffCarPage>
     with SingleTickerProviderStateMixin {
+  List<File> _images = [];
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +65,7 @@ class _OffCarPageState extends State<OffCarPage>
                 ),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   20.hb,
                   Row(
@@ -86,27 +97,12 @@ class _OffCarPageState extends State<OffCarPage>
                       ),
                     ],
                   ),
-                  GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding:
-                          EdgeInsets.only(left: 32.w, right: 32.w, top: 24.w),
-                      itemCount: 4,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              //横轴元素个数
-                              crossAxisCount: 3,
-                              //纵轴间距
-                              mainAxisSpacing: 10,
-                              //横轴间距
-                              crossAxisSpacing: 10,
-                              //子组件宽高长度比例
-                              childAspectRatio: 2 / 1.5),
-                      itemBuilder: (BuildContext context, int index) {
-                        return getItem(
-                          Assets.images.carBanner.path,
-                        );
-                      }),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.w),
+                    child: MultiImagePickWidget(onChanged: (files) {
+                      _images = files.cast<File>().toList();
+                    }),
+                  ),
                 ],
               ),
               200.hb,
@@ -133,21 +129,32 @@ class _OffCarPageState extends State<OffCarPage>
                         listener: (index) {
                           Alert.dismiss(context);
                         },
-                        deleteListener: () {
+                        deleteListener: () async {
                           Alert.dismiss(context);
-                          Get.off(() => SuccessFailurePage(
-                              conditions: true,
-                              headline: '下架/退库',
-                              body: Text(
-                                '提交成功，等待平台审核',
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                              bottom: CloudBottomButton(
-                                onTap: () {
-                                  Get.back();
-                                },
-                                text: '返回汽车详情',
-                              )));
+                          var cancel = CloudToast.loading;
+                          var imgUrls = <String>[];
+                          if (_images.isNotEmpty) {
+                            imgUrls = await apiClient.uploadImages(_images);
+                          }
+                          var res = await apiClient.request(API.car.offShelf,
+                              data: {"carId": widget.carId});
+                          if (res.code == 0) {
+                            cancel();
+                            Get.off(() => SuccessFailurePage(
+                                conditions: true,
+                                headline: '下架/退库',
+                                body: Text(
+                                  '提交成功，等待平台审核',
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
+                                bottom: CloudBottomButton(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  text: '返回汽车详情',
+                                )));
+                          }
+                          cancel();
                         },
                       ));
                 },

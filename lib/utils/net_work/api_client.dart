@@ -88,7 +88,8 @@ class ApiClient {
     return model.data['path'];
   }
 
-  Future<List<String>> uploadFiles(
+  /// 批量上传图片
+  Future<List<String>> uploadImages(
     List<File> files,
   ) async {
     List<String> urls = [];

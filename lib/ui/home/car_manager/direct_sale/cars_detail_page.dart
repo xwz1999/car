@@ -763,7 +763,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                       : Assets.icons.download.path,
                   '下架/退库', () {
             if (widget.carListModel.isSelf == 1) {
-              Get.to(() => const OffCarPage());
+              Get.to(() =>  OffCarPage(carId: widget.carListModel.id,));
             }
           })),
         ],
