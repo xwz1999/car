@@ -394,6 +394,10 @@ class $AssetsIconsGen {
   AssetGenImage get selected =>
       const AssetGenImage('assets/icons/selected.png');
 
+  /// File path: assets/icons/service_phone.png
+  AssetGenImage get servicePhone =>
+      const AssetGenImage('assets/icons/service_phone.png');
+
   /// File path: assets/icons/shanghaibankhead.png
   AssetGenImage get shanghaibankhead =>
       const AssetGenImage('assets/icons/shanghaibankhead.png');

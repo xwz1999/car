@@ -1,3 +1,4 @@
+import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/ui/user/user_assessment/pay_num_changes_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -189,7 +190,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        launchUrlString('tel:(0574) 8716 7365');
+                        launchUrlString('tel:$servicePhone');
                       },
                       child: Container(
                           alignment: Alignment.center,
