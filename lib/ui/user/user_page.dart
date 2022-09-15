@@ -1,6 +1,7 @@
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/providers/user_provider.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/login/login_bind_page.dart';
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
@@ -78,11 +79,6 @@ class _UserPageState extends State<UserPage> {
       bodyColor: bgColor,
       systemStyle: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
-      ),
-      fab: FloatingActionButton(
-        onPressed: () {
-          Get.to(() => const LoginBindPage(token: '', bindType: 1));
-        },
       ),
       appbar: Container(
         //height: kToolbarHeight + MediaQuery.of(context).padding.top,
@@ -361,13 +357,27 @@ class _UserPageState extends State<UserPage> {
             break;
           case '联系客服':
             Get.dialog(AlertDialog(
-              content: const Text('确认拨打客服电话$servicePhone'),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    servicePhone,
+                    style: TextStyle(color: Colors.blue, fontSize: 40.sp),
+                  ),
+                ],
+              ),
               actions: [
-                TextButton(
-                    onPressed: () {
-                      launchUrlString('tel:$servicePhone');
-                    },
-                    child: const Text('确认'))
+                Align(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                      onPressed: () {
+                        launchUrlString('tel:$servicePhone');
+                      },
+                      child: const Text(
+                        '确认拨打',
+                        style: TextStyle(),
+                      )),
+                )
               ],
             ));
         }

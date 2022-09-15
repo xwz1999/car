@@ -5,6 +5,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
@@ -181,7 +182,10 @@ class _ContractPurchaseState extends State<ContractPurchase> {
         ),
 
         EditItemWidget(
-          keyboardType: TextInputType.number ,
+          keyboardType: const TextInputType.numberWithOptions() ,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[\d.]+'))
+          ],
           titleWidth: 160.w,
           title: '出售标价',
           endText: '万元',
