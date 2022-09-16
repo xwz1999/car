@@ -20,6 +20,9 @@ SplitAccountInfoModel _$SplitAccountInfoModelFromJson(
           .map((e) => DateBillItem.fromJson(e as Map<String, dynamic>))
           .toList(),
       finish: json['finish'] as bool,
+      ownBillAmount: json['ownBillAmount'] as String,
+      ownProfit: json['ownProfit'] as String,
+      totalProfit: json['totalProfit'] as String,
     );
 
 Map<String, dynamic> _$SplitAccountInfoModelToJson(
@@ -32,6 +35,9 @@ Map<String, dynamic> _$SplitAccountInfoModelToJson(
       'brokers': instance.brokers,
       'dateBills': instance.dateBills,
       'finish': instance.finish,
+      'ownBillAmount': instance.ownBillAmount,
+      'ownProfit': instance.ownProfit,
+      'totalProfit': instance.totalProfit,
     };
 
 BrokerItem _$BrokerItemFromJson(Map<String, dynamic> json) => BrokerItem(
@@ -42,6 +48,7 @@ BrokerItem _$BrokerItemFromJson(Map<String, dynamic> json) => BrokerItem(
       proportion: json['proportion'] as String,
       amount: json['amount'] as String,
       billAmount: json['billAmount'] as String,
+      profit: json['profit'] as String,
     );
 
 Map<String, dynamic> _$BrokerItemToJson(BrokerItem instance) =>
@@ -53,6 +60,7 @@ Map<String, dynamic> _$BrokerItemToJson(BrokerItem instance) =>
       'proportion': instance.proportion,
       'amount': instance.amount,
       'billAmount': instance.billAmount,
+      'profit': instance.profit,
     };
 
 DateBillItem _$DateBillItemFromJson(Map<String, dynamic> json) => DateBillItem(

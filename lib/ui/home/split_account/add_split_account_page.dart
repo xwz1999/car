@@ -209,7 +209,6 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
   }
 
   Widget _listTile(StaffAllModel staff, int index) {
-    print(staff.brokerId);
     return GestureDetector(
       onTap: () {
         if (_selectBrokerId.contains(staff.brokerId)) {

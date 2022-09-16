@@ -1,5 +1,4 @@
 import 'package:azlistview/azlistview.dart';
-import 'package:cloud_car/base/base_style.dart';
 import 'package:cloud_car/model/region/az_city_model.dart';
 import 'package:cloud_car/providers/city_provider.dart';
 import 'package:cloud_car/utils/headers.dart';

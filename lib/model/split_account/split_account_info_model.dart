@@ -14,12 +14,21 @@ class SplitAccountInfoModel extends Equatable {
   final List<BrokerItem> brokers;
   final List<DateBillItem> dateBills;
   final bool finish;
+  final String ownBillAmount;
+  final String ownProfit;
+  final String totalProfit;
 
   Decimal get amountDec => Decimal.parse(amount);
 
   Decimal get billAmountDec => Decimal.parse(billAmount);
 
   Decimal get saleAmountDec => Decimal.parse(saleAmount);
+
+  Decimal get ownBillAmountDec => Decimal.parse(ownBillAmount);
+
+  Decimal get ownProfitDec => Decimal.parse(ownProfit);
+
+  Decimal get totalProfitDec => Decimal.parse(totalProfit);
 
   factory SplitAccountInfoModel.fromJson(Map<String, dynamic> json) =>
       _$SplitAccountInfoModelFromJson(json);
@@ -45,6 +54,9 @@ class SplitAccountInfoModel extends Equatable {
     required this.brokers,
     required this.dateBills,
     required this.finish,
+    required this.ownBillAmount,
+    required this.ownProfit,
+    required this.totalProfit,
   });
 
   SplitAccountInfoModel copyWith({
@@ -55,6 +67,9 @@ class SplitAccountInfoModel extends Equatable {
     List<BrokerItem>? brokers,
     List<DateBillItem>? dateBills,
     bool? finish,
+    String? ownBillAmount,
+    String? ownProfit,
+    String? totalProfit,
   }) {
     return SplitAccountInfoModel(
       amount: amount ?? this.amount,
@@ -64,6 +79,9 @@ class SplitAccountInfoModel extends Equatable {
       brokers: brokers ?? this.brokers,
       dateBills: dateBills ?? this.dateBills,
       finish: finish ?? this.finish,
+      ownBillAmount: ownBillAmount ?? this.ownBillAmount,
+      ownProfit: ownProfit ?? this.ownProfit,
+      totalProfit: totalProfit ?? this.totalProfit,
     );
   }
 }
@@ -77,6 +95,7 @@ class BrokerItem extends Equatable {
   final String proportion;
   final String amount;
   final String billAmount;
+  final String profit;
 
   factory BrokerItem.fromJson(Map<String, dynamic> json) =>
       _$BrokerItemFromJson(json);
@@ -89,16 +108,11 @@ class BrokerItem extends Equatable {
 
   Decimal get billAmountDec => Decimal.parse(billAmount);
 
+  Decimal get profitDec => Decimal.parse(profit);
+
   @override
-  List<Object?> get props => [
-        brokerId,
-        name,
-        roleId,
-        avatar,
-        proportion,
-        amount,
-        billAmount,
-      ];
+  List<Object?> get props =>
+      [brokerId, name, roleId, avatar, proportion, amount, billAmount, profit];
 
   const BrokerItem({
     required this.brokerId,
@@ -108,6 +122,7 @@ class BrokerItem extends Equatable {
     required this.proportion,
     required this.amount,
     required this.billAmount,
+    required this.profit,
   });
 
   BrokerItem copyWith({
@@ -118,6 +133,7 @@ class BrokerItem extends Equatable {
     String? proportion,
     String? amount,
     String? billAmount,
+    String? profit,
   }) {
     return BrokerItem(
       brokerId: brokerId ?? this.brokerId,
@@ -127,6 +143,7 @@ class BrokerItem extends Equatable {
       proportion: proportion ?? this.proportion,
       amount: amount ?? this.amount,
       billAmount: billAmount ?? this.billAmount,
+      profit: profit ?? this.profit,
     );
   }
 }

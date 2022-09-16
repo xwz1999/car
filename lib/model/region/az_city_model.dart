@@ -23,6 +23,9 @@ class AzCityModel extends ISuspensionBean {
     if (upperFirst == "★") return '★ 热门城市';
     return RegExp('[A-Z]').hasMatch(upperFirst) ? upperFirst : "#";
   }
+  factory AzCityModel.fromJson(Map<String, dynamic> json) =>_$AzCityModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AzCityModelToJson(this);
 
   @override
   String getSuspensionTag() {

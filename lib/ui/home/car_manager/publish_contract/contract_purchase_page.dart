@@ -182,7 +182,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
         ),
 
         EditItemWidget(
-          keyboardType: const TextInputType.numberWithOptions() ,
+          keyboardType: const TextInputType.numberWithOptions(signed: true,decimal: true) ,
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'[\d.]+'))
           ],

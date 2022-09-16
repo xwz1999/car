@@ -53,7 +53,7 @@ class _PreferredPageState extends State<PreferredPage>
   int _page = 1;
   final int _size = 10;
   String _pickSort = '';
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   List<Widget> get listWidget => [
         CarListPage(

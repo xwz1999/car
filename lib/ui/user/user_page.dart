@@ -1,8 +1,7 @@
+
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/providers/user_provider.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
-import 'package:cloud_car/ui/login/login_bind_page.dart';
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_page.dart';
 import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';

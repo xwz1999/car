@@ -1,12 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cloud_car/providers/message_provider.dart';
-import 'package:cloud_car/ui/home/split_account/split_account_page.dart';
-import 'package:cloud_car/ui/home/task/customer_page.dart';
-import 'package:cloud_car/ui/notice/car_system_informs.dart';
-import 'package:cloud_car/ui/notice/notice_examination.dart';
-import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

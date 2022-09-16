@@ -290,12 +290,11 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: [
-              '总计利润额 '
+              '我的利润 '
                   .richText
                   .withTextSpanChildren([
                     '￥'.textSpan.size(28.sp).color(Colors.red).make(),
-                    (_infoModel.saleAmountDec -
-                            (_infoModel.amountDec + _infoModel.billAmountDec))
+                    (_infoModel.ownProfitDec)
                         .toStringAsFixed(2)
                         .textSpan
                         .size(36.sp)
@@ -313,13 +312,19 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                      '合计利润额  '
+                          .text
+                          .size(28.sp)
+                          .color(const Color(0xFF666666))
+                          .make(),
+                      16.hb,
                       '合计购车成本  '
                           .text
                           .size(28.sp)
                           .color(const Color(0xFF666666))
                           .make(),
                       16.hb,
-                      '其他成本  '
+                      '合计沉没成本  '
                           .text
                           .size(28.sp)
                           .color(const Color(0xFF666666))
@@ -335,6 +340,12 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      '${_infoModel.totalProfitDec.toStringAsFixed(2)}元'
+                          .text
+                          .size(28.sp)
+                          .color(const Color(0xFF666666))
+                          .make(),
+                      16.hb,
                       '${_infoModel.amountDec.toStringAsFixed(2)}元'
                           .text
                           .size(28.sp)
@@ -408,7 +419,7 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 32.w),
       width: 686.w,
-      height: 136.w,
+      height: 170.w,
       child: Row(
         children: [
           CloudAvatarWidget(
@@ -436,7 +447,12 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                   .size(24.w)
                   .color(const Color(0xFF999999))
                   .make(),
-              '总计出资额：￥${NumUtil.add(double.parse(item.amount), double.parse(item.billAmount))}'
+              '总计出资额：￥${item.amountDec}'
+                  .text
+                  .size(24.w)
+                  .color(Colors.black)
+                  .make(),
+              '其他费用：￥${item.billAmountDec}'
                   .text
                   .size(24.w)
                   .color(Colors.black)

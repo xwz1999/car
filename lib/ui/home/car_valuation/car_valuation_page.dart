@@ -216,7 +216,6 @@ class _CarValuationPageState extends State<CarValuationPage> {
           children: [
             ScanLicenseWidget(onLoadComplete: (carInfoModel) {
               // _carInfo.name = carInfoModel.cartype;
-              print(carInfoModel.vinModel == null);
               if (carInfoModel.vinModel != null) {
                 _carModelController.text =
                     carInfoModel.vinModel!.first.modelName;
