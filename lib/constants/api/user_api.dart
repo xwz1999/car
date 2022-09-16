@@ -15,6 +15,9 @@ class _UserApi {
 
   /// 注销账户
   String get logOff => '/user/logoff';
+
+  ///全部经纪人
+  String get allBroker => '/app/broker/user/all';
 }
 
 class _Wallet {

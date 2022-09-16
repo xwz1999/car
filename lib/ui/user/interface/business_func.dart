@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/split_account/broker_all_model.dart';
 import 'package:cloud_car/model/split_account/business_all_model.dart';
 import 'package:cloud_car/model/user/roleall_model.dart';
 import 'package:cloud_car/model/user/staff_all_model.dart';
@@ -34,6 +35,15 @@ class BusinessFunc {
 
     if (res.data==null) return [];
     return (res.data as List).map((e) => BusinessAllModel.fromJson(e)).toList();
+  }
+
+  ///全部经纪人
+  static Future<List<BrokerAllModel>> getBrokerAll(Map params) async {
+    var res =
+    await apiClient.request(API.user.allBroker, data: params);
+
+    if (res.data==null) return [];
+    return (res.data as List).map((e) => BrokerAllModel.fromJson(e)).toList();
   }
 
   ///全部角色

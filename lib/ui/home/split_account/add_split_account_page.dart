@@ -1,5 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/constants/enums.dart';
+import 'package:cloud_car/model/split_account/broker_all_model.dart';
 import 'package:cloud_car/model/split_account/business_all_model.dart';
 import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
@@ -28,7 +29,7 @@ class AddSplitAccountPage extends StatefulWidget {
 class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
-  List<BusinessAllModel> employees = [];
+  List<BrokerAllModel> employees = [];
 
   final TextEditingController _amountEditingController =
       TextEditingController();
@@ -71,7 +72,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             footer: MaterialFooter(),
             controller: _easyRefreshController,
             onRefresh: () async {
-              employees = await BusinessFunc.getBusinessStaffAll(_params);
+              employees = await BusinessFunc.getBrokerAll(_params);
               _openValues.clear();
               _initOpenValue();
               setState(() {});
@@ -88,7 +89,7 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
                             index.isEven ? Colors.black12 : Colors.transparent,
                         title: Text(employees[index].name),
                         children: employees[index]
-                            .staffs
+                            .brokers
                             .mapIndexed((currentValue, index) =>
                                 _listTile(currentValue, index))
                             .toList(),
@@ -208,17 +209,17 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
     _openValues = List.filled(employees.length, false);
   }
 
-  Widget _listTile(StaffAllModel staff, int index) {
+  Widget _listTile(SplitBrokerItem broker, int index) {
     return GestureDetector(
       onTap: () {
-        if (_selectBrokerId.contains(staff.brokerId)) {
-          _selectBrokerId.remove(staff.brokerId);
-          _mapTextController[staff.brokerId]?.dispose();
-          _mapTextController.remove(staff.brokerId);
+        if (_selectBrokerId.contains(broker.id)) {
+          _selectBrokerId.remove(broker.id);
+          _mapTextController[broker.id]?.dispose();
+          _mapTextController.remove(broker.id);
         } else {
-          _selectBrokerId.add(staff.brokerId);
+          _selectBrokerId.add(broker.id);
           _mapTextController.putIfAbsent(
-              staff.brokerId, () => TextEditingController());
+              broker.id, () => TextEditingController());
         }
         setState(() {});
       },
@@ -228,13 +229,13 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
         padding: EdgeInsets.symmetric(horizontal: 64.w, vertical: 18.w),
         child: Row(
           children: [
-            CloudCheckBox(value: staff.brokerId, groupValue: _selectBrokerId),
+            CloudCheckBox(value: broker.id, groupValue: _selectBrokerId),
             16.wb,
             SizedBox(
               width: 32.w,
               height: 32.w,
               child: Image.asset(
-                staff.gender == 2
+                broker.gender == 2
                     ? Assets.icons.icUserWoman.path
                     : Assets.icons.icUser.path,
                 fit: BoxFit.fill,
@@ -242,18 +243,18 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             ),
             16.wb,
             Text(
-              staff.name,
+              broker.name,
               style: TextStyle(
                   fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
             ),
             16.wb,
-            if (staff.roleEM == Role.manager) CloudTag.blue(text: '店长'),
-            if (_selectBrokerId.contains(staff.brokerId))
+            // if (broker.roleEM == Role.manager) CloudTag.blue(text: '店长'),
+            if (_selectBrokerId.contains(broker.id))
               Row(
                 children: [
                   20.wb,
                   CloudBorderedTextFieldWidget(
-                    controller: _mapTextController[staff.brokerId],
+                    controller: _mapTextController[broker.id],
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     inputType: TextInputType.number,
                   ),
