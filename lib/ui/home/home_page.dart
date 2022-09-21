@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/providers/user_provider.dart';
@@ -10,6 +9,7 @@ import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/split_account/split_account_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
+import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/share_util.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage>
     _kingCoinList.add(KingCoin(name: '车辆发布', url: Assets.icons.carPush.path));
     _kingCoinList
         .add(KingCoin(name: '车辆按揭', url: Assets.icons.carMortgage.path));
-    _kingCoinList.add(KingCoin(name: '车辆代理', url: Assets.icons.carAgent.path));
+    _kingCoinList.add(KingCoin(name: '估价充值', url: Assets.icons.carAgent.path));
     _kingCoinList
         .add(KingCoin(name: '维保查询', url: Assets.icons.carMaintain.path));
     _kingCoinList
@@ -215,8 +215,8 @@ class _HomePageState extends State<HomePage>
           case '收车账单':
             Get.to(() => const SplitAccountPage());
             break;
-          case '车辆代理':
-            CloudToast.show('此功能未开通');
+          case '估价充值':
+            Get.to(() => const UserAssessmentPage());
         }
       },
       child: ColoredBox(
@@ -328,8 +328,10 @@ class _HomePageState extends State<HomePage>
 
   _shareItem(CarListModel model) {
     return GestureDetector(
-      onTap: (){
-        Get.to(()=>CarsDetailPage(carListModel: model,));
+      onTap: () {
+        Get.to(() => CarsDetailPage(
+              carListModel: model,
+            ));
       },
       child: Container(
         width: 240.w,
@@ -377,7 +379,8 @@ class _HomePageState extends State<HomePage>
                             text:
                                 '${NumUtil.divide(num.parse(model.price), 10000)}',
                             style: TextStyle(
-                                color: const Color(0xFFFF3E02), fontSize: 32.sp),
+                                color: const Color(0xFFFF3E02),
+                                fontSize: 32.sp),
                             children: [
                               TextSpan(
                                   text: '万',

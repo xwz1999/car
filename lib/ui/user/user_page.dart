@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/providers/user_provider.dart';
@@ -41,13 +40,13 @@ class _UserPageState extends State<UserPage> {
   @override
   void initState() {
     super.initState();
+    _kingCoinUserList
+        .add(KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
     if (UserTool.userProvider.userInfo.levelEM ==
         PermissionLevel.settledMerchants) {
-      _kingCoinUserList
-          .add(KingCoin(name: '我的订单', url: Assets.icons.usermyorder.path));
+      _kingCoinUserList.add(
+          KingCoin(name: '员工管理', url: Assets.icons.userstaffmangement.path));
     }
-    _kingCoinUserList
-        .add(KingCoin(name: '员工管理', url: Assets.icons.userstaffmangement.path));
     _kingCoinUserList
         .add(KingCoin(name: '查看合同', url: Assets.icons.userviewContract.path));
     _kingCoinUserList

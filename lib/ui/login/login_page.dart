@@ -20,7 +20,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
-import 'package:jverify/jverify.dart';
+
+// import 'package:jverify/jverify.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -28,7 +29,9 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../splash/agreement_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key,  });
+  const LoginPage({
+    super.key,
+  });
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -43,40 +46,40 @@ class _LoginPageState extends State<LoginPage> {
     'CT': '中国电信',
   };
 
-  Future getPrePhone() async {
-    var re = await Jverify().preLogin();
-    if (kDebugMode) {
-      print("预取号${re.toString()}");
-    }
-  }
+  // Future getPrePhone() async {
+  //   var re = await Jverify().preLogin();
+  //   if (kDebugMode) {
+  //     print("预取号${re.toString()}");
+  //   }
+  // }
 
   /// 添加 loginAuthSyncApi 接口回调的监听
-  void addJverifyListen() {
-    Jverify().addLoginAuthCallBackListener((event) async {
-      var result = "监听获取返回数据：[${event.code}] message = ${event.message}";
-      if (kDebugMode) {
-        print(result);
-        LoggerData.addData(result);
-      }
-      var cancel = CloudToast.loading;
-      if (event.code == 6000) {
-        var base = await apiClient.request(API.login.phone,
-            data: {'token': event.message, 'inviteCode': ''});
-        if (base.code == 0) {
-          if (kDebugMode) {
-            print('极光一键登录：  ${base.data}');
-          }
-          await UserTool.userProvider.setToken(base.data['token']);
-          Get.offAll(() => const TabNavigator());
-        } else {
-          CloudToast.show(base.msg);
-        }
-      } else {
-        CloudToast.show(JverifyErrorCode.getmsg(event.code ?? 0));
-      }
-      cancel();
-    });
-  }
+  // void addJverifyListen() {
+  //   Jverify().addLoginAuthCallBackListener((event) async {
+  //     var result = "监听获取返回数据：[${event.code}] message = ${event.message}";
+  //     if (kDebugMode) {
+  //       print(result);
+  //       LoggerData.addData(result);
+  //     }
+  //     var cancel = CloudToast.loading;
+  //     if (event.code == 6000) {
+  //       var base = await apiClient.request(API.login.phone,
+  //           data: {'token': event.message, 'inviteCode': ''});
+  //       if (base.code == 0) {
+  //         if (kDebugMode) {
+  //           print('极光一键登录：  ${base.data}');
+  //         }
+  //         await UserTool.userProvider.setToken(base.data['token']);
+  //         Get.offAll(() => const TabNavigator());
+  //       } else {
+  //         CloudToast.show(base.msg);
+  //       }
+  //     } else {
+  //       CloudToast.show(JverifyErrorCode.getmsg(event.code ?? 0));
+  //     }
+  //     cancel();
+  //   });
+  // }
 
   void addFluwxListen() {
     _fluwxListenObjcet = fluwx.weChatResponseEventHandler
@@ -97,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
               var wxLoginResponse = WxLoginModel.fromJson(base.data);
               if (!wxLoginResponse.isBind) {
                 Get.to(() => LoginBindPage(
-                      token: wxLoginResponse.bindToken, bindType: 1,
+                      token: wxLoginResponse.bindToken,
+                      bindType: 1,
                     ));
               } else {
                 await UserTool.userProvider
@@ -132,18 +136,18 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     // _operator = '中国移动认证';
     // _phone = '12345678909';
-    Jverify()
-        .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
-    Jverify().setDebugMode(AppENV.instance.env != ENVConfig.release);
-    getPrePhone();
-    addFluwxListen();
-    addJverifyListen();
+    // Jverify()
+    //     .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
+    // Jverify().setDebugMode(AppENV.instance.env != ENVConfig.release);
+    // getPrePhone();
+    // addFluwxListen();
+    // addJverifyListen();
   }
 
   @override
   void dispose() {
     super.dispose();
-    Jverify().dismissLoginAuthView();
+    // Jverify().dismissLoginAuthView();
     _fluwxListenObjcet.cancel();
   }
 
@@ -195,46 +199,14 @@ class _LoginPageState extends State<LoginPage> {
                       end: Alignment.centerRight),
                 ),
                 child: MaterialButton(
-                    onPressed: () async {
-                      if (!_chooseAgreement) {
-                        CloudToast.show('请阅读并同意用户协议和隐私政策');
-                        return;
-                      }
-                      var cancel = CloudToast.loading;
-                      var setup = await Jverify().isInitSuccess();
-                      if (!setup['result']) {
-                        CloudToast.show('初始化未完成');
-                        cancel();
-                        return;
-                      }
-                      var re = await Jverify().checkVerifyEnable();
-                      if (kDebugMode) {
-                        print('检查认证网络环境数据返回： ${re.toString()}');
-                      }
-                      if (re["result"]) {
-                        var map = await Jverify().getToken();
-                        if (kDebugMode) {
-                          print('极光认证获取token数据返回： ${map.toString()}');
-                          LoggerData.addData(map.toString());
-                        }
-                        if (map['code'] == 2000) {
-                          await _authToken();
-                        } else {
-                          CloudToast.show(
-                              '错误码：${map['code']}${map['message']}');
-                        }
-                      } else {
-                        CloudToast.show('当前网络不支持认证');
-                      }
-                      cancel();
-                    },
+                    onPressed: _smsCodeLoginOnTap,
                     elevation: 0,
                     height: 72.w,
                     minWidth: 590.w,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.w)),
                     child: Text(
-                      '本机号码一键登录',
+                      '验证码登录',
                       style: TextStyle(
                           fontSize: BaseStyle.fontSize28,
                           color: kForeGroundColor),
@@ -273,7 +245,8 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           '微信授权登录',
                           style: TextStyle(
-                              fontSize: BaseStyle.fontSize28, color: kPrimaryColor),
+                              fontSize: BaseStyle.fontSize28,
+                              color: kPrimaryColor),
                         )),
                   ],
                 ),
@@ -307,8 +280,9 @@ class _LoginPageState extends State<LoginPage> {
                               AppleLoginModel.fromJson(res.data);
                           if (!appleLoginModel.isBind) {
                             Get.to(() => LoginBindPage(
-                              token: appleLoginModel.bindToken, bindType: 2,
-                            ));
+                                  token: appleLoginModel.bindToken,
+                                  bindType: 2,
+                                ));
                           } else {
                             await UserTool.userProvider
                                 .setToken(appleLoginModel.loginInfo.token);
@@ -392,20 +366,20 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              24.hb,
-              GestureDetector(
-                onTap: () {
-                  if (!_chooseAgreement) {
-                    CloudToast.show('请阅读并同意用户协议和隐私政策');
-                    return;
-                  }
-                  Get.to(() => const LoginBySmsPage());
-                },
-                child: Text(
-                  '验证码登录',
-                  style: TextStyle(color: Colors.black26, fontSize: 24.w),
-                ),
-              ),
+              // 24.hb,
+              // GestureDetector(
+              //   onTap: () {
+              //     if (!_chooseAgreement) {
+              //       CloudToast.show('请阅读并同意用户协议和隐私政策');
+              //       return;
+              //     }
+              //     Get.to(() => const LoginBySmsPage());
+              //   },
+              //   child: Text(
+              //     '验证码登录',
+              //     style: TextStyle(color: Colors.black26, fontSize: 24.w),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -413,117 +387,162 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  ///调起一键登录页面
-  Future _authToken() async {
-    // final screenSize = MediaQuery.of(context).size;
-    // final screenWidth = screenSize.width;
-    // final screenHeight = screenSize.height;
-    bool isiOS = Platform.isIOS;
+  /// 验证码登录
 
-    /// 自定义授权的 UI 界面，以下设置的图片必须添加到资源文件里，
-    /// android项目将图片存放至drawable文件夹下，可使用图片选择器的文件名,例如：btn_login.xml,入参为"btn_login"。
-    /// ios项目存放在 Assets.xcassets。
-    ///
-    JVUIConfig uiConfig = JVUIConfig();
-    //uiConfig.authBackgroundImage = ;
-
-    //uiConfig.navHidden = true;
-    uiConfig.navColor = Colors.blue.value;
-    uiConfig.navText = "一键登录";
-    uiConfig.navTextColor = Colors.white.value;
-    // uiConfig.navReturnImgPath = "return_bg";//图片必须存在
-
-    uiConfig.logoWidth = 100;
-    uiConfig.logoHeight = 100;
-    //uiConfig.logoOffsetX = isiOS ? 0 : null;//(screenWidth/2 - uiConfig.logoWidth/2).toInt();
-    uiConfig.logoOffsetY = 10;
-    uiConfig.logoVerticalLayoutItem = JVIOSLayoutItem.ItemSuper;
-    uiConfig.logoHidden = false;
-    uiConfig.logoImgPath = "logo";
-
-    uiConfig.numberFieldWidth = 200;
-    uiConfig.numberFieldHeight = 40;
-    //uiConfig.numFieldOffsetX = isiOS ? 0 : null;//(screenWidth/2 - uiConfig.numberFieldWidth/2).toInt();
-    uiConfig.numFieldOffsetY = isiOS ? 20 : 120;
-    uiConfig.numberVerticalLayoutItem = JVIOSLayoutItem.ItemLogo;
-    uiConfig.numberColor = Colors.blue.value;
-    uiConfig.numberSize = 18;
-
-    uiConfig.sloganOffsetY = isiOS ? 20 : 160;
-    uiConfig.sloganVerticalLayoutItem = JVIOSLayoutItem.ItemNumber;
-    uiConfig.sloganTextColor = Colors.black.value;
-    uiConfig.sloganTextSize = 15;
-    //        uiConfig.slogan
-    //uiConfig.sloganHidden = 0;
-
-    uiConfig.logBtnWidth = 220;
-    uiConfig.logBtnHeight = 50;
-    //uiConfig.logBtnOffsetX = isiOS ? 0 : null;//(screenWidth/2 - uiConfig.logBtnWidth/2).toInt();
-    uiConfig.logBtnOffsetY = isiOS ? 20 : 230;
-    uiConfig.logBtnVerticalLayoutItem = JVIOSLayoutItem.ItemSlogan;
-    uiConfig.logBtnText = "一键登录";
-    uiConfig.logBtnTextColor = Colors.white.value;
-    uiConfig.logBtnTextSize = 16;
-    // uiConfig.loginBtnNormalImage = "login_btn_normal";//图片必须存在
-    // uiConfig.loginBtnPressedImage = "login_btn_press";//图片必须存在
-    // uiConfig.loginBtnUnableImage = "login_btn_unable";//图片必须存在
-
-    uiConfig.privacyState = false; //设置默认勾选
-    uiConfig.privacyCheckboxSize = 16;
-    // uiConfig.checkedImgPath = "check_image";//图片必须存在
-    // uiConfig.uncheckedImgPath = "uncheck_image";//图片必须存在
-    uiConfig.privacyCheckboxInCenter = true;
-    //uiConfig.privacyCheckboxHidden = false;
-
-    //uiConfig.privacyOffsetX = isiOS ? (20 + uiConfig.privacyCheckboxSize) : null;
-    uiConfig.privacyOffsetY = 32; // 距离底部距离
-    uiConfig.privacyOffsetX = 12;
-    uiConfig.privacyVerticalLayoutItem = JVIOSLayoutItem.ItemSuper;
-    uiConfig.clauseName = "用户协议";
-    uiConfig.clauseUrl =
-        "https://static.yunyunwenche.com/html/useragreement.html";
-    uiConfig.clauseBaseColor = Colors.black.value;
-    uiConfig.clauseNameTwo = "隐私政策";
-    uiConfig.clauseUrlTwo = "https://static.yunyunwenche.com/html/privacy.html";
-    uiConfig.clauseColor = Colors.blue.value;
-    uiConfig.privacyText = ["", "", "", ""];
-    uiConfig.privacyTextSize = 13;
-    //uiConfig.privacyWithBookTitleMark = true;
-    //uiConfig.privacyTextCenterGravity = false;
-    uiConfig.authStatusBarStyle = JVIOSBarStyle.StatusBarStyleDarkContent;
-    uiConfig.privacyStatusBarStyle = JVIOSBarStyle.StatusBarStyleDefault;
-    uiConfig.privacyItem = [
-      JVPrivacy(
-          "《用户协议》", "https://static.yunyunwenche.com/html/useragreement.html",
-          beforeName: "==", afterName: "++", separator: "、"),
-      JVPrivacy("《隐私政策》", "https://static.yunyunwenche.com/html/privacy.html",
-          separator: "、")
-    ];
-
-    uiConfig.statusBarColorWithNav = true;
-    uiConfig.virtualButtonTransparent = true;
-
-    uiConfig.privacyStatusBarColorWithNav = true;
-    uiConfig.privacyVirtualButtonTransparent = true;
-
-    uiConfig.needStartAnim = true;
-    uiConfig.needCloseAnim = true;
-
-    uiConfig.privacyNavColor = Colors.blue.value;
-    uiConfig.privacyNavTitleTextColor = Colors.white.value;
-    uiConfig.privacyNavTitleTextSize = 16;
-    uiConfig.privacyNavTitleTitle1 = "用户协议";
-    uiConfig.privacyNavTitleTitle2 = "隐私协议";
-    // uiConfig.privacyNavReturnBtnImage = "return_bg"; //图片必须存在;
-
-    /// 添加自定义的 控件 到授权界面
-    // List<JVCustomWidget> widgetList = [];
-
-    /// 步骤 1：调用接口设置 UI
-    Jverify()
-        .setCustomAuthorizationView(true, uiConfig, landscapeConfig: uiConfig);
-
-    /// 步骤 2：调用一键登录接口
-    Jverify().loginAuthSyncApi(autoDismiss: true);
+  Future _smsCodeLoginOnTap() async {
+    if (!_chooseAgreement) {
+      CloudToast.show('请阅读并同意用户协议和隐私政策');
+      return;
+    }
+    Get.to(() => const LoginBySmsPage());
   }
+
+  /// 极光一键登录
+// Future _jevrifyLoginOnTap() async {
+//   if (!_chooseAgreement) {
+//     CloudToast.show('请阅读并同意用户协议和隐私政策');
+//     return;
+//   }
+//   var cancel = CloudToast.loading;
+//   var setup = await Jverify().isInitSuccess();
+//   if (!setup['result']) {
+//     CloudToast.show('初始化未完成');
+//     cancel();
+//     return;
+//   }
+//   var re = await Jverify().checkVerifyEnable();
+//   if (kDebugMode) {
+//     print('检查认证网络环境数据返回： ${re.toString()}');
+//   }
+//   if (re["result"]) {
+//     var map = await Jverify().getToken();
+//     if (kDebugMode) {
+//       print('极光认证获取token数据返回： ${map.toString()}');
+//       LoggerData.addData(map.toString());
+//     }
+//     if (map['code'] == 2000) {
+//       await _authToken();
+//     } else {
+//       CloudToast.show(
+//           '错误码：${map['code']}${map['message']}');
+//     }
+//   } else {
+//     CloudToast.show('当前网络不支持认证');
+//   }
+//   cancel();
+// }
+
+  ///调起一键登录页面
+// Future _authToken() async {
+//   // final screenSize = MediaQuery.of(context).size;
+//   // final screenWidth = screenSize.width;
+//   // final screenHeight = screenSize.height;
+//   bool isiOS = Platform.isIOS;
+//
+//   /// 自定义授权的 UI 界面，以下设置的图片必须添加到资源文件里，
+//   /// android项目将图片存放至drawable文件夹下，可使用图片选择器的文件名,例如：btn_login.xml,入参为"btn_login"。
+//   /// ios项目存放在 Assets.xcassets。
+//   ///
+//   JVUIConfig uiConfig = JVUIConfig();
+//   //uiConfig.authBackgroundImage = ;
+//
+//   //uiConfig.navHidden = true;
+//   uiConfig.navColor = Colors.blue.value;
+//   uiConfig.navText = "一键登录";
+//   uiConfig.navTextColor = Colors.white.value;
+//   // uiConfig.navReturnImgPath = "return_bg";//图片必须存在
+//
+//   uiConfig.logoWidth = 100;
+//   uiConfig.logoHeight = 100;
+//   //uiConfig.logoOffsetX = isiOS ? 0 : null;//(screenWidth/2 - uiConfig.logoWidth/2).toInt();
+//   uiConfig.logoOffsetY = 10;
+//   uiConfig.logoVerticalLayoutItem = JVIOSLayoutItem.ItemSuper;
+//   uiConfig.logoHidden = false;
+//   uiConfig.logoImgPath = "logo";
+//
+//   uiConfig.numberFieldWidth = 200;
+//   uiConfig.numberFieldHeight = 40;
+//   //uiConfig.numFieldOffsetX = isiOS ? 0 : null;//(screenWidth/2 - uiConfig.numberFieldWidth/2).toInt();
+//   uiConfig.numFieldOffsetY = isiOS ? 20 : 120;
+//   uiConfig.numberVerticalLayoutItem = JVIOSLayoutItem.ItemLogo;
+//   uiConfig.numberColor = Colors.blue.value;
+//   uiConfig.numberSize = 18;
+//
+//   uiConfig.sloganOffsetY = isiOS ? 20 : 160;
+//   uiConfig.sloganVerticalLayoutItem = JVIOSLayoutItem.ItemNumber;
+//   uiConfig.sloganTextColor = Colors.black.value;
+//   uiConfig.sloganTextSize = 15;
+//   //        uiConfig.slogan
+//   //uiConfig.sloganHidden = 0;
+//
+//   uiConfig.logBtnWidth = 220;
+//   uiConfig.logBtnHeight = 50;
+//   //uiConfig.logBtnOffsetX = isiOS ? 0 : null;//(screenWidth/2 - uiConfig.logBtnWidth/2).toInt();
+//   uiConfig.logBtnOffsetY = isiOS ? 20 : 230;
+//   uiConfig.logBtnVerticalLayoutItem = JVIOSLayoutItem.ItemSlogan;
+//   uiConfig.logBtnText = "一键登录";
+//   uiConfig.logBtnTextColor = Colors.white.value;
+//   uiConfig.logBtnTextSize = 16;
+//   // uiConfig.loginBtnNormalImage = "login_btn_normal";//图片必须存在
+//   // uiConfig.loginBtnPressedImage = "login_btn_press";//图片必须存在
+//   // uiConfig.loginBtnUnableImage = "login_btn_unable";//图片必须存在
+//
+//   uiConfig.privacyState = false; //设置默认勾选
+//   uiConfig.privacyCheckboxSize = 16;
+//   // uiConfig.checkedImgPath = "check_image";//图片必须存在
+//   // uiConfig.uncheckedImgPath = "uncheck_image";//图片必须存在
+//   uiConfig.privacyCheckboxInCenter = true;
+//   //uiConfig.privacyCheckboxHidden = false;
+//
+//   //uiConfig.privacyOffsetX = isiOS ? (20 + uiConfig.privacyCheckboxSize) : null;
+//   uiConfig.privacyOffsetY = 32; // 距离底部距离
+//   uiConfig.privacyOffsetX = 12;
+//   uiConfig.privacyVerticalLayoutItem = JVIOSLayoutItem.ItemSuper;
+//   uiConfig.clauseName = "用户协议";
+//   uiConfig.clauseUrl =
+//       "https://static.yunyunwenche.com/html/useragreement.html";
+//   uiConfig.clauseBaseColor = Colors.black.value;
+//   uiConfig.clauseNameTwo = "隐私政策";
+//   uiConfig.clauseUrlTwo = "https://static.yunyunwenche.com/html/privacy.html";
+//   uiConfig.clauseColor = Colors.blue.value;
+//   uiConfig.privacyText = ["", "", "", ""];
+//   uiConfig.privacyTextSize = 13;
+//   //uiConfig.privacyWithBookTitleMark = true;
+//   //uiConfig.privacyTextCenterGravity = false;
+//   uiConfig.authStatusBarStyle = JVIOSBarStyle.StatusBarStyleDarkContent;
+//   uiConfig.privacyStatusBarStyle = JVIOSBarStyle.StatusBarStyleDefault;
+//   uiConfig.privacyItem = [
+//     JVPrivacy(
+//         "《用户协议》", "https://static.yunyunwenche.com/html/useragreement.html",
+//         beforeName: "==", afterName: "++", separator: "、"),
+//     JVPrivacy("《隐私政策》", "https://static.yunyunwenche.com/html/privacy.html",
+//         separator: "、")
+//   ];
+//
+//   uiConfig.statusBarColorWithNav = true;
+//   uiConfig.virtualButtonTransparent = true;
+//
+//   uiConfig.privacyStatusBarColorWithNav = true;
+//   uiConfig.privacyVirtualButtonTransparent = true;
+//
+//   uiConfig.needStartAnim = true;
+//   uiConfig.needCloseAnim = true;
+//
+//   uiConfig.privacyNavColor = Colors.blue.value;
+//   uiConfig.privacyNavTitleTextColor = Colors.white.value;
+//   uiConfig.privacyNavTitleTextSize = 16;
+//   uiConfig.privacyNavTitleTitle1 = "用户协议";
+//   uiConfig.privacyNavTitleTitle2 = "隐私协议";
+//   // uiConfig.privacyNavReturnBtnImage = "return_bg"; //图片必须存在;
+//
+//   /// 添加自定义的 控件 到授权界面
+//   // List<JVCustomWidget> widgetList = [];
+//
+//   /// 步骤 1：调用接口设置 UI
+//   Jverify()
+//       .setCustomAuthorizationView(true, uiConfig, landscapeConfig: uiConfig);
+//
+//   /// 步骤 2：调用一键登录接口
+//   Jverify().loginAuthSyncApi(autoDismiss: true);
+// }
 }
