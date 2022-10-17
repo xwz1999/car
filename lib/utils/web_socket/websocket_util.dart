@@ -136,7 +136,6 @@ class WebsocketUtil {
       _dPrint('心跳正常————————${DateTime.now()}');
     } else {
       var base64Message = utf8.decode(message);
-      print(base64Message);
       onReceive?.call(base64Message);
     }
   }

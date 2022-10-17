@@ -49,8 +49,8 @@ class _SplashPageState extends State<SplashPage> {
       }
     }
 
-    PowerLogger.start(context, debug: AppENV.instance.env != ENVConfig.release);
-    // PowerLogger.start(context, debug: true);
+    //PowerLogger.start(context, debug: AppENV.instance.env != ENVConfig.release);
+    PowerLogger.start(context, debug: true);
     ///第三方加载
     var isAndroid = Platform.isAndroid;
     registerWxApi(
@@ -140,7 +140,9 @@ class _SplashPageState extends State<SplashPage> {
     if (kDebugMode) {
       print('env :$env');
     }
-    AppENV.instance.setEnv(env);
+    //AppENV.instance.setEnv(env);
+    AppENV.instance.setEnv('release');
+
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll(context);
 

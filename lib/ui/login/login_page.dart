@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
     //     .setup(appKey: 'c185d29d6fb92c29cfeda32a', channel: 'devloper-default');
     // Jverify().setDebugMode(AppENV.instance.env != ENVConfig.release);
     // getPrePhone();
-    // addFluwxListen();
+    addFluwxListen();
     // addJverifyListen();
   }
 

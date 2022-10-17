@@ -108,7 +108,6 @@ class ShareUtil {
       minWidth: 500,
       quality: 96,
     );
-    print(result.length);
     if (result.length > 128000 && result.length < data.length) {
       result = await compressImageList(result);
     }

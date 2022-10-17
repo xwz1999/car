@@ -34,8 +34,10 @@ enum Role {
 
 ///车辆来源
 enum CarSource {
+  noData(0,''),
   carDealer(1, '车商'),
-  individual(2, '个人直卖');
+  individual(2, '个人直卖'),
+  acquisition(3,'收购');
 
   final int typeNum;
   final String typeStr;
@@ -45,14 +47,75 @@ enum CarSource {
 
   static CarSource getValueByBusinessId(int businessId) {
     switch (businessId) {
+      case 0:
+        return CarSource.noData;
       case 1:
         return CarSource.carDealer;
-      default:
+      case 2:
         return CarSource.individual;
+      default:
+        return CarSource.acquisition;
     }
   }
 
   const CarSource(this.typeNum, this.typeStr);
+}
+
+enum CarType{
+  noData(0,''),
+  middleGauge(1, '二手车(中规)'),
+  parallelImport(2, '个人直卖'),
+  handcart(3,'收购')
+  ;
+
+  final int typeNum;
+  final String typeStr;
+
+  static CarType getValue(int value) =>
+      CarType.values.firstWhere((element) => element.typeNum == value);
+
+  const CarType(this.typeNum, this.typeStr);
+}
+
+enum CarStockStatus{
+  noData(0,''),
+  goOut(1, '外出'),
+  inTheHall(2, '在厅'),
+  handcart(3,'收购');
+
+  final int typeNum;
+  final String typeStr;
+
+  static CarStockStatus getValue(int value) =>
+      CarStockStatus.values.firstWhere((element) => element.typeNum == value);
+
+  const CarStockStatus(this.typeNum, this.typeStr);
+}
+
+enum CarNatureOfUse{
+  noData(0,''),
+  operate(1, '运营'),
+  noOperate(2, '非运营'),
+  lease(3,'租赁');
+  static CarNatureOfUse getValue(int value) =>
+      CarNatureOfUse.values.firstWhere((element) => element.typeNum == value);
+  final int typeNum;
+  final String typeStr;
+  const CarNatureOfUse(this.typeNum, this.typeStr);
+}
+
+
+enum CarPurchaseType{
+  noData(0,''),
+  acquisition(1, '收购'),
+  consignment(2, '寄卖'),
+  cooperation(3, '合作');
+
+  static CarPurchaseType getValue(int value) =>
+      CarPurchaseType.values.firstWhere((element) => element.typeNum == value);
+  final int typeNum;
+  final String typeStr;
+  const CarPurchaseType(this.typeNum, this.typeStr);
 }
 
 /// 所属入驻商
@@ -103,3 +166,6 @@ enum PermissionLevel {
 
   const PermissionLevel(this.typeNum, this.typeStr);
 }
+
+
+

@@ -1,6 +1,7 @@
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/providers/user_provider.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_func.dart';
@@ -201,7 +202,8 @@ class _HomePageState extends State<HomePage>
             Get.to(() => const UserManagerPage());
             break;
           case '车辆发布':
-            Get.to(() => const PushCarPage());
+            //Get.to(() => const PushCarPage());
+          Get.to(()=>const NewPushCarPage());
             break;
           case '车辆估值':
             Get.to(() => const CarValuationPage());
