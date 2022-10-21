@@ -10,8 +10,13 @@ import 'package:cloud_car/model/car/car_sale_contract_model.dart';
 import 'package:cloud_car/model/car/car_statistics_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/car/estimate_price_model.dart';
+import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
+import 'package:cloud_car/model/user/storeall_model.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/report_photo_page.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
@@ -116,6 +121,17 @@ class CarFunc {
   }
 
   ///⻋辆详情
+  static Future<NewCarInfo?> getNewCarInfo(int carId) async {
+    BaseModel model = await apiClient.request(API.car.getCarIfo, data: {
+      'carId': carId,
+    });
+    if (model.code == 0) {
+      return NewCarInfo.fromJson(model.data);
+    } else {
+      CloudToast.show(model.msg);
+      return null;
+    }
+  }
   static Future<CarInfoModel?> getCarInfo(int carId) async {
     BaseModel model = await apiClient.request(API.car.getCarIfo, data: {
       'carId': carId,
@@ -305,6 +321,96 @@ class CarFunc {
       return [];
     }
   }
+
+
+  static Future<List<StoreallModel>> getStoreall() async {
+    var res =
+    await apiClient.request(API.storeManagement.storeAll,data: {});
+
+    if (res.data==null) return [];
+    return (res.data as List).map((e) => StoreallModel.fromJson(e)).toList();
+  }
+
+  static Future<bool> newPushCar({
+    required NewPublishCarInfo newPublishCarInfo,
+    required PushPhotoModel pushPhotoModel,
+    required ReportPhotoModel reportPhotoModel,
+  }) async {
+
+    Map<String, dynamic> baseInfo = {
+      "source":newPublishCarInfo.carSource,
+      "sourceId":newPublishCarInfo.carShopId,
+      "type":newPublishCarInfo.carTypeEM.typeStr,
+      "modelId":newPublishCarInfo.carModelId,
+      "vin":newPublishCarInfo.viNum,
+      "engineNo":newPublishCarInfo.engineNum,
+      "licensingDate":newPublishCarInfo.licensingDateStr,
+      "color":newPublishCarInfo.carColor,
+      "interiorColor":newPublishCarInfo.carDecorativeColor,
+      "temporaryLicensePlate":newPublishCarInfo.carTemporaryNum,
+      "parkingNo":newPublishCarInfo.carParkingNum,
+      "emissionStandard":newPublishCarInfo.environmentalLevel,
+      "useCharacter":newPublishCarInfo.natureOfUseEM.typeStr,
+      "shamMileage": newPublishCarInfo.mileage!=null?num.parse(newPublishCarInfo.mileage!):null,
+      "marketDate":newPublishCarInfo.productionDateStr==''?null:newPublishCarInfo.productionDateStr,
+      "newCarGuidePrice": newPublishCarInfo.newCarPrice!=null? num.parse('${newPublishCarInfo.newCarPrice!}0000'):null,
+      "purchaseTax":newPublishCarInfo.purchaseTax!=null? num.parse('${newPublishCarInfo.purchaseTax!}0000'):null,
+      "installationCost":newPublishCarInfo.retrofittingFee!=null?int.parse(newPublishCarInfo.retrofittingFee!):null,
+      "location":newPublishCarInfo.locationCityId,
+      "condition":newPublishCarInfo.carDescription,
+      "remark":newPublishCarInfo.remark,
+    };
+    Map<String, dynamic> priceInfo = {
+
+      "purchasePrice":newPublishCarInfo.wholesalePrice!=null? num.parse('${newPublishCarInfo.wholesalePrice!}0000'):null,
+      "salePrice":newPublishCarInfo.salePrice!=null? num.parse('${newPublishCarInfo.salePrice!}0000'):null,
+
+    };
+
+    Map<String, dynamic> certificateInfo = {
+      "transfer": newPublishCarInfo.transferNum!=null?int.parse(newPublishCarInfo.transferNum!):null ,
+      "keyCount":newPublishCarInfo.keyCount!=null?int.parse(newPublishCarInfo.keyCount!):null ,
+      "compulsoryInsurance":newPublishCarInfo.haveCompulsoryInsurance,
+      "compulsoryInsuranceDate":newPublishCarInfo.compulsoryInsuranceDateStr,
+      "commercialInsurance":newPublishCarInfo.haveCommercialInsurance,
+      "commercialInsuranceDate":newPublishCarInfo.commercialInsuranceDateStr,
+      "commercialInsurancePrice":newPublishCarInfo.commercialInsurancePrice!=null?num.parse(newPublishCarInfo.commercialInsurancePrice!):null ,
+    };
+
+    Map<String, dynamic> purchaseInfo = {
+
+    };
+
+
+    Map<String, dynamic> base = {
+      "photos":pushPhotoModel.toJson(),
+      "baseInfo":baseInfo,
+      "report":reportPhotoModel.toJson(),
+      "priceInfo":priceInfo,
+      "certificateInfo":certificateInfo,
+      "purchaseInfo":purchaseInfo
+    };
+
+  print(base);
+
+    BaseModel model = await apiClient.request(API.order.newPushCar, data: base);
+    if (model.code == 0) {
+      if (model.msg == '操作成功') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      //BotToast.showText(text: '发布失败');
+      CloudToast.show(model.msg);
+      return false;
+    }
+  }
+
+
+
+
+
 
   ///车商发布车辆
   static Future<bool> dealerPushCar({

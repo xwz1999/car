@@ -12,6 +12,7 @@ SortCarModelModel _$SortCarModelModelFromJson(Map<String, dynamic> json) =>
       modelId: json['modelId'] as int,
       name: json['name'] as String,
       year: json['year'] as int,
+      guidePrice: json['guidePrice'] as String,
     );
 
 Map<String, dynamic> _$SortCarModelModelToJson(SortCarModelModel instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$SortCarModelModelToJson(SortCarModelModel instance) =>
       'modelId': instance.modelId,
       'name': instance.name,
       'year': instance.year,
+      'guidePrice': instance.guidePrice,
     };

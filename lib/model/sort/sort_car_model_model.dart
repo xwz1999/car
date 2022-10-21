@@ -9,6 +9,7 @@ class SortCarModelModel extends Equatable {
   final int modelId;
   final String name;
   final int year;
+  final String guidePrice;
 
   factory SortCarModelModel.fromJson(Map<String, dynamic> json) =>
       _$SortCarModelModelFromJson(json);
@@ -16,7 +17,7 @@ class SortCarModelModel extends Equatable {
   Map<String, dynamic> toJson() => _$SortCarModelModelToJson(this);
 
   static SortCarModelModel get init =>
-      const SortCarModelModel(id: 0, name: '', year: 0, modelId: 0);
+      const SortCarModelModel(id: 0, name: '', year: 0, modelId: 0,guidePrice: '');
 
   @override
   List<Object?> get props => [id, name, year, modelId];
@@ -26,5 +27,6 @@ class SortCarModelModel extends Equatable {
     required this.modelId,
     required this.name,
     required this.year,
+    required this.guidePrice
   });
 }

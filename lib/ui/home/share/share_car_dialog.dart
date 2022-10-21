@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
+import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/share_util.dart';
 import 'package:cloud_car/utils/user_tool.dart';
@@ -9,6 +10,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:provider/provider.dart';
 
 import 'edit_item_widget.dart';
 
@@ -33,13 +35,34 @@ class _ShareCarDialogState extends State<ShareCarDialog>
 
   ///防止键盘遮挡输入框
   final GlobalKey<EditItemWidgetState> _key = GlobalKey();
+  String shareTitle = '';
   late String _selfText = '';
+  String shareUrl = '';
 
   @override
   void initState() {
+    final userProvider = Provider.of<UserProvider>(context,listen: false);
     _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
 
     super.initState();
+
+    if(!widget.isMore){
+      shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/singleTransfer?id='"${widget.model.first.id}";
+      shareTitle = widget.model.first.modelName;
+    }else{
+      String id = '';
+      for(int i=0;i<widget.model.length;i++){
+       if(i==0){
+         id+= "${widget.model[i].id}";
+       }else{
+         id+= "+${widget.model[i].id}";
+       }
+      }
+      shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/quickTransfer?id=$id';
+      shareTitle = '${userProvider.userInfo.nickname}分享了${widget.model.length}辆车';
+    }
+    print(shareUrl);
+    print(shareTitle);
   }
 
   @override
@@ -141,32 +164,40 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                         ),
                       ),
                     ),
-                    // Expanded(
-                    //   child: GestureDetector(
-                    //     onTap: () async {
-                    //       ShareUtil.shareNetWorkImage(
-                    //           title: widget.model.first.modelName,
-                    //           imgUrl: widget.model.first.mainPhoto,
-                    //           scene: fluwx.WeChatScene.TIMELINE);
-                    //     },
-                    //     child: Column(
-                    //       children: [
-                    //         Image.asset(
-                    //           Assets.icons.icShareWxCircle.path,
-                    //           width: 96.w,
-                    //           height: 96.w,
-                    //         ),
-                    //         5.hb,
-                    //         Text(
-                    //           '朋友圈',
-                    //           style: TextStyle(
-                    //               color: const Color(0xFF666666),
-                    //               fontSize: BaseStyle.fontSize24),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          Get.back();
+                          ShareUtil.shareWebPage(
+                            shareUrl,
+                            title:  shareTitle,
+                            scene: fluwx.WeChatScene.TIMELINE,
+                            image: widget.model.first.mainPhoto,
+                          );
+
+                          // ShareUtil.shareNetWorkImage(
+                          //     title: widget.model.first.modelName,
+                          //     imgUrl: widget.model.first.mainPhoto,
+                          //     scene: fluwx.WeChatScene.TIMELINE);
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              Assets.icons.icShareWxCircle.path,
+                              width: 96.w,
+                              height: 96.w,
+                            ),
+                            5.hb,
+                            Text(
+                              '朋友圈',
+                              style: TextStyle(
+                                  color: const Color(0xFF666666),
+                                  fontSize: BaseStyle.fontSize24),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 40.hb,
@@ -444,10 +475,18 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          ShareUtil.shareNetWorkImage(
-                              title: widget.model.first.modelName,
-                              imgUrl: widget.model.first.mainPhoto,
-                              scene: fluwx.WeChatScene.TIMELINE);
+                          // ShareUtil.shareNetWorkImage(
+                          //     title: widget.model.first.modelName,
+                          //     imgUrl: widget.model.first.mainPhoto,
+                          //     scene: fluwx.WeChatScene.TIMELINE);
+                          Get.back();
+                          ShareUtil.shareWebPage(
+                            shareUrl,
+                            title:  shareTitle,
+                            scene: fluwx.WeChatScene.TIMELINE,
+                            image: widget.model.first.mainPhoto,
+                          );
+
                         },
                         child: Column(
                           children: [

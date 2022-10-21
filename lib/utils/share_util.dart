@@ -36,11 +36,12 @@ class ShareUtil {
 
   ///分享web链接
   static Future shareWebPage(String webUrl,
-      {fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION,
+      {fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION,String? title,
       String? image}) async {
     var re = await fluwx.shareToWeChat(
       fluwx.WeChatShareWebPageModel(
         webUrl,
+        title: title??"",
         thumbnail: fluwx.WeChatImage.network(image.imageWithHost),
         compressThumbnail: true,
         scene: scene,

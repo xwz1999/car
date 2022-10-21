@@ -84,7 +84,7 @@ class _CarManagePhotoWidgetState extends State<CarManagePhotoWidget> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: Assets.images.addcar,
+                        image:  AssetImage(Assets.images.addcar.path) ,
                       ),
                     ),
                   )

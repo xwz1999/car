@@ -294,7 +294,7 @@ class _PushCarPageState extends State<PushCarPage> {
 
     var mile = EditItemWidget(
       topIcon: true,
-      title: '表现里程',
+      title: '表显里程',
       tips: '请输入里程',
       controller: _mileController,
       canChange: true,
@@ -567,7 +567,7 @@ class PublishCarInfo {
   ///车身颜色
   String? carColor;
 
-  ///表现里程
+  ///表显里程
   String? mileage;
 
   static PublishCarInfo get empty => PublishCarInfo(

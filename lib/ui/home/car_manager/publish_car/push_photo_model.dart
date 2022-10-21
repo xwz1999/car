@@ -1,0 +1,82 @@
+class PushPhotoModel {
+  List<CarPhotos>? carPhotos;
+  List<CarPhotos>? interiorPhotos;
+  List<CarPhotos>? defectPhotos;
+  // List<CarPhotos>? dataPhotos;
+
+  PushPhotoModel(
+      {this.carPhotos,
+        this.interiorPhotos,
+        this.defectPhotos,});
+
+  static PushPhotoModel get init => PushPhotoModel(
+    carPhotos:[],
+    interiorPhotos:[],
+    defectPhotos:[],
+
+  );
+
+  PushPhotoModel.fromJson(Map<String, dynamic> json) {
+    if (json['carPhotos'] != null) {
+      carPhotos = [];
+      json['carPhotos'].forEach((v) {
+        carPhotos!.add(CarPhotos.fromJson(v));
+      });
+    }
+    if (json['interiorPhotos'] != null) {
+      interiorPhotos = [];
+      json['interiorPhotos'].forEach((v) {
+        interiorPhotos!.add(CarPhotos.fromJson(v));
+      });
+    }
+    if (json['defectPhotos'] != null) {
+      defectPhotos = [];
+      json['defectPhotos'].forEach((v) {
+        defectPhotos!.add( CarPhotos.fromJson(v));
+      });
+    }
+    // if (json['dataPhotos'] != null) {
+    //   dataPhotos = [];
+    //   json['dataPhotos'].forEach((v) {
+    //     dataPhotos!.add(CarPhotos.fromJson(v));
+    //   });
+    // }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (carPhotos != null) {
+      data['carPhotos'] = carPhotos!.map((v) => v.toJson()).toList();
+    }
+    if (interiorPhotos != null) {
+      data['interiorPhotos'] =
+          interiorPhotos!.map((v) => v.toJson()).toList();
+    }
+    if (defectPhotos != null) {
+      data['defectPhotos'] = defectPhotos!.map((v) => v.toJson()).toList();
+    }
+    // if (dataPhotos != null) {
+    //   data['dataPhotos'] = dataPhotos!.map((v) => v.toJson()).toList();
+    // }
+    return data;
+  }
+}
+
+class CarPhotos {
+  String? photo;
+  String? text;
+
+  CarPhotos({this.photo, this.text});
+
+  CarPhotos.fromJson(Map<String, dynamic> json) {
+    photo = json['photo'];
+    text = json['text'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['photo'] = photo;
+    data['text'] = text;
+    return data;
+  }
+}

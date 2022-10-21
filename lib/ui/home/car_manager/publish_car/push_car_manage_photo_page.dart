@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_car/model/car/inner_model/car_manage_photo_model.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_report_photo_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/report_photo_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -12,11 +16,12 @@ import 'package:velocity_x/velocity_x.dart';
 
 class PushCarManagePhotoPage extends StatefulWidget {
   final List<String> tabs;
-  final CarManagePhotoModel model;
+  final PushPhotoModel model;
   final int initIndex;
+  final bool canTap;
 
   const PushCarManagePhotoPage(
-      {super.key, required this.tabs, required this.model, this.initIndex = 0});
+      {super.key, required this.tabs, required this.model, this.initIndex = 0, this.canTap = true});
 
   @override
   _PushCarManagePhotoPageState createState() => _PushCarManagePhotoPageState();
@@ -25,15 +30,11 @@ class PushCarManagePhotoPage extends StatefulWidget {
 class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController _tabController;
+
   List<PushImgModel> _carPhotos = [];
   List<PushImgModel> _interiorPhotos = [];
-
-
-
-
-  // List<dynamic> _carPhotos = [];
-  // List<dynamic> _interiorPhotos = [];
   List<dynamic> _defectPhotos = [];
+
 
   @override
   void initState() {
@@ -42,71 +43,108 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         vsync: this,
         initialIndex: widget.initIndex);
     _carPhotos = [
-      PushImgModel(name: '左前45°',url: ''),
-      PushImgModel(name: '正面',url: ''),
-      PushImgModel(name: '右前45°',url: ''),
-      PushImgModel(name: '右后45°',url: ''),
-      PushImgModel(name: '左后45°',url: ''),
-      PushImgModel(name: '左后45°',url: ''),
+      PushImgModel(name: '左前45°'),
+      PushImgModel(name: '正面'),
+      PushImgModel(name: '右前45°'),
+      PushImgModel(name: '右后45°'),
+      PushImgModel(name: '左后45°'),
+      PushImgModel(name: '左后45°'),
     ];
 
     _interiorPhotos = [
-      PushImgModel(name: '驾驶座椅',url: ''),
-      PushImgModel(name: '副驾驶座椅',url: ''),
-      PushImgModel(name: '后排座椅',url: ''),
-      PushImgModel(name: '仪表（公里数）',url: ''),
-      PushImgModel(name: '中控',url: ''),
-      PushImgModel(name: '前排机舱及地盘',url: ''),
-      PushImgModel(name: '后备箱',url: ''),
-      PushImgModel(name: '引擎盖打开整体',url: ''),
-      PushImgModel(name: '发动机',url: ''),
-      PushImgModel(name: '车边梁',url: ''),
-      PushImgModel(name: '底盘',url: ''),
+      PushImgModel(name: '驾驶座椅'),
+      PushImgModel(name: '副驾驶座椅'),
+      PushImgModel(name: '后排座椅'),
+      PushImgModel(name: '仪表（公里数）'),
+      PushImgModel(name: '中控'),
+      PushImgModel(name: '前排机舱及地盘'),
+      PushImgModel(name: '后备箱'),
+      PushImgModel(name: '引擎盖打开整体'),
+      PushImgModel(name: '发动机'),
+      PushImgModel(name: '车边梁'),
+      PushImgModel(name: '底盘'),
     ];
 
+    for(int i=0;i<widget.model.carPhotos!.length;i++){
 
-    // for (var item in widget.model.carPhotos) {
-    //   _carPhotos.add(item);
+      for(int j=0;j<_carPhotos.length;j++){
+        if(_carPhotos[j].name == widget.model.carPhotos![i].text){
+          if(widget.model.carPhotos![i].photo!=null){
+            print(j);
+            print(i);
+            _carPhotos[j].url = widget.model.carPhotos![i].photo;
+          }
+
+        }
+      }
+    }
+
+
+    for(int i=0;i<widget.model.interiorPhotos!.length;i++){
+
+      for(int j=0;j<_interiorPhotos.length;j++){
+        if(_interiorPhotos[j].name == widget.model.interiorPhotos![i].text){
+          if(widget.model.interiorPhotos![i].photo!=null){
+            print(j);
+            print(i);
+            _interiorPhotos[j].url = widget.model.interiorPhotos![i].photo;
+          }
+        }
+      }
+    }
+
+    // for(int i=0;i<widget.model.interiorPhotos!.length;i++){
+    //   for(int j=0;i<_interiorPhotos.length;j++){
+    //     if(_interiorPhotos[j].name == widget.model.interiorPhotos![i].text){
+    //       _interiorPhotos[j].url = widget.model.interiorPhotos![i].photo;
+    //     }
+    //   }
     // }
-    // for (var item in widget.model.interiorPhotos) {
-    //   _interiorPhotos.add(item);
-    // }
-    for (var item in widget.model.defectPhotos) {
-      _defectPhotos.add(item);
+
+    for (var item in widget.model.defectPhotos!) {
+      _defectPhotos.add(item.photo);
     }
 
     super.initState();
   }
 
   Future uploadPhotos() async {
-    // widget.model.carPhotos.clear();
-    // widget.model.interiorPhotos.clear();
-    // widget.model.defectPhotos.clear();
-    // widget.model.dataPhotos.clear();
-    // for (var i = 0; i < _carPhotos.length; i++) {
-    //   if (_carPhotos[i].runtimeType != String) {
-    //     var url = await apiClient.uploadImage(_carPhotos[i]);
-    //     _carPhotos.removeAt(i);
-    //     _carPhotos.insert(i, url);
-    //   }
-    //   widget.model.carPhotos.add(_carPhotos[i]);
-    // }
-    // for (var i = 0; i < _interiorPhotos.length; i++) {
-    //   if (_interiorPhotos[i].runtimeType != String) {
-    //     var url = await apiClient.uploadImage(_interiorPhotos[i]);
-    //     _interiorPhotos.removeAt(i);
-    //     _interiorPhotos.insert(i, url);
-    //   }
-    //   widget.model.interiorPhotos.add(_interiorPhotos[i]);
-    // }
-    // for (var i = 0; i < _defectPhotos.length; i++) {
-    //   if (_defectPhotos[i].runtimeType != String) {
-    //     var url = await apiClient.uploadImage(_defectPhotos[i]);
-    //     _defectPhotos.removeAt(i);
-    //     _defectPhotos.insert(i, url);
-    //   }
-    //   widget.model.defectPhotos.add(_defectPhotos[i]);
-    // }
+
+    widget.model.carPhotos!.clear();
+    widget.model.interiorPhotos!.clear();
+    widget.model.defectPhotos!.clear();
+
+
+    for (var i = 0; i < _carPhotos.length; i++) {
+      if (_carPhotos[i].url.runtimeType != String&&_carPhotos[i].url.runtimeType != Null) {
+        var url = await apiClient.uploadImage(
+            _carPhotos[i].url );
+        _carPhotos[i].url = url;
+      }
+      widget.model.carPhotos!.add(CarPhotos(photo: _carPhotos[i].url,text: _carPhotos[i].name)  );
+    }
+
+
+    for (var i = 0; i < _interiorPhotos.length; i++) {
+      if (_interiorPhotos[i].url.runtimeType != String&&_interiorPhotos[i].url.runtimeType != Null) {
+        var url = await apiClient.uploadImage(
+            _interiorPhotos[i].url );
+        _interiorPhotos[i].url = url;
+      }
+      widget.model.interiorPhotos!.add(CarPhotos(photo: _interiorPhotos[i].url,text: _interiorPhotos[i].name)  );
+    }
+
+
+    for (var i = 0; i < _defectPhotos.length; i++) {
+      if (_defectPhotos[i].runtimeType != String) {
+        print(_defectPhotos[i]);
+        var url = await apiClient.uploadImage(_defectPhotos[i]);
+        _defectPhotos.removeAt(i);
+        _defectPhotos.insert(i, url);
+      }
+      widget.model.defectPhotos!.add(CarPhotos(photo: _defectPhotos[i],text: '细节照片')  );
+    }
+
   }
 
   @override
@@ -117,10 +155,16 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
       actions: [
         TextButton(
           onPressed: () async {
-            var cancel = CloudToast.loading;
-            await uploadPhotos();
-            Get.back();
-            cancel();
+            if(widget.canTap){
+              var cancel = CloudToast.loading;
+              await uploadPhotos();
+              Get.back();
+              cancel();
+            }
+          else{
+              Get.back();
+            }
+
 
           },
           child: Text(
@@ -174,16 +218,20 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
     return GestureDetector(
       onTap: () async {
 
-        var value =
-        await CloudImagePicker.pickSingleImage(title: '选择图片');
-        if(type==0){
-          _carPhotos[index].url = value;
-        }else{
-          _interiorPhotos[index].url = value;
+        if(widget.canTap){
+
+          var value =
+          await CloudImagePicker.pickSingleImage(title: '选择图片');
+          if(type==0){
+            _carPhotos[index].url = value;
+          }else{
+            _interiorPhotos[index].url = value;
+          }
+
+
+          setState(() {});
         }
 
-
-        setState(() {});
       },
       child: Material(
         color: Colors.transparent,
@@ -196,7 +244,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: Assets.images.addcar,
+                  image: AssetImage(Assets.images.addcar.path) ,
                 ),
               ),
             )

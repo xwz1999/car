@@ -191,7 +191,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             editor: false,
             value: gender.typeStr,
             widget: Image(
-              image: Assets.icons.icGoto,
+              image: AssetImage(Assets.icons.icGoto.path) ,
               width: 32.w,
               height: 32.w,
             ),
@@ -329,7 +329,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             tips: '请选择',
             value: storeIdText,
             widget: Image(
-              image: Assets.icons.icGoto,
+              image: AssetImage(Assets.icons.icGoto.path) ,
               width: 32.w,
               height: 32.w,
             ),
@@ -363,7 +363,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
           tips: '请选择',
           value: permissions1,
           widget: Image(
-            image: Assets.icons.icGoto,
+            image: AssetImage(Assets.icons.icGoto.path) ,
             width: 32.w,
             height: 32.w,
           ),

@@ -210,8 +210,8 @@ class _ShareCarPageState extends State<ShareCarPage> {
                 _selectIndex.remove(index);
                 _chooseModels.remove(model);
               } else {
-                _selectIndex.clear();
-                _chooseModels.clear();
+                // _selectIndex.clear();
+                // _chooseModels.clear();
                 _selectIndex.add(index);
                 _chooseModels.add(model);
               }

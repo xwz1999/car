@@ -88,6 +88,17 @@ class ApiClient {
     return model.data['path'];
   }
 
+  // Future<String> uploadImageString(String file) async {
+  //   var response = await _dio.post(
+  //     API.file.uploadImage,
+  //     data: FormData.fromMap(
+  //       {'image': await MultipartFile.fromFile(file)},
+  //     ),
+  //   );
+  //   var model = BaseModel.fromJson(response.data);
+  //   return model.data['path'];
+  // }
+
   /// 批量上传图片
   Future<List<String>> uploadImages(
     List<File> files,

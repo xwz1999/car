@@ -140,8 +140,8 @@ class _SplashPageState extends State<SplashPage> {
     if (kDebugMode) {
       print('env :$env');
     }
-    //AppENV.instance.setEnv(env);
-    AppENV.instance.setEnv('release');
+    AppENV.instance.setEnv(env);
+    //AppENV.instance.setEnv('release');
 
     Future.delayed(const Duration(milliseconds: 1000), () async {
       await initialAll(context);

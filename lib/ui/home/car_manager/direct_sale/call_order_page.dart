@@ -103,7 +103,7 @@ class _CallOrderPageState extends State<CallOrderPage> {
                         bottom: CloudBottomButton(
                           onTap: () {
                             Get.until((route) =>
-                                Get.currentRoute == '/CarsDetailPage');
+                                Get.currentRoute == '/NewCarsDetailPage');
                             // Alert.show(
                             //     context,
                             //     NormalContentDialog(

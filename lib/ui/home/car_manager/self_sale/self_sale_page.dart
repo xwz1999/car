@@ -3,6 +3,7 @@ import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/cars_detail_page.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/new_cars_detail_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/func/car_map.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
@@ -216,7 +217,7 @@ class _SelfSalePageState extends State<SelfSalePage>
                             var model = carList[index];
                             return GestureDetector(
                               onTap: () async {
-                                Get.to(() => CarsDetailPage(
+                                Get.to(() => NewCarsDetailPage(
                                       carListModel: model,
                                     ));
                               },

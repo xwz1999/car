@@ -378,7 +378,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
             getText('手机号', staffInfo!.phone),
             getText('权限配置', staffInfo!.roleName),
             getText('所属门店', staffInfo!.storeName),
-            getText('所属入驻商', '宁波xx4s专营店'),
+            //getText('所属入驻商', '宁波xx4s专营店'),
 
             ///widget.business
             ///staffInfo!.Storeid

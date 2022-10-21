@@ -271,7 +271,8 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
                       await fluwx.shareToWeChat(
                         fluwx.WeChatShareImageModel(
                             fluwx.WeChatImage.binary(u8List),
-                            scene: fluwx.WeChatScene.TIMELINE),
+                            scene: fluwx.WeChatScene.TIMELINE,
+                            title: ''),
                       );
                     } else {
                       CloudToast.show('海报生成失败');

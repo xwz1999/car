@@ -1,6 +1,8 @@
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/enums.dart';
+import 'package:cloud_car/ui/user/user_management/access_configuration_page.dart';
+import 'package:cloud_car/ui/user/user_management/organizational_structure_page.dart';
 import 'package:cloud_car/ui/user/user_management/text_editingcontroller_widget.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
@@ -89,9 +91,10 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
                 nameText,
                 _gender!.typeNum,
                 phoneText,
-                // storeId,
+
                 2,
                 commissionText,
+                storeId:  storeId,
               );
               if (res) {
                 BotToast.showText(text: '提交成功');
@@ -143,7 +146,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
             tips: '请选择',
             value: _gender?.typeStr ?? '',
             widget: Image(
-              image: Assets.icons.icGoto,
+              image: AssetImage(Assets.icons.icGoto.path) ,
               width: 32.w,
               height: 32.w,
             ),
@@ -273,29 +276,29 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
               phoneText = content;
             },
           ),
-          // TextEditItemWidget(
-          //   padding: EdgeInsets.only(bottom: 16.w),
-          //   title: '组织架构',
-          //   endIcon: true,
-          //   editor: false,
-          //   tips: '请选择',
-          //   value: storeidText,
-          //   widget: Image(
-          //     image: Assets.icons.icGoto,
-          //     width: 32.w,
-          //     height: 32.w,
-          //   ),
-          //   onTap: () async {
-          //     await Get.to(() => StructurePage(
-          //           callback: (String city, int id) {
-          //             storeidText = city;
-          //             storeId = id;
-          //           },
-          //         ));
-          //     setState(() {});
-          //   },
-          //   callback: (String content) {},
-          // ),
+          TextEditItemWidget(
+            padding: EdgeInsets.only(bottom: 16.w),
+            title: '组织架构',
+            endIcon: true,
+            editor: false,
+            tips: '请选择',
+            value: storeidText,
+            widget: Image(
+              image: AssetImage(Assets.icons.icGoto.path) ,
+              width: 32.w,
+              height: 32.w,
+            ),
+            onTap: () async {
+              await Get.to(() => StructurePage(
+                    callback: (String city, int id) {
+                      storeidText = city;
+                      storeId = id;
+                    },
+                  ));
+              setState(() {});
+            },
+            callback: (String content) {},
+          ),
         ],
       ),
     );
@@ -311,7 +314,7 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           title: '权限配置',
           endIcon: true,
           editor: false,
-          tips: UserTool.userProvider.userInfo.businessId == 1 ? '车务' : '经纪人',
+          tips: roleId == 1 ? '店长' :roleId == 2 ? '车务':roleId == 3 ?'经纪人':'',
           value: permissions1,
           // widget: Image(
           //   image: Assets.icons.icGoto,
@@ -319,13 +322,13 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           //   height: 32.w,
           // ),
           onTap: () async {
-            // await Get.to(() => AccessConfigurationPage(
-            //       callback: (String city, int id) {
-            //         permissions1 = city;
-            //         roleId = id;
-            //       },
-            //     ));
-            // setState(() {});
+            await Get.to(() => AccessConfigurationPage(
+                  callback: (String city, int id) {
+                    permissions1 = city;
+                    roleId = id;
+                  },
+                ));
+            setState(() {});
           },
           callback: (String content) {},
         ),

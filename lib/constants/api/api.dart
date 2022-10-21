@@ -201,6 +201,10 @@ class _Order {
   ///发布车辆详情
   get consignmentInfoCar => '/order/consignment/info/car';
 
+
+  ///添加车商寄卖订单 车商发布订单
+  get newPushCar => '/car/publish';
+
   ///发布车辆编辑
   get consignmentPublishEdit => '/order/consignment/publish/edit';
 
@@ -239,7 +243,7 @@ class _Region {
 ///门店管理
 class _StoreManagement {
   ///组织架构
-  get storeAll => '/business/store/all';
+  String get storeAll => '/business/store/all';
 
   ///全部入驻商
   String get businessAll => '/business/allBusiness';

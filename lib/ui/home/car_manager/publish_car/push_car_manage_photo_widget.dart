@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/car/inner_model/car_manage_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/car_manage_photos/car_manage_photo_page.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class PushCarManagePhotoWidget extends StatefulWidget {
-  final CarManagePhotoModel model;
+  final PushPhotoModel model;
 
   const PushCarManagePhotoWidget({super.key, required this.model});
 
@@ -44,18 +45,29 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
     String bottom,
     int index,
   ) {
-    var photos = [];
+    List<CarPhotos> photos = [];
+    int length = 0;
+    String firstPhoto = '';
     switch (index) {
       case 0:
-        photos = widget.model.carPhotos;
+        photos = widget.model.carPhotos??[];
         break;
       case 1:
-        photos = widget.model.interiorPhotos;
+        photos = widget.model.interiorPhotos??[];
         break;
       case 2:
-        photos = widget.model.defectPhotos;
+        photos = widget.model.defectPhotos??[];
         break;
     }
+
+    for(int i=0;i<photos.length;i++){
+      if(photos[i].photo!=null){
+        firstPhoto = photos[i].photo!;
+        length++;
+
+      }
+    }
+
     return GestureDetector(
       onTap: () async {
         await Get.to(
@@ -71,14 +83,14 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
         color: Colors.transparent,
         child: Column(
           children: [
-            photos.isEmpty
+            length==0
                 ? Container(
                     width: 210.w,
                     height: 158.w,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: Assets.images.addcar,
+                        image: AssetImage(Assets.images.addcar.path) ,
                       ),
                     ),
                   )
@@ -93,7 +105,7 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
                           borderRadius: BorderRadius.circular(16.w),
                         ),
                         child: CloudImageNetworkWidget(
-                          urls: [photos.first],
+                          urls: [firstPhoto],
                         ),
                       ),
                       Positioned(
@@ -111,7 +123,7 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
                             ),
                           ),
                           child: Text(
-                            '${photos.length}张',
+                            '$length张',
                             style: TextStyle(
                               fontSize: 20.sp,
                               color: Colors.white,

@@ -1,7 +1,9 @@
 import 'package:cloud_car/model/car/car_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_widget.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_report_photo_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/report_photo_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -12,9 +14,10 @@ import 'package:flutter/material.dart';
 
 class PushCarPicturePage extends StatefulWidget {
   final NewPublishCarInfo newPublishCarInfo;
-
+  final PushPhotoModel carPhotoModel;
+  final ReportPhotoModel reportPhotoModel;
   const PushCarPicturePage({
-  super.key, required this.newPublishCarInfo,
+  super.key, required this.newPublishCarInfo, required this.carPhotoModel, required this.reportPhotoModel,
   });
 
   @override
@@ -23,9 +26,11 @@ class PushCarPicturePage extends StatefulWidget {
 
 class _PushCarPicturePageState extends State<PushCarPicturePage> {
 
-  final ValueNotifier<CarPhotoModel> carPhotoModel =
-  ValueNotifier(CarPhotoModel.init);
-
+  // final ValueNotifier<PushPhotoModel> carPhotoModel =
+  // ValueNotifier(PushPhotoModel.init);
+  //
+  // final ValueNotifier<ReportPhotoModel> reportPhotoModel =
+  // ValueNotifier(ReportPhotoModel.init);
   @override
   void initState() {
     super.initState();
@@ -52,25 +57,38 @@ class _PushCarPicturePageState extends State<PushCarPicturePage> {
         child: Column(
           children: [
             Expanded(
-                child: PushCarManagePhotoWidget(model: carPhotoModel.value.photos)),
+                child: PushCarManagePhotoWidget(model: widget.carPhotoModel)),
             30.hb,
             CloudBottomButton(
               onTap: () {
-                Get.to(()=>const PushReportPhotoPage());
-                // if (carPhotoModel.value.photos.defectPhotos.isEmpty ||
-                //     carPhotoModel.value.photos.interiorPhotos.isEmpty||carPhotoModel.value.photos.carPhotos.isEmpty){
-                //   CloudToast.show('每种照片至少上传一张');
-                // }else{
-                //   // Get.to(
-                //   //       () => PublishCarInfoPage(
-                //   //     businessPushModel: businessPushModel,
-                //   //     carPhotoModel: carPhotoModel,
-                //   //     consignmentContractModel: widget.consignmentContractModel,
-                //   //     orderId: widget.orderId,
-                //   //   ),
-                //   // );
-                //   Get.to(()=>const PushReportPhotoPage());
-                // }
+
+                int carPhotosLength = 0;
+                int interiorPhotosLength = 0;
+                int defectPhotosLength = 0;
+
+                for(int i=0;i<widget.carPhotoModel.carPhotos!.length;i++){
+                  if(widget.carPhotoModel.carPhotos![i].photo!=null){
+                    carPhotosLength++;
+                  }
+                }
+                for(int i=0;i<widget.carPhotoModel.interiorPhotos!.length;i++){
+                  if(widget.carPhotoModel.interiorPhotos![i].photo!=null){
+                    interiorPhotosLength++;
+                  }
+                }
+                for(int i=0;i<widget.carPhotoModel.defectPhotos!.length;i++){
+                  if(widget.carPhotoModel.defectPhotos![i].photo!=null){
+                    defectPhotosLength++;
+                  }
+                }
+
+
+                if (carPhotosLength<=0||interiorPhotosLength<=0||defectPhotosLength<=0){
+                  CloudToast.show('每种照片至少上传一张');
+                }else{
+                  Get.to(()=> PushReportPhotoPage(pushPhotoModel: widget.carPhotoModel,
+                    newPublishCarInfo: widget.newPublishCarInfo,reportPhotoModel: widget.reportPhotoModel,));
+                }
 
               },
               text: '下一步',

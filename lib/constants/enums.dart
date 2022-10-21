@@ -15,7 +15,8 @@ enum Gender {
 
 ///角色分配
 enum Role {
-  salesTraffic(2, '经纪人', '可以录入车辆信息、编辑车辆，并进行客户跟进'),
+  carService(2, '车务', '可以录入车辆信息、编辑车辆，并进行客户跟进'),
+  salesTraffic(3, '经纪人', '参与平台卖车'),
   manager(1, '店长', '能够管理店内的客户、车辆、订单'),
   defaultRole(0, '', '');
 
@@ -35,8 +36,9 @@ enum Role {
 ///车辆来源
 enum CarSource {
   noData(0,''),
-  carDealer(1, '车商'),
-  individual(2, '个人直卖'),
+
+  individual(1, '个人直卖'),
+  carDealer(2, '车商'),
   acquisition(3,'收购');
 
   final int typeNum;
