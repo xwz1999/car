@@ -8,6 +8,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/cloud_image_preview.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
@@ -230,6 +231,12 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
 
           setState(() {});
+        }else{
+          if (model.url.runtimeType == String) {
+            await CloudImagePreview.toPath(path: model.url);
+          } else {
+            await CloudImagePreview.toFile(file: model.url);
+          }
         }
 
       },
@@ -285,7 +292,11 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
               onChanged: (files) {
                 _defectPhotos = files;
                 setState(() {});
-              }),
+              },
+            maxCount: widget.canTap?null:list.length,
+
+              ),
+
         ],
       ),
     );
@@ -313,12 +324,12 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
   bool get wantKeepAlive => true;
 }
 
-class PushImgModel {
-  String? name;
-  dynamic url;
-
-  PushImgModel({
-    this.name,
-    this.url,
-  });
-}
+// class PushImgModel {
+//   String? name;
+//   dynamic url;
+//
+//   PushImgModel({
+//     this.name,
+//     this.url,
+//   });
+// }
