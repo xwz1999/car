@@ -1,6 +1,7 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/split_account/split_account_list_model.dart';
 import 'package:cloud_car/ui/home/split_account/add_split_account_page.dart';
+import 'package:cloud_car/ui/home/split_account/profit_statistics_page.dart';
 import 'package:cloud_car/ui/home/split_account/split_info_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
@@ -13,20 +14,34 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 enum SplitAccountStatus {
-  inProgress(1, '进行中'),
-  finish(2, '已完成');
+  inProgress(1,'进行中'),
+  finish(2,'已完成');
 
-  final int typeNum;
-  final String typeStr;
+final int typeNum;
+final String typeStr;
 
-  static SplitAccountStatus getValue(int value) => SplitAccountStatus.values
-      .firstWhere((element) => element.typeNum == value);
+static SplitAccountStatus getValue
+(
 
-  const SplitAccountStatus(this.typeNum, this.typeStr);
+int value
+)
+=>
+SplitAccountStatus.values
+    .firstWhere((
+element) =>
+element.typeNum == value);
+
+const SplitAccountStatus(this
+.
+typeNum, this
+.
+typeStr);
 }
 
 class SplitAccountPage extends StatefulWidget {
-  const SplitAccountPage({super.key});
+  const SplitAccountPage
+
+  ({super.key});
 
   @override
   _SplitAccountPageState createState() => _SplitAccountPageState();
@@ -51,17 +66,66 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
   @override
   Widget build(BuildContext context) {
     return CloudScaffold.normal(
-      title: '收车账单',
+      title: '收车合作',
       actions: [
-        IconButton(
-            onPressed: () async {
+        PopupMenuButton(
+          itemBuilder: (ctx) {
+            return [
+              PopupMenuItem(
+                value: ['1'],
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  Image.asset(
+                    Assets.icons.icProfit.path, width: 48.w, height: 48.w,),
+                  Padding(
+                    padding:  EdgeInsets.only(bottom: 10.w,left: 5.w),
+                    child: Text("创建分账",
+                      style: TextStyle(color: Colors.white, fontSize: 28.sp),),
+                  )
+                ],),
+              ),
+              PopupMenuItem(
+                value: ['2'],
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  Image.asset(
+                    Assets.icons.icLedger.path, width: 48.w, height: 48.w,),
+                  Padding(
+                    padding:  EdgeInsets.only(bottom: 10.w,left: 5.w),
+                    child: Text("利润统计",
+                      style: TextStyle(color: Colors.white, fontSize: 28.sp),),
+                  )
+                ],),
+              ),
+            ];
+          },
+          color: const Color(0xFF404040),
+          offset: const Offset(0, 40),
+          enabled: true,
+          child: Center(
+              child:
+              Padding(
+                padding: EdgeInsets.only(right: 32.w),
+                child: Icon(
+                  CupertinoIcons.add,
+                  size: 48.w,
+                ),
+              )
+          ),
+          onSelected: (List<String> value)async{
+            print(value[0]);
+            if(value[0]=='1'){
               await Get.to(() => const AddSplitAccountPage());
               _easyRefreshController.callRefresh();
-            },
-            icon: Icon(
-              CupertinoIcons.add,
-              size: 48.w,
-            ))
+            }else{
+              Get.to(() => const ProfitStatisticsPage(accountId: 0,));
+            }
+          },// 内边距
+        ),
       ],
       barHeight: 88.w,
       body: Column(
@@ -87,7 +151,7 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
               onRefresh: () async {
                 _page = 1;
                 var baseList =
-                    await apiClient.requestList(API.split.list, data: {
+                await apiClient.requestList(API.split.list, data: {
                   'status': _currentStatus.typeNum,
                   'page': _page,
                   'limit': _limit,
@@ -102,7 +166,7 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
               onLoad: () async {
                 _page++;
                 var baseList =
-                    await apiClient.requestList(API.split.list, data: {
+                await apiClient.requestList(API.split.list, data: {
                   'status': _currentStatus,
                   'page': _page,
                   'limit': _limit,
@@ -119,14 +183,14 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
               child: _models.isEmpty
                   ? const SizedBox()
                   : ListView(
-                      children: ListTile.divideTiles(
-                              context: context,
-                              tiles: _models
-                                  .mapIndexed((currentValue, index) =>
-                                      _listCard(currentValue, index))
-                                  .toList())
-                          .toList(),
-                    ),
+                children: ListTile.divideTiles(
+                    context: context,
+                    tiles: _models
+                        .mapIndexed((currentValue, index) =>
+                        _listCard(currentValue, index))
+                        .toList())
+                    .toList(),
+              ),
             ),
           ),
         ],
@@ -147,7 +211,8 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
       color: Colors.white,
       child: InkWell(
         onTap: () {
-          Get.to(() => SplitInfoPage(
+          Get.to(() =>
+              SplitInfoPage(
                 title: model.name,
                 accountId: model.id,
               ));
@@ -155,13 +220,14 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
         child: ListTile(
           leading: _iconPaths[index % 5].image(width: 88.w, height: 88.w),
           title:
-              model.name.text.size(28.sp).color(const Color(0xFF111111)).make(),
+          model.name.text.size(28.sp).color(const Color(0xFF111111)).make(),
           subtitle: model.lastBill.text
               .size(28.sp)
               .color(const Color(0xFFAAAAAA))
               .make(),
-          trailing: DateUtil.formatDateMs(model.createAt * 1000,
-                  format: DateFormats.mo_d_h_m)
+          trailing: DateUtil
+              .formatDateMs(model.createAt * 1000,
+              format: DateFormats.mo_d_h_m)
               .text
               .size(20.sp)
               .color(const Color(0xFFAAAAAA))

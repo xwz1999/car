@@ -59,6 +59,11 @@ class SearchParamModel {
   ///里程
   String mile;
 
+  ///能源类型
+  String fuel;
+  int? get fuelType => CarMap.fuelType[fuel];
+
+
   ///筛选中输入的最大最小里程
   int? editMinMile;
   int? editMaxMile;
@@ -84,6 +89,7 @@ class SearchParamModel {
     this.editMaxMile,
     this.editMinMile,
     this.gear='',
+    this.fuel='',
     this.struct='',
     this.carAge='',
     this.dischargeStandard='',

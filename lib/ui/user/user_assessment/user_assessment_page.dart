@@ -100,7 +100,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
           ),
         ),
         Container(
-          padding: EdgeInsets.only(top: 40.w, left: 80.w),
+         padding: EdgeInsets.only( left: 40.w),
           child: Column(
             children: [
               Row(

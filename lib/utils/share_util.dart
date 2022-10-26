@@ -4,6 +4,7 @@ import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/constants/environment/environment.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,7 @@ class ShareUtil {
       {required String title,
       required String imgUrl,
       fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
+
     var data = await handleImage(imgUrl);
     if (data == null) {
       return;
@@ -57,12 +59,13 @@ class ShareUtil {
       {required String title,
       required String imgUrl,
       required List<int> carIds}) async {
+    print(imgUrl);
     var data = await handleImage(imgUrl);
     if (data == null) return;
     var str = carIds.map((e) => e.toString()).join(',');
     String path = carIds.length == 1
-        ? 'pages/index/carBuying/secHandCar/carDetail/index/index?carId=${carIds.first}'
-        : 'pages/buy/buy?carIds=$str';
+        ? 'pages/index/carBuying/secHandCar/carDetail/index/index?carId=${carIds.first}&inviteCode=${UserTool.userProvider.userInfo.inviteCode}'
+        : 'pages/buy/buy?carIds=$str&inviteCode=${UserTool.userProvider.userInfo.inviteCode}';
     var re = await fluwx.shareToWeChat(
       fluwx.WeChatShareMiniProgramModel(
         title: title,

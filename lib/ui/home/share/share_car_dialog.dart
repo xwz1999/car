@@ -47,7 +47,7 @@ class _ShareCarDialogState extends State<ShareCarDialog>
     super.initState();
 
     if(!widget.isMore){
-      shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/singleTransfer?id='"${widget.model.first.id}";
+      shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/singleTransfer?id='"${widget.model.first.id}&inviteCode=${UserTool.userProvider.userInfo.inviteCode}";
       shareTitle = widget.model.first.modelName;
     }else{
       String id = '';
@@ -58,11 +58,9 @@ class _ShareCarDialogState extends State<ShareCarDialog>
          id+= "+${widget.model[i].id}";
        }
       }
-      shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/quickTransfer?id=$id';
+      shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/quickTransfer?id=$id&inviteCode=${UserTool.userProvider.userInfo.inviteCode}';
       shareTitle = '${userProvider.userInfo.nickname}分享了${widget.model.length}辆车';
     }
-    print(shareUrl);
-    print(shareTitle);
   }
 
   @override

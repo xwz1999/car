@@ -4,6 +4,7 @@ import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/new_cars_detail_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_mortgage/car_mortgage_page.dart';
+import 'package:cloud_car/ui/home/car_purchase/purchase_push_car_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_edit_page.dart';
 import 'package:cloud_car/ui/home/poster/poster_func.dart';
 import 'package:cloud_car/ui/home/poster/poster_list_page.dart';
@@ -222,7 +223,9 @@ class _HomePageState extends State<HomePage>
             Get.to(() => const SplitAccountPage());
             break;
           case '估价充值':
-            Get.to(() => const UserAssessmentPage());
+
+            Get.to(() => const PurchasePushCarPage());
+            //Get.to(() => const UserAssessmentPage());
         }
       },
       child: ColoredBox(

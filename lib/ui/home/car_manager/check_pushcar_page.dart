@@ -36,7 +36,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
           Stack(
             children: [
               Container(
-                height: 420.h,
+                height: 320.h,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/push_car_top.png'),
@@ -57,42 +57,72 @@ class _CheckPushPageState extends State<CheckPushPage> {
                   backgroundColor: Colors.transparent,
                   extendBody: true,
                   body: Container(
-                    padding: EdgeInsets.only(left: 80.w),
+                    padding: EdgeInsets.only(left: 62.w,top: 50.w),
                     width: double.infinity,
                     height: 140.h,
                     alignment: Alignment.centerLeft,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    child: Column(
                       children: [
-                        const Text(
-                          '系统估值',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
-                        ).paddingOnly(top: 10.w),
-                        20.wb,
-                        Text(
-                          (num.parse(widget.consignmentContractModel.value
-                                      .evaluationPrice!) /
-                                  10000)
-                              .toString(),
-                          style: const TextStyle(
-                            fontSize: 30,
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text(
+                              '系统估值',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                            ).paddingOnly(top: 10.w),
+                            20.wb,
+                            Text(
+                              (num.parse(widget.consignmentContractModel.value
+                                          .evaluationPrice!)*1.05 /
+                                      10000)
+                                  .toStringAsFixed(2),
+                              style: const TextStyle(
+                                fontSize: 30,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            5.wb,
+                            '万'.text.color(Colors.red).bold.size(41.sp).make(),
+                          ],
                         ),
-                        5.wb,
-                        '万'.text.color(Colors.red).bold.size(41.sp).make(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                             Text(
+                              '预计到手价：',
+                              style: TextStyle(
+                                color: const Color(0xFF333333),
+                                fontSize: 20.sp,
+                              ),
+                            ).paddingOnly(top: 0.w),
+
+                            Text(
+                              (num.parse(widget.consignmentContractModel.value
+                                  .evaluationPrice!) /
+                                  10000)
+                                  .toString(),
+                              style:  TextStyle(
+                                fontSize:20.sp,
+                                color: const Color(0xFF333333),
+                              ),
+                            ),
+
+                            '万'.text.color(const Color(0xFF333333),).size(20.sp).make(),
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 410.h),
+                padding: EdgeInsets.only(top: 310.h),
                 child: Container(
                   padding: EdgeInsets.all(30.w),
                   decoration: BoxDecoration(

@@ -814,7 +814,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                     filled: true,
                     isDense: true,
                     fillColor: Colors.white,
-                    hintText: "请选择",
+                    hintText: "请输入",
                     hintStyle: TextStyle(
                         color: Colors.grey.shade500,
                         fontSize: 14,
@@ -1459,3 +1459,20 @@ class NewPublishCarInfo {
     this.wholesalePrice
   });
 }
+
+final TextEditingController ownerNameController = TextEditingController();
+final TextEditingController ownerIdController = TextEditingController();
+final TextEditingController phoneNumController = TextEditingController();
+final TextEditingController bankNumController = TextEditingController();
+final TextEditingController signingAddressController = TextEditingController();
+
+final TextEditingController transactionAmountController = TextEditingController();
+final TextEditingController depositAmountController = TextEditingController();
+final TextEditingController downPaymentAmountController = TextEditingController();
+final TextEditingController balanceAmountBackupController = TextEditingController();
+
+final TextEditingController deliveryPlaceController = TextEditingController();
+final TextEditingController transferTaxController = TextEditingController();
+final TextEditingController handlingFeeController = TextEditingController();
+final TextEditingController serviceChargeController = TextEditingController();
+final TextEditingController remarkController = TextEditingController();

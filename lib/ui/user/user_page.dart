@@ -10,6 +10,8 @@ import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract_page.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management_page.dart';
 import 'package:cloud_car/ui/user/user_order/myorder_page.dart';
+import 'package:cloud_car/ui/user/user_partner_center/agent_center_page.dart';
+import 'package:cloud_car/ui/user/user_partner_center/partner_center_page.dart';
 import 'package:cloud_car/ui/user/user_recommended/user_recommended_page.dart';
 import 'package:cloud_car/ui/user/user_wallet/wallet_certification_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -112,8 +114,8 @@ class _UserPageState extends State<UserPage> {
                       60.hb,
                       //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
                       _shareUser(),
-                      // 32.hb,
-                      // _getBanner(),
+                      32.hb,
+                      _agent(),
                       24.hb,
                       _share(),
                     ],
@@ -130,7 +132,91 @@ class _UserPageState extends State<UserPage> {
       ),
     );
   }
+  _agent(){
+    return GestureDetector(
+      onTap: (){
+        Get.to(() => const AgentCenterPage());
+      },
+      child: Container(
+        width: double.infinity,
+        height: 146.w,
+        decoration: BoxDecoration(image: DecorationImage(
+            image: AssetImage(Assets.images.bannerUser.path),fit: BoxFit.cover
+        ),
+        ),
+        child:
+        Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Row(
+              children: [
+                32.wb,
+                Text('经纪人',style: TextStyle(color: Colors.white,fontSize: 32.sp,fontWeight: FontWeight.bold),),
+                16.wb,
+                Text('开通即享6项权益',style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 24.sp),),
+                const Spacer(),
+                Container(
+                  padding: EdgeInsets.only(bottom: 5.w),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(38.w)),
+                  ),
+                  width: 160.w,
+                  height: 60.w,
+                  alignment: Alignment.center,
+                  child:  Text('立即开通',style: TextStyle(color: const Color(0xFF027AFF),fontSize: 28.sp,fontWeight: FontWeight.bold),),
+                ),
+                32.wb,
+              ],
+            ),
 
+            Positioned(top: 2,right: 5,child: Image.asset(Assets.images.bubble.path,width: 112.w,height: 46.w,),),
+            Positioned(top: 3,right: 10,child:   Text('首年6折',style: TextStyle(color: Colors.white,fontSize: 24.sp),),),
+          ],
+        )
+      ),
+    );
+  }
+
+
+  _agent1(){
+    return GestureDetector(
+      onTap: (){
+
+      },
+      child: Container(
+          width: double.infinity,
+          height: 146.w,
+          decoration: BoxDecoration(image: DecorationImage(
+              image: AssetImage(Assets.images.bannerUser1.path),fit: BoxFit.cover
+          ),
+          ),
+          alignment: Alignment.center,
+          child:
+          Row(
+            children: [
+              32.wb,
+              Text('经纪人',style: TextStyle(color: Colors.white,fontSize: 32.sp,fontWeight: FontWeight.bold),),
+              16.wb,
+              Text('您已享受6项权益',style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 24.sp),),
+              const Spacer(),
+              Container(
+                padding: EdgeInsets.only(bottom: 5.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(38.w)),
+                ),
+                width: 160.w,
+                height: 60.w,
+                alignment: Alignment.center,
+                child:  Text('立即续费',style: TextStyle(color: const Color(0xFF027AFF),fontSize: 28.sp,fontWeight: FontWeight.bold),),
+              ),
+              32.wb,
+            ],
+          )
+      ),
+    );
+  }
   //type：1 角色名 2 门店名
   _getChap(String title, int type) {
     return Offstage(

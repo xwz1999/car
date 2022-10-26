@@ -22,7 +22,7 @@ class _PublishCarInfoWidgetState extends State<PublishCarInfoWidget> {
       children: [
         _showarea('车架号', widget.publishCarInfo.viNum!,widget.fontColor),
         _showarea('品牌车型', widget.publishCarInfo.carName!,widget.fontColor),
-        _showarea('所在地区', widget.publishCarInfo.locationCity!,widget.fontColor),
+       // _showarea('所在地区', widget.publishCarInfo.locationCity!,widget.fontColor),
         _showarea('首次上牌', widget.publishCarInfo.licensingDateStr,widget.fontColor),
         // _showarea('车牌号', widget.publishCarInfo.carNum!,widget.fontColor),
         _showarea('发动机号', widget.publishCarInfo.engineNum!,widget.fontColor),

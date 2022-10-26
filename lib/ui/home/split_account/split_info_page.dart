@@ -3,6 +3,7 @@ import 'package:cloud_car/model/split_account/split_account_info_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/cloud_bordered_text_field_widget.dart';
 import 'package:cloud_car/widget/cloud_dialog_widget.dart';
@@ -94,9 +95,22 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
       ),
     );
     return CloudScaffold.normal(
-      title: widget.title,
       barHeight: 88.w,
       extendBody: true,
+      appbar: PreferredSize(
+        preferredSize: Size.fromHeight(176.w),
+        child:  AppBar(
+          backgroundColor:Colors.transparent ,
+          leading: const CloudBackButton(color: Colors.white,),
+          title: Text(
+            widget.title,
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 32.sp),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           Assets.images.splitBarBotttom.image(),
@@ -117,13 +131,50 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                   ? const SizedBox.shrink()
                   : ListView(
                       children: [
-                        214.hb,
+                        180.hb,
+                        Container(
+                          width: 686.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.w),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 32.w,vertical: 24.w),
+                          margin: EdgeInsets.symmetric(horizontal: 32.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              '奥迪A4L'
+                                  .text
+                                  .size(28.sp)
+                                  .color(const Color(0xFF666666))
+                                  .make(),
+                              16.hb,
+                              Row(
+                                children: [
+                                  _getTextView('2020年10月'),
+                                  16.wb,
+                                  _getTextView('20.43万公里'),
+                                  16.wb,
+                                  _getTextView('宁波'),
+                                  16.wb,
+                                  _getTextView('蓝色'),
+                                ],
+                              )
+
+                            ],
+                          ),
+                        ),
+                        20.hb,
                         Center(
                           child: Stack(
                             children: [
                               Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8.w),
+                                ),
                                 width: 686.w,
-                                color: Colors.white,
+
                                 child: Column(
                                   children: [
                                     ..._infoModel.brokers
@@ -148,6 +199,7 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                             decoration: const BoxDecoration(
                               color: Colors.white,
                             ),
+                            padding: EdgeInsets.only(right: 20.w),
                             child: _totalStatistics(),
                           ),
                         ),
@@ -167,11 +219,24 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                         _billTile(_infoModel.dateBills[_currentDateIndex])
                       ],
                     )),
-          Assets.images.splitBarAbove.image(),
+          //Assets.images.splitBarAbove.image(),
         ],
       ),
       bottomNavi:
           (_onLoad || _infoModel.finish) ? const SizedBox.shrink() : bottom,
+    );
+  }
+
+  _getTextView(String text) {
+    return Container(
+      decoration: BoxDecoration(
+          color: const Color(0xFFF1F2F4),
+          borderRadius: BorderRadius.all(Radius.circular(4.w))),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
+      child: Text(
+        text,
+        style: TextStyle(color: const Color(0xFF4F5A74), fontSize: 18.sp),
+      ),
     );
   }
 
@@ -277,7 +342,7 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                             ))
                         .toList())
                 .toList(),
-            (260.w + MediaQuery.of(context).padding.bottom).hb
+           // (260.w + MediaQuery.of(context).padding.bottom).hb
           ]),
         ),
       ],
@@ -290,6 +355,7 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: [
+              20.hb,
               '我的利润 '
                   .richText
                   .withTextSpanChildren([
@@ -338,7 +404,7 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                     ],
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       '${_infoModel.totalProfitDec.toStringAsFixed(2)}元'
                           .text
@@ -369,24 +435,27 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
               ),
             ],
           )
-        : Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              '合计购车成本'
-                  .richText
-                  .withTextSpanChildren([
-                    '￥'.textSpan.size(28.sp).color(Colors.red).make(),
-                    _infoModel.amount.textSpan
-                        .size(36.sp)
-                        .color(Colors.red)
-                        .make(),
-                  ])
-                  .size(28.sp)
-                  .color(const Color(0xFF333333))
-                  .make(),
-              32.wb,
-            ],
-          );
+        : Padding(
+          padding: EdgeInsets.only(top: 20.w),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                '合计购车成本'
+                    .richText
+                    .withTextSpanChildren([
+                      '￥'.textSpan.size(28.sp).color(Colors.red).make(),
+                      _infoModel.amount.textSpan
+                          .size(36.sp)
+                          .color(Colors.red)
+                          .make(),
+                    ])
+                    .size(28.sp)
+                    .color(const Color(0xFF333333))
+                    .make(),
+                32.wb,
+              ],
+            ),
+        );
   }
 
   Widget _bottomButton({
@@ -421,6 +490,7 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
       width: 686.w,
       height: 170.w,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CloudAvatarWidget(
             width: 72.w,
@@ -452,11 +522,11 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                   .size(24.w)
                   .color(Colors.black)
                   .make(),
-              '其他费用：￥${item.billAmountDec}'
-                  .text
-                  .size(24.w)
-                  .color(Colors.black)
-                  .make(),
+              // '其他费用：￥${item.billAmountDec}'
+              //     .text
+              //     .size(24.w)
+              //     .color(Colors.black)
+              //     .make(),
             ],
           )
         ],

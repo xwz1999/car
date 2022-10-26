@@ -272,6 +272,8 @@ class _PushCarPageState extends State<PushCarPage> {
       title: '车架号',
       tips: '请输入车架号',
       controller: _viNumController,
+      topIcon: false,
+      paddingStart: 0.5,
     );
     // var carNum = EditItemWidget(
     //   title: '车牌号',
@@ -290,10 +292,13 @@ class _PushCarPageState extends State<PushCarPage> {
       title: '发动机号',
       tips: '请输入发动机号',
       controller: _engineController,
+      topIcon: false,
+      paddingStart: 0.5,
     );
 
     var mile = EditItemWidget(
-      topIcon: true,
+      topIcon: false,
+      paddingStart: 0.5,
       title: '表显里程',
       tips: '请输入里程',
       controller: _mileController,
@@ -330,21 +335,22 @@ class _PushCarPageState extends State<PushCarPage> {
             },
             _publishCarInfo.carName,
             '请输入具体车型',
+
           ),
-          _function(
-            '选择地区',
-            () async {
-              await Get.to(() => CarThreeCityListPage(onSelect: (city) {
-                    _publishCarInfo.locationCity = city.cityName;
-                    _publishCarInfo.locationCityId = city.cityId;
-                    Get.back();
-                  }));
-              FocusManager.instance.primaryFocus?.unfocus();
-              setState(() {});
-            },
-            _publishCarInfo.locationCity,
-            '选择所在地区',
-          ),
+          // _function(
+          //   '选择地区',
+          //   () async {
+          //     await Get.to(() => CarThreeCityListPage(onSelect: (city) {
+          //           _publishCarInfo.locationCity = city.cityName;
+          //           _publishCarInfo.locationCityId = city.cityId;
+          //           Get.back();
+          //         }));
+          //     FocusManager.instance.primaryFocus?.unfocus();
+          //     setState(() {});
+          //   },
+          //   _publishCarInfo.locationCity,
+          //   '选择所在地区',
+          // ),
           _function(
             '首次上牌',
             () async {
@@ -476,10 +482,10 @@ class _PushCarPageState extends State<PushCarPage> {
     //   return false;
     // }
 
-    if (_publishCarInfo.locationCity.isEmptyOrNull) {
-      CloudToast.show('请选择所在地区');
-      return false;
-    }
+    // if (_publishCarInfo.locationCity.isEmptyOrNull) {
+    //   CloudToast.show('请选择所在地区');
+    //   return false;
+    // }
 
     if (_engineController.text.trim().isEmpty) {
       BotToast.showText(text: '请输入发动机号');
@@ -514,8 +520,8 @@ class _PushCarPageState extends State<PushCarPage> {
           title: title,
           tips: msg,
           value: content ?? '',
-          topIcon: true,
-          paddingStart: 32,
+          topIcon: false,
+          paddingStart: 0.5,
           canChange: false,
           callback: (String content) {},
           endIcon: Image.asset(

@@ -30,6 +30,7 @@ class _SortListPageState extends State<SortListPage> {
   List<ChooseItem> _mileage = [];
   List<ChooseItem> _emission = [];
   List<ChooseItem> _carAge = [];
+  List<ChooseItem> _fuel = [];
 
   String get _carName {
     return widget.pickCar.value.series.name.isEmpty
@@ -69,14 +70,33 @@ class _SortListPageState extends State<SortListPage> {
       ChooseItem(name: '硬顶跑车'),
     ];
     _gearbox = [
-      ChooseItem(name: '手动'),
+      ChooseItem(name: '手自一体'),
       ChooseItem(name: '自动'),
+      ChooseItem(name: '无级'),
+      ChooseItem(name: '双离合'),
+      ChooseItem(name: '手动'),
+      ChooseItem(name: '电子无级'),
+      ChooseItem(name: '机械式自动'),
+      ChooseItem(name: '序列'),
+      ChooseItem(name: 'ISR'),
+      ChooseItem(name: '固定齿比'),
+      ChooseItem(name: 'E-CVT+自动'),
+      ChooseItem(name: '国际档'),
     ];
     _mileage = [
       ChooseItem(name: '1万公里内'),
       ChooseItem(name: '3万公里内'),
       ChooseItem(name: '5公里内'),
       ChooseItem(name: '8万公里内'),
+    ];
+    _fuel = [
+      ChooseItem(name: '汽油'),
+      ChooseItem(name: '柴油'),
+      ChooseItem(name: '油电混合'),
+      ChooseItem(name: '轻混系统'),
+      ChooseItem(name: '纯电动'),
+      ChooseItem(name: '插电混合'),
+      ChooseItem(name: '增程式'),
     ];
     _emission = [
       ChooseItem(name: '国一'),
@@ -309,6 +329,20 @@ class _SortListPageState extends State<SortListPage> {
             ),
           ),
           pickString:  widget.pickCar.value.mile,
+        ),
+        16.hb,
+        SortListWidget(
+          itemList: _fuel,
+          childAspectRatio: 144 / 56,
+          mainAxisSpacing: 10.w,
+          crossAxisSpacing: 24.w,
+          crossAxisCount: 4,
+          callback: (ChooseItem item) {
+            widget.pickCar.value.fuel = item.name;
+            setState(() {});
+          },
+          title: '能源类型',
+          pickString:  widget.pickCar.value.fuel,
         ),
         16.hb,
         SortListWidget(

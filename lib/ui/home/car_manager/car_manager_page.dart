@@ -4,12 +4,15 @@ import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../manager_container_item.dart';
 import 'direct_sale/direct_sale_manager_page.dart';
 
 class CarManagerPage extends StatefulWidget {
-  const CarManagerPage({super.key});
+  const CarManagerPage
+
+  ({super.key});
 
   @override
   _CarManagerPageState createState() => _CarManagerPageState();
@@ -47,104 +50,237 @@ class _CarManagerPageState extends State<CarManagerPage> {
         backgroundColor: kForeGroundColor,
         title: Text(
           '车辆管理',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme
+              .of(context)
+              .textTheme
+              .headline4,
         ),
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
       backgroundColor: kForeGroundColor,
       extendBody: true,
       body: ListView(
+          children: [
+          _buildMainClassification(text: '门店车辆', items: [
+        ManagerContainerItem(
+          text: '在售',
+          num: '${_allCarCount.sellCount}',
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 0,
+              initType: CarManageType.all,
+            ));
+          },
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 1,
+              initType: CarManageType.all,
+            ));
+          },
+          text: '已预订',
+          num: '${_allCarCount.reserveCount}',
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 2,
+              initType: CarManageType.all,
+            ));
+          },
+          text: '已售',
+          num: '${_allCarCount.soldCount}',
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 2,
+              initType: CarManageType.all,
+            ));
+          },
+          text: '待审核',
+          num: '111',
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 2,
+              initType: CarManageType.all,
+            ));
+          },
+          text: '已驳回',
+          num: '222',
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 3,
+              initType: CarManageType.all,
+            ));
+          },
+          text: '退库',
+          num: '${_allCarCount.backOutCount}',
+        )
+      ]),
+      40.hb,
+      _buildMainClassification(text: '公司车辆', items: [
+        ManagerContainerItem(
+          text: '在售',
+          num: '${_selfCarCount.sellCount}',
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 0,
+              initType: CarManageType.personal,
+            ));
+          },
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 1,
+              initType: CarManageType.personal,
+            ));
+          },
+          text: '已预订',
+          num: '${_selfCarCount.reserveCount}',
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 2,
+              initType: CarManageType.personal,
+            ));
+          },
+          text: '已售',
+          num: '${_selfCarCount.soldCount}',
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 3,
+              initType: CarManageType.personal,
+            ));
+          },
+          text: '退库',
+          num: '${_selfCarCount.backOutCount}',
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 3,
+              initType: CarManageType.personal,
+            ));
+          },
+          text: '待审核',
+          num: '25',
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 3,
+              initType: CarManageType.personal,
+            ));
+          },
+          text: '已驳回',
+          num: '231',
+        )
+      ]),
+      40.hb,
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildMainClassification(text: '直卖车辆', items: [
-            ManagerContainerItem(
-              text: '在售',
-              num: '${_allCarCount.sellCount}',
-              onTap: () {
-                Get.to(() => const DirectSaleManagerPage(
-                      initIndex: 0,
-                      initType: CarManageType.all,
-                    ));
-              },
-            ),
-            ManagerContainerItem(
-              onTap: () {
-                Get.to(() => const DirectSaleManagerPage(
-                      initIndex: 1,
-                      initType: CarManageType.all,
-                    ));
-              },
-              text: '已预订',
-              num: '${_allCarCount.reserveCount}',
-            ),
-            ManagerContainerItem(
-              onTap: () {
-                Get.to(() => const DirectSaleManagerPage(
-                      initIndex: 2,
-                      initType: CarManageType.all,
-                    ));
-              },
-              text: '已售',
-              num: '${_allCarCount.soldCount}',
-            ),
-            ManagerContainerItem(
-              onTap: () {
-                Get.to(() => const DirectSaleManagerPage(
-                      initIndex: 3,
-                      initType: CarManageType.all,
-                    ));
-              },
-              text: '退库',
-              num: '${_allCarCount.backOutCount}',
-            )
-          ]),
-          40.hb,
-          _buildMainClassification(text: '我的车辆', items: [
-            ManagerContainerItem(
-              text: '在售',
-              num: '${_selfCarCount.sellCount}',
-              onTap: () {
-                Get.to(() => const DirectSaleManagerPage(
-                      initIndex: 0,
-                      initType: CarManageType.personal,
-                    ));
-              },
-            ),
-            ManagerContainerItem(
-              onTap: () {
-                Get.to(() => const DirectSaleManagerPage(
-                      initIndex: 1,
-                      initType: CarManageType.personal,
-                    ));
-              },
-              text: '已预订',
-              num: '${_selfCarCount.reserveCount}',
-            ),
-            ManagerContainerItem(
-              onTap: () {
-                Get.to(() => const DirectSaleManagerPage(
-                      initIndex: 2,
-                      initType: CarManageType.personal,
-                    ));
-              },
-              text: '已售',
-              num: '${_selfCarCount.soldCount}',
-            ),
-            ManagerContainerItem(
-              onTap: () {
-                Get.to(() => const DirectSaleManagerPage(
-                      initIndex: 3,
-                      initType: CarManageType.personal,
-                    ));
-              },
-              text: '退库',
-              num: '${_selfCarCount.backOutCount}',
-            )
-          ])
-          // 40.hb,
-          // _getItem('评估车辆'),
+          Padding(
+            padding: const EdgeInsets.only(left: 12),
+            child: Text('库存预警',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .subtitle1
+                    ?.copyWith(
+                    color: const Color(0xFF333333),
+                    fontWeight: FontWeight.bold)),
+          ),
+          24.hb,
+          Row(
+            children: [
+              32.wb,
+              Expanded(child: Container(
+                height: 176.w,
+                decoration:  BoxDecoration(
+                  gradient: const LinearGradient(
+                      colors: [Color(0xFFFFD700), Color(0xFFFFDA4A),Color(0xFFFFAE00),],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight),
+                  borderRadius: BorderRadius.circular(8.w)
+                ),
+                padding: EdgeInsets.only(left: 22.w),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    '12'
+                        .text
+                        .size(48.sp)
+                        .color(Colors.white).bold
+                        .make(),
+                    16.hb,
+                    '超期30天'
+                        .text
+                        .size(28.sp)
+                        .color(Colors.white)
+                        .make()
+                  ],
+                ),
+              )),
+              32.wb,
+              Expanded(child: Container(
+                height: 176.w,
+                decoration:  BoxDecoration(
+                  gradient: const LinearGradient(
+                      colors: [Color(0xFFDB2323), Color(0xFFF84141),Color(0xFFB50F0F),],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight),
+                    borderRadius: BorderRadius.circular(8.w)
+                ),
+                padding: EdgeInsets.only(left: 22.w),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    '12'
+                        .text
+                        .size(48.sp)
+                        .color(Colors.white).bold
+                        .make(),
+                    16.hb,
+                    '超期30天'
+                        .text
+                        .size(28.sp)
+                        .color(Colors.white)
+                        .make()
+                  ],
+                ),
+              )),
+              32.wb,
+            ],
+          )
         ],
       ),
-    );
+      ],
+    ),);
   }
 
   _buildMainClassification(
@@ -155,7 +291,11 @@ class _CarManagerPageState extends State<CarManagerPage> {
         Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(text,
-              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .subtitle1
+                  ?.copyWith(
                   color: const Color(0xFF333333), fontWeight: FontWeight.bold)),
         ),
         24.hb,

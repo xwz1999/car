@@ -3,6 +3,7 @@ import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/split_account/broker_all_model.dart';
 import 'package:cloud_car/model/split_account/business_all_model.dart';
 import 'package:cloud_car/model/user/staff_all_model.dart';
+import 'package:cloud_car/ui/home/split_account/split_car_info_page.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
@@ -128,31 +129,34 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
             _subButton(
                 text: '发起',
                 onTap: () async {
-                  var result = await Get.dialog(_getNameDialog());
-                  if (!result) return;
-                  if (_nameController.text.trim().isEmpty) {
-                    CloudToast.show('名称不能为空！');
-                    return;
-                  }
-                  var cancel = CloudToast.loading;
-                  var brokerData = [];
-                  _mapTextController.forEach((key, value) {
-                    brokerData.add({
-                      'brokerId': key,
-                      'amount': num.parse(value.text),
-                    });
-                  });
-                  var res = await apiClient.request(API.split.create, data: {
-                    'ownAmount': double.parse(_amountEditingController.text),
-                    'name': _nameController.text,
-                    'brokerAmounts': brokerData,
-                  });
-                  if (res.code == 0) {
-                    Get.back();
-                  } else {
-                    CloudToast.show(res.msg);
-                  }
-                  cancel();
+                  Get.to(()=>const SplitCarInfoPage());
+
+
+                  // var result = await Get.dialog(_getNameDialog());
+                  // if (!result) return;
+                  // if (_nameController.text.trim().isEmpty) {
+                  //   CloudToast.show('名称不能为空！');
+                  //   return;
+                  // }
+                  // var cancel = CloudToast.loading;
+                  // var brokerData = [];
+                  // _mapTextController.forEach((key, value) {
+                  //   brokerData.add({
+                  //     'brokerId': key,
+                  //     'amount': num.parse(value.text),
+                  //   });
+                  // });
+                  // var res = await apiClient.request(API.split.create, data: {
+                  //   'ownAmount': double.parse(_amountEditingController.text),
+                  //   'name': _nameController.text,
+                  //   'brokerAmounts': brokerData,
+                  // });
+                  // if (res.code == 0) {
+                  //   Get.back();
+                  // } else {
+                  //   CloudToast.show(res.msg);
+                  // }
+                  // cancel();
                 }),
             32.wb,
           ],

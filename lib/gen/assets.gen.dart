@@ -66,6 +66,30 @@ class $AssetsIconsGen {
   /// File path: assets/icons/advice.png
   AssetGenImage get advice => const AssetGenImage('assets/icons/advice.png');
 
+  /// File path: assets/icons/agent_contract.png
+  AssetGenImage get agentContract =>
+      const AssetGenImage('assets/icons/agent_contract.png');
+
+  /// File path: assets/icons/agent_customer.png
+  AssetGenImage get agentCustomer =>
+      const AssetGenImage('assets/icons/agent_customer.png');
+
+  /// File path: assets/icons/agent_invite.png
+  AssetGenImage get agentInvite =>
+      const AssetGenImage('assets/icons/agent_invite.png');
+
+  /// File path: assets/icons/agent_order.png
+  AssetGenImage get agentOrder =>
+      const AssetGenImage('assets/icons/agent_order.png');
+
+  /// File path: assets/icons/agent_recommend.png
+  AssetGenImage get agentRecommend =>
+      const AssetGenImage('assets/icons/agent_recommend.png');
+
+  /// File path: assets/icons/agent_wallet.png
+  AssetGenImage get agentWallet =>
+      const AssetGenImage('assets/icons/agent_wallet.png');
+
   /// File path: assets/icons/agricultural.png
   AssetGenImage get agricultural =>
       const AssetGenImage('assets/icons/agricultural.png');
@@ -276,6 +300,10 @@ class $AssetsIconsGen {
   AssetGenImage get icInvite =>
       const AssetGenImage('assets/icons/ic_invite.png');
 
+  /// File path: assets/icons/ic_ledger.png
+  AssetGenImage get icLedger =>
+      const AssetGenImage('assets/icons/ic_ledger.png');
+
   /// File path: assets/icons/ic_location.png
   AssetGenImage get icLocation =>
       const AssetGenImage('assets/icons/ic_location.png');
@@ -285,6 +313,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/ic_photo.png
   AssetGenImage get icPhoto => const AssetGenImage('assets/icons/ic_photo.png');
+
+  /// File path: assets/icons/ic_profit.png
+  AssetGenImage get icProfit =>
+      const AssetGenImage('assets/icons/ic_profit.png');
 
   /// File path: assets/icons/ic_share.png
   AssetGenImage get icShare => const AssetGenImage('assets/icons/ic_share.png');
@@ -586,6 +618,10 @@ class $AssetsImagesGen {
   AssetGenImage get bannerUser =>
       const AssetGenImage('assets/images/banner_user.png');
 
+  /// File path: assets/images/banner_user1.png
+  AssetGenImage get bannerUser1 =>
+      const AssetGenImage('assets/images/banner_user1.png');
+
   /// File path: assets/images/bbgg.png
   AssetGenImage get bbgg => const AssetGenImage('assets/images/bbgg.png');
 
@@ -649,6 +685,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/home_bg.png
   AssetGenImage get homeBg => const AssetGenImage('assets/images/home_bg.png');
 
+  /// File path: assets/images/home_bg1.png
+  AssetGenImage get homeBg1 =>
+      const AssetGenImage('assets/images/home_bg1.png');
+
+  /// File path: assets/images/home_bg2.png
+  AssetGenImage get homeBg2 =>
+      const AssetGenImage('assets/images/home_bg2.png');
+
   /// File path: assets/images/immediately.png
   AssetGenImage get immediately =>
       const AssetGenImage('assets/images/immediately.png');
@@ -691,6 +735,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/partner_center_bg.png
   AssetGenImage get partnerCenterBg =>
       const AssetGenImage('assets/images/partner_center_bg.png');
+
+  /// File path: assets/images/partner_center_bg1.png
+  AssetGenImage get partnerCenterBg1 =>
+      const AssetGenImage('assets/images/partner_center_bg1.png');
+
+  /// File path: assets/images/partner_center_bg2.png
+  AssetGenImage get partnerCenterBg2 =>
+      const AssetGenImage('assets/images/partner_center_bg2.png');
 
   /// File path: assets/images/photo.png
   AssetGenImage get photo => const AssetGenImage('assets/images/photo.png');
