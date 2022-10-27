@@ -200,14 +200,6 @@ class $AssetsIconsGen {
   AssetGenImage get constructionHead =>
       const AssetGenImage('assets/icons/construction_head.png');
 
-  /// File path: assets/icons/customer_care.png
-  AssetGenImage get customerCare =>
-      const AssetGenImage('assets/icons/customer_care.png');
-
-  /// File path: assets/icons/customer_invite.png
-  AssetGenImage get customerInvite =>
-      const AssetGenImage('assets/icons/customer_invite.png');
-
   /// File path: assets/icons/customer_manager.png
   AssetGenImage get customerManager =>
       const AssetGenImage('assets/icons/customer_manager.png');
@@ -215,10 +207,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/customer_message.png
   AssetGenImage get customerMessage =>
       const AssetGenImage('assets/icons/customer_message.png');
-
-  /// File path: assets/icons/customer_pay.png
-  AssetGenImage get customerPay =>
-      const AssetGenImage('assets/icons/customer_pay.png');
 
   /// File path: assets/icons/customer_track.png
   AssetGenImage get customerTrack =>
@@ -255,14 +243,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/estimate_location.png
   AssetGenImage get estimateLocation =>
       const AssetGenImage('assets/icons/estimate_location.png');
-
-  /// File path: assets/icons/examination.png
-  AssetGenImage get examination =>
-      const AssetGenImage('assets/icons/examination.png');
-
-  /// File path: assets/icons/fashionable.png
-  AssetGenImage get fashionable =>
-      const AssetGenImage('assets/icons/fashionable.png');
 
   /// File path: assets/icons/feedback.png
   AssetGenImage get feedback =>
@@ -408,6 +388,30 @@ class $AssetsIconsGen {
   AssetGenImage get notCollect =>
       const AssetGenImage('assets/icons/not_collect.png');
 
+  /// File path: assets/icons/notice_customer_care.png
+  AssetGenImage get noticeCustomerCare =>
+      const AssetGenImage('assets/icons/notice_customer_care.png');
+
+  /// File path: assets/icons/notice_customer_invite.png
+  AssetGenImage get noticeCustomerInvite =>
+      const AssetGenImage('assets/icons/notice_customer_invite.png');
+
+  /// File path: assets/icons/notice_customer_pay.png
+  AssetGenImage get noticeCustomerPay =>
+      const AssetGenImage('assets/icons/notice_customer_pay.png');
+
+  /// File path: assets/icons/notice_examination.png
+  AssetGenImage get noticeExamination =>
+      const AssetGenImage('assets/icons/notice_examination.png');
+
+  /// File path: assets/icons/notice_fashionable.png
+  AssetGenImage get noticeFashionable =>
+      const AssetGenImage('assets/icons/notice_fashionable.png');
+
+  /// File path: assets/icons/notice_system.png
+  AssetGenImage get noticeSystem =>
+      const AssetGenImage('assets/icons/notice_system.png');
+
   /// File path: assets/icons/pan.png
   AssetGenImage get pan => const AssetGenImage('assets/icons/pan.png');
 
@@ -443,9 +447,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/successful.png
   AssetGenImage get successful =>
       const AssetGenImage('assets/icons/successful.png');
-
-  /// File path: assets/icons/system.png
-  AssetGenImage get system => const AssetGenImage('assets/icons/system.png');
 
   /// File path: assets/icons/tab_car.png
   AssetGenImage get tabCar => const AssetGenImage('assets/icons/tab_car.png');

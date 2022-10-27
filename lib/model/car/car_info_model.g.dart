@@ -30,7 +30,7 @@ CarCommonInfo _$CarCommonInfoFromJson(Map<String, dynamic> json) =>
       price: json['price'] as String,
       lastPrice: json['lastPrice'] as String,
       downPayment: json['downPayment'] as String,
-      mileage: json['Mileage'] as String,
+      mileage: json['mileage'] as String,
       carPhotos:
           (json['carPhotos'] as List<dynamic>).map((e) => e as String).toList(),
       interiorPhotos: (json['interiorPhotos'] as List<dynamic>)
@@ -61,7 +61,7 @@ Map<String, dynamic> _$CarCommonInfoToJson(CarCommonInfo instance) =>
       'price': instance.price,
       'lastPrice': instance.lastPrice,
       'downPayment': instance.downPayment,
-      'Mileage': instance.mileage,
+      'mileage': instance.mileage,
       'carPhotos': instance.carPhotos,
       'interiorPhotos': instance.interiorPhotos,
       'brokerInfo': instance.brokerInfo,

@@ -1,9 +1,7 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-
-import '../../widget/button/cloud_back_button.dart';
-import 'car_rejected_detail.dart';
 
 class ExaminationPage extends StatefulWidget {
   const ExaminationPage({super.key});
@@ -12,8 +10,7 @@ class ExaminationPage extends StatefulWidget {
   _ExaminationPageState createState() => _ExaminationPageState();
 }
 
-class _ExaminationPageState extends State<ExaminationPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _ExaminationPageState extends State<ExaminationPage>{
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   final auditlist = [
@@ -30,7 +27,7 @@ class _ExaminationPageState extends State<ExaminationPage>
       'conditions': 2,
     },
   ];
-  late EasyRefreshController _refreshController;
+  late final EasyRefreshController _refreshController = EasyRefreshController();
 
   @override
   @override
@@ -41,7 +38,6 @@ class _ExaminationPageState extends State<ExaminationPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       appBar: AppBar(
         leading: const CloudBackButton(
@@ -76,9 +72,13 @@ class _ExaminationPageState extends State<ExaminationPage>
         Container(
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
           margin: EdgeInsets.only(left: 150.w),
-          color: state == 2
-              ? const Color.fromRGBO(6, 180, 77, 0.1)
-              : const Color.fromRGBO(230, 34, 34, 0.1),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.w),
+            color: state == 2
+                ? const Color.fromRGBO(6, 180, 77, 0.1)
+                : const Color.fromRGBO(230, 34, 34, 0.1),
+          ),
+
           child: Text(
             state == 2 ? "通过" : '驳回',
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -93,19 +93,11 @@ class _ExaminationPageState extends State<ExaminationPage>
 
 //发布审核
   _release(item) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
-        switch (item['conditions']) {
-          case '1':
-            Get.to(() => const CardetailPage());
-            break;
-          case '2':
-            Get.to(() => const CardetailPage());
-            break;
-        }
       },
       child: Container(
-        decoration: const BoxDecoration(color: Colors.white),
+        decoration:  BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(8.w)),
         margin: EdgeInsets.only(top: 10.w, left: 32.w, right: 32.w),
         padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
         child: Column(children: [
@@ -182,10 +174,6 @@ class _ExaminationPageState extends State<ExaminationPage>
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
 }
 
-class Button {
-  Button(Null Function() param0);
-}
+

@@ -28,7 +28,7 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
+    _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
     super.initState();
   }
 
@@ -100,7 +100,7 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
                     indicatorSize: TabBarIndicatorSize.label,
                     isScrollable: true,
                     controller: _tabController,
-                    tabs: [_tab(0, '寄卖合同'), _tab(1, '售车合同')]),
+                    tabs: [_tab(0, '寄卖合同'), _tab(1, '售车合同'), _tab(1, '收车合同')]),
               ),
             ),
             Expanded(
@@ -110,6 +110,10 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
                 ConsignmentView(
                   consignmentList: _consignmentList,
                   refreshController: _consignmentRefreshController,
+                ),
+                SaleView(
+                  saleList: _saleList,
+                  refreshController: _saleRefreshController,
                 ),
                 SaleView(
                   saleList: _saleList,

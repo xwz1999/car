@@ -1,8 +1,8 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../../utils/user_tool.dart';
-import '../../widget/button/cloud_back_button.dart';
 
 class FashionablePage extends StatefulWidget {
   const FashionablePage({super.key});
@@ -11,15 +11,18 @@ class FashionablePage extends StatefulWidget {
   _FashionablePageState createState() => _FashionablePageState();
 }
 
-class _FashionablePageState extends State<FashionablePage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _FashionablePageState extends State<FashionablePage> {
+
+
+  final EasyRefreshController _refreshController = EasyRefreshController();
+
   List<dynamic>? data;
   // ignore: non_constant_identifier_names
   final fashionablelist = [
     {
       'title': '奥迪A3分账群',
       'content': '买车',
-      'name': UserTool.userProvider.userInfo.nickname,
+      'name': '1',
       'money': '50000元/1000000元',
       'time': '2020—12-30 12:20',
       'conditions': 0,
@@ -27,7 +30,7 @@ class _FashionablePageState extends State<FashionablePage>
     {
       'title': '宝马CLS级分账群',
       'content': '洗车',
-      'name': UserTool.userProvider.userInfo.nickname,
+      'name':'2',
       'money': '10元/50元',
       'time': '2020—12-30 12:20',
       'conditions': 1,
@@ -38,11 +41,11 @@ class _FashionablePageState extends State<FashionablePage>
   @override
   void dispose() {
     super.dispose();
+    _refreshController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       appBar: AppBar(
         leading: const CloudBackButton(
@@ -54,13 +57,25 @@ class _FashionablePageState extends State<FashionablePage>
       ),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      body: ListView.builder(
-        //padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-        itemCount: fashionablelist.length,
-        itemBuilder: (context, index) {
-          return _fashionablecard(fashionablelist[index]);
-        },
+      body:  Expanded(
+        child: EasyRefresh(
+          firstRefresh: true,
+          header: MaterialHeader(),
+          controller: _refreshController,
+          onRefresh: () async {
+
+            setState(() {});
+          },
+          child:ListView.builder(
+            //padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+            itemCount: fashionablelist.length,
+            itemBuilder: (context, index) {
+              return _fashionablecard(fashionablelist[index]);
+            },
+          ),
+        ),
       ),
+
     );
   }
 
@@ -69,10 +84,14 @@ class _FashionablePageState extends State<FashionablePage>
     return Row(
       children: [
         Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.w),
+            color: state == 1
+                ? const Color.fromRGBO(153, 153, 153, 0.1)
+                : const Color.fromRGBO(2, 122, 255, 0.1),
+          ),
           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
-          color: state == 1
-              ? const Color.fromRGBO(153, 153, 153, 0.1)
-              : const Color.fromRGBO(2, 122, 255, 0.1),
+         
           child: Text(
             state == 1 ? "已读" : '未读',
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -176,14 +195,5 @@ class _FashionablePageState extends State<FashionablePage>
     );
   }
 
-//
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
-class Button {
-  Button(Null Function() param0);
-}
-
-void column() {}

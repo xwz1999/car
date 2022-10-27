@@ -13,7 +13,7 @@ class UserInvitationPage extends StatefulWidget {
 }
 
 class _UserInvitationPageState extends State<UserInvitationPage>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -31,7 +31,6 @@ class _UserInvitationPageState extends State<UserInvitationPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
         appBar: AppBar(
             leading: const CloudBackButton(
@@ -73,6 +72,4 @@ class _UserInvitationPageState extends State<UserInvitationPage>
     return Text(text);
   }
 
-  @override
-  bool get wantKeepAlive => true;
 }

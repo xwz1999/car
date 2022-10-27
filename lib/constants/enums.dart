@@ -96,9 +96,10 @@ enum CarStockStatus{
 
 enum CarNatureOfUse{
   noData(0,''),
-  operate(1, '运营'),
-  noOperate(2, '非运营'),
-  lease(3,'租赁');
+  familyCar(1, '家庭自备车'),
+  officialCar(2, '公务车'),
+  taxi(3,'出租车'),
+  other(4, '其他');
   static CarNatureOfUse getValue(int value) =>
       CarNatureOfUse.values.firstWhere((element) => element.typeNum == value);
   final int typeNum;

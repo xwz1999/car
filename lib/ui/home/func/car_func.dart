@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/car/bank_card_info_model.dart';
 import 'package:cloud_car/model/car/business_push_model.dart';
 import 'package:cloud_car/model/car/car_amount_model.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
@@ -10,6 +11,7 @@ import 'package:cloud_car/model/car/car_sale_contract_model.dart';
 import 'package:cloud_car/model/car/car_statistics_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/car/estimate_price_model.dart';
+import 'package:cloud_car/model/car/id_card_info_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
@@ -28,6 +30,34 @@ import 'package:flustars/flustars.dart';
 import '../../../model/car/dealer_list_model.dart';
 
 class CarFunc {
+
+  ///⾏驶证 识别
+  static Future<IdCardInfoModel?> idCardOCR(String path) async {
+    BaseModel model = await apiClient.request(API.car.getIdCard, data: {
+      "path": path,
+    });
+    if (model.code == 0) {
+      return IdCardInfoModel.fromJson(model.data);
+    } else {
+      CloudToast.show(model.msg);
+      return null;
+    }
+  }
+
+  ///⾏驶证 识别
+  static Future<BankCardInfoModel?> bankCardOCR(String path) async {
+    BaseModel model = await apiClient.request(API.car.getBankCard, data: {
+      "path": path,
+    });
+    if (model.code == 0) {
+      return BankCardInfoModel.fromJson(model.data);
+    } else {
+      CloudToast.show(model.msg);
+      return null;
+    }
+  }
+
+
   ///获取⻋辆品牌
   static Future<List<SortBrandModel>> getBrandList() async {
     BaseListModel baseList = await apiClient.requestList(

@@ -192,7 +192,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                       itemBuilder: (context, index) {
                         return CarItemWidget(
                           price: '27.43万',
-                          url: Assets.icons.customerCare.path,
+                          url: Assets.icons.care.path,
                           distance: '20.43万公里',
                           standard: '国六',
                           name: '奥迪Q3 2020款 35 TFSI 进取型SUV',

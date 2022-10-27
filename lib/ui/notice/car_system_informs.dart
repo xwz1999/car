@@ -1,9 +1,10 @@
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../../widget/button/cloud_back_button.dart';
 
 class SystemPage extends StatefulWidget {
   const SystemPage({super.key});
@@ -14,6 +15,9 @@ class SystemPage extends StatefulWidget {
 
 class _SystemPageState extends State<SystemPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+
+  final EasyRefreshController _refreshController = EasyRefreshController();
+
   List<dynamic>? data;
 
   @override
@@ -24,6 +28,7 @@ class _SystemPageState extends State<SystemPage>
   @override
   void dispose() {
     super.dispose();
+    _refreshController.dispose();
   }
 
   @override
@@ -36,42 +41,53 @@ class _SystemPageState extends State<SystemPage>
           ),
           backgroundColor: kForeGroundColor,
           title: Text('系统通知', style: Theme.of(context).textTheme.headline6),
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
         ),
-        extendBody: true,
-        extendBodyBehindAppBar: true,
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32.w),
-          child: Column(
-            children: [
-              _time(),
-              32.hb,
-              _picture(),
-              _content(),
-            ],
+        body: Expanded(
+          child: EasyRefresh(
+            firstRefresh: true,
+            header: MaterialHeader(),
+            controller: _refreshController,
+            onRefresh: () async {
+
+              setState(() {});
+            },
+            child:ListView.builder(
+              //padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                return    Container(
+                  padding: EdgeInsets.symmetric(horizontal: 32.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      50.hb,
+                      _time(),
+                      32.hb,
+                      _picture(),
+                      _content(),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-        ));
+        ),
+
+
+
+     );
   }
 
 //时间
   _time() {
-    return Column(
-      children: [
-        Padding(padding: EdgeInsets.only(top: 264.w)),
-        SizedBox(
-            width: double.infinity,
-            height: 24.w,
-            child: Container(
-              padding: EdgeInsets.only(left: 284.w),
-              child: Text(
-                '01-12 12:44',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(color: const Color(0xFF999999)),
-              ),
-            )),
-      ],
+    return Container(
+      child: Text(
+        '01-12 12:44',
+        style: Theme.of(context)
+            .textTheme
+            .bodyText1
+            ?.copyWith(color: const Color(0xFF999999)),
+      ),
     );
   }
 

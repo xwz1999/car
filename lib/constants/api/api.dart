@@ -316,4 +316,10 @@ class _Split {
 class _Message {
   /// 未读消息统计
   String get unReadMessage => '/message/count';
+
+  ///消息列表
+  String get messageLists => '/message/lists';
+
+  ///消息详情
+  String get messageInfo => '/message/info';
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'car_picker_box.dart';
 
@@ -13,6 +14,7 @@ class CloudGridPickerWidget extends StatefulWidget {
   final double? crossAxisSpacing;
   final double? childAspectRatio;
   final bool multi;
+  final bool isWrap;
 
   const CloudGridPickerWidget(
       {super.key,
@@ -23,8 +25,8 @@ class CloudGridPickerWidget extends StatefulWidget {
       this.crossAxisCount = 4,
       this.mainAxisSpacing,
       this.crossAxisSpacing,
-      this.childAspectRatio = 72 / 28})
-      : multi = false;
+      this.childAspectRatio = 72 / 28, })
+      : multi = false,isWrap=false;
 
   const CloudGridPickerWidget.multi(
       {super.key,
@@ -36,7 +38,20 @@ class CloudGridPickerWidget extends StatefulWidget {
       this.mainAxisSpacing,
       this.crossAxisSpacing,
       this.childAspectRatio = 72 / 28})
-      : multi = true;
+      : multi = true,isWrap=false;
+
+
+  const CloudGridPickerWidget.wrap({
+  super.key,
+  required this.title,
+  required this.items,
+  required this.onConfirm,
+  this.initIndex,
+  this.crossAxisCount = 4,
+  this.mainAxisSpacing,
+  this.crossAxisSpacing,
+  this.childAspectRatio = 72 / 28
+  })   : multi = false,isWrap=true;
 
   @override
   _CloudGridPickerWidgetState createState() => _CloudGridPickerWidgetState();
@@ -63,7 +78,18 @@ class _CloudGridPickerWidgetState extends State<CloudGridPickerWidget> {
       height: (widget.items.length / widget.crossAxisCount!) *50.w + 300.w,
       title: widget.title,
       onPressed: () => widget.onConfirm(_groupString, _groupIndex),
-      child: GridView.builder(
+      child:
+      widget.isWrap?Wrap(
+        spacing: widget.mainAxisSpacing??24.w,
+        runSpacing: widget.crossAxisSpacing ?? 24.w,
+        children: [
+          ...widget.items.mapIndexed((currentValue, index) => _getItem(currentValue,index))
+        ],
+
+      ):
+
+
+      GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           padding: EdgeInsets.only(top: 20.w,left:32.w,right:32.w ),

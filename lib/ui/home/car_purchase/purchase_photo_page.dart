@@ -33,17 +33,28 @@ class PurchasePhotoPage extends StatefulWidget {
 class _PurchasePhotoPageState extends State<PurchasePhotoPage>
     with TickerProviderStateMixin {
   List<PushImgModel> _reportPhotos = [];
-
+  List<PushImgModel> _certificatesPhotos = [];
 
   @override
   void initState() {
 
     _reportPhotos = [
-      PushImgModel(name: '正面'),
-      PushImgModel(name: '左面'),
-      PushImgModel(name: '后面'),
-      PushImgModel(name: '右面'),
-      PushImgModel(name: '表显里程')
+      PushImgModel(name: '正面',isMust:true ),
+      PushImgModel(name: '左面',isMust:true ),
+      PushImgModel(name: '后面',isMust:true ),
+      PushImgModel(name: '右面',isMust:true ),
+      PushImgModel(name: '表显里程',isMust:true ),
+
+    ];
+
+    _certificatesPhotos=[
+      PushImgModel(name: '行驶证',isMust:true ),
+      PushImgModel(name: '登记证书',isMust:true ),
+      PushImgModel(name: '购置税发票'),
+      PushImgModel(name: '年检凭证'),
+      PushImgModel(name: '购车证明'),
+      PushImgModel(name: '保险单材料'),
+      PushImgModel(name: '车主身份证明')
     ];
     //
     for(int i=0;i<widget.reportPhotoModel.paints!.length;i++){
@@ -51,6 +62,17 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
         if(_reportPhotos[j].name == widget.reportPhotoModel.paints![i].text){
           if(widget.reportPhotoModel.paints![i].photo!=null){
             _reportPhotos[j].url = widget.reportPhotoModel.paints![i].photo;
+          }
+
+        }
+      }
+    }
+
+    for(int i=0;i<widget.reportPhotoModel.certificates!.length;i++){
+      for(int j=0;j<_certificatesPhotos.length;j++){
+        if(_certificatesPhotos[j].name == widget.reportPhotoModel.certificates![i].text){
+          if(widget.reportPhotoModel.certificates![i].photo!=null){
+            _certificatesPhotos[j].url = widget.reportPhotoModel.certificates![i].photo;
           }
 
         }
@@ -69,6 +91,16 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
         }
         widget.reportPhotoModel.paints!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name)  );
       }
+
+      widget.reportPhotoModel.certificates!.clear();
+      for (var i = 0; i < _certificatesPhotos.length; i++) {
+        if (_certificatesPhotos[i].url.runtimeType != String&&_certificatesPhotos[i].url.runtimeType != Null) {
+          var url = await apiClient.uploadImage(
+              _certificatesPhotos[i].url );
+          _certificatesPhotos[i].url = url;
+        }
+        widget.reportPhotoModel.certificates!.add(CarPhotos(photo: _certificatesPhotos[i].url,text: _certificatesPhotos[i].name)  );
+      }
   }
 
   @override
@@ -76,14 +108,14 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
     return CloudScaffold.normal(
         barHeight:88.w,
       title: '车辆照片',
-      body: Column(
+      body: ListView(
         children: [
 
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding:  EdgeInsets.all(32.w),
+                padding:  EdgeInsets.all(24.w),
                 child: '上传车辆前后左右至少各一张及表显里程'.text.size(28.sp).color(const Color(0xFF999999)).make(),
               ),
             ],
@@ -94,7 +126,22 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
             child: _getView(_reportPhotos),
           ),
 
-          100.hb,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding:  EdgeInsets.all(24.w),
+                child: '手续证件'.text.size(28.sp).color(const Color(0xFF999999)).make(),
+              ),
+            ],
+          ),
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 10.w),
+            child: _getView(_certificatesPhotos),
+          ),
+
+          20.hb,
           CloudBottomButton(
             onTap: () async{
               await uploadPhotos();
@@ -109,7 +156,8 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
               // }
             },
             text: '发起合同',
-          )
+          ),
+          50.hb,
         ],
       )
     );
@@ -135,6 +183,17 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
       }
       if(item.text=='表显里程'&&item.photo==null){
         BotToast.showText(text: '请先上传表显里程照片');
+        return false;
+      }
+    }
+
+    for(var item in widget.reportPhotoModel.certificates!){
+      if(item.text=='行驶证'&&item.photo==null){
+        BotToast.showText(text: '请先上传行驶证照片');
+        return false;
+      }
+      if(item.text=='登记证书'&&item.photo==null){
+        BotToast.showText(text: '请先上传登记证书照片');
         return false;
       }
     }

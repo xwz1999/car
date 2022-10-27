@@ -56,7 +56,7 @@ class _MessagePageState extends State<MessagePage> {
                   return GestureDetector(
                     child: MessageItemWidget(
                       time: '01-09 12;22',
-                      url: Assets.icons.customerCare.path,
+                      url: Assets.icons.care.path,
                       tip:
                           '你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱你好，多少钱',
                       num: 101,

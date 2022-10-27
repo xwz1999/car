@@ -38,7 +38,6 @@ dependencies:
   hive_flutter: ^1.1.0
   #刷新组件
   flutter_easyrefresh: ^2.2.1
-
   extended_image: ^7.0.0-dev.1
   #下拉框
   gzx_dropdown_menu: ^3.1.0

@@ -15,6 +15,12 @@ class _Car {
   ///行驶证识别
   String get getCarVehicle => '/car/cor/vehicle';
 
+  ///身份证识别
+  String get getIdCard => '/car/cor/idCard';
+
+  ///银行卡识别
+  String get getBankCard => '/car/cor/bankCard';
+
   ///估算价格
   String get estimatePrice => '/car/price/estimate';
 
