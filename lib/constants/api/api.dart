@@ -122,6 +122,12 @@ class _Contract {
 
   ///售出合同列表
   String get soldList => '/contract/sale/lists';
+
+  ///发起收购合同
+  String get addPurchase => '/contract/purchase/add';
+
+  ///收购合同列表
+  String get purchaseList => '/contract/purchase/lists';
 }
 
 class _File {

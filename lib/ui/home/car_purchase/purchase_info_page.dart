@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car/bank_card_info_model.dart';
 import 'package:cloud_car/model/car/id_card_info_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/report_photo_page.dart';
+import 'package:cloud_car/model/contract/purchase_photo_model.dart';
+import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_photo_page.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_push_car_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
@@ -23,7 +25,7 @@ import 'package:velocity_x/velocity_x.dart';
 class PurchaseInfoPage extends StatefulWidget {
   final PurchaseCarInfo purchaseCarInfo;
   final PurchaseInfo purchaseInfo;
-  final ReportPhotoModel reportPhotoModel;
+  final PurchasePhotoModel reportPhotoModel;
   const PurchaseInfoPage({super.key, required this.purchaseCarInfo, required this.purchaseInfo, required this.reportPhotoModel});
 
   @override
@@ -35,7 +37,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   final TextEditingController ownerIdController = TextEditingController();
   final TextEditingController phoneNumController = TextEditingController();
   final TextEditingController bankNumController = TextEditingController();
-  final TextEditingController signingAddressController = TextEditingController();
+  final TextEditingController bankController = TextEditingController();
+
+  // final TextEditingController signingAddressController = TextEditingController();
 
   final TextEditingController transactionAmountController = TextEditingController();
   // final TextEditingController depositAmountController = TextEditingController();
@@ -50,6 +54,83 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
 
   final TextEditingController downPaymentNumController = TextEditingController();
   final TextEditingController balanceAmountBackupNumController = TextEditingController();
+
+
+  bool get canTap {
+    if (ownerIdController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先完善车主信息');
+      return false;
+    }
+    if (ownerNameController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先完善车主信息');
+      return false;
+    }
+    if (phoneNumController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先完善车主信息');
+      return false;
+    }
+    if (bankNumController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先完善车主信息');
+      return false;
+    }
+    if (bankController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先完善车主信息');
+      return false;
+    }
+
+
+
+
+    if (transactionAmountController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先输入成交金额');
+      return false;
+    }
+    if (downPaymentNumController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先输入首付占比');
+      return false;
+    }
+    if (downPaymentAmountController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先输入首付金额');
+      return false;
+    }
+    if (balanceAmountBackupController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先输入尾款金额');
+      return false;
+    }
+
+    if (balanceAmountBackupNumController.text.trim().isEmpty) {
+      BotToast.showText(text: '请先输入尾款占比');
+      return false;
+    }
+    if(  widget.purchaseInfo.deliveryDate==null){
+      BotToast.showText(text: '请先选择交付日期');
+      return false;
+    }
+
+
+    if(  widget.purchaseInfo.remark==''){
+      BotToast.showText(text: '请先输入车况描述');
+      return false;
+    }
+
+    widget.purchaseInfo.ownerId = ownerIdController.text;
+    widget.purchaseInfo.ownerName = ownerNameController.text;
+
+    widget.purchaseInfo.phoneNum = phoneNumController.text;
+    widget.purchaseInfo.bankNum = bankNumController.text;
+    widget.purchaseInfo.bank = bankController.text;
+
+    widget.purchaseInfo.transactionAmount = transactionAmountController.text;
+    widget.purchaseInfo.downPaymentAmount = downPaymentAmountController.text;
+    widget.purchaseInfo.downPaymentNum = downPaymentNumController.text;
+    widget.purchaseInfo.balanceAmountBackup = balanceAmountBackupController.text;
+    widget.purchaseInfo.balanceAmountBackupNum = balanceAmountBackupNumController.text;
+
+    //widget.purchaseInfo.remark = remarkController.text;
+
+
+    return true;
+  }
 
 
   List<ChooseItem> formalitiesList = [
@@ -68,7 +149,8 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     ownerIdController.dispose();
     phoneNumController.dispose();
     bankNumController.dispose();
-    signingAddressController.dispose();
+    bankController.dispose();
+    // signingAddressController.dispose();
     transactionAmountController.dispose();
     downPaymentAmountController.dispose();
     balanceAmountBackupController.dispose();
@@ -114,7 +196,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           ),
           Padding(padding: EdgeInsets.all(32.w),child:  '车况描述'.text.size(28.sp).color(const Color(0xFF999999)).make(),),
           Container(
-              padding: EdgeInsets.only(left: 32.w,top: 24.w,bottom: 24.w,right: 12.w),
+              padding: EdgeInsets.only(left: 32.w,top: 24.w,bottom: 24.w,right: 32.w),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,),
@@ -125,6 +207,10 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                if (!canTap) {
+                  return;
+                }
                 Get.to(()=>PurchasePhotoPage(purchaseInfo: widget.purchaseInfo,
                     purchaseCarInfo: widget.purchaseCarInfo, reportPhotoModel: widget.reportPhotoModel));
               },
@@ -146,17 +232,17 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              margin: EdgeInsets.only(top: 30.w,right: 5.w),
-              child: Text(
-                '*',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                  color: const Color(0xFFE62222),
-                ),
-              ),
-            ),
-            10.wb,
+            // Container(
+            //   margin: EdgeInsets.only(top: 30.w,right: 5.w),
+            //   child: Text(
+            //     '*',
+            //     style: TextStyle(
+            //       fontSize: 28.sp,
+            //       color: const Color(0xFFE62222),
+            //     ),
+            //   ),
+            // ),
+            // 10.wb,
             Container(
               padding: EdgeInsets.only(top: 12.w),
               width: 150.w,
@@ -168,9 +254,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           ],
         )
         ,
-        12.hb,
+        22.hb,
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 30.w),
+          margin: EdgeInsets.symmetric(horizontal: 0.w),
           width: double.infinity,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
@@ -344,7 +430,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         _function(
           '交付时间',
               () async {
-            var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime.now());
+            var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime(DateTime.now().year+100));
             widget.purchaseInfo.deliveryDate = firstDate;
             FocusManager.instance.primaryFocus?.unfocus();
             setState(() {});
@@ -455,6 +541,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
             if (bankCardInfoModel != null) {
               widget.purchaseInfo.bankNum = bankCardInfoModel.bankCardNo;
               bankNumController.text = bankCardInfoModel.bankCardNo;
+              widget.purchaseInfo.bank = bankCardInfoModel.bankName;
+              bankController.text = bankCardInfoModel.bankName;
+
             }
             cancel();
             setState(() {
@@ -470,13 +559,23 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       ),
     );
 
-    var signingAddress = EditItemWidget(
-      title: '签约地点',
+    var bank = EditItemWidget(
+      title: '银行',
       tips: '请输入',
-      controller: signingAddressController,
+      controller: bankController,
       topIcon: false,
       paddingStart: 0.w,
     );
+
+
+
+    // var signingAddress = EditItemWidget(
+    //   title: '签约地点',
+    //   tips: '请输入',
+    //   controller: signingAddressController,
+    //   topIcon: false,
+    //   paddingStart: 0.w,
+    // );
 
 
     return Column(
@@ -485,18 +584,19 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         ownerId,
         phoneNum,
         bankNum,
-        _function(
-          '签订时间',
-              () async {
-            var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime.now());
-            widget.purchaseInfo.signingDate = firstDate;
-            FocusManager.instance.primaryFocus?.unfocus();
-            setState(() {});
-          },
-          widget.purchaseInfo.signingDateStr,
-          '请选择',
-        ),
-        signingAddress,
+        bank,
+        // _function(
+        //   '签订时间',
+        //       () async {
+        //     var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime.now());
+        //     widget.purchaseInfo.signingDate = firstDate;
+        //     FocusManager.instance.primaryFocus?.unfocus();
+        //     setState(() {});
+        //   },
+        //   widget.purchaseInfo.signingDateStr,
+        //   '请选择',
+        // ),
+        // signingAddress,
 
       ],
     );
@@ -541,10 +641,12 @@ class PurchaseInfo {
   String? phoneNum;
 
   String? bankNum;
-  ///签订时间
-  DateTime? signingDate;
-  String get signingDateStr =>
-      DateUtil.formatDate(signingDate, format: 'yyyy-MM-dd');
+
+  String? bank;
+  // ///签订时间
+  // DateTime? signingDate;
+  // String get signingDateStr =>
+  //     DateUtil.formatDate(signingDate, format: 'yyyy-MM-dd');
   String? signingAddress;
   ///成交金额
   String? transactionAmount;
@@ -563,7 +665,7 @@ class PurchaseInfo {
 
   DateTime? deliveryDate;
   String get deliveryDateStr =>
-      DateUtil.formatDate(signingDate, format: 'yyyy-MM-dd');
+      DateUtil.formatDate(deliveryDate, format: 'yyyy-MM-dd');
 
   String? deliveryPlace;
 
@@ -581,7 +683,7 @@ class PurchaseInfo {
     ownerId:'',
     phoneNum:'',
     bankNum:'',
-    signingDate:null,
+    // signingDate:null,
     signingAddress:'',
     transactionAmount:'',
     //depositAmount:'',
@@ -600,7 +702,7 @@ class PurchaseInfo {
     this.ownerId,
     this.phoneNum,
     this.bankNum,
-    this.signingDate,
+    // this.signingDate,
     this.signingAddress,
     this.transactionAmount,
 //    this.depositAmount,

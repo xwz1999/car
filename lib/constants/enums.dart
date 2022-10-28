@@ -99,6 +99,7 @@ enum CarNatureOfUse{
   familyCar(1, '家庭自备车'),
   officialCar(2, '公务车'),
   taxi(3,'出租车'),
+  lease(4,'租赁车'),
   other(4, '其他');
   static CarNatureOfUse getValue(int value) =>
       CarNatureOfUse.values.firstWhere((element) => element.typeNum == value);

@@ -17,8 +17,11 @@ import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
+import 'package:cloud_car/model/contract/purchase_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/report_photo_page.dart';
+import 'package:cloud_car/model/contract/report_photo_model.dart';
+import 'package:cloud_car/ui/home/car_purchase/purchase_info_page.dart';
+import 'package:cloud_car/ui/home/car_purchase/purchase_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
@@ -336,6 +339,71 @@ class CarFunc {
       return false;
     }
   }
+
+  ///发起出售合同
+  static Future<bool> addPurchase(PurchaseCarInfo purchaseCarInfo,PurchaseInfo purchaseInfo,PurchasePhotoModel purchasePhotoModel) async {
+
+
+
+    Map<String, dynamic> baseInfo = {
+      "modelId":purchaseCarInfo.carModelId,
+      "vin":purchaseCarInfo.viNum,
+      "engineNo":purchaseCarInfo.engineNum,
+      "licensingDate":purchaseCarInfo.licensingDateStr,
+      'licensePlate':purchaseCarInfo.licensePlate,
+      "useCharacter":purchaseCarInfo.carNatureOfUseEM.typeStr,
+
+      "marketDate":purchaseCarInfo.productionDateStr==''?null:purchaseCarInfo.productionDateStr,
+      "mileage": purchaseCarInfo.mileage!=null? num.parse('${purchaseCarInfo.mileage!}0000'):null,
+      "compulsoryInsuranceDate":purchaseCarInfo.compulsoryInsuranceDateStr==''?null:purchaseCarInfo.compulsoryInsuranceDateStr,
+      "condition":purchaseInfo.remark,
+    };
+
+    Map<String, dynamic> masterInfo = {
+      "name": purchaseInfo.ownerName,
+      "idCard":purchaseInfo.ownerId,
+      "phone": purchaseInfo.phoneNum,
+      "bankCard": purchaseInfo.bankNum,
+      "bank": purchaseInfo.bank,
+    };
+
+    Map<String, dynamic> priceInfo = {
+      "DealPrice": purchaseInfo.transactionAmount,
+      "DownPaymentRate": purchaseInfo.downPaymentNum!=null? (num.parse(purchaseInfo.downPaymentNum!)/100).toString():null,
+      "BalancePaymentRate":  purchaseInfo.downPaymentNum!=null? (1-num.parse(purchaseInfo.downPaymentNum!)/100).toString():null,
+      "DeliverDate": purchaseInfo.deliveryDateStr,
+    };
+
+
+    Map<String, dynamic> base = {
+      "customerId":purchaseCarInfo.customerId,
+      "baseInfo":baseInfo,
+      "masterInfo":masterInfo,
+      "PriceInfo":priceInfo,
+      "photos":purchasePhotoModel.toJson(),
+    };
+
+    print(base);
+
+    BaseModel model =
+    await apiClient.request(API.contract.addPurchase, data:
+      base
+    );
+    if (model.code == 0) {
+      if (model.msg == '操作成功') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      CloudToast.show(model.msg);
+      return false;
+    }
+  }
+
+
+
+
 
   ///获取车商列表
 

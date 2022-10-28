@@ -6,7 +6,8 @@ import '../../../../widget/button/cloud_back_button.dart';
 import '../../../tab_navigator.dart';
 
 class PublishFinishPage extends StatefulWidget {
-  const PublishFinishPage({super.key});
+  final String title;
+  const PublishFinishPage({super.key,  this.title='车辆发布'});
 
   @override
   State<PublishFinishPage> createState() => _PublishFinishPageState();
@@ -21,7 +22,7 @@ class _PublishFinishPageState extends State<PublishFinishPage> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('车辆发布',
+        title: Text(widget.title,
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,

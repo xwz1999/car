@@ -3,7 +3,7 @@ import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_report_photo_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/report_photo_page.dart';
+import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';

@@ -7,7 +7,7 @@ import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/choose_purchaser_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/report_photo_page.dart';
+import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/ui/home/sort/car_three_city_list_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management_page.dart';
@@ -922,7 +922,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           _function(
               '交强险到期',
                   () async {
-                var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime.now());
+                    var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime(DateTime.now().year+100));
                 _publishCarInfo.value.compulsoryInsuranceDate = firstDate;
                 FocusManager.instance.primaryFocus?.unfocus();
                 setState(() {});
@@ -946,7 +946,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           _function(
               '商业险到期',
                   () async {
-                var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime.now());
+                    var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime(DateTime.now().year+100));
                 _publishCarInfo.value.commercialInsuranceDate = firstDate;
                 FocusManager.instance.primaryFocus?.unfocus();
                 setState(() {});

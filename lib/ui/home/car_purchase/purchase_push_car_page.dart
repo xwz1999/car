@@ -5,7 +5,8 @@ import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/sort/sort_car_model_model.dart';
 import 'package:cloud_car/model/sort/sort_series_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/report_photo_page.dart';
+import 'package:cloud_car/model/contract/purchase_photo_model.dart';
+import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_choose_page.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_info_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
@@ -43,13 +44,14 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
 
   final ValueNotifier<PurchaseInfo> purchaseInfo = ValueNotifier(PurchaseInfo.empty);
 
-  final ValueNotifier<ReportPhotoModel> reportPhotoModel =
-  ValueNotifier(ReportPhotoModel.init);
+  final ValueNotifier<PurchasePhotoModel> reportPhotoModel =
+  ValueNotifier(PurchasePhotoModel.init);
   
   // final PurchaseCarInfo _publishCarInfo = PurchaseCarInfo.empty;
   final TextEditingController _viNumController = TextEditingController();
   final TextEditingController _engineController = TextEditingController();
   final TextEditingController _mileController = TextEditingController();
+  final TextEditingController _licensePlateController = TextEditingController();
 
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
@@ -77,8 +79,8 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
     ChooseItem(name: '国五'),
     ChooseItem(name: '国六'),
   ];
-  List<String> get carTypeList =>
-      CarType.values.map((e) =>  e.typeStr).toList();
+  List<String> get carNatureOfUseList =>
+      CarNatureOfUse.values.map((e) =>  e.typeStr).toList();
 
   @override
   void initState() {
@@ -90,6 +92,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
     _viNumController.dispose();
     _engineController.dispose();
     _mileController.dispose();
+    _licensePlateController.dispose();
     BotToast.closeAllLoading();
     super.dispose();
   }
@@ -145,7 +148,8 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (canTap) {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              if (!canTap) {
                                 return;
                               }
                               Get.to(()=>PurchaseChoosePage(purchaseCarInfo: _publishCarInfo.value, purchaseInfo: purchaseInfo.value, reportPhotoModel: reportPhotoModel.value,));
@@ -188,6 +192,14 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       topIcon: false,
       paddingStart: 0.w,
     );
+    var licensePlate = EditItemWidget(
+      title: '车辆牌照',
+      tips: '请输入',
+      controller: _licensePlateController,
+      topIcon: false,
+      paddingStart: 0.w,
+    );
+
 
     var mile = EditItemWidget(
       topIcon: false,
@@ -242,7 +254,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
             '选择首次上牌时间',
           ),
           _function(
-            '车辆类型',
+            '使用性质',
                 () async {
               await showModalBottomSheet(
                 context: context,
@@ -250,25 +262,37 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                     borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
                   return CloudListPickerWidget(
-                      title: '车辆类型',
-                      items: carTypeList,
+                      title: '使用性质',
+                      items: carNatureOfUseList,
                       onConfirm: (str, index) {
-                        _publishCarInfo.value.carType = index;
-
+                        _publishCarInfo.value.carNatureOfUse = index;
                         Get.back();
                         setState(() {});
                       });
                 },
               );
             },
-            _publishCarInfo.value.carTypeEM.typeStr,
+            _publishCarInfo.value.carNatureOfUseEM.typeStr,
             '请选择',
           ),
           engineNum,
+
+          _function(
+            '出厂日期',
+                () async {
+              var firstDate = await CarDatePicker.calenderPicker(DateTime(1960), DateTime.now());
+              _publishCarInfo.value.productionDate = firstDate;
+              FocusManager.instance.primaryFocus?.unfocus();
+              setState(() {});
+            },
+            _publishCarInfo.value.productionDateStr,
+            '选择出厂日期',
+          ),
+
           _function(
             '车强险',
                 () async {
-                  var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime.now());
+                  var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime(DateTime.now().year+100));
               _publishCarInfo.value.compulsoryInsuranceDate = firstDate;
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
@@ -278,29 +302,30 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
           ),
 
           mile,
-          _function(
-              '环保等级',
-                  () async {
-                await showModalBottomSheet(
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
-                  builder: (context) {
-                    return CloudGridPickerWidget(
-                        title: '环保等级',
-                        items: emission.map((e) => e.name).toList(),
-                        onConfirm: (strList, indexList) {
-                          _publishCarInfo.value.environmentalLevel = strList.first;
-                          Get.back();
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          setState(() {});
-                        });
-                  },
-                );
-              },
-              _publishCarInfo.value.environmentalLevel,
-              '请选择'
-          ),
+          licensePlate
+          // _function(
+          //     '环保等级',
+          //         () async {
+          //       await showModalBottomSheet(
+          //         context: context,
+          //         shape: RoundedRectangleBorder(
+          //             borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+          //         builder: (context) {
+          //           return CloudGridPickerWidget(
+          //               title: '环保等级',
+          //               items: emission.map((e) => e.name).toList(),
+          //               onConfirm: (strList, indexList) {
+          //                 _publishCarInfo.value.environmentalLevel = strList.first;
+          //                 Get.back();
+          //                 FocusManager.instance.primaryFocus?.unfocus();
+          //                 setState(() {});
+          //               });
+          //         },
+          //       );
+          //     },
+          //     _publishCarInfo.value.environmentalLevel,
+          //     '请选择'
+          // ),
 
         ],
       ),
@@ -323,14 +348,20 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       BotToast.showText(text: '请选择首次上牌时间');
       return false;
     }
-    if (_publishCarInfo.value.carType==0) {
-      BotToast.showText(text: '请先选择车辆类型');
+    if (_publishCarInfo.value.carNatureOfUse==0) {
+      BotToast.showText(text: '请先选择使用性质');
       return false;
     }
     if (_engineController.text.trim().isEmpty) {
       BotToast.showText(text: '请输入发动机号');
       return false;
     }
+    if (_publishCarInfo.value.productionDate == null) {
+      BotToast.showText(text: '请选择出厂日期');
+      return false;
+    }
+
+
     if (_publishCarInfo.value.compulsoryInsuranceDate == null) {
       BotToast.showText(text: '请选择车强险时间');
       return false;
@@ -341,14 +372,16 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       return false;
     }
 
-    if (_publishCarInfo.value.environmentalLevel!='') {
-      BotToast.showText(text: '请先选择环保等级');
+    if (_publishCarInfo.value.licensePlate=='') {
+      BotToast.showText(text: '请输入车辆牌照');
       return false;
     }
 
     _publishCarInfo.value.mileage = _mileController.text;
     _publishCarInfo.value.viNum = _viNumController.text;
     _publishCarInfo.value.engineNum = _engineController.text;
+
+    _publishCarInfo.value.licensePlate = _licensePlateController.text;
     return true;
   }
 
@@ -395,9 +428,19 @@ class PurchaseCarInfo {
 
   String get licensingDateStr =>
       DateUtil.formatDate(licensingDate, format: 'yyyy-MM-dd');
-  ///车辆类型
-  int? carType;
-  CarType get carTypeEM => CarType.getValue(carType??0);
+
+  ///出场日期
+  DateTime? productionDate;
+
+  String get productionDateStr =>
+      DateUtil.formatDate(productionDate, format: 'yyyy-MM-dd');
+
+  ///车辆牌照
+  String? licensePlate;
+
+  ///使用性质
+  int? carNatureOfUse;
+  CarNatureOfUse get carNatureOfUseEM => CarNatureOfUse.getValue(carNatureOfUse??0);
 
   ///发动机号
   String? engineNum;
@@ -415,8 +458,8 @@ class PurchaseCarInfo {
   ///表显里程
   String? mileage;
 
-  ///环保等级
-  String? environmentalLevel;
+  // ///环保等级
+  // String? environmentalLevel;
 
 
   String? customer;
@@ -426,14 +469,14 @@ class PurchaseCarInfo {
   static PurchaseCarInfo get empty => PurchaseCarInfo(
         viNum: '',
         carName: '',
-        carModelId: 0,
+        carModelId: null,
         licensingDate: null,
         engineNum: '',
         customer:'',
-        customerId:0,
+        customerId:null,
         mileage: '',
-        carType:0,
-        environmentalLevel:'',
+        carNatureOfUse:0,
+        //environmentalLevel:'',
         compulsoryInsuranceDate:null
       );
 
@@ -446,8 +489,8 @@ class PurchaseCarInfo {
     this.engineNum,
     this.mileage,
     this.carModelId,
-    this.carType,
-    this.environmentalLevel,
+    this.carNatureOfUse,
+    //this.environmentalLevel,
     this.compulsoryInsuranceDate
   });
 }

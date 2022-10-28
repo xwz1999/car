@@ -1,9 +1,17 @@
+import 'dart:io';
+
+import 'package:cloud_car/model/car/bank_card_info_model.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/model/car/id_card_info_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/picker/image_pick_widget/single_image_pick_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
@@ -20,6 +28,22 @@ class ContractOwnerPage extends StatefulWidget {
 
 class _ContractOwnerPageState extends State<ContractOwnerPage> {
   // bool _chooseOwner = true;
+
+  final TextEditingController ownerIdController = TextEditingController();
+
+  final TextEditingController bankNumController = TextEditingController();
+
+  @override
+  void dispose() {
+
+    ownerIdController.dispose();
+
+    bankNumController.dispose();
+
+    super.dispose();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,110 +82,6 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                   color: Colors.white,
                   child: Column(
                     children: [
-                      // Container(
-                      //   padding: EdgeInsets.only(
-                      //       top: 20.h, bottom: 20.h, left: 30.w, right: 30.w),
-                      //   color: Colors.transparent,
-                      //   child: Row(
-                      //     children: [
-                      //       '*'
-                      //           .text
-                      //           .size(30.sp)
-                      //           .color(Colors.red)
-                      //           .normal
-                      //           .textStyle(const TextStyle(
-                      //           decoration: TextDecoration.none))
-                      //           .make()
-                      //           .paddingOnly(top: 5),
-                      //       10.wb,
-                      //       SizedBox(
-                      //         width: 160.w,
-                      //         child: '车主类别'
-                      //             .text
-                      //             .size(30.sp)
-                      //             .normal
-                      //             .textStyle(const TextStyle(
-                      //             decoration: TextDecoration.none))
-                      //             .color(Colors.black.withOpacity(0.45))
-                      //             .make(),
-                      //       ),
-                      //       Expanded(
-                      //         child: Row(
-                      //           children: [
-                      //             GestureDetector(
-                      //               onTap: () {
-                      //                 _chooseOwner = !_chooseOwner;
-                      //                 setState(() {});
-                      //               },
-                      //               child: Row(
-                      //                 mainAxisSize: MainAxisSize.min,
-                      //                 mainAxisAlignment: MainAxisAlignment.center,
-                      //                 children: [
-                      //                   Container(
-                      //                       width: 50.w,
-                      //                       height: 50.w,
-                      //                       padding: EdgeInsets.only(
-                      //                           top: 6.w, right: 5.w),
-                      //                       child: !_chooseOwner
-                      //                           ? const Icon(CupertinoIcons.circle,
-                      //                           size: 18,
-                      //                           color: Color(0xFFdddddd))
-                      //                           : const Icon(
-                      //                           CupertinoIcons
-                      //                               .checkmark_alt_circle_fill,
-                      //                           size: 18,
-                      //                           color: Colors.blue)),
-                      //                   RichText(
-                      //                     text: TextSpan(
-                      //                       text: "个人寄卖",
-                      //                       style: TextStyle(
-                      //                           color: Colors.black,
-                      //                           fontSize: 30.sp),
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //             GestureDetector(
-                      //               onTap: () {
-                      //                 _chooseOwner = !_chooseOwner;
-                      //                 setState(() {});
-                      //               },
-                      //               child: Row(
-                      //                 mainAxisSize: MainAxisSize.min,
-                      //                 mainAxisAlignment: MainAxisAlignment.center,
-                      //                 children: [
-                      //                   Container(
-                      //                       width: 50.w,
-                      //                       height: 50.w,
-                      //                       padding: EdgeInsets.only(
-                      //                           top: 6.w, right: 5.w),
-                      //                       child: _chooseOwner
-                      //                           ? const Icon(CupertinoIcons.circle,
-                      //                           size: 18,
-                      //                           color: Color(0xFFdddddd))
-                      //                           : const Icon(
-                      //                           CupertinoIcons
-                      //                               .checkmark_alt_circle_fill,
-                      //                           size: 18,
-                      //                           color: Colors.blue)),
-                      //                   RichText(
-                      //                     text: TextSpan(
-                      //                       text: "公司车辆",
-                      //                       style: TextStyle(
-                      //                           color: Colors.black,
-                      //                           fontSize: 30.sp),
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                       Container(
                           padding: EdgeInsets.only(
                               left: 30.w, right: 30.w, bottom: 30.w,),
@@ -221,26 +141,86 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
         ),
         EditItemWidget(
           title: '身份证号',
-          value: widget.consignmentContractModel.value.masterInfo.idCard ?? "",
+          controller: ownerIdController,
           callback: (String content) {
             widget.consignmentContractModel.value.masterInfo.idCard = content;
           },
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(18)
+          ],
+          endIcon: GestureDetector(
+            onTap: ()async{
+              File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
+              if (file != null) {
+                setState(() {});
+                var cancel = CloudToast.loading;
+                String urls = await apiClient.uploadImage(file);
+                IdCardInfoModel? carInfoModel = await CarFunc.idCardOCR(urls);
+                if (carInfoModel != null) {
+                  widget.consignmentContractModel.value.masterInfo.idCard = carInfoModel.number;
+                  ownerIdController.text =  carInfoModel.number;
+                }
+                cancel();
+                setState(() {
+
+                });
+              }
+            },
+            child: Image.asset(
+              Assets.icons.scan.path,
+              width: 32.w,
+              height: 32.w,
+            ),
+          ),
         ),
         EditItemWidget(
           title: '手机号码',
           value: widget.consignmentContractModel.value.masterInfo.phone ?? "",
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(11)
+          ],
           callback: (String content) {
             widget.consignmentContractModel.value.masterInfo.phone = content;
           },
         ),
         EditItemWidget(
           title: '银行卡号',
-          value:
-              widget.consignmentContractModel.value.masterInfo.bankCard ?? "",
+          controller: bankNumController,
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(19)
+          ],
           callback: (String content) {
             widget.consignmentContractModel.value.masterInfo.bankCard =
                 content;
           },
+          endIcon: GestureDetector(
+            onTap: ()async{
+              File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
+              if (file != null) {
+                setState(() {});
+                var cancel = CloudToast.loading;
+                String urls = await apiClient.uploadImage(file);
+                BankCardInfoModel? bankCardInfoModel = await CarFunc.bankCardOCR(urls);
+                if (bankCardInfoModel != null) {
+                  widget.consignmentContractModel.value.masterInfo.bankCard = bankCardInfoModel.bankCardNo;
+
+                  bankNumController.text = bankCardInfoModel.bankCardNo;
+
+                  widget.consignmentContractModel.value.masterInfo.bank = bankCardInfoModel.bankName;
+
+                }
+                cancel();
+                setState(() {
+
+                });
+              }
+            },
+            child: Image.asset(
+              Assets.icons.scan.path,
+              width: 32.w,
+              height: 32.w,
+            ),
+          ),
         ),
         EditItemWidget(
           title: '开户行',
