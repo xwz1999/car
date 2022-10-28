@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/user/user_look_contract/comsignment_view.dart';
+import 'package:cloud_car/ui/user/user_look_contract/purchase_contract_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/sale_view.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,14 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
   final EasyRefreshController _consignmentRefreshController =
       EasyRefreshController();
   final EasyRefreshController _saleRefreshController = EasyRefreshController();
+
+  final EasyRefreshController _purchaseRefreshController = EasyRefreshController();
+
   final List<ConsignmentListModel> _consignmentList = [];
 
   final List<ConsignmentListModel> _saleList = [];
+
+  final List<ConsignmentListModel> _purchaseList = [];
 
   @override
   void initState() {
@@ -37,6 +43,7 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
     _tabController.dispose();
     _consignmentRefreshController.dispose();
     _saleRefreshController.dispose();
+    _purchaseRefreshController.dispose();
     super.dispose();
   }
 
@@ -115,9 +122,9 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
                   saleList: _saleList,
                   refreshController: _saleRefreshController,
                 ),
-                SaleView(
-                  saleList: _saleList,
-                  refreshController: _saleRefreshController,
+                PurchaseContractPage(
+                  saleList: _purchaseList,
+                  refreshController: _purchaseRefreshController,
                 ),
               ],
             ))

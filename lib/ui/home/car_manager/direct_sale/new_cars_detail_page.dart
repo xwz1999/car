@@ -698,7 +698,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${carInfoModel!.carInfo.price}万',
+                      '${num.parse(carInfoModel!.carInfo.newCarGuidePrice)/10000}万',
                       style: Theme
                           .of(context)
                           .textTheme
@@ -716,7 +716,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                         //   size: 20,
                         // ),
                         Text(
-                          '系统估价',
+                          '新车指导价',
                           style: Theme
                               .of(context)
                               .textTheme
@@ -847,9 +847,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       ? Assets.icons.editor.path
                       : Assets.icons.noEditor.path,
                   '编辑', () {
-                if (widget.carListModel.isSelf == 1) {
-                  Get.to(() => const EditCarPage());
-                }
+                // if (widget.carListModel.isSelf == 1) {
+                //   Get.to(() => const EditCarPage());
+                // }
               })),
           Expanded(
               child: _getBottom(
@@ -857,9 +857,13 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       ? Assets.icons.noTransmission.path
                       : Assets.icons.transmission.path,
                   '调价', () {
-                if (widget.carListModel.isSelf == 1) {
-                  Get.to(() => const ModifyPricePage());
+                // if (widget.carListModel.isSelf == 1) {
+                //   Get.to(() => const ModifyPricePage());
+                // }
+                if(carInfoModel!.IsSelfBusiness==1&&carInfoModel!.isSelfStore==1){
+                  Get.to(() => ModifyPricePage(model: carInfoModel!,));
                 }
+
               })),
           Expanded(
               child: _getBottom(Assets.icons.upload.path, '出售', () {

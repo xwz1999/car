@@ -272,6 +272,43 @@ class CarFunc {
     }
   }
 
+
+  ///收车合同列表
+  static Future<List<ConsignmentListModel>> getPurchaseList(
+      {required int page, int size = 10}) async {
+    BaseListModel res = await apiClient.requestList(
+        API.contract.purchaseList,
+        data: {'size': size, 'page': page});
+    if (res.code == 0) {
+      return res.nullSafetyList
+          .map((e) => ConsignmentListModel.fromJson(e))
+          .toList();
+    } else {
+      return [];
+    }
+  }
+
+
+  ///发起寄卖合同
+  static Future<bool> adjustPrice(int id,
+      num price) async {
+    BaseModel model =
+    await apiClient.request(API.car.adjustPrice, data: {
+      'carId':id,'price':price
+    });
+    if (model.code == 0) {
+      if (model.msg == '操作成功') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      CloudToast.show(model.msg);
+      return false;
+    }
+  }
+
+
   ///发起寄卖合同
   static Future<bool> addConsignment(
       ConsignmentContractModel contractModel) async {
@@ -283,7 +320,7 @@ class CarFunc {
       "bank": contractModel.masterInfo.bank,
       "idCardFront": contractModel.masterInfo.idCardFront,
       "idCardBack": contractModel.masterInfo.idCardBack,
-      "photo": contractModel.masterInfo.photo,
+      "photo": '',
     };
     BaseModel model =
         await apiClient.request(API.contract.addConsignment, data: {

@@ -10,6 +10,7 @@ class EditItemWidget extends StatefulWidget {
   @Deprecated('not good,replace it')
   final String? value;
   final bool canChange;
+  final Color? textColor;
   final TextCallback? callback;
   final String endText;
   final double paddingTop;
@@ -36,7 +37,7 @@ class EditItemWidget extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.controller,
     this.value,
-    this.inputFormatters,
+    this.inputFormatters,this.textColor = BaseStyle.color333333,
   });
 
   @override
@@ -120,7 +121,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                 widget.callback?.call(text);
               },
               style: TextStyle(
-                color: BaseStyle.color333333,
+                color: widget.textColor?? BaseStyle.color333333,
                 fontSize: BaseStyle.fontSize28,
               ),
               maxLines: null,

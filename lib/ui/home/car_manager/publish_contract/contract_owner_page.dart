@@ -270,30 +270,30 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
             ],
           ),
         ),
-        30.hb,
-        _takePhoto(
-          '半身照',
-          Row(
-            children: [
-              SingleImagePickWidget(
-                width: 216.w,
-                height: 160.w,
-                onChanged: (files) {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  widget.consignmentContractModel.value.bust = files;
-                  setState(() {
-
-                  });
-                },
-                imageView: Image.asset(
-                  Assets.images.carPersonPhoto.path,
-                  fit: BoxFit.fill,
-                ),
-                files: widget.consignmentContractModel.value.bust,
-              ),
-            ],
-          ),
-        ),
+        // 30.hb,
+        // _takePhoto(
+        //   '半身照',
+        //   Row(
+        //     children: [
+        //       SingleImagePickWidget(
+        //         width: 216.w,
+        //         height: 160.w,
+        //         onChanged: (files) {
+        //           FocusManager.instance.primaryFocus?.unfocus();
+        //           widget.consignmentContractModel.value.bust = files;
+        //           setState(() {
+        //
+        //           });
+        //         },
+        //         imageView: Image.asset(
+        //           Assets.images.carPersonPhoto.path,
+        //           fit: BoxFit.fill,
+        //         ),
+        //         files: widget.consignmentContractModel.value.bust,
+        //       ),
+        //     ],
+        //   ),
+        // ),
 
       ],
     );

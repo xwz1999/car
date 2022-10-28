@@ -53,6 +53,10 @@ class _Car {
 
   ///下架/退库
   String get offShelf => '/order/consignment/down';
+
+
+  ///调价
+  String get adjustPrice => '/car/adjustPrice';
 }
 
 class _Collect {

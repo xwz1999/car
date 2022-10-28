@@ -21,6 +21,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 import 'modify_price_page.dart';
 
+
+@Deprecated('user new_cars_detail_page')
 class CarsDetailPage extends StatefulWidget {
   // final bool isSelf;
   final CarListModel carListModel;
@@ -747,7 +749,7 @@ class _CarsDetailPageState extends State<CarsDetailPage>
                       : Assets.icons.transmission.path,
                   '调价', () {
             if (widget.carListModel.isSelf == 1) {
-              Get.to(() => const ModifyPricePage());
+              //Get.to(() => const ModifyPricePage());
             }
           })),
           Expanded(

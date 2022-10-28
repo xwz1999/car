@@ -1,14 +1,19 @@
+
+import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ///调价页面
 class ModifyPricePage extends StatefulWidget {
-  const ModifyPricePage({super.key});
+  final NewCarInfo model;
+  const ModifyPricePage({super.key, required this.model});
 
   @override
   _ModifyPricePageState createState() => _ModifyPricePageState();
@@ -16,14 +21,28 @@ class ModifyPricePage extends StatefulWidget {
 
 class _ModifyPricePageState extends State<ModifyPricePage>
     with SingleTickerProviderStateMixin {
+
+
+  final TextEditingController _guideController = TextEditingController();
+  final TextEditingController _showController = TextEditingController();
+
+  num price = 0;
+
+
   @override
   void initState() {
     super.initState();
+    _guideController.text = (num.parse(widget.model.carInfo.newCarGuidePrice)/10000).toString();
+
+
+    _showController.text = (num.parse(widget.model.carInfo.price)/10000).toString();
   }
 
   @override
   void dispose() {
     super.dispose();
+    _guideController.dispose();
+    _showController.dispose();
   }
 
   @override
@@ -47,16 +66,26 @@ class _ModifyPricePageState extends State<ModifyPricePage>
             children: [
               EditItemWidget(
                 title: '展示价格',
-                value: '27.65',
-                callback: (String content) {},
+                controller: _guideController,
+                callback: (String content) {
+                  if(content!=''){
+
+                    price = (num.parse(content)*10000);
+                  }
+
+                },
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
                 endText: '万元',
                 topIcon: false,
               ),
               EditItemWidget(
-                title: '系统估价',
-                value: '26.12',
-                callback: (String content) {},
-                endText: '把',
+                title: '新车指导价',
+                controller: _showController,
+                callback: (String content) {
+
+                },
+                textColor:const Color(0xFF999999) ,
+                endText: '万元',
                 topIcon: false,
                 canChange: false,
               ),
@@ -84,21 +113,27 @@ class _ModifyPricePageState extends State<ModifyPricePage>
                         listener: (index) {
                           Alert.dismiss(context);
                         },
-                        deleteListener: () {
+                        deleteListener: () async{
                           Alert.dismiss(context);
-                          Get.off(() => SuccessFailurePage(
-                              conditions: true,
-                              headline: '调价',
-                              body: Text(
-                                '提交成功，等待平台审核',
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                              bottom: CloudBottomButton(
-                                onTap: () {
-                                  Get.back();
-                                },
-                                text: '返回汽车详情',
-                              )));
+
+                        bool result =  await CarFunc.adjustPrice(widget.model.carInfo.id, price);
+
+                          if(result){
+                            Get.off(() => SuccessFailurePage(
+                                conditions: true,
+                                headline: '调价',
+                                body: Text(
+                                  '提交成功，等待平台审核',
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
+                                bottom: CloudBottomButton(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  text: '返回汽车详情',
+                                )));
+                          }
+
                         },
                       ));
                 },

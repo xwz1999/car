@@ -7,6 +7,10 @@ part 'new_car_info.g.dart';
 class NewCarInfo extends Equatable {
   final CarNewInfo carInfo;
   final int isSelf;
+  ///是否是自己的门店
+  final int isSelfStore;
+  ///是否是经纪人
+  final int IsSelfBusiness;
 
   factory NewCarInfo.fromJson(Map<String, dynamic> json) =>
       _$NewCarInfoFromJson(json);
@@ -16,9 +20,11 @@ class NewCarInfo extends Equatable {
   const NewCarInfo({
     required this.carInfo,
     required this.isSelf,
+    required this.isSelfStore,
+    required this.IsSelfBusiness,
   });
   @override
-  List<Object?> get props => [carInfo,isSelf,];
+  List<Object?> get props => [carInfo,isSelf,isSelfStore,IsSelfBusiness];
 }
 
 @JsonSerializable()

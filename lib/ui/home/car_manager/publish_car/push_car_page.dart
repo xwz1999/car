@@ -90,7 +90,7 @@ class _PushCarPageState extends State<PushCarPage> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('车辆发布',
+        title: Text('车辆寄卖',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
