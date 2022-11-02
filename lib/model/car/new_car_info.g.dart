@@ -7,17 +7,18 @@ part of 'new_car_info.dart';
 // **************************************************************************
 
 NewCarInfo _$NewCarInfoFromJson(Map<String, dynamic> json) => NewCarInfo(
-    carInfo: CarNewInfo.fromJson(json['carInfo'] as Map<String, dynamic>),
-    isSelf: json['isSelf'] as int,
-    isSelfStore: json['isSelfStore'] as int,
-    IsSelfBusiness: json['IsSelfBusiness'] as int);
+      carInfo: CarNewInfo.fromJson(json['carInfo'] as Map<String, dynamic>),
+      isSelf: json['isSelf'] as int,
+      isSelfStore: json['isSelfStore'] as int,
+      IsSelfBusiness: json['IsSelfBusiness'] as int,
+    );
 
 Map<String, dynamic> _$NewCarInfoToJson(NewCarInfo instance) =>
     <String, dynamic>{
       'carInfo': instance.carInfo,
       'isSelf': instance.isSelf,
       'isSelfStore': instance.isSelfStore,
-      'IsSelfBusiness': instance.IsSelfBusiness
+      'IsSelfBusiness': instance.IsSelfBusiness,
     };
 
 CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(

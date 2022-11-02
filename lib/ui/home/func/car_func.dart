@@ -13,8 +13,10 @@ import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/car/estimate_price_model.dart';
 import 'package:cloud_car/model/car/id_card_info_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
+import 'package:cloud_car/model/car/new_car_statistics_model.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
+import 'package:cloud_car/model/user/store_model.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
 import 'package:cloud_car/model/contract/purchase_photo_model.dart';
@@ -334,9 +336,9 @@ class CarFunc {
       'commercialInsurance': contractModel.commercialInsurance,
       'commercialInsuranceDate': contractModel.commercialInsuranceDate,
       'commercialInsurancePrice': contractModel.commercialInsurancePrice,
-      'exterior': contractModel.exterior,
-      'interiorTrim': contractModel.interiorTrim,
-      'workingCondition': contractModel.workingCondition,
+      // 'exterior': contractModel.exterior,
+      // 'interiorTrim': contractModel.interiorTrim,
+      // 'workingCondition': contractModel.workingCondition,
       'serviceFeeRate': contractModel.serviceFeeRate,
     });
     if (model.code == 0) {
@@ -458,12 +460,12 @@ class CarFunc {
   }
 
 
-  static Future<List<StoreallModel>> getStoreall() async {
+  static Future<List<StoreModel>> getStructureAll() async {
     var res =
-    await apiClient.request(API.storeManagement.storeAll,data: {});
+    await apiClient.request(API.storeManagement.structureAll,data: {});
 
     if (res.data==null) return [];
-    return (res.data as List).map((e) => StoreallModel.fromJson(e)).toList();
+    return (res.data as List).map((e) => StoreModel.fromJson(e)).toList();
   }
 
   static Future<bool> newPushCar({
@@ -684,6 +686,19 @@ class CarFunc {
       return CarStatisticsModel.fromJson(res.data);
     } else {
       return CarStatisticsModel.init;
+    }
+  }
+
+
+  ///新车辆管理统计数据
+  static Future<NewCarStatisticsModel> getNewStatisticNum() async {
+    BaseModel res = await apiClient.request(
+      API.car.personalStatisticNum,
+    );
+    if (res.code == 0) {
+      return NewCarStatisticsModel.fromJson(res.data);
+    } else {
+      return NewCarStatisticsModel.init;
     }
   }
 }

@@ -20,6 +20,17 @@ class ContractPurchase extends StatefulWidget {
 
 class _ContractPurchaseState extends State<ContractPurchase> {
 
+  TextEditingController textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    print(widget.consignmentContractModel.value.evaluationPrice!);
+    textEditingController.text =  (double.parse(widget.consignmentContractModel.value.evaluationPrice!)*1.05/10000).toString();
+
+    widget.consignmentContractModel.value.sellPrice = (double.parse(widget.consignmentContractModel.value.evaluationPrice!)*1.05 ).toString() ;
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +102,16 @@ class _ContractPurchaseState extends State<ContractPurchase> {
   ) {
     return Container(
       padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-      color: Colors.transparent,
+
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+          border:  Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+      ),
       child: Row(
         children: [
           '*'
               .text
-              .size(28.sp)
+              .size(32.sp)
               .normal
               .textStyle(const TextStyle(decoration: TextDecoration.none))
               .color(Colors.red)
@@ -104,17 +119,17 @@ class _ContractPurchaseState extends State<ContractPurchase> {
               .paddingOnly(top: 5),
           10.wb,
           SizedBox(
-            width: 160.w,
+            width: 180.w,
             child: title.text
-                .size(28.sp)
+                .size(32.sp)
                 .normal
                 .textStyle(const TextStyle(decoration: TextDecoration.none))
-                .color(Colors.black.withOpacity(0.45))
+                .color(const Color(0xFF999999))
                 .make(),
           ),
           Expanded(
             child: (content??'').text
-                .size(28.sp)
+                .size(30.sp)
                 .normal
                 .textStyle(const TextStyle(decoration: TextDecoration.none))
                 .color(fontColor)
@@ -138,8 +153,11 @@ class _ContractPurchaseState extends State<ContractPurchase> {
         _showarea('发动机号',  widget.consignmentContractModel.value.publishCarInfo!.engineNum, fontColor),
         _showarea('车身颜色',  widget.consignmentContractModel.value.publishCarInfo!.carColor, fontColor),
         Container(
-          padding: EdgeInsets.only(top: 20.h),
-          color: Colors.transparent,
+          padding: EdgeInsets.only(top: 20.h,bottom: 20.w),
+          decoration: BoxDecoration(
+              color: Colors.transparent,
+              border:  Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+          ),
           child: Row(
             children: [
               '*'
@@ -152,10 +170,10 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                   .paddingOnly(top: 5),
               10.wb,
               SizedBox(
-                width: 160.w,
+                width: 180.w,
                 child: '表显里程'
                     .text
-                    .size(28.sp)
+                    .size(32.sp)
                     .normal
                     .textStyle(const TextStyle(decoration: TextDecoration.none))
                     .color(Colors.black.withOpacity(0.45))
@@ -186,24 +204,28 @@ class _ContractPurchaseState extends State<ContractPurchase> {
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'[\d.]+'))
           ],
-          titleWidth: 160.w,
+          titleWidth: 180.w,
+          titleColor: Color(0xFF999999),
           title: '出售标价',
           endText: '万元',
-          value: widget.consignmentContractModel.value.sellPrice.isEmptyOrNull?'':  (double.parse(widget.consignmentContractModel.value.sellPrice!)/10000 ).toString(),
+          controller: textEditingController,
+          //value: widget.consignmentContractModel.value.sellPrice.isEmptyOrNull?'':  (double.parse(widget.consignmentContractModel.value.sellPrice!)/10000 ).toString(),
           callback: (String content) {
             widget.consignmentContractModel.value.sellPrice = (double.parse(content)*10000 ).toString() ;
           },
         ),
-        20.hb,
 
         Container(
           padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-          color: Colors.transparent,
+          decoration: BoxDecoration(
+              color: Colors.transparent,
+              border:  Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+          ),
           child: Row(
             children: [
               23.wb,
               SizedBox(
-                width: 160.w,
+                width: 180.w,
                 child: '采购人'
                     .text
                     .size(30.sp)
@@ -231,7 +253,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
             children: [
               23.wb,
               SizedBox(
-                width: 160.w,
+                width: 180.w,
                 child: '门店'
                     .text
                     .size(30.sp)

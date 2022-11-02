@@ -8,6 +8,9 @@ class CustomerListModel extends Equatable {
   final int id;
   final String nickname;
   final int gender;
+  final String mobile;
+  final String realName;
+  final String idCard;
   final int isImportant;
   final String brokerName;
   final String trailContent;
@@ -27,10 +30,13 @@ class CustomerListModel extends Equatable {
     required this.trailContent,
     required this.trailCreatedAt,
     required this.createdAt,
+    required this.mobile,
+    required this.idCard,
+    required this.realName
   });
   
   
   @override
-  List<Object?> get props => [id,nickname,gender,isImportant,brokerName,trailContent,trailCreatedAt,createdAt,];
+  List<Object?> get props => [id,nickname,gender,isImportant,brokerName,trailContent,trailCreatedAt,createdAt,mobile,idCard,realName];
   
 }

@@ -11,6 +11,7 @@ class EditItemWidget extends StatefulWidget {
   final String? value;
   final bool canChange;
   final Color? textColor;
+  final Color? titleColor;
   final TextCallback? callback;
   final String endText;
   final double paddingTop;
@@ -21,6 +22,7 @@ class EditItemWidget extends StatefulWidget {
   final TextInputType? keyboardType;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
+  final bool haveBorder;
 
   const EditItemWidget({
     super.key,
@@ -37,7 +39,7 @@ class EditItemWidget extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.controller,
     this.value,
-    this.inputFormatters,this.textColor = BaseStyle.color333333,
+    this.inputFormatters,this.textColor ,this.titleColor,this.haveBorder = true
   });
 
   @override
@@ -51,7 +53,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
   @override
   void initState() {
     if (widget.paddingTop == 0) {
-      paddingTop = 40.w;
+      paddingTop = 30.w;
     } else {
       paddingTop = widget.paddingTop;
     }
@@ -78,8 +80,12 @@ class _EditItemWidgetState extends State<EditItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: paddingTop),
+    return Container(
+      padding: EdgeInsets.only(top: paddingTop,bottom: paddingTop),
+      decoration: BoxDecoration(
+
+        border:  Border(bottom:  widget.haveBorder? BorderSide(color: const Color(0xFFF6F6F6),width: 2.w):BorderSide.none)
+      ),
       child: Row(
         children: [
           widget.topIcon
@@ -100,12 +106,12 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                   ),
                 ),
           SizedBox(
-            width: widget.titleWidth ?? 170.w,
+            width: widget.titleWidth ?? 180.w,
             child: Text(
               widget.title,
               style: TextStyle(
-                color: BaseStyle.color999999,
-                fontSize: BaseStyle.fontSize28,
+                color: widget.titleColor?? BaseStyle.color333333,
+                fontSize: BaseStyle.fontSize32,
               ),
             ),
           ),
@@ -143,19 +149,19 @@ class _EditItemWidgetState extends State<EditItemWidget> {
           widget.endIcon != null
               ? Padding(
                   padding: EdgeInsets.only(
-                    right: 32.w,
+                    right: 24.w,
                   ),
                   child: widget.endIcon!,
                 )
               : (widget.endText.isNotEmpty
                   ? Padding(
                       padding: EdgeInsets.only(
-                        right: 32.w,
+                        right: 24.w,
                       ),
                       child: Text(
                         widget.endText,
                         style: TextStyle(
-                          fontSize: 28.sp,
+                          fontSize: 32.sp,
                           color: const Color(0xFF333333),
                         ),
                       ),

@@ -86,10 +86,12 @@ class _CloudSmsCodeWidgetState extends State<CloudSmsCodeWidget> {
 
   _beginCountDown() {
     ///开始倒计时
-    setState(() {
-      _timerWorking = true;
-      _countDownStr = "重新获取($_countDownNum)";
-    });
+    if(mounted){
+      setState(() {
+        _timerWorking = true;
+        _countDownStr = "重新获取($_countDownNum)";
+      });
+    }
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!mounted) {
         return;

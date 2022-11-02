@@ -14,8 +14,11 @@ import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart'
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_report_photo_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/share/share_car_dialog.dart';
+import 'package:cloud_car/utils/custom_floating_action_button_location.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -25,6 +28,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'modify_price_page.dart';
 
@@ -132,13 +136,69 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
       }
     }
     pushPhotoModel = PushPhotoModel(carPhotos: carPhotos,interiorPhotos: interiorPhotos,defectPhotos: defectPhotos);
-    setState(() {});
+    if(mounted){
+      setState(() {});
+    }
+
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  getPhone(String phone){
+    return Alert.show(
+        context,
+        NormalContentDialog(
+          type: NormalTextDialogType.delete,
+          title: '',
+          content: Column(
+            crossAxisAlignment:
+            CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 238.w,
+                height: 174.w,
+                child: Image.asset(
+                  Assets.images.immediately.path,
+                  fit: BoxFit.fill,
+                ),
+              ),
+              48.hb,
+              Text(
+                phone,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    ?.copyWith(
+                    fontSize: BaseStyle.fontSize40),
+              ),
+              16.hb,
+              Text(
+                '使用虚拟号联系车主',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2,
+              ),
+            ],
+          ),
+          items: const ['取消'],
+          deleteItem: '立即联系',
+          //监听器
+          listener: (index) {
+            Alert.dismiss(context);
+            //Value = false;
+            //(Value);
+          },
+          deleteListener: () {
+            Alert.dismiss(context);
+            launch("tel:$phone");
+            //Value = true;
+            //(Value);
+          },
+        ));
   }
 
   @override
@@ -157,7 +217,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
               SliverAppBar(
                   pinned: true,
                   stretch: true,
-                  expandedHeight: 1150.w,
+                  expandedHeight: 1100.w,
                   elevation: 0,
                   backgroundColor:
                   headerWhite ? Colors.white : Colors.transparent,
@@ -369,6 +429,31 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     ),
     ),
     bottomNavi: _bottom(),
+      fab: FloatingActionButton(onPressed: () {
+        if(carInfoModel!=null){
+          if(carInfoModel!.carInfo.brokerInfo.brokerPhone!='') {
+            getPhone( carInfoModel!.carInfo.brokerInfo.brokerPhone);
+          }
+        }else{
+          CloudToast.show('没有找到联系方式！');
+        }
+
+      },child:
+
+      SizedBox(
+        width: 120.w,
+        height: 120.w,
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(60.w)),
+            child:   Image.asset(Assets.images.imgPhone.path,width: 120.w,height: 120.w,),
+          ),
+        ),
+      ),
+      ),
+      fbLocation: CustomFloatingActionButtonLocation(
+          FloatingActionButtonLocation.endDocked,2.w, -130.w),
     );
   }
 
@@ -729,14 +814,14 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                 ),
               ),
             ),
-            13.wb,
+
             SizedBox(
               width: 1.w,
               height: 40.w,
               child: const DecoratedBox(
                   decoration: BoxDecoration(color: Colors.grey)),
             ),
-            13.wb,
+
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 22.w),
@@ -775,14 +860,13 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                 ),
               ),
             ),
-            13.wb,
+
             SizedBox(
               width: 1.w,
               height: 40.w,
               child: const DecoratedBox(
                   decoration: BoxDecoration(color: Colors.grey)),
             ),
-            13.wb,
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 22.w),
@@ -857,12 +941,19 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       ? Assets.icons.noTransmission.path
                       : Assets.icons.transmission.path,
                   '调价', () {
+                if(carInfoModel!=null){
+                  if(carInfoModel!.carInfo.brokerInfo.brokerPhone!='') {
+                    getPhone( carInfoModel!.carInfo.brokerInfo.brokerPhone);
+                  }
+                }else{
+                  CloudToast.show('没有找到联系方式！');
+                }
                 // if (widget.carListModel.isSelf == 1) {
                 //   Get.to(() => const ModifyPricePage());
                 // }
-                if(carInfoModel!.IsSelfBusiness==1&&carInfoModel!.isSelfStore==1){
-                  Get.to(() => ModifyPricePage(model: carInfoModel!,));
-                }
+                // if(carInfoModel!.IsSelfBusiness==1&&carInfoModel!.isSelfStore==1){
+                //   Get.to(() => ModifyPricePage(model: carInfoModel!,));
+                // }
 
               })),
           Expanded(

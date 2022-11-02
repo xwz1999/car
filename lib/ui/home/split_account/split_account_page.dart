@@ -86,21 +86,21 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
                   )
                 ],),
               ),
-              PopupMenuItem(
-                value: ['2'],
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  Image.asset(
-                    Assets.icons.icLedger.path, width: 48.w, height: 48.w,),
-                  Padding(
-                    padding:  EdgeInsets.only(bottom: 10.w,left: 5.w),
-                    child: Text("利润统计",
-                      style: TextStyle(color: Colors.white, fontSize: 28.sp),),
-                  )
-                ],),
-              ),
+              // PopupMenuItem(
+              //   value: ['2'],
+              //   child: Row(
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //     Image.asset(
+              //       Assets.icons.icLedger.path, width: 48.w, height: 48.w,),
+              //     Padding(
+              //       padding:  EdgeInsets.only(bottom: 10.w,left: 5.w),
+              //       child: Text("利润统计",
+              //         style: TextStyle(color: Colors.white, fontSize: 28.sp),),
+              //     )
+              //   ],),
+              // ),
             ];
           },
           color: const Color(0xFF404040),

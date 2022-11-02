@@ -248,8 +248,11 @@ class _Region {
 
 ///门店管理
 class _StoreManagement {
+  ///全部门店
+  String get  storeAll => '/business/all';
+
   ///组织架构
-  String get storeAll => '/business/store/all';
+  String get structureAll => '/business/store/all';
 
   ///全部入驻商
   String get businessAll => '/business/allBusiness';
@@ -317,6 +320,12 @@ class _Split {
 
   ///结束分账
   String get finish => '/split/account/finish';
+
+  ///获取常用联系人
+  String get contactAll => '/split/contact/all';
+
+  ///更新常用联系人状态
+  String get updateContact => '/split/contact/update';
 }
 
 class _Message {

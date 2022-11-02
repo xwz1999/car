@@ -228,8 +228,7 @@ class _PushReportPhotoPageState extends State<PushReportPhotoPage>
                   child:   model.isMust!=null&&model.isMust!?
                   '* '.text.size(28.sp).color(Colors.red).make().paddingOnly(top: 5):const SizedBox(),
                 ),
-
-                ( model.name??'').text.size(28.sp).black.make(),
+                ( model.name??'').text.size(32.sp).color(const Color(0xFF110000)).make(),
               ],
             )
 

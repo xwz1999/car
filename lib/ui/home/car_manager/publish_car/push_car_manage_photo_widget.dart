@@ -134,7 +134,7 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
                     ],
                   ),
             10.hb,
-            bottom.text.size(28.sp).black.bold.make(),
+            bottom.text.size(32.sp).color(const Color(0xFF110000)).make(),
           ],
         ),
       ),

@@ -79,6 +79,7 @@ class _SelfSalePageState extends State<SelfSalePage>
         'maxMileage': widget.pickCar.value.finalMaxMile,
         'dischargeStandard': widget.pickCar.value.dischargeStandard,
         'selfCarStatus': _currentCarStatus.typeNum,
+    'ownerType':1
       };
 
   int _page = 1;

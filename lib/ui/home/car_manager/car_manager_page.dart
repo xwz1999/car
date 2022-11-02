@@ -1,10 +1,9 @@
-import 'package:cloud_car/model/car/car_statistics_model.dart';
+import 'package:cloud_car/model/car/new_car_statistics_model.dart';
 import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import '../manager_container_item.dart';
 import 'direct_sale/direct_sale_manager_page.dart';
@@ -19,13 +18,18 @@ class CarManagerPage extends StatefulWidget {
 }
 
 class _CarManagerPageState extends State<CarManagerPage> {
-  CarStatisticsModel _allCarCount = CarStatisticsModel.init;
+  // CarStatisticsModel _allCarCount = CarStatisticsModel.init;
+  //
+  // CarStatisticsModel _selfCarCount = CarStatisticsModel.init;
 
-  CarStatisticsModel _selfCarCount = CarStatisticsModel.init;
+  NewCarStatisticsModel carCount = NewCarStatisticsModel.init;
 
   Future _getStatisticsNum() async {
-    _allCarCount = await CarFunc.getStatisticNum();
-    _selfCarCount = await CarFunc.getPersonalStatisticNum();
+
+    carCount = await CarFunc.getNewStatisticNum();
+
+    // _allCarCount = await CarFunc.getStatisticNum();
+     //_selfCarCount = await CarFunc.getPersonalStatisticNum();
     setState(() {});
   }
 
@@ -64,7 +68,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
           _buildMainClassification(text: '门店车辆', items: [
         ManagerContainerItem(
           text: '在售',
-          num: '${_allCarCount.sellCount}',
+          num: '${carCount.storeCount.sellCount}',
           onTap: () {
             Get.to(() =>
             const DirectSaleManagerPage(
@@ -82,7 +86,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
             ));
           },
           text: '已预订',
-          num: '${_allCarCount.reserveCount}',
+          num: '${carCount.storeCount.reserveCount}',
         ),
         ManagerContainerItem(
           onTap: () {
@@ -93,30 +97,30 @@ class _CarManagerPageState extends State<CarManagerPage> {
             ));
           },
           text: '已售',
-          num: '${_allCarCount.soldCount}',
+          num: '${carCount.storeCount.soldCount}',
         ),
-        ManagerContainerItem(
-          onTap: () {
-            Get.to(() =>
-            const DirectSaleManagerPage(
-              initIndex: 2,
-              initType: CarManageType.all,
-            ));
-          },
-          text: '待审核',
-          num: '111',
-        ),
-        ManagerContainerItem(
-          onTap: () {
-            Get.to(() =>
-            const DirectSaleManagerPage(
-              initIndex: 2,
-              initType: CarManageType.all,
-            ));
-          },
-          text: '已驳回',
-          num: '222',
-        ),
+        // ManagerContainerItem(
+        //   onTap: () {
+        //     Get.to(() =>
+        //     const DirectSaleManagerPage(
+        //       initIndex: 2,
+        //       initType: CarManageType.all,
+        //     ));
+        //   },
+        //   text: '待审核',
+        //   num: '111',
+        // ),
+        // ManagerContainerItem(
+        //   onTap: () {
+        //     Get.to(() =>
+        //     const DirectSaleManagerPage(
+        //       initIndex: 2,
+        //       initType: CarManageType.all,
+        //     ));
+        //   },
+        //   text: '已驳回',
+        //   num: '222',
+        // ),
         ManagerContainerItem(
           onTap: () {
             Get.to(() =>
@@ -126,14 +130,14 @@ class _CarManagerPageState extends State<CarManagerPage> {
             ));
           },
           text: '退库',
-          num: '${_allCarCount.backOutCount}',
+          num: '${carCount.storeCount.backOutCount}',
         )
       ]),
       40.hb,
       _buildMainClassification(text: '公司车辆', items: [
         ManagerContainerItem(
           text: '在售',
-          num: '${_selfCarCount.sellCount}',
+          num: '${carCount.businessCount.sellCount}',
           onTap: () {
             Get.to(() =>
             const DirectSaleManagerPage(
@@ -151,7 +155,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
             ));
           },
           text: '已预订',
-          num: '${_selfCarCount.reserveCount}',
+          num: '${carCount.businessCount.reserveCount}',
         ),
         ManagerContainerItem(
           onTap: () {
@@ -162,7 +166,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
             ));
           },
           text: '已售',
-          num: '${_selfCarCount.soldCount}',
+          num: '${carCount.businessCount.soldCount}',
         ),
         ManagerContainerItem(
           onTap: () {
@@ -173,112 +177,112 @@ class _CarManagerPageState extends State<CarManagerPage> {
             ));
           },
           text: '退库',
-          num: '${_selfCarCount.backOutCount}',
+          num: '${carCount.businessCount.backOutCount}',
         ),
-        ManagerContainerItem(
-          onTap: () {
-            Get.to(() =>
-            const DirectSaleManagerPage(
-              initIndex: 3,
-              initType: CarManageType.personal,
-            ));
-          },
-          text: '待审核',
-          num: '25',
-        ),
-        ManagerContainerItem(
-          onTap: () {
-            Get.to(() =>
-            const DirectSaleManagerPage(
-              initIndex: 3,
-              initType: CarManageType.personal,
-            ));
-          },
-          text: '已驳回',
-          num: '231',
-        )
+        // ManagerContainerItem(
+        //   onTap: () {
+        //     Get.to(() =>
+        //     const DirectSaleManagerPage(
+        //       initIndex: 3,
+        //       initType: CarManageType.personal,
+        //     ));
+        //   },
+        //   text: '待审核',
+        //   num: '25',
+        // ),
+        // ManagerContainerItem(
+        //   onTap: () {
+        //     Get.to(() =>
+        //     const DirectSaleManagerPage(
+        //       initIndex: 3,
+        //       initType: CarManageType.personal,
+        //     ));
+        //   },
+        //   text: '已驳回',
+        //   num: '231',
+        // )
       ]),
       40.hb,
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 12),
-            child: Text('库存预警',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .subtitle1
-                    ?.copyWith(
-                    color: const Color(0xFF333333),
-                    fontWeight: FontWeight.bold)),
-          ),
-          24.hb,
-          Row(
-            children: [
-              32.wb,
-              Expanded(child: Container(
-                height: 176.w,
-                decoration:  BoxDecoration(
-                  gradient: const LinearGradient(
-                      colors: [Color(0xFFFFD700), Color(0xFFFFDA4A),Color(0xFFFFAE00),],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight),
-                  borderRadius: BorderRadius.circular(8.w)
-                ),
-                padding: EdgeInsets.only(left: 22.w),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    '12'
-                        .text
-                        .size(48.sp)
-                        .color(Colors.white).bold
-                        .make(),
-                    16.hb,
-                    '超期30天'
-                        .text
-                        .size(28.sp)
-                        .color(Colors.white)
-                        .make()
-                  ],
-                ),
-              )),
-              32.wb,
-              Expanded(child: Container(
-                height: 176.w,
-                decoration:  BoxDecoration(
-                  gradient: const LinearGradient(
-                      colors: [Color(0xFFDB2323), Color(0xFFF84141),Color(0xFFB50F0F),],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight),
-                    borderRadius: BorderRadius.circular(8.w)
-                ),
-                padding: EdgeInsets.only(left: 22.w),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    '12'
-                        .text
-                        .size(48.sp)
-                        .color(Colors.white).bold
-                        .make(),
-                    16.hb,
-                    '超期30天'
-                        .text
-                        .size(28.sp)
-                        .color(Colors.white)
-                        .make()
-                  ],
-                ),
-              )),
-              32.wb,
-            ],
-          )
-        ],
-      ),
+      // Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   children: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(left: 12),
+      //       child: Text('库存预警',
+      //           style: Theme
+      //               .of(context)
+      //               .textTheme
+      //               .subtitle1
+      //               ?.copyWith(
+      //               color: const Color(0xFF333333),
+      //               fontWeight: FontWeight.bold)),
+      //     ),
+      //     24.hb,
+      //     Row(
+      //       children: [
+      //         32.wb,
+      //         Expanded(child: Container(
+      //           height: 176.w,
+      //           decoration:  BoxDecoration(
+      //             gradient: const LinearGradient(
+      //                 colors: [Color(0xFFFFD700), Color(0xFFFFDA4A),Color(0xFFFFAE00),],
+      //                 begin: Alignment.centerLeft,
+      //                 end: Alignment.centerRight),
+      //             borderRadius: BorderRadius.circular(8.w)
+      //           ),
+      //           padding: EdgeInsets.only(left: 22.w),
+      //           child: Column(
+      //             mainAxisAlignment: MainAxisAlignment.center,
+      //             crossAxisAlignment: CrossAxisAlignment.start,
+      //             children: [
+      //               '12'
+      //                   .text
+      //                   .size(48.sp)
+      //                   .color(Colors.white).bold
+      //                   .make(),
+      //               16.hb,
+      //               '超期30天'
+      //                   .text
+      //                   .size(28.sp)
+      //                   .color(Colors.white)
+      //                   .make()
+      //             ],
+      //           ),
+      //         )),
+      //         32.wb,
+      //         Expanded(child: Container(
+      //           height: 176.w,
+      //           decoration:  BoxDecoration(
+      //             gradient: const LinearGradient(
+      //                 colors: [Color(0xFFDB2323), Color(0xFFF84141),Color(0xFFB50F0F),],
+      //                 begin: Alignment.centerLeft,
+      //                 end: Alignment.centerRight),
+      //               borderRadius: BorderRadius.circular(8.w)
+      //           ),
+      //           padding: EdgeInsets.only(left: 22.w),
+      //           child: Column(
+      //             mainAxisAlignment: MainAxisAlignment.center,
+      //             crossAxisAlignment: CrossAxisAlignment.start,
+      //             children: [
+      //               '12'
+      //                   .text
+      //                   .size(48.sp)
+      //                   .color(Colors.white).bold
+      //                   .make(),
+      //               16.hb,
+      //               '超期30天'
+      //                   .text
+      //                   .size(28.sp)
+      //                   .color(Colors.white)
+      //                   .make()
+      //             ],
+      //           ),
+      //         )),
+      //         32.wb,
+      //       ],
+      //     )
+      //   ],
+      // ),
       ],
     ),);
   }

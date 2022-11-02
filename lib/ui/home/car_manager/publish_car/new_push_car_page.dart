@@ -3,6 +3,7 @@ import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/model/car/dealer_list_model.dart';
 import 'package:cloud_car/model/user/staff_all_model.dart';
+import 'package:cloud_car/model/user/store_model.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/choose_purchaser_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_picture_page.dart';
@@ -243,8 +244,8 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                                       width: 150.w,
                                       child: Text('备注',
                                           style: TextStyle(
-                                            color: BaseStyle.color999999,
-                                            fontSize: BaseStyle.fontSize28,)),
+                                            color: BaseStyle.color333333,
+                                            fontSize: BaseStyle.fontSize32,)),
                                     )
                                   ],
                                 )
@@ -509,7 +510,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
         children: [
 
           20.heightBox,
-          Text('车辆信息',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.w),),
+          Text('车辆信息',style: TextStyle(color: const Color(0xFF999999),fontSize: 36.w),),
           _function(
             '车辆来源',
                 () async {
@@ -537,7 +538,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                 () async {
                   ///需要新接口
                   Get.to(() => ChooseShopPage(
-                    callback: (StoreallModel model) {
+                    callback: (StoreModel model) {
                       _publishCarInfo.value.carShop = model.name;
                       _publishCarInfo.value.carShopId = model.id;
                       setState(() {});
@@ -778,8 +779,8 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                     width: 150.w,
                     child: Text('车况描述',
                         style: TextStyle(
-                          color: BaseStyle.color999999,
-                          fontSize: BaseStyle.fontSize28,)),
+                          color: BaseStyle.color333333,
+                          fontSize: BaseStyle.fontSize32,)),
                   )
                 ],
               )
@@ -826,7 +827,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
               32.hb,
             ],
           ),
-          Text('价格信息',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.w),),
+          Text('价格信息',style: TextStyle(color: const Color(0xFF999999),fontSize: 36.w),),
           wholesalePrice,
           salePrice,
           // _publishCarInfo.value.carSource==2||_publishCarInfo.value.carSource==3?
@@ -834,7 +835,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           //   crossAxisAlignment: CrossAxisAlignment.start,
           //   children: [
           //     32.hb,
-          //     Text('采购信息',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.w),),
+          //     Text('采购信息',style:TextStyle(color: const Color(0xFF999999),fontSize: 36.w),),
           //     _function(
           //       '采购类型',
           //           () async {
@@ -904,7 +905,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           //   ],
           // ):const SizedBox(),
           32.hb,
-          Text('牌证信息',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.w),),
+          Text('牌证信息',style: TextStyle(color: const Color(0xFF999999),fontSize: 36.w),),
           transferNum,
           keyCount,
           _showSelect(
@@ -957,8 +958,6 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           ),
 
           commercialInsurancePrice,
-          32.hb,
-
         ],
       ),
     );
@@ -1108,17 +1107,22 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       ) {
     return Container(
       padding: EdgeInsets.only(
-        top: 40.w,
+        top: 30.w,bottom: 30.w
       ),
-      color: Colors.transparent,
+
+      decoration: BoxDecoration(
+          border:  Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w)),
+        color: Colors.transparent,
+      ),
+
       child: Row(
         children: [
           30.wb,
           SizedBox(
-            width: 170.w,
+            width: 180.w,
             child: title.text
-                .size(26.sp)
-                .color(Colors.black.withOpacity(0.45))
+                .size(32.sp)
+                .color(const Color(0xFF333333))
                 .make(),
           ),
           Row(

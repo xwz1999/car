@@ -205,13 +205,13 @@ class _HomePageState extends State<HomePage>
             break;
           case '车辆发布':
             //Get.to(() => const PushCarPage());
-          Get.to(()=>const NewPushCarPage());
+            Get.to(() => const NewPushCarPage());
             break;
           case '车辆估值':
           //   Get.to(() => const CarValuationPage());
           //   break;
           case '车辆寄卖':
-          Get.to(() => const PushCarPage());
+            Get.to(() => const PushCarPage());
             break;
           case '车辆按揭':
             Get.to(() => const CarMortgagePage());
@@ -223,9 +223,8 @@ class _HomePageState extends State<HomePage>
             Get.to(() => const SplitAccountPage());
             break;
           case '估价充值':
-
             Get.to(() => const PurchasePushCarPage());
-            //Get.to(() => const UserAssessmentPage());
+          //Get.to(() => const UserAssessmentPage());
         }
       },
       child: ColoredBox(

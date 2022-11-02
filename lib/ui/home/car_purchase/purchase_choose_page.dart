@@ -84,8 +84,8 @@ class _PurchaseChoosePageState extends State<PurchaseChoosePage> {
                         width: 160.w,
                         child: '选择客户'
                             .text
-                            .size(30.sp)
-                            .color(Colors.black.withOpacity(0.45))
+                            .size(32.sp)
+                            .color(const Color(0xFF999999))
                             .make(),
                       ),
                       (widget.purchaseCarInfo.customer!

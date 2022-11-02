@@ -93,21 +93,23 @@ class _ContactConditionState extends State<ContactCondition> {
             Container(
               color: Colors.white,
               padding: EdgeInsets.only(left: 34.w, bottom: 40.w),
-              child: EditItemWidget(
+              child: const EditItemWidget(
+                textColor: Color(0xFF999999),
                 title: '服务费比列',
                 keyboardType: TextInputType.number,
-                value:
-                    widget.consignmentContractModel.value.serviceFeeRate == null
-                        ? ''
-                        : (num.parse(widget.consignmentContractModel.value
-                                        .serviceFeeRate ??
-                                    '0') *
-                                100)
-                            .toString(),
-                callback: (String content) {
-                  widget.consignmentContractModel.value.serviceFeeRate =
-                      (num.parse(content) / 100).toString();
-                },
+                value: '5',
+                // value:
+                //     widget.consignmentContractModel.value.serviceFeeRate == null
+                //         ? ''
+                //         : (num.parse(widget.consignmentContractModel.value
+                //                         .serviceFeeRate ??
+                //                     '0') *
+                //                 100)
+                //             .toString(),
+                // callback: (String content) {
+                //   widget.consignmentContractModel.value.serviceFeeRate =
+                //       (num.parse(content) / 100).toString();
+                // },
                 endText: '%',
               ),
             ),
@@ -136,9 +138,9 @@ class _ContactConditionState extends State<ContactCondition> {
                         await apiClient.uploadImage(widget
                             .consignmentContractModel.value.idFront!.first);
 
-                    widget.consignmentContractModel.value.masterInfo.photo =
-                        await apiClient.uploadImage(
-                            widget.consignmentContractModel.value.bust!.first);
+                    // widget.consignmentContractModel.value.masterInfo.photo =
+                    //     await apiClient.uploadImage(
+                    //         widget.consignmentContractModel.value.bust!.first);
 
                     bool success = await CarFunc.addConsignment(
                         widget.consignmentContractModel.value);

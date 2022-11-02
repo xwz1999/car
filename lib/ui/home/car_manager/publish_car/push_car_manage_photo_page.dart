@@ -49,7 +49,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
       PushImgModel(name: '右前45°'),
       PushImgModel(name: '右后45°'),
       PushImgModel(name: '左后45°'),
-      PushImgModel(name: '左后45°'),
+      PushImgModel(name: '正后'),
     ];
 
     _interiorPhotos = [
@@ -209,7 +209,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
             //横轴间距
             crossAxisSpacing: 20,
             //子组件宽高长度比例
-            childAspectRatio: 100/100),
+            childAspectRatio: 100/105),
         itemBuilder: (BuildContext context, int iIndex) {
           return _buildChild(list[iIndex],iIndex,index);
         });
@@ -270,7 +270,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
               ],
             ),
 
-           ( model.name??'').text.size(28.sp).black.make(),
+            ( model.name??'').text.size(28.sp).color(const Color(0xFF110000)).make(),
           ],
         ),
       ),

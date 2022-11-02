@@ -131,39 +131,40 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                   ? const SizedBox.shrink()
                   : ListView(
                       children: [
+                        //214.hb,
                         180.hb,
-                        Container(
-                          width: 686.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8.w),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 32.w,vertical: 24.w),
-                          margin: EdgeInsets.symmetric(horizontal: 32.w),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              '奥迪A4L'
-                                  .text
-                                  .size(28.sp)
-                                  .color(const Color(0xFF666666))
-                                  .make(),
-                              16.hb,
-                              Row(
-                                children: [
-                                  _getTextView('2020年10月'),
-                                  16.wb,
-                                  _getTextView('20.43万公里'),
-                                  16.wb,
-                                  _getTextView('宁波'),
-                                  16.wb,
-                                  _getTextView('蓝色'),
-                                ],
-                              )
-
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   width: 686.w,
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.white,
+                        //     borderRadius: BorderRadius.circular(8.w),
+                        //   ),
+                        //   padding: EdgeInsets.symmetric(horizontal: 32.w,vertical: 24.w),
+                        //   margin: EdgeInsets.symmetric(horizontal: 32.w),
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       '奥迪A4L'
+                        //           .text
+                        //           .size(28.sp)
+                        //           .color(const Color(0xFF666666))
+                        //           .make(),
+                        //       16.hb,
+                        //       Row(
+                        //         children: [
+                        //           _getTextView('2020年10月'),
+                        //           16.wb,
+                        //           _getTextView('20.43万公里'),
+                        //           16.wb,
+                        //           _getTextView('宁波'),
+                        //           16.wb,
+                        //           _getTextView('蓝色'),
+                        //         ],
+                        //       )
+                        //
+                        //     ],
+                        //   ),
+                        // ),
                         20.hb,
                         Center(
                           child: Stack(
@@ -216,7 +217,8 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                           ),
                         ),
                         56.hb,
-                        _billTile(_infoModel.dateBills[_currentDateIndex])
+                        _billTile(_infoModel.dateBills[_currentDateIndex]),
+                        200.hb,
                       ],
                     )),
           //Assets.images.splitBarAbove.image(),

@@ -292,7 +292,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                 //     ],
                 //   ),
                 // ),
-                30.hb,
+                //30.hb,
 
               ],
             ),

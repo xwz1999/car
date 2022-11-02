@@ -99,13 +99,8 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
             tips: '限制1000万以内',
             callback: (String content) {},
           ),
-          30.hb,
-          Divider(
-            endIndent: 16.w,
-            indent: 16.w,
-            height: 1.w,
-            color: const Color(0xFFE8E8E8),
-          ),
+
+
           EditItemWidget(
             keyboardType: TextInputType.number,
             paddingTop: 30.w,
@@ -125,13 +120,8 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
                   }
                 }),
           ),
-          30.hb,
-          Divider(
-            endIndent: 16.w,
-            indent: 16.w,
-            height: 2.w,
-            color: const Color(0xFFE8E8E8),
-          ),
+
+
           EditItemWidget(
             paddingTop: 30.w,
             keyboardType: TextInputType.number,
@@ -161,13 +151,8 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
             canChange: true,
             tips: '限50字以内',
           ),
-          30.hb,
-          Divider(
-            endIndent: 16.w,
-            indent: 16.w,
-            height: 1.w,
-            color: const Color(0xFFE8E8E8),
-          ),
+
+
           GestureDetector(
             onTap: () async {
               await showModalBottomSheet(
@@ -200,7 +185,7 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
               tips: '请选择还款方式',
             ),
           ),
-          80.hb,
+
           Container(
             width: double.infinity,
             height: 84.w,

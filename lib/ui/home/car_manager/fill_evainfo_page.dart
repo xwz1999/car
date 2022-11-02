@@ -199,21 +199,25 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                     children: [
                       Container(
                         padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
-                        color: Colors.transparent,
+
+                        decoration: BoxDecoration(
+                            border: Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+                                ,  color: Colors.transparent,
+                        ),
                         child: Row(
                           children: [
                             20.wb,
                             SizedBox(
-                              width: 160.w,
+                              width: 180.w,
                               child: '车身颜色'
                                   .text
-                                  .size(30.sp)
+                                  .size(32.sp)
                                   .color(Colors.black.withOpacity(0.45))
                                   .make(),
                             ),
                             Expanded(
                                 child: widget.publishCarInfo.carColor!.text
-                                    .size(30.sp)
+                                    .size(32.sp)
                                     .color(Colors.black)
                                     .make()),
                             24.wb,
@@ -221,23 +225,27 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 20.h, bottom: 15.h),
-                        color: Colors.transparent,
+                        padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
+
+                        decoration: BoxDecoration(
+                          border: Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+                          ,  color: Colors.transparent,
+                        ),
                         child: Row(
                           children: [
                             20.wb,
                             SizedBox(
-                              width: 160.w,
+                              width: 180.w,
                               child: '首次上牌'
                                   .text
-                                  .size(30.sp)
+                                  .size(32.sp)
                                   .color(Colors.black.withOpacity(0.45))
                                   .make(),
                             ),
                             Expanded(
                                 child: widget
                                     .publishCarInfo.licensingDateStr.text
-                                    .size(30.sp)
+                                    .size(32.sp)
                                     .color(Colors.black)
                                     .make()),
                             24.wb,
@@ -246,27 +254,31 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                       ),
                       Container(
                         padding: EdgeInsets.only(
-                          top: 15.h,
+                          top: 15.h,bottom: 15.h
                         ),
-                        color: Colors.transparent,
+
+                        decoration: BoxDecoration(
+                          border: Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+                          ,  color: Colors.transparent,
+                        ),
                         child: Row(
                           children: [
                             20.wb,
                             SizedBox(
                               child: '行驶里程'
                                   .text
-                                  .size(30.sp)
+                                  .size(32.sp)
                                   .color(Colors.black.withOpacity(0.45))
                                   .make(),
                             ),
-                            40.wb,
+                            50.wb,
                             Expanded(
                                 child: widget.publishCarInfo.mileage!.text
-                                    .size(30.sp)
+                                    .size(32.sp)
                                     .color(Colors.black)
                                     .make()),
                             24.wb,
-                            '万公里'.text.size(30.sp).make(),
+                            '万公里'.text.size(32.sp).make(),
                           ],
                         ),
                       ),
@@ -325,16 +337,17 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                               ? maintainList[_carInfo.maintain!].name
                               : '',
                           '请选择',
-                          titleWidth: 220.w),
+                          titleWidth: 240.w),
                       _function(
+
                           '有无更改真实公里数',
                           _mileageOnTap,
                           _carInfo.shamMileage != null
                               ? shamMileageType[_carInfo.shamMileage!]
                               : '',
                           '请选择',
-                          titleWidth: 280.w),
-                      30.hb,
+                          titleWidth: 300.w),
+
                     ],
                   ),
                 ),
@@ -383,6 +396,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
       child: Material(
         color: Colors.transparent,
         child: EditItemWidget(
+          titleColor:const Color(0xFF999999),
           title: title,
           titleWidth: titleWidth,
           tips: msg,

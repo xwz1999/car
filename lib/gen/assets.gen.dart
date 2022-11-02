@@ -317,6 +317,14 @@ class $AssetsIconsGen {
   AssetGenImage get icShareWxCircle =>
       const AssetGenImage('assets/icons/ic_share_wx_circle.png');
 
+  /// File path: assets/icons/ic_split_add.png
+  AssetGenImage get icSplitAdd =>
+      const AssetGenImage('assets/icons/ic_split_add.png');
+
+  /// File path: assets/icons/ic_split_choose.png
+  AssetGenImage get icSplitChoose =>
+      const AssetGenImage('assets/icons/ic_split_choose.png');
+
   /// File path: assets/icons/ic_user.png
   AssetGenImage get icUser => const AssetGenImage('assets/icons/ic_user.png');
 
@@ -693,6 +701,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/home_bg2.png
   AssetGenImage get homeBg2 =>
       const AssetGenImage('assets/images/home_bg2.png');
+
+  /// File path: assets/images/img_phone.png
+  AssetGenImage get imgPhone =>
+      const AssetGenImage('assets/images/img_phone.png');
 
   /// File path: assets/images/immediately.png
   AssetGenImage get immediately =>

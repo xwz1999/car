@@ -16,6 +16,9 @@ CustomerListModel _$CustomerListModelFromJson(Map<String, dynamic> json) =>
       trailContent: json['trailContent'] as String,
       trailCreatedAt: json['trailCreatedAt'] as int,
       createdAt: json['createdAt'] as int,
+      mobile: json['mobile'] as String,
+      idCard: json['idCard'] as String,
+      realName: json['realName'] as String,
     );
 
 Map<String, dynamic> _$CustomerListModelToJson(CustomerListModel instance) =>
@@ -23,6 +26,9 @@ Map<String, dynamic> _$CustomerListModelToJson(CustomerListModel instance) =>
       'id': instance.id,
       'nickname': instance.nickname,
       'gender': instance.gender,
+      'mobile': instance.mobile,
+      'realName': instance.realName,
+      'idCard': instance.idCard,
       'isImportant': instance.isImportant,
       'brokerName': instance.brokerName,
       'trailContent': instance.trailContent,

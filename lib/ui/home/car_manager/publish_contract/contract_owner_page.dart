@@ -31,7 +31,13 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
 
   final TextEditingController ownerIdController = TextEditingController();
 
+
+
+  final TextEditingController nameController = TextEditingController();
+
   final TextEditingController bankNumController = TextEditingController();
+
+  final TextEditingController bankController = TextEditingController();
 
   @override
   void dispose() {
@@ -39,6 +45,9 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
     ownerIdController.dispose();
 
     bankNumController.dispose();
+
+    nameController.dispose();
+    bankController.dispose();
 
     super.dispose();
   }
@@ -84,7 +93,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                     children: [
                       Container(
                           padding: EdgeInsets.only(
-                              left: 30.w, right: 30.w, bottom: 30.w,),
+                              left: 30.w, right: 30.w),
                           child:
                               personInfo() //_chooseOwner ? personInfo() : companyInfo(),
                           )
@@ -107,8 +116,9 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
                 widget.consignmentContractModel.value.masterInfo.bank==null||
                 widget.consignmentContractModel.value.masterInfo.bankCard==null||
                 widget.consignmentContractModel.value.idFront==null||
-                widget.consignmentContractModel.value.idBack==null||
-            widget.consignmentContractModel.value.bust==null
+                widget.consignmentContractModel.value.idBack==null
+                //||
+                //widget.consignmentContractModel.value.bust==null
             ){
 
               CloudToast.show('请先完善车主信息');
@@ -132,104 +142,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EditItemWidget(
-          title: '车主姓名',
-          value: widget.consignmentContractModel.value.masterInfo.name ?? "",
-          callback: (String content) {
-            widget.consignmentContractModel.value.masterInfo.name = content;
-          },
-        ),
-        EditItemWidget(
-          title: '身份证号',
-          controller: ownerIdController,
-          callback: (String content) {
-            widget.consignmentContractModel.value.masterInfo.idCard = content;
-          },
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(18)
-          ],
-          endIcon: GestureDetector(
-            onTap: ()async{
-              File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
-              if (file != null) {
-                setState(() {});
-                var cancel = CloudToast.loading;
-                String urls = await apiClient.uploadImage(file);
-                IdCardInfoModel? carInfoModel = await CarFunc.idCardOCR(urls);
-                if (carInfoModel != null) {
-                  widget.consignmentContractModel.value.masterInfo.idCard = carInfoModel.number;
-                  ownerIdController.text =  carInfoModel.number;
-                }
-                cancel();
-                setState(() {
-
-                });
-              }
-            },
-            child: Image.asset(
-              Assets.icons.scan.path,
-              width: 32.w,
-              height: 32.w,
-            ),
-          ),
-        ),
-        EditItemWidget(
-          title: '手机号码',
-          value: widget.consignmentContractModel.value.masterInfo.phone ?? "",
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(11)
-          ],
-          callback: (String content) {
-            widget.consignmentContractModel.value.masterInfo.phone = content;
-          },
-        ),
-        EditItemWidget(
-          title: '银行卡号',
-          controller: bankNumController,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(19)
-          ],
-          callback: (String content) {
-            widget.consignmentContractModel.value.masterInfo.bankCard =
-                content;
-          },
-          endIcon: GestureDetector(
-            onTap: ()async{
-              File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
-              if (file != null) {
-                setState(() {});
-                var cancel = CloudToast.loading;
-                String urls = await apiClient.uploadImage(file);
-                BankCardInfoModel? bankCardInfoModel = await CarFunc.bankCardOCR(urls);
-                if (bankCardInfoModel != null) {
-                  widget.consignmentContractModel.value.masterInfo.bankCard = bankCardInfoModel.bankCardNo;
-
-                  bankNumController.text = bankCardInfoModel.bankCardNo;
-
-                  widget.consignmentContractModel.value.masterInfo.bank = bankCardInfoModel.bankName;
-
-                }
-                cancel();
-                setState(() {
-
-                });
-              }
-            },
-            child: Image.asset(
-              Assets.icons.scan.path,
-              width: 32.w,
-              height: 32.w,
-            ),
-          ),
-        ),
-        EditItemWidget(
-          title: '开户行',
-          value: widget.consignmentContractModel.value.masterInfo.bank ?? "",
-          callback: (String content) {
-            widget.consignmentContractModel.value.masterInfo.bank = content;
-          },
-        ),
-        30.hb,
+        20.hb,
         _takePhoto(
           '身份证照',
           Row(
@@ -237,9 +150,24 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               SingleImagePickWidget(
                 width: 216.w,
                 height: 160.w,
-                onChanged: (files) {
+                onChanged: (files) async {
                   FocusManager.instance.primaryFocus?.unfocus();
                   widget.consignmentContractModel.value.idFront = files;
+                  if(files.isNotEmpty){
+                    File? file= files.first;
+                    var cancel = CloudToast.loading;
+                    String urls = await apiClient.uploadImage(file);
+                    IdCardInfoModel? carInfoModel = await CarFunc.idCardOCR(urls);
+                    if (carInfoModel != null) {
+                      widget.consignmentContractModel.value.masterInfo.idCard = carInfoModel.number;
+                      widget.consignmentContractModel.value.masterInfo.name = carInfoModel.name;
+
+                      ownerIdController.text =  carInfoModel.number;
+                      nameController.text = carInfoModel.name;
+                    }
+                    cancel();
+                  }
+
                   setState(() {
 
                   });
@@ -270,6 +198,117 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
             ],
           ),
         ),
+        EditItemWidget(
+          titleColor: const Color(0xFF999999),
+          title: '身份证号',
+          controller: ownerIdController,
+          callback: (String content) {
+            widget.consignmentContractModel.value.masterInfo.idCard = content;
+          },
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(18)
+          ],
+          endIcon: GestureDetector(
+            onTap: ()async{
+              File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
+              if (file != null) {
+                setState(() {});
+                var cancel = CloudToast.loading;
+                String urls = await apiClient.uploadImage(file);
+                IdCardInfoModel? carInfoModel = await CarFunc.idCardOCR(urls);
+                if (carInfoModel != null) {
+                  widget.consignmentContractModel.value.masterInfo.idCard = carInfoModel.number;
+                  widget.consignmentContractModel.value.masterInfo.name = carInfoModel.name;
+
+                  ownerIdController.text =  carInfoModel.number;
+                  nameController.text = carInfoModel.name;
+                }
+                cancel();
+                setState(() {
+
+                });
+              }
+            },
+            child: Image.asset(
+              Assets.icons.scan.path,
+              width: 32.w,
+              height: 32.w,
+            ),
+          ),
+        ),
+        EditItemWidget(
+          titleColor: const Color(0xFF999999),
+          title: '车主姓名',
+          controller: nameController,
+          //value: widget.consignmentContractModel.value.masterInfo.name ?? "",
+          callback: (String content) {
+            widget.consignmentContractModel.value.masterInfo.name = content;
+          },
+        ),
+
+        EditItemWidget(
+          titleColor: const Color(0xFF999999),
+          title: '手机号码',
+          value: widget.consignmentContractModel.value.masterInfo.phone ?? "",
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(11)
+          ],
+          callback: (String content) {
+            widget.consignmentContractModel.value.masterInfo.phone = content;
+          },
+        ),
+        EditItemWidget(
+          titleColor: const Color(0xFF999999),
+          title: '银行卡号',
+          controller: bankNumController,
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(19)
+          ],
+          callback: (String content) {
+            widget.consignmentContractModel.value.masterInfo.bankCard =
+                content;
+          },
+          endIcon: GestureDetector(
+            onTap: ()async{
+              File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
+              if (file != null) {
+                setState(() {});
+                var cancel = CloudToast.loading;
+                String urls = await apiClient.uploadImage(file);
+                BankCardInfoModel? bankCardInfoModel = await CarFunc.bankCardOCR(urls);
+                if (bankCardInfoModel != null) {
+                  widget.consignmentContractModel.value.masterInfo.bankCard = bankCardInfoModel.bankCardNo;
+                  widget.consignmentContractModel.value.masterInfo.bank = bankCardInfoModel.bankName;
+
+                  bankNumController.text = bankCardInfoModel.bankCardNo;
+                  bankController.text = bankCardInfoModel.bankName;
+
+
+                }
+                cancel();
+                setState(() {
+
+                });
+              }
+            },
+            child: Image.asset(
+              Assets.icons.scan.path,
+              width: 32.w,
+              height: 32.w,
+            ),
+          ),
+        ),
+        EditItemWidget(
+          titleColor: const Color(0xFF999999),
+          title: '开户行',
+          //value: widget.consignmentContractModel.value.masterInfo.bank ?? "",
+          controller: bankController,
+          callback: (String content) {
+            widget.consignmentContractModel.value.masterInfo.bank = content;
+          },
+        ),
+
+
         // 30.hb,
         // _takePhoto(
         //   '半身照',
@@ -305,26 +344,31 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
     String title,
     Widget content,
   ) {
-    return ColoredBox(
-      color: Colors.transparent,
+    return Container(
+
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+          border:  Border(bottom:  BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
+              '*'.text.size(32.sp).color(Colors.red).make().paddingOnly(top: 5),
               10.wb,
               SizedBox(
                 width: 160.w,
                 child: title.text
-                    .size(30.sp)
-                    .color(Colors.black.withOpacity(0.45))
+                    .size(32.sp)
+                    .color(const Color(0xFF999999))
                     .make(),
               ),
             ],
           ),
           15.heightBox,
           content,
+          20.hb,
         ],
       ),
     );

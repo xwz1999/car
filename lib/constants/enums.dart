@@ -66,8 +66,8 @@ enum CarSource {
 enum CarType{
   noData(0,''),
   middleGauge(1, '二手车(中规)'),
-  parallelImport(2, '个人直卖'),
-  handcart(3,'收购')
+  parallelImport(2, '二手车(平行进口)'),
+  handcart(3,'一手车')
   ;
 
   final int typeNum;

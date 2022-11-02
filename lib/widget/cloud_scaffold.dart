@@ -22,6 +22,7 @@ class CloudScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBarBottom;
   final Widget? endDrawer;
   final double? barHeight;
+  final FloatingActionButtonLocation? fbLocation;
 
   const CloudScaffold({
     super.key,
@@ -33,7 +34,7 @@ class CloudScaffold extends StatelessWidget {
     this.systemStyle = SystemStyle.initial,
     this.extendBody = false,
     this.path,
-    this.endDrawer, this.barHeight,
+    this.endDrawer, this.barHeight, this.fbLocation,
   })  : normal = false,
         title = '',
         actions = const [],
@@ -49,7 +50,7 @@ class CloudScaffold extends StatelessWidget {
     this.extendBody = false,
     this.appbar,
     this.path,
-    this.endDrawer, this.barHeight,
+    this.endDrawer, this.barHeight, this.fbLocation,
   })  : bodyColor = Colors.white,
         normal = false,
         title = '',
@@ -71,7 +72,7 @@ class CloudScaffold extends StatelessWidget {
       this.appBarBackColor = Colors.white,
       this.appBarBottom,
       this.actions = const [],
-      this.endDrawer, this.barHeight})
+      this.endDrawer, this.barHeight, this.fbLocation})
       : normal = true,
         assert(title != null || appbar != null);
 
@@ -105,6 +106,7 @@ class CloudScaffold extends StatelessWidget {
               ),
               bottomNavigationBar: bottomNavi,
               floatingActionButton: fab,
+              floatingActionButtonLocation:fbLocation ,
             ),
           )
         : AnnotatedRegion<SystemUiOverlayStyle>(
@@ -136,6 +138,7 @@ class CloudScaffold extends StatelessWidget {
               ),
               bottomNavigationBar: bottomNavi,
               floatingActionButton: fab,
+  floatingActionButtonLocation:fbLocation ,
             ),
           );
   }

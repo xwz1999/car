@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car/dealer_list_model.dart';
+import 'package:cloud_car/model/user/store_model.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -10,7 +11,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-typedef CarCallback = Function(StoreallModel model);
+typedef CarCallback = Function(StoreModel model);
 
 
 class ChooseShopPage extends StatefulWidget {
@@ -28,9 +29,9 @@ class ChooseShopPage extends StatefulWidget {
 class _ChooseShopPageState extends State<ChooseShopPage> {
   //选中的item
   final List<int> _selectIndex = [];
-  final List<StoreallModel> _chooseModels = [];
+  final List<StoreModel> _chooseModels = [];
 
-  List<StoreallModel> _list = [];
+  List<StoreModel> _list = [];
 
   bool _onLoad = true;
 
@@ -62,7 +63,7 @@ class _ChooseShopPageState extends State<ChooseShopPage> {
               footer: MaterialFooter(),
               controller: _easyRefreshController,
               onRefresh: () async {
-                _list = await CarFunc.getStoreall();
+                _list = await CarFunc.getStructureAll();
 
                 _onLoad = false;
                 setState(() {});
@@ -146,7 +147,7 @@ class _ChooseShopPageState extends State<ChooseShopPage> {
     );
   }
 
-  _getCustom(int index, StoreallModel model) {
+  _getCustom(int index, StoreModel model) {
     return GestureDetector(
       onTap: () {
         if (_selectIndex.contains(index)) {
@@ -198,14 +199,14 @@ class _ChooseShopPageState extends State<ChooseShopPage> {
               ],
             ),
             getContentItem('门店编号', model.id.toString()),
-            // getContentItem('联系人', model.liaison),
-            // getContentItem('联系电话', model.liaisonPhone),
-            // getContentItem(
-            //   '跟进时间',
-            //   DateUtil.formatDateMs(model.createdAt.toInt() * 1000,
-            //       format: 'yyyy-MM-dd HH-mm-ss'),
-            // ),
-            // getContentItem('车务', model.brokerName),
+            getContentItem('联系人', model.ownBrokerName),
+            getContentItem('联系电话', model.ownerBrokerTel),
+            getContentItem(
+              '注册时间',
+              DateUtil.formatDateMs(model.createdAt.toInt() * 1000,
+                  format: 'yyyy-MM-dd HH-mm-ss'),
+            ),
+            //getContentItem('车务', model.brokerName),
           ],
         ),
       ),

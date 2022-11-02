@@ -307,6 +307,7 @@ class _PushCarPageState extends State<PushCarPage> {
         _publishCarInfo.mileage = content;
       },
       endText: '万公里',
+      haveBorder: false,
     );
 
     return Container(

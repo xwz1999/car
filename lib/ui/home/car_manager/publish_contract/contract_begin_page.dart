@@ -83,7 +83,7 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
                         width: 160.w,
                         child: '选择客户'
                             .text
-                            .size(30.sp)
+                            .size(32.sp)
                             .color(Colors.black.withOpacity(0.45))
                             .make(),
                       ),
@@ -93,7 +93,7 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
                               : widget
                                   .consignmentContractModel.value.customerName!)
                           .text
-                          .size(30.sp)
+                          .size(32.sp)
                           .color(Colors.black.withOpacity(widget
                                   .consignmentContractModel
                                   .value

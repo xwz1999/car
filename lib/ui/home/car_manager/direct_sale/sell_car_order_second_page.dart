@@ -28,6 +28,10 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
 
   late TextEditingController _editingController2;
 
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController cardNoController = TextEditingController();
+
   CustomerListModel? customerListModel;
 
   @override
@@ -42,6 +46,9 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
   void dispose() {
     _editingController.dispose();
     _editingController2.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    cardNoController.dispose();
     super.dispose();
   }
 
@@ -144,21 +151,25 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                 getContentItem('客户', '请选择', path: Assets.icons.icGoto.path),
                 EditItemWidget(
                   title: '手机号',
-                  value: widget.contractModel.value.phone ?? '',
+                  //value: widget.contractModel.value.phone ?? '',
+                  controller: phoneController,
+
                   callback: (String content) {
                     widget.contractModel.value.phone = content;
                   },
                 ),
                 EditItemWidget(
                   title: '姓名',
-                  value: widget.contractModel.value.name ?? "",
+                  //value: widget.contractModel.value.name ?? "",
+                  controller: nameController,
                   callback: (String content) {
                     widget.contractModel.value.name = content;
                   },
                 ),
                 EditItemWidget(
                   title: '身份证号',
-                  value: widget.contractModel.value.cardNo ?? "",
+                  //value: widget.contractModel.value.cardNo ?? "",
+                  controller: cardNoController,
                   callback: (String content) {
                     widget.contractModel.value.cardNo = content;
                   },
@@ -313,16 +324,31 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
 
   getContentItem(String title, String content,
       {isSpecial = false, path, topIcon = true}) {
-    return Padding(
-      padding: EdgeInsets.only(top: 30.w),
+    return Container(
+      decoration: BoxDecoration(
+
+          border:  Border(bottom:BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+      ),
+      padding: EdgeInsets.only(top: 30.w,bottom: 30.w),
       child: GestureDetector(
         onTap: () {
           Get.to(() => ChooseCustomerPage(
                 callback: (CustomerListModel model) {
                   widget.contractModel.value.customerModel = model;
                   customerListModel = model;
-
                   _editingController.text = customerListModel!.nickname;
+                  if(model.realName.isNotEmpty){
+                    nameController.text = model.realName;
+                    widget.contractModel.value.name = model.realName;
+                  }
+                  if(model.mobile.isNotEmpty){
+                    phoneController.text = model.mobile;
+                    widget.contractModel.value.phone = model.mobile;
+                  }
+                  if(model.idCard.isNotEmpty){
+                    cardNoController.text = model.idCard;
+                    widget.contractModel.value.cardNo = model.idCard;
+                  }
                   setState(() {});
                 },
               ));
@@ -336,7 +362,7 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                     child: Text(
                       '*  ',
                       style: TextStyle(
-                        fontSize: 28.sp,
+                        fontSize: 32.sp,
                         color: const Color(0xFFE62222),
                       ),
                     ),
@@ -346,18 +372,18 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                     child: Text(
                       '*  ',
                       style: TextStyle(
-                        fontSize: 28.sp,
+                        fontSize: 32.sp,
                         color: Colors.transparent,
                       ),
                     ),
                   ),
             SizedBox(
-              width: 170.w,
+              width: 180.w,
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: 28.sp,
-                  color: const Color(0xFF999999),
+                  fontSize: 32.sp,
+                  color: const Color(0xFF333333),
                 ),
               ),
             ),

@@ -47,7 +47,7 @@ class _ExaminationPageState extends State<ExaminationPage>{
         title: Text('审批提醒', style: Theme.of(context).textTheme.headline6),
         //leading:  Container(width: 10.w, child: const CloudBackButton()),
       ),
-      extendBody: true,
+      extendBody: false,
       extendBodyBehindAppBar: true,
       body: ListView(children: [
         //引用列表数据

@@ -1,7 +1,11 @@
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contact_condition_page.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
+import 'package:cloud_car/ui/user/user_order/sales_orders_page.dart';
+import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/picker/car_date_picker.dart';
 import 'package:flustars/flustars.dart';
@@ -59,11 +63,25 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
               color: Colors.white,
               child: showLicense(),
             ),
+            Container(
+              padding: EdgeInsets.all(30.w),
+              child: '服务费'.text.size(32.sp).bold.color(Colors.black).make(),
+            ),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.only(left: 34.w,),
+              child: const EditItemWidget(
+                textColor: Color(0xFF999999),
+                title: '服务费比列',
+                keyboardType: TextInputType.number,
+                value: '5%',
+              ),
+            ),
             30.heightBox,
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: ()async {
                   if (widget.consignmentContractModel.value
                               .commercialInsurance ==
                           null ||
@@ -72,16 +90,53 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                           null) {
                     CloudToast.show('请先完善牌证信息');
                   } else {
-                    Get.to(() => ContactCondition(
-                          consignmentContractModel:
-                              widget.consignmentContractModel,
-                        ));
+                    // Get.to(() => ContactCondition(
+                    //       consignmentContractModel:
+                    //           widget.consignmentContractModel,
+                    //     ));
+
+                    widget.consignmentContractModel.value.serviceFeeRate = '0.05';
+
+                    var cancel = CloudToast.loading;
+                    widget.consignmentContractModel.value.masterInfo
+                        .idCardBack =
+                        await apiClient.uploadImage(widget
+                        .consignmentContractModel.value.idBack!.first);
+
+                    widget.consignmentContractModel.value.masterInfo
+                        .idCardFront =
+                        await apiClient.uploadImage(widget
+                        .consignmentContractModel.value.idFront!.first);
+
+                    // widget.consignmentContractModel.value.masterInfo.photo =
+                    //     await apiClient.uploadImage(
+                    //         widget.consignmentContractModel.value.bust!.first);
+
+                    bool success = await CarFunc.addConsignment(
+                        widget.consignmentContractModel.value);
+                    cancel();
+
+                    if (success) {
+                      CloudToast.show('合同发布成功');
+                      Get.offUntil(
+                          GetPageRoute(
+                              page: () =>
+                              const SalesOrderPage(orderType: OrderType.personal)),
+                              (route) =>
+                          (route as GetPageRoute).routeName ==
+                              '/TabNavigator');
+
+                      ///关闭估价和发布合同的所有页面 跳转到寄卖订单列表
+
+                    } else {
+                      CloudToast.show('合同发布失败');
+                    }
                   }
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                 ),
-                child: '下一步'.text.size(30.sp).color(Colors.white).make(),
+                child: '发起合同'.text.size(30.sp).color(Colors.white).make(),
               ),
             ).paddingOnly(left: 30.w, right: 30.w),
           ],
@@ -97,9 +152,12 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
   ) {
     return Container(
       padding: EdgeInsets.only(
-        top: 40.w,
+        top: 30.w,bottom: 30.w
       ),
-      color: Colors.transparent,
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+          border:  Border(bottom:  BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+      ),
       child: Row(
         children: [
           Padding(
@@ -107,16 +165,16 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
             child: Text(
               '*  ',
               style: TextStyle(
-                fontSize: 28.sp,
+                fontSize: 32.sp,
                 color: const Color(0xFFE62222),
               ),
             ),
           ),
           SizedBox(
-            width: 170.w,
+            width: 180.w,
             child: title.text
-                .size(26.sp)
-                .color(Colors.black.withOpacity(0.45))
+                .size(32.sp)
+                .color( const Color(0xFF999999))
                 .make(),
           ),
           Row(
@@ -201,6 +259,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
     return Column(
       children: [
         EditItemWidget(
+          titleColor: const Color(0xFF999999),
           topIcon: false,
           title: '过户次数',
           endText: '次',
@@ -214,6 +273,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
           },
         ),
         EditItemWidget(
+          titleColor: const Color(0xFF999999),
           topIcon: false,
           title: '钥匙数量',
           endText: '把',
@@ -245,20 +305,23 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                 DateUtil.formatDate(firstDate, format: 'yyyy-MM-dd');
             setState(() {});
           },
-          child: Padding(
-            padding: EdgeInsets.only(top: 40.w, left: 25.w),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.transparent,
+                border:  Border(bottom:  BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+            ),
+            padding: EdgeInsets.only(top: 30.w, left: 30.w,bottom: 30.w),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 150.w,
+                  width: 180.w,
                   child: Text('交强险到期',
                       style: TextStyle(
                         color: BaseStyle.color999999,
-                        fontSize: BaseStyle.fontSize28,
+                        fontSize: BaseStyle.fontSize32,
                       )),
                 ),
-                20.wb,
                 Expanded(
                   child: Text(
                       widget.consignmentContractModel.value
@@ -268,7 +331,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                               .compulsoryInsuranceDate!,
                       style: widget.consignmentContractModel.value
                                   .compulsoryInsuranceDate !=
-                              null
+                              ''
                           ? Theme.of(context).textTheme.subtitle2
                           : TextStyle(
                               fontSize: 28.sp, color: const Color(0xFFCCCCCC))),
@@ -305,20 +368,24 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                 DateUtil.formatDate(firstDate, format: 'yyyy-MM-dd');
             setState(() {});
           },
-          child: Padding(
-            padding: EdgeInsets.only(top: 40.w, left: 25.w),
+          child: Container(
+            padding: EdgeInsets.only(top: 30.w, left: 25.w,bottom: 30.w),
+            decoration: BoxDecoration(
+                color: Colors.transparent,
+                border:  Border(bottom:  BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 150.w,
+                  width: 180.w,
                   child: Text('商业险到期',
                       style: TextStyle(
                         color: BaseStyle.color999999,
-                        fontSize: BaseStyle.fontSize28,
+                        fontSize: BaseStyle.fontSize32,
                       )),
                 ),
-                20.wb,
+
                 Expanded(
                   child: Text(
                       widget.consignmentContractModel.value
@@ -328,7 +395,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                               .commercialInsuranceDate!,
                       style: widget.consignmentContractModel.value
                                   .commercialInsuranceDate !=
-                              null
+                              ''
                           ? Theme.of(context).textTheme.subtitle2
                           : TextStyle(
                               fontSize: 28.sp, color: const Color(0xFFCCCCCC))),
@@ -346,6 +413,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
           ),
         ),
         EditItemWidget(
+          titleColor: const Color(0xFF999999),
           topIcon: false,
           title: '商业险金额',
           endText: '元',
@@ -357,7 +425,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                 content;
           },
         ),
-        40.hb,
+
       ],
     );
   }

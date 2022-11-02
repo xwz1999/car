@@ -17,7 +17,11 @@ class _UserApi {
   String get logOff => '/user/logoff';
 
   ///全部经纪人
-  String get allBroker => '/app/broker/user/all';
+  // String get allBroker => '/app/broker/user/all';
+
+  ///搜索经纪人
+  String get searchBroker => '/user/broker/search';
+
 }
 
 class _Wallet {

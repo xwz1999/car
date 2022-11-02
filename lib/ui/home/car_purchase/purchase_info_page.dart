@@ -178,25 +178,25 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       extendBody: true,
       body: ListView(
         children: [
-          Padding(padding: EdgeInsets.all(32.w),child:  '车主信息'.text.size(28.sp).color(const Color(0xFF999999)).make(),),
+          Padding(padding: EdgeInsets.all(32.w),child:  '车主信息'.text.size(36.sp).color(const Color(0xFF999999)).make(),),
           Container(
-            padding: EdgeInsets.only(left: 32.w,top: 24.w,bottom: 24.w,right: 12.w),
+            padding: EdgeInsets.only(left: 32.w,right: 12.w),
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Colors.white,),
             child: _ownerInfo()
           ),
-          Padding(padding: EdgeInsets.all(32.w),child:  '车款与交验车'.text.size(28.sp).color(const Color(0xFF999999)).make(),),
+          Padding(padding: EdgeInsets.all(32.w),child:  '车款与交验车'.text.size(36.sp).color(const Color(0xFF999999)).make(),),
           Container(
-              padding: EdgeInsets.only(left: 32.w,top: 24.w,bottom: 24.w,right: 12.w),
+              padding: EdgeInsets.only(left: 32.w,right: 12.w),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,),
               child: _priceInfo()
           ),
-          Padding(padding: EdgeInsets.all(32.w),child:  '车况描述'.text.size(28.sp).color(const Color(0xFF999999)).make(),),
+          Padding(padding: EdgeInsets.all(32.w),child:  '车况描述'.text.size(36.sp).color(const Color(0xFF999999)).make(),),
           Container(
-              padding: EdgeInsets.only(left: 32.w,top: 24.w,bottom: 24.w,right: 32.w),
+              padding: EdgeInsets.only(left: 32.w,right: 32.w),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,),
@@ -229,31 +229,31 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     return  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Container(
-            //   margin: EdgeInsets.only(top: 30.w,right: 5.w),
-            //   child: Text(
-            //     '*',
-            //     style: TextStyle(
-            //       fontSize: 28.sp,
-            //       color: const Color(0xFFE62222),
-            //     ),
-            //   ),
-            // ),
-            // 10.wb,
-            Container(
-              padding: EdgeInsets.only(top: 12.w),
-              width: 150.w,
-              child: Text('车况描述',
-                  style: TextStyle(
-                    color: BaseStyle.color999999,
-                    fontSize: BaseStyle.fontSize28,)),
-            )
-          ],
-        )
-        ,
+        // Row(
+        //   crossAxisAlignment: CrossAxisAlignment.center,
+        //   children: [
+        //     // Container(
+        //     //   margin: EdgeInsets.only(top: 30.w,right: 5.w),
+        //     //   child: Text(
+        //     //     '*',
+        //     //     style: TextStyle(
+        //     //       fontSize: 28.sp,
+        //     //       color: const Color(0xFFE62222),
+        //     //     ),
+        //     //   ),
+        //     // ),
+        //     // 10.wb,
+        //     Container(
+        //       padding: EdgeInsets.only(top: 12.w),
+        //       width: 150.w,
+        //       child: Text('车况描述',
+        //           style: TextStyle(
+        //             color: BaseStyle.color999999,
+        //             fontSize: BaseStyle.fontSize28,)),
+        //     )
+        //   ],
+        // )
+        // ,
         22.hb,
         Container(
           margin: EdgeInsets.symmetric(horizontal: 0.w),
@@ -307,7 +307,6 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       controller: transactionAmountController,
       endText: '元',
       inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
-      paddingTop: 0.5,
       callback: (text){
         if(text.isNotEmpty&&downPaymentNumController.text.isNotEmpty){
           num amount = num.parse(text);
@@ -482,7 +481,6 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       controller: ownerNameController,
       topIcon: false,
       paddingStart: 0.w,
-      paddingTop: 0.5,
     );
     var ownerId = EditItemWidget(
       title: '身份证号',
@@ -501,6 +499,8 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
             if (carInfoModel != null) {
               widget.purchaseInfo.ownerId = carInfoModel.number;
               ownerIdController.text = carInfoModel.number;
+              widget.purchaseInfo.ownerName = carInfoModel.name;
+              ownerNameController.text = carInfoModel.name;
             }
             cancel();
             setState(() {
@@ -580,8 +580,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
 
     return Column(
       children: [
-        ownerName,
         ownerId,
+        ownerName,
+
         phoneNum,
         bankNum,
         bank,

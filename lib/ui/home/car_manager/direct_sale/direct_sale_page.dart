@@ -78,6 +78,7 @@ class _DirectSalePageState extends State<DirectSalePage>
         'maxMileage': widget.pickCar.value.finalMaxMile,
         'dischargeStandard': widget.pickCar.value.dischargeStandard,
         'selfCarStatus': _currentCarStatus.typeNum,
+        'ownerType':2
       };
 
   int _page = 1;
@@ -165,9 +166,9 @@ class _DirectSalePageState extends State<DirectSalePage>
             footer: MaterialFooter(),
             onRefresh: () async {
               _page = 1;
-              var list = await CarFunc.getCarList(_page, _size,
+              var list = await CarFunc.getMyCarList(size: _size,
                   order: CarMap.carSortString.getKeyFromValue(sort),
-                  searchParams: _params);
+                  searchParams: _params, page: _page);
               carList.clear();
               carList.addAll(list);
               _onLoad = false;
@@ -178,7 +179,7 @@ class _DirectSalePageState extends State<DirectSalePage>
             onLoad: () async {
               _page++;
               var baseList =
-                  await apiClient.requestList(API.car.getCarLists, data: {
+                  await apiClient.requestList(API.car.getCarSelfLists, data: {
                 'page': _page,
                 'size': _size,
                 'order': CarMap.carSortString.getKeyFromValue(sort),
