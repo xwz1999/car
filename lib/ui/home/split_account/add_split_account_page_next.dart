@@ -104,7 +104,7 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
                   controller: _amountEditingController,
                   hintText: '请输入金额',
                   width: 200.w,
-                  height: 60.w,
+                  height: 70.w,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   inputType: TextInputType.number,
                 ),
@@ -154,7 +154,7 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
                         CloudToast.show('我的出资额不能为空');
                         return;
                       }
-                      var cancel = CloudToast.loading;
+                      //var cancel = CloudToast.loading;
                       var brokerData = [];
                       _mapTextController.forEach((key, value) {
                         brokerData.add({
@@ -163,18 +163,21 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
                         });
                       });
                       print(brokerData);
-                      var res = await apiClient.request(API.split.create, data: {
-                        'ownAmount': double.parse(_amountEditingController.text),
-                        'name': _nameController.text,
-                        'brokerAmounts': brokerData,
-                      });
-                      if (res.code == 0) {
-                        Get.back();
-                        Get.back();
-                      } else {
-                        CloudToast.show(res.msg);
-                      }
-                      cancel();
+                      Get.to(() => SplitCarInfoPage(name: _nameController.text, ownAmount:  double.parse(_amountEditingController.text), brokerAmounts: brokerData,));
+
+
+                      // var res = await apiClient.request(API.split.create, data: {
+                      //   'ownAmount': double.parse(_amountEditingController.text),
+                      //   'name': _nameController.text,
+                      //   'brokerAmounts': brokerData,
+                      // });
+                      // if (res.code == 0) {
+                      //   Get.back();
+                      //   Get.back();
+                      // } else {
+                      //   CloudToast.show(res.msg);
+                      // }
+                      // cancel();
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -220,7 +223,7 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
             24.hb,
             CloudBorderedTextFieldWidget(
               width: 400.w,
-              height: 60.w,
+              height: 8.w,
               controller: _nameController,
               hintText: '请输入名称',
             ),
@@ -338,7 +341,7 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
                 20.wb,
                 CloudBorderedTextFieldWidget(
                   width: 150.w,
-                  height: 50.w,
+                  height: 80.w,
                   controller: _mapTextController[model.id],
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   inputType: TextInputType.number,

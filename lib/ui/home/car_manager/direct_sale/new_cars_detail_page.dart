@@ -21,6 +21,7 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/cloud_image_preview.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
@@ -66,9 +67,14 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
   List<CarPhotos> interiorPhotos = [];
   List<CarPhotos> defectPhotos = [];
   List<PushImgModel> _reportPhotos = [];
+
+  List<ImagePhoto> bannerList = [];
+
   late PushPhotoModel pushPhotoModel;
   @override
   void initState() {
+
+
     ///自己发布的 tab2个 否则1个
     tabs = [
       '车辆详情',
@@ -115,7 +121,11 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
     for(var item in carInfoModel!.carInfo.carPhotos){
       carPhotos.add(CarPhotos(photo: item.photo,text: item.text));
+      if(item.photo.isNotEmpty){
+        bannerList.add(item);
+      }
     }
+
 
     for(var item in carInfoModel!.carInfo.interiorPhotos){
       interiorPhotos.add(CarPhotos(photo: item.photo,text: item.text));
@@ -128,7 +138,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     for(int i=0;i<carInfoModel!.carInfo.reportPhotos.length;i++){
       for(int j=0;j<_reportPhotos.length;j++){
         if(_reportPhotos[j].name == carInfoModel!.carInfo.reportPhotos[i].text){
-          if(carInfoModel!.carInfo.reportPhotos[i].photo!=null){
+          if(carInfoModel!.carInfo.reportPhotos[i].photo!=''){
             _reportPhotos[j].url = carInfoModel!.carInfo.reportPhotos[i].photo;
           }
 
@@ -482,8 +492,13 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
   Widget _buildGrid(PushImgModel model,int index) {
     return GestureDetector(
       onTap: () async {
-
-
+        if(model.url!=null){
+          if ( model.url.runtimeType == String) {
+            await CloudImagePreview.toPath(path: model.url);
+          } else {
+            await CloudImagePreview.toFile(file: model.url);
+          }
+        }
       },
       child: Material(
         color: Colors.transparent,
@@ -571,10 +586,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     }
 
     for(int i=0;i<photos.length;i++){
-      if(photos[i].photo!=null){
+      if(photos[i].photo!=null&&photos[i].photo!=''){
         firstPhoto = photos[i].photo!;
         length++;
-
       }
     }
 
@@ -1052,13 +1066,13 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 //图片样式
   _bannerStyle() {
     return Swiper(
-      itemCount: carInfoModel!.carInfo.carPhotos.length,
+      itemCount: bannerList.length,
       //横向
       scrollDirection: Axis.horizontal,
       //布局构建
       itemBuilder: (context, index) {
         return CloudImageNetworkWidget.car(
-          urls: [ carInfoModel!.carInfo.carPhotos[index].photo],
+          urls: [bannerList[index].photo],
         );
       },
       //自动翻页

@@ -65,6 +65,21 @@ class OrderFunc {
     }
   }
 
+
+  ///寄卖订单列表
+  static Future<List<ListsModel>> getPushCarLists({Map? data}) async {
+    BaseListModel baseList =
+    await apiClient.requestList(API.order.businessLists, data: data);
+    if (baseList.code != 0) {
+      CloudToast.show(baseList.msg);
+      return [];
+    } else {
+      return baseList.nullSafetyList
+          .map((e) => ListsModel.fromJson(e))
+          .toList();
+    }
+  }
+
   ///车商寄卖订单列表
   static Future<List<ListsModel>> getDealerLists({Map? data}) async {
     BaseListModel baseList = await apiClient

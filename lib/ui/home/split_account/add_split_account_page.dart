@@ -326,29 +326,29 @@ class _AddSplitAccountPageState extends State<AddSplitAccountPage> {
     );
   }
 
-  Widget _getNameDialog() {
-    return CloudDialogWidget(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            40.hb,
-            '账目名称'.text.size(36.sp).color(Colors.black).bold.isIntrinsic.make(),
-            24.hb,
-            CloudBorderedTextFieldWidget(
-              width: 400.w,
-              height: 60.w,
-              controller: _nameController,
-              hintText: '请输入名称',
-            ),
-          ],
-        ),
-        onConfirm: () {
-          Get.back(result: true);
-        },
-        onCancel: () {
-          Get.back(result: false);
-        });
-  }
+  // Widget _getNameDialog() {
+  //   return CloudDialogWidget(
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           40.hb,
+  //           '账目名称'.text.size(36.sp).color(Colors.black).bold.isIntrinsic.make(),
+  //           24.hb,
+  //           CloudBorderedTextFieldWidget(
+  //             width: 400.w,
+  //             height: 60.w,
+  //             controller: _nameController,
+  //             hintText: '请输入名称',
+  //           ),
+  //         ],
+  //       ),
+  //       onConfirm: () {
+  //         Get.back(result: true);
+  //       },
+  //       onCancel: () {
+  //         Get.back(result: false);
+  //       });
+  // }
 
   Widget _subButton({required String text, required VoidCallback onTap}) {
     return GestureDetector(

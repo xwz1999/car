@@ -1,5 +1,6 @@
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/ui/user/user_order/dealer_consignment_order.dart/dealer_consignment_order_page.dart';
+import 'package:cloud_car/ui/user/user_order/push_car_order_widget.dart';
 import 'package:cloud_car/ui/user/user_order/sellcar_order/sales_order_widget.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_order_widget.dart';
@@ -38,11 +39,13 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
               ChooseItem(name: '售车订单'),
               ChooseItem(name: '个人寄卖'),
               ChooseItem(name: '叫车订单'),
+              ChooseItem(name: '发布订单'),
             ]
           : [
               ChooseItem(name: '售车订单'),
               ChooseItem(name: '车商寄卖'),
               ChooseItem(name: '叫车订单'),
+              ChooseItem(name: '发布订单'),
             ];
 
   @override
@@ -122,6 +125,12 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
         });
       case '个人寄卖':
         return ConsignmentOrderWidget(callBack: () {
+          _scaffoldKey.currentState?.openDrawer();
+        });
+
+
+      case '发布订单':
+        return PushCarOrderWidget(callBack: () {
           _scaffoldKey.currentState?.openDrawer();
         });
       // case '租车订单':

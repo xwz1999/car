@@ -7,7 +7,7 @@ part 'order_statistics_model.g.dart';
 class OrderStatisticsModel extends Equatable {
   final int saleCount;
   final int consignmentCount;
-  final int dealerConsignmentCount;
+  final int businessConsignmentCount;
   final int callCarCount;
 
   factory OrderStatisticsModel.fromJson(Map<String, dynamic> json) =>
@@ -17,13 +17,13 @@ class OrderStatisticsModel extends Equatable {
   static OrderStatisticsModel get init =>
     const  OrderStatisticsModel(saleCount: 0,
           consignmentCount: 0,
-          dealerConsignmentCount: 0,
+        businessConsignmentCount: 0,
           callCarCount: 0);
 
   const OrderStatisticsModel({
     required this.saleCount,
     required this.consignmentCount,
-    required this.dealerConsignmentCount,
+    required this.businessConsignmentCount,
     required this.callCarCount,
   });
 
@@ -32,7 +32,7 @@ class OrderStatisticsModel extends Equatable {
       [
         saleCount,
         consignmentCount,
-        dealerConsignmentCount,
+        businessConsignmentCount,
         callCarCount,
       ];
 }

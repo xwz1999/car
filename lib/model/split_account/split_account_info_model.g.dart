@@ -23,6 +23,11 @@ SplitAccountInfoModel _$SplitAccountInfoModelFromJson(
       ownBillAmount: json['ownBillAmount'] as String,
       ownProfit: json['ownProfit'] as String,
       totalProfit: json['totalProfit'] as String,
+      modelName: json['modelName'] as String,
+      location: json['location'] as String,
+      licensingDate: json['licensingDate'] as int,
+      color: json['color'] as String,
+      mileage: json['mileage'] as String,
     );
 
 Map<String, dynamic> _$SplitAccountInfoModelToJson(

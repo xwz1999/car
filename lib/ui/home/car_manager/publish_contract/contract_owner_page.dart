@@ -126,8 +126,6 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
             }else{
               Get.to(() =>  ContractLicencePage(consignmentContractModel: widget.consignmentContractModel,));
             }
-
-
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.blue),

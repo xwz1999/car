@@ -240,8 +240,8 @@ enum OrderType {
   sale(1, '售车订单'),
   personal(2, '个人寄卖'),
   callCar(3, '叫车订单'),
-  carDealer(4, '车商寄卖');
-
+  carDealer(4, '车商寄卖'),
+  pushOrder(5, '发布订单');
   final int typeNum;
   final String typeStr;
 

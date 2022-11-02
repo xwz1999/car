@@ -30,8 +30,8 @@ class NewCarDetailItem extends StatelessWidget {
           48.hb,
           getItem6('牌证信息'),
           48.hb,
-
-          getItem5('车主信息'),
+          carInfoModel.carInfo.source=='个人直卖'?
+          getItem5('车主信息'):const SizedBox(),
         ],
       ),
     );
@@ -56,12 +56,12 @@ class NewCarDetailItem extends StatelessWidget {
         getContentItem('首次上牌', TextUtils.getTimeByInt(carInfoModel.carInfo.licensingDate)),
 
         getContentItem('车身颜色', carInfoModel.carInfo.color),
-        getContentItem('内饰颜色', TextUtils.carInfoIsEmpty(carInfoModel.carInfo.color)),
-        getContentItem('临时车牌', TextUtils.carInfoIsEmpty(carInfoModel.carInfo.color)),
-        getContentItem('车位编号', TextUtils.carInfoIsEmpty(carInfoModel.carInfo.color)),
-        getContentItem('库存状态', TextUtils.carInfoIsEmpty(carInfoModel.carInfo.color)),
+        getContentItem('内饰颜色', TextUtils.carInfoIsEmpty(carInfoModel.carInfo.interiorColor)),
+        getContentItem('临时车牌', TextUtils.carInfoIsEmpty(carInfoModel.carInfo.temporaryLicensePlate)),
+        getContentItem('车位编号', TextUtils.carInfoIsEmpty(carInfoModel.carInfo.parkingNo.toString())),
+        getContentItem('库存状态', '/'),
 
-        getContentItem('使用性质', carInfoModel.carInfo.color),
+        getContentItem('使用性质', carInfoModel.carInfo.useCharacter),
         getContentItem('表显里程', '${carInfoModel.carInfo.Mileage}万公里'),
 
         getContentItem('出厂日期',  TextUtils.getTimeByInt(carInfoModel.carInfo.marketDate)),

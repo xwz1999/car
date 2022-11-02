@@ -20,15 +20,14 @@ class MyOrderPage extends StatefulWidget {
 class _MyOrderPageState extends State<MyOrderPage> {
   OrderStatisticsModel _model = OrderStatisticsModel.init;
 
-  Future _getStatisticsNum() async {
-    _model = await OrderFunc.getStatisticNum();
-    setState(() {});
-  }
-
   @override
   void initState() {
     super.initState();
-    _getStatisticsNum();
+
+    Future.delayed(Duration.zero,()async{
+      _model = await OrderFunc.getStatisticNum();
+      setState(() {});
+    });
   }
 
   @override
@@ -96,6 +95,13 @@ class _MyOrderPageState extends State<MyOrderPage> {
             },
             text: '叫车订单',
             num: '${_model.callCarCount}',
+          ),
+          ManagerContainerItem(
+            onTap: () {
+              Get.to(() => const SalesOrderPage(orderType: OrderType.pushOrder));
+            },
+            text: '发布订单',
+            num: '${_model.businessConsignmentCount}',
           )
         ],
       ),

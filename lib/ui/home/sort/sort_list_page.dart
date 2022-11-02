@@ -92,11 +92,12 @@ class _SortListPageState extends State<SortListPage> {
     _fuel = [
       ChooseItem(name: '汽油'),
       ChooseItem(name: '柴油'),
-      ChooseItem(name: '油电混合'),
-      ChooseItem(name: '轻混系统'),
       ChooseItem(name: '纯电动'),
-      ChooseItem(name: '插电混合'),
-      ChooseItem(name: '增程式'),
+      ChooseItem(name: '油电混合'),
+      ChooseItem(name: '油气混合'),
+      ChooseItem(name: '天然气'),
+      ChooseItem(name: '氢能源'),
+      ChooseItem(name: '甲醇'),
     ];
     _emission = [
       ChooseItem(name: '国一'),

@@ -69,15 +69,15 @@ class _HomePageState extends State<HomePage>
     _kingCoinList
         .add(KingCoin(name: '客户管理', url: Assets.icons.customerManager.path));
     _kingCoinList
-        .add(KingCoin(name: '车辆估值', url: Assets.icons.carValuation.path));
+        .add(KingCoin(name: '车辆寄卖', url: Assets.icons.carConsignment.path));
     _kingCoinList.add(KingCoin(name: '车辆发布', url: Assets.icons.carPush.path));
     _kingCoinList
         .add(KingCoin(name: '车辆按揭', url: Assets.icons.carMortgage.path));
-    _kingCoinList.add(KingCoin(name: '估价充值', url: Assets.icons.carAgent.path));
+    _kingCoinList.add(KingCoin(name: '车辆收购', url: Assets.icons.carCquisition.path));
     _kingCoinList
         .add(KingCoin(name: '维保查询', url: Assets.icons.carMaintain.path));
     _kingCoinList
-        .add(KingCoin(name: '收车账单', url: Assets.icons.carRecovery.path));
+        .add(KingCoin(name: '收车合作', url: Assets.icons.carRecovery.path));
   }
 
   @override
@@ -219,7 +219,7 @@ class _HomePageState extends State<HomePage>
           case '维保查询':
             Get.to(() => const MaintainQueryPage());
             break;
-          case '收车账单':
+          case '收车合作':
             Get.to(() => const SplitAccountPage());
             break;
           case '估价充值':

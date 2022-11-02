@@ -1,5 +1,8 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/split_account/profit_statistics_model.dart';
 import 'package:cloud_car/model/split_account/split_account_info_model.dart';
+import 'package:cloud_car/model/split_account/split_account_list_model.dart';
+import 'package:cloud_car/ui/home/split_account/split_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -29,12 +32,18 @@ class _ProfitStatisticsPageState extends State<ProfitStatisticsPage> {
 
   bool _onLoad = true;
   int _currentDateIndex = 0;
-  List<DateBillItem> dateBills = [
-    DateBillItem(bills: [BillItem(createAt: 1666580408, amount: '50000', brokerName: 'cc', name: '卖车', symbol: false),
-      BillItem(createAt: 1666580408, amount: '50000', brokerName: 'cc', name: '卖车', symbol: false)], date: '2022-12')
-  ];
+  // List<DateBillItem> dateBills = [
+  //   DateBillItem(bills: [BillItem(createAt: 1666580408, amount: '50000', brokerName: 'cc', name: '卖车', symbol: false),
+  //     BillItem(createAt: 1666580408, amount: '50000', brokerName: 'cc', name: '卖车', symbol: false)], date: '2022-12')
+  // ];
+
+  int _page = 1;
+
+  final int _limit = 10;
 
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
+
+  ProfitStatisticsModel profitStatisticsModel = ProfitStatisticsModel.init;
 
   @override
   void dispose() {
@@ -69,13 +78,11 @@ class _ProfitStatisticsPageState extends State<ProfitStatisticsPage> {
               firstRefresh: true,
               controller: _easyRefreshController,
               onRefresh: () async {
-                var res = await apiClient.request(API.split.info,
-                    data: {'accountId': widget.accountId});
-                if (res.code == 0) {
-                  //_infoModel = SplitAccountInfoModel.fromJson(res.data);
-                  _onLoad = false;
-                  setState(() {});
-                }
+                _page = 1;
+                profitStatisticsModel =
+                  await  SplitFunc.getProfit()??ProfitStatisticsModel.init;
+
+                setState(() {});
               },
               header: MaterialHeader(),
               child: !_onLoad
@@ -86,16 +93,17 @@ class _ProfitStatisticsPageState extends State<ProfitStatisticsPage> {
                   Center(
                     child: Stack(
                       children: [
+
                         Container(
                           width: 686.w,
                           color: Colors.white,
                           child: Column(
                             children: [
-                              48.hb,
+                              30.hb,
                               '￥'
                                   .richText
                                   .withTextSpanChildren([
-                                '10005000'.textSpan.size(48.sp).color(const Color(0xFFFF3b02)).make(),
+                               (num.parse(profitStatisticsModel.total).toStringAsFixed(2) ).textSpan.size(48.sp).color(const Color(0xFFFF3b02)).make(),
                               ])
                                   .size(28.sp)
                                   .color(const Color(0xFFFF3b02))
@@ -106,7 +114,7 @@ class _ProfitStatisticsPageState extends State<ProfitStatisticsPage> {
                                   .size(28.sp).bold
                                   .color(const Color(0xFF333333))
                                   .make(),
-                              48.hb,
+                              28.hb,
                             ],
                           ),
                         ),
@@ -125,8 +133,39 @@ class _ProfitStatisticsPageState extends State<ProfitStatisticsPage> {
                                   Assets.images.sawtooth.path))),
                     ),
                   ),
+                  20.hb,
+                  Container(
+                    width: 686.w,
+                    margin: EdgeInsets.symmetric(horizontal: 32.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.w),
+                      color: Colors.white,
+                    ),
 
-                  _billTile(dateBills[_currentDateIndex])
+                    child: Column(children: [
+                      ...profitStatisticsModel.profits.map((e) => ListTile(
+                        title: e.name.text.make(),
+                        subtitle:
+                        DateUtil.formatDateMs(e.finishAt * 1000)
+                            .text
+                            .make(),
+                        trailing: '${'+' }¥ '
+                            .richText
+                            .withTextSpanChildren([
+                          num.parse( e.profit).toStringAsFixed(2).textSpan
+
+                              .size(32.sp)
+                              .color( Colors.black87)
+                              .make()
+                        ])
+                            .size(24.sp)
+                            .color(Colors.black87)
+                            .make(),
+                      )).toList()
+
+                    ]),
+                  ),
+                  //_billTile(dateBills[_currentDateIndex])
                 ],
               )),
           Assets.images.splitBarAbove.image(),
@@ -134,73 +173,6 @@ class _ProfitStatisticsPageState extends State<ProfitStatisticsPage> {
       ),
     );
   }
-
-
-  Widget _billTile(DateBillItem item) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          children: [
-            32.wb,
-            item.date.text.size(32.sp).color(Colors.black).bold.make(),
-            PopupMenuButton(
-                icon: const Icon(
-                  CupertinoIcons.chevron_down,
-                  color: Colors.black12,
-                ),
-                iconSize: 36.w,
-                position: PopupMenuPosition.under,
-                itemBuilder: (context) {
-                  return dateBills
-                      .mapIndexed((e, index) => PopupMenuItem(
-                      onTap: () {
-                        _currentDateIndex = index;
-                        setState(() {});
-                      },
-                      child: e.date.text.isIntrinsic.make()))
-                      .toList();
-                })
-          ],
-        ),
-
-        Container(
-          width: 686.w,
-          color: Colors.white,
-          child: Column(children: [
-            ...ListTile.divideTiles(
-                context: context,
-                tiles: item.bills
-                    .map((e) => ListTile(
-                  title: e.name.text.make(),
-                  subtitle:
-                  DateUtil.formatDateMs(e.createAt * 1000)
-                      .text
-                      .make(),
-                  trailing: '${'+' }¥ '
-                      .richText
-                      .withTextSpanChildren([
-                    e.amount.textSpan
-                        .size(32.sp)
-                        .color(e.symbol
-                        ? Colors.red
-                        : Colors.black87)
-                        .make()
-                  ])
-                      .size(24.sp)
-                      .color(e.symbol ? Colors.red : Colors.black87)
-                      .make(),
-                ))
-                    .toList())
-                .toList(),
-            // (260.w + MediaQuery.of(context).padding.bottom).hb
-          ]),
-        ),
-      ],
-    );
-  }
-
 
 
 }

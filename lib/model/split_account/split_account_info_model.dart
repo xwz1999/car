@@ -17,6 +17,11 @@ class SplitAccountInfoModel extends Equatable {
   final String ownBillAmount;
   final String ownProfit;
   final String totalProfit;
+  final String modelName;
+  final String location;
+  final int licensingDate;
+  final String color;
+  final String mileage;
 
   Decimal get amountDec => Decimal.parse(amount);
 
@@ -36,15 +41,7 @@ class SplitAccountInfoModel extends Equatable {
   Map<String, dynamic> toJson() => _$SplitAccountInfoModelToJson(this);
 
   @override
-  List<Object?> get props => [
-        amount,
-        billAmount,
-        saleAmount,
-        name,
-        brokers,
-        dateBills,
-        finish,
-      ];
+  List<Object?> get props => [amount,billAmount,saleAmount,name,brokers,dateBills,finish,ownBillAmount,ownProfit,totalProfit,modelName,location,licensingDate,color,mileage,];
 
   const SplitAccountInfoModel({
     required this.amount,
@@ -57,6 +54,11 @@ class SplitAccountInfoModel extends Equatable {
     required this.ownBillAmount,
     required this.ownProfit,
     required this.totalProfit,
+    required this.mileage,
+  required this.color,
+  required this.location,
+  required this.modelName,
+  required this.licensingDate
   });
 
   SplitAccountInfoModel copyWith({
@@ -70,6 +72,13 @@ class SplitAccountInfoModel extends Equatable {
     String? ownBillAmount,
     String? ownProfit,
     String? totalProfit,
+
+    String? mileage,
+    String? color,
+    String? location,
+    String? modelName,
+    int? licensingDate,
+
   }) {
     return SplitAccountInfoModel(
       amount: amount ?? this.amount,
@@ -82,6 +91,11 @@ class SplitAccountInfoModel extends Equatable {
       ownBillAmount: ownBillAmount ?? this.ownBillAmount,
       ownProfit: ownProfit ?? this.ownProfit,
       totalProfit: totalProfit ?? this.totalProfit,
+      mileage: mileage??this.mileage,
+      modelName: modelName??this.modelName,
+      location: location??this.location,
+      color: color??this.color,
+      licensingDate: licensingDate??this.licensingDate,
     );
   }
 }

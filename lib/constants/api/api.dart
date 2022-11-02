@@ -214,6 +214,11 @@ class _Order {
   ///发布车辆编辑
   get consignmentPublishEdit => '/order/consignment/publish/edit';
 
+
+  ///入驻商下寄卖订单
+  get businessLists => '/order/consignment/business/lists';
+
+
   ///售车订单详情
   get saleInfo => '/order/sale/info';
 
@@ -326,6 +331,11 @@ class _Split {
 
   ///更新常用联系人状态
   String get updateContact => '/split/contact/update';
+
+  // ///利润统计
+  // String get getProfit => 'split/account/profit';
+
+
 }
 
 class _Message {

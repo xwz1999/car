@@ -138,6 +138,14 @@ class $AssetsIconsGen {
   AssetGenImage get carColor =>
       const AssetGenImage('assets/icons/car_color.png');
 
+  /// File path: assets/icons/car_consignment.png
+  AssetGenImage get carConsignment =>
+      const AssetGenImage('assets/icons/car_consignment.png');
+
+  /// File path: assets/icons/car_cquisition.png
+  AssetGenImage get carCquisition =>
+      const AssetGenImage('assets/icons/car_cquisition.png');
+
   /// File path: assets/icons/car_detail.png
   AssetGenImage get carDetail =>
       const AssetGenImage('assets/icons/car_detail.png');

@@ -7,6 +7,7 @@ import 'package:cloud_car/utils/drop_down_body.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/cloud_image_preview.dart';
 import 'package:cloud_car/widget/progress_bar.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
@@ -164,7 +165,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
             ///支付信息
             Offstage(
-              offstage: widget.status.num == 1,
+              offstage: widget.status.num == 1||widget.status.num == 2,
               child: _getPay(),
             ),
 
@@ -294,11 +295,16 @@ class _ReservationPageState extends State<ReservationPage> {
                     fontSize: BaseStyle.fontSize28),
               ),
               16.hb,
-              SizedBox(
-                width: 200.w,
-                height: 150.w,
-                child: const CloudImageNetworkWidget.car(
-                  urls: [],
+              GestureDetector(
+                onTap: ()async{
+                  await CloudImagePreview.toPath(path: _consignmentInfo.balancePayment.proof);
+                },
+                child: SizedBox(
+                  width: 200.w,
+                  height: 150.w,
+                  child:  CloudImageNetworkWidget.car(
+                    urls: [_consignmentInfo.balancePayment.proof],
+                  ),
                 ),
               ),
               SizedBox(
@@ -382,11 +388,16 @@ class _ReservationPageState extends State<ReservationPage> {
       children: [
         _getTitle('车辆检测报告'),
         36.hb,
-        SizedBox(
-          width: 200.w,
-          height: 150.w,
-          child: CloudImageNetworkWidget.car(
-            urls: [_consignmentInfo.report.path],
+        GestureDetector(
+          onTap: ()async{
+            await CloudImagePreview.toPath(path: _consignmentInfo.report.path);
+          },
+          child: SizedBox(
+            width: 200.w,
+            height: 150.w,
+            child: CloudImageNetworkWidget.car(
+              urls: [_consignmentInfo.report.path],
+            ),
           ),
         ),
         SizedBox(
@@ -405,30 +416,22 @@ class _ReservationPageState extends State<ReservationPage> {
         36.hb,
         _getPhoto(
           '登记证书',
-          CloudImageNetworkWidget.car(
-            urls: [_consignmentInfo.means.certificate],
-          ),
+          _consignmentInfo.means.certificate,
         ),
         36.hb,
         _getPhoto(
           '行驶证',
-          CloudImageNetworkWidget.car(
-            urls: [_consignmentInfo.means.vehicleLicense],
-          ),
+            _consignmentInfo.means.vehicleLicense
         ),
         36.hb,
         _getPhoto(
           '发票',
-          CloudImageNetworkWidget.car(
-            urls: [_consignmentInfo.means.invoice],
-          ),
+            _consignmentInfo.means.invoice
         ),
         36.hb,
         _getPhoto(
           '保单',
-          CloudImageNetworkWidget.car(
-            urls: [_consignmentInfo.means.guaranteeSlip],
-          ),
+            _consignmentInfo.means.guaranteeSlip
         ),
         SizedBox(
           width: 686.w,
@@ -677,7 +680,7 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
 //文字加图片样式
-  _getPhoto(String title, CloudImageNetworkWidget url) {
+  _getPhoto(String title, String url) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -687,10 +690,15 @@ class _ReservationPageState extends State<ReservationPage> {
               color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
         ),
         GestureDetector(
+          onTap: ()async{
+            await CloudImagePreview.toPath(path: url);
+          },
           child: SizedBox(
             width: 200.w,
             height: 150.w,
-            child: url,
+            child: CloudImageNetworkWidget.car(
+              urls: [url],
+            ),
           ),
         )
       ],

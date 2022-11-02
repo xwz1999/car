@@ -473,7 +473,7 @@ class CarFunc {
     required PushPhotoModel pushPhotoModel,
     required ReportPhotoModel reportPhotoModel,
   }) async {
-
+    print(newPublishCarInfo.retrofittingFee!);
     Map<String, dynamic> baseInfo = {
       "source":newPublishCarInfo.carSource,
       "sourceId":newPublishCarInfo.carShopId,
@@ -490,17 +490,17 @@ class CarFunc {
       "useCharacter":newPublishCarInfo.natureOfUseEM.typeStr,
       "shamMileage": newPublishCarInfo.mileage!=null?num.parse(newPublishCarInfo.mileage!):null,
       "marketDate":newPublishCarInfo.productionDateStr==''?null:newPublishCarInfo.productionDateStr,
-      "newCarGuidePrice": newPublishCarInfo.newCarPrice!=null? num.parse('${newPublishCarInfo.newCarPrice!}0000'):null,
-      "purchaseTax":newPublishCarInfo.purchaseTax!=null? num.parse('${newPublishCarInfo.purchaseTax!}0000'):null,
-      "installationCost":newPublishCarInfo.retrofittingFee!=null?int.parse(newPublishCarInfo.retrofittingFee!):null,
+      "newCarGuidePrice": newPublishCarInfo.newCarPrice!=null? num.parse(newPublishCarInfo.newCarPrice!)*10000:null,
+      "purchaseTax":newPublishCarInfo.purchaseTax!=null? num.parse(newPublishCarInfo.purchaseTax!)*10000:null,
+      "installationCost":newPublishCarInfo.retrofittingFee!=null?num.parse(newPublishCarInfo.retrofittingFee!):null,
       "location":newPublishCarInfo.locationCityId,
       "condition":newPublishCarInfo.carDescription,
       "remark":newPublishCarInfo.remark,
     };
     Map<String, dynamic> priceInfo = {
 
-      "purchasePrice":newPublishCarInfo.wholesalePrice!=null? num.parse('${newPublishCarInfo.wholesalePrice!}0000'):null,
-      "salePrice":newPublishCarInfo.salePrice!=null? num.parse('${newPublishCarInfo.salePrice!}0000'):null,
+      "purchasePrice":newPublishCarInfo.wholesalePrice!=null? num.parse(newPublishCarInfo.wholesalePrice!)*10000:null,
+      "salePrice":newPublishCarInfo.salePrice!=null? num.parse(newPublishCarInfo.salePrice!)*10000:null,
 
     };
 
@@ -542,6 +542,7 @@ class CarFunc {
       CloudToast.show(model.msg);
       return false;
     }
+    return false;
   }
 
 

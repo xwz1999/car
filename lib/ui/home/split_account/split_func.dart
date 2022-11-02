@@ -3,6 +3,7 @@ import 'package:cloud_car/model/split_account/broker_all_model.dart';
 import 'package:cloud_car/model/split_account/broker_model.dart';
 import 'package:cloud_car/model/split_account/business_all_model.dart';
 import 'package:cloud_car/model/split_account/common_contact_model.dart';
+import 'package:cloud_car/model/split_account/profit_statistics_model.dart';
 import 'package:cloud_car/model/user/roleall_model.dart';
 import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/model/user/staff_info_model.dart';
@@ -22,6 +23,15 @@ class SplitFunc {
 
     if (res.data==null) return [];
     return (res.data as List).map((e) => CommonContactModel.fromJson(e)).toList();
+  }
+
+
+  ///获取利润信息
+  static Future<ProfitStatisticsModel?> getProfit() async {
+    var res =
+    await apiClient.request(API.split.profit,data: {});
+    if (res.data==null) return null;
+    return  ProfitStatisticsModel.fromJson(res.data);
   }
 
 

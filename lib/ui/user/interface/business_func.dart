@@ -59,7 +59,7 @@ class BusinessFunc {
 
   static Future<BrokerModel?> searchBrokerAll(Map params) async {
     var res =
-    await apiClient.request(API.user.searchBroker, data: params);
+    await apiClient.request(API.user.searchBroker, data: params,showMessage: true);
 
     if (res.data==null) return null;
     return  BrokerModel.fromJson(res.data);

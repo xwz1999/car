@@ -1,13 +1,19 @@
+import 'dart:io';
+
+import 'package:cloud_car/model/car/bank_card_info_model.dart';
 import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/choose_customer_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_third_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/initiate_contract_model.dart';
+import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
+import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -32,6 +38,12 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController cardNoController = TextEditingController();
 
+
+
+  final TextEditingController bankNumController = TextEditingController();
+
+  final TextEditingController bankController = TextEditingController();
+
   CustomerListModel? customerListModel;
 
   @override
@@ -49,6 +61,8 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
     nameController.dispose();
     phoneController.dispose();
     cardNoController.dispose();
+    bankController.dispose();
+    bankNumController.dispose();
     super.dispose();
   }
 
@@ -204,19 +218,51 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                   },
                 ),
                 EditItemWidget(
+                  title: '银行账号',
+                  //value: widget.contractModel.value.bankCard ?? "",
+                  controller: bankNumController,
+                  callback: (String content) {
+                    widget.contractModel.value.bankCard = content;
+
+                  },
+                  endIcon: GestureDetector(
+                    onTap: ()async{
+                      File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
+                      if (file != null) {
+                        setState(() {});
+                        var cancel = CloudToast.loading;
+                        String urls = await apiClient.uploadImage(file);
+                        BankCardInfoModel? bankCardInfoModel = await CarFunc.bankCardOCR(urls);
+                        if (bankCardInfoModel != null) {
+                          widget.contractModel.value.bankCard = bankCardInfoModel.bankCardNo;
+                          widget.contractModel.value.bank = bankCardInfoModel.bankName;
+
+                          bankNumController.text = bankCardInfoModel.bankCardNo;
+                          bankController.text = bankCardInfoModel.bankName;
+                        }
+                        cancel();
+                        setState(() {
+
+                        });
+                      }
+                    },
+                    child: Image.asset(
+                      Assets.icons.scan.path,
+                      width: 32.w,
+                      height: 32.w,
+                    ),
+                  ),
+                ),
+
+                EditItemWidget(
                   title: '开户行',
-                  value: widget.contractModel.value.bank ?? "",
+                  //value: widget.contractModel.value.bank ?? "",
+                  controller: bankController,
                   callback: (String content) {
                     widget.contractModel.value.bank = content;
                   },
                 ),
-                EditItemWidget(
-                  title: '银行账号',
-                  value: widget.contractModel.value.bankCard ?? "",
-                  callback: (String content) {
-                    widget.contractModel.value.bankCard = content;
-                  },
-                ),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

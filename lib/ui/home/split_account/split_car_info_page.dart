@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/sort/sort_car_model_model.dart';
@@ -10,6 +11,7 @@ import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -23,7 +25,11 @@ import 'package:velocity_x/velocity_x.dart';
 
 
 class SplitCarInfoPage extends StatefulWidget {
-  const SplitCarInfoPage({super.key});
+  final double ownAmount;
+  final String name;
+  final List<dynamic> brokerAmounts;
+
+  const SplitCarInfoPage({super.key, required this.ownAmount, required this.name, required this.brokerAmounts});
 
   @override
   State<SplitCarInfoPage> createState() => _SplitCarInfoPageState();
@@ -67,8 +73,8 @@ class _SplitCarInfoPageState extends State<SplitCarInfoPage> {
   @override
   void initState() {
     super.initState();
-    _publishCarInfo.locationCity = '宁波';
-    _publishCarInfo.locationCityId = 42;
+    // _publishCarInfo.locationCity = '宁波';
+    // _publishCarInfo.locationCityId = 42;
   }
 
   @override
@@ -135,11 +141,31 @@ class _SplitCarInfoPageState extends State<SplitCarInfoPage> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: ()async {
                               if (!canTap) {
                                 return;
                               }
+                              var cancel = CloudToast.loading;
 
+                              var res = await apiClient.request(API.split.create, data: {
+                                'ownAmount': widget.ownAmount,
+                                'name': widget.name,
+                                'brokerAmounts': widget.brokerAmounts,
+                                'modelId': _publishCarInfo.carModelId,
+                                'locationId': _publishCarInfo.locationCityId,
+                                'licensingDate': _publishCarInfo.licensingDateStr,
+                                'color': _publishCarInfo.carColor,
+                                'mileage': (num.parse(_publishCarInfo.mileage??'0')*10000).toString(),
+                              });
+                              if (res.code == 0) {
+                                CloudToast.show('创建成功');
+                                Get.back();
+                                Get.back();
+                                Get.back();
+                              } else {
+                                CloudToast.show(res.msg);
+                              }
+                              cancel();
                             },
                             style: ButtonStyle(
                               backgroundColor:
@@ -223,7 +249,7 @@ class _SplitCarInfoPageState extends State<SplitCarInfoPage> {
           _function(
             '首次上牌',
                 () async {
-              var firstDate = await CarDatePicker.monthPicker(DateTime.now());
+              var firstDate = await CarDatePicker.calenderPicker(DateTime(1960), DateTime.now());
               _publishCarInfo.licensingDate = firstDate;
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
@@ -341,7 +367,7 @@ class SplitCarInfo {
   DateTime? licensingDate;
 
   String get licensingDateStr =>
-      DateUtil.formatDate(licensingDate, format: 'yyyy-MM');
+      DateUtil.formatDate(licensingDate, format: 'yyyy-MM-dd');
 
   // ///车牌号
   // String? carNum;

@@ -548,7 +548,6 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
             },
             _publishCarInfo.value.carShop,
             '请选择',
-            topIcon: false
           ):const SizedBox(),
           _function(
             '车辆类型',
@@ -1005,6 +1004,10 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
   bool get canTap {
     if(_publishCarInfo.value.carSource==null){
       BotToast.showText(text: '请选择车辆来源');
+      return false;
+    }
+    if( (_publishCarInfo.value.carSource==2||_publishCarInfo.value.carSource==3)&&_publishCarInfo.value.carShop.isEmptyOrNull){
+      BotToast.showText(text: '请先选择所属门店');
       return false;
     }
     if(_publishCarInfo.value.carType==null){

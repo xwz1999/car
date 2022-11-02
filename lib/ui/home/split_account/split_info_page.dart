@@ -133,38 +133,40 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
                       children: [
                         //214.hb,
                         180.hb,
-                        // Container(
-                        //   width: 686.w,
-                        //   decoration: BoxDecoration(
-                        //     color: Colors.white,
-                        //     borderRadius: BorderRadius.circular(8.w),
-                        //   ),
-                        //   padding: EdgeInsets.symmetric(horizontal: 32.w,vertical: 24.w),
-                        //   margin: EdgeInsets.symmetric(horizontal: 32.w),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       '奥迪A4L'
-                        //           .text
-                        //           .size(28.sp)
-                        //           .color(const Color(0xFF666666))
-                        //           .make(),
-                        //       16.hb,
-                        //       Row(
-                        //         children: [
-                        //           _getTextView('2020年10月'),
-                        //           16.wb,
-                        //           _getTextView('20.43万公里'),
-                        //           16.wb,
-                        //           _getTextView('宁波'),
-                        //           16.wb,
-                        //           _getTextView('蓝色'),
-                        //         ],
-                        //       )
-                        //
-                        //     ],
-                        //   ),
-                        // ),
+                        Container(
+                          width: 686.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.w),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 32.w,vertical: 24.w),
+                          margin: EdgeInsets.symmetric(horizontal: 32.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _infoModel.modelName
+                                  .text
+                                  .size(28.sp)
+                                  .color(const Color(0xFF666666))
+                                  .make(),
+                              16.hb,
+                              Row(
+                                children: [
+                                  _getTextView(DateUtil.formatDateMs(
+                                      ( _infoModel.licensingDate.toInt()) * 1000,
+                                      format: 'yyyy年MM月')),
+                                  16.wb,
+                                  _getTextView('${num.parse(_infoModel.mileage)/10000}万公里'),
+                                  16.wb,
+                                  _getTextView(_infoModel.location),
+                                  16.wb,
+                                  _getTextView(_infoModel.color),
+                                ],
+                              )
+
+                            ],
+                          ),
+                        ),
                         20.hb,
                         Center(
                           child: Stack(
@@ -268,14 +270,14 @@ class _SplitInfoPageState extends State<SplitInfoPage> {
           if (type == 2)
             CloudBorderedTextFieldWidget(
               width: 400.w,
-              height: 60.w,
+              height: 100.w,
               controller: _nameController,
               hintText: '请输入名称',
             ),
           if (type == 2) 24.hb,
           CloudBorderedTextFieldWidget(
             width: 400.w,
-            height: 60.w,
+            height: 100.w,
             inputType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             controller: _amountController,

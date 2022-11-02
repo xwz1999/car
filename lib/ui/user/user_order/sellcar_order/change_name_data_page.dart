@@ -18,24 +18,29 @@ class ChangeNameDataPage extends StatefulWidget {
   State<ChangeNameDataPage> createState() => _ChangeNameDataPageState();
 }
 
-String certificate = '';
 
-///登记证书
-String vehicleLicense = '';
-
-///行驶证
-String invoice = '';
-
-///发票
-String guaranteeSlip = '';
-
-///保单
-late double price;
-// final picker = ImagePicker();
-// ignore: unnecessary_late
-File imagePath = File('');
 
 class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
+
+
+  String certificate = '';
+
+  ///登记证书
+  String vehicleLicense = '';
+
+  ///行驶证
+  String invoice = '';
+
+  ///发票
+  String guaranteeSlip = '';
+
+  ///保单
+  late double price;
+// final picker = ImagePicker();
+// ignore: unnecessary_late
+  File imagePath = File('');
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
