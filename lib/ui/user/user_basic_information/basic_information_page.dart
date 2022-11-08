@@ -6,7 +6,10 @@ import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/providers/user_provider.dart';
 import 'package:cloud_car/ui/login/login_page.dart';
 import 'package:cloud_car/ui/user/interface/user_func.dart';
+import 'package:cloud_car/ui/user/user_install/bank_card_page.dart';
 import 'package:cloud_car/ui/user/user_install/cancellation_page.dart';
+import 'package:cloud_car/ui/user/user_install/enterprise_information_page.dart';
+import 'package:cloud_car/ui/user/user_install/real_name_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -427,19 +430,45 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                       ),
                     ),
                     //企业信息
-                    // ListTile(
-                    //   onTap: () {
-                    //     Get.to(() => const EnterprisePage());
-                    //   },
-                    //   title: Text('企业信息',
-                    //       style: Theme.of(context).textTheme.bodyText1),
-                    //   trailing: SizedBox(
-                    //       width: 40.w,
-                    //       height: 40.w,
-                    //       child: const Icon(
-                    //         Icons.keyboard_arrow_right,
-                    //       )),
-                    // ),
+                    ListTile(
+                      onTap: () {
+                        Get.to(() => const EnterpriseInformationPage());
+                      },
+                      title: Text('企业信息',
+                          style: Theme.of(context).textTheme.bodyText1),
+                      trailing: SizedBox(
+                          width: 40.w,
+                          height: 40.w,
+                          child: const Icon(
+                            Icons.keyboard_arrow_right,
+                          )),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Get.to(() => const RealNamePage());
+                      },
+                      title: Text('认证身份',
+                          style: Theme.of(context).textTheme.bodyText1),
+                      trailing: SizedBox(
+                          width: 40.w,
+                          height: 40.w,
+                          child: const Icon(
+                            Icons.keyboard_arrow_right,
+                          )),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Get.to(() => const BankCardPage());
+                      },
+                      title: Text('我的银行卡',
+                          style: Theme.of(context).textTheme.bodyText1),
+                      trailing: SizedBox(
+                          width: 40.w,
+                          height: 40.w,
+                          child: const Icon(
+                            Icons.keyboard_arrow_right,
+                          )),
+                    ),
                   ]).toList(),
                 ],
               ),

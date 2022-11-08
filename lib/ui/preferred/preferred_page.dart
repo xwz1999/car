@@ -117,6 +117,7 @@ class _PreferredPageState extends State<PreferredPage>
         'maxAge': _pickCar.value.maxCarAge,
         'struct': _pickCar.value.struct,
         'gearType': _pickCar.value.gearType,
+        'fuelType':_pickCar.value.fuelType,
         'minMileage': _pickCar.value.finalMinMile,
         'maxMileage': _pickCar.value.finalMaxMile,
         'dischargeStandard': _pickCar.value.dischargeStandard,

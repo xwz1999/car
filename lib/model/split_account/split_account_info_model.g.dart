@@ -23,11 +23,11 @@ SplitAccountInfoModel _$SplitAccountInfoModelFromJson(
       ownBillAmount: json['ownBillAmount'] as String,
       ownProfit: json['ownProfit'] as String,
       totalProfit: json['totalProfit'] as String,
-      modelName: json['modelName'] as String,
-      location: json['location'] as String,
-      licensingDate: json['licensingDate'] as int,
-      color: json['color'] as String,
       mileage: json['mileage'] as String,
+      color: json['color'] as String,
+      location: json['location'] as String,
+      modelName: json['modelName'] as String,
+      licensingDate: json['licensingDate'] as int,
     );
 
 Map<String, dynamic> _$SplitAccountInfoModelToJson(
@@ -43,6 +43,11 @@ Map<String, dynamic> _$SplitAccountInfoModelToJson(
       'ownBillAmount': instance.ownBillAmount,
       'ownProfit': instance.ownProfit,
       'totalProfit': instance.totalProfit,
+      'modelName': instance.modelName,
+      'location': instance.location,
+      'licensingDate': instance.licensingDate,
+      'color': instance.color,
+      'mileage': instance.mileage,
     };
 
 BrokerItem _$BrokerItemFromJson(Map<String, dynamic> json) => BrokerItem(

@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_license_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_owner_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -76,7 +77,8 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                       if(widget.consignmentContractModel.value.sellPrice!.isEmpty){
                         CloudToast.show('请先输入售价');
                       }else{
-                        Get.to(() =>  ContractOwnerPage(consignmentContractModel: widget.consignmentContractModel,));
+                       // Get.to(() =>  ContractOwnerPage(consignmentContractModel: widget.consignmentContractModel,));
+                        Get.to(() =>  ContractLicencePage(consignmentContractModel: widget.consignmentContractModel,));
                       }
 
                     },

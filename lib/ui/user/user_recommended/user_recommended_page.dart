@@ -5,6 +5,7 @@ import 'package:cloud_car/ui/home/func/customer_func.dart';
 import 'package:cloud_car/ui/user/user_recommended/share_detail_customer_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -28,28 +29,8 @@ class _RecommendedPageState extends State<RecommendedPage>
   late TabController _tabController;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   List<CustomerListModel> recommendedList = [
-    // const CustomerListModel(
-    //     brokerName: '世界这么大我想去看看',
-    //     createdAt: 1645497563,
-    //     gender: 0,
-    //     id: 1,
-    //     isImportant: 2,
-    //     nickname: '世界这么大我想去看看',
-    //     trailContent: '发起客户邀约',
-    //     trailCreatedAt: 1652161448)
   ];
-  late CustomerDetailModel phone
-      // = const CustomerDetailModel(
-      //     brokerName: '世界这么大我想去看看',
-      //     createdAt: 1645497563,
-      //     gender: 0,
-      //     id: 1,
-      //     isImportant: 2,
-      //     mobile: '15394315510',
-      //     nickname: '世界这么大我想去看看',
-      //     trailContent: '发起客户邀约',
-      //     trailCreatedAt: 1652161448)
-      ;
+
 
   ///滚动监听设置
   final ScrollController _scrollController = ScrollController();
@@ -101,15 +82,9 @@ class _RecommendedPageState extends State<RecommendedPage>
                 pinned: true,
                 snap: false,
                 elevation: 0,
-                //阴影
-                // toolbarHeight:
-                //     MediaQuery.of(context).padding.top + kToolbarHeight,
-                //展开高度
                 expandedHeight: 800.w,
-                //
                 leadingWidth: 0,
                 titleSpacing: 0,
-                //标题
                 title: Container(
                     //color: Colors.red,
                     height: kToolbarHeight + MediaQuery.of(context).padding.top,
@@ -133,13 +108,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                         200.wb,
                         Text(
                           '我的推荐码',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline6
-                              ?.copyWith(
-                                  color: headerWhite
-                                      ? const Color(0xFF333333)
-                                      : kForeGroundColor),
+                          style: TextStyle(fontSize: 36.sp,color: Colors.white),
                         ),
                       ],
                     )),
@@ -219,17 +188,6 @@ class _RecommendedPageState extends State<RecommendedPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 16.hb,
-                  // Padding(
-                  //   padding: EdgeInsets.only(left: 32.w),
-                  //   child: Text(
-                  //     '共找到${recommendedList.length}条信息',
-                  //     style: Theme.of(context)
-                  //         .textTheme
-                  //         .subtitle2
-                  //         ?.copyWith(color: const Color(0xFF999999)),
-                  //   ),
-                  // ),
                   16.hb,
                   Expanded(
                     child: TabBarView(
@@ -240,8 +198,6 @@ class _RecommendedPageState extends State<RecommendedPage>
                             header: MaterialHeader(),
                             footer: MaterialFooter(),
                             scrollController: _controller,
-
-                            ///_positions.length==1
                             controller: _easyRefreshController,
                             onRefresh: () async {
                               Future.delayed(
@@ -250,28 +206,6 @@ class _RecommendedPageState extends State<RecommendedPage>
                               recommendedList =
                                   await CustomerFunc.getCustomerList(
                                       page: _page, size: _size);
-                              // recommendedList = [
-                              //   const CustomerListModel(
-                              //       brokerName: '世界这么大我想去看看',
-                              //       createdAt: 1645497563,
-                              //       gender: 0,
-                              //       id: 1,
-                              //       isImportant: 2,
-                              //       nickname: '世界这么大我想去看看',
-                              //       trailContent: '发起客户邀约',
-                              //       trailCreatedAt: 1652161448)
-                              // ];
-                              // phone = const CustomerDetailModel(
-                              //     brokerName: '世界这么大我想去看看',
-                              //     createdAt: 1645497563,
-                              //     gender: 0,
-                              //     id: 1,
-                              //     isImportant: 2,
-                              //     mobile: '15394315510',
-                              //     nickname: '世界这么大我想去看看',
-                              //     trailContent: '发起客户邀约',
-                              //     trailCreatedAt: 1652161448);
-
                               setState(() {});
                             },
                             onLoad: () async {
@@ -295,194 +229,6 @@ class _RecommendedPageState extends State<RecommendedPage>
                               },
                               itemCount: recommendedList.length,
                             ))
-                        // Container(
-                        //   padding: EdgeInsets.symmetric(horizontal: 32.w),
-                        //   child: ListView(
-                        //     children: [
-                        //       Text(
-                        //         '共找到2条信息',
-                        //         style: Theme.of(context)
-                        //             .textTheme
-                        //             .subtitle2
-                        //             ?.copyWith(color: const Color(0xFF999999)),
-                        //       ),
-                        //       GestureDetector(
-                        //         onTap: () {
-                        //           //Get.to(()=>const UserInfoPage());
-                        //         },
-                        //         child: Container(
-                        //           decoration: BoxDecoration(
-                        //               borderRadius: BorderRadius.circular(16.w),
-                        //               color: kForeGroundColor),
-                        //           child: Stack(
-                        //             children: [
-                        //               Positioned(
-                        //                 child: Image.asset(
-                        //                   Assets.images.importantUser.path,
-                        //                   width: 130.w,
-                        //                   fit: BoxFit.fitWidth,
-                        //                 ),
-                        //                 right: 0,
-                        //                 top: 0,
-                        //               ),
-                        //               Column(
-                        //                 crossAxisAlignment: CrossAxisAlignment.start,
-                        //                 children: [
-                        //                   20.hb,
-                        //                   Row(
-                        //                     children: [
-                        //                       36.wb,
-                        //                       Image.asset(
-                        //                         Assets.icons.icUser.path,
-                        //                         width: 32.w,
-                        //                         height: 32.w,
-                        //                       ),
-                        //                       5.wb,
-                        //                       Text(
-                        //                         '李四',
-                        //                         style: TextStyle(
-                        //                             fontSize: 32.sp,
-                        //                             color: BaseStyle.color333333,
-                        //                             fontWeight: FontWeight.bold),
-                        //                       ),
-                        //                       const Spacer(),
-                        //                       GestureDetector(
-                        //                         onTap: () {},
-                        //                         child: Text(
-                        //                           '设为重要',
-                        //                           style: TextStyle(
-                        //                             fontSize: 24.sp,
-                        //                             color: BaseStyle.color999999,
-                        //                           ),
-                        //                         ),
-                        //                       ),
-                        //                       24.wb,
-                        //                     ],
-                        //                   ),
-                        //                   10.hb,
-                        //                   const Divider(
-                        //                     height: 2,
-                        //                     color: BaseStyle.colorf6f6f6,
-                        //                   ),
-                        //                   Row(
-                        //                     children: [
-                        //                       36.wb,
-                        //                       Column(
-                        //                         children: [
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号1', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890',
-                        //                               isRed: true),
-                        //                           20.hb,
-                        //                         ],
-                        //                       )
-                        //                     ],
-                        //                   )
-                        //                 ],
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       ),
-                        //       GestureDetector(
-                        //         onTap: () {
-                        //           //Get.to(()=>const UserInfoPage());
-                        //         },
-                        //         child: Container(
-                        //           decoration: BoxDecoration(
-                        //               borderRadius: BorderRadius.circular(16.w),
-                        //               color: kForeGroundColor),
-                        //           child: Stack(
-                        //             children: [
-                        //               Positioned(
-                        //                 child: Image.asset(
-                        //                   Assets.images.importantUser.path,
-                        //                   width: 130.w,
-                        //                   fit: BoxFit.fitWidth,
-                        //                 ),
-                        //                 right: 0,
-                        //                 top: 0,
-                        //               ),
-                        //               Column(
-                        //                 crossAxisAlignment: CrossAxisAlignment.start,
-                        //                 children: [
-                        //                   20.hb,
-                        //                   Row(
-                        //                     children: [
-                        //                       36.wb,
-                        //                       Image.asset(
-                        //                         Assets.icons.icUser.path,
-                        //                         width: 32.w,
-                        //                         height: 32.w,
-                        //                       ),
-                        //                       5.wb,
-                        //                       Text(
-                        //                         '李四',
-                        //                         style: TextStyle(
-                        //                             fontSize: 32.sp,
-                        //                             color: BaseStyle.color333333,
-                        //                             fontWeight: FontWeight.bold),
-                        //                       ),
-                        //                       const Spacer(),
-                        //                       GestureDetector(
-                        //                         onTap: () {},
-                        //                         child: Text(
-                        //                           '设为重要',
-                        //                           style: TextStyle(
-                        //                             fontSize: 24.sp,
-                        //                             color: BaseStyle.color999999,
-                        //                           ),
-                        //                         ),
-                        //                       ),
-                        //                       24.wb,
-                        //                     ],
-                        //                   ),
-                        //                   10.hb,
-                        //                   const Divider(
-                        //                     height: 2,
-                        //                     color: BaseStyle.colorf6f6f6,
-                        //                   ),
-                        //                   Row(
-                        //                     children: [
-                        //                       36.wb,
-                        //                       Column(
-                        //                         children: [
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号1', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890'),
-                        //                           16.hb,
-                        //                           _getText('车架号', 'GDL26173890989890',
-                        //                               isRed: true),
-                        //                           20.hb,
-                        //                         ],
-                        //                       )
-                        //                     ],
-                        //                   )
-                        //                 ],
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // )
                       ],
                     ),
                   ),
@@ -493,15 +239,24 @@ class _RecommendedPageState extends State<RecommendedPage>
 
   ///客户信息
   _getRecommended(CustomerListModel model) {
-    Future.delayed(const Duration(milliseconds: 0), () async {
-      phone = await CustomerFunc.getCustomerDetailModel(model.id);
-    });
+    // Future.delayed(const Duration(milliseconds: 0), () async {
+    //   phone = await CustomerFunc.getCustomerDetailModel(model.id);
+    // });
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w),
       child: GestureDetector(
-        onTap: () {
-          //Get.to(()=>const UserInfoPage());
+        onTap: ()async {
+          if(model.isImportant != 1){
+            bool success =
+                await CustomerFunc.setImportant(model.id);
+            if (success) {
+              CloudToast.show('设置成功');
+              _easyRefreshController.callRefresh();
+              setState(() {});
+            }
+          }
+
         },
         child: DecoratedBox(
           decoration: BoxDecoration(
@@ -582,7 +337,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                                 format: 'yyyy-MM-dd HH:mm:ss'),
                           ),
                           16.hb,
-                          _getText('联系方式', phone.mobile),
+                          _getText('联系方式', model.mobile),
                           16.hb,
                           _getText(
                               '销售', UserTool.userProvider.userInfo.nickname),
@@ -659,45 +414,45 @@ class _RecommendedPageState extends State<RecommendedPage>
 //
   //邀请客户
   _getCustomer() {
-    return Stack(
-      children: [
-        Container(
-            width: 328.w,
-            height: 158.w,
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                  color: const Color(0x40D14A16),
-                  offset: const Offset(0.0, 2.0),
-                  blurRadius: 14.w,
-                  spreadRadius: 2.w)
-            ]),
-            child: Image.asset(Assets.images.inviteCustomers.path)),
-        Positioned(
-            left: 32.w,
-            top: 40.w,
-            child: Column(
-              children: [
-                Text(
-                  '邀请客户',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      ?.copyWith(color: const Color(0xFFFF8129)),
-                ),
-                16.hb,
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => const ShareDetailCustomerWidget());
-                  },
-                  child: Text(
+    return GestureDetector(
+      onTap: (){
+        Get.to(() => const ShareDetailCustomerWidget());
+      },
+      child: Stack(
+        children: [
+          Container(
+              width: 328.w,
+              height: 158.w,
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                    color: const Color(0x40D14A16),
+                    offset: const Offset(0.0, 2.0),
+                    blurRadius: 14.w,
+                    spreadRadius: 2.w)
+              ]),
+              child: Image.asset(Assets.images.inviteCustomers.path)),
+          Positioned(
+              left: 32.w,
+              top: 30.w,
+              child: Column(
+                children: [
+                  Text(
+                    '邀请客户',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(color: const Color(0xFFFF8129)),
+                  ),
+                  16.hb,
+                  Text(
                     "立即邀请>>>",
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         color: const Color.fromRGBO(255, 129, 41, 0.8)),
                   ),
-                ),
-              ],
-            ))
-      ],
+                ],
+              ))
+        ],
+      ),
     );
   }
 

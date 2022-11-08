@@ -215,7 +215,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
         if (_chooseItem != null) {
           Get.to(() => AssessmentPayPage(
                 price: _chooseItem!.pice,
-                count: _chooseItem!.count,
+                count: _chooseItem!.count, title: '评估次数充值',
               ));
         } else {
           CloudToast.show('请先选择一个充值类型');

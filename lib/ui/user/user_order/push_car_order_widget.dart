@@ -1,9 +1,11 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
+import 'package:cloud_car/ui/user/user_order/push_car_order_detail_page.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_signed_page.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -37,7 +39,6 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
   final int _size = 10;
   bool _onLoad = true;
 
-  ConsignmentSearchStatus _currentStatus = ConsignmentSearchStatus.all;
 
   Map<String, dynamic> get _params =>
       {};
@@ -150,7 +151,7 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => ConsignmentSignedPage(
+          Get.to(() => PushCarOrderDetailPage(
                 price: model.price,
                 statusNumber: model.statusEnum,
                 id: model.id,
@@ -180,7 +181,7 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
                         fontSize: BaseStyle.fontSize28),
                   ),
                 ),
-                // 24.hb,
+                12.hb,
                 Row(
                   children: [
                     SizedBox(
@@ -219,36 +220,11 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
                     ? Padding(
                         padding: EdgeInsets.only(left: 452.w),
                         child: GestureDetector(
-                          onTap: () {
-
-                            Get.to(() => const NewPushCarPage());
-
-                            // switch (_getStatusText(model)) {
-                            //   case '待发布':
-                            //     Get.to(() => ConsignmentSigned(
-                            //           price: model.price,
-                            //           auditStatus:
-                            //               model.auditStatus,
-                            //           id: model.id,
-                            //           stat: '待发布',
-                            //           statusNumber: 1,
-                            //           licensingDate:
-                            //               model.licensingDate,
-                            //           createdAt: model.createdAt,
-                            //           statusNum: _getStatusNum(
-                            //               model.status),
-                            //         ));
-                            //     break;
-                            //   default:
-                            // }
-
-                            // Get.to(() => CarPicturePage(
-                            //       isPersonal: true,
-                            //       orderId: model.id,
-                            //       consignmentContractModel:
-                            //           ConsignmentContractModel(
-                            //               masterInfo: MasterInfo()),
-                            //     ));
+                          onTap: () async{
+                            IndividualModel? individualList = await OrderFunc.getConsignmentInfo(model.id);
+                            if(individualList!=null){
+                              Get.to(() => NewPushCarPage(individualModel: individualList,));
+                            }
                           },
                           child: Container(
                               width: 168.w,
@@ -269,8 +245,11 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
                     :    model.status == 3 && model.auditStatus == 3?Padding(
                   padding: EdgeInsets.only(left: 452.w),
                   child: GestureDetector(
-                    onTap: () {
-                      Get.to(() => const NewPushCarPage());
+                    onTap: ()async {
+                      IndividualModel? individualList = await OrderFunc.getConsignmentInfo(model.id);
+                      if(individualList!=null){
+                        Get.to(() => NewPushCarPage(individualModel: individualList,));
+                      }
                     },
                     child: Container(
                         width: 168.w,

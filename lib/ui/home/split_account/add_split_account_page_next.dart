@@ -46,7 +46,7 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
 
   final TextEditingController _amountEditingController =
       TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  // final TextEditingController _nameController = TextEditingController();
 
   final Map<int, TextEditingController> _mapTextController = {};
 
@@ -144,12 +144,12 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
                   child: GestureDetector(
                     onTap: ()async {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      var result = await Get.dialog(_getNameDialog());
-                      if (!result) return;
-                      if (_nameController.text.trim().isEmpty) {
-                        CloudToast.show('名称不能为空！');
-                        return;
-                      }
+                      // var result = await Get.dialog(_getNameDialog());
+                      // if (!result) return;
+                      // if (_nameController.text.trim().isEmpty) {
+                      //   CloudToast.show('名称不能为空！');
+                      //   return;
+                      // }
                       if(_amountEditingController.text.trim().isEmpty){
                         CloudToast.show('我的出资额不能为空');
                         return;
@@ -163,7 +163,7 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
                         });
                       });
                       print(brokerData);
-                      Get.to(() => SplitCarInfoPage(name: _nameController.text, ownAmount:  double.parse(_amountEditingController.text), brokerAmounts: brokerData,));
+                      Get.to(() => SplitCarInfoPage( ownAmount:  double.parse(_amountEditingController.text), brokerAmounts: brokerData,));
 
 
                       // var res = await apiClient.request(API.split.create, data: {
@@ -213,29 +213,29 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
     );
   }
 
-  Widget _getNameDialog() {
-    return CloudDialogWidget(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            40.hb,
-            '账目名称'.text.size(36.sp).color(Colors.black).bold.isIntrinsic.make(),
-            24.hb,
-            CloudBorderedTextFieldWidget(
-              width: 400.w,
-              height: 8.w,
-              controller: _nameController,
-              hintText: '请输入名称',
-            ),
-          ],
-        ),
-        onConfirm: () {
-          Get.back(result: true);
-        },
-        onCancel: () {
-          Get.back(result: false);
-        });
-  }
+  // Widget _getNameDialog() {
+  //   return CloudDialogWidget(
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           40.hb,
+  //           '账目名称'.text.size(36.sp).color(Colors.black).bold.isIntrinsic.make(),
+  //           24.hb,
+  //           CloudBorderedTextFieldWidget(
+  //             width: 400.w,
+  //             height: 8.w,
+  //             controller: _nameController,
+  //             hintText: '请输入名称',
+  //           ),
+  //         ],
+  //       ),
+  //       onConfirm: () {
+  //         Get.back(result: true);
+  //       },
+  //       onCancel: () {
+  //         Get.back(result: false);
+  //       });
+  // }
 
   Widget _subButton({required String text, required VoidCallback onTap}) {
     return GestureDetector(

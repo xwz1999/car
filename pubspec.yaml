@@ -3,7 +3,7 @@ description: A new Flutter project.
 publish_to: 'none'
 
 
-version: 1.0.19+20
+version: 1.0.20+21
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -18,7 +18,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
-  permission_handler: ^9.2.0
+  permission_handler: 9.2.0
   #包信息
   package_info_plus: ^1.4.2
   #状态管理
@@ -83,7 +83,7 @@ dependencies:
   json_annotation: ^4.4.0
 
   #拨号
-  url_launcher: ^6.1.0
+  url_launcher: 6.1.0
   #生成类重载==运算符和toString方法
   equatable: ^2.0.3
   #设备平台信息
@@ -104,6 +104,10 @@ dependencies:
   sign_in_with_apple: ^4.1.0
   #websocket
   web_socket_channel: 2.2.0
+
+  flutter_inappwebview: 5.4.3
+
+  cached_network_image: ^3.2.1
 
 
 dev_dependencies:

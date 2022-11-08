@@ -7,6 +7,7 @@ import 'package:cloud_car/ui/user/user_management/text_editingcontroller_widget.
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:power_logger/power_logger.dart';
 
 import '../../../utils/headers.dart';
@@ -87,12 +88,36 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
           88.hb,
           CloudBottomButton(
             onTap: () async {
+
+              if(nameText.isEmpty){
+                BotToast.showText(text: '请先输入姓名');
+                return;
+              }
+              if(_gender==null){
+                BotToast.showText(text: '请先选择性别');
+                return;
+              }
+              if(phoneText.isEmpty){
+                BotToast.showText(text: '请先输入手机号');
+                return;
+              }
+              // if(storeId==0){
+              //   BotToast.showText(text: '请先选择门店');
+              // }
+              if(commissionText.isEmpty){
+                BotToast.showText(text: '请先输入销售提成');
+                return;
+              }
+              if(roleId==0){
+                BotToast.showText(text: '请先配置权限');
+                return;
+              }
+
               var res = await BusinessFunc.getStaffadd(
                 nameText,
                 _gender!.typeNum,
                 phoneText,
-
-                2,
+                roleId,
                 commissionText,
                 storeId:  storeId,
               );
@@ -272,13 +297,16 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
             title: '手机号',
             value: phoneText,
             onTap: () {},
+            inputFormatters: <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(11)//限制长度
+            ],
             callback: (String content) {
               phoneText = content;
             },
           ),
           TextEditItemWidget(
             padding: EdgeInsets.only(bottom: 16.w),
-            title: '组织架构',
+            title: '门店',
             endIcon: true,
             editor: false,
             tips: '请选择',

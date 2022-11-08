@@ -139,7 +139,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 72.hb,
                 Offstage(
                   offstage: staffInfo!.auditStatus == 1 ||
-                      staffInfo!.auditStatus == 2,
+                      staffInfo!.auditStatus == 2||staffInfo!.roleId == 1,
                   child: Column(
                     children: [
                       Text(
@@ -256,7 +256,8 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
 
   _getAudit() {
     return Offstage(
-      offstage: staffInfo!.auditStatus == 2,
+      offstage: staffInfo!.auditStatus == 1 ||
+          staffInfo!.auditStatus == 2||staffInfo!.roleId == 1,
       child: Image.asset(
         staffInfo!.auditStatus == 1
             ? Assets.icons.inreview.path

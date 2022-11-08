@@ -1,3 +1,4 @@
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract_page.dart';
 import 'package:cloud_car/ui/user/user_order/myorder_page.dart';
@@ -9,6 +10,7 @@ import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
+import 'package:cloud_car/widget/webView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -159,37 +161,32 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
                       : const Icon(CupertinoIcons.checkmark_circle,
                           size: 18, color: Colors.blue)),
             ),
-            // RichText(
-            //   text: TextSpan(
-            //       text: '我已阅读并了解',
-            //       style: Theme.of(context)
-            //           .textTheme
-            //           .bodyText1
-            //           ?.copyWith(color: Color(0xFFAAAAAA)),
-            //       children: [TextSpan(children: Text.rich(OnTap(){
-
-            //       }))]),
-            // )
-            Row(
-              children: [
-                Text(
-                  '我已阅读并了解',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: const Color(0xFFAAAAAA)),
+            GestureDetector(
+              onTap: (){
+                print('123123');
+                Get.to(()=>CloudWebView(url: API.web.vipAgreement, title: ''));
+              },
+              child: Container(
+                color: Colors.teal,
+                child: Row(
+                  children: [
+                    Text(
+                      '我已阅读并了解',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: const Color(0xFFAAAAAA)),
+                    ),
+                    Text(
+                      '《付款服务协议》',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: const Color(0xFF027AFF)),
+                    )
+                  ],
                 ),
-                GestureDetector(
-                  onTap: (() {}),
-                  child: Text(
-                    '《付款服务协议》',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(color: const Color(0xFF027AFF)),
-                  ),
-                )
-              ],
+              ),
             ),
             conditions ? const SizedBox() : _getBubbles(),
           ],

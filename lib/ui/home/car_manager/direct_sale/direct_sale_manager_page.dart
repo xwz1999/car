@@ -160,8 +160,12 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
     return SortListPage(
       pickCar: _pickCar,
       onConfirm: () {
+        if(_currentType==CarManageType.personal){
+          asRefreshController.callRefresh();
+        }else{
+          refreshController.callRefresh();
+        }
         Get.back();
-        refreshController.callRefresh();
       },
     );
   }

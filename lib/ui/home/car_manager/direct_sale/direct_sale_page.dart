@@ -74,6 +74,7 @@ class _DirectSalePageState extends State<DirectSalePage>
         'maxAge': widget.pickCar.value.maxCarAge,
         'struct': widget.pickCar.value.struct,
         'gearType': widget.pickCar.value.gearType,
+        'fuelType':widget.pickCar.value.fuelType,
         'minMileage': widget.pickCar.value.finalMinMile,
         'maxMileage': widget.pickCar.value.finalMaxMile,
         'dischargeStandard': widget.pickCar.value.dischargeStandard,

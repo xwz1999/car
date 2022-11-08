@@ -124,7 +124,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               CloudToast.show('请先完善车主信息');
 
             }else{
-              Get.to(() =>  ContractLicencePage(consignmentContractModel: widget.consignmentContractModel,));
+              //Get.to(() =>  ContractLicencePage(consignmentContractModel: widget.consignmentContractModel,));
             }
           },
           style: ButtonStyle(

@@ -51,7 +51,7 @@ class TextUtils{
       if (price<=0) {
          return price.toString();
       } else {
-         return '${price/10000}万';
+         return '${price/10000}万元';
       }
    }
 }

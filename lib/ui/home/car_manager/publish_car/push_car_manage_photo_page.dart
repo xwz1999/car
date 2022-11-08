@@ -70,7 +70,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
       for(int j=0;j<_carPhotos.length;j++){
         if(_carPhotos[j].name == widget.model.carPhotos![i].text){
-          if(widget.model.carPhotos![i].photo!=null){
+          if(widget.model.carPhotos![i].photo!=''){
             print(j);
             print(i);
             _carPhotos[j].url = widget.model.carPhotos![i].photo;
@@ -85,7 +85,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
       for(int j=0;j<_interiorPhotos.length;j++){
         if(_interiorPhotos[j].name == widget.model.interiorPhotos![i].text){
-          if(widget.model.interiorPhotos![i].photo!=null){
+          if(widget.model.interiorPhotos![i].photo!=''){
             print(j);
             print(i);
             _interiorPhotos[j].url = widget.model.interiorPhotos![i].photo;

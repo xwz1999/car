@@ -67,7 +67,7 @@ class NewCarDetailItem extends StatelessWidget {
         getContentItem('出厂日期',  TextUtils.getTimeByInt(carInfoModel.carInfo.marketDate)),
         getContentItem('新车指导价', TextUtils.carInfoIsEmpty( TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.newCarGuidePrice)) )),
         getContentItem('购置税', TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.purchaseTax)))),
-        getContentItem('加装费用', TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.installationCost)))),
+        getContentItem('加装费用', TextUtils.carInfoIsEmpty('${carInfoModel.carInfo.installationCost}元')),
         getContentItem('车辆所在地', TextUtils.carInfoIsEmpty(carInfoModel.carInfo.location)),
 
         getContentItem('环保等级', carInfoModel.carInfo.emissionStandard),

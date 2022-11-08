@@ -129,7 +129,7 @@ class _ConsignmentRejectedState extends State<ConsignmentRejected> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(_individualList.car.modelName,
+                        Text(_individualList.model.name,
                             style: TextStyle(
                                 fontSize: BaseStyle.fontSize28,
                                 color: BaseStyle.color111111)),

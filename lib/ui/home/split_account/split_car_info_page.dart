@@ -26,10 +26,9 @@ import 'package:velocity_x/velocity_x.dart';
 
 class SplitCarInfoPage extends StatefulWidget {
   final double ownAmount;
-  final String name;
   final List<dynamic> brokerAmounts;
 
-  const SplitCarInfoPage({super.key, required this.ownAmount, required this.name, required this.brokerAmounts});
+  const SplitCarInfoPage({super.key, required this.ownAmount, required this.brokerAmounts});
 
   @override
   State<SplitCarInfoPage> createState() => _SplitCarInfoPageState();
@@ -149,7 +148,7 @@ class _SplitCarInfoPageState extends State<SplitCarInfoPage> {
 
                               var res = await apiClient.request(API.split.create, data: {
                                 'ownAmount': widget.ownAmount,
-                                'name': widget.name,
+                                'name': DateUtil.formatDate(_publishCarInfo.licensingDate, format: 'yyyy年MM月')+_publishCarInfo.carName!,
                                 'brokerAmounts': widget.brokerAmounts,
                                 'modelId': _publishCarInfo.carModelId,
                                 'locationId': _publishCarInfo.locationCityId,

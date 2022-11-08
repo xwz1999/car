@@ -19,9 +19,7 @@ class DetectionDataPage extends StatefulWidget {
   State<DetectionDataPage> createState() => _DetectionDataPageState();
 }
 
-String img = '';
-final picker = ImagePicker();
-File imagePath = File(Assets.images.addcar.path);
+
 
 class _DetectionDataPageState extends State<DetectionDataPage> {
   // Future getImage() async {
@@ -36,6 +34,11 @@ class _DetectionDataPageState extends State<DetectionDataPage> {
   //     }
   //   });
   // }
+
+
+  String img = '';
+  final picker = ImagePicker();
+  File imagePath = File(Assets.images.addcar.path);
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +106,7 @@ class _DetectionDataPageState extends State<DetectionDataPage> {
             GestureDetector(
               onTap: () async {
                 bool res = await OrderFunc.getTestrepord(
-                    widget.orderId, imagePath.path);
+                    widget.orderId, img);
                 //BotToast.showText(text: '验证码输入错误');
                 //print("检测报告+$img");
                 if (res) {

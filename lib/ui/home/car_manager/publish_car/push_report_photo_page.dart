@@ -113,13 +113,14 @@ class _PushReportPhotoPageState extends State<PushReportPhotoPage>
           100.hb,
           CloudBottomButton(
             onTap: () async{
+              CloudToast.loading;
               await uploadPhotos();
               if (!canTap) {
+                BotToast.closeAllLoading();
                 return;
               }
             var result = await  CarFunc.newPushCar(reportPhotoModel: widget.reportPhotoModel,
                 pushPhotoModel: widget.pushPhotoModel, newPublishCarInfo: widget.newPublishCarInfo);
-
               if(result){
                 Get.to(() => const PublishFinishPage());
               }

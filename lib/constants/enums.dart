@@ -160,7 +160,7 @@ enum PayType {
 enum PermissionLevel {
   normal(1, '普通用户'),
   independentPartner(2, '独立合伙人'),
-  settledMerchants(3, '经纪人');
+  settledMerchants(3, '入驻商');///门店员工状态
 
   final int typeNum;
   final String typeStr;

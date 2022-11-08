@@ -179,7 +179,7 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
                         fontSize: BaseStyle.fontSize28),
                   ),
                 ),
-                // 24.hb,
+                12.hb,
                 Row(
                   children: [
                     SizedBox(
@@ -214,144 +214,144 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
                   ],
                 ),
                 32.hb,
-                SizedBox(
-                    child: model.statusEnum.num == 2
-                        ? Padding(
-                            padding: EdgeInsets.only(left: 452.w),
-                            child: GestureDetector(
-                              onTap: () {
-                                // switch (_getStatusText(model)) {
-                                //   case '待发布':
-                                //     Get.to(() => ConsignmentSigned(
-                                //           price: model.price,
-                                //           auditStatus:
-                                //               model.auditStatus,
-                                //           id: model.id,
-                                //           stat: '待发布',
-                                //           statusNumber: 1,
-                                //           licensingDate:
-                                //               model.licensingDate,
-                                //           createdAt: model.createdAt,
-                                //           statusNum: _getStatusNum(
-                                //               model.status),
-                                //         ));
-                                //     break;
-                                //   default:
-                                // }
-
-                                Get.to(() => CarPicturePage(
-                                      isPersonal: true,
-                                      orderId: model.id,
-                                      consignmentContractModel:
-                                          ConsignmentContractModel(
-                                              masterInfo: MasterInfo()),
-                                    ));
-                              },
-                              child: Container(
-                                  width: 168.w,
-                                  height: 68.w,
-                                  padding:
-                                      EdgeInsets.only(left: 28.w, top: 14.w),
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xFF027AFF),
-                                      borderRadius: BorderRadius.circular(8.w)),
-                                  child: Text(
-                                    '发布车辆',
-                                    style: TextStyle(
-                                        color: kForeGroundColor,
-                                        fontSize: BaseStyle.fontSize28),
-                                  )),
-                            ),
-                          )
-                        : const SizedBox()
-                    //item['judgename'] != '交易取消'
-                    //     ? Row(
-                    //         mainAxisAlignment: MainAxisAlignment.end,
-                    //         children: [
-                    //           SizedBox(
-                    //             child: Text(
-                    //               '车辆总价',
-                    //               style: TextStyle(
-                    //                   fontSize: BaseStyle.fontSize28,
-                    //                   color: BaseStyle.color999999),
-                    //             ),
-                    //           ),
-                    //           16.wb,
-                    //           SizedBox(
-                    //             child: Text.rich(TextSpan(children: [
-                    //               TextSpan(
-                    //                   text: '30.00',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2),
-                    //               TextSpan(
-                    //                   text: '万',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2),
-                    //             ])),
-                    //           ),
-                    //           56.wb,
-                    //           SizedBox(
-                    //             child: Text(
-                    //               item['picename'],
-                    //               style: TextStyle(
-                    //                   fontSize: BaseStyle.fontSize28,
-                    //                   color: BaseStyle.color999999),
-                    //             ),
-                    //           ),
-                    //           16.wb,
-                    //           SizedBox(
-                    //             child: Text.rich(TextSpan(children: [
-                    //               TextSpan(
-                    //                   text: item['pice'],
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2
-                    //                       ?.copyWith(
-                    //                           color:
-                    //                               const Color(0xFFFF3B02))),
-                    //               TextSpan(
-                    //                   text: '万',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2
-                    //                       ?.copyWith(
-                    //                           color:
-                    //                               const Color(0xFFFF3B02))),
-                    //             ])),
-                    //           ),
-                    //         ],
-                    //       )
-                    //     : Row(
-                    //         mainAxisAlignment: MainAxisAlignment.end,
-                    //         children: [
-                    //           SizedBox(
-                    //             child: Text(
-                    //               '车辆总价',
-                    //               style: TextStyle(
-                    //                   fontSize: BaseStyle.fontSize28,
-                    //                   color: BaseStyle.color999999),
-                    //             ),
-                    //           ),
-                    //           16.wb,
-                    //           SizedBox(
-                    //             child: Text.rich(TextSpan(children: [
-                    //               TextSpan(
-                    //                   text: '30.00',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2),
-                    //               TextSpan(
-                    //                   text: '万',
-                    //                   style: Theme.of(context)
-                    //                       .textTheme
-                    //                       .subtitle2),
-                    //             ])),
-                    //           ),
-                    //         ],
-                    // )
-                    ),
+                // SizedBox(
+                //     child: model.statusEnum.num == 2
+                //         ? Padding(
+                //             padding: EdgeInsets.only(left: 452.w),
+                //             child: GestureDetector(
+                //               onTap: () {
+                //                 // switch (_getStatusText(model)) {
+                //                 //   case '待发布':
+                //                 //     Get.to(() => ConsignmentSigned(
+                //                 //           price: model.price,
+                //                 //           auditStatus:
+                //                 //               model.auditStatus,
+                //                 //           id: model.id,
+                //                 //           stat: '待发布',
+                //                 //           statusNumber: 1,
+                //                 //           licensingDate:
+                //                 //               model.licensingDate,
+                //                 //           createdAt: model.createdAt,
+                //                 //           statusNum: _getStatusNum(
+                //                 //               model.status),
+                //                 //         ));
+                //                 //     break;
+                //                 //   default:
+                //                 // }
+                //
+                //                 Get.to(() => CarPicturePage(
+                //                       isPersonal: true,
+                //                       orderId: model.id,
+                //                       consignmentContractModel:
+                //                           ConsignmentContractModel(
+                //                               masterInfo: MasterInfo()),
+                //                     ));
+                //               },
+                //               child: Container(
+                //                   width: 168.w,
+                //                   height: 68.w,
+                //                   padding:
+                //                       EdgeInsets.only(left: 28.w, top: 14.w),
+                //                   decoration: BoxDecoration(
+                //                       color: const Color(0xFF027AFF),
+                //                       borderRadius: BorderRadius.circular(8.w)),
+                //                   child: Text(
+                //                     '发布车辆',
+                //                     style: TextStyle(
+                //                         color: kForeGroundColor,
+                //                         fontSize: BaseStyle.fontSize28),
+                //                   )),
+                //             ),
+                //           )
+                //         : const SizedBox()
+                //     //item['judgename'] != '交易取消'
+                //     //     ? Row(
+                //     //         mainAxisAlignment: MainAxisAlignment.end,
+                //     //         children: [
+                //     //           SizedBox(
+                //     //             child: Text(
+                //     //               '车辆总价',
+                //     //               style: TextStyle(
+                //     //                   fontSize: BaseStyle.fontSize28,
+                //     //                   color: BaseStyle.color999999),
+                //     //             ),
+                //     //           ),
+                //     //           16.wb,
+                //     //           SizedBox(
+                //     //             child: Text.rich(TextSpan(children: [
+                //     //               TextSpan(
+                //     //                   text: '30.00',
+                //     //                   style: Theme.of(context)
+                //     //                       .textTheme
+                //     //                       .subtitle2),
+                //     //               TextSpan(
+                //     //                   text: '万',
+                //     //                   style: Theme.of(context)
+                //     //                       .textTheme
+                //     //                       .subtitle2),
+                //     //             ])),
+                //     //           ),
+                //     //           56.wb,
+                //     //           SizedBox(
+                //     //             child: Text(
+                //     //               item['picename'],
+                //     //               style: TextStyle(
+                //     //                   fontSize: BaseStyle.fontSize28,
+                //     //                   color: BaseStyle.color999999),
+                //     //             ),
+                //     //           ),
+                //     //           16.wb,
+                //     //           SizedBox(
+                //     //             child: Text.rich(TextSpan(children: [
+                //     //               TextSpan(
+                //     //                   text: item['pice'],
+                //     //                   style: Theme.of(context)
+                //     //                       .textTheme
+                //     //                       .subtitle2
+                //     //                       ?.copyWith(
+                //     //                           color:
+                //     //                               const Color(0xFFFF3B02))),
+                //     //               TextSpan(
+                //     //                   text: '万',
+                //     //                   style: Theme.of(context)
+                //     //                       .textTheme
+                //     //                       .subtitle2
+                //     //                       ?.copyWith(
+                //     //                           color:
+                //     //                               const Color(0xFFFF3B02))),
+                //     //             ])),
+                //     //           ),
+                //     //         ],
+                //     //       )
+                //     //     : Row(
+                //     //         mainAxisAlignment: MainAxisAlignment.end,
+                //     //         children: [
+                //     //           SizedBox(
+                //     //             child: Text(
+                //     //               '车辆总价',
+                //     //               style: TextStyle(
+                //     //                   fontSize: BaseStyle.fontSize28,
+                //     //                   color: BaseStyle.color999999),
+                //     //             ),
+                //     //           ),
+                //     //           16.wb,
+                //     //           SizedBox(
+                //     //             child: Text.rich(TextSpan(children: [
+                //     //               TextSpan(
+                //     //                   text: '30.00',
+                //     //                   style: Theme.of(context)
+                //     //                       .textTheme
+                //     //                       .subtitle2),
+                //     //               TextSpan(
+                //     //                   text: '万',
+                //     //                   style: Theme.of(context)
+                //     //                       .textTheme
+                //     //                       .subtitle2),
+                //     //             ])),
+                //     //           ),
+                //     //         ],
+                //     // )
+                //     ),
               ],
             )),
       ),

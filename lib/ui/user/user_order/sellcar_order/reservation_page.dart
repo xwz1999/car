@@ -110,7 +110,6 @@ class _ReservationPageState extends State<ReservationPage> {
                 ],
               ),
             ),
-
             ///车辆信息
             _getContainer(
               GestureDetector(
@@ -173,7 +172,10 @@ class _ReservationPageState extends State<ReservationPage> {
             Offstage(
               offstage: widget.status.num == 1 ||
                   widget.status.num == 3 ||
-                  widget.status.num == 10,
+                  widget.status.num == 2 ,
+                  // widget.status.num == 10 ||
+                  // widget.status.num == 11 ||
+                  // widget.status.num == 20,
               child: _getReport(),
             ),
             // widget.status.num == 0
@@ -198,7 +200,7 @@ class _ReservationPageState extends State<ReservationPage> {
             ///车辆检测报告2
             Offstage(
               offstage: !(widget.status.num == 40 ||
-                  widget.status.num == 41 ||
+                  widget.status.num == 41 ||widget.status.num == 31||
                   widget.status.num == 50),
               child: _getReport2(),
             ),
@@ -255,70 +257,96 @@ class _ReservationPageState extends State<ReservationPage> {
             child: _getTitle('支付信息'),
           ),
           36.hb,
-          _getText('定金支付', '¥${_consignmentInfo.contract.deposit}',
-              BaseStyle.color333333),
-          36.hb,
-          _getText('支付方式', '支付宝', BaseStyle.color333333),
-          36.hb,
-          _getText(
-              '支付时间',
-              DateUtil.formatDateMs(
-                  _consignmentInfo.deposit.createdAt.toInt() * 1000,
-                  format: DateFormats.full),
-              BaseStyle.color333333),
-          40.hb,
-          widget.status.num == 20 || widget.status.num == 20
-              ? widget.status.num == 20
-                  ? _getText(
-                      '首付支付',
-                      '¥${_consignmentInfo.contract.downPayment}(审核中)',
-                      const Color(0xFF027AFF))
-                  : _getText(
-                      '首付支付',
-                      '¥${_consignmentInfo.contract.downPayment}(审核驳回)',
-                      const Color(0xFFE62222))
-              : _getText('首付支付', '¥${_consignmentInfo.contract.downPayment}',
-                  BaseStyle.color333333),
-          widget.status.num == 20 ? 36.hb : 0.hb,
+
+          Offstage(
+            offstage: widget.status.num == 0||widget.status.num == 1,
+            child: Column(
+              children: [
+                _getText('定金支付', '¥${_consignmentInfo.contract.deposit}',
+                    BaseStyle.color333333),
+                36.hb,
+                _getText('支付方式', '支付宝', BaseStyle.color333333),
+                36.hb,
+                _getText(
+                    '支付时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfo.deposit.createdAt.toInt() * 1000,
+                        format: DateFormats.full),
+                    BaseStyle.color333333),
+              ],
+            ),
+          ),
+
+          Offstage(
+            offstage: widget.status.num == 0||widget.status.num == 1||widget.status.num == 2||widget.status.num == 3||widget.status.num == 10||widget.status.num == 11,
+            child: Column(
+              children: [
+                40.hb,
+                widget.status.num == 20 || widget.status.num == 20
+                    ? widget.status.num == 20
+                    ? _getText(
+                    '首付支付',
+                    '¥${_consignmentInfo.contract.downPayment}(审核中)',
+                    const Color(0xFF027AFF))
+                    : _getText(
+                    '首付支付',
+                    '¥${_consignmentInfo.contract.downPayment}(审核驳回)',
+                    const Color(0xFFE62222))
+                    : _getText('首付支付', '¥${_consignmentInfo.contract.downPayment}',
+                    BaseStyle.color333333),
+                widget.status.num == 20 ? 36.hb : 0.hb,
+              ],
+            ),
+          ),
+
+
+
           // Offstage(
           //   offstage: widget.status.num != 20,
           //   child: _getText('驳回理由', '凭证金额与汇款金额不符', const Color(0xFFE62222)),
           // ),
           36.hb,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '支付凭证',
-                style: TextStyle(
-                    color: BaseStyle.color333333,
-                    fontSize: BaseStyle.fontSize28),
-              ),
-              16.hb,
-              GestureDetector(
-                onTap: ()async{
-                  await CloudImagePreview.toPath(path: _consignmentInfo.balancePayment.proof);
-                },
-                child: SizedBox(
-                  width: 200.w,
-                  height: 150.w,
-                  child:  CloudImageNetworkWidget.car(
-                    urls: [_consignmentInfo.balancePayment.proof],
+
+
+          Offstage(
+            offstage: widget.status.num == 0||widget.status.num == 1
+                ||widget.status.num == 2||widget.status.num == 3
+                ||widget.status.num == 10||widget.status.num == 11||widget.status.num == 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '支付凭证',
+                  style: TextStyle(
+                      color: BaseStyle.color333333,
+                      fontSize: BaseStyle.fontSize28),
+                ),
+                16.hb,
+                GestureDetector(
+                  onTap: ()async{
+                    print(_consignmentInfo.downPayment.proof);
+                    await CloudImagePreview.toPath(path: _consignmentInfo.downPayment.proof);
+                  },
+                  child: Container(
+                    width: 200.w,
+                    height: 150.w,
+                    color: Colors.transparent,
+                    child:  CloudImageNetworkWidget(
+                      urls: [_consignmentInfo.downPayment.proof],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 686.w,
-              )
-            ],
+                _getText(
+                    '支付时间',
+                    DateUtil.formatDateMs(
+                        _consignmentInfo.downPayment.createdAt.toInt() * 1000,
+                        format: DateFormats.full),
+                    BaseStyle.color333333),
+              ],
+            ),
           ),
           36.hb,
-          _getText(
-              '支付时间',
-              DateUtil.formatDateMs(
-                  _consignmentInfo.downPayment.createdAt.toInt() * 1000,
-                  format: DateFormats.full),
-              BaseStyle.color333333),
+
           widget.status.num == 40 ||
                   widget.status.num == 41 ||
                   widget.status.num == 50

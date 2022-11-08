@@ -49,6 +49,10 @@ class _Ail {
 class _Sign {
   String get contractSign => '/user/partner/contract/sign';
 
+
+  ///合伙人创建订单
+  String get createUserOrder => '/user/partner/order/create';
+
   ///独立合伙人——>支付
 
   String get partnerPay => '/user/partner/pay';

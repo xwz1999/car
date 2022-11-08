@@ -15,10 +15,10 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import '../../../model/order/callcarlist_model.dart';
 
 class OrderFunc {
-  ///独立合伙人签订合同
-  static Future<bool> getSign(String sign) async {
+  ///独立合伙人付款
+  static Future<bool> partnerPay(int orderId,int payType) async {
     BaseModel res =
-        await apiClient.request(API.user.sign.partnerPay, data: {'sign': sign});
+        await apiClient.request(API.user.sign.partnerPay, data: {'orderId': orderId,'payType':payType});
     if (res.code == 0) {
       return true;
     } else {
@@ -26,6 +26,19 @@ class OrderFunc {
       return false;
     }
   }
+
+  ///创建独立合伙人定档
+  static Future<int> createOrder(int kind) async {
+    BaseModel res =
+    await apiClient.request(API.user.sign.createUserOrder, data: {'kind': kind});
+    if (res.code == 0) {
+      return res.data['orderId'];
+    } else {
+      CloudToast.show(res.msg);
+      return 0;
+    }
+  }
+
 
   ///个人寄卖详情
   static Future<IndividualModel?> getConsignmentInfo(int orderId) async {

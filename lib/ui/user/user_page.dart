@@ -88,13 +88,6 @@ class _UserPageState extends State<UserPage> {
         margin: EdgeInsets.only(
           top: 78.w,
         ),
-        // child: GestureDetector(
-        //   onTap: () {
-        //     Get.to(() => const SystemSettingPage());
-        //   },
-        //   child: Image.asset(Assets.icons.userSetUp.path,
-        //       height: 48.w, width: 48.w),
-        // ),
       ),
       body: Expanded(
         child: Column(
@@ -115,7 +108,8 @@ class _UserPageState extends State<UserPage> {
                       //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
                       _shareUser(),
                       32.hb,
-                      _agent(),
+                      UserTool.userProvider.userInfo.levelEM== PermissionLevel.settledMerchants?SizedBox():UserTool.userProvider.userInfo.levelEM== PermissionLevel.normal?
+                      _agent():_agent1(),
                       24.hb,
                       _share(),
                     ],
@@ -182,7 +176,7 @@ class _UserPageState extends State<UserPage> {
   _agent1(){
     return GestureDetector(
       onTap: (){
-
+        Get.to(() => const AgentCenterPage(isRenew:true));
       },
       child: Container(
           width: double.infinity,
@@ -309,8 +303,8 @@ class _UserPageState extends State<UserPage> {
                     ),
                   ),
                   32.wb,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         UserTool.userProvider.userInfo.nickname,
@@ -319,15 +313,19 @@ class _UserPageState extends State<UserPage> {
                         //     fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       const Padding(padding: EdgeInsets.only(top: 5)),
-                      Row(
-                        children: [
-                          _getChap(
-                              UserTool.userProvider.userInfo.store.roleName, 1),
-                          16.wb,
-                          _getChap(
-                              UserTool.userProvider.userInfo.store.storeName, 2)
-                        ],
-                      )
+                      10.wb,
+                      UserTool.userProvider.userInfo.levelEM==PermissionLevel.independentPartner?
+                      _getChap(
+                          UserTool.userProvider.userInfo.levelEM.typeStr , 1):const SizedBox(),
+                      // Row(
+                      //   children: [
+                      //     _getChap(
+                      //         UserTool.userProvider.userInfo.store.roleName, 1),
+                      //     16.wb,
+                      //     _getChap(
+                      //         UserTool.userProvider.userInfo.store.storeName, 2)
+                      //   ],
+                      // )
                     ],
                   ),
                   const Spacer(),

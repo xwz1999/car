@@ -1,5 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 typedef TextCallback = Function(String content);
 
@@ -15,6 +16,7 @@ class TextEditItemWidget extends StatefulWidget {
   final bool editor;
   final int? maxLines;
   final EdgeInsetsGeometry padding;
+  final List<TextInputFormatter>? inputFormatters;
 
   const TextEditItemWidget(
       {super.key,
@@ -28,7 +30,7 @@ class TextEditItemWidget extends StatefulWidget {
       this.widget = const SizedBox(),
       this.editor = true,
       this.maxLines = 1,
-      this.padding = EdgeInsets.zero});
+      this.padding = EdgeInsets.zero, this.inputFormatters});
 
   @override
   _TextEditItemWidgetState createState() => _TextEditItemWidgetState();
@@ -88,6 +90,7 @@ class _TextEditItemWidgetState extends State<TextEditItemWidget> {
                 maxLines: widget.maxLines,
                 controller: _editingController,
                 enabled: widget.editor,
+                inputFormatters: widget.inputFormatters,
                 decoration: InputDecoration(
                   enabled: widget.endIcon,
                   filled: true,

@@ -14,6 +14,9 @@ class UserInfoModel extends Equatable {
   final int gender;
   final ExtraData data;
   final StoreInfo store;
+  final Partner partner;
+
+
   final int businessId; // 1= 云云问车 2=其他
   final String businessName;
 
@@ -36,7 +39,7 @@ class UserInfoModel extends Equatable {
         inviteCount: 0,
         balance: '',
       ),
-      store: StoreInfo(storeName: '', roleName: '', roleId: 0));
+      store: StoreInfo(storeName: '', roleName: '', roleId: 0), partner: Partner(expireDate: 0, isPartner: 0));
 
   PermissionLevel get levelEM => PermissionLevel.getValue(level);
 
@@ -69,6 +72,7 @@ class UserInfoModel extends Equatable {
     required this.store,
     required this.businessId,
     required this.businessName,
+  required this.partner
   });
 
   UserInfoModel copyWith({
@@ -81,7 +85,7 @@ class UserInfoModel extends Equatable {
     ExtraData? data,
     StoreInfo? store,
     int? businessId,
-    String? businessName,
+    String? businessName, Partner? partner
   }) {
     return UserInfoModel(
       inviteCode: inviteCode ?? this.inviteCode,
@@ -93,10 +97,29 @@ class UserInfoModel extends Equatable {
       data: data ?? this.data,
       store: store ?? this.store,
       businessId: businessId ?? this.businessId,
-      businessName: businessName ?? this.businessName,
+      businessName: businessName ?? this.businessName, partner: partner??this.partner,
     );
   }
 }
+
+
+@JsonSerializable()
+class Partner extends Equatable{
+  final int isPartner;
+  final int expireDate;
+  @override
+  List<Object?> get props => [isPartner,expireDate,];
+
+  const Partner({
+    required this.isPartner,
+    required this.expireDate,
+  });
+
+  factory Partner.fromJson(Map<String, dynamic> json) =>_$PartnerFromJson(json);
+
+
+}
+
 
 @JsonSerializable()
 class ExtraData extends Equatable {

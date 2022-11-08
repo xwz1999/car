@@ -49,8 +49,8 @@ class _SplashPageState extends State<SplashPage> {
       }
     }
 
-    //PowerLogger.start(context, debug: AppENV.instance.env != ENVConfig.release);
-    PowerLogger.start(context, debug: true);
+    PowerLogger.start(context, debug: AppENV.instance.env != ENVConfig.release);
+    //PowerLogger.start(context, debug: true);
     ///第三方加载
     var isAndroid = Platform.isAndroid;
     registerWxApi(

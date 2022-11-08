@@ -195,7 +195,7 @@ class _DealerConsignmentSignedPageState
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(_individualList.car.modelName,
+                                  Text(_individualList.model.name,
                                       style: TextStyle(
                                           fontSize: BaseStyle.fontSize28,
                                           color: BaseStyle.color111111)),
@@ -332,7 +332,7 @@ class _DealerConsignmentSignedPageState
               36.hb,
               _getText(
                 '出售时间',
-                DateUtil.formatDateMs(_individualList.saleAt.toInt() * 1000,
+                DateUtil.formatDateMs(_individualList.pay.saleAt.toInt() * 1000,
                     format: DateFormats.full),
               ),
             ],
@@ -365,12 +365,12 @@ class _DealerConsignmentSignedPageState
                   36.hb,
                   _getText(
                     '出售价格',
-                    '¥${_individualList.saleAmount}',
+                    '¥${_individualList.pay.saleAmount}',
                   ),
                   36.hb,
                   _getText(
                     '出售时间',
-                    DateUtil.formatDateMs(_individualList.saleAt.toInt() * 1000,
+                    DateUtil.formatDateMs(_individualList.pay.saleAt.toInt() * 1000,
                         format: DateFormats.full),
                   ),
                 ],
@@ -396,7 +396,7 @@ class _DealerConsignmentSignedPageState
                   _getText(
                     '到款时间',
                     DateUtil.formatDateMs(
-                        _individualList.paymentCreatedAt.toInt() * 1000,
+                        _individualList.pay.paymentCreatedAt.toInt() * 1000,
                         format: DateFormats.full),
                   ),
                   36.hb,

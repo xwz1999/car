@@ -7,15 +7,17 @@ part 'individual_model.g.dart';
 class IndividualModel extends Equatable {
   final int id;
   final int status;
+  final String StatusName;
+  final Model model;
   final Car car;
-  final String contractSn;
-  final int contractSignAt;
-  final String saleAmount;
-  final int saleAt;
-  final String paymentAmount;
-  final String paymentProof;
-  final int paymentCreatedAt;
+  final Contract contract;
   final Customer customer;
+  final Pay pay;
+
+  @override
+  List<Object?> get props => [id,status,StatusName,model,car,contract,customer,pay,];
+
+
 
   factory IndividualModel.fromJson(Map<String, dynamic> json) =>
       _$IndividualModelFromJson(json);
@@ -25,38 +27,19 @@ class IndividualModel extends Equatable {
   const IndividualModel({
     required this.id,
     required this.status,
+    required this.StatusName,
+    required this.model,
     required this.car,
-    required this.contractSn,
-    required this.contractSignAt,
-    required this.saleAmount,
-    required this.saleAt,
-    required this.paymentAmount,
-    required this.paymentProof,
-    required this.paymentCreatedAt,
+    required this.contract,
     required this.customer,
+    required this.pay,
   });
-
-  @override
-  List<Object?> get props => [
-        id,
-        status,
-        car,
-        contractSn,
-        contractSignAt,
-        saleAmount,
-        saleAt,
-        paymentAmount,
-        paymentProof,
-        paymentCreatedAt,
-        customer
-      ];
 }
 
 @JsonSerializable()
 class Car extends Equatable {
   final int id;
   final String mainPhoto;
-  final String modelName;
   final int licensingDate;
   final String mileage;
   final String price;
@@ -68,7 +51,6 @@ class Car extends Equatable {
   const Car({
     required this.id,
     required this.mainPhoto,
-    required this.modelName,
     required this.licensingDate,
     required this.mileage,
     required this.price,
@@ -76,7 +58,7 @@ class Car extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, mainPhoto, modelName, licensingDate, mileage, price];
+      [id, mainPhoto, licensingDate, mileage, price];
 }
 
 @JsonSerializable()
@@ -97,4 +79,85 @@ class Customer extends Equatable {
 
   @override
   List<Object?> get props => [id, nickname, mobile];
+}
+
+
+@JsonSerializable()
+class Model  extends Equatable{
+  final int id;
+  final String name;
+  final String price;
+
+  @override
+  List<Object?> get props => [id,name,];
+
+  factory Model.fromJson(Map<String, dynamic> json) =>_$ModelFromJson(json);
+
+  const Model({
+    required this.id,
+    required this.name,
+    required this.price
+  });
+}
+
+
+@JsonSerializable()
+class Contract extends Equatable{
+
+  final String contractSn;
+  final int contractSignAt;
+  final String vin;
+  final String engine;
+  final String color;
+  final String mileage;
+  final int keyCount;
+  final int compulsoryInsurance;
+  final int compulsoryInsuranceDate;
+  final int commercialInsurance;
+  final int commercialInsuranceDate;
+  final String commercialInsurancePrice;
+
+  const Contract({
+    required this.contractSn,
+    required this.contractSignAt,
+    required this.vin,
+    required this.engine,
+    required this.color,
+    required this.mileage,
+    required this.keyCount,
+    required this.compulsoryInsurance,
+    required this.compulsoryInsuranceDate,
+    required this.commercialInsurance,
+    required this.commercialInsuranceDate,
+    required this.commercialInsurancePrice,
+  });
+
+  @override
+  List<Object?> get props => [contractSn,contractSignAt,vin,engine,color,mileage,keyCount,compulsoryInsurance,compulsoryInsuranceDate,commercialInsurance,commercialInsuranceDate,commercialInsurancePrice,];
+
+  factory Contract.fromJson(Map<String, dynamic> json) =>_$ContractFromJson(json);
+
+
+}
+
+
+@JsonSerializable()
+class Pay extends Equatable{
+  final String saleAmount;
+  final int saleAt;
+  final String paymentAmount;
+  final String paymentProof;
+  final int paymentCreatedAt;
+  @override
+  List<Object?> get props => [saleAmount,saleAt,paymentAmount,paymentProof,paymentCreatedAt,];
+
+  const Pay({
+    required this.saleAmount,
+    required this.saleAt,
+    required this.paymentAmount,
+    required this.paymentProof,
+    required this.paymentCreatedAt,
+  });
+
+  factory Pay.fromJson(Map<String, dynamic> json) =>_$PayFromJson(json);
 }

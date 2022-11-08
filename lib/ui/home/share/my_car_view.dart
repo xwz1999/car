@@ -42,6 +42,7 @@ class _MyCarViewState extends State<MyCarView>
         'maxAge': widget.pickCar.value.maxCarAge,
         'struct': widget.pickCar.value.struct,
         'gearType': widget.pickCar.value.gearType,
+        'fuelType':widget.pickCar.value.fuelType,
         'minMileage': widget.pickCar.value.finalMinMile,
         'maxMileage': widget.pickCar.value.finalMaxMile,
         'dischargeStandard': widget.pickCar.value.dischargeStandard,

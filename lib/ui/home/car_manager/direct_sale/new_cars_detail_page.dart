@@ -120,19 +120,26 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     collect = carInfoModel?.carInfo.collect ?? 0;
 
     for(var item in carInfoModel!.carInfo.carPhotos){
-      carPhotos.add(CarPhotos(photo: item.photo,text: item.text));
-      if(item.photo.isNotEmpty){
+      if(item.photo.isNotEmpty&&item.text.isNotEmpty){
+        carPhotos.add(CarPhotos(photo: item.photo,text: item.text));
+      }
+
+      if(item.photo.isNotEmpty&&item.text.isNotEmpty){
         bannerList.add(item);
       }
     }
 
 
     for(var item in carInfoModel!.carInfo.interiorPhotos){
-      interiorPhotos.add(CarPhotos(photo: item.photo,text: item.text));
+      if(item.photo.isNotEmpty&&item.text.isNotEmpty) {
+        interiorPhotos.add(CarPhotos(photo: item.photo, text: item.text));
+      }
     }
 
     for(var item in carInfoModel!.carInfo.defectPhotos){
-      defectPhotos.add(CarPhotos(photo: item.photo,text: item.text));
+      if(item.photo.isNotEmpty&&item.text.isNotEmpty) {
+        defectPhotos.add(CarPhotos(photo: item.photo, text: item.text));
+      }
     }
 
     for(int i=0;i<carInfoModel!.carInfo.reportPhotos.length;i++){
@@ -140,8 +147,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         if(_reportPhotos[j].name == carInfoModel!.carInfo.reportPhotos[i].text){
           if(carInfoModel!.carInfo.reportPhotos[i].photo!=''){
             _reportPhotos[j].url = carInfoModel!.carInfo.reportPhotos[i].photo;
+          }else{
+            _reportPhotos.removeAt(j);
           }
-
         }
       }
     }

@@ -167,7 +167,7 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
                 _page++;
                 var baseList =
                 await apiClient.requestList(API.split.list, data: {
-                  'status': _currentStatus,
+                  'status': _currentStatus.typeNum,
                   'page': _page,
                   'limit': _limit,
                 });

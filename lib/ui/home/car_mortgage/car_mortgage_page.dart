@@ -9,6 +9,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'choose_time_widget.dart';
 
@@ -105,6 +106,9 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
             keyboardType: TextInputType.number,
             paddingTop: 30.w,
             title: '贷款期限',
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+            ],
             controller: _loanTermController,
             callback: (String content) {},
             canChange: true,
@@ -203,9 +207,9 @@ class _CarMortgagePageState extends State<CarMortgagePage> {
                       rateType: rateType,
                       loanTerm: _finalTerm,
                       loanType: _pickLoanType!,
-                      loanAmount: int.parse(_loanAmountController.text) * 10000,
+                      loanAmount: num.parse(_loanAmountController.text) * 10000,
                       interestRate: NumUtil.divide(
-                          int.parse(_interestRateController.text), 100.0),
+                          num.parse(_interestRateController.text), 100.0),
                     ));
               },
               child: Container(

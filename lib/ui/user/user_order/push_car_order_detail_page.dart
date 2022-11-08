@@ -1,5 +1,6 @@
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 import '../../../../utils/headers.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
-class ConsignmentSignedPage extends StatefulWidget {
+class PushCarOrderDetailPage extends StatefulWidget {
   //final String stat;
 
   final int id;
@@ -21,7 +22,7 @@ class ConsignmentSignedPage extends StatefulWidget {
   final int createdAt;
   final String price;
 
-  const ConsignmentSignedPage(
+  const PushCarOrderDetailPage(
       {super.key,
       //required this.stat,
 
@@ -33,11 +34,11 @@ class ConsignmentSignedPage extends StatefulWidget {
       required this.price});
 
   @override
-  State<ConsignmentSignedPage> createState() => _ConsignmentSignedPageState();
+  State<PushCarOrderDetailPage> createState() => _PushCarOrderDetailPageState();
 }
 
-class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
-  IndividualModel? _individualList;
+class _PushCarOrderDetailPageState extends State<PushCarOrderDetailPage> {
+   IndividualModel? _individualList;
 
   @override
   void initState() {
@@ -70,30 +71,7 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
         body: _individualList == null
             ? const SizedBox.shrink()
             : ListView(children: [
-                16.hb,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32.w),
-                  padding: EdgeInsets.only(top: 32.w),
-                  height: 120.w,
-                  color: Colors.white,
-                  child: ProgressBar(
-                    length: 6,
-                    num: widget.statusNumber.progressNum,
-                    direction: false,
-                    cancel: widget.statusNumber.num != 0,
-                    HW: 96,
-                    texts: [
-                      _text('预定'),
-                      _text('签订'),
-                      _text('上架'),
-                      widget.statusNumber.num == 0
-                          ? _text('交易取消')
-                          : _text('出售'),
-                      _text('到账'),
-                      _text('成交'),
-                    ],
-                  ),
-                ),
+
                 16.hb,
                 Offstage(
                   offstage:
@@ -255,50 +233,38 @@ class _ConsignmentSignedPageState extends State<ConsignmentSignedPage> {
                 16.hb,
                 _getWidget()
               ]),
-        // bottomNavigationBar: SizedBox(
-        //     height: 100.w,
-        //     child: widget.statusNumber.num == 2 ||
-        //             (widget.statusNumber.num == 3 && widget.auditStatus == 3)
-        //         ? Positioned(
-        //             left: 0,
-        //             right: 0,
-        //             bottom: 0,
-        //             child: Container(
-        //                 width: double.infinity,
-        //                 color: kForeGroundColor,
-        //                 padding: EdgeInsets.only(
-        //                     top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
-        //                 child: GestureDetector(
-        //                   onTap: () {
-        //                     Get.to(() => CarPicturePage(
-        //                           isPersonal: true,
-        //                           consignmentContractModel:
-        //                               ConsignmentContractModel(
-        //                                   masterInfo: MasterInfo()),
-        //                           orderId: widget.id,
-        //                         ));
-        //                   },
-        //                   child: Padding(
-        //                     padding: EdgeInsets.only(bottom: 16.w),
-        //                     child: Container(
-        //                         padding: EdgeInsets.only(
-        //                             left: 38.w, top: 16.w, bottom: 16.w),
-        //                         decoration: BoxDecoration(
-        //                             color: const Color(0xFF027AFF),
-        //                             borderRadius: BorderRadius.circular(8.w)),
-        //                         child: Text(
-        //                           widget.statusNumber.num == 2
-        //                               ? '发布车辆'
-        //                               : '重新发布',
-        //                           style: TextStyle(
-        //                               color: kForeGroundColor,
-        //                               fontSize: BaseStyle.fontSize28),
-        //                         )),
-        //                   ),
-        //                 )),
-        //           )
-        //         : const SizedBox())
-    );
+        bottomNavigationBar: SafeArea(
+            //height: 200.w,
+            child: widget.statusNumber.num == 2 ||
+                    (widget.statusNumber.num == 3 && widget.auditStatus == 3)
+                ? Container(
+                    width: double.infinity,
+                    color: kForeGroundColor,
+                    padding: EdgeInsets.only(
+                        top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => NewPushCarPage(individualModel: _individualList,));
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 16.w),
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                left: 38.w, top: 16.w, bottom: 16.w),
+                            decoration: BoxDecoration(
+                                color: const Color(0xFF027AFF),
+                                borderRadius: BorderRadius.circular(8.w)),
+                            child: Text(
+                              widget.statusNumber.num == 2
+                                  ? '发布车辆'
+                                  : '重新发布',
+                              style: TextStyle(
+                                  color: kForeGroundColor,
+                                  fontSize: BaseStyle.fontSize28),
+                            )),
+                      ),
+                    ))
+                : const SizedBox()));
   }
 
   _getWidget() {

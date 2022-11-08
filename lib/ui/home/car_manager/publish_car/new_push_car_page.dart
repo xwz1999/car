@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/model/car/dealer_list_model.dart';
+import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/model/user/store_model.dart';
 import 'package:cloud_car/model/user/storeall_model.dart';
@@ -38,7 +39,9 @@ import '../fill_evainfo_page.dart';
 import 'choose_shop_page.dart';
 
 class NewPushCarPage extends StatefulWidget {
-  const NewPushCarPage({super.key});
+  final IndividualModel? individualModel;
+
+  const NewPushCarPage({super.key, this.individualModel});
 
   @override
   State<NewPushCarPage> createState() => _NewPushCarPageState();
@@ -62,10 +65,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
   final ValueNotifier<NewPublishCarInfo> _publishCarInfo =
   ValueNotifier(NewPublishCarInfo());
 
-
   late CarDistinguishModel? carInfoModel;
-
-
 
 
   final TextEditingController _viNumController = TextEditingController();
@@ -150,6 +150,28 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
     super.initState();
     _publishCarInfo.value.locationCity = '宁波';
     _publishCarInfo.value.locationCityId = 42;
+
+    if(widget.individualModel!=null){
+      _publishCarInfo.value.carSource = 1;
+      _publishCarInfo.value.carName = widget.individualModel!.model.name;
+      _publishCarInfo.value.carModelId = widget.individualModel!.model.id;
+      _publishCarInfo.value.newCarPrice = widget.individualModel!.model.price;
+      _newCarPriceController.text =  widget.individualModel!.model.price;
+      _publishCarInfo.value.licensingDate = DateTime.fromMillisecondsSinceEpoch(widget.individualModel!.car.licensingDate*1000);
+      _viNumController.text =  widget.individualModel!.contract.vin;
+      _engineController.text = widget.individualModel!.contract.engine;
+      _publishCarInfo.value.carColor = widget.individualModel!.contract.color;
+      _mileController.text = (num.parse(widget.individualModel!.contract.mileage)/10000).toString();
+      _publishCarInfo.value.haveCompulsoryInsurance =  widget.individualModel!.contract.compulsoryInsurance;
+      if(widget.individualModel!.contract.compulsoryInsurance!=0){
+        _publishCarInfo.value.compulsoryInsuranceDate = DateTime.fromMillisecondsSinceEpoch(widget.individualModel!.contract.compulsoryInsuranceDate*1000);
+      }
+      _publishCarInfo.value.haveCommercialInsurance =  widget.individualModel!.contract.commercialInsurance;
+      if(widget.individualModel!.contract.commercialInsurance!=0){
+        _publishCarInfo.value.commercialInsuranceDate = DateTime.fromMillisecondsSinceEpoch(widget.individualModel!.contract.commercialInsuranceDate*1000);
+        _publishCarInfo.value.commercialInsurancePrice = widget.individualModel!.contract.commercialInsurancePrice;
+      }
+    }
   }
 
   @override

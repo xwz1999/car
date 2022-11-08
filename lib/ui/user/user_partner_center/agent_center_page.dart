@@ -1,11 +1,18 @@
+import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/ui/user/interface/order_func.dart';
+import 'package:cloud_car/ui/user/user_assessment/assessment_pay_page.dart';
+import 'package:cloud_car/ui/user/user_partner_center/agent_pay_page.dart';
 import 'package:cloud_car/ui/user/user_partner_center/partner_shop_contract_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:cloud_car/widget/webView.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,6 +73,7 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
                     children: [
                       80.hb,
                       Text(UserTool.userProvider.userInfo.nickname,style: TextStyle(fontSize: 36.sp,color: Colors.white),),
+                      20.hb,
                       Row(
                         children: [
                           Text(!widget.isRenew?'合作经纪人':'经纪人，你好',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 36.sp,color: Colors.white),),
@@ -75,11 +83,12 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
                       10.hb,
                       Row(
                         children: [
-                          Text(!widget.isRenew?'成为云云问车经纪人享受豪华特权':'经纪人有效期至',style: TextStyle(fontSize: 24.sp,color: Colors.white),),
+                          Text(!widget.isRenew?'成为云云问车经纪人享受豪华特权':'经纪人有效期至${  DateUtil.formatDateMs(UserTool.userProvider.userInfo.partner.expireDate.toInt() * 1000, format: 'yyyy-MM-dd') }',style: TextStyle(fontSize: 24.sp,color: Colors.white),),
                           Spacer()
                         ],
+
                       ),
-                      80.hb,
+                      60.hb,
                       Row(
                         children: [
                           Text(!widget.isRenew?'待解锁':'已开通',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 32.sp,color: Colors.white),),
@@ -170,8 +179,33 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
       child: Column(children: [
         10.hb,
         CloudBottomButton(
-          onTap: () {
+          onTap: ()async {
             //Get.to(() => const PartnerShopContractPage());
+            if(_getSure){
+              int orderId =
+              await OrderFunc.createOrder(!widget.isRenew?1:2);
+              if(!widget.isRenew){
+                if(orderId!=0){
+                  Get.to(() =>  AgentPayPage(
+                    price: '3000',
+                    orderId: orderId,
+                    title: '开通经纪人',
+                  ));
+                }
+              }else{
+                if(orderId!=0){
+                  Get.to(() =>  AgentPayPage(
+                    price: '1000',
+                    orderId: orderId,
+                    title: '续费经纪人',
+                  ));
+                }
+              }
+            }else{
+              CloudToast.show('请先同意付款服务协议');
+            }
+
+
           },
           text: !widget.isRenew?'确认协议立即开通':'确认协议并续费',
         ),
@@ -208,6 +242,9 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
                           setState(() {
                             //_getSure;
                           });
+
+
+
                           //print(_getSure);
                           //Value = true;
                           //(Value);
@@ -224,27 +261,29 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
                       : const Icon(CupertinoIcons.checkmark_circle,
                       size: 18, color: Colors.blue)),
             ),
-            Row(
-              children: [
-                10.wb,
-                Text(
-                  '我已阅读并了解',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: const Color(0xFFAAAAAA)),
-                ),
-                GestureDetector(
-                  onTap: (() {}),
-                  child: Text(
+            GestureDetector(
+              onTap: (){
+                Get.to(()=>CloudWebView(url: API.web.vipAgreement, title: ''));
+              },
+              child: Row(
+                children: [
+                  10.wb,
+                  Text(
+                    '我已阅读并了解',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.copyWith(color: const Color(0xFFAAAAAA)),
+                  ),
+                  Text(
                     '《付款服务协议》',
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1
                         ?.copyWith(color: const Color(0xFF027AFF)),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
 
           ],

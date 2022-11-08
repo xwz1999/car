@@ -246,7 +246,7 @@ class _ShareCarPageState extends State<ShareCarPage> {
               name: model.modelName,
               time: DateUtil.formatDate(model.licensingDateDT,
                   format: DateFormats.zh_y_mo),
-              distance: model.mileage,
+              distance: '${model.mileage}万公里',
               standard: '国六',
               url: model.mainPhoto,
               price: '${(double.parse(model.price) / 10000)}',

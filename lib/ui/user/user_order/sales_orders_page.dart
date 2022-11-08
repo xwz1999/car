@@ -92,28 +92,18 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
           //backgroundColor: Colors.red,
           extendBodyBehindAppBar: true,
           extendBody: true,
-          body: ColoredBox(
-            color: bodyColor,
-            //padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                    child: TitleDropDownWidget(
-                        _dropDownHeaderItemStrings1, listWidget,
-                        isSearch: false,
-                        height: kToolbarHeight + 30.w,
-                        bottomHeight: 30.w,
-                        headFontSize: 36.sp,
-                        leftWidget: const CloudBackButton(
-                          isSpecial: true,
-                        ),
-                        screenControl: screenControl1,
-                        child: _get(
-                            isClick ? orderName : widget.orderType.typeStr)))
-              ],
-            ),
-          ),
+          body: TitleDropDownWidget(
+              _dropDownHeaderItemStrings1, listWidget,
+              isSearch: false,
+              height: kToolbarHeight + 30.w,
+              bottomHeight: 30.w,
+              headFontSize: 36.sp,
+              leftWidget: const CloudBackButton(
+                isSpecial: true,
+              ),
+              screenControl: screenControl1,
+              child: _get(
+                  isClick ? orderName : widget.orderType.typeStr)),
         ));
   }
 

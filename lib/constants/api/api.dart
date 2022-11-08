@@ -80,6 +80,15 @@ class API {
 
   ///二级分类
   static _UserApi user = _UserApi();
+
+  /// 网页
+  static _Web web = _Web();
+
+}
+
+class _Web{
+  ///vip服务协议
+  String get vipAgreement => 'https://static.yunyunwenche.com/html/vipagreement.html';
 }
 
 class _Task {

@@ -1,5 +1,7 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
+import 'package:cloud_car/widget/car_item_widget.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -12,7 +14,7 @@ class ExaminationPage extends StatefulWidget {
 
 class _ExaminationPageState extends State<ExaminationPage>{
   List<dynamic>? data;
-  // ignore: non_constant_identifier_names
+
   final auditlist = [
     {
       'name': '奥迪A3',
@@ -50,14 +52,11 @@ class _ExaminationPageState extends State<ExaminationPage>{
       extendBody: false,
       extendBodyBehindAppBar: true,
       body: ListView(children: [
-        //引用列表数据
 
         ...auditlist.map(
           (e) => _release(e),
         ),
 
-        //_release(auditlist[0]),
-        //_modify(noauditlist[0])
       ]
           // children: [
           // ],
@@ -75,26 +74,89 @@ class _ExaminationPageState extends State<ExaminationPage>{
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
             color: state == 2
-                ? const Color.fromRGBO(6, 180, 77, 0.1)
-                : const Color.fromRGBO(230, 34, 34, 0.1),
+                ? const Color(0xFF027AFF).withOpacity(0.1)
+                : const Color(0xFF999999).withOpacity(0.1)
           ),
 
           child: Text(
-            state == 2 ? "通过" : '驳回',
+            state == 2 ? "未读" : '已读',
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
                 color: state == 2
-                    ? const Color(0xFF06B44D)
-                    : const Color(0xFFE62222)),
+                    ? const Color(0xFF027AFF)
+                    : const Color(0xFF999999)),
           ),
         )
       ],
     );
   }
 
-//发布审核
+  ///审批提醒 店长身份
   _release(item) {
     return GestureDetector(
       onTap: () {
+        showModalBottomSheet(
+            context: context,
+            isDismissible: true,
+            isScrollControlled: true,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15))),
+            builder: (BuildContext context) {
+              return Container(
+                width: double.infinity,
+                height: 500.w,
+                decoration: BoxDecoration(
+                    color: BaseStyle.colorf6f6f6,
+                    borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                          GestureDetector(
+                            onTap: (){
+                              Get.back();
+                            },
+                            child: Container(padding: EdgeInsets.all(32.w),child: Text('拒绝',style: TextStyle(color: const Color(0xFF999999),fontSize: 28.sp),),),
+                          ),
+                        Expanded(child: Text('车辆确认',textAlign: TextAlign.center,style: TextStyle(color: const Color(0xFF111111),fontSize: 32.sp),),),
+                        GestureDetector(
+                          onTap: (){
+                            Get.back();
+                          },
+                          child: Container(padding: EdgeInsets.all(32.w),child: Text('同意',style: TextStyle(color: const Color(0xFF027AFF),fontSize: 28.sp),),),
+                        ),
+                      ],
+                    ),
+                    Text('客户对你的这辆车有购买意愿，是否同意出售',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp),),
+
+                     Container(
+                       margin: EdgeInsets.all(24.w),
+                       decoration: BoxDecoration(
+                         boxShadow: [
+                           BoxShadow(
+                             offset: Offset(10.w, 17.w),
+                             blurRadius: 10.w,
+                              spreadRadius:-10.w,
+                             color: const Color(0x33027AFF),
+                           )
+                         ],
+                       ),
+                       child: CarItemWidget(
+                        widgetPadding: EdgeInsets.all(24.w),
+                        name: '奥迪A8',
+                        time: '2022-11-04',
+                        distance: '2万公里',
+                        standard: '国六',
+                        url: '',
+                        price: '27.43',
+                    ),
+                     ),
+                  ],
+                ),
+              );
+            });
       },
       child: Container(
         decoration:  BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(8.w)),
@@ -169,6 +231,109 @@ class _ExaminationPageState extends State<ExaminationPage>{
                   ],
                 )
               : const SizedBox(),
+        ]),
+      ),
+    );
+  }
+
+
+  ///审批提醒 经纪人身份和车务身份
+  _release1(item) {
+    return GestureDetector(
+      onTap: () {
+      },
+      child: Container(
+        decoration:  BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(8.w)),
+        margin: EdgeInsets.only(top: 10.w, left: 32.w, right: 32.w),
+        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+        child: Column(children: [
+          Row(
+            children: [
+              Text(
+                item['conditions'] == 2 ? "出售申请" : "发布审核",
+                style: TextStyle(
+                    fontSize: 32.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
+              ),
+              const Spacer(),
+              _isPass(item['conditions'])
+            ],
+          ),
+          24.hb,
+          Row(
+            children: [
+              Text(
+                '车辆名称',
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(102, 102, 102, 1)),
+              ),
+              48.wb,
+              Text(
+                item['name'],
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
+              )
+            ],
+          ),
+          28.hb,
+          Row(
+            children: [
+              Text(
+                '审核状态',
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(102, 102, 102, 1)),
+              ),
+              48.wb,
+              Text(
+                '驳回',
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
+              )
+            ],
+          ),
+          item['conditions'] == 1 ? 28.hb : 0.hb,
+          item['conditions'] == 1
+              ? Row(
+            children: [
+              Text(
+                '驳回原因',
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(102, 102, 102, 1)),
+              ),
+              48.wb,
+              Text(
+                item['text'],
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
+              )
+            ],
+          )
+              : const SizedBox(),
+
+          28.hb,
+          Row(
+            children: [
+              Text(
+                '审核时间',
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(102, 102, 102, 1)),
+              ),
+              48.wb,
+              Text(
+                item['time'],
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color.fromRGBO(51, 51, 51, 1)),
+              )
+            ],
+          ),
         ]),
       ),
     );

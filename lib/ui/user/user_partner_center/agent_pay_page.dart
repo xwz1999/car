@@ -15,19 +15,19 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../widget/button/colud_check_radio.dart';
 
-class AssessmentPayPage extends StatefulWidget {
+class AgentPayPage extends StatefulWidget {
   final String price;
-  final int count;
+  final int orderId;
   final String title;
 
-  const AssessmentPayPage(
-      {super.key, required this.price, required this.count, required this.title});
+  const AgentPayPage(
+      {super.key, required this.price, required this.orderId, required this.title});
 
   @override
-  _AssessmentPayPageState createState() => _AssessmentPayPageState();
+  _AgentPayPageState createState() => _AgentPayPageState();
 }
 
-class _AssessmentPayPageState extends State<AssessmentPayPage> {
+class _AgentPayPageState extends State<AgentPayPage> {
   List<dynamic>? data;
 
   int _selectIndex = 0;
@@ -187,27 +187,22 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
   }
 
   Future _wxPayFunc() async {
-    var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
-      'count': widget.count,
-      'payType': 2,
-    });
+    var base = await apiClient.request(API.user.sign.partnerPay, data: {'orderId': widget.orderId,'payType':2});
     if (base.code == 0) {
-      var wxPayModel = WxPayModel.fromJson(base.data['content']);
+      var wxPayModel = WxPayModel.fromJson(base.data);
       await PayUtil().callWxPay(
         payModel: wxPayModel,
       );
     } else {
       CloudToast.show(base.msg);
+      BotToast.closeAllLoading();
     }
   }
 
   Future _aliPayFunc() async {
-    var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
-      'count': widget.count,
-      'payType': 1,
-    });
+    var base = await apiClient.request(API.user.sign.partnerPay, data: {'orderId': widget.orderId,'payType':1});
     if (base.code == 0) {
-      var re = await PayUtil().callAliPay(base.data['content']);
+      var re = await PayUtil().callAliPay(base.data);
       if (re) {
         _paySuccess();
       } else {
@@ -215,6 +210,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
       }
     } else {
       CloudToast.show(base.msg);
+      BotToast.closeAllLoading();
     }
   }
 
@@ -230,7 +226,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
         bottom: CloudBottomButton(
           onTap: () async {
             await UserTool.userProvider.updateUserInfo();
-            Get.offAll(const TabNavigator());
+            Get.offAll(const TabNavigator(index: 3,));
           },
           text: '返回首页',
         ),

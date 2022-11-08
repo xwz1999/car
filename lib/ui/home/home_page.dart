@@ -222,7 +222,7 @@ class _HomePageState extends State<HomePage>
           case '收车合作':
             Get.to(() => const SplitAccountPage());
             break;
-          case '估价充值':
+          case '车辆收购':
             Get.to(() => const PurchasePushCarPage());
           //Get.to(() => const UserAssessmentPage());
         }
@@ -435,7 +435,9 @@ class _HomePageState extends State<HomePage>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.w),
         ),
-        child: CloudImageNetworkWidget(
+        child: CloudImageNetworkWidget.car(
+          memCacheHeight: 1000,
+          memCacheWidth: 1000,
           urls: [model.path],
         ),
       ),
