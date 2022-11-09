@@ -2,9 +2,11 @@
 
 
 // Package imports:
+import 'dart:io';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
-import 'package:cloud_car/widget/cloud_image_preview.dart';
+import 'package:cloud_car/widget/cloud_image_preview_list.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,11 +39,24 @@ class MultiImagePickWidget extends StatefulWidget {
 
 class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
   List<dynamic> _files = [];
+  List<File> fileLists = [];
+  List<String> stringLists = [];
 
   @override
   void initState() {
     if (widget.photos.isNotEmpty) {
       _files = widget.photos;
+      for(var item in _files){
+        if( item.runtimeType == String){
+          if(item!=null) {
+            stringLists.add(item);
+          }
+        }else{
+          if(item!=null) {
+            fileLists.add(item);
+          }
+        }
+      }
     }
     super.initState();
   }
@@ -172,10 +187,16 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
                 ));
               },
               onTap: () async {
-                if (file.runtimeType == String) {
-                  await CloudImagePreview.toPath(path: file);
+                // if (file.runtimeType == String) {
+                //   await CloudImagePreview.toPath(path: file);
+                // } else {
+                //   await CloudImagePreview.toFile(file: file);
+                // }
+
+                if ( file.runtimeType == String) {
+                  await CloudImagePreviewList.toPath(path: stringLists, index: index);
                 } else {
-                  await CloudImagePreview.toFile(file: file);
+                  await CloudImagePreviewList.toFile(file: fileLists ,index: index);
                 }
               },
               child: Container(

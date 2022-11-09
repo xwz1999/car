@@ -15,7 +15,6 @@ import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../widget/button/cloud_back_button.dart';
-import 'contract_license_page.dart';
 
 class ContractOwnerPage extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
@@ -342,7 +341,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
     String title,
     Widget content,
   ) {
-    return Container(
+    return DecoratedBox(
 
       decoration: BoxDecoration(
           color: Colors.transparent,

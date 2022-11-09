@@ -6,6 +6,7 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -190,7 +191,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        launchUrlString('tel:$servicePhone');
+                        launchUrl(Uri(scheme: 'tel', path: servicePhone));
                       },
                       child: Container(
                           alignment: Alignment.center,

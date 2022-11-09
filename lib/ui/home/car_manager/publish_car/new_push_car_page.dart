@@ -1,22 +1,14 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
-import 'package:cloud_car/model/car/dealer_list_model.dart';
+import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
-import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/model/user/store_model.dart';
-import 'package:cloud_car/model/user/storeall_model.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/choose_purchaser_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
-import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/ui/home/sort/car_three_city_list_page.dart';
-import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
-import 'package:cloud_car/ui/user/user_management/staff_management_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/text_utils.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
-import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:cloud_car/widget/scan_license_widget.dart';
@@ -35,7 +27,6 @@ import '../../../../widget/sort_widget.dart';
 import '../../sort/choose_car_page.dart';
 import '../../sort/search_param_model.dart';
 import '../direct_sale/edit_item_widget.dart';
-import '../fill_evainfo_page.dart';
 import 'choose_shop_page.dart';
 
 class NewPushCarPage extends StatefulWidget {
@@ -228,7 +219,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
 
                   Padding(
                     padding: EdgeInsets.only(top: 0.w),
-                    child: Container(
+                    child: SizedBox(
 
                       width: double.infinity,
 
@@ -477,17 +468,17 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
     );
 
 
-    var purchasePrice = EditItemWidget(
-      title: '采购价格',
-      tips: '请输入', inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
-      controller: _purchasePriceController,
-      canChange: true,
-      callback: (String content) {
-        _publishCarInfo.value.purchasePrice = content;
-      },
-      endText: '万',
-        topIcon: false
-    );
+    // var purchasePrice = EditItemWidget(
+    //   title: '采购价格',
+    //   tips: '请输入', inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
+    //   controller: _purchasePriceController,
+    //   canChange: true,
+    //   callback: (String content) {
+    //     _publishCarInfo.value.purchasePrice = content;
+    //   },
+    //   endText: '万',
+    //     topIcon: false
+    // );
 
     var transferNum = EditItemWidget(
         title: '过户次数',
@@ -991,44 +982,44 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
     );
   }
 
-  _textarea(String title, String hint, String content,
-      TextEditingController contentController, Function(String) callback) {
-    return ColoredBox(
-      color: Colors.transparent,
-      child: Row(
-        children: [
-          '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
-          10.wb,
-          SizedBox(
-            width: 170.w,
-            child: title.text
-                .size(30.sp)
-                .color(Colors.black.withOpacity(0.45))
-                .make(),
-          ),
-          Expanded(
-            child: TextField(
-              textAlign: TextAlign.start,
-              onChanged: callback,
-              autofocus: false,
-              controller: contentController,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.zero,
-                isDense: true,
-                border: InputBorder.none,
-                hintText: hint,
-                hintStyle: const TextStyle(
-                    color: Color(0xFFcccccc),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-              ),
-            ),
-          ),
-          24.wb,
-        ],
-      ),
-    );
-  }
+  // _textarea(String title, String hint, String content,
+  //     TextEditingController contentController, Function(String) callback) {
+  //   return ColoredBox(
+  //     color: Colors.transparent,
+  //     child: Row(
+  //       children: [
+  //         '*'.text.size(30.sp).color(Colors.red).make().paddingOnly(top: 5),
+  //         10.wb,
+  //         SizedBox(
+  //           width: 170.w,
+  //           child: title.text
+  //               .size(30.sp)
+  //               .color(Colors.black.withOpacity(0.45))
+  //               .make(),
+  //         ),
+  //         Expanded(
+  //           child: TextField(
+  //             textAlign: TextAlign.start,
+  //             onChanged: callback,
+  //             autofocus: false,
+  //             controller: contentController,
+  //             decoration: InputDecoration(
+  //               contentPadding: EdgeInsets.zero,
+  //               isDense: true,
+  //               border: InputBorder.none,
+  //               hintText: hint,
+  //               hintStyle: const TextStyle(
+  //                   color: Color(0xFFcccccc),
+  //                   fontSize: 14,
+  //                   fontWeight: FontWeight.w300),
+  //             ),
+  //           ),
+  //         ),
+  //         24.wb,
+  //       ],
+  //     ),
+  //   );
+  // }
 
   bool get canTap {
     if(_publishCarInfo.value.carSource==null){

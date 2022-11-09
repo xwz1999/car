@@ -1,6 +1,6 @@
 import 'package:cloud_car/model/login/wx_login_model.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'apple_login_model.g.dart';
 

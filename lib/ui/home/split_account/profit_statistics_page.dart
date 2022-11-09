@@ -1,20 +1,10 @@
-import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/split_account/profit_statistics_model.dart';
-import 'package:cloud_car/model/split_account/split_account_info_model.dart';
-import 'package:cloud_car/model/split_account/split_account_list_model.dart';
 import 'package:cloud_car/ui/home/split_account/split_func.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/net_work/api_client.dart';
-import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/cloud_avatar_widget.dart';
-import 'package:cloud_car/widget/cloud_bordered_text_field_widget.dart';
-import 'package:cloud_car/widget/cloud_dialog_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -31,15 +21,15 @@ class ProfitStatisticsPage extends StatefulWidget {
 class _ProfitStatisticsPageState extends State<ProfitStatisticsPage> {
 
   bool _onLoad = true;
-  int _currentDateIndex = 0;
+  // int _currentDateIndex = 0;
   // List<DateBillItem> dateBills = [
   //   DateBillItem(bills: [BillItem(createAt: 1666580408, amount: '50000', brokerName: 'cc', name: '卖车', symbol: false),
   //     BillItem(createAt: 1666580408, amount: '50000', brokerName: 'cc', name: '卖车', symbol: false)], date: '2022-12')
   // ];
 
-  int _page = 1;
+  // int _page = 1;
 
-  final int _limit = 10;
+  // final int _limit = 10;
 
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
@@ -78,9 +68,10 @@ class _ProfitStatisticsPageState extends State<ProfitStatisticsPage> {
               firstRefresh: true,
               controller: _easyRefreshController,
               onRefresh: () async {
-                _page = 1;
+                //_page = 1;
                 profitStatisticsModel =
                   await  SplitFunc.getProfit()??ProfitStatisticsModel.init;
+                _onLoad = true;
 
                 setState(() {});
               },

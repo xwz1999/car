@@ -13,7 +13,7 @@ class CloudImagePicker {
       double maxHeight = 1000}) async {
     List<XFile>? files = [];
     files = await ImagePicker().pickMultiImage();
-    if (files == null) {
+    if (files.isNotEmpty) {
       return <File>[];
     } else {
       return files.map((e) => File(e.path)).toList();
@@ -33,7 +33,7 @@ class CloudImagePicker {
         CupertinoDialogAction(
           onPressed: () async {
             await ImagePicker().pickMultiImage().then((value) {
-              if (value != null) {
+              if (value.isNotEmpty ) {
                 Get.back(
                   result: value,
                 );

@@ -1,7 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -238,106 +237,106 @@ class _ExaminationPageState extends State<ExaminationPage>{
 
 
   ///审批提醒 经纪人身份和车务身份
-  _release1(item) {
-    return GestureDetector(
-      onTap: () {
-      },
-      child: Container(
-        decoration:  BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(8.w)),
-        margin: EdgeInsets.only(top: 10.w, left: 32.w, right: 32.w),
-        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
-        child: Column(children: [
-          Row(
-            children: [
-              Text(
-                item['conditions'] == 2 ? "出售申请" : "发布审核",
-                style: TextStyle(
-                    fontSize: 32.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
-              ),
-              const Spacer(),
-              _isPass(item['conditions'])
-            ],
-          ),
-          24.hb,
-          Row(
-            children: [
-              Text(
-                '车辆名称',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(102, 102, 102, 1)),
-              ),
-              48.wb,
-              Text(
-                item['name'],
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
-              )
-            ],
-          ),
-          28.hb,
-          Row(
-            children: [
-              Text(
-                '审核状态',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(102, 102, 102, 1)),
-              ),
-              48.wb,
-              Text(
-                '驳回',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
-              )
-            ],
-          ),
-          item['conditions'] == 1 ? 28.hb : 0.hb,
-          item['conditions'] == 1
-              ? Row(
-            children: [
-              Text(
-                '驳回原因',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(102, 102, 102, 1)),
-              ),
-              48.wb,
-              Text(
-                item['text'],
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
-              )
-            ],
-          )
-              : const SizedBox(),
-
-          28.hb,
-          Row(
-            children: [
-              Text(
-                '审核时间',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(102, 102, 102, 1)),
-              ),
-              48.wb,
-              Text(
-                item['time'],
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
-              )
-            ],
-          ),
-        ]),
-      ),
-    );
-  }
+  // _release1(item) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //     },
+  //     child: Container(
+  //       decoration:  BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(8.w)),
+  //       margin: EdgeInsets.only(top: 10.w, left: 32.w, right: 32.w),
+  //       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+  //       child: Column(children: [
+  //         Row(
+  //           children: [
+  //             Text(
+  //               item['conditions'] == 2 ? "出售申请" : "发布审核",
+  //               style: TextStyle(
+  //                   fontSize: 32.sp,
+  //                   color: const Color.fromRGBO(51, 51, 51, 1)),
+  //             ),
+  //             const Spacer(),
+  //             _isPass(item['conditions'])
+  //           ],
+  //         ),
+  //         24.hb,
+  //         Row(
+  //           children: [
+  //             Text(
+  //               '车辆名称',
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(102, 102, 102, 1)),
+  //             ),
+  //             48.wb,
+  //             Text(
+  //               item['name'],
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(51, 51, 51, 1)),
+  //             )
+  //           ],
+  //         ),
+  //         28.hb,
+  //         Row(
+  //           children: [
+  //             Text(
+  //               '审核状态',
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(102, 102, 102, 1)),
+  //             ),
+  //             48.wb,
+  //             Text(
+  //               '驳回',
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(51, 51, 51, 1)),
+  //             )
+  //           ],
+  //         ),
+  //         item['conditions'] == 1 ? 28.hb : 0.hb,
+  //         item['conditions'] == 1
+  //             ? Row(
+  //           children: [
+  //             Text(
+  //               '驳回原因',
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(102, 102, 102, 1)),
+  //             ),
+  //             48.wb,
+  //             Text(
+  //               item['text'],
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(51, 51, 51, 1)),
+  //             )
+  //           ],
+  //         )
+  //             : const SizedBox(),
+  //
+  //         28.hb,
+  //         Row(
+  //           children: [
+  //             Text(
+  //               '审核时间',
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(102, 102, 102, 1)),
+  //             ),
+  //             48.wb,
+  //             Text(
+  //               item['time'],
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(51, 51, 51, 1)),
+  //             )
+  //           ],
+  //         ),
+  //       ]),
+  //     ),
+  //   );
+  // }
 
 }
 

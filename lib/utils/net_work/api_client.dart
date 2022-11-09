@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:platform/platform.dart';
-import 'package:dio/adapter.dart';
+
 import '../../constants/api/api.dart';
 import '../toast/cloud_toast.dart';
 import 'inner_model/base_list_model.dart';
@@ -35,6 +36,7 @@ class ApiClient {
       client.badCertificateCallback = (cert, host, port) {
         return true;	// 返回true强制通过
       };
+      return null;
     };
 
   }

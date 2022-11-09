@@ -56,7 +56,7 @@ class _CloudBorderedTextFieldWidgetState
         focusNode: _contentFocusNode,
         style: TextStyle(
           textBaseline: TextBaseline.ideographic,
-          fontSize: 30.sp,
+          fontSize: 24.sp,
           color: Colors.black,
         ),
         controller: _editingController,
@@ -67,7 +67,7 @@ class _CloudBorderedTextFieldWidgetState
           hintText: widget.hintText ?? '请输入',
           hintStyle: TextStyle(
             color: const Color(0xFFCCCCCC),
-            fontSize: 30.sp,
+            fontSize: 24.sp,
           ),
           fillColor: Colors.white,
           //

@@ -10,7 +10,7 @@ NewCarInfo _$NewCarInfoFromJson(Map<String, dynamic> json) => NewCarInfo(
       carInfo: CarNewInfo.fromJson(json['carInfo'] as Map<String, dynamic>),
       isSelf: json['isSelf'] as int,
       isSelfStore: json['isSelfStore'] as int,
-      IsSelfBusiness: json['IsSelfBusiness'] as int,
+      isSelfBusiness: json['IsSelfBusiness'] as int,
     );
 
 Map<String, dynamic> _$NewCarInfoToJson(NewCarInfo instance) =>
@@ -18,7 +18,7 @@ Map<String, dynamic> _$NewCarInfoToJson(NewCarInfo instance) =>
       'carInfo': instance.carInfo,
       'isSelf': instance.isSelf,
       'isSelfStore': instance.isSelfStore,
-      'IsSelfBusiness': instance.IsSelfBusiness,
+      'IsSelfBusiness': instance.isSelfBusiness,
     };
 
 CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
@@ -43,7 +43,7 @@ CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
       parkingNo: json['parkingNo'] as int,
       // emissionStandard: json['emissionStandard'] as String,
       useCharacter: json['useCharacter'] as String,
-      Mileage: json['Mileage'] as String,
+      mileage: json['Mileage'] as String,
       newCarGuidePrice: json['newCarGuidePrice'] as String,
       purchaseTax: json['purchaseTax'] as String,
       installationCost: json['installationCost'] as String,
@@ -93,7 +93,7 @@ Map<String, dynamic> _$CarNewInfoToJson(CarNewInfo instance) =>
       'temporaryLicensePlate': instance.temporaryLicensePlate,
       'parkingNo': instance.parkingNo,
       'useCharacter': instance.useCharacter,
-      'Mileage': instance.Mileage,
+      'Mileage': instance.mileage,
       'newCarGuidePrice': instance.newCarGuidePrice,
       'purchaseTax': instance.purchaseTax,
       'installationCost': instance.installationCost,

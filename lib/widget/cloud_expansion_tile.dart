@@ -70,9 +70,7 @@ class CloudExpansionTile extends StatefulWidget {
     this.iconColor,
     this.collapsedIconColor,
     this.controlAffinity,
-  }) : assert(initiallyExpanded != null),
-       assert(maintainState != null),
-       assert(
+  }) : assert(
        expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
        'CrossAxisAlignment.baseline is not supported since the expanded children '
            'are aligned in a column, not a row. Try to use another constant.',
@@ -305,8 +303,9 @@ class _ExpansionTileState extends State<CloudExpansionTile> with SingleTickerPro
     _backgroundColor = _controller.drive(_backgroundColorTween.chain(_easeOutTween));
 
     _isExpanded = PageStorage.of(context)?.readState(context) as bool? ?? widget.initiallyExpanded;
-    if (_isExpanded)
+    if (_isExpanded) {
       _controller.value = 1.0;
+    }
   }
 
   @override
@@ -322,8 +321,9 @@ class _ExpansionTileState extends State<CloudExpansionTile> with SingleTickerPro
         _controller.forward();
       } else {
         _controller.reverse().then<void>((void value) {
-          if (!mounted)
+          if (!mounted) {
             return;
+          }
           setState(() {
             // Rebuild without widget.children.
           });
@@ -353,14 +353,16 @@ class _ExpansionTileState extends State<CloudExpansionTile> with SingleTickerPro
   }
 
   Widget? _buildLeadingIcon(BuildContext context) {
-    if (_effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.leading)
+    if (_effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.leading) {
       return null;
+    }
     return _buildIcon(context);
   }
 
   Widget? _buildTrailingIcon(BuildContext context) {
-    if (_effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing)
+    if (_effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing) {
       return null;
+    }
     return _buildIcon(context);
   }
 
@@ -368,7 +370,7 @@ class _ExpansionTileState extends State<CloudExpansionTile> with SingleTickerPro
     final ExpansionTileThemeData expansionTileTheme = ExpansionTileTheme.of(context);
     final Color borderSideColor = _borderColor.value ?? Colors.transparent;
 
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: _backgroundColor.value ?? expansionTileTheme.backgroundColor ?? Colors.transparent,
         border: Border(

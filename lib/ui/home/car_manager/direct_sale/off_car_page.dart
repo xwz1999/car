@@ -132,9 +132,9 @@ class _OffCarPageState extends State<OffCarPage>
                         deleteListener: () async {
                           Alert.dismiss(context);
                           var cancel = CloudToast.loading;
-                          var imgUrls = <String>[];
+                          //var imgUrls = <String>[];
                           if (_images.isNotEmpty) {
-                            imgUrls = await apiClient.uploadImages(_images);
+                            await apiClient.uploadImages(_images);
                           }
                           var res = await apiClient.request(API.car.offShelf,
                               data: {"carId": widget.carId});

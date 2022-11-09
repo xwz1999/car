@@ -1,7 +1,6 @@
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_license_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_owner_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
@@ -25,7 +24,6 @@ class _ContractPurchaseState extends State<ContractPurchase> {
 
   @override
   void initState() {
-    print(widget.consignmentContractModel.value.evaluationPrice!);
     textEditingController.text =  (double.parse(widget.consignmentContractModel.value.evaluationPrice!)*1.05/10000).toString();
 
     widget.consignmentContractModel.value.sellPrice = (double.parse(widget.consignmentContractModel.value.evaluationPrice!)*1.05 ).toString() ;
@@ -207,7 +205,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
             FilteringTextInputFormatter.allow(RegExp(r'[\d.]+'))
           ],
           titleWidth: 180.w,
-          titleColor: Color(0xFF999999),
+          titleColor: const Color(0xFF999999),
           title: '出售标价',
           endText: '万元',
           controller: textEditingController,

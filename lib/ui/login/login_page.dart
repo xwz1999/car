@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/constants/environment/environment.dart';
 import 'package:cloud_car/model/login/apple_login_model.dart';
 import 'package:cloud_car/model/login/wx_login_model.dart';
 import 'package:cloud_car/providers/app_provider.dart';
-import 'package:cloud_car/ui/login/jverify_error_code.dart';
 import 'package:cloud_car/ui/login/login_bind_page.dart';
 import 'package:cloud_car/ui/login/login_by_sms_page.dart';
 import 'package:cloud_car/ui/splash/privacy_page.dart';
@@ -20,7 +18,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
-
 // import 'package:jverify/jverify.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:provider/provider.dart';
@@ -268,7 +265,7 @@ class _LoginPageState extends State<LoginPage> {
                             AppleIDAuthorizationScopes.fullName,
                           ],
                         );
-                        var cancel = CloudToast.loading;
+                       // var cancel = CloudToast.loading;
                         var res = await apiClient
                             .request(API.login.appleLogin, data: {
                           'authorizationCode': credential.authorizationCode,

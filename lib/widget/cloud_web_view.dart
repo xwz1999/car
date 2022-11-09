@@ -1,7 +1,8 @@
 import 'package:cloud_car/utils/headers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class CloudWebView extends StatefulWidget {
   final String url;
@@ -87,15 +88,17 @@ class _CloudWebViewState extends State<CloudWebView> {
   }
 
 
-  Future<void> _launchInBrowser(String url) async {
-    ///打开webView中的url链接
-    /// 先判断是否可以launch url
-    if (await canLaunch(url)) {
-      /// 如果可以则启动
-      await launch(url);
-    } else {
-      print('${url}无法打开');
-    }
-  }
+  // Future<void> _launchInBrowser(String url) async {
+  //   ///打开webView中的url链接
+  //   /// 先判断是否可以launch url
+  //   if (await canLaunchUrl(Uri(path: url))) {
+  //     /// 如果可以则启动
+  //     await launchUrl(Uri(path: url));
+  //   } else {
+  //     if (kDebugMode) {
+  //       print('$url无法打开');
+  //     }
+  //   }
+  // }
 
 }

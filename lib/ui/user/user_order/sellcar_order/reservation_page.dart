@@ -324,7 +324,6 @@ class _ReservationPageState extends State<ReservationPage> {
                 16.hb,
                 GestureDetector(
                   onTap: ()async{
-                    print(_consignmentInfo.downPayment.proof);
                     await CloudImagePreview.toPath(path: _consignmentInfo.downPayment.proof);
                   },
                   child: Container(

@@ -1,5 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
 part 'profit_statistics_model.g.dart';
 
 
@@ -33,6 +34,7 @@ class Profits  extends Equatable{
   List<Object?> get props => [name,finishAt,profit,];
   factory Profits.fromJson(Map<String, dynamic> json) =>_$ProfitsFromJson(json);
 
+  Map<String, dynamic> toJson() => _$ProfitsToJson(this);
   const Profits({
     required this.name,
     required this.finishAt,

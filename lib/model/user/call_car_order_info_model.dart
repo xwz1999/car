@@ -1,7 +1,7 @@
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'call_car_order_info_model.g.dart';
 

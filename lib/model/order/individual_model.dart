@@ -7,7 +7,7 @@ part 'individual_model.g.dart';
 class IndividualModel extends Equatable {
   final int id;
   final int status;
-  final String StatusName;
+  final String statusName;
   final Model model;
   final Car car;
   final Contract contract;
@@ -15,7 +15,7 @@ class IndividualModel extends Equatable {
   final Pay pay;
 
   @override
-  List<Object?> get props => [id,status,StatusName,model,car,contract,customer,pay,];
+  List<Object?> get props => [id,status,statusName,model,car,contract,customer,pay,];
 
 
 
@@ -27,7 +27,7 @@ class IndividualModel extends Equatable {
   const IndividualModel({
     required this.id,
     required this.status,
-    required this.StatusName,
+    required this.statusName,
     required this.model,
     required this.car,
     required this.contract,
@@ -93,6 +93,7 @@ class Model  extends Equatable{
 
   factory Model.fromJson(Map<String, dynamic> json) =>_$ModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$ModelToJson(this);
   const Model({
     required this.id,
     required this.name,
@@ -139,6 +140,7 @@ class Contract extends Equatable{
   @override
   List<Object?> get props => [contractSn,contractSignAt,vin,engine,color,mileage,keyCount,compulsoryInsurance,compulsoryInsuranceDate,commercialInsurance,commercialInsuranceDate,commercialInsurancePrice,transfer];
 
+  Map<String, dynamic> toJson() => _$ContractToJson(this);
   factory Contract.fromJson(Map<String, dynamic> json) =>_$ContractFromJson(json);
 
 
@@ -163,5 +165,6 @@ class Pay extends Equatable{
     required this.paymentCreatedAt,
   });
 
+  Map<String, dynamic> toJson() => _$PayToJson(this);
   factory Pay.fromJson(Map<String, dynamic> json) =>_$PayFromJson(json);
 }

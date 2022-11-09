@@ -1,8 +1,6 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
-import 'package:cloud_car/ui/user/user_assessment/assessment_pay_page.dart';
 import 'package:cloud_car/ui/user/user_partner_center/agent_pay_page.dart';
-import 'package:cloud_car/ui/user/user_partner_center/partner_shop_contract_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
@@ -11,7 +9,7 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:cloud_car/widget/webView.dart';
+import 'package:cloud_car/widget/cloud_web_view.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -77,14 +75,14 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
                       Row(
                         children: [
                           Text(!widget.isRenew?'合作经纪人':'经纪人，你好',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 36.sp,color: Colors.white),),
-                          Spacer()
+                          const Spacer()
                         ],
                       ),
                       10.hb,
                       Row(
                         children: [
                           Text(!widget.isRenew?'成为云云问车经纪人享受豪华特权':'经纪人有效期至${  DateUtil.formatDateMs(UserTool.userProvider.userInfo.partner.expireDate.toInt() * 1000, format: 'yyyy-MM-dd') }',style: TextStyle(fontSize: 24.sp,color: Colors.white),),
-                          Spacer()
+                          const Spacer()
                         ],
 
                       ),
@@ -92,7 +90,7 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
                       Row(
                         children: [
                           Text(!widget.isRenew?'待解锁':'已开通',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 32.sp,color: Colors.white),),
-                          Spacer()
+                          const Spacer()
                         ],
                       ),
 
@@ -171,7 +169,7 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
   }
 
   _getButton() {
-    return Container(
+    return SizedBox(
       height: 227.w,
       width: 750.w,
       //color: Colors.red,

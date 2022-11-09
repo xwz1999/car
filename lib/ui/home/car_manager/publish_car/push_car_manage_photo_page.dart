@@ -1,14 +1,11 @@
 import 'dart:io';
 
-import 'package:cloud_car/model/car/inner_model/car_manage_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_report_photo_page.dart';
-import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
-import 'package:cloud_car/widget/cloud_image_preview.dart';
 import 'package:cloud_car/widget/cloud_image_preview_list.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
@@ -72,8 +69,6 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
       for(int j=0;j<_carPhotos.length;j++){
         if(_carPhotos[j].name == widget.model.carPhotos![i].text){
           if(widget.model.carPhotos![i].photo!=''){
-            print(j);
-            print(i);
             _carPhotos[j].url = widget.model.carPhotos![i].photo;
           }
 
@@ -87,8 +82,6 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
       for(int j=0;j<_interiorPhotos.length;j++){
         if(_interiorPhotos[j].name == widget.model.interiorPhotos![i].text){
           if(widget.model.interiorPhotos![i].photo!=''){
-            print(j);
-            print(i);
             _interiorPhotos[j].url = widget.model.interiorPhotos![i].photo;
           }
         }
@@ -139,7 +132,6 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
     for (var i = 0; i < _defectPhotos.length; i++) {
       if (_defectPhotos[i].runtimeType != String) {
-        print(_defectPhotos[i]);
         var url = await apiClient.uploadImage(_defectPhotos[i]);
         _defectPhotos.removeAt(i);
         _defectPhotos.insert(i, url);

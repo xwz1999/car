@@ -72,7 +72,7 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
           itemBuilder: (ctx) {
             return [
               PopupMenuItem(
-                value: ['1'],
+                value: const ['1'],
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +87,7 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
                 ],),
               ),
               PopupMenuItem(
-                value: ['2'],
+                value: const ['2'],
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +117,6 @@ class _SplitAccountPageState extends State<SplitAccountPage> {
               )
           ),
           onSelected: (List<String> value)async{
-            print(value[0]);
             if(value[0]=='1'){
               await Get.to(() => const AddSplitAccountPage());
               _easyRefreshController.callRefresh();

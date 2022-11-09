@@ -1,10 +1,11 @@
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/widget/sort_edit_widget.dart';
+import 'package:cloud_car/widget/cloud_bordered_text_field_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../widget/sort_list_widget.dart';
 
@@ -31,6 +32,17 @@ class _SortListPageState extends State<SortListPage> {
   List<ChooseItem> _emission = [];
   List<ChooseItem> _carAge = [];
   List<ChooseItem> _fuel = [];
+
+  TextEditingController editMinPriceController = TextEditingController();
+
+  TextEditingController editMaxPriceController = TextEditingController();
+
+  TextEditingController editMinMileController = TextEditingController();
+
+  TextEditingController editMaxMileController = TextEditingController();
+
+
+
 
   String get _carName {
     return widget.pickCar.value.series.name.isEmpty
@@ -126,6 +138,10 @@ class _SortListPageState extends State<SortListPage> {
   @override
   void dispose() {
     super.dispose();
+    editMinPriceController.dispose();
+    editMaxPriceController.dispose();
+    editMinMileController.dispose();
+    editMaxMileController.dispose();
   }
 
   @override
@@ -197,10 +213,12 @@ class _SortListPageState extends State<SortListPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SortEditWidget(
-                  callback: (String content) {
-                     widget.pickCar.value.editMinPrice = int.parse(content);
-                  },
+                CloudBorderedTextFieldWidget(
+                  controller: editMinPriceController,
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9]"))],
+                  // callback: (String content) {
+                  //    widget.pickCar.value.editMinPrice = int.parse(content);
+                  // },
                 ),
                 5.wb,
                 Container(
@@ -209,10 +227,9 @@ class _SortListPageState extends State<SortListPage> {
                   height: 2.w,
                 ),
                 5.wb,
-                SortEditWidget(
-                  callback: (String content) {
-                     widget.pickCar.value.editMaxPrice = int.parse(content);
-                  },
+                CloudBorderedTextFieldWidget(
+                  controller:editMaxPriceController,
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9]"))],
                 ),
                 10.wb,
                 Text(
@@ -304,10 +321,9 @@ class _SortListPageState extends State<SortListPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SortEditWidget(
-                  callback: (String content) {
-                     widget.pickCar.value.editMinMile = int.parse(content.trim());
-                  },
+                CloudBorderedTextFieldWidget(
+                  controller: editMinMileController,
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9]"))],
                 ),
                 5.wb,
                 Container(
@@ -316,10 +332,9 @@ class _SortListPageState extends State<SortListPage> {
                   height: 2.w,
                 ),
                 5.wb,
-                SortEditWidget(
-                  callback: (String content) {
-                     widget.pickCar.value.editMaxMile = int.parse(content.trim());
-                  },
+                CloudBorderedTextFieldWidget(
+                  controller: editMaxMileController,
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9]"))],
                 ),
                 10.wb,
                 Text(
@@ -373,7 +388,22 @@ class _SortListPageState extends State<SortListPage> {
 
   _confirmBtn() {
     return GestureDetector(
-      onTap: widget.onConfirm,
+      onTap:(){
+        if(editMinPriceController.text.isNotEmpty){
+          widget.pickCar.value.editMinPrice = int.parse(editMinPriceController.text);
+        }
+        if(editMaxPriceController.text.isNotEmpty){
+          widget.pickCar.value.editMaxPrice = int.parse(editMaxPriceController.text);
+        }
+        if(editMinMileController.text.isNotEmpty){
+          widget.pickCar.value.editMinMile = int.parse(editMinMileController.text);
+        }
+        if(editMaxMileController.text.isNotEmpty){
+          widget.pickCar.value.editMaxMile = int.parse(editMaxMileController.text);
+        }
+
+        widget.onConfirm();
+      },
       child: Container(
         width: 300.w,
         padding: EdgeInsets.symmetric(vertical: 16.w),

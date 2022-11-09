@@ -1,6 +1,6 @@
 import 'package:cloud_car/model/user/staff_all_model.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'business_all_model.g.dart';
 

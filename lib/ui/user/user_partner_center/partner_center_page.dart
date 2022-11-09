@@ -10,11 +10,11 @@ import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
-import 'package:cloud_car/widget/webView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/user_tool.dart';
+import '../../../widget/cloud_web_view.dart';
 
 class PartnerCenterPage extends StatefulWidget {
   const PartnerCenterPage({super.key});
@@ -163,10 +163,9 @@ class _PartnerCenterPageState extends State<PartnerCenterPage>
             ),
             GestureDetector(
               onTap: (){
-                print('123123');
                 Get.to(()=>CloudWebView(url: API.web.vipAgreement, title: ''));
               },
-              child: Container(
+              child: ColoredBox(
                 color: Colors.teal,
                 child: Row(
                   children: [

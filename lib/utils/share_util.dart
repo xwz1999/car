@@ -8,9 +8,9 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class ShareUtil {
   ///分享图片
@@ -59,7 +59,6 @@ class ShareUtil {
       {required String title,
       required String imgUrl,
       required List<int> carIds}) async {
-    print(imgUrl);
     var data = await handleImage(imgUrl);
     if (data == null) return;
     var str = carIds.map((e) => e.toString()).join(',');

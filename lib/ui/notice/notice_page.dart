@@ -77,7 +77,7 @@ class _NoticePageState extends State<NoticePage>
                     messageLists[index].type??1,);
               },
               itemCount: messageLists.length, separatorBuilder: (BuildContext context, int index) {
-                return Divider(height: 2.w,thickness: 2.w,color: Color(0xFFf9f9f9),indent: 10.w,endIndent: 10.w,);
+                return Divider(height: 2.w,thickness: 2.w,color: const Color(0xFFf9f9f9),indent: 10.w,endIndent: 10.w,);
             },
             ),
             ),

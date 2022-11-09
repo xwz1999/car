@@ -1,8 +1,6 @@
-import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/text_utils.dart';
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
 class NewCarDetailItem extends StatelessWidget {
@@ -62,7 +60,7 @@ class NewCarDetailItem extends StatelessWidget {
         getContentItem('库存状态', '/'),
 
         getContentItem('使用性质', carInfoModel.carInfo.useCharacter),
-        getContentItem('表显里程', '${carInfoModel.carInfo.Mileage}万公里'),
+        getContentItem('表显里程', '${carInfoModel.carInfo.mileage}万公里'),
 
         getContentItem('出厂日期', carInfoModel.carInfo.modelInfo.marketDate),
         getContentItem('新车指导价', TextUtils.carInfoIsEmpty( TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.newCarGuidePrice)) )),

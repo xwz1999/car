@@ -15,13 +15,12 @@ import 'package:cloud_car/model/car/id_card_info_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/model/car/new_car_statistics_model.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
+import 'package:cloud_car/model/contract/purchase_photo_model.dart';
+import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/user/store_model.dart';
-import 'package:cloud_car/model/user/storeall_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
-import 'package:cloud_car/model/contract/purchase_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
-import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_info_page.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
@@ -422,8 +421,6 @@ class CarFunc {
       "photos":purchasePhotoModel.toJson(),
     };
 
-    print(base);
-
     BaseModel model =
     await apiClient.request(API.contract.addPurchase, data:
       base
@@ -528,8 +525,6 @@ class CarFunc {
       "purchaseInfo":purchaseInfo
     };
 
-  print(base);
-
     BaseModel model = await apiClient.request(API.order.newPushCar, data: base);
     if (model.code == 0) {
       if (model.msg == '操作成功') {
@@ -542,7 +537,6 @@ class CarFunc {
       CloudToast.show(model.msg);
       return false;
     }
-    return false;
   }
 
 

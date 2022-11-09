@@ -2,12 +2,9 @@ import 'dart:io';
 
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
-import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/car_detail_item.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/new_car_detail_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/off_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.dart';
@@ -23,10 +20,8 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
-import 'package:cloud_car/widget/cloud_image_preview.dart';
 import 'package:cloud_car/widget/cloud_image_preview_list.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +29,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'modify_price_page.dart';
 
 class NewCarsDetailPage extends StatefulWidget {
   // final bool isSelf;
@@ -215,9 +209,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
           },
           deleteListener: () {
             Alert.dismiss(context);
-            launch("tel:$phone");
-            //Value = true;
-            //(Value);
+            launchUrl(Uri(scheme: 'tel', path: phone));
           },
         ));
   }
@@ -754,7 +746,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                   (carInfoModel?.carInfo.licensingDate.toInt() ?? 0) * 1000,
                   format: 'yyyy-MM')),
               16.wb,
-              _textview('${carInfoModel?.carInfo.Mileage}万公里'),
+              _textview('${carInfoModel?.carInfo.mileage}万公里'),
               16.wb,
               _textview(
                   carInfoModel?.carInfo.modelInfo.dischargeStandard ?? ""),

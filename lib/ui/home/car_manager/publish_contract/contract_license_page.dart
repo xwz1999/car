@@ -1,6 +1,5 @@
 import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_contract/contact_condition_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/user/user_order/sales_orders_page.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';

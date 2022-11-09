@@ -80,14 +80,12 @@ class _SystemPageState extends State<SystemPage>
 
 //时间
   _time() {
-    return Container(
-      child: Text(
-        '01-12 12:44',
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1
-            ?.copyWith(color: const Color(0xFF999999)),
-      ),
+    return Text(
+      '01-12 12:44',
+      style: Theme.of(context)
+          .textTheme
+          .bodyText1
+          ?.copyWith(color: const Color(0xFF999999)),
     );
   }
 

@@ -10,7 +10,7 @@ IndividualModel _$IndividualModelFromJson(Map<String, dynamic> json) =>
     IndividualModel(
       id: json['id'] as int,
       status: json['status'] as int,
-      StatusName: json['StatusName'] as String,
+          statusName: json['StatusName'] as String,
       model: Model.fromJson(json['model'] as Map<String, dynamic>),
       car: Car.fromJson(json['car'] as Map<String, dynamic>),
       contract: Contract.fromJson(json['contract'] as Map<String, dynamic>),
@@ -22,7 +22,7 @@ Map<String, dynamic> _$IndividualModelToJson(IndividualModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'status': instance.status,
-      'StatusName': instance.StatusName,
+      'StatusName': instance.statusName,
       'model': instance.model,
       'car': instance.car,
       'contract': instance.contract,

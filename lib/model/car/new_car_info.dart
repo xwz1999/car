@@ -1,5 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'new_car_info.g.dart';
 
@@ -10,7 +10,7 @@ class NewCarInfo extends Equatable {
   ///是否是自己的门店
   final int isSelfStore;
   ///是否是经纪人
-  final int IsSelfBusiness;
+  final int isSelfBusiness;
 
   factory NewCarInfo.fromJson(Map<String, dynamic> json) =>
       _$NewCarInfoFromJson(json);
@@ -21,10 +21,10 @@ class NewCarInfo extends Equatable {
     required this.carInfo,
     required this.isSelf,
     required this.isSelfStore,
-    required this.IsSelfBusiness,
+    required this.isSelfBusiness,
   });
   @override
-  List<Object?> get props => [carInfo,isSelf,isSelfStore,IsSelfBusiness];
+  List<Object?> get props => [carInfo,isSelf,isSelfStore,isSelfBusiness];
 }
 
 @JsonSerializable()
@@ -49,7 +49,7 @@ class CarNewInfo extends Equatable {
   final String temporaryLicensePlate;
   final int parkingNo;
   final String useCharacter;
-  final String Mileage;
+  final String mileage;
   final String newCarGuidePrice;
   final String purchaseTax;
   final String installationCost;
@@ -66,7 +66,7 @@ class CarNewInfo extends Equatable {
   final ContractMasterInfo contractMasterInfo;
 
   //final PurchaseInfo purchaseInfo;
-
+  Map<String, dynamic> toJson() => _$CarNewInfoToJson(this);
   factory CarNewInfo.fromJson(Map<String, dynamic> json) =>
       _$CarNewInfoFromJson(json);
 
@@ -91,9 +91,8 @@ class CarNewInfo extends Equatable {
         interiorColor,
         temporaryLicensePlate,
         parkingNo,
-
         useCharacter,
-        Mileage,
+        mileage,
         newCarGuidePrice,
         purchaseTax,
         installationCost,
@@ -131,7 +130,7 @@ class CarNewInfo extends Equatable {
     required this.temporaryLicensePlate,
     required this.parkingNo,
     required this.useCharacter,
-    required this.Mileage,
+    required this.mileage,
     required this.newCarGuidePrice,
     required this.purchaseTax,
     required this.installationCost,
@@ -163,6 +162,7 @@ class ImagePhoto extends Equatable {
         text,
       ];
 
+  Map<String, dynamic> toJson() => _$ImagePhotoToJson(this);
   const ImagePhoto({
     required this.photo,
     required this.text,
@@ -179,6 +179,7 @@ class BrokerInfo extends Equatable {
   factory BrokerInfo.fromJson(Map<String, dynamic> json) =>
       _$BrokerInfoFromJson(json);
 
+  Map<String, dynamic> toJson() => _$BrokerInfoToJson(this);
   const BrokerInfo({
     required this.brokerId,
     required this.brokerNickname,
@@ -245,6 +246,8 @@ class ModelInfo extends Equatable{
     required this.isParallel,
     required this.priceAllowance,
   });
+
+  Map<String, dynamic> toJson() => _$ModelInfoToJson(this);
   @override
   List<Object?> get props => [year,price,liter,dischargeStandard,fuelTypeName,
     enginePower,enginePowerKw,isGreen,modelCode,driveName,driveType,modelStatus,
@@ -259,6 +262,7 @@ class PriceInfo extends Equatable{
   final String salePrice;
   factory PriceInfo.fromJson(Map<String, dynamic> json) =>_$PriceInfoFromJson(json);
 
+  Map<String, dynamic> toJson() => _$PriceInfoToJson(this);
   const PriceInfo({
     required this.purchasePrice,
     required this.salePrice,
@@ -279,6 +283,7 @@ class CertificateInfo extends Equatable{
 
   factory CertificateInfo.fromJson(Map<String, dynamic> json) =>_$CertificateInfoFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CertificateInfoToJson(this);
   const CertificateInfo({
     required this.transfer,
     required this.keyCount,
@@ -303,6 +308,7 @@ class ContractMasterInfo extends Equatable{
   final String bank;
   factory ContractMasterInfo.fromJson(Map<String, dynamic> json) =>_$ContractMasterInfoFromJson(json);
 
+  Map<String, dynamic> toJson() => _$ContractMasterInfoToJson(this);
   const ContractMasterInfo({
     required this.name,
     required this.idCard,

@@ -1,7 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_signed_page.dart';

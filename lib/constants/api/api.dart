@@ -1,7 +1,6 @@
 import '../environment/environment.dart';
 
 part 'car_api.dart';
-
 part 'user_api.dart';
 
 /// * user  用户接口

@@ -1,27 +1,13 @@
-import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/constants/enums.dart';
-import 'package:cloud_car/model/split_account/broker_all_model.dart';
-import 'package:cloud_car/model/split_account/broker_model.dart';
-import 'package:cloud_car/model/split_account/business_all_model.dart';
 import 'package:cloud_car/model/split_account/common_contact_model.dart';
-import 'package:cloud_car/model/user/staff_all_model.dart';
 import 'package:cloud_car/ui/home/split_account/split_car_info_page.dart';
-import 'package:cloud_car/ui/home/split_account/split_func.dart';
-import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_bordered_text_field_widget.dart';
 import 'package:cloud_car/widget/cloud_check_box.dart';
-import 'package:cloud_car/widget/cloud_dialog_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
-import 'package:cloud_car/widget/cloud_search_head_widget.dart';
-import 'package:cloud_car/widget/cloud_tag.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class AddSplitAccountPageNext extends StatefulWidget {
@@ -162,7 +148,6 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
                           'amount': num.parse(value.text),
                         });
                       });
-                      print(brokerData);
                       Get.to(() => SplitCarInfoPage( ownAmount:  double.parse(_amountEditingController.text), brokerAmounts: brokerData,));
 
 
@@ -237,24 +222,24 @@ class _AddSplitAccountPageNextState extends State<AddSplitAccountPageNext> {
   //       });
   // }
 
-  Widget _subButton({required String text, required VoidCallback onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 120.w,
-        height: 60.w,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xFF0593FF), Color(0xFF027AFF)]),
-          borderRadius: BorderRadius.circular(8.w),
-        ),
-        child: text.text.size(28.sp).color(const Color(0xFFFFFFFF)).make(),
-      ),
-    );
-  }
+  // Widget _subButton({required String text, required VoidCallback onTap}) {
+  //   return GestureDetector(
+  //     onTap: onTap,
+  //     child: Container(
+  //       width: 120.w,
+  //       height: 60.w,
+  //       alignment: Alignment.center,
+  //       decoration: BoxDecoration(
+  //         gradient: const LinearGradient(
+  //             begin: Alignment.centerLeft,
+  //             end: Alignment.centerRight,
+  //             colors: [Color(0xFF0593FF), Color(0xFF027AFF)]),
+  //         borderRadius: BorderRadius.circular(8.w),
+  //       ),
+  //       child: text.text.size(28.sp).color(const Color(0xFFFFFFFF)).make(),
+  //     ),
+  //   );
+  // }
 
   /// 初始化折叠组件折叠值
   // void _initOpenValue() {

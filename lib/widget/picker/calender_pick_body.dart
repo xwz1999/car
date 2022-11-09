@@ -117,14 +117,13 @@ class _CalendarHeader extends StatelessWidget {
   final VoidCallback onTodayButtonTap;
 
   const _CalendarHeader({
-    Key? key,
     required this.focusedDay,
     required this.onLeftArrowTap,
     required this.onRightArrowTap,
     required this.onTodayButtonTap,
     required this.onLeft1ArrowTap,
     required this.onRight1ArrowTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

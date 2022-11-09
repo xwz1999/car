@@ -1,5 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'new_car_statistics_model.g.dart';
 
@@ -56,6 +56,7 @@ class BusinessCount extends Equatable{
     required this.backOutCount,
   });
 
+  Map<String, dynamic> toJson() => _$BusinessCountToJson(this);
   static BusinessCount get init => const  BusinessCount(
     sellCount: 0,
     reserveCount: 0,
@@ -79,6 +80,8 @@ class StoreCount extends Equatable{
     soldCount,
     backOutCount,
   ];
+
+  Map<String, dynamic> toJson() => _$StoreCountToJson(this);
   const StoreCount({
     required this.sellCount,
     required this.reserveCount,
@@ -108,6 +111,8 @@ class OwnCount extends Equatable{
     soldCount,
     backOutCount,
   ];
+
+  Map<String, dynamic> toJson() => _$OwnCountToJson(this);
   const OwnCount({
     required this.sellCount,
     required this.reserveCount,

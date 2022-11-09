@@ -5,7 +5,6 @@ import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/car/id_card_info_model.dart';
 import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/choose_customer_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_license_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_purchase_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -421,7 +420,7 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
       String title,
       Widget content,
       ) {
-    return Container(
+    return DecoratedBox(
 
       decoration: BoxDecoration(
           color: Colors.transparent,

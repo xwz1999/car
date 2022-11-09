@@ -3,7 +3,6 @@ import 'package:cloud_car/ui/user/interface/manuals_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flustars/flustars.dart';
-
 import 'package:flutter/material.dart';
 
 class HandbookInfoPage extends StatefulWidget {

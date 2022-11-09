@@ -1,10 +1,10 @@
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/model/order/sale_info.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/model/order/order_dealer_model.dart';
 import 'package:cloud_car/model/order/order_statistics_model.dart';
 import 'package:cloud_car/model/order/ordercount_model.dart';
 import 'package:cloud_car/model/order/publish_car_model.dart';
+import 'package:cloud_car/model/order/sale_info.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/model/user/salelists_model.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';

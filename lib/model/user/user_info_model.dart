@@ -115,6 +115,7 @@ class Partner extends Equatable{
     required this.expireDate,
   });
 
+  Map<String, dynamic> toJson() => _$PartnerToJson(this);
   factory Partner.fromJson(Map<String, dynamic> json) =>_$PartnerFromJson(json);
 
 

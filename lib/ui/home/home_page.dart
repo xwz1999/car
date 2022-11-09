@@ -12,10 +12,8 @@ import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/split_account/split_account_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
-import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/share_util.dart';
-import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
@@ -27,10 +25,8 @@ import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 import 'car_manager/car_manager_page.dart';
-
 import 'car_manager/maintain_query/maintain_query_page.dart';
 import 'car_manager/publish_car/push_car_page.dart';
-import 'car_valuation/car_valuation_page.dart';
 import 'func/car_func.dart';
 import 'home_title.dart';
 

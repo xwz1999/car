@@ -2,7 +2,6 @@ import 'package:cloud_car/model/user/handbook_model.dart';
 import 'package:cloud_car/ui/user/interface/manuals_func.dart';
 import 'package:cloud_car/ui/user/product_manuals/product_manuals_info_page.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -82,66 +81,66 @@ class _ProductManualsState extends State<ProductManuals> {
     );
   }
 
-  _search() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        32.wb,
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(36.w),
-              border: Border.all(width: 2.w, color: const Color(0xFFE7E7E7))),
-          width: 606.w,
-          height: 72.w,
-          child: TextField(
-            keyboardType: TextInputType.text,
-            onTap: () {},
-            style: TextStyle(
-              textBaseline: TextBaseline.ideographic,
-              fontSize: 32.sp,
-              color: Colors.black,
-            ),
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 20.w, bottom: 10.w),
-              filled: true,
-              fillColor: Colors.white,
-              hintText: "请输入员工名称",
-              hintStyle: TextStyle(
-                  color: Colors.grey.shade500,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              prefixIcon: const Icon(
-                CupertinoIcons.search,
-                size: 16,
-              ),
-              enabledBorder: UnderlineInputBorder(
-                //
-                // 不是焦点的时候颜色
-                borderRadius: BorderRadius.circular(36.w),
-                borderSide: const BorderSide(
-                  color: kForeGroundColor,
-                ),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                // 焦点集中的时候颜色
-                borderRadius: BorderRadius.circular(36.w),
-                borderSide: const BorderSide(color: kForeGroundColor),
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(36.w),
-                  borderSide: const BorderSide(color: kForeGroundColor)),
-            ),
-          ),
-        ),
-        12.wb,
-        GestureDetector(
-          onTap: () {},
-          child: Text('取消', style: Theme.of(context).textTheme.bodyText2),
-        ),
-        20.wb,
-      ],
-    );
-  }
+  // _search() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.start,
+  //     children: [
+  //       32.wb,
+  //       Container(
+  //         decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(36.w),
+  //             border: Border.all(width: 2.w, color: const Color(0xFFE7E7E7))),
+  //         width: 606.w,
+  //         height: 72.w,
+  //         child: TextField(
+  //           keyboardType: TextInputType.text,
+  //           onTap: () {},
+  //           style: TextStyle(
+  //             textBaseline: TextBaseline.ideographic,
+  //             fontSize: 32.sp,
+  //             color: Colors.black,
+  //           ),
+  //           decoration: InputDecoration(
+  //             contentPadding: EdgeInsets.only(left: 20.w, bottom: 10.w),
+  //             filled: true,
+  //             fillColor: Colors.white,
+  //             hintText: "请输入员工名称",
+  //             hintStyle: TextStyle(
+  //                 color: Colors.grey.shade500,
+  //                 fontSize: 14,
+  //                 fontWeight: FontWeight.w300),
+  //             prefixIcon: const Icon(
+  //               CupertinoIcons.search,
+  //               size: 16,
+  //             ),
+  //             enabledBorder: UnderlineInputBorder(
+  //               //
+  //               // 不是焦点的时候颜色
+  //               borderRadius: BorderRadius.circular(36.w),
+  //               borderSide: const BorderSide(
+  //                 color: kForeGroundColor,
+  //               ),
+  //             ),
+  //             focusedBorder: UnderlineInputBorder(
+  //               // 焦点集中的时候颜色
+  //               borderRadius: BorderRadius.circular(36.w),
+  //               borderSide: const BorderSide(color: kForeGroundColor),
+  //             ),
+  //             border: OutlineInputBorder(
+  //                 borderRadius: BorderRadius.circular(36.w),
+  //                 borderSide: const BorderSide(color: kForeGroundColor)),
+  //           ),
+  //         ),
+  //       ),
+  //       12.wb,
+  //       GestureDetector(
+  //         onTap: () {},
+  //         child: Text('取消', style: Theme.of(context).textTheme.bodyText2),
+  //       ),
+  //       20.wb,
+  //     ],
+  //   );
+  // }
 
   getList(HandbookModel model) {
     return Column(

@@ -1,15 +1,9 @@
-import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/model/car/consignment_contact_model.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/model/user/lists_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/pcar_picture_page.dart';
 import 'package:cloud_car/ui/user/interface/order_func.dart';
 import 'package:cloud_car/ui/user/user_order/push_car_order_detail_page.dart';
-import 'package:cloud_car/ui/user/user_order/status.dart';
-import 'package:cloud_car/ui/user/user_order/user_consignment_order/consignment_signed_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
@@ -18,8 +12,6 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-
-import '../../../../widget/car_widget.dart';
 
 class PushCarOrderWidget extends StatefulWidget {
   final Function callBack;
@@ -35,8 +27,8 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
   final List<ChooseItem> _sortList = [];
   List<ListsModel> _consignmentList = [];
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
-  int _page = 1;
-  final int _size = 10;
+  // int _page = 1;
+  // final int _size = 10;
   bool _onLoad = true;
 
 
@@ -108,7 +100,7 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
               footer: MaterialFooter(),
               controller: _easyRefreshController,
               onRefresh: () async {
-                _page = 1;
+                //_page = 1;
                 _consignmentList = await OrderFunc.getPushCarLists(data: _params);
                 _onLoad = false;
                 setState(() {});

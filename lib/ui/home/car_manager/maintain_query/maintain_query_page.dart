@@ -1,4 +1,3 @@
-import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/maintain_query/maintain_query_history_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
@@ -14,7 +13,6 @@ class MaintainQueryPage extends StatefulWidget {
 }
 
 class _MaintainQueryPageState extends State<MaintainQueryPage> {
-  CarDistinguishModel? _carInfoModel;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +126,6 @@ class _MaintainQueryPageState extends State<MaintainQueryPage> {
               child: Column(
                 children: [
                   ScanLicenseWidget(onLoadComplete: (carInfoModel) {
-                    _carInfoModel = carInfoModel;
                     setState(() {});
                   }),
                   32.hb,

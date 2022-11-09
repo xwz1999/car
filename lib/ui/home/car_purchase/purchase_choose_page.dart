@@ -1,9 +1,6 @@
-import 'package:cloud_car/model/car/consignment_contact_model.dart';
+import 'package:cloud_car/model/contract/purchase_photo_model.dart';
 import 'package:cloud_car/model/customer/customer_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/choose_customer_page.dart';
-import 'package:cloud_car/model/contract/purchase_photo_model.dart';
-import 'package:cloud_car/model/contract/report_photo_model.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_purchase_page.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_info_page.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_push_car_page.dart';
 import 'package:cloud_car/utils/headers.dart';

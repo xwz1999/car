@@ -1,22 +1,17 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/model/car/inner_model/car_manage_photo_model.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/publish_finish_page.dart';
 import 'package:cloud_car/model/contract/purchase_photo_model.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/publish_finish_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_report_photo_page.dart';
-import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_info_page.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_push_car_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
-import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
-import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
