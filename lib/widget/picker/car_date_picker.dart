@@ -48,14 +48,14 @@ class CarDatePicker {
 
 class _CarDatePicker extends StatefulWidget {
   final DateTime date;
-  final bool use24H;
+  // final bool use24H;
   final DateTime? max;
   final DateTime? min;
   final CupertinoDatePickerMode? mode;
 
   const _CarDatePicker({
     required this.date,
-    this.use24H = false,
+    // this.use24H = false,
     this.max,
     this.min,
     this.mode,
@@ -79,7 +79,7 @@ class __CarDatePickerState extends State<_CarDatePicker> {
     return CarPickerBox(
       onPressed: () => Get.back(result: _date),
       child: CupertinoDatePicker(
-        use24hFormat: widget.use24H,
+        use24hFormat: false,
         maximumDate: widget.max,
         minimumDate: widget.min,
         initialDateTime: _date,

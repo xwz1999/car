@@ -22,7 +22,7 @@ List<StaffAllModel> employees = [];
 class _ChoosePurchaserPageState extends State<ChoosePurchaserPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
-  Map _params = {};
+  // Map _params = {};
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _ChoosePurchaserPageState extends State<ChoosePurchaserPage> {
         children: [
           8.hb,
           CloudSearchHeadWidget(onSearch: (text) {
-            _params = {'name': text};
+            //_params = {'name': text};
             _easyRefreshController.callRefresh();
           }),
           32.hb,

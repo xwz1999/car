@@ -7,7 +7,7 @@ typedef TextCallback = Function(String content);
 class EditItemWidget extends StatefulWidget {
   final bool topIcon;
   final String title;
-  @Deprecated('not good,replace it')
+  // @Deprecated('not good,replace it')
   final String? value;
   final bool canChange;
   final Color? textColor;
