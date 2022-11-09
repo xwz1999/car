@@ -201,7 +201,7 @@ class CarFunc {
       'color': carModel.color,
       'licensingDate': DateUtil.formatDate(carModel.licensingDate,
           format: DateFormats.y_mo_d),
-      'mileage': carModel.mileage,
+      'mileage': (num.parse(carModel.mileage!)*10000).toString(),
     });
     if (model.code == 0) {
       UserTool.userProvider.updateUserInfo();
@@ -221,7 +221,7 @@ class CarFunc {
       'color': carInfo.color,
       'licensingDate': DateUtil.formatDate(carInfo.licensingDate,
           format: DateFormats.y_mo_d),
-      'Mileage': carInfo.mileage,
+      'Mileage': (num.parse(carInfo.mileage!)*10000).toString(),
       'Transfer': carInfo.transfer,
       'Paint': carInfo.paint,
       'Plate': carInfo.plate,
@@ -393,7 +393,7 @@ class CarFunc {
       "useCharacter":purchaseCarInfo.carNatureOfUseEM.typeStr,
 
       "marketDate":purchaseCarInfo.productionDateStr==''?null:purchaseCarInfo.productionDateStr,
-      "mileage": purchaseCarInfo.mileage!=null? num.parse('${purchaseCarInfo.mileage!}0000'):null,
+      "mileage": purchaseCarInfo.mileage!=null? num.parse(purchaseCarInfo.mileage!)*10000:null,
       "compulsoryInsuranceDate":purchaseCarInfo.compulsoryInsuranceDateStr==''?null:purchaseCarInfo.compulsoryInsuranceDateStr,
       "condition":purchaseInfo.remark,
     };

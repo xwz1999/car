@@ -6,6 +6,7 @@ import 'package:cloud_car/ui/user/user_management/add_employee_page.dart';
 import 'package:cloud_car/ui/user/user_management/add_stores_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:cloud_car/widget/cloud_expansion_tile.dart';
 import 'package:cloud_car/widget/cloud_search_head_widget.dart';
 import 'package:cloud_car/widget/cloud_status_tag.dart';
 import 'package:cloud_car/widget/cloud_tag.dart';
@@ -30,7 +31,7 @@ List<StoreallModel> employees = [];
 
 class _StaffManagementPageState extends State<StaffManagementPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
-
+  StoreallModel storeallModel = StoreallModel.empty();
   Map _params = {};
 
   @override
@@ -88,36 +89,96 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
           32.hb,
           Expanded(
               child: EasyRefresh(
-            firstRefresh: true,
-            header: MaterialHeader(),
-            footer: MaterialFooter(),
-            controller: _easyRefreshController,
-            onRefresh: () async {
-              employees = await BusinessFunc.getStoreall(_params);
-              setState(() {});
-            },
-            child: employees.isEmpty
-                ? const NoDataWidget(
-                    text: '暂无客户信息',
-                    paddingTop: 0,
-                  )
-                :
-            ListView.builder(
-                    itemBuilder: (context, index) {
-                      return _getList(employees[index]);
-                    },
-                    itemCount: employees.length,
-                  ),
-          )),
+                  firstRefresh: true,
+                  header: MaterialHeader(),
+                  footer: MaterialFooter(),
+                  controller: _easyRefreshController,
+                  onRefresh: () async {
+                    employees = await BusinessFunc.getStoreall(_params);
+                    for (var item in employees) {
+                      if (item.id == 0) {
+                        storeallModel = item;
+                      }
+                    }
+
+                    setState(() {});
+                  },
+                  child: employees.isEmpty
+                      ? const NoDataWidget(
+                          text: '暂无客户信息',
+                          paddingTop: 0,
+                        )
+                      : CloudExpansionTile(
+                          backgroundColor:
+                              const Color(0xFF027AFF).withOpacity(0.1),
+                          collapsedBackgroundColor:
+                              const Color(0xFF333333).withOpacity(0.1),
+                          visualDensity: VisualDensity(vertical: -3.w),
+                          title: Row(
+                            children: [
+                              Text('入驻商',
+                                  style: TextStyle(
+                                      fontSize: BaseStyle.fontSize32,
+                                      color: const Color(0xFF027AFF))),
+                              24.wb,
+                              Padding(
+                                padding: EdgeInsets.only(top: 10.w),
+                                child: Text((storeallModel.staffs != null ? storeallModel.staffs!.length : 0).toString(),
+                                    style: TextStyle(
+                                        fontSize: BaseStyle.fontSize28,
+                                        color: const Color.fromRGBO(2, 122, 255, 0.8))),
+                              )
+                            ],
+                          ),
+                          children: [
+                            ...storeallModel.staffs != null
+                                ? storeallModel.staffs!.mapIndexed((e, index) {
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        await Get.to(() => EmployeeDetailsPage(
+                                              staffId: e.id,
+                                            ));
+                                        _easyRefreshController.callRefresh();
+                                      },
+                                      child: getText(
+                                          e.roleName,
+                                          e.genderEM.typeNum,
+                                          e.name,
+                                          e.phone,
+                                          e.auditStatus,
+                                          e.roleEm),
+                                    );
+                                  }).toList()
+                                : [],
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return _getList(employees[index]);
+                              },
+                              itemCount: employees.length,
+                            ),
+                          ],
+                        )
+
+                  // ListView.builder(
+                  //         itemBuilder: (context, index) {
+                  //           return _getList(employees[index]);
+                  //         },
+                  //         itemCount: employees.length,
+                  //       ),
+                  )),
           Row(
             children: [
-              Expanded(child:    CloudBottomButton(
-                onTap: () async {
-                  await Get.to(() => const AddStoresPage());
-                  _easyRefreshController.callRefresh();
-                },
-                text: '新增门店',
-              ),),
+              Expanded(
+                child: CloudBottomButton(
+                  onTap: () async {
+                    await Get.to(() => const AddStoresPage());
+                    _easyRefreshController.callRefresh();
+                  },
+                  text: '新增门店',
+                ),
+              ),
               Expanded(
                 child: CloudBottomButton(
                   onTap: () async {
@@ -127,7 +188,6 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                   text: '新建员工',
                 ),
               ),
-
             ],
           ),
           50.hb,
@@ -137,9 +197,12 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
   }
 
   _getList(StoreallModel model) {
-    return ExpansionTile(
+    return CloudExpansionTile(
       backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
       collapsedBackgroundColor: const Color(0xFF333333).withOpacity(0.1),
+      visualDensity: VisualDensity(vertical: -3.w),
+
+      tilePadding: EdgeInsets.only(left: 60.w, right: 40.w),
       title: Row(
         children: [
           Text(model.name,
@@ -147,10 +210,13 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                   fontSize: BaseStyle.fontSize32,
                   color: const Color(0xFF027AFF))),
           24.wb,
-          Text((model.staffs != null ? model.staffs!.length : 0).toString(),
-              style: TextStyle(
-                  fontSize: BaseStyle.fontSize28,
-                  color: const Color.fromRGBO(2, 122, 255, 0.8)))
+          Padding(
+            padding: EdgeInsets.only(top: 10.w),
+            child: Text((model.staffs != null ? model.staffs!.length : 0).toString(),
+                style: TextStyle(
+                    fontSize: BaseStyle.fontSize28,
+                    color: const Color.fromRGBO(2, 122, 255, 0.8))),
+          )
         ],
       ),
       children: [
@@ -172,92 +238,91 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
     );
   }
 
-getText(String position, int gender, String name, String phone, int judge,Role role) {
-  return Container(
-    color: Colors.white,
-    height: 94.w,
-    padding: EdgeInsets.symmetric(horizontal: 64.w, vertical: 18.w),
-    child: Row(
-      children: [
-        Text(
-          position,
-          style: TextStyle(
-              fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
-        ),
-        16.wb,
-        SizedBox(
-          width: 32.w,
-          height: 32.w,
-          child: Image.asset(
-            gender==2
-                ? Assets.icons.icUserWoman.path
-                : Assets.icons.icUser.path,
-            fit: BoxFit.fill,
+  getText(String position, int gender, String name, String phone, int judge,
+      Role role) {
+    return Container(
+      color: Colors.white,
+      height: 94.w,
+      padding: EdgeInsets.symmetric(horizontal: 64.w, vertical: 18.w),
+      child: Row(
+        children: [
+          Text(
+            position,
+            style: TextStyle(
+                fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
           ),
-        ),
-        16.wb,
-        Text(
-          name,
-          style: TextStyle(
-              fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
-        ),
-        16.wb,
-        Text(
-          phone,
-          style: TextStyle(
-              fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
-        ),
-        24.wb,
-        if (role == Role.manager) CloudTag.blue(text: '店长'),
-        //if (model.roleEM == Role.defaultRole) CloudTag.blue(text: '店长'),
-        SizedBox(
-            child: judge == 1
-                ? const CloudStatusTag(text: '待审核')
-                : const SizedBox())
-      ],
-    ),
-  );
-}
+          16.wb,
+          SizedBox(
+            width: 32.w,
+            height: 32.w,
+            child: Image.asset(
+              gender == 2
+                  ? Assets.icons.icUserWoman.path
+                  : Assets.icons.icUser.path,
+              fit: BoxFit.fill,
+            ),
+          ),
+          16.wb,
+          Text(
+            name,
+            style: TextStyle(
+                fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
+          ),
+          16.wb,
+          Text(
+            phone,
+            style: TextStyle(
+                fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
+          ),
+          24.wb,
+          if (role == Role.manager) CloudTag.blue(text: '店长'),
+          //if (model.roleEM == Role.defaultRole) CloudTag.blue(text: '店长'),
+          SizedBox(
+              child: judge == 1
+                  ? const CloudStatusTag(text: '待审核')
+                  : const SizedBox())
+        ],
+      ),
+    );
+  }
 
-
-
-  // getText(StaffAllModel model) {
-  //   return Container(
-  //     color: Colors.white,
-  //     height: 94.w,
-  //     padding: EdgeInsets.symmetric(horizontal: 64.w, vertical: 18.w),
-  //     child: Row(
-  //       children: [
-  //         SizedBox(
-  //           width: 32.w,
-  //           height: 32.w,
-  //           child: Image.asset(
-  //             model.genderEM == Gender.female
-  //                 ? Assets.icons.icUserWoman.path
-  //                 : Assets.icons.icUser.path,
-  //             fit: BoxFit.fill,
-  //           ),
-  //         ),
-  //         16.wb,
-  //         Text(
-  //           model.name,
-  //           style: TextStyle(
-  //               fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
-  //         ),
-  //         16.wb,
-  //         Text(
-  //           model.phone,
-  //           style: TextStyle(
-  //               fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
-  //         ),
-  //         24.wb,
-  //         if (model.roleEM == Role.defaultRole) CloudTag.blue(text: '店长'),
-  //         SizedBox(
-  //             child: model.auditStatus == 1
-  //                 ? const CloudStatusTag(text: '待审核')
-  //                 : const SizedBox())
-  //       ],
-  //     ),
-  //   );
-  // }
+// getText(StaffAllModel model) {
+//   return Container(
+//     color: Colors.white,
+//     height: 94.w,
+//     padding: EdgeInsets.symmetric(horizontal: 64.w, vertical: 18.w),
+//     child: Row(
+//       children: [
+//         SizedBox(
+//           width: 32.w,
+//           height: 32.w,
+//           child: Image.asset(
+//             model.genderEM == Gender.female
+//                 ? Assets.icons.icUserWoman.path
+//                 : Assets.icons.icUser.path,
+//             fit: BoxFit.fill,
+//           ),
+//         ),
+//         16.wb,
+//         Text(
+//           model.name,
+//           style: TextStyle(
+//               fontSize: BaseStyle.fontSize28, color: BaseStyle.color333333),
+//         ),
+//         16.wb,
+//         Text(
+//           model.phone,
+//           style: TextStyle(
+//               fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
+//         ),
+//         24.wb,
+//         if (model.roleEM == Role.defaultRole) CloudTag.blue(text: '店长'),
+//         SizedBox(
+//             child: model.auditStatus == 1
+//                 ? const CloudStatusTag(text: '待审核')
+//                 : const SizedBox())
+//       ],
+//     ),
+//   );
+// }
 }

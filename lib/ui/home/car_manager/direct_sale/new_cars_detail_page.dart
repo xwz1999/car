@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_info_model.dart';
@@ -22,6 +24,7 @@ import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_image_preview.dart';
+import 'package:cloud_car/widget/cloud_image_preview_list.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
@@ -493,18 +496,35 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             //子组件宽高长度比例
             childAspectRatio: 100/100),
         itemBuilder: (BuildContext context, int iIndex) {
-          return _buildGrid(list[iIndex],iIndex);
+          return _buildGrid(list[iIndex],iIndex,list);
         });
   }
 
-  Widget _buildGrid(PushImgModel model,int index) {
+  Widget _buildGrid(PushImgModel model,int index,List<PushImgModel> list) {
+
+    List<File> fileLists = [];
+    List<String> stringLists = [];
+    for(var item in list){
+      if( model.url.runtimeType == String){
+        stringLists.add(item.url);
+      }else{
+        if(item.url!=null) {
+          fileLists.add(item.url);
+        }
+      }
+    }
+
+
+
     return GestureDetector(
       onTap: () async {
         if(model.url!=null){
           if ( model.url.runtimeType == String) {
-            await CloudImagePreview.toPath(path: model.url);
+            //await CloudImagePreview.toPath(path: model.url);
+            await CloudImagePreviewList.toPath(path: stringLists, index: index);
           } else {
-            await CloudImagePreview.toFile(file: model.url);
+            //await CloudImagePreview.toFile(file: model.url);
+            await CloudImagePreviewList.toFile(file: fileLists ,index: index);
           }
         }
       },
@@ -897,7 +917,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                   children: [
                     Padding(padding: EdgeInsets.symmetric(horizontal: 68.w)),
                     Text(
-                      '-',
+                      carInfoModel!.carInfo.parkingNo.toString(),
                       style: Theme
                           .of(context)
                           .textTheme

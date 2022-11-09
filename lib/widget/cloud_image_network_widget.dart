@@ -29,7 +29,6 @@ class CloudImageNetworkWidget extends StatelessWidget {
     } else if (urls!.isEmpty) {
       return '';
     } else {
-      print(urls!.first.imageWithHost);
       return urls!.first.imageWithHost;
     }
 

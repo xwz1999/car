@@ -21,30 +21,29 @@ class BusinessFunc {
   //   return (res.data as List).map((e) => StaffAllModel.fromJson(e)).toList();
   // }
 
-
   static Future<List<StoreallModel>> getStoreall(Map params) async {
     var res =
-        await apiClient.request(API.storeManagement.storeAll,data: params);
+        await apiClient.request(API.storeManagement.storeAll, data: params);
 
-    if (res.data==null) return [];
+    if (res.data == null) return [];
     return (res.data as List).map((e) => StoreallModel.fromJson(e)).toList();
   }
 
   ///全部入驻商
   static Future<List<BusinessAllModel>> getBusinessAll(Map params) async {
     var res =
-    await apiClient.request(API.storeManagement.businessAll, data: params);
+        await apiClient.request(API.storeManagement.businessAll, data: params);
 
-    if (res.data==null) return [];
+    if (res.data == null) return [];
     return (res.data as List).map((e) => BusinessAllModel.fromJson(e)).toList();
   }
 
   ///全部入驻商员工
   static Future<List<BusinessAllModel>> getBusinessStaffAll(Map params) async {
-    var res =
-    await apiClient.request(API.storeManagement.businessStaffAll, data: params);
+    var res = await apiClient.request(API.storeManagement.businessStaffAll,
+        data: params);
 
-    if (res.data==null) return [];
+    if (res.data == null) return [];
     return (res.data as List).map((e) => BusinessAllModel.fromJson(e)).toList();
   }
 
@@ -58,11 +57,11 @@ class BusinessFunc {
   // }
 
   static Future<BrokerModel?> searchBrokerAll(Map params) async {
-    var res =
-    await apiClient.request(API.user.searchBroker, data: params,showMessage: true);
+    var res = await apiClient.request(API.user.searchBroker,
+        data: params, showMessage: true);
 
-    if (res.data==null) return null;
-    return  BrokerModel.fromJson(res.data);
+    if (res.data == null) return null;
+    return BrokerModel.fromJson(res.data);
   }
 
   ///全部角色
@@ -76,10 +75,13 @@ class BusinessFunc {
 
   ///门店筛选
   static Future<List<StoreselectMoedl>> getStoreselect() async {
-    BaseModel res =
-        await apiClient.request(API.storeManagement.storeSelect,);
+    BaseModel res = await apiClient.request(
+      API.storeManagement.storeSelect,
+    );
     if (res.code == 0) {
-      return (res.data as List).map((e) => StoreselectMoedl.fromJson(e)).toList();
+      return (res.data as List)
+          .map((e) => StoreselectMoedl.fromJson(e))
+          .toList();
     } else {
       CloudToast.show(res.msg);
       return [];
@@ -87,15 +89,17 @@ class BusinessFunc {
   }
 
   ///添加门店
-  static Future<bool> getStoreadd(
-    String name,
-    String address,
-  ) async {
-    BaseModel res =
-        await apiClient.request(API.storeManagement.storeAdd, data: {
+  static Future<bool> getStoreadd(String storeName, String address, String name,
+      int gender, String phone, String commission) async {
+    Map params = {
       'name': name,
-      'address': address,
-    });
+      'gender': gender,
+      'phone': phone,
+      'commision': num.parse(commission)
+    };
+
+    BaseModel res = await apiClient.request(API.storeManagement.storeAdd,
+        data: {'name': name, 'address': address, 'owner': params});
     if (res.code == 0) {
       return true;
     } else {
@@ -106,13 +110,8 @@ class BusinessFunc {
 
   ///添加员工
   static Future<bool> getStaffadd(
-    String name,
-    int gender,
-    String phone,
-    int roleId,
-    String commission,
-  { int storeId=0}
-  ) async {
+      String name, int gender, String phone, int roleId, String commission,
+      {int storeId = 0}) async {
     Map params = {
       'name': name,
       'gender': gender,
@@ -121,10 +120,9 @@ class BusinessFunc {
       'roleId': roleId,
       'commission': commission
     };
-    if(storeId!=0){
+    if (storeId != 0) {
       params.putIfAbsent('storeId', () => storeId);
     }
-
 
     BaseModel res =
         await apiClient.request(API.storeManagement.staffAdd, data: params);

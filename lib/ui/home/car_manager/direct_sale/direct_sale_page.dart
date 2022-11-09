@@ -18,7 +18,6 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import 'cars_detail_page.dart';
 
 enum AllCarStatus {
   onSale(1, '在售'),

@@ -110,7 +110,9 @@ class Contract extends Equatable{
   final String engine;
   final String color;
   final String mileage;
+  final int transfer;
   final int keyCount;
+  final int licensingDate;
   final int compulsoryInsurance;
   final int compulsoryInsuranceDate;
   final int commercialInsurance;
@@ -130,10 +132,12 @@ class Contract extends Equatable{
     required this.commercialInsurance,
     required this.commercialInsuranceDate,
     required this.commercialInsurancePrice,
+    required this.transfer,
+    required this.licensingDate
   });
 
   @override
-  List<Object?> get props => [contractSn,contractSignAt,vin,engine,color,mileage,keyCount,compulsoryInsurance,compulsoryInsuranceDate,commercialInsurance,commercialInsuranceDate,commercialInsurancePrice,];
+  List<Object?> get props => [contractSn,contractSignAt,vin,engine,color,mileage,keyCount,compulsoryInsurance,compulsoryInsuranceDate,commercialInsurance,commercialInsuranceDate,commercialInsurancePrice,transfer];
 
   factory Contract.fromJson(Map<String, dynamic> json) =>_$ContractFromJson(json);
 

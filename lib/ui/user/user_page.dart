@@ -108,7 +108,7 @@ class _UserPageState extends State<UserPage> {
                       //Padding(padding: EdgeInsets.symmetric(horizontal: 32.w)),
                       _shareUser(),
                       32.hb,
-                      UserTool.userProvider.userInfo.levelEM== PermissionLevel.settledMerchants?SizedBox():UserTool.userProvider.userInfo.levelEM== PermissionLevel.normal?
+                      UserTool.userProvider.userInfo.levelEM== PermissionLevel.settledMerchants?const SizedBox():UserTool.userProvider.userInfo.levelEM== PermissionLevel.normal?
                       _agent():_agent1(),
                       24.hb,
                       _share(),

@@ -48,10 +48,8 @@ class CarNewInfo extends Equatable {
   final String interiorColor;
   final String temporaryLicensePlate;
   final int parkingNo;
-  final String emissionStandard;
   final String useCharacter;
   final String Mileage;
-  final int marketDate;
   final String newCarGuidePrice;
   final String purchaseTax;
   final String installationCost;
@@ -93,10 +91,9 @@ class CarNewInfo extends Equatable {
         interiorColor,
         temporaryLicensePlate,
         parkingNo,
-        emissionStandard,
+
         useCharacter,
         Mileage,
-        marketDate,
         newCarGuidePrice,
         purchaseTax,
         installationCost,
@@ -133,10 +130,8 @@ class CarNewInfo extends Equatable {
     required this.interiorColor,
     required this.temporaryLicensePlate,
     required this.parkingNo,
-    required this.emissionStandard,
     required this.useCharacter,
     required this.Mileage,
-    required this.marketDate,
     required this.newCarGuidePrice,
     required this.purchaseTax,
     required this.installationCost,

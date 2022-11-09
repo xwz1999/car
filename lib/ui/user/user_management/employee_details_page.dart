@@ -361,6 +361,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
       children: [
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+          padding: EdgeInsets.symmetric(vertical: 20.w),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
           child:

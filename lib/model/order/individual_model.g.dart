@@ -59,10 +59,9 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
     };
 
 Model _$ModelFromJson(Map<String, dynamic> json) => Model(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      price:json['price'] as String
-    );
+    id: json['id'] as int,
+    name: json['name'] as String,
+    price: json['price'] as String);
 
 Map<String, dynamic> _$ModelToJson(Model instance) => <String, dynamic>{
       'id': instance.id,
@@ -70,19 +69,20 @@ Map<String, dynamic> _$ModelToJson(Model instance) => <String, dynamic>{
     };
 
 Contract _$ContractFromJson(Map<String, dynamic> json) => Contract(
-      contractSn: json['contractSn'] as String,
-      contractSignAt: json['contractSignAt'] as int,
-      vin: json['vin'] as String,
-      engine: json['engine'] as String,
-      color: json['color'] as String,
-      mileage: json['mileage'] as String,
-      keyCount: json['keyCount'] as int,
-      compulsoryInsurance: json['compulsoryInsurance'] as int,
-      compulsoryInsuranceDate: json['compulsoryInsuranceDate'] as int,
-      commercialInsurance: json['commercialInsurance'] as int,
-      commercialInsuranceDate: json['commercialInsuranceDate'] as int,
-      commercialInsurancePrice: json['commercialInsurancePrice'] as String,
-    );
+    contractSn: json['contractSn'] as String,
+    contractSignAt: json['contractSignAt'] as int,
+    vin: json['vin'] as String,
+    engine: json['engine'] as String,
+    color: json['color'] as String,
+    mileage: json['mileage'] as String,
+    keyCount: json['keyCount'] as int,
+    compulsoryInsurance: json['compulsoryInsurance'] as int,
+    compulsoryInsuranceDate: json['compulsoryInsuranceDate'] as int,
+    commercialInsurance: json['commercialInsurance'] as int,
+    commercialInsuranceDate: json['commercialInsuranceDate'] as int,
+    commercialInsurancePrice: json['commercialInsurancePrice'] as String,
+    licensingDate:json['licensingDate'] as int,
+    transfer: json['transfer'] as int);
 
 Map<String, dynamic> _$ContractToJson(Contract instance) => <String, dynamic>{
       'contractSn': instance.contractSn,

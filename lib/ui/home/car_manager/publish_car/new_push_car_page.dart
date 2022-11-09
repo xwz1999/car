@@ -157,11 +157,18 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       _publishCarInfo.value.carModelId = widget.individualModel!.model.id;
       _publishCarInfo.value.newCarPrice = widget.individualModel!.model.price;
       _newCarPriceController.text =  widget.individualModel!.model.price;
-      _publishCarInfo.value.licensingDate = DateTime.fromMillisecondsSinceEpoch(widget.individualModel!.car.licensingDate*1000);
+      _publishCarInfo.value.licensingDate = DateTime.fromMillisecondsSinceEpoch(widget.individualModel!.contract.licensingDate*1000);
+
       _viNumController.text =  widget.individualModel!.contract.vin;
       _engineController.text = widget.individualModel!.contract.engine;
       _publishCarInfo.value.carColor = widget.individualModel!.contract.color;
       _mileController.text = (num.parse(widget.individualModel!.contract.mileage)/10000).toString();
+
+
+      _keyCountController.text = (widget.individualModel!.contract.keyCount).toString();
+
+      _transferNumController.text = (widget.individualModel!.contract.transfer).toString();
+
       _publishCarInfo.value.haveCompulsoryInsurance =  widget.individualModel!.contract.compulsoryInsurance;
       if(widget.individualModel!.contract.compulsoryInsurance!=0){
         _publishCarInfo.value.compulsoryInsuranceDate = DateTime.fromMillisecondsSinceEpoch(widget.individualModel!.contract.compulsoryInsuranceDate*1000);
@@ -169,7 +176,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       _publishCarInfo.value.haveCommercialInsurance =  widget.individualModel!.contract.commercialInsurance;
       if(widget.individualModel!.contract.commercialInsurance!=0){
         _publishCarInfo.value.commercialInsuranceDate = DateTime.fromMillisecondsSinceEpoch(widget.individualModel!.contract.commercialInsuranceDate*1000);
-        _publishCarInfo.value.commercialInsurancePrice = widget.individualModel!.contract.commercialInsurancePrice;
+        _commercialInsurancePriceController.text = widget.individualModel!.contract.commercialInsurancePrice;
       }
     }
   }

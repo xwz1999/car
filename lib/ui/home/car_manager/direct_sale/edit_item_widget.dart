@@ -12,6 +12,7 @@ class EditItemWidget extends StatefulWidget {
   final bool canChange;
   final Color? textColor;
   final Color? titleColor;
+  final double? titleSize;
   final TextCallback? callback;
   final String endText;
   final double paddingTop;
@@ -39,7 +40,7 @@ class EditItemWidget extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.controller,
     this.value,
-    this.inputFormatters,this.textColor ,this.titleColor,this.haveBorder = true
+    this.inputFormatters,this.textColor ,this.titleColor,this.haveBorder = true, this.titleSize
   });
 
   @override
@@ -111,7 +112,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
               widget.title,
               style: TextStyle(
                 color: widget.titleColor?? BaseStyle.color333333,
-                fontSize: BaseStyle.fontSize32,
+                fontSize: widget.titleSize?? BaseStyle.fontSize32,
               ),
             ),
           ),
@@ -138,9 +139,9 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                 isCollapsed: true,
                 fillColor: Colors.white,
                 hintText: widget.tips,
-                hintStyle: const TextStyle(
-                    color: Color(0xFFcccccc),
-                    fontSize: 14,
+                hintStyle: TextStyle(
+                    color: const Color(0xFFcccccc),
+                    fontSize: 28.sp,
                     fontWeight: FontWeight.w300),
                 border: InputBorder.none,
               ),

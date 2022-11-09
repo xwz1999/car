@@ -9,6 +9,7 @@ import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_image_preview.dart';
+import 'package:cloud_car/widget/cloud_image_preview_list.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
@@ -211,11 +212,24 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
             //子组件宽高长度比例
             childAspectRatio: 100/105),
         itemBuilder: (BuildContext context, int iIndex) {
-          return _buildChild(list[iIndex],iIndex,index);
+          return _buildChild(list[iIndex],iIndex,index,list);
         });
   }
 
-  Widget _buildChild(PushImgModel model,int index,int type) {
+  Widget _buildChild(PushImgModel model,int index,int type, List<PushImgModel> list) {
+    List<File> fileLists = [];
+    List<String> stringLists = [];
+    for(var item in list){
+      if( model.url.runtimeType == String){
+        stringLists.add(item.url);
+      }else{
+        if(item.url!=null){
+          fileLists.add(item.url);
+        }
+
+      }
+    }
+
     return GestureDetector(
       onTap: () async {
 
@@ -232,10 +246,15 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
           setState(() {});
         }else{
-          if (model.url.runtimeType == String) {
-            await CloudImagePreview.toPath(path: model.url);
+          // if (model.url.runtimeType == String) {
+          //   await CloudImagePreview.toPath(path: model.url);
+          // } else {
+          //   await CloudImagePreview.toFile(file: model.url);
+          // }
+          if ( model.url.runtimeType == String) {
+            await CloudImagePreviewList.toPath(path: stringLists,index: index);
           } else {
-            await CloudImagePreview.toFile(file: model.url);
+            await CloudImagePreviewList.toFile(file: fileLists ,index: index);
           }
         }
 

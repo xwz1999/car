@@ -89,7 +89,7 @@ class _CloudImagePreviewState extends State<CloudImagePreview> {
       child: Scaffold(
         backgroundColor: Colors.black54,
         body: InteractiveViewer(
-          boundaryMargin: const EdgeInsets.all(48),
+          //boundaryMargin: const EdgeInsets.all(48),
           minScale: 0.2,
           maxScale: 10,
           child: Center(child: image),

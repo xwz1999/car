@@ -126,7 +126,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                   ),
                 ),
                 bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(kToolbarHeight + 12.w),
+                  preferredSize: Size.fromHeight(kToolbarHeight + MediaQuery.of(context).padding.top),
                   child: Container(
                       width: 750.w,
                       height: 138.w,
@@ -245,6 +245,7 @@ class _RecommendedPageState extends State<RecommendedPage>
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w),
+      margin: EdgeInsets.only(bottom: 20.w),
       child: GestureDetector(
         onTap: ()async {
           if(model.isImportant != 1){

@@ -10,6 +10,13 @@ class StoreallModel extends Equatable {
   final String name;
   final List<Staff>? staffs;
 
+  factory StoreallModel.empty() {
+    return const StoreallModel(
+        id: 0,
+        name: '入驻商',
+    staffs: []);
+  }
+
   factory StoreallModel.fromJson(Map<String, dynamic> json) =>
       _$StoreallModelFromJson(json);
 
