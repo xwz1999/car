@@ -271,10 +271,13 @@ class _SplitCarInfoPageState extends State<SplitCarInfoPage> {
                       title: '车身颜色',
                       items: colorList.map((e) => e.name).toList(),
                       onConfirm: (strList, indexList) {
-                        _publishCarInfo.carColor = strList.first;
-                        Get.back();
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        setState(() {});
+                        if(strList.isNotEmpty){
+                          _publishCarInfo.carColor = strList.first;
+                          Get.back();
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          setState(() {});
+                        }
+
                       });
                 },
               );

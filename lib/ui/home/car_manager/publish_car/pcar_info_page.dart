@@ -153,12 +153,14 @@ class _PublishCarInfoPageState extends State<PublishCarInfoPage> {
                               title: '选择内饰颜色',
                               items: interColorList.map((e) => e.name).toList(),
                               onConfirm: (str, index) {
-                                widget.carPhotoModel.value.baseInfo
-                                    .interiorColor = str.first;
+                                if (str.isNotEmpty) {
+                                  widget.carPhotoModel.value.baseInfo
+                                      .interiorColor = str.first;
 
-                                Get.back();
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                setState(() {});
+                                  Get.back();
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  setState(() {});
+                                }
                               });
                         },
                       );

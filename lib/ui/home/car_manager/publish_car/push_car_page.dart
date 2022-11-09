@@ -335,7 +335,6 @@ class _PushCarPageState extends State<PushCarPage> {
             },
             _publishCarInfo.carName,
             '请输入具体车型',
-
           ),
 
           _function(
@@ -367,10 +366,12 @@ class _PushCarPageState extends State<PushCarPage> {
                       title: '车身颜色',
                       items: colorList.map((e) => e.name).toList(),
                       onConfirm: (strList, indexList) {
-                        _publishCarInfo.carColor = strList.first;
-                        Get.back();
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        setState(() {});
+                        if (strList.isNotEmpty) {
+                          _publishCarInfo.carColor = strList.first;
+                          Get.back();
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          setState(() {});
+                        }
                       });
                 },
               );
@@ -381,12 +382,12 @@ class _PushCarPageState extends State<PushCarPage> {
           mile,
           _function(
             '选择地区',
-                () async {
+            () async {
               await Get.to(() => CarThreeCityListPage(onSelect: (city) {
-                _publishCarInfo.locationCity = city.cityName;
-                _publishCarInfo.locationCityId = city.cityId;
-                Get.back();
-              }));
+                    _publishCarInfo.locationCity = city.cityName;
+                    _publishCarInfo.locationCityId = city.cityId;
+                    Get.back();
+                  }));
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
             },
