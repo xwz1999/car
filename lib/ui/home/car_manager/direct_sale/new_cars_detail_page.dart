@@ -497,7 +497,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     List<File> fileLists = [];
     List<String> stringLists = [];
     for(var item in list){
-      if( model.url.runtimeType == String){
+      if( item.url.runtimeType == String){
         stringLists.add(item.url);
       }else{
         if(item.url!=null) {

@@ -470,7 +470,8 @@ class CarFunc {
     required PushPhotoModel pushPhotoModel,
     required ReportPhotoModel reportPhotoModel,
   }) async {
-    // print(newPublishCarInfo.retrofittingFee!);
+    print(newPublishCarInfo.locationCityId);
+    print(newPublishCarInfo.locationCity);
     Map<String, dynamic> baseInfo = {
       "source":newPublishCarInfo.carSource,
       "sourceId":newPublishCarInfo.carShopId,

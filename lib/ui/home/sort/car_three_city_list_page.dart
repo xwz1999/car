@@ -4,6 +4,7 @@ import 'package:cloud_car/providers/city_provider.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/utils/utils.dart';
+import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,9 +26,19 @@ class _CarThreeCityListPageState extends State<CarThreeCityListPage> {
   Widget build(BuildContext context) {
     var cityList = Provider.of<CityProvider>(context, listen: false).azCities;
     return CloudScaffold.normal(
-      appbar: SizedBox(
-        height: 88.w,
+      appbar: AppBar(
+        leading: const CloudBackButton(
+          isSpecial: true,
+        ),
+        backgroundColor: kForeGroundColor,
+        title: Text('定位筛选',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 34.sp,
+              color: const Color(0xFF333333),
+            )),
       ),
+      barHeight: 88.w,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,6 +52,7 @@ class _CarThreeCityListPageState extends State<CarThreeCityListPage> {
           _buildHeader(),
           Expanded(
             child: AzListView(
+              padding: EdgeInsets.symmetric(vertical: 30.w),
               data: cityList,
               itemCount: cityList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -55,7 +67,7 @@ class _CarThreeCityListPageState extends State<CarThreeCityListPage> {
                 AzCityModel model = cityList[index];
                 String tag = model.getSuspensionTag();
                 if (imgFavorite == tag) {
-                  return const SizedBox.shrink();
+                  return Container();
                 }
                 return Utils.getSusItem(context, tag, susHeight: susItemHeight);
               },

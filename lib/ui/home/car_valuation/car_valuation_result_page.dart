@@ -169,8 +169,8 @@ class _CarValuationResultPageState extends State<CarValuationResultPage> {
       ),
     );
   }
-  
-  
+
+
   _getShare(){
     return Container(
       width: double.infinity,

@@ -3,10 +3,12 @@ import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/model/order/individual_model.dart';
+import 'package:cloud_car/model/region/china_region_model.dart';
 import 'package:cloud_car/model/user/store_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/sort/car_three_city_list_page.dart';
+import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
@@ -139,8 +141,8 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
   @override
   void initState() {
     super.initState();
-    _publishCarInfo.value.locationCity = '宁波';
-    _publishCarInfo.value.locationCityId = 42;
+    // _publishCarInfo.value.locationCity = '宁波';
+    // _publishCarInfo.value.locationCityId = 119;
 
     if(widget.individualModel!=null){
       _publishCarInfo.value.carSource = 1;
@@ -742,11 +744,13 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           _function(
             '所在地',
             () async {
-              await Get.to(() => CarThreeCityListPage(onSelect: (city) {
-                    _publishCarInfo.value.locationCity = city.cityName;
-                    _publishCarInfo.value.locationCityId = city.cityId;
-                    Get.back();
-                  }));
+              await  Get.to(() => ChooseCityPage(
+                callback: (ChinaRegionModel model) {
+                  _publishCarInfo.value.locationCity =model.name;
+                  _publishCarInfo.value.locationCityId =  model.id;
+                  setState(() {});
+                },
+              ));
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
             },

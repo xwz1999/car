@@ -63,8 +63,8 @@ class _CarValuationPageState extends State<CarValuationPage> {
   @override
   void initState() {
     super.initState();
-    _carInfo.locationCity = '宁波';
-    _carInfo.locationCityId = 42;
+    // _carInfo.locationCity = '宁波';
+    // _carInfo.locationCityId = 119;
   }
 
   @override

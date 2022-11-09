@@ -32,7 +32,7 @@ class _CityListPageState extends State<CityListPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 0), () {
       loadData();
     });
   }
@@ -79,11 +79,11 @@ class _CityListPageState extends State<CityListPage> {
     SuspensionUtil.setShowSuspensionStatus(cityList);
 
     // add header.
-    cityList.insert(
-        0,
-        AzRegionModel(
-            name: 'header',
-            tagIndex: imgFavorite)); //index bar support local images.
+    // cityList.insert(
+    //     0,
+    //     AzRegionModel(
+    //         name: 'header',
+    //         tagIndex: imgFavorite)); //index bar support local images.
 
     setState(() {});
   }
@@ -144,9 +144,7 @@ class _CityListPageState extends State<CityListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CloudScaffold.normal(
-      appbar:  SizedBox(height: 88.w,),
-      body: Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -156,12 +154,14 @@ class _CityListPageState extends State<CityListPage> {
               style: TextStyle(color: BaseStyle.color999999, fontSize: 24.sp),
             ),
           ),
+          _buildHeader(),
           Expanded(
             child: AzListView(
+              padding: EdgeInsets.symmetric(vertical: 30.w),
               data: cityList,
               itemCount: cityList.length,
               itemBuilder: (BuildContext context, int index) {
-                if (index == 0) return _buildHeader();
+                // if (index == 0) return _buildHeader();
                 AzRegionModel model = cityList[index];
                 return Utils.getListItem(context, model, (name, id) {
                   widget.cityCallback(model.model!);
@@ -207,7 +207,7 @@ class _CityListPageState extends State<CityListPage> {
             ),
           ),
         ],
-      ),
+
     );
   }
 }

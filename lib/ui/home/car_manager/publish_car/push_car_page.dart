@@ -1,8 +1,10 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
+import 'package:cloud_car/ui/home/sort/car_three_city_list_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
 import 'package:cloud_car/widget/scan_license_widget.dart';
@@ -66,8 +68,8 @@ class _PushCarPageState extends State<PushCarPage> {
   @override
   void initState() {
     super.initState();
-    _publishCarInfo.locationCity = '宁波';
-    _publishCarInfo.locationCityId = 42;
+    // _publishCarInfo.locationCity = '宁波';
+    // _publishCarInfo.locationCityId = 119;
   }
 
   @override
@@ -305,7 +307,6 @@ class _PushCarPageState extends State<PushCarPage> {
         _publishCarInfo.mileage = content;
       },
       endText: '万公里',
-      haveBorder: false,
     );
 
     return Container(
@@ -336,20 +337,7 @@ class _PushCarPageState extends State<PushCarPage> {
             '请输入具体车型',
 
           ),
-          // _function(
-          //   '选择地区',
-          //   () async {
-          //     await Get.to(() => CarThreeCityListPage(onSelect: (city) {
-          //           _publishCarInfo.locationCity = city.cityName;
-          //           _publishCarInfo.locationCityId = city.cityId;
-          //           Get.back();
-          //         }));
-          //     FocusManager.instance.primaryFocus?.unfocus();
-          //     setState(() {});
-          //   },
-          //   _publishCarInfo.locationCity,
-          //   '选择所在地区',
-          // ),
+
           _function(
             '首次上牌',
             () async {
@@ -391,6 +379,20 @@ class _PushCarPageState extends State<PushCarPage> {
             '请输入车身颜色',
           ),
           mile,
+          _function(
+            '选择地区',
+                () async {
+              await Get.to(() => CarThreeCityListPage(onSelect: (city) {
+                _publishCarInfo.locationCity = city.cityName;
+                _publishCarInfo.locationCityId = city.cityId;
+                Get.back();
+              }));
+              FocusManager.instance.primaryFocus?.unfocus();
+              setState(() {});
+            },
+            _publishCarInfo.locationCity,
+            '选择所在地区',
+          ),
           // _function(
           //   '车辆来源',
           //   () async {
@@ -481,11 +483,10 @@ class _PushCarPageState extends State<PushCarPage> {
     //   return false;
     // }
 
-    // if (_publishCarInfo.locationCity.isEmptyOrNull) {
-    //   CloudToast.show('请选择所在地区');
-    //   return false;
-    // }
-
+    if (_publishCarInfo.locationCity.isEmptyOrNull) {
+      CloudToast.show('请选择所在地区');
+      return false;
+    }
     if (_engineController.text.trim().isEmpty) {
       BotToast.showText(text: '请输入发动机号');
       return false;

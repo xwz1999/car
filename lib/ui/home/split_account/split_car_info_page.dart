@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
+import 'package:cloud_car/model/region/china_region_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/sort/sort_car_model_model.dart';
 import 'package:cloud_car/model/sort/sort_series_model.dart';
@@ -8,6 +9,7 @@ import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/sort/car_three_city_list_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
+import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
@@ -232,11 +234,13 @@ class _SplitCarInfoPageState extends State<SplitCarInfoPage> {
           _function(
             '选择地区',
                 () async {
-              await Get.to(() => CarThreeCityListPage(onSelect: (city) {
-                _publishCarInfo.locationCity = city.cityName;
-                _publishCarInfo.locationCityId = city.cityId;
-                Get.back();
-              }));
+              await  Get.to(() => ChooseCityPage(
+                callback: (ChinaRegionModel model) {
+                  _publishCarInfo.locationCity =model.name;
+                  _publishCarInfo.locationCityId =  model.id;
+                  setState(() {});
+                },
+              ));
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
             },
