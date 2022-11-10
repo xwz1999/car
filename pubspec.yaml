@@ -51,7 +51,6 @@ dependencies:
   # 汉字转拼音
   lpinyin: ^2.0.0
   #轮播
-  flutter_swiper: ^1.1.6
   flutter_swiper_tv: ^1.1.6-nullsafety
   #角标
   badges: ^2.0.2
@@ -62,7 +61,7 @@ dependencies:
   # 虚线框
   dotted_border: ^2.0.0+2
   # 时间轴
-  timelines: ^0.1.0
+#  timelines: ^0.1.0
   #日志输出
   power_logger: ^1.2.2
   #极光认证
@@ -104,9 +103,9 @@ dependencies:
   sign_in_with_apple: ^4.1.0
   #websocket
   web_socket_channel: 2.2.0
-
+  #webView
   flutter_inappwebview: 5.4.3
-
+  #图片缓存
   cached_network_image: ^3.2.1
 
 

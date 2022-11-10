@@ -96,6 +96,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
             children: [
               _topImage(),
               _bottomEdit(),
+
             ],
           ),
         ],

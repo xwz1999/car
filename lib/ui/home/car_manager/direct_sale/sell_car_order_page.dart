@@ -3,7 +3,7 @@ import 'package:cloud_car/model/car/car_amount_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_second_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_contract/initiate_contract_model.dart';
+import 'package:cloud_car/model/contract/initiate_contract_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';

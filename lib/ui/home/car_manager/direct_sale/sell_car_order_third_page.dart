@@ -1,5 +1,5 @@
 import 'package:cloud_car/model/car/car_sale_contract_model.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_contract/initiate_contract_model.dart';
+import 'package:cloud_car/model/contract/initiate_contract_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/user/success_failure_page.dart';
 import 'package:cloud_car/utils/headers.dart';

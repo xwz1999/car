@@ -3,7 +3,7 @@ import 'package:cloud_car/model/sort/sort_car_model_model.dart';
 import 'package:cloud_car/model/sort/sort_series_model.dart';
 import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/direct_sale_page.dart';
-import 'package:cloud_car/ui/home/car_manager/self_sale/self_sale_page.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/self_sale_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/headers.dart';
