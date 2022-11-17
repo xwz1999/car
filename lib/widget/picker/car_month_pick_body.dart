@@ -6,23 +6,24 @@ import 'package:velocity_x/velocity_x.dart';
 
 class CarMonthPickBody extends StatefulWidget {
   final DateTime initTime;
+  final int addYear;///需要选择今年以后的日期使用该属性
 
-  const CarMonthPickBody({super.key, required this.initTime});
+  const CarMonthPickBody({super.key, required this.initTime,this.addYear = 0});
 
   @override
   _CarMonthPickBodyState createState() => _CarMonthPickBodyState();
 }
 
 class _CarMonthPickBodyState extends State<CarMonthPickBody> {
-  final FixedExtentScrollController _yearController =
-      FixedExtentScrollController();
+  late FixedExtentScrollController _yearController;
   final FixedExtentScrollController _monthController =
       FixedExtentScrollController();
 
   DateTime get _pickedTime => DateTime(_pickYear, _pickMonth);
 
   List<int> get _years => List.generate(
-      DateTime.now().year - 1970 + 1, (index) => widget.initTime.year - index);
+      DateTime.now().year+widget.addYear - 1970 + 1, (index) => widget.initTime.year+widget.addYear - index);
+
   int _pickYearIndex = 0;
   int _pickMonthIndex = 0;
 
@@ -51,7 +52,15 @@ class _CarMonthPickBodyState extends State<CarMonthPickBody> {
 
   @override
   void initState() {
-    _pickYearIndex = 0;
+    if(widget.addYear!=0){
+      _yearController =
+          FixedExtentScrollController(initialItem: widget.addYear);
+    }else{
+      _yearController =
+          FixedExtentScrollController();
+    }
+
+    _pickYearIndex = widget.addYear;
     _pickMonthIndex = 0;
     super.initState();
   }

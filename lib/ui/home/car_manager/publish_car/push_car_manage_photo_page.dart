@@ -181,6 +181,9 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         _getView(0, _carPhotos),
         _getView(1, _interiorPhotos),
         _getView1(2, _defectPhotos),
+        _getView1(2, _defectPhotos),
+        _getView1(2, _defectPhotos)
+
       ]),
     );
   }

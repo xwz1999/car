@@ -31,8 +31,8 @@ class CarDatePicker {
     ));
   }
 
-  static Future<DateTime?> monthPicker(DateTime initDate) async {
-    return await Get.bottomSheet(CarMonthPickBody(initTime: initDate));
+  static Future<DateTime?> monthPicker(DateTime initDate,{int add = 0}) async {
+    return await Get.bottomSheet(CarMonthPickBody(initTime: initDate,addYear: add,));
   }
 
   ///选择年月日时分

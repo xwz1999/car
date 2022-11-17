@@ -33,11 +33,19 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
           _titles[2],
           2,
         ),
+        _buildChild(
+          _titles[3],
+          3,
+        ),
+        _buildChild(
+          _titles[4],
+          4,
+        ),
       ],
     );
   }
 
-  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片'];
+  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片','报告数据','维保数据'];
 
   Widget _buildChild(
     String bottom,

@@ -3,6 +3,7 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/new_cars_detail_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -95,17 +96,24 @@ class _AllCarViewState extends State<AllCarView>
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               var model = widget.allCarList[index];
-              return CarItemWidget(
-                widgetPadding:
-                    EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
-                name: model.modelName,
-                time: DateUtil.formatDateMs(model.licensingDate.toInt() * 1000,
-                    format: 'yyyy年MM月'),
-                distance: '${model.mileage}万公里',
-                // standard: '国六',
-                url: model.mainPhoto,
-                price:
-                    '${NumUtil.divide(num.parse(model.price), 10000)}',
+              return GestureDetector(
+                onTap: (){
+                  Get.to(() => NewCarsDetailPage(
+                    carListModel: model,
+                  ));
+                },
+                child: CarItemWidget(
+                  widgetPadding:
+                      EdgeInsets.symmetric(vertical: 28.w, horizontal: 24.w),
+                  name: model.modelName,
+                  time: DateUtil.formatDateMs(model.licensingDate.toInt() * 1000,
+                      format: 'yyyy年MM月'),
+                  distance: '${model.mileage}万公里',
+                  // standard: '国六',
+                  url: model.mainPhoto,
+                  price:
+                      '${NumUtil.divide(num.parse(model.price), 10000)}',
+                ),
               );
             }, childCount: widget.allCarList.length),
           ),

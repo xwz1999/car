@@ -8,6 +8,7 @@ import 'package:cloud_car/model/user/store_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
+import 'package:cloud_car/utils/custom_floating_action_button_location.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
@@ -220,7 +221,37 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
                 fontWeight: FontWeight.bold)),
+        actions: [
+          Center(
+            child: GestureDetector(
+              onTap: (){},
+              child:  Padding(
+                padding: EdgeInsets.only(right: 32.w),
+                child: Text('草稿箱',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.w500),),
+              ),
+            ),
+          )
+        ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+
+
+      },child:
+
+      SizedBox(
+        width: 120.w,
+        height: 120.w,
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(60.w)),
+            child:   Image.asset(Assets.images.imgSave.path,width: 120.w,height: 120.w,),
+          ),
+        ),
+      ),
+      ),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+          FloatingActionButtonLocation.endDocked,2.w, -130.w),
       backgroundColor: kForeGroundColor,
       extendBody: true,
       body: ListView(
@@ -438,7 +469,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
     );
 
     var wholesalePrice = EditItemWidget(
-      title: '批发价格',
+      title: '内部价格',
       tips: '请输入',
       controller: _wholesalePriceController,
       canChange: true,
@@ -450,7 +481,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
     );
 
     var salePrice = EditItemWidget(
-      title: _publishCarInfo.value.carSource != 1 ? '销售价格' : '评估价格',
+      title: _publishCarInfo.value.carSource != 1 ? '外部价格' : '评估价格',
       tips: '请输入',
       inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
       controller: _salePriceController,
@@ -631,8 +662,9 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           _function(
             '首次上牌',
             () async {
-              var firstDate = await CarDatePicker.calenderPicker(
-                  DateTime(1960), DateTime.now());
+              var firstDate = await CarDatePicker.monthPicker(DateTime.now());
+              // await CarDatePicker.calenderPicker(
+              //     DateTime(1960), DateTime.now());
               _publishCarInfo.value.licensingDate = firstDate;
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
@@ -737,8 +769,9 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           ),
           mile,
           _function('出厂日期', () async {
-            var firstDate = await CarDatePicker.calenderPicker(
-                DateTime(1960), DateTime.now());
+            // var firstDate = await CarDatePicker.calenderPicker(
+            //     DateTime(1960), DateTime.now());
+            var firstDate = await CarDatePicker.monthPicker(DateTime.now());
             _publishCarInfo.value.productionDate = firstDate;
             FocusManager.instance.primaryFocus?.unfocus();
             setState(() {});
@@ -951,8 +984,9 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
             setState(() {});
           }),
           _function('交强险到期', () async {
-            var firstDate = await CarDatePicker.calenderPicker(
-                DateTime(1960), DateTime(DateTime.now().year + 100));
+            // var firstDate = await CarDatePicker.calenderPicker(
+            //     DateTime(1960), DateTime(DateTime.now().year + 100));
+            var firstDate = await CarDatePicker.monthPicker(DateTime.now(),add: 100);
             _publishCarInfo.value.compulsoryInsuranceDate = firstDate;
             FocusManager.instance.primaryFocus?.unfocus();
             setState(() {});
@@ -971,8 +1005,9 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
             setState(() {});
           }),
           _function('商业险到期', () async {
-            var firstDate = await CarDatePicker.calenderPicker(
-                DateTime(1960), DateTime(DateTime.now().year + 100));
+            // var firstDate = await CarDatePicker.calenderPicker(
+            //     DateTime(1960), DateTime(DateTime.now().year + 100));
+            var firstDate = await CarDatePicker.monthPicker(DateTime.now(),add: 100);
             _publishCarInfo.value.commercialInsuranceDate = firstDate;
             FocusManager.instance.primaryFocus?.unfocus();
             setState(() {});
@@ -1263,7 +1298,7 @@ class NewPublishCarInfo {
   DateTime? licensingDate;
 
   String get licensingDateStr =>
-      DateUtil.formatDate(licensingDate, format: 'yyyy-MM-dd');
+      DateUtil.formatDate(licensingDate, format: 'yyyy-MM');
 
   ///车身颜色
   String? carColor;
@@ -1298,7 +1333,7 @@ class NewPublishCarInfo {
     if (productionDate == null) {
       return '';
     } else {
-      return DateUtil.formatDate(productionDate, format: 'yyyy-MM-dd');
+      return DateUtil.formatDate(productionDate, format: 'yyyy-MM');
     }
   }
 
@@ -1375,7 +1410,7 @@ class NewPublishCarInfo {
     if (compulsoryInsuranceDate == null) {
       return '';
     } else {
-      return DateUtil.formatDate(compulsoryInsuranceDate, format: 'yyyy-MM-dd');
+      return DateUtil.formatDate(compulsoryInsuranceDate, format: 'yyyy-MM');
     }
   }
 
@@ -1389,7 +1424,7 @@ class NewPublishCarInfo {
     if (commercialInsuranceDate == null) {
       return '';
     } else {
-      return DateUtil.formatDate(commercialInsuranceDate, format: 'yyyy-MM-dd');
+      return DateUtil.formatDate(commercialInsuranceDate, format: 'yyyy-MM');
     }
   }
 

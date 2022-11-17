@@ -82,17 +82,6 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
           SizedBox(
             height: kToolbarHeight + 50.w,
           ),
-          // SizedBox(
-          //   height: 88.w,
-          //   child: CarWidget(
-          //       items: ConsignmentSearchStatus.values
-          //           .map((e) => e.typeStr)
-          //           .toList(),
-          //       callBack: (index) {
-          //         _currentStatus = ConsignmentSearchStatus.values[index];
-          //         _easyRefreshController.callRefresh();
-          //       }),
-          // ),
           Expanded(
             child: EasyRefresh(
               firstRefresh: true,
@@ -100,24 +89,10 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
               footer: MaterialFooter(),
               controller: _easyRefreshController,
               onRefresh: () async {
-                //_page = 1;
                 _consignmentList = await OrderFunc.getPushCarLists(data: _params);
                 _onLoad = false;
                 setState(() {});
               },
-              // onLoad: () async {
-              //   _page++;
-              //   var baseList = await apiClient
-              //       .requestList(API.order.consignmentLists, data: _params);
-              //   if (baseList.nullSafetyTotal > _consignmentList.length) {
-              //     _consignmentList.addAll(baseList.nullSafetyList
-              //         .map((e) => ListsModel.fromJson(e))
-              //         .toList());
-              //   } else {
-              //     _easyRefreshController.finishLoad(noMore: true);
-              //   }
-              //   setState(() {});
-              // },
               child: _onLoad
                   ? const SizedBox()
                   : _consignmentList.isEmpty

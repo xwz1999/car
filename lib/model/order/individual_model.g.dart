@@ -10,7 +10,7 @@ IndividualModel _$IndividualModelFromJson(Map<String, dynamic> json) =>
     IndividualModel(
       id: json['id'] as int,
       status: json['status'] as int,
-          statusName: json['StatusName'] as String,
+      statusName: json['statusName'] as String,
       model: Model.fromJson(json['model'] as Map<String, dynamic>),
       car: Car.fromJson(json['car'] as Map<String, dynamic>),
       contract: Contract.fromJson(json['contract'] as Map<String, dynamic>),
@@ -22,7 +22,7 @@ Map<String, dynamic> _$IndividualModelToJson(IndividualModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'status': instance.status,
-      'StatusName': instance.statusName,
+      'statusName': instance.statusName,
       'model': instance.model,
       'car': instance.car,
       'contract': instance.contract,
@@ -59,30 +59,33 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
     };
 
 Model _$ModelFromJson(Map<String, dynamic> json) => Model(
-    id: json['id'] as int,
-    name: json['name'] as String,
-    price: json['price'] as String);
+      id: json['id'] as int,
+      name: json['name'] as String,
+      price: json['price'] as String,
+    );
 
 Map<String, dynamic> _$ModelToJson(Model instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'price': instance.price,
     };
 
 Contract _$ContractFromJson(Map<String, dynamic> json) => Contract(
-    contractSn: json['contractSn'] as String,
-    contractSignAt: json['contractSignAt'] as int,
-    vin: json['vin'] as String,
-    engine: json['engine'] as String,
-    color: json['color'] as String,
-    mileage: json['mileage'] as String,
-    keyCount: json['keyCount'] as int,
-    compulsoryInsurance: json['compulsoryInsurance'] as int,
-    compulsoryInsuranceDate: json['compulsoryInsuranceDate'] as int,
-    commercialInsurance: json['commercialInsurance'] as int,
-    commercialInsuranceDate: json['commercialInsuranceDate'] as int,
-    commercialInsurancePrice: json['commercialInsurancePrice'] as String,
-    licensingDate:json['licensingDate'] as int,
-    transfer: json['transfer'] as int);
+      contractSn: json['contractSn'] as String,
+      contractSignAt: json['contractSignAt'] as int,
+      vin: json['vin'] as String,
+      engine: json['engine'] as String,
+      color: json['color'] as String,
+      mileage: json['mileage'] as String,
+      keyCount: json['keyCount'] as int,
+      compulsoryInsurance: json['compulsoryInsurance'] as int,
+      compulsoryInsuranceDate: json['compulsoryInsuranceDate'] as int,
+      commercialInsurance: json['commercialInsurance'] as int,
+      commercialInsuranceDate: json['commercialInsuranceDate'] as int,
+      commercialInsurancePrice: json['commercialInsurancePrice'] as String,
+      transfer: json['transfer'] as int,
+      licensingDate: json['licensingDate'] as int,
+    );
 
 Map<String, dynamic> _$ContractToJson(Contract instance) => <String, dynamic>{
       'contractSn': instance.contractSn,
@@ -91,7 +94,9 @@ Map<String, dynamic> _$ContractToJson(Contract instance) => <String, dynamic>{
       'engine': instance.engine,
       'color': instance.color,
       'mileage': instance.mileage,
+      'transfer': instance.transfer,
       'keyCount': instance.keyCount,
+      'licensingDate': instance.licensingDate,
       'compulsoryInsurance': instance.compulsoryInsurance,
       'compulsoryInsuranceDate': instance.compulsoryInsuranceDate,
       'commercialInsurance': instance.commercialInsurance,
