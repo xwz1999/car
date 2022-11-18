@@ -426,13 +426,21 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                         _titles[2],
                         2,
                       ),
+                      _buildChild(
+                        _titles[3],
+                        3,
+                      ),
+                      _buildChild(
+                        _titles[4],
+                        4,
+                      ),
                     ],
                   ),
-                    Padding(
-                      padding:  EdgeInsets.only(left: 20.w,bottom: 20.w),
-                      child: Text('报告数据',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.bold),),
-                    ),
-                    _getView(_reportPhotos)
+                    // Padding(
+                    //   padding:  EdgeInsets.only(left: 20.w,bottom: 20.w),
+                    //   child: Text('报告数据',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.bold),),
+                    // ),
+                    // _getView(_reportPhotos)
           ],
         ),
             )
@@ -584,7 +592,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     );
   }
 
-  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片'];
+  final List<String> _titles =['车辆照片', '内饰照片', '缺陷照片','报告数据','维保数据'];
 
   Widget _buildChild(
       String bottom,

@@ -19,6 +19,8 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
   Widget build(BuildContext context) {
     return GridView.count(
       physics: const NeverScrollableScrollPhysics(),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
       crossAxisCount: 3,
       children: [
         _buildChild(

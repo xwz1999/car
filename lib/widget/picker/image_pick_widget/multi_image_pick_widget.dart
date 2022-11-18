@@ -66,8 +66,8 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.start,
       alignment: WrapAlignment.start,
-      spacing: widget.spacing ?? 10.w,
-      runSpacing: widget.spacing ?? 10.w,
+      spacing: widget.spacing ?? 25.w,
+      runSpacing: widget.spacing ?? 20.w,
       children: [
         ..._files.mapIndexed((e, index) => showImage(e, index)).toList(),
         Offstage(
@@ -83,34 +83,45 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
               widget.onChanged(_files);
               setState(() {});
             },
-            child: DottedBorder(
-              color: Colors.black.withOpacity(0.25),
-              borderType: BorderType.RRect,
-              strokeWidth: 2.w,
-              dashPattern: const [6, 3],
-              radius: Radius.circular(8.w),
-              child: SizedBox(
-                width: widget.width != null ? widget.width! - 10.w : 160.w,
-                height: widget.height != null ? widget.height! - 10.w : 160.w,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      Assets.icons.camera.path,
-                      width: 60.w,
-                      height: 60.w,
-                      color: const Color(0xFF999999),
-                    ),
-                    4.w.heightBox,
-                    widget.description.text
-                        .color(Colors.black.withOpacity(0.45))
-                        .size(22.sp)
-                        .make(),
-                  ],
+            child: Container(
+              width: 210.w,
+              height: 158.w,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage(Assets.images.addcar.path) ,
                 ),
               ),
-            ).material(color: Colors.transparent),
+            )
+
+            // DottedBorder(
+            //   color: Colors.black.withOpacity(0.25),
+            //   borderType: BorderType.RRect,
+            //   strokeWidth: 2.w,
+            //   dashPattern: const [6, 3],
+            //   radius: Radius.circular(8.w),
+            //   child: SizedBox(
+            //     width: widget.width != null ? widget.width! - 10.w : 160.w,
+            //     height: widget.height != null ? widget.height! - 10.w : 160.w,
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: [
+            //         Image.asset(
+            //           Assets.icons.camera.path,
+            //           width: 60.w,
+            //           height: 60.w,
+            //           color: const Color(0xFF999999),
+            //         ),
+            //         4.w.heightBox,
+            //         widget.description.text
+            //             .color(Colors.black.withOpacity(0.45))
+            //             .size(22.sp)
+            //             .make(),
+            //       ],
+            //     ),
+            //   ),
+            // ).material(color: Colors.transparent),
           ),
         )
       ],
@@ -121,16 +132,16 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
     return Draggable(
       data: index,
       childWhenDragging: Container(
-        width: widget.width ?? 160.w,
-        height: widget.height ?? 160.w,
+        width: widget.width ?? 210.w,
+        height: widget.height ?? 158.w,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.w),
             color: Colors.black.withOpacity(0.03)),
       ),
       feedback: Container(
-        width: (widget.width ?? 160.w) * 0.8,
-        height: (widget.height ?? 160.w) * 0.8,
+        width: (widget.width ?? 210.w) * 0.8,
+        height: (widget.height ?? 158.w) * 0.8,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.w),
@@ -200,8 +211,8 @@ class _MultiImagePickWidgetState extends State<MultiImagePickWidget> {
                 }
               },
               child: Container(
-                width: widget.width ?? 160.w,
-                height: widget.height ?? 160.w,
+                width: widget.width ?? 210.w,
+                height: widget.height ?? 158.w,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16.w),

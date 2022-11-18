@@ -158,8 +158,6 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
           else{
               Get.back();
             }
-
-
           },
           child: Text(
             '确定',
@@ -171,6 +169,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         )
       ],
       appBarBottom: TabBar(
+          isScrollable:true,
           labelColor: Colors.blue,
           controller: _tabController,
           unselectedLabelColor: Colors.black,
@@ -296,11 +295,15 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
     List<dynamic> list,
   ) {
     return Padding(
-      padding: EdgeInsets.all(30.w),
+      padding: EdgeInsets.only(left: 30.w,right: 30.w,top: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          30.hb,
+          Text(
+            '按住照片拖动排序，第一张默认为首页',
+            style: TextStyle(color: const Color(0xFF999999), fontSize: 28.sp),
+          ),
+          20.hb,
           MultiImagePickWidget(
               photos: list,
               onChanged: (files) {
