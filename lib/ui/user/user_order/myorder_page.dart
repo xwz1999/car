@@ -71,7 +71,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
             text: '售车订单',
             num: '${_model.saleCount}',
           ),
-          UserTool.userProvider.userInfo.businessAscription ==
+          UserTool.userProvider.userInfo.business.businessAscription ==
                   BusinessAscription.normal
               ? ManagerContainerItem(
                   onTap: () {

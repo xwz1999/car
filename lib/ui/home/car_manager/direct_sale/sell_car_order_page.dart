@@ -27,39 +27,39 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
 
   final ValueNotifier<InitiateContractModel> _contractModel = ValueNotifier(
       InitiateContractModel());
-
   CarAmountModel? carAmountModel;
 
+  final List _models1 = ['全款','按揭'];
+  final List _models2 = ['本地','外地'];
+  final List<int> _selectIndex1 = [];
+  final List<int> _selectIndex2 = [];
 
-
+  final TextEditingController _finalPriceController = TextEditingController();
+  final TextEditingController _depositController = TextEditingController();
+  final TextEditingController _downPaymentsController = TextEditingController();
+  final TextEditingController _balancePaymentController = TextEditingController();
 
   @override
   void initState() {
-
-
     super.initState();
-
     Future.delayed(const Duration(milliseconds: 0), () async {
       carAmountModel = await CarFunc.getCarAmount(num.parse(widget.carModel.price));
-
       _contractModel.value.carAmountModel = carAmountModel;
-
       _contractModel.value.origin = '微信小程序';
-
       _contractModel.value.carModel = widget.carModel;
-
       setState(() {
-
       });
-
     });
   }
 
 
   @override
   void dispose() {
-
     super.dispose();
+    _finalPriceController.dispose();
+    _depositController.dispose();
+    _downPaymentsController.dispose();
+    _balancePaymentController.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -110,7 +110,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
 
           Padding(
             padding:  EdgeInsets.only(left: 24.w,top: 12.w),
-            child: Text('销售信息',
+            child: Text('卖方信息',
               style: Theme.of(context)
                   .textTheme
                   .subtitle1?.copyWith(
@@ -129,10 +129,8 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
               children: [
                 EditItemWidget(
                   paddingTop: 30.w,
-
                   title: '成交价',
-                  value: widget.carModel.price,
-                  callback: (String content) {},
+                  controller: _finalPriceController,
                   endText: '元',
                   canChange: false,
                   tips: '',
@@ -143,114 +141,114 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
 
                   title: '定金',
                   topIcon: false,
-                  value: carAmountModel==null? '':carAmountModel!.deposit,
-                  callback: (String content) {},
+                  controller: _depositController,
                   endText: '元',
                   canChange: false,
                   tips: '',
 
                 ),
                 EditItemWidget(
-
                   title: '首付',
                   topIcon: false,
-                  value: carAmountModel==null? '':carAmountModel!.downPayment,
-                  callback: (String content) {},
+                  controller: _downPaymentsController,
                   endText: '元',
                   canChange: false,
                   tips: '',
-
                 ),
 
                 EditItemWidget(
-
                   title: '尾款',
                   topIcon: false,
-                  value: carAmountModel==null? '':carAmountModel!.balancePayment,
                   tips: '',
-                  callback: (String content) {},
+                  controller: _balancePaymentController,
                   endText: '元',
                   canChange: false,
-
                 ),
-
-                EditItemWidget(
-
-                  title: '服务费比列',
-                  canChange: false,
-                  value: carAmountModel==null? '':'${double.parse(carAmountModel!.serviceFeeRate)  * 100}%' ,
-                  callback: (String content) {},
-                  endText: '元',
-
-
-                ),
-                // Padding(
-                //   padding: EdgeInsets.only(top: 40.w),
-                //   child: Row(
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     children: [
-                //       Padding(
-                //         padding: EdgeInsets.only(top: 10.w),
-                //         child: Text(
-                //           '*  ',
-                //           style: TextStyle(
-                //             fontSize: 28.sp,
-                //             color: const Color(0xFFE62222),
-                //           ),
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         width: 170.w,
-                //         child: Text(
-                //           '付款方式',
-                //           style: TextStyle(
-                //             fontSize: 28.sp,
-                //             color: const Color(0xFF999999),
-                //           ),
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         height: 50.w,
-                //         child: getChooseList(
-                //                 (String choice) {}, _models1, _selectIndex1),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 //
-                // Padding(
-                //   padding: EdgeInsets.only(top: 40.w),
-                //   child: Row(
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     children: [
-                //       Padding(
-                //         padding: EdgeInsets.only(top: 10.w),
-                //         child: Text(
-                //           '*  ',
-                //           style: TextStyle(
-                //             fontSize: 28.sp,
-                //             color: const Color(0xFFE62222),
-                //           ),
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         width: 170.w,
-                //         child: Text(
-                //           '过户方式',
-                //           style: TextStyle(
-                //             fontSize: 28.sp,
-                //             color: const Color(0xFF999999),
-                //           ),
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         height: 50.w,
-                //         child: getChooseList(
-                //                 (String choice) {}, _models2, _selectIndex2),
-                //       ),
-                //     ],
-                //   ),
+                // EditItemWidget(
+                //
+                //   title: '服务费比列',
+                //   canChange: false,
+                //   value: carAmountModel==null? '':'${double.parse(carAmountModel!.serviceFeeRate)  * 100}%' ,
+                //   callback: (String content) {},
+                //   endText: '元',
+                //
+                //
                 // ),
+                Container(
+                  padding: EdgeInsets.only(top: 30.w,bottom: 30.w),
+                  decoration: BoxDecoration(
+                      border:  Border(bottom:  BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.w),
+                        child: Text(
+                          '*  ',
+                          style: TextStyle(
+                            fontSize: 28.sp,
+                            color: const Color(0xFFE62222),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 170.w,
+                        child: Text(
+                          '付款方式',
+                          style: TextStyle(
+                            fontSize: 32.sp,
+                            color: BaseStyle.color333333,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50.w,
+                        child: getChooseList(
+                                (String choice) {
+
+                                }, _models1, _selectIndex1),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 40.w),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.w),
+                        child: Text(
+                          '*  ',
+                          style: TextStyle(
+                            fontSize: 28.sp,
+                            color: const Color(0xFFE62222),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 170.w,
+                        child: Text(
+                          '过户方式',
+                          style: TextStyle(
+                            fontSize: 32.sp,
+                            color: BaseStyle.color333333,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50.w,
+                        child: getChooseList(
+                                (String choice) {
+
+                                }, _models2, _selectIndex2),
+                      ),
+                    ],
+                  ),
+                ),
                 30.hb,
 
               ],
@@ -263,7 +261,6 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 30.w),
             height: 150.w,
-
             child:
             GestureDetector(
               onTap: (){
@@ -317,6 +314,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
               choices.add(index);
             }
             setState(() {});
+            callBack(models[choices.first]);
           },
           child: Container(
             width: 160.w,

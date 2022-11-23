@@ -285,74 +285,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                             setState(() {});
                           }),
                           _rewardWidget(),
-                          Container(
-                            width: double.infinity,
-                            height: 40.w,
-                            color: const Color(0xFFF6F6F6),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    30.wb,
-                                    Container(
-                                      padding: EdgeInsets.only(top: 20.w),
-                                      width: 150.w,
-                                      child: Text('备注',
-                                          style: TextStyle(
-                                            color: BaseStyle.color333333,
-                                            fontSize: BaseStyle.fontSize32,
-                                          )),
-                                    )
-                                  ],
-                                ),
-                                12.hb,
-                                Container(
-                                  margin:
-                                      EdgeInsets.symmetric(horizontal: 30.w),
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.w),
-                                      border: Border.all(
-                                          color: BaseStyle.colordddddd,
-                                          width: 2.w)),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 16.w, horizontal: 20.w),
-                                  height: 200.w,
-                                  child: TextField(
-                                    maxLines: 50,
-                                    keyboardType: TextInputType.text,
-                                    onEditingComplete: () {},
-                                    onChanged: (text) {
-                                      _publishCarInfo.value.remark = text;
-                                    },
-                                    style: TextStyle(
-                                      color: BaseStyle.color333333,
-                                      fontSize: BaseStyle.fontSize28,
-                                    ),
-                                    controller: _remarkController,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.zero,
-                                      filled: true,
-                                      isDense: true,
-                                      fillColor: Colors.white,
-                                      hintText: "请输入",
-                                      hintStyle: TextStyle(
-                                          color: Colors.grey.shade500,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w300),
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
-                                ),
-                                32.hb,
-                              ],
-                            ),
-                          ),
+
                           100.w.heightBox,
                           Padding(
                             padding: EdgeInsets.all(20.w),
@@ -415,14 +348,6 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
     );
 
-    // var version = _textarea(
-    //     '发动机号',
-    //     '请输入发动机号',
-    //     _publishCarInfo.engineNum??'',
-    //     _engineController,
-    //     (text) => setState(() {
-    //           _publishCarInfo.engineNum = _engineController.text;
-    //         }));
     var engineNum = EditItemWidget(
       title: '发动机号',
       tips: '请输入发动机号',
@@ -560,271 +485,315 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.w),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+     // padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           20.heightBox,
-          Text(
-            '车辆信息',
-            style: TextStyle(color: const Color(0xFF999999), fontSize: 36.w),
+          Container(
+            width: double.infinity,
+            color: const Color(0xFFF6F6F6),
+            padding: EdgeInsets.symmetric(vertical: 24.w,horizontal: 32.w),
+            child:  Text(
+              '车辆信息',
+              style: TextStyle(color: const Color(0xFF999999), fontSize: 36.w),
+            ),
           ),
-          _function(
-            '车辆来源',
-            () async {
-              await showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(16.w))),
-                builder: (context) {
-                  return CloudListPickerWidget(
-                      title: '车辆来源',
-                      items: carSourceList,
-                      onConfirm: (str, index) {
-                        _publishCarInfo.value.carSource = index;
-                        Get.back();
-                        setState(() {});
-                      });
-                },
-              );
-            },
-            _publishCarInfo.value.carSourceEM.typeStr,
-            '请选择',
-          ),
-          _publishCarInfo.value.carSource == 2 ||
-                  _publishCarInfo.value.carSource == 3
-              ? _function(
+
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              children: [
+                _function(
+                  '车辆来源',
+                      () async {
+                    await showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16.w))),
+                      builder: (context) {
+                        return CloudListPickerWidget(
+                            title: '车辆来源',
+                            items: carSourceList,
+                            onConfirm: (str, index) {
+                              _publishCarInfo.value.carSource = index;
+                              Get.back();
+                              setState(() {});
+                            });
+                      },
+                    );
+                  },
+                  _publishCarInfo.value.carSourceEM.typeStr,
+                  '请选择',
+                ),
+                _function(
                   '所属门店',
-                  () async {
+                      () async {
                     ///需要新接口
                     Get.to(() => ChooseShopPage(
-                          callback: (StoreModel model) {
-                            _publishCarInfo.value.carShop = model.name;
-                            _publishCarInfo.value.carShopId = model.id;
-                            setState(() {});
-                          },
-                        ));
+                      callback: (StoreModel model) {
+                        _publishCarInfo.value.carShop = model.name;
+                        _publishCarInfo.value.carShopId = model.id;
+                        setState(() {});
+                      },
+                    ));
                     setState(() {});
                   },
                   _publishCarInfo.value.carShop,
                   '请选择',
-                )
-              : const SizedBox(),
-          _function(
-            '车辆类型',
-            () async {
-              await showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(16.w))),
-                builder: (context) {
-                  return CloudListPickerWidget(
-                      title: '车辆类型',
-                      items: carTypeList,
-                      onConfirm: (str, index) {
-                        _publishCarInfo.value.carType = index;
+                ),
+                _function(
+                  '车辆类型',
+                      () async {
+                    await showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16.w))),
+                      builder: (context) {
+                        return CloudListPickerWidget(
+                            title: '车辆类型',
+                            items: carTypeList,
+                            onConfirm: (str, index) {
+                              _publishCarInfo.value.carType = index;
 
+                              Get.back();
+                              setState(() {});
+                            });
+                      },
+                    );
+                  },
+                  _publishCarInfo.value.carTypeEM.typeStr,
+                  '请选择',
+                ),
+                _function(
+                  '品牌车型',
+                      () async {
+                    await Get.to(() => ChooseCarPage(
+                      callback: () {
                         Get.back();
-                        setState(() {});
-                      });
-                },
-              );
-            },
-            _publishCarInfo.value.carTypeEM.typeStr,
-            '请选择',
-          ),
-          _function(
-            '品牌车型',
-            () async {
-              await Get.to(() => ChooseCarPage(
-                    callback: () {
-                      Get.back();
-                      _publishCarInfo.value.carName = _pickCar.value.car.name;
-                      _publishCarInfo.value.carModelId =
-                          _pickCar.value.car.modelId;
-                      _publishCarInfo.value.newCarPrice =
-                          _pickCar.value.car.guidePrice;
-                      _newCarPriceController.text =
-                          _pickCar.value.car.guidePrice;
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
-                    pickCar: _pickCar,
-                  ));
-              setState(() {});
-            },
-            _publishCarInfo.value.carName,
-            '请输入具体车型',
-          ),
-          vinNum,
-          engineNum,
-          _function(
-            '首次上牌',
-            () async {
-              var firstDate = await CarDatePicker.monthPicker(DateTime.now());
-              // await CarDatePicker.calenderPicker(
-              //     DateTime(1960), DateTime.now());
-              _publishCarInfo.value.licensingDate = firstDate;
-              FocusManager.instance.primaryFocus?.unfocus();
-              setState(() {});
-            },
-            _publishCarInfo.value.licensingDateStr,
-            '选择首次上牌时间',
-          ),
-          _function(
-            '车身颜色',
-            () async {
-              await showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius:
+                        _publishCarInfo.value.carName = _pickCar.value.car.name;
+                        _publishCarInfo.value.carModelId =
+                            _pickCar.value.car.modelId;
+                        _publishCarInfo.value.newCarPrice =
+                            _pickCar.value.car.guidePrice;
+                        _newCarPriceController.text =
+                            _pickCar.value.car.guidePrice;
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      },
+                      pickCar: _pickCar,
+                    ));
+                    setState(() {});
+                  },
+                  _publishCarInfo.value.carName,
+                  '请输入具体车型',
+                ),
+                vinNum,
+                engineNum,
+                _function(
+                  '首次上牌',
+                      () async {
+                    var firstDate = await CarDatePicker.monthPicker(DateTime.now());
+                    // await CarDatePicker.calenderPicker(
+                    //     DateTime(1960), DateTime.now());
+                    _publishCarInfo.value.licensingDate = firstDate;
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    setState(() {});
+                  },
+                  _publishCarInfo.value.licensingDateStr,
+                  '选择首次上牌时间',
+                ),
+                _function(
+                  '车身颜色',
+                      () async {
+                    await showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16.w))),
+                      builder: (context) {
+                        return CloudGridPickerWidget(
+                            title: '车身颜色',
+                            items: colorList.map((e) => e.name).toList(),
+                            onConfirm: (strList, indexList) {
+                              if (strList.isNotEmpty) {
+                                _publishCarInfo.value.carColor = strList.first;
+                                Get.back();
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                setState(() {});
+                              }
+                            });
+                      },
+                    );
+                  },
+                  _publishCarInfo.value.carColor,
+                  '请输入车身颜色',
+                ),
+
+                _function('内饰颜色', () async {
+                  await showModalBottomSheet(
+                    context: context,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
                         BorderRadius.vertical(top: Radius.circular(16.w))),
-                builder: (context) {
-                  return CloudGridPickerWidget(
-                      title: '车身颜色',
-                      items: colorList.map((e) => e.name).toList(),
-                      onConfirm: (strList, indexList) {
-                        if (strList.isNotEmpty) {
-                          _publishCarInfo.value.carColor = strList.first;
-                          Get.back();
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          setState(() {});
-                        }
-                      });
-                },
-              );
-            },
-            _publishCarInfo.value.carColor,
-            '请输入车身颜色',
+                    builder: (context) {
+                      return CloudGridPickerWidget(
+                          title: '内饰颜色',
+                          items: interColorList.map((e) => e.name).toList(),
+                          onConfirm: (strList, indexList) {
+                            if (strList.isNotEmpty) {
+                              _publishCarInfo.value.carDecorativeColor =
+                                  strList.first;
+                              Get.back();
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              setState(() {});
+                            }
+                          });
+                    },
+                  );
+                }, _publishCarInfo.value.carDecorativeColor, '请选择', topIcon: false),
+                _function(
+                  '所在地',
+                      () async {
+                    await Get.to(() => ChooseCityPage(
+                      callback: (ChinaRegionModel model) {
+                        _publishCarInfo.value.locationCity = model.name;
+                        _publishCarInfo.value.locationCityId = model.id;
+                        setState(() {});
+                      },
+                    ));
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    setState(() {});
+                  },
+                  _publishCarInfo.value.locationCity,
+                  '请选择',
+                ),
+                _function(
+                  '上牌地',
+                      () async {
+                    await Get.to(() => ChooseCityPage(
+                      callback: (ChinaRegionModel model) {
+                        _publishCarInfo.value.attribution = model.name;
+                        _publishCarInfo.value.attributionId = model.id;
+                        setState(() {});
+                      },
+                    ));
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    setState(() {});
+                  },
+                  _publishCarInfo.value.attribution,
+                  '请选择',
+                ),
+
+
+                _function(
+                  '使用性质',
+                      () async {
+                    await showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16.w))),
+                      builder: (context) {
+                        return CloudListPickerWidget(
+                            title: '使用性质',
+                            items: natureOfUseList,
+                            onConfirm: (str, index) {
+                              _publishCarInfo.value.natureOfUse = index;
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              Get.back();
+                              setState(() {});
+                            });
+                      },
+                    );
+                  },
+                  _publishCarInfo.value.natureOfUseEM.typeStr,
+                  '请选择',
+                ),
+                mile,
+                carNum,
+                carParkingNum,
+                _function('库存状态', () async {
+                  await showModalBottomSheet(
+                    context: context,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(16.w))),
+                    builder: (context) {
+                      return CloudListPickerWidget(
+                          title: '库存状态',
+                          items: carStockStatusList,
+                          onConfirm: (str, index) {
+                            _publishCarInfo.value.carStockStatus = index;
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            Get.back();
+                            setState(() {});
+                          });
+                    },
+                  );
+                }, _publishCarInfo.value.carStockStatusEM.typeStr, '请选择',
+                    topIcon: false),
+                newCarPrice,
+                purchaseTax,
+                retrofittingFee,
+              ],
+            ),
           ),
 
-          _function('内饰颜色', () async {
-            await showModalBottomSheet(
-              context: context,
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(16.w))),
-              builder: (context) {
-                return CloudGridPickerWidget(
-                    title: '内饰颜色',
-                    items: interColorList.map((e) => e.name).toList(),
-                    onConfirm: (strList, indexList) {
-                      if (strList.isNotEmpty) {
-                        _publishCarInfo.value.carDecorativeColor =
-                            strList.first;
-                        Get.back();
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        setState(() {});
-                      }
-                    });
-              },
-            );
-          }, _publishCarInfo.value.carDecorativeColor, '请选择', topIcon: false),
-          carNum,
-          carParkingNum,
-          _function('库存状态', () async {
-            await showModalBottomSheet(
-              context: context,
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(16.w))),
-              builder: (context) {
-                return CloudListPickerWidget(
-                    title: '库存状态',
-                    items: carStockStatusList,
-                    onConfirm: (str, index) {
-                      _publishCarInfo.value.carStockStatus = index;
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      Get.back();
-                      setState(() {});
-                    });
-              },
-            );
-          }, _publishCarInfo.value.carStockStatusEM.typeStr, '请选择',
-              topIcon: false),
-          _function(
-            '使用性质',
-            () async {
-              await showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(16.w))),
-                builder: (context) {
-                  return CloudListPickerWidget(
-                      title: '使用性质',
-                      items: natureOfUseList,
-                      onConfirm: (str, index) {
-                        _publishCarInfo.value.natureOfUse = index;
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        Get.back();
-                        setState(() {});
-                      });
-                },
-              );
-            },
-            _publishCarInfo.value.natureOfUseEM.typeStr,
-            '请选择',
-          ),
-          mile,
-          _function('出厂日期', () async {
-            // var firstDate = await CarDatePicker.calenderPicker(
-            //     DateTime(1960), DateTime.now());
-            var firstDate = await CarDatePicker.monthPicker(DateTime.now());
-            _publishCarInfo.value.productionDate = firstDate;
-            FocusManager.instance.primaryFocus?.unfocus();
-            setState(() {});
-          }, _publishCarInfo.value.productionDateStr, '请选择', topIcon: false),
-          newCarPrice,
-          purchaseTax,
-          retrofittingFee,
-          _function(
-            '所在地',
-            () async {
-              await Get.to(() => ChooseCityPage(
-                    callback: (ChinaRegionModel model) {
-                      _publishCarInfo.value.locationCity = model.name;
-                      _publishCarInfo.value.locationCityId = model.id;
-                      setState(() {});
-                    },
-                  ));
-              FocusManager.instance.primaryFocus?.unfocus();
-              setState(() {});
-            },
-            _publishCarInfo.value.locationCity,
-            '选择所在地区',
-          ),
-          _function('环保等级', () async {
-            await showModalBottomSheet(
-              context: context,
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(16.w))),
-              builder: (context) {
-                return CloudGridPickerWidget(
-                    title: '环保等级',
-                    items: emission.map((e) => e.name).toList(),
-                    onConfirm: (strList, indexList) {
-                      if (strList.isNotEmpty) {
-                        _publishCarInfo.value.environmentalLevel =
-                            strList.first;
-                        Get.back();
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        setState(() {});
-                      }
-                    });
-              },
-            );
-          }, _publishCarInfo.value.environmentalLevel, '请选择'),
+
+
+
+          // _function('出厂日期', () async {
+          //   // var firstDate = await CarDatePicker.calenderPicker(
+          //   //     DateTime(1960), DateTime.now());
+          //   var firstDate = await CarDatePicker.monthPicker(DateTime.now());
+          //   _publishCarInfo.value.productionDate = firstDate;
+          //   FocusManager.instance.primaryFocus?.unfocus();
+          //   setState(() {});
+          // }, _publishCarInfo.value.productionDateStr, '请选择', topIcon: false),
+
+
+          // _function('环保等级', () async {
+          //   await showModalBottomSheet(
+          //     context: context,
+          //     shape: RoundedRectangleBorder(
+          //         borderRadius:
+          //             BorderRadius.vertical(top: Radius.circular(16.w))),
+          //     builder: (context) {
+          //       return CloudGridPickerWidget(
+          //           title: '环保等级',
+          //           items: emission.map((e) => e.name).toList(),
+          //           onConfirm: (strList, indexList) {
+          //             if (strList.isNotEmpty) {
+          //               _publishCarInfo.value.environmentalLevel =
+          //                   strList.first;
+          //               Get.back();
+          //               FocusManager.instance.primaryFocus?.unfocus();
+          //               setState(() {});
+          //             }
+          //           });
+          //     },
+          //   );
+          // }, _publishCarInfo.value.environmentalLevel, '请选择'),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                width: double.infinity,
+                color: const Color(0xFFF6F6F6),
+                padding: EdgeInsets.symmetric(vertical: 24.w,horizontal: 32.w),
+                child:  Text(
+                  '车况描述',
+                  style: TextStyle(color: const Color(0xFF999999), fontSize: 36.w),
+                ),
+              ),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 50.w, right: 5.w),
+                    margin: EdgeInsets.only(top: 30.w, left: 20.w),
                     child: Text(
                       '*',
                       style: TextStyle(
@@ -834,62 +803,69 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                     ),
                   ),
                   10.wb,
-                  Container(
-                    padding: EdgeInsets.only(top: 32.w),
-                    width: 150.w,
-                    child: Text('车况描述',
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(right: 20.w,top: 25.w),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.w),
+                          border:
+                          Border.all(color: BaseStyle.colordddddd, width: 2.w)),
+                      padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
+                      height: 200.w,
+                      child: TextField(
+                        maxLines: 50,
+                        keyboardType: TextInputType.text,
+                        onEditingComplete: () {},
+                        onChanged: (text) {
+                          _publishCarInfo.value.carDescription = text;
+                        },
                         style: TextStyle(
                           color: BaseStyle.color333333,
-                          fontSize: BaseStyle.fontSize32,
-                        )),
-                  )
+                          fontSize: BaseStyle.fontSize28,
+                        ),
+                        controller: _carDescriptionController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          filled: true,
+                          isDense: true,
+                          fillColor: Colors.white,
+                          hintText: "请输入",
+                          hintStyle: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               12.hb,
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 30.w),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.w),
-                    border:
-                        Border.all(color: BaseStyle.colordddddd, width: 2.w)),
-                padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
-                height: 200.w,
-                child: TextField(
-                  maxLines: 50,
-                  keyboardType: TextInputType.text,
-                  onEditingComplete: () {},
-                  onChanged: (text) {
-                    _publishCarInfo.value.carDescription = text;
-                  },
-                  style: TextStyle(
-                    color: BaseStyle.color333333,
-                    fontSize: BaseStyle.fontSize28,
-                  ),
-                  controller: _carDescriptionController,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.zero,
-                    filled: true,
-                    isDense: true,
-                    fillColor: Colors.white,
-                    hintText: "请输入",
-                    hintStyle: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300),
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
+
               32.hb,
             ],
           ),
-          Text(
-            '价格信息',
-            style: TextStyle(color: const Color(0xFF999999), fontSize: 36.w),
+          Container(
+            width: double.infinity,
+            color: const Color(0xFFF6F6F6),
+            padding: EdgeInsets.symmetric(vertical: 24.w,horizontal: 32.w),
+            child:  Text(
+              '采购信息',
+              style: TextStyle(color: const Color(0xFF999999), fontSize: 36.w),
+            ),
           ),
-          wholesalePrice,
-          salePrice,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              children: [
+                wholesalePrice,
+                salePrice,
+              ],
+            ),
+          ),
+
           // _publishCarInfo.value.carSource==2||_publishCarInfo.value.carSource==3?
           // Column(
           //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -964,57 +940,133 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           //     ),
           //   ],
           // ):const SizedBox(),
-          32.hb,
-          Text(
-            '牌证信息',
-            style: TextStyle(color: const Color(0xFF999999), fontSize: 36.w),
+          // Text(
+          //   '牌证信息',
+          //   style: TextStyle(color: const Color(0xFF999999), fontSize: 36.w),
+          // ),
+          Container(
+            width: double.infinity,
+            color: const Color(0xFFF6F6F6),
+            padding: EdgeInsets.symmetric(vertical: 24.w,horizontal: 32.w),
+            child:  Text(
+              '牌证信息',
+              style: TextStyle(color: const Color(0xFF999999), fontSize: 36.w),
+            ),
           ),
-          transferNum,
-          keyCount,
-          _showSelect(
-              _publishCarInfo.value.haveCompulsoryInsurance ?? -1, '交强险',
-              (choose) {
-            FocusManager.instance.primaryFocus?.unfocus();
-            if (choose != -1) {
-              _publishCarInfo.value.haveCompulsoryInsurance = choose;
-            } else {
-              _publishCarInfo.value.haveCompulsoryInsurance = null;
-            }
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              children: [
+                transferNum,
+                keyCount,
+                _showSelect(
+                    _publishCarInfo.value.haveCompulsoryInsurance ?? -1, '交强险',
+                        (choose) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      if (choose != -1) {
+                        _publishCarInfo.value.haveCompulsoryInsurance = choose;
+                      } else {
+                        _publishCarInfo.value.haveCompulsoryInsurance = null;
+                      }
 
-            setState(() {});
-          }),
-          _function('交强险到期', () async {
-            // var firstDate = await CarDatePicker.calenderPicker(
-            //     DateTime(1960), DateTime(DateTime.now().year + 100));
-            var firstDate = await CarDatePicker.monthPicker(DateTime.now(),add: 100);
-            _publishCarInfo.value.compulsoryInsuranceDate = firstDate;
-            FocusManager.instance.primaryFocus?.unfocus();
-            setState(() {});
-          }, _publishCarInfo.value.compulsoryInsuranceDateStr, '请选择日期',
-              topIcon: false),
-          _showSelect(
-              _publishCarInfo.value.haveCommercialInsurance ?? -1, '商业险',
-              (choose) {
-            FocusManager.instance.primaryFocus?.unfocus();
-            if (choose != -1) {
-              _publishCarInfo.value.haveCommercialInsurance = choose;
-            } else {
-              _publishCarInfo.value.haveCommercialInsurance = null;
-            }
+                      setState(() {});
+                    }),
+                _function('交强险到期', () async {
+                  // var firstDate = await CarDatePicker.calenderPicker(
+                  //     DateTime(1960), DateTime(DateTime.now().year + 100));
+                  var firstDate = await CarDatePicker.monthPicker(DateTime.now(),add: 100);
+                  _publishCarInfo.value.compulsoryInsuranceDate = firstDate;
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  setState(() {});
+                }, _publishCarInfo.value.compulsoryInsuranceDateStr, '请选择日期',
+                    topIcon: false),
+                _showSelect(
+                    _publishCarInfo.value.haveCommercialInsurance ?? -1, '商业险',
+                        (choose) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      if (choose != -1) {
+                        _publishCarInfo.value.haveCommercialInsurance = choose;
+                      } else {
+                        _publishCarInfo.value.haveCommercialInsurance = null;
+                      }
 
-            setState(() {});
-          }),
-          _function('商业险到期', () async {
-            // var firstDate = await CarDatePicker.calenderPicker(
-            //     DateTime(1960), DateTime(DateTime.now().year + 100));
-            var firstDate = await CarDatePicker.monthPicker(DateTime.now(),add: 100);
-            _publishCarInfo.value.commercialInsuranceDate = firstDate;
-            FocusManager.instance.primaryFocus?.unfocus();
-            setState(() {});
-          }, _publishCarInfo.value.commercialInsuranceDateStr, '请选择日期',
-              topIcon: false),
+                      setState(() {});
+                    }),
+                _function('商业险到期', () async {
+                  // var firstDate = await CarDatePicker.calenderPicker(
+                  //     DateTime(1960), DateTime(DateTime.now().year + 100));
+                  var firstDate = await CarDatePicker.monthPicker(DateTime.now(),add: 100);
+                  _publishCarInfo.value.commercialInsuranceDate = firstDate;
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  setState(() {});
+                }, _publishCarInfo.value.commercialInsuranceDateStr, '请选择日期',
+                    topIcon: false),
 
-          commercialInsurancePrice,
+                commercialInsurancePrice,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        30.wb,
+                        Container(
+                          padding: EdgeInsets.only(top: 20.w),
+                          width: 150.w,
+                          child: Text('备注',
+                              style: TextStyle(
+                                color: BaseStyle.color333333,
+                                fontSize: BaseStyle.fontSize32,
+                              )),
+                        )
+                      ],
+                    ),
+                    12.hb,
+                    Container(
+                      margin:
+                      EdgeInsets.symmetric(horizontal: 30.w),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.w),
+                          border: Border.all(
+                              color: BaseStyle.colordddddd,
+                              width: 2.w)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 16.w, horizontal: 20.w),
+                      height: 200.w,
+                      child: TextField(
+                        maxLines: 50,
+                        keyboardType: TextInputType.text,
+                        onEditingComplete: () {},
+                        onChanged: (text) {
+                          _publishCarInfo.value.remark = text;
+                        },
+                        style: TextStyle(
+                          color: BaseStyle.color333333,
+                          fontSize: BaseStyle.fontSize28,
+                        ),
+                        controller: _remarkController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          filled: true,
+                          isDense: true,
+                          fillColor: Colors.white,
+                          hintText: "请输入",
+                          hintStyle: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    32.hb,
+                  ],
+                ),
+              ],
+            ),
+          ),
+
         ],
       ),
     );
@@ -1354,6 +1406,12 @@ class NewPublishCarInfo {
   /// 所在地区id
   int? locationCityId;
 
+  ///上牌地
+  String? attribution;
+
+  /// 所在地区id
+  int? attributionId;
+
   ///环保等级
   String? environmentalLevel;
 
@@ -1521,22 +1579,3 @@ class NewPublishCarInfo {
       this.wholesalePrice});
 }
 
-final TextEditingController ownerNameController = TextEditingController();
-final TextEditingController ownerIdController = TextEditingController();
-final TextEditingController phoneNumController = TextEditingController();
-final TextEditingController bankNumController = TextEditingController();
-final TextEditingController signingAddressController = TextEditingController();
-
-final TextEditingController transactionAmountController =
-    TextEditingController();
-final TextEditingController depositAmountController = TextEditingController();
-final TextEditingController downPaymentAmountController =
-    TextEditingController();
-final TextEditingController balanceAmountBackupController =
-    TextEditingController();
-
-final TextEditingController deliveryPlaceController = TextEditingController();
-final TextEditingController transferTaxController = TextEditingController();
-final TextEditingController handlingFeeController = TextEditingController();
-final TextEditingController serviceChargeController = TextEditingController();
-final TextEditingController remarkController = TextEditingController();

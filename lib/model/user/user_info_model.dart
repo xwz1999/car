@@ -13,12 +13,12 @@ class UserInfoModel extends Equatable {
   final String phone;
   final int gender;
   final ExtraData data;
-  final StoreInfo store;
+  final Business business;
   final Partner partner;
 
-
-  final int businessId; // 1= 云云问车 2=其他
-  final String businessName;
+  //
+  // final int businessId; // 1= 云云问车 2=其他
+  // final String businessName;
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);
@@ -32,21 +32,20 @@ class UserInfoModel extends Equatable {
       level: 0,
       phone: '',
       gender: 0,
-      businessId: 0,
-      businessName: '',
+      // businessId: 0,
+      // businessName: '',
       data: ExtraData(
         assessCount: 0,
         inviteCount: 0,
         balance: '',
       ),
-      store: StoreInfo(storeName: '', roleName: '', roleId: 0), partner: Partner(expireDate: 0, isPartner: 0));
+      business: Business(storeName: '', roleName: '', roleId: 0,businessId: 0,businessName: '',storeId: 0), partner: Partner(expireDate: 0, isPartner: 0));
 
   PermissionLevel get levelEM => PermissionLevel.getValue(level);
 
   Gender get genderEM => Gender.getValue(gender);
 
-  BusinessAscription get businessAscription =>
-      BusinessAscription.getValue(businessId);
+
 
   @override
   List<Object?> get props => [
@@ -57,8 +56,8 @@ class UserInfoModel extends Equatable {
         phone,
         gender,
         data,
-        store,
-        businessId
+        business,
+        // businessId
       ];
 
   const UserInfoModel({
@@ -69,10 +68,10 @@ class UserInfoModel extends Equatable {
     required this.phone,
     required this.gender,
     required this.data,
-    required this.store,
-    required this.businessId,
-    required this.businessName,
-  required this.partner
+    required this.business,
+    // required this.businessId,
+    // required this.businessName,
+    required this.partner,
   });
 
   UserInfoModel copyWith({
@@ -83,9 +82,11 @@ class UserInfoModel extends Equatable {
     String? phone,
     int? gender,
     ExtraData? data,
-    StoreInfo? store,
-    int? businessId,
-    String? businessName, Partner? partner
+    Business? business,
+    //
+    // int? businessId,
+    // String? businessName,
+    Partner? partner
   }) {
     return UserInfoModel(
       inviteCode: inviteCode ?? this.inviteCode,
@@ -95,9 +96,10 @@ class UserInfoModel extends Equatable {
       phone: phone ?? this.phone,
       gender: gender ?? this.gender,
       data: data ?? this.data,
-      store: store ?? this.store,
-      businessId: businessId ?? this.businessId,
-      businessName: businessName ?? this.businessName, partner: partner??this.partner,
+      business: business ?? this.business,
+      // businessId: businessId ?? this.businessId,
+      // businessName: businessName ?? this.businessName,
+      partner: partner??this.partner,
     );
   }
 }
@@ -148,18 +150,27 @@ class ExtraData extends Equatable {
 }
 
 @JsonSerializable()
-class StoreInfo extends Equatable {
+class Business extends Equatable {
   final String storeName;
   final String roleName;
+  final String businessName;
   final int roleId;
+  final int storeId;
+  final int businessId;
 
-  const StoreInfo({
+  const Business({
     required this.storeName,
     required this.roleName,
+    required this.businessName,
     required this.roleId,
+    required this.storeId,
+    required this.businessId,
   });
 
-  factory StoreInfo.fromJson(Map<String, dynamic> json) =>
+  BusinessAscription get businessAscription =>
+      BusinessAscription.getValue(businessId);
+
+  factory Business.fromJson(Map<String, dynamic> json) =>
       _$StoreInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$StoreInfoToJson(this);
@@ -167,5 +178,5 @@ class StoreInfo extends Equatable {
   Role get roleEM => Role.getValueN(roleId);
 
   @override
-  List<Object?> get props => [storeName, roleName, roleId];
+  List<Object?> get props => [storeName, roleName, roleId,businessName,storeId,businessId];
 }

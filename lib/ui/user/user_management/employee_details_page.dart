@@ -28,10 +28,10 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   bool get _deletePermission {
     var userRole = UserTool.userProvider.userInfo;
 
-    return (userRole.store.roleEM == Role.defaultRole) ||
-        (userRole.store.roleEM == Role.manager &&
-            staffInfo?.roleId != userRole.store.roleId &&
-            userRole.store.storeName == staffInfo?.storeName);
+    return (userRole.business.roleEM == Role.defaultRole) ||
+        (userRole.business.roleEM == Role.manager &&
+            staffInfo?.roleId != userRole.business.roleId &&
+            userRole.business.storeName == staffInfo?.storeName);
   }
 
   @override

@@ -33,7 +33,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
   TitleScreenControl screenControl1 = TitleScreenControl();
   List<Widget> listWidget = []; //创建方法列表
   List<ChooseItem> get _sortList =>
-      UserTool.userProvider.userInfo.businessAscription ==
+      UserTool.userProvider.userInfo.business.businessAscription ==
               BusinessAscription.normal
           ? [
               ChooseItem(name: '售车订单'),

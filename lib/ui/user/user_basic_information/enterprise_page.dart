@@ -56,7 +56,7 @@ class _EnterprisePageState extends State<EnterprisePage> {
                   '门店',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                trailing: Text(UserTool.userProvider.userInfo.store.storeName,
+                trailing: Text(UserTool.userProvider.userInfo.business.storeName,
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2
@@ -69,7 +69,7 @@ class _EnterprisePageState extends State<EnterprisePage> {
                   '部门',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                trailing: Text(UserTool.userProvider.userInfo.store.roleName,
+                trailing: Text(UserTool.userProvider.userInfo.business.roleName,
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2

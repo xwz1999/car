@@ -8,7 +8,7 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_image_preview_list.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
-import 'package:dotted_border/dotted_border.dart';
+// import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';

@@ -15,9 +15,9 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String,
       gender: json['gender'] as int,
       data: ExtraData.fromJson(json['data'] as Map<String, dynamic>),
-      store: StoreInfo.fromJson(json['store'] as Map<String, dynamic>),
-      businessId: json['businessId'] as int,
-      businessName: json['businessName'] as String,
+      business: Business.fromJson(json['business'] as Map<String, dynamic>),
+      // businessId: json['businessId'] as int,
+      // businessName: json['businessName'] as String,
       partner: Partner.fromJson(json['partner'] as Map<String, dynamic>),
     );
 
@@ -30,10 +30,10 @@ Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
       'phone': instance.phone,
       'gender': instance.gender,
       'data': instance.data,
-      'store': instance.store,
+      'business': instance.business,
       'partner': instance.partner,
-      'businessId': instance.businessId,
-      'businessName': instance.businessName,
+      // 'businessId': instance.businessId,
+      // 'businessName': instance.businessName,
     };
 
 Partner _$PartnerFromJson(Map<String, dynamic> json) => Partner(
@@ -58,14 +58,20 @@ Map<String, dynamic> _$ExtraDataToJson(ExtraData instance) => <String, dynamic>{
       'inviteCount': instance.inviteCount,
     };
 
-StoreInfo _$StoreInfoFromJson(Map<String, dynamic> json) => StoreInfo(
+Business _$StoreInfoFromJson(Map<String, dynamic> json) => Business(
       storeName: json['storeName'] as String,
       roleName: json['roleName'] as String,
       roleId: json['roleId'] as int,
+      businessName: json['businessName'] as String,
+      storeId: json['storeId'] as int,
+      businessId: json['businessId'] as int,
     );
 
-Map<String, dynamic> _$StoreInfoToJson(StoreInfo instance) => <String, dynamic>{
+Map<String, dynamic> _$StoreInfoToJson(Business instance) => <String, dynamic>{
       'storeName': instance.storeName,
       'roleName': instance.roleName,
+      'businessName':instance.businessName,
       'roleId': instance.roleId,
+      'storeId': instance.storeId,
+      'businessId': instance.businessId,
     };

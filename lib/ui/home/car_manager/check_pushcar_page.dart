@@ -142,7 +142,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            if (UserTool.userProvider.userInfo.businessId ==
+                            if (UserTool.userProvider.userInfo.business.businessId ==
                                 1) {
                               ///车商发布车辆
                               Get.to(() => CarPicturePage(
@@ -163,7 +163,7 @@ class _CheckPushPageState extends State<CheckPushPage> {
                                 MaterialStateProperty.all(Colors.blue),
                           ),
                           child: Text(
-                            UserTool.userProvider.userInfo.businessAscription!=BusinessAscription.yywc
+                            UserTool.userProvider.userInfo.business.businessAscription!=BusinessAscription.yywc
                                 ? '发起合同'
                                 : '发布车辆',
                             style: TextStyle(

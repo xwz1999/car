@@ -46,6 +46,11 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
 
   CustomerListModel? customerListModel;
 
+  final List _models1 = ['微信小程序','其他'];
+
+
+  final List<int> _selectIndex1 = [];
+
   @override
   void initState() {
     _editingController = TextEditingController();
@@ -162,6 +167,53 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+              //   EditItemWidget(
+              //   title: '客户来源',
+              //   topIcon: false,
+              //   value: widget.contractModel.value.origin ?? '',
+              //   callback: (String content) {
+              //     widget.contractModel.value.origin = content;
+              //   },
+              // ),
+                Container(
+                  padding: EdgeInsets.only(top: 30.w,bottom: 30.w),
+                  decoration: BoxDecoration(
+                      border:  Border(bottom:  BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.w),
+                        child: Text(
+                          '*  ',
+                          style: TextStyle(
+                            fontSize: 28.sp,
+                            color: const Color(0xFFE62222),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 170.w,
+                        child: Text(
+                          '客户来源',
+                          style: TextStyle(
+                            fontSize: 32.sp,
+                            color: BaseStyle.color333333,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50.w,
+                        child: getChooseList(
+                                (String choice) {
+                                  widget.contractModel.value.origin = choice;
+                                }, _models1, _selectIndex1),
+                      ),
+                    ],
+                  ),
+                ),
+
                 getContentItem('客户', '请选择', path: Assets.icons.icGoto.path),
                 EditItemWidget(
                   title: '手机号',
@@ -188,14 +240,7 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                     widget.contractModel.value.cardNo = content;
                   },
                 ),
-                EditItemWidget(
-                  title: '客户来源',
-                  topIcon: false,
-                  value: widget.contractModel.value.origin ?? '',
-                  callback: (String content) {
-                    widget.contractModel.value.origin = content;
-                  },
-                ),
+
                 EditItemWidget(
                   title: '地址',
                   value: widget.contractModel.value.address ?? "",
@@ -490,6 +535,7 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                       choices.add(index);
                     }
                     setState(() {});
+                    callBack(models[choices.first]);
                   },
                   child: Container(
                     width: 160.w,

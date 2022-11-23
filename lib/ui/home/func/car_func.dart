@@ -230,7 +230,7 @@ class CarFunc {
       'Maintain': carInfo.maintain,
       'vin': carInfo.vin,
       'engineNo': carInfo.engineNo,
-      'source': UserTool.userProvider.userInfo.businessId == 1 ? 1 : 2,
+      'source': UserTool.userProvider.userInfo.business.businessId == 1 ? 1 : 2,
       'shamMileage': carInfo.shamMileage
     });
 

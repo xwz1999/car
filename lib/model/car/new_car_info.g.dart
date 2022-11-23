@@ -10,7 +10,7 @@ NewCarInfo _$NewCarInfoFromJson(Map<String, dynamic> json) => NewCarInfo(
       carInfo: CarNewInfo.fromJson(json['carInfo'] as Map<String, dynamic>),
       isSelf: json['isSelf'] as int,
       isSelfStore: json['isSelfStore'] as int,
-      isSelfBusiness: json['IsSelfBusiness'] as int,
+      isSelfBusiness: json['isSelfBusiness'] as int,
     );
 
 Map<String, dynamic> _$NewCarInfoToJson(NewCarInfo instance) =>
@@ -42,7 +42,7 @@ CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
       temporaryLicensePlate: json['temporaryLicensePlate'] as String,
       parkingNo: json['parkingNo'] as int,
       useCharacter: json['useCharacter'] as String,
-      mileage: json['Mileage'] as String,
+      mileage: json['mileage'] as String,
       newCarGuidePrice: json['newCarGuidePrice'] as String,
       purchaseTax: json['purchaseTax'] as String,
       installationCost: json['installationCost'] as String,
