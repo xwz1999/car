@@ -18,4 +18,7 @@ class UserTool {
 
   static MyAppStyle get myAppStyle =>
       Theme.of(Get.context!).extension<MyAppStyle>()!;
+
 }
+
+

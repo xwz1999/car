@@ -1,3 +1,4 @@
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/poster/poster_list_model.dart';
 import 'package:cloud_car/providers/user_provider.dart';
@@ -12,11 +13,16 @@ import 'package:cloud_car/ui/home/search_page.dart';
 import 'package:cloud_car/ui/home/share/share_home_page.dart';
 import 'package:cloud_car/ui/home/split_account/split_account_page.dart';
 import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
+import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
+import 'package:cloud_car/ui/user/user_order/myorder_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/share_util.dart';
+import 'package:cloud_car/utils/user_tool.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/cloud_avatar_widget.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:cloud_car/widget/jurisdiction_toast.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -64,7 +70,7 @@ class _HomePageState extends State<HomePage>
         .add(KingCoin(name: '车辆寄卖', url: Assets.icons.carConsignment.path));
     _kingCoinList.add(KingCoin(name: '车辆发布', url: Assets.icons.carPush.path));
     _kingCoinList
-        .add(KingCoin(name: '车辆按揭', url: Assets.icons.carMortgage.path));
+        .add(KingCoin(name: '车险报价', url: Assets.icons.carMortgage.path));
     _kingCoinList.add(KingCoin(name: '车辆收购', url: Assets.icons.carCquisition.path));
     _kingCoinList
         .add(KingCoin(name: '维保查询', url: Assets.icons.carMaintain.path));
@@ -190,22 +196,44 @@ class _HomePageState extends State<HomePage>
       onTap: () {
         switch (name) {
           case '车辆管理':
-            Get.to(() => const CarManagerPage());
+            if(UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal){
+              Alert.show(context, const JurisdictionToast());
+            }else{
+              Get.to(() => const CarManagerPage());
+            }
             break;
           case '客户管理':
-            Get.to(() => const UserManagerPage());
+            if(UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal){
+              Alert.show(context, const JurisdictionToast());
+            }else{
+              Get.to(() => const UserManagerPage());
+            }
+
             break;
           case '车辆发布':
-            //Get.to(() => const PushCarPage());
-            Get.to(() => const NewPushCarPage());
+
+            if(UserTool.userProvider.userInfo.business.roleEM == Role.manager){
+              Get.to(() => const NewPushCarPage());
+
+            }else{
+              Alert.show(context, const JurisdictionToast(type: 2,));
+            }
+
             break;
           case '车辆估值':
           //   Get.to(() => const CarValuationPage());
           //   break;
           case '车辆寄卖':
+          if(UserTool.userProvider.userInfo.levelEM ==
+              PermissionLevel.normal){
+            Alert.show(context, const JurisdictionToast());
+          }else{
             Get.to(() => const PushCarPage());
+          }
             break;
-          case '车辆按揭':
+          case '车险报价':
             Get.to(() => const CarMortgagePage());
             break;
           case '维保查询':
@@ -243,9 +271,129 @@ class _HomePageState extends State<HomePage>
   _getBanner() {
     return Container(
       width: double.infinity,
-      height: 162.w,
+      //height: 162.w,
       padding: EdgeInsets.only(left: 32.w, right: 32.w),
-      child: Image.asset(Assets.images.bannerBg.path),
+      child: Row(
+        children: [
+
+          Expanded(child: GestureDetector(
+            onTap: (){
+              if(UserTool.userProvider.userInfo.levelEM ==
+                  PermissionLevel.normal){
+                Alert.show(context, const JurisdictionToast());
+              }else{
+                Get.to(() => const MyOrderPage());
+              }
+            },
+            child: Container(
+              padding: EdgeInsets.all(24.w),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16.w)
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('我的订单',
+                          style: TextStyle(
+                              color: BaseStyle.color333333,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28.sp)),
+                      4.hb,
+                      Text('快速查看订单',
+                          style: TextStyle(
+                              color: BaseStyle.color999999,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 24.sp)),
+                      9.hb,
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: const Color(0xFF027AFF),width: 2.w),
+                            borderRadius: BorderRadius.circular(20.w)
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 4.w,horizontal: 16.w),
+                        child:Text('进入 ->',
+                            style: TextStyle(
+                                color:  const Color(0xFF027AFF),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.sp)),
+                      )
+                    ],
+                  ),
+                  const Spacer(),
+                  Image.asset(
+                    Assets.images.imgOrder.path,
+                    fit: BoxFit.fill,
+                    width: 105.w,
+                    height: 115.w,
+                  ),
+                ],
+              ),
+            ),
+          )),
+          24.wb,
+
+          Expanded(child: GestureDetector(
+            onTap: (){
+              if(UserTool.userProvider.userInfo.levelEM ==
+                  PermissionLevel.normal){
+                Alert.show(context, const JurisdictionToast());
+              }else{
+                Get.to(() => const UserInvitationPage());
+              }
+            },
+            child: Container(
+              padding: EdgeInsets.all(24.w),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16.w)
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('我的邀约',
+                          style: TextStyle(
+                              color: BaseStyle.color333333,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28.sp)),
+                      4.hb,
+                      Text('客户随时邀约',
+                          style: TextStyle(
+                              color: BaseStyle.color999999,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 24.sp)),
+                      9.hb,
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: const Color(0xFF027AFF),width: 2.w),
+                            borderRadius: BorderRadius.circular(20.w)
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 4.w,horizontal: 16.w),
+                        child:Text('进入 ->',
+                            style: TextStyle(
+                                color:  const Color(0xFF027AFF),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.sp)),
+                      )
+                    ],
+                  ),
+                  const Spacer(),
+                  Image.asset(
+                    Assets.images.imgInvitation.path,
+                    fit: BoxFit.fill,
+                    width: 120.w,
+                    height: 105.w,
+                  ),
+                ],
+              ),
+            ),
+          )),
+        ],
+      ),
     );
   }
 
@@ -256,7 +404,12 @@ class _HomePageState extends State<HomePage>
           title: '快速分享',
           suffixTitle: '查看全部',
           onTap: () {
-            Get.to(() => const ShareHomePage());
+            if(UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal){
+              Alert.show(context, const JurisdictionToast());
+            }else{
+              Get.to(() => const ShareHomePage());
+            }
           },
         ),
         Container(
@@ -294,7 +447,12 @@ class _HomePageState extends State<HomePage>
           title: '海报',
           suffixTitle: '查看全部',
           onTap: () {
-            Get.to(() => const PosterListPage());
+            if(UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal){
+              Alert.show(context, const JurisdictionToast());
+            }else{
+              Get.to(() => const PosterListPage());
+            }
           },
         ),
         12.hb,
@@ -329,9 +487,14 @@ class _HomePageState extends State<HomePage>
   _shareItem(CarListModel model) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => NewCarsDetailPage(
-              carListModel: model,
-            ));
+        if(UserTool.userProvider.userInfo.levelEM ==
+            PermissionLevel.normal){
+          Alert.show(context, const JurisdictionToast());
+        }else{
+          Get.to(() => NewCarsDetailPage(
+            carListModel: model,
+          ));
+        }
       },
       child: Container(
         width: 240.w,
@@ -419,7 +582,15 @@ class _HomePageState extends State<HomePage>
 
   _posterItem(PosterListModel model) {
     return GestureDetector(
-      onTap: () => Get.to(() => PosterEditPage(model: model)),
+      onTap: () {
+        if(UserTool.userProvider.userInfo.levelEM ==
+            PermissionLevel.normal){
+          Alert.show(context, const JurisdictionToast());
+        }else{
+          Get.to(() => PosterEditPage(model: model));
+        }
+
+      },
       child: Container(
         width: 240.w,
         height: 360.w,

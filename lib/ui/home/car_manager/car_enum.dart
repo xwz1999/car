@@ -12,8 +12,9 @@ enum CarSource {
 }
 
 enum CarManageType {
+  person(3, '个人寄卖'),
   all(2, '门店车辆'),
-  personal(1, '公司车辆');
+  company(1, '公司车辆');
 
   final int typeNum;
   final String typeStr;

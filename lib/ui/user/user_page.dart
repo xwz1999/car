@@ -14,7 +14,9 @@ import 'package:cloud_car/ui/user/user_partner_center/agent_center_page.dart';
 import 'package:cloud_car/ui/user/user_recommended/user_recommended_page.dart';
 import 'package:cloud_car/ui/user/user_wallet/wallet_certification_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:cloud_car/widget/jurisdiction_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -240,11 +242,22 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const UserAssessmentPage());
             break;
           case '钱包':
-            //Get.to(() => const HomePage());
-            Get.to(() => const WalletCertificationPage());
+            if(UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal){
+              Alert.show(context, const JurisdictionToast());
+            }else{
+              //Get.to(() => const WalletCertificationPage());
+            }
+
             break;
           case '邀请':
-            Get.to(() => const RecommendedPage());
+            if(UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal){
+              Alert.show(context, const JurisdictionToast());
+            }else{
+              Get.to(() => const RecommendedPage());
+            }
+
             break;
         }
       },
@@ -416,7 +429,13 @@ class _UserPageState extends State<UserPage> {
       onTap: () {
         switch (name) {
           case '我的订单':
-            Get.to(() => const MyOrderPage());
+            if(UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal){
+              Alert.show(context, const JurisdictionToast());
+            }else{
+              Get.to(() => const MyOrderPage());
+            }
+
             break;
           case '关于云云':
             Get.to(() => const AboutPage());
@@ -425,7 +444,13 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const StaffManagementPage());
             break;
           case '查看合同':
-            Get.to(() => const ConsignmentContractPage());
+            if(UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal){
+              Alert.show(context, const JurisdictionToast());
+            }else{
+              Get.to(() => const ConsignmentContractPage());
+            }
+
             break;
           case '产品手册':
             Get.to(() => const ProductManuals());
@@ -434,7 +459,13 @@ class _UserPageState extends State<UserPage> {
             Get.to(() => const FeedbackPage());
             break;
           case '我的邀约':
-            Get.to(() => const UserInvitationPage());
+            if(UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal){
+              Alert.show(context, const JurisdictionToast());
+            }else{
+              Get.to(() => const UserInvitationPage());
+            }
+
             break;
           case '联系客服':
             Get.dialog(AlertDialog(

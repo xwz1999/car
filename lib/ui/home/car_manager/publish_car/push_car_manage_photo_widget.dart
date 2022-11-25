@@ -1,3 +1,5 @@
+import 'package:cloud_car/model/contract/report_photo_model.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -7,8 +9,9 @@ import 'package:velocity_x/velocity_x.dart';
 
 class PushCarManagePhotoWidget extends StatefulWidget {
   final PushPhotoModel model;
-
-  const PushCarManagePhotoWidget({super.key, required this.model});
+  final ReportPhotoModel reportPhotoModel;
+  final NewPublishCarInfo newPublishCarInfo;
+  const PushCarManagePhotoWidget({super.key, required this.model, required this.reportPhotoModel, required this.newPublishCarInfo});
 
   @override
   _PushCarManagePhotoWidgetState createState() => _PushCarManagePhotoWidgetState();
@@ -66,13 +69,19 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
       case 2:
         photos = widget.model.defectPhotos??[];
         break;
+      case 3:
+        photos = widget.reportPhotoModel.paints??[];
+        break;
+      case 4:
+        photos = widget.model.repairPhotos??[];
+        break;
+
     }
 
     for(int i=0;i<photos.length;i++){
       if(photos[i].photo!=null){
         firstPhoto = photos[i].photo!;
         length++;
-
       }
     }
 
@@ -83,6 +92,7 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
             tabs: _titles,
             model: widget.model,
             initIndex: index,
+            reportPhotoModel: widget.reportPhotoModel, newPublishCarInfo: widget.newPublishCarInfo,
           ),
         );
         setState(() {});

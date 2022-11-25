@@ -171,9 +171,9 @@ class Business extends Equatable {
       BusinessAscription.getValue(businessId);
 
   factory Business.fromJson(Map<String, dynamic> json) =>
-      _$StoreInfoFromJson(json);
+      _$BusinessFromJson(json);
 
-  Map<String, dynamic> toJson() => _$StoreInfoToJson(this);
+  Map<String, dynamic> toJson() => _$BusinessToJson(this);
 
   Role get roleEM => Role.getValueN(roleId);
 

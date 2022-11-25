@@ -1,4 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/new_cars_detail_page.dart';
@@ -10,8 +11,11 @@ import 'package:cloud_car/ui/home/sort/sort_list_page.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/user_tool.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
+import 'package:cloud_car/widget/jurisdiction_toast.dart';
 import 'package:cloud_car/widget/no_data_widget.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/search_bar_widget.dart';
@@ -283,9 +287,14 @@ class _AllCarState extends State<AllCar> {
   _carItem(CarListModel model) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => NewCarsDetailPage(
-              carListModel: model,
-            ));
+        if(UserTool.userProvider.userInfo.levelEM ==
+            PermissionLevel.normal){
+          Alert.show(context, const JurisdictionToast());
+        }else{
+          Get.to(() => NewCarsDetailPage(
+            carListModel: model,
+          ));
+        }
       },
       child: Container(
         decoration: BoxDecoration(

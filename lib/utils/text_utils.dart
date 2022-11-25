@@ -2,6 +2,17 @@ import 'package:common_utils/common_utils.dart';
 
 class TextUtils{
 
+   static String getTimeByIntYM(int date){
+      if(date<0){
+         return '/';
+      }else{
+         return DateUtil.formatDateMs(
+             ( date.toInt()) * 1000,
+             format: 'yyyy-MM');
+      }
+
+   }
+
    static String getTimeByInt(int date){
       if(date<0){
          return '/';

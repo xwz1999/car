@@ -129,6 +129,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
                 .requestList(API.user.wallet.assessHistory, data: {
               'page': page,
               'size': size,
+              'kind': 1,
             });
             if (baseList.nullSafetyTotal > payNumList.length) {
               payNumList.addAll(baseList.nullSafetyList

@@ -252,7 +252,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       ),
       floatingActionButtonLocation: CustomFloatingActionButtonLocation(
           FloatingActionButtonLocation.endDocked,2.w, -130.w),
-      backgroundColor: kForeGroundColor,
+      backgroundColor: bodyColor,
       extendBody: true,
       body: ListView(
         children: [
@@ -266,27 +266,39 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                       width: double.infinity,
                       child: Column(
                         children: [
-                          ScanLicenseWidget(onLoadComplete: (carInfoModel) {
-                            if (carInfoModel.vinModel != null) {
-                              _publishCarInfo.value.carName =
-                                  carInfoModel.vinModel!.first.modelName;
-                              _publishCarInfo.value.carModelId =
-                                  carInfoModel.vinModel!.first.modelId;
-                              _publishCarInfo.value.carColor =
-                                  carInfoModel.vinModel!.first.color;
-                            }
-                            _viNumController.text = carInfoModel.vehicle.vin;
-                            _publishCarInfo.value.licensingDate =
-                                DateUtil.getDateTime(
-                                    carInfoModel.vehicle.issuedate);
-                            _carNumController.text = carInfoModel.vehicle.lsnum;
-                            _engineController.text =
-                                carInfoModel.vehicle.engineno;
-                            setState(() {});
-                          }),
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(vertical: 20.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.w),
+                              color: Colors.white,
+                            ),
+
+                            child: ScanLicenseWidget(
+
+                                onLoadComplete: (carInfoModel) {
+                              if (carInfoModel.vinModel != null) {
+                                _publishCarInfo.value.carName =
+                                    carInfoModel.vinModel!.first.modelName;
+                                _publishCarInfo.value.carModelId =
+                                    carInfoModel.vinModel!.first.modelId;
+                                _publishCarInfo.value.carColor =
+                                    carInfoModel.vinModel!.first.color;
+                              }
+                              _viNumController.text = carInfoModel.vehicle.vin;
+                              _publishCarInfo.value.licensingDate =
+                                  DateUtil.getDateTime(
+                                      carInfoModel.vehicle.issuedate);
+                              _carNumController.text = carInfoModel.vehicle.lsnum;
+                              _engineController.text =
+                                  carInfoModel.vehicle.engineno;
+                              setState(() {});
+                            }),
+                          ),
                           _rewardWidget(),
 
-                          100.w.heightBox,
+                          80.w.heightBox,
+
                           Padding(
                             padding: EdgeInsets.all(20.w),
                             child: SizedBox(
@@ -316,6 +328,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                               ),
                             ),
                           ),
+                          50.hb,
                         ],
                       ),
                     ),
@@ -489,13 +502,13 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          20.heightBox,
+
           Container(
             width: double.infinity,
             color: const Color(0xFFF6F6F6),
             padding: EdgeInsets.symmetric(vertical: 24.w,horizontal: 32.w),
             child:  Text(
-              '车辆信息',
+              '车辆档案',
               style: TextStyle(color: const Color(0xFF999999), fontSize: 36.w),
             ),
           ),
@@ -742,8 +755,6 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
           ),
 
 
-
-
           // _function('出厂日期', () async {
           //   // var firstDate = await CarDatePicker.calenderPicker(
           //   //     DateTime(1960), DateTime.now());
@@ -811,11 +822,14 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                           borderRadius: BorderRadius.circular(8.w),
                           border:
                           Border.all(color: BaseStyle.colordddddd, width: 2.w)),
-                      padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
-                      height: 200.w,
+                      padding: EdgeInsets.only(top: 10.w, left: 20.w,right: 20.w,bottom: 20.w ),
+                      constraints: BoxConstraints(
+                        maxHeight: 450.w,
+                        minHeight: 150.w
+                      ),
                       child: TextField(
-                        maxLines: 50,
-                        keyboardType: TextInputType.text,
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
                         onEditingComplete: () {},
                         onChanged: (text) {
                           _publishCarInfo.value.carDescription = text;
@@ -842,8 +856,6 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                   ),
                 ],
               ),
-              12.hb,
-
               32.hb,
             ],
           ),
@@ -1031,12 +1043,14 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                           border: Border.all(
                               color: BaseStyle.colordddddd,
                               width: 2.w)),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 16.w, horizontal: 20.w),
-                      height: 200.w,
+                      padding: EdgeInsets.only(top: 10.w, left: 20.w,right: 20.w,bottom: 20.w ),
+                      constraints: BoxConstraints(
+                          maxHeight: 450.w,
+                          minHeight: 150.w
+                      ),
                       child: TextField(
-                        maxLines: 50,
-                        keyboardType: TextInputType.text,
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
                         onEditingComplete: () {},
                         onChanged: (text) {
                           _publishCarInfo.value.remark = text;
@@ -1157,25 +1171,23 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       BotToast.showText(text: '请输入行驶里程');
       return false;
     }
-    if (_publishCarInfo.value.locationCity.isEmptyOrNull) {
-      BotToast.showText(text: '请选择所在地');
+
+    if (_publishCarInfo.value.attribution.isEmptyOrNull) {
+      BotToast.showText(text: '请选择上牌地');
       return false;
     }
-    if (_publishCarInfo.value.environmentalLevel.isEmptyOrNull) {
-      BotToast.showText(text: '请选择环保等级');
-      return false;
-    }
+
     if (_publishCarInfo.value.carDescription.isEmptyOrNull) {
       BotToast.showText(text: '请输入车况描述');
       return false;
     }
     if (_publishCarInfo.value.wholesalePrice.isEmptyOrNull) {
-      BotToast.showText(text: '请输入批发价格');
+      BotToast.showText(text: '请输入内部价格');
       return false;
     }
 
     if (_publishCarInfo.value.salePrice.isEmptyOrNull) {
-      BotToast.showText(text: '请输入销售价格');
+      BotToast.showText(text: '请输入外部价格');
       return false;
     }
 

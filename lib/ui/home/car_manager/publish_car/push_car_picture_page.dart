@@ -1,10 +1,9 @@
 import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
+import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_widget.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_report_photo_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +22,8 @@ class PushCarPicturePage extends StatefulWidget {
 }
 
 class _PushCarPicturePageState extends State<PushCarPicturePage> {
+  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片','报告数据','维保数据'];
 
-  // final ValueNotifier<PushPhotoModel> carPhotoModel =
-  // ValueNotifier(PushPhotoModel.init);
-  //
-  // final ValueNotifier<ReportPhotoModel> reportPhotoModel =
-  // ValueNotifier(ReportPhotoModel.init);
   @override
   void initState() {
     super.initState();
@@ -55,39 +50,18 @@ class _PushCarPicturePageState extends State<PushCarPicturePage> {
         child: Column(
           children: [
             Expanded(
-                child: PushCarManagePhotoWidget(model: widget.carPhotoModel)),
+                child: PushCarManagePhotoWidget(model: widget.carPhotoModel, reportPhotoModel: widget.reportPhotoModel, newPublishCarInfo: widget.newPublishCarInfo,)),
             30.hb,
             CloudBottomButton(
               onTap: () {
-
-                int carPhotosLength = 0;
-                int interiorPhotosLength = 0;
-                int defectPhotosLength = 0;
-
-                for(int i=0;i<widget.carPhotoModel.carPhotos!.length;i++){
-                  if(widget.carPhotoModel.carPhotos![i].photo!=null){
-                    carPhotosLength++;
-                  }
-                }
-                for(int i=0;i<widget.carPhotoModel.interiorPhotos!.length;i++){
-                  if(widget.carPhotoModel.interiorPhotos![i].photo!=null){
-                    interiorPhotosLength++;
-                  }
-                }
-                for(int i=0;i<widget.carPhotoModel.defectPhotos!.length;i++){
-                  if(widget.carPhotoModel.defectPhotos![i].photo!=null){
-                    defectPhotosLength++;
-                  }
-                }
-
-
-                if (carPhotosLength<=0||interiorPhotosLength<=0||defectPhotosLength<=0){
-                  CloudToast.show('每种照片至少上传一张');
-                }else{
-                  Get.to(()=> PushReportPhotoPage(pushPhotoModel: widget.carPhotoModel,
-                    newPublishCarInfo: widget.newPublishCarInfo,reportPhotoModel: widget.reportPhotoModel,));
-                }
-
+                 Get.to(
+                  PushCarManagePhotoPage(
+                    tabs: _titles,
+                    model: widget.carPhotoModel,
+                    initIndex: 0,
+                    reportPhotoModel: widget.reportPhotoModel, newPublishCarInfo: widget.newPublishCarInfo,
+                  ),
+                );
               },
               text: '下一步',
             )

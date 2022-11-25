@@ -306,6 +306,9 @@ class $AssetsIconsGen {
   AssetGenImage get icProfit =>
       const AssetGenImage('assets/icons/ic_profit.png');
 
+  /// File path: assets/icons/ic_scan.png
+  AssetGenImage get icScan => const AssetGenImage('assets/icons/ic_scan.png');
+
   /// File path: assets/icons/ic_share.png
   AssetGenImage get icShare => const AssetGenImage('assets/icons/ic_share.png');
 
@@ -709,6 +712,18 @@ class $AssetsImagesGen {
   /// File path: assets/images/home_bg2.png
   AssetGenImage get homeBg2 =>
       const AssetGenImage('assets/images/home_bg2.png');
+
+  /// File path: assets/images/img_Approval.png
+  AssetGenImage get imgApproval =>
+      const AssetGenImage('assets/images/img_Approval.png');
+
+  /// File path: assets/images/img_Invitation.png
+  AssetGenImage get imgInvitation =>
+      const AssetGenImage('assets/images/img_Invitation.png');
+
+  /// File path: assets/images/img_order.png
+  AssetGenImage get imgOrder =>
+      const AssetGenImage('assets/images/img_order.png');
 
   /// File path: assets/images/img_phone.png
   AssetGenImage get imgPhone =>

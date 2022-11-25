@@ -27,11 +27,15 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   /// 有权限为true
   bool get _deletePermission {
     var userRole = UserTool.userProvider.userInfo;
+    if(userRole.business.roleId==11){
+      return true;
+    }
+    if(userRole.business.storeId == staffInfo?.storeId&&userRole.business.roleId==1){
+      return true;
+    }else{
+      return false;
+    }
 
-    return (userRole.business.roleEM == Role.defaultRole) ||
-        (userRole.business.roleEM == Role.manager &&
-            staffInfo?.roleId != userRole.business.roleId &&
-            userRole.business.storeName == staffInfo?.storeName);
   }
 
   @override
@@ -79,8 +83,8 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
 
   _getPermissions() {
     return Container(
+      height: 800.w,
       color: Colors.white,
-      height: 1045.w,
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

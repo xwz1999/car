@@ -234,7 +234,7 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                 isKeyBord ? 50.hb : const SizedBox(),
                 Row(
                   children: [
-                    30.wb,
+                    100.wb,
                     const Spacer(),
                     Text(
                       '分享车辆',

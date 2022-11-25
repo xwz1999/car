@@ -33,7 +33,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
   TitleScreenControl screenControl = TitleScreenControl();
   final EasyRefreshController refreshController = EasyRefreshController();
   final EasyRefreshController asRefreshController = EasyRefreshController();
-
+  final EasyRefreshController pRefreshController = EasyRefreshController();
   late String city;
   late String brand;
   late String price;
@@ -87,6 +87,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
     super.dispose();
     refreshController.dispose();
     asRefreshController.dispose();
+    pRefreshController.dispose();
   }
 
   @override
@@ -113,8 +114,11 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
                     case CarManageType.all:
                       refreshController.callRefresh();
                       break;
-                    case CarManageType.personal:
+                    case CarManageType.company:
                       asRefreshController.callRefresh();
+                      break;
+                    case CarManageType.person:
+                      pRefreshController.callRefresh();
                       break;
                   }
                   if (mounted) {
@@ -148,10 +152,16 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           refreshController: refreshController,
         );
 
-      case CarManageType.personal:
+      case CarManageType.company:
         return SelfSalePage(
             initIndex: widget.initIndex,
             refreshController: asRefreshController,
+            pickCar: _pickCar);
+      case CarManageType.person:
+        return SelfSalePage(
+            ownerType: 3,
+            initIndex: widget.initIndex,
+            refreshController: pRefreshController,
             pickCar: _pickCar);
     }
   }
@@ -160,10 +170,12 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
     return SortListPage(
       pickCar: _pickCar,
       onConfirm: () {
-        if(_currentType==CarManageType.personal){
+        if(_currentType==CarManageType.company){
           asRefreshController.callRefresh();
-        }else{
+        }else if(_currentType==CarManageType.all){
           refreshController.callRefresh();
+        }else{
+          pRefreshController.callRefresh();
         }
         Get.back();
       },

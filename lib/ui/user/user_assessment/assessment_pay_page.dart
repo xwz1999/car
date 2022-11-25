@@ -188,6 +188,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
 
   Future _wxPayFunc() async {
     var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
+      'kind': 1,
       'count': widget.count,
       'payType': 2,
     });
@@ -203,6 +204,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
 
   Future _aliPayFunc() async {
     var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
+      'kind': 1,
       'count': widget.count,
       'payType': 1,
     });

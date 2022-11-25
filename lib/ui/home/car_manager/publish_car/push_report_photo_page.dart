@@ -69,6 +69,8 @@ class _PushReportPhotoPageState extends State<PushReportPhotoPage>
       }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return CloudScaffold.normal(
@@ -111,11 +113,12 @@ class _PushReportPhotoPageState extends State<PushReportPhotoPage>
           CloudBottomButton(
             onTap: () async{
               CloudToast.loading;
-              await uploadPhotos();
               if (!canTap) {
                 BotToast.closeAllLoading();
                 return;
               }
+              await uploadPhotos();
+              BotToast.closeAllLoading();
             var result = await  CarFunc.newPushCar(reportPhotoModel: widget.reportPhotoModel,
                 pushPhotoModel: widget.pushPhotoModel, newPublishCarInfo: widget.newPublishCarInfo);
               if(result){

@@ -99,40 +99,18 @@ class _CarManagerPageState extends State<CarManagerPage> {
           text: '已售',
           num: '${carCount.storeCount.soldCount}',
         ),
-        // ManagerContainerItem(
-        //   onTap: () {
-        //     Get.to(() =>
-        //     const DirectSaleManagerPage(
-        //       initIndex: 2,
-        //       initType: CarManageType.all,
-        //     ));
-        //   },
-        //   text: '待审核',
-        //   num: '111',
-        // ),
-        // ManagerContainerItem(
-        //   onTap: () {
-        //     Get.to(() =>
-        //     const DirectSaleManagerPage(
-        //       initIndex: 2,
-        //       initType: CarManageType.all,
-        //     ));
-        //   },
-        //   text: '已驳回',
-        //   num: '222',
-        // ),
         ManagerContainerItem(
-          onTap: () {
-            Get.to(() =>
-            const DirectSaleManagerPage(
-              initIndex: 3,
-              initType: CarManageType.all,
-            ));
-          },
-          text: '退库',
-          num: '${carCount.storeCount.backOutCount}',
-        )
-      ]),
+              onTap: () {
+                Get.to(() =>
+                const DirectSaleManagerPage(
+                  initIndex: 3,
+                  initType: CarManageType.all,
+                ));
+              },
+              text: '退库',
+              num: '${carCount.storeCount.backOutCount}',
+            )
+          ]),
       40.hb,
       _buildMainClassification(text: '公司车辆', items: [
         ManagerContainerItem(
@@ -142,7 +120,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
             Get.to(() =>
             const DirectSaleManagerPage(
               initIndex: 0,
-              initType: CarManageType.personal,
+              initType: CarManageType.company,
             ));
           },
         ),
@@ -151,7 +129,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
             Get.to(() =>
             const DirectSaleManagerPage(
               initIndex: 1,
-              initType: CarManageType.personal,
+              initType: CarManageType.company,
             ));
           },
           text: '已预订',
@@ -162,7 +140,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
             Get.to(() =>
             const DirectSaleManagerPage(
               initIndex: 2,
-              initType: CarManageType.personal,
+              initType: CarManageType.company,
             ));
           },
           text: '已售',
@@ -173,36 +151,60 @@ class _CarManagerPageState extends State<CarManagerPage> {
             Get.to(() =>
             const DirectSaleManagerPage(
               initIndex: 3,
-              initType: CarManageType.personal,
+              initType: CarManageType.company,
             ));
           },
           text: '退库',
           num: '${carCount.businessCount.backOutCount}',
         ),
-        // ManagerContainerItem(
-        //   onTap: () {
-        //     Get.to(() =>
-        //     const DirectSaleManagerPage(
-        //       initIndex: 3,
-        //       initType: CarManageType.personal,
-        //     ));
-        //   },
-        //   text: '待审核',
-        //   num: '25',
-        // ),
-        // ManagerContainerItem(
-        //   onTap: () {
-        //     Get.to(() =>
-        //     const DirectSaleManagerPage(
-        //       initIndex: 3,
-        //       initType: CarManageType.personal,
-        //     ));
-        //   },
-        //   text: '已驳回',
-        //   num: '231',
-        // )
       ]),
       40.hb,
+            _buildMainClassification(text: '个人寄卖', items: [
+              ManagerContainerItem(
+                text: '在售',
+                num: '${carCount.ownCount.sellCount}',
+                onTap: () {
+                  Get.to(() =>
+                  const DirectSaleManagerPage(
+                    initIndex: 0,
+                    initType: CarManageType.person,
+                  ));
+                },
+              ),
+              ManagerContainerItem(
+                onTap: () {
+                  Get.to(() =>
+                  const DirectSaleManagerPage(
+                    initIndex: 1,
+                    initType: CarManageType.person,
+                  ));
+                },
+                text: '已预订',
+                num: '${carCount.ownCount.reserveCount}',
+              ),
+              ManagerContainerItem(
+                onTap: () {
+                  Get.to(() =>
+                  const DirectSaleManagerPage(
+                    initIndex: 2,
+                    initType: CarManageType.person,
+                  ));
+                },
+                text: '已售',
+                num: '${carCount.ownCount.soldCount}',
+              ),
+              ManagerContainerItem(
+                onTap: () {
+                  Get.to(() =>
+                  const DirectSaleManagerPage(
+                    initIndex: 3,
+                    initType: CarManageType.person,
+                  ));
+                },
+                text: '退库',
+                num: '${carCount.ownCount.backOutCount}',
+              ),
+            ]),
       // Column(
       //   crossAxisAlignment: CrossAxisAlignment.start,
       //   children: [

@@ -10,6 +10,7 @@ class User {
   static Future<String> getWallet() async {
     BaseModel res = await apiClient.request(
       API.user.wallet.assessCount,
+        data: {'kind': 1, }
     );
     if (res.data! == null) return '0';
     return (res.data['count'] as int).toString();
@@ -29,7 +30,7 @@ class User {
       {required int page, int size = 10}) async {
     BaseListModel res = await apiClient.requestList(
         API.user.wallet.assessHistory,
-        data: {'page': page, 'size': size});
+        data: {'page': page, 'size': size,  'kind': 1,});
 
     if (res.code == 0) {
       return res.nullSafetyList.map((e) => HistoryModel.fromJson(e)).toList();

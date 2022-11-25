@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable, avoid_unnecessary_containers
 
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/extensions/map_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/new_cars_detail_page.dart';
@@ -14,9 +15,12 @@ import 'package:cloud_car/ui/preferred/preferred_carcollection.dart';
 import 'package:cloud_car/utils/drop_down_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/user_tool.dart';
+import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/custom_drawer.dart';
+import 'package:cloud_car/widget/jurisdiction_toast.dart';
 import 'package:cloud_car/widget/screen_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
@@ -201,37 +205,37 @@ class _PreferredPageState extends State<PreferredPage>
                   height: 72.w,
                   child: Row(
                     children: [
-                      Row(
-                        children: [
-                          32.wb,
-                          GestureDetector(
-                            onTap: () {},
-                            child: SizedBox(
-                                child: Row(
-                              children: [
-                                Text(
-                                  '宁波',
-                                  style: Theme.of(context).textTheme.subtitle2,
-                                ),
-                                12.wb,
-                                Image(
-                                  image:AssetImage(Assets.icons.noSelected.path) ,
-                                  width: 6.w,
-                                  height: 6.w,
-                                )
-                              ],
-                            )),
-                          )
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     32.wb,
+                      //     GestureDetector(
+                      //       onTap: () {},
+                      //       child: SizedBox(
+                      //           child: Row(
+                      //         children: [
+                      //           Text(
+                      //             '宁波',
+                      //             style: Theme.of(context).textTheme.subtitle2,
+                      //           ),
+                      //           12.wb,
+                      //           Image(
+                      //             image:AssetImage(Assets.icons.noSelected.path) ,
+                      //             width: 6.w,
+                      //             height: 6.w,
+                      //           )
+                      //         ],
+                      //       )),
+                      //     )
+                      //   ],
+                      // ),
                       24.wb,
-                      Container(
-                        height: 24.w,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF828CA0).withOpacity(0.5),
-                          border: Border.all(width: 1.w),
-                        ),
-                      ),
+                      // Container(
+                      //   height: 24.w,
+                      //   decoration: BoxDecoration(
+                      //     color: const Color(0xFF828CA0).withOpacity(0.5),
+                      //     border: Border.all(width: 1.w),
+                      //   ),
+                      // ),
                       Expanded(
                         child: TextField(
                           keyboardType: TextInputType.text,
@@ -439,9 +443,15 @@ class _PreferredPageState extends State<PreferredPage>
   _carItem(CarListModel model) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => NewCarsDetailPage(
-              carListModel: model,
-            ));
+        if(UserTool.userProvider.userInfo.levelEM ==
+            PermissionLevel.normal){
+          Alert.show(context, const JurisdictionToast());
+        }else{
+          Get.to(() => NewCarsDetailPage(
+            carListModel: model,
+          ));
+        }
+
       },
       child: Container(
         decoration: BoxDecoration(

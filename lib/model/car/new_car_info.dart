@@ -41,6 +41,7 @@ class CarNewInfo extends Equatable {
   final String downPayment;
   final String source;
   final int sourceId;
+  final String storeName;
   final String type;
   final String engineNo;
   final int licensingDate;
@@ -54,18 +55,19 @@ class CarNewInfo extends Equatable {
   final String purchaseTax;
   final String installationCost;
   final String location;
+  final String attribution;
   final String condition;
   final List<ImagePhoto> carPhotos;
   final List<ImagePhoto> interiorPhotos;
   final List<ImagePhoto> defectPhotos;
   final List<ImagePhoto> reportPhotos;
+  final List<ImagePhoto> repairPhotos;
   final BrokerInfo brokerInfo;
   final ModelInfo modelInfo;
   final PriceInfo priceInfo;
   final CertificateInfo certificateInfo;
   final ContractMasterInfo contractMasterInfo;
 
-  //final PurchaseInfo purchaseInfo;
   Map<String, dynamic> toJson() => _$CarNewInfoToJson(this);
   factory CarNewInfo.fromJson(Map<String, dynamic> json) =>
       _$CarNewInfoFromJson(json);
@@ -97,11 +99,13 @@ class CarNewInfo extends Equatable {
         purchaseTax,
         installationCost,
         location,
+        attribution,
         condition,
         carPhotos,
         interiorPhotos,
         defectPhotos,
         reportPhotos,
+        repairPhotos,
         brokerInfo,
         modelInfo,
         priceInfo,
@@ -112,6 +116,7 @@ class CarNewInfo extends Equatable {
   const CarNewInfo({
     required this.id,
     required this.modelName,
+    required this.storeName,
     required this.vin,
     required this.carSn,
     required this.collect,
@@ -135,11 +140,13 @@ class CarNewInfo extends Equatable {
     required this.purchaseTax,
     required this.installationCost,
     required this.location,
+    required this.attribution,
     required this.condition,
     required this.carPhotos,
     required this.interiorPhotos,
     required this.defectPhotos,
     required this.reportPhotos,
+    required this.repairPhotos,
     required this.brokerInfo,
     required this.modelInfo,
     required this.priceInfo,

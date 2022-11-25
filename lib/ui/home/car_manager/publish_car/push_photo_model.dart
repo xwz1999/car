@@ -2,18 +2,18 @@ class PushPhotoModel {
   List<CarPhotos>? carPhotos;
   List<CarPhotos>? interiorPhotos;
   List<CarPhotos>? defectPhotos;
-  // List<CarPhotos>? dataPhotos;
+  List<CarPhotos>? repairPhotos;
 
   PushPhotoModel(
       {this.carPhotos,
         this.interiorPhotos,
-        this.defectPhotos,});
+        this.defectPhotos,this.repairPhotos});
 
   static PushPhotoModel get init => PushPhotoModel(
     carPhotos:[],
     interiorPhotos:[],
     defectPhotos:[],
-
+      repairPhotos:[]
   );
 
   PushPhotoModel.fromJson(Map<String, dynamic> json) {
@@ -35,12 +35,12 @@ class PushPhotoModel {
         defectPhotos!.add( CarPhotos.fromJson(v));
       });
     }
-    // if (json['dataPhotos'] != null) {
-    //   dataPhotos = [];
-    //   json['dataPhotos'].forEach((v) {
-    //     dataPhotos!.add(CarPhotos.fromJson(v));
-    //   });
-    // }
+    if (json['repairPhotos'] != null) {
+      repairPhotos = [];
+      json['repairPhotos'].forEach((v) {
+        repairPhotos!.add(CarPhotos.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -55,9 +55,9 @@ class PushPhotoModel {
     if (defectPhotos != null) {
       data['defectPhotos'] = defectPhotos!.map((v) => v.toJson()).toList();
     }
-    // if (dataPhotos != null) {
-    //   data['dataPhotos'] = dataPhotos!.map((v) => v.toJson()).toList();
-    // }
+    if (repairPhotos != null) {
+      data['repairPhotos'] = repairPhotos!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

@@ -52,7 +52,7 @@ class _Car {
   String get personalStatisticNum => '/car/self/count';
 
   ///下架/退库
-  String get offShelf => '/order/consignment/down';
+  String get offShelf => '/car/down';
 
 
   ///调价

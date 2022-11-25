@@ -24,6 +24,7 @@ Map<String, dynamic> _$NewCarInfoToJson(NewCarInfo instance) =>
 CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
       id: json['id'] as int,
       modelName: json['modelName'] as String,
+      storeName: json['storeName'] as String,
       vin: json['vin'] as String,
       carSn: json['carSn'] as String,
       collect: json['collect'] as int,
@@ -47,6 +48,7 @@ CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
       purchaseTax: json['purchaseTax'] as String,
       installationCost: json['installationCost'] as String,
       location: json['location'] as String,
+      attribution: json['attribution'] as String,
       condition: json['condition'] as String,
       carPhotos: (json['carPhotos'] as List<dynamic>)
           .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
@@ -58,6 +60,9 @@ CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
           .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
           .toList(),
       reportPhotos: (json['reportPhotos'] as List<dynamic>)
+          .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      repairPhotos: json['repairPhotos']==null?[]: (json['repairPhotos'] as List<dynamic>)
           .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
           .toList(),
       brokerInfo:
@@ -84,6 +89,7 @@ Map<String, dynamic> _$CarNewInfoToJson(CarNewInfo instance) =>
       'downPayment': instance.downPayment,
       'source': instance.source,
       'sourceId': instance.sourceId,
+      'storeName': instance.storeName,
       'type': instance.type,
       'engineNo': instance.engineNo,
       'licensingDate': instance.licensingDate,
@@ -97,11 +103,13 @@ Map<String, dynamic> _$CarNewInfoToJson(CarNewInfo instance) =>
       'purchaseTax': instance.purchaseTax,
       'installationCost': instance.installationCost,
       'location': instance.location,
+      'attribution': instance.attribution,
       'condition': instance.condition,
       'carPhotos': instance.carPhotos,
       'interiorPhotos': instance.interiorPhotos,
       'defectPhotos': instance.defectPhotos,
       'reportPhotos': instance.reportPhotos,
+      'repairPhotos': instance.repairPhotos,
       'brokerInfo': instance.brokerInfo,
       'modelInfo': instance.modelInfo,
       'priceInfo': instance.priceInfo,

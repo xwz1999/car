@@ -4,6 +4,7 @@ import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/ui/user/user_management/add_employee_page.dart';
 import 'package:cloud_car/ui/user/user_management/add_stores_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/cloud_expansion_tile.dart';
 import 'package:cloud_car/widget/cloud_search_head_widget.dart';
@@ -167,17 +168,19 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                   //         itemCount: employees.length,
                   //       ),
                   )),
+          UserTool.userProvider.userInfo.business.roleEM== Role.manager?
           Row(
             children: [
-              Expanded(
-                child: CloudBottomButton(
+          UserTool.userProvider.userInfo.business.roleId ==
+          11? Expanded(
+                child:CloudBottomButton(
                   onTap: () async {
                     await Get.to(() => const AddStoresPage());
                     _easyRefreshController.callRefresh();
                   },
                   text: '新增门店',
                 ),
-              ),
+              ):const SizedBox(),
               Expanded(
                 child: CloudBottomButton(
                   onTap: () async {
@@ -188,7 +191,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                 ),
               ),
             ],
-          ),
+          ):const SizedBox(),
           50.hb,
         ],
       ),

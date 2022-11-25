@@ -28,7 +28,6 @@ enum SelfCarStatus {
 
   final int typeNum;
   final String typeStr;
-
   static SelfCarStatus getValue(int value) =>
       SelfCarStatus.values.firstWhere((element) => element.typeNum == value);
 
@@ -39,12 +38,14 @@ class SelfSalePage extends StatefulWidget {
   final EasyRefreshController refreshController;
   final ValueNotifier<SearchParamModel> pickCar;
   final int initIndex;
+  final int ownerType;
 
   const SelfSalePage({
     super.key,
     required this.refreshController,
     required this.pickCar,
     this.initIndex = 0,
+  this.ownerType =1 ,
   });
 
   @override
@@ -79,7 +80,7 @@ class _SelfSalePageState extends State<SelfSalePage>
         'maxMileage': widget.pickCar.value.finalMaxMile,
         'dischargeStandard': widget.pickCar.value.dischargeStandard,
         'selfCarStatus': _currentCarStatus.typeNum,
-    'ownerType':1
+        'ownerType':widget.ownerType
       };
 
   int _page = 1;
