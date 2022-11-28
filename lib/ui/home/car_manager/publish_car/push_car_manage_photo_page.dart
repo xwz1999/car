@@ -113,7 +113,6 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
       _repairPhotos.add(item.photo);
     }
 
-    print(widget.model.repairPhotos);
     for (var item in widget.model.defectPhotos!) {
       _defectPhotos.add(item.photo);
     }

@@ -326,7 +326,7 @@ class _PreferredPageState extends State<PreferredPage>
                 84.wb,
                 getPhoto('最新上架', Assets.icons.carShelves.path),
                 84.wb,
-                getPhoto('4s认证车', Assets.icons.carCertification.path),
+                getPhoto('降价车', Assets.icons.carCertification.path),
               ],
             ),
           ),
@@ -397,7 +397,7 @@ class _PreferredPageState extends State<PreferredPage>
                   title: title,
                 ));
             break;
-          case '4s认证车':
+          case '降价车':
             Get.to(() => AllCar(
                   title: title,
                 ));

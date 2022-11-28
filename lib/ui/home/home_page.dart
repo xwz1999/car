@@ -181,9 +181,9 @@ class _HomePageState extends State<HomePage>
             //纵轴间距
             mainAxisSpacing: 6,
             //横轴间距
-            crossAxisSpacing: 24,
+            crossAxisSpacing: 27,
             //子组件宽高长度比例
-            childAspectRatio: 1),
+            childAspectRatio: 0.92),
         itemBuilder: (BuildContext context, int index) {
           //Widget Function(BuildContext context, int index)
           return _kingCoinItem(
@@ -192,10 +192,12 @@ class _HomePageState extends State<HomePage>
   }
 
   _kingCoinItem(String name, String url) {
+
     return GestureDetector(
       onTap: () {
         switch (name) {
           case '车辆管理':
+
             if(UserTool.userProvider.userInfo.levelEM ==
                 PermissionLevel.normal){
               Alert.show(context, const JurisdictionToast());
@@ -204,6 +206,7 @@ class _HomePageState extends State<HomePage>
             }
             break;
           case '客户管理':
+
             if(UserTool.userProvider.userInfo.levelEM ==
                 PermissionLevel.normal){
               Alert.show(context, const JurisdictionToast());
@@ -214,9 +217,9 @@ class _HomePageState extends State<HomePage>
             break;
           case '车辆发布':
 
-            if(UserTool.userProvider.userInfo.business.roleEM == Role.manager){
+            if(UserTool.userProvider.userInfo.business.roleEM!= Role.salesTraffic&&UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.settledMerchants ){
               Get.to(() => const NewPushCarPage());
-
             }else{
               Alert.show(context, const JurisdictionToast(type: 2,));
             }
@@ -226,6 +229,7 @@ class _HomePageState extends State<HomePage>
           //   Get.to(() => const CarValuationPage());
           //   break;
           case '车辆寄卖':
+
           if(UserTool.userProvider.userInfo.levelEM ==
               PermissionLevel.normal){
             Alert.show(context, const JurisdictionToast());
@@ -235,15 +239,19 @@ class _HomePageState extends State<HomePage>
             break;
           case '车险报价':
             Get.to(() => const CarMortgagePage());
+
             break;
           case '维保查询':
             Get.to(() => const MaintainQueryPage());
+
             break;
           case '收车合作':
             Get.to(() => const SplitAccountPage());
+
             break;
           case '车辆收购':
             Get.to(() => const PurchasePushCarPage());
+
           //Get.to(() => const UserAssessmentPage());
         }
       },
@@ -252,12 +260,13 @@ class _HomePageState extends State<HomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+
             Image.asset(
               url,
-              width: 96.w,
-              height: 96.w,
+              width: name=='车辆管理'|| name=='客户管理'||name=='车辆寄卖'||name=='车辆发布'? 96.w:72.w,
+              height: name=='车辆管理'|| name=='客户管理'||name=='车辆寄卖'||name=='车辆发布'? 96.w:72.w,
             ),
-            //30.w.heightBox,
+            8.hb,
             Text(
               name,
               style: Theme.of(context).textTheme.bodyText1,

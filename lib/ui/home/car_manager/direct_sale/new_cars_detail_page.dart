@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/extensions/string_extension.dart';
@@ -12,7 +10,6 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/off_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_report_photo_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/share/share_car_dialog.dart';
 import 'package:cloud_car/utils/custom_floating_action_button_location.dart';
@@ -23,7 +20,6 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
-import 'package:cloud_car/widget/cloud_image_preview_list.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/swiper_pagination_widget.dart';
 import 'package:flustars/flustars.dart';
@@ -497,103 +493,103 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     );
   }
 
-  Widget _getView(
-    List<PushImgModel> list,
-  ) {
-    return GridView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        itemCount: list.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //横轴元素个数
-            crossAxisCount: 3,
-            //纵轴间距
-            mainAxisSpacing: 10,
-            //横轴间距
-            crossAxisSpacing: 15,
-            //子组件宽高长度比例
-            childAspectRatio: 100 / 100),
-        itemBuilder: (BuildContext context, int iIndex) {
-          return _buildGrid(list[iIndex], iIndex, list);
-        });
-  }
+  // Widget _getView(
+  //   List<PushImgModel> list,
+  // ) {
+  //   return GridView.builder(
+  //       physics: const NeverScrollableScrollPhysics(),
+  //       shrinkWrap: true,
+  //       padding: EdgeInsets.symmetric(horizontal: 20.w),
+  //       itemCount: list.length,
+  //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //           //横轴元素个数
+  //           crossAxisCount: 3,
+  //           //纵轴间距
+  //           mainAxisSpacing: 10,
+  //           //横轴间距
+  //           crossAxisSpacing: 15,
+  //           //子组件宽高长度比例
+  //           childAspectRatio: 100 / 100),
+  //       itemBuilder: (BuildContext context, int iIndex) {
+  //         return _buildGrid(list[iIndex], iIndex, list);
+  //       });
+  // }
 
-  Widget _buildGrid(PushImgModel model, int index, List<PushImgModel> list) {
-    List<File> fileLists = [];
-    List<String> stringLists = [];
-    for (var item in list) {
-      if (item.url.runtimeType == String) {
-        stringLists.add(item.url);
-      } else {
-        if (item.url != null) {
-          fileLists.add(item.url);
-        }
-      }
-    }
-
-    return GestureDetector(
-      onTap: () async {
-        if (model.url != null) {
-          if (model.url.runtimeType == String) {
-            //await CloudImagePreview.toPath(path: model.url);
-            await CloudImagePreviewList.toPath(path: stringLists, index: index);
-          } else {
-            //await CloudImagePreview.toFile(file: model.url);
-            await CloudImagePreviewList.toFile(file: fileLists, index: index);
-          }
-        }
-      },
-      child: Material(
-        color: Colors.transparent,
-        child: Column(
-          children: [
-            model.url == null || model.url == ''
-                ? Container(
-                    width: 210.w,
-                    height: 158.w,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage(Assets.images.addcar.path),
-                      ),
-                    ),
-                  )
-                : Stack(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    children: [
-                      Container(
-                          // width: 210.w,
-                          // height: 158.w,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.w),
-                          ),
-                          child: image(model.url)),
-                    ],
-                  ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 5.w),
-                  child: model.isMust != null && model.isMust!
-                      ? '* '
-                          .text
-                          .size(28.sp)
-                          .color(Colors.red)
-                          .make()
-                          .paddingOnly(top: 5)
-                      : const SizedBox(),
-                ),
-                (model.name ?? '').text.size(28.sp).black.make(),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildGrid(PushImgModel model, int index, List<PushImgModel> list) {
+  //   List<File> fileLists = [];
+  //   List<String> stringLists = [];
+  //   for (var item in list) {
+  //     if (item.url.runtimeType == String) {
+  //       stringLists.add(item.url);
+  //     } else {
+  //       if (item.url != null) {
+  //         fileLists.add(item.url);
+  //       }
+  //     }
+  //   }
+  //
+  //   return GestureDetector(
+  //     onTap: () async {
+  //       if (model.url != null) {
+  //         if (model.url.runtimeType == String) {
+  //           //await CloudImagePreview.toPath(path: model.url);
+  //           await CloudImagePreviewList.toPath(path: stringLists, index: index);
+  //         } else {
+  //           //await CloudImagePreview.toFile(file: model.url);
+  //           await CloudImagePreviewList.toFile(file: fileLists, index: index);
+  //         }
+  //       }
+  //     },
+  //     child: Material(
+  //       color: Colors.transparent,
+  //       child: Column(
+  //         children: [
+  //           model.url == null || model.url == ''
+  //               ? Container(
+  //                   width: 210.w,
+  //                   height: 158.w,
+  //                   decoration: BoxDecoration(
+  //                     image: DecorationImage(
+  //                       fit: BoxFit.fill,
+  //                       image: AssetImage(Assets.images.addcar.path),
+  //                     ),
+  //                   ),
+  //                 )
+  //               : Stack(
+  //                   clipBehavior: Clip.antiAliasWithSaveLayer,
+  //                   children: [
+  //                     Container(
+  //                         // width: 210.w,
+  //                         // height: 158.w,
+  //                         clipBehavior: Clip.antiAliasWithSaveLayer,
+  //                         decoration: BoxDecoration(
+  //                           borderRadius: BorderRadius.circular(16.w),
+  //                         ),
+  //                         child: image(model.url)),
+  //                   ],
+  //                 ),
+  //           Row(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               Container(
+  //                 margin: EdgeInsets.only(top: 5.w),
+  //                 child: model.isMust != null && model.isMust!
+  //                     ? '* '
+  //                         .text
+  //                         .size(28.sp)
+  //                         .color(Colors.red)
+  //                         .make()
+  //                         .paddingOnly(top: 5)
+  //                     : const SizedBox(),
+  //               ),
+  //               (model.name ?? '').text.size(28.sp).black.make(),
+  //             ],
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget image(dynamic file) {
     return file.runtimeType == String

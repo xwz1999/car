@@ -152,7 +152,6 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
                         ],
                       ),
                       80.hb,
-                      Text(!widget.isRenew?'开通经纪人费用¥1000+2000保证金':'续费经纪人费用¥1000',style: TextStyle(fontSize: 28.sp,color: const Color(0xFFbbbbbb)),),
                       _getButton()
                     ],
                   ),

@@ -5,6 +5,7 @@ import 'package:cloud_car/ui/user/user_recommended/share_detail_customer_widget.
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -68,9 +69,9 @@ class _RecommendedPageState extends State<RecommendedPage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-        //path: Assets.images.shareFirstFigure.path,
         extendBody: true,
         body: NestedScrollView(
+
           controller: _scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
@@ -101,13 +102,13 @@ class _RecommendedPageState extends State<RecommendedPage>
                             Assets.icons.back.path,
                             height: 48.w,
                             width: 48.w,
-                            color: headerWhite ? Colors.black : Colors.white,
+                            color: Colors.black ,
                           ),
                         ),
                         200.wb,
                         Text(
                           '我的推荐码',
-                          style: TextStyle(fontSize: 36.sp,color: Colors.white),
+                          style: TextStyle(fontSize: 36.sp,color: Colors.black),
                         ),
                       ],
                     )),
@@ -198,6 +199,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                             footer: MaterialFooter(),
                             scrollController: _controller,
                             controller: _easyRefreshController,
+
                             onRefresh: () async {
                               Future.delayed(
                                   const Duration(milliseconds: 0), () async {});
@@ -223,6 +225,7 @@ class _RecommendedPageState extends State<RecommendedPage>
                               setState(() {});
                             },
                             child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return _getRecommended(recommendedList[index]);
                               },
@@ -233,14 +236,24 @@ class _RecommendedPageState extends State<RecommendedPage>
                   ),
                 ],
               )),
-        ));
+        ),
+        bottomSheet:  Container(
+          height: 120.w,
+          padding: EdgeInsets.only(bottom: 50.w),
+          child: CloudBottomButton(
+            onTap: () {
+              Get.to(() => const ShareDetailCustomerWidget());
+            },
+            text: '我的邀请码',
+          ),
+        ),
+
+    );
+
   }
 
   ///客户信息
   _getRecommended(CustomerListModel model) {
-    // Future.delayed(const Duration(milliseconds: 0), () async {
-    //   phone = await CustomerFunc.getCustomerDetailModel(model.id);
-    // });
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w),
@@ -357,28 +370,12 @@ class _RecommendedPageState extends State<RecommendedPage>
 
 //图片叠加
   _flexibleSpace() {
-    return Stack(
-      children: [
-        Align(
-          child: Container(
-            width: 750.w,
-            height: 800.w,
-            padding: EdgeInsets.only(bottom: 10.w),
-            child: Image.asset(Assets.images.shareFirstFigure.path,
-                fit: BoxFit.fill),
-          ),
-        ),
-        Positioned(
-          top: 472.w,
-          left: 32.w,
-          child: Row(
-            children: [
-              _getCustomer(),
-              // 30.wb, _getPartner()
-            ],
-          ),
-        )
-      ],
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(bottom: 10.w),
+      height: 800.w,
+      child: Image.asset(Assets.images.shareFirstFigure.path,
+          fit: BoxFit.fill),
     );
   }
 
@@ -411,50 +408,6 @@ class _RecommendedPageState extends State<RecommendedPage>
     );
   }
 
-//
-  //邀请客户
-  _getCustomer() {
-    return GestureDetector(
-      onTap: (){
-        Get.to(() => const ShareDetailCustomerWidget());
-      },
-      child: Stack(
-        children: [
-          Container(
-              width: 328.w,
-              height: 158.w,
-              decoration: BoxDecoration(boxShadow: [
-                BoxShadow(
-                    color: const Color(0x40D14A16),
-                    offset: const Offset(0.0, 2.0),
-                    blurRadius: 14.w,
-                    spreadRadius: 2.w)
-              ]),
-              child: Image.asset(Assets.images.inviteCustomers.path)),
-          Positioned(
-              left: 32.w,
-              top: 30.w,
-              child: Column(
-                children: [
-                  Text(
-                    '邀请客户',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        ?.copyWith(color: const Color(0xFFFF8129)),
-                  ),
-                  16.hb,
-                  Text(
-                    "立即邀请>>>",
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: const Color.fromRGBO(255, 129, 41, 0.8)),
-                  ),
-                ],
-              ))
-        ],
-      ),
-    );
-  }
 
   //邀请合伙人
   // _getpartner() {

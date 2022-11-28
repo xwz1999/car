@@ -507,12 +507,17 @@ class NewCarDetailItem extends StatelessWidget {
                         color: BaseStyle.color333333),
                   ),
                   const Spacer(),
-                  Text(
-                    '返回',
-                    style: TextStyle(
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.w500,
-                        color: BaseStyle.color999999),
+                  GestureDetector(
+                    onTap: (){
+                      Get.back();
+                    },
+                    child: Text(
+                      '返回',
+                      style: TextStyle(
+                          fontSize: 28.sp,
+                          fontWeight: FontWeight.w500,
+                          color: BaseStyle.color999999),
+                    ),
                   ),
 
                 ],

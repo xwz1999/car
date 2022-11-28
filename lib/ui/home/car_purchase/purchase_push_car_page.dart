@@ -221,9 +221,9 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       child: Column(
         children: [
           20.heightBox,
-
+          licensePlate,
           _function(
-            '具体车型',
+            '品牌车型',
             () async {
               await Get.to(() => ChooseCarPage(
                     callback: () {

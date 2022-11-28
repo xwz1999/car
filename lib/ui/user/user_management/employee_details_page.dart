@@ -1,4 +1,3 @@
-import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/user/staff_info_model.dart';
 import 'package:cloud_car/ui/user/interface/business_func.dart';
 import 'package:cloud_car/ui/user/user_management/editor_employee_page.dart';
@@ -27,15 +26,15 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
   /// 有权限为true
   bool get _deletePermission {
     var userRole = UserTool.userProvider.userInfo;
-    if(userRole.business.roleId==11){
+    if (userRole.business.roleId == 11) {
       return true;
     }
-    if(userRole.business.storeId == staffInfo?.storeId&&userRole.business.roleId==1){
+    if (userRole.business.storeId == staffInfo?.storeId &&
+        userRole.business.roleId == 1) {
       return true;
-    }else{
+    } else {
       return false;
     }
-
   }
 
   @override
@@ -63,7 +62,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                 fontSize: BaseStyle.fontSize36,
                 fontWeight: FontWeight.bold)),
       ),
-      backgroundColor: bodyColor,
+      backgroundColor: kForeGroundColor,
       body: EasyRefresh(
         firstRefresh: true,
         header: MaterialHeader(),
@@ -76,192 +75,174 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
         },
         child: staffInfo == null
             ? const SizedBox.shrink()
-            : ListView(children: [_getUserinfo(), _getPermissions()]),
-      ), //
-    );
-  }
-
-  _getPermissions() {
-    return Container(
-      height: 800.w,
-      color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 16.w),
-            child: SizedBox(
-                height: 36.w,
-                child: Text(
-                  '权限描述',
-                  style: TextStyle(
-                    fontSize: BaseStyle.fontSize28,
-                    fontWeight: FontWeight.bold,
-                    color: BaseStyle.color333333,
-                  ),
-                )),
-          ),
-          const Divider(),
-          Container(
-            margin: EdgeInsets.only(left: 16.w),
-            decoration: BoxDecoration(
-                color: const Color(0xFF027AFF).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(4.w)),
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-            child: Text(
-              staffInfo!.roleEm.typeStr,
-              style: TextStyle(
-                  color: const Color(0xFF027AFF),
-                  fontSize: BaseStyle.fontSize28),
-            ),
-          ),
-          24.hb,
-          Padding(
-            padding: EdgeInsets.only(left: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  staffInfo!.roleEm.typeText,
-                  style: TextStyle(
-                      color: BaseStyle.color333333,
-                      fontSize: BaseStyle.fontSize28),
-                ),
-                staffInfo!.roleId == 1 || staffInfo!.roleId == 3 ? 0.hb : 32.hb,
-                Offstage(
-                  offstage: staffInfo!.roleId == 1 || staffInfo!.roleId == 3,
-                  child: SizedBox(
-                      width: 250.w,
+            : ListView(shrinkWrap: true, children: [
+                _getUserinfo(),
+                ClipRRect(
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(16.w)),
+                  child: Container(
+                      padding:
+                          EdgeInsets.only(left: 56.w, top: 24.w, bottom: 24.w),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border(
+                          bottom:
+                              BorderSide(color: Color(0xFFDDDDDD), width: 2.w),
+                        ),
+                        //borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.w)),
+                      ),
                       child: Text(
-                        '销售提成比例${staffInfo!.commission}%',
+                        '权限描述',
                         style: TextStyle(
-                            color: BaseStyle.color666666,
-                            fontSize: BaseStyle.fontSize28),
+                          fontSize: BaseStyle.fontSize28,
+                          fontWeight: FontWeight.bold,
+                          color: BaseStyle.color333333,
+                        ),
                       )),
                 ),
-                72.hb,
-                Offstage(
-                  offstage: staffInfo!.auditStatus == 1 ||
-                      staffInfo!.auditStatus == 2||staffInfo!.roleId == 1,
-                  child: Column(
-                    children: [
-                      Text(
-                        '驳回理由',
+                32.hb,
+                Row(
+                  children: [
+                    56.wb,
+                    Container(
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF027AFF).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(4.w)),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+                      child: Text(
+                        staffInfo!.roleEm.typeStr,
                         style: TextStyle(
-                            color: BaseStyle.color333333,
+                            color: const Color(0xFF027AFF),
                             fontSize: BaseStyle.fontSize28),
                       ),
-                      56.hb,
-                      Text(
-                        '该员工未能通过技术培训',
-                        style: TextStyle(
-                            color: const Color(0xFFFF6F42),
-                            fontSize: BaseStyle.fontSize28),
-                      )
-                    ],
+                    ),
+                  ],
+                ),
+                24.hb,
+                Padding(
+                  padding: EdgeInsets.only(left: 56.w),
+                  child: Text(
+                    staffInfo!.roleEm.typeText,
+                    style: TextStyle(
+                        color: BaseStyle.color333333,
+                        fontSize: BaseStyle.fontSize28),
+                  ),
+                ),
+                staffInfo!.roleId == 1 || staffInfo!.roleId == 3 ? 0.hb : 32.hb,
+                Padding(
+                  padding: EdgeInsets.only(left: 56.w),
+                  child: Offstage(
+                    offstage: staffInfo!.roleId == 1 || staffInfo!.roleId == 3,
+                    child: SizedBox(
+                        child: Text(
+                      '销售提成比例      ${staffInfo!.commission}%',
+                      style: TextStyle(
+                          color: BaseStyle.color666666,
+                          fontSize: BaseStyle.fontSize28),
+                    )),
+                  ),
+                ),
+                72.hb,
+                Padding(
+                  padding: EdgeInsets.only(left: 56.w),
+                  child: Offstage(
+                    offstage: staffInfo!.auditStatus == 1 ||
+                        staffInfo!.auditStatus == 2 ||
+                        staffInfo!.roleId == 1,
+                    child: Text(
+                      '驳回理由',
+                      style: TextStyle(
+                          color: BaseStyle.color333333,
+                          fontSize: BaseStyle.fontSize28),
+                    ),
+                  ),
+                ),
+                56.hb,
+                Padding(
+                  padding: EdgeInsets.only(left: 56.w),
+                  child: Offstage(
+                    offstage: staffInfo!.auditStatus == 1 ||
+                        staffInfo!.auditStatus == 2 ||
+                        staffInfo!.roleId == 1,
+                    child: Text(
+                      '该员工未能通过技术培训',
+                      style: TextStyle(
+                          color: const Color(0xFFFF6F42),
+                          fontSize: BaseStyle.fontSize28),
+                    ),
                   ),
                 )
-              ],
-            ),
-          ),
-          const Spacer(),
-          const Divider(),
-          Offstage(
-            offstage: !_deletePermission,
-            child: Row(
-              children: [
-                Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
-                getButton(Assets.icons.delete.path, '删除', () async {
-                  await Get.dialog(NormalContentDialog(
-                    type: NormalTextDialogType.delete,
-                    title: '确认提示',
-                    content: const Text('确认删除该员工吗？'),
-                    items: const ['取消'],
-                    deleteItem: '确定',
-                    //监听器
-                    listener: (index) {
-                      Alert.dismiss(context);
-                      setState(() {});
-                    },
-                    deleteListener: () async {
-                      var res =
-                          await BusinessFunc.getStaffDelete(widget.staffId);
-                      if (res) {
-                        Get.back();
-                      }
-                      Get.back();
-                    },
-                  ));
-                }),
-                200.wb,
-                Offstage(
-                  offstage: !_deletePermission,
-                  child: getButton(Assets.icons.editor1.path, '编辑', () async {
-                    res = await Get.to(() => EditorEmployeePage(
-                          roleId: staffInfo!.roleId,
-                          storeId: staffInfo!.storeId,
-                          staffId: widget.staffId,
-                          nameText: staffInfo!.name,
-                          gender: staffInfo!.genderEm,
-                          phoneText: staffInfo!.phone,
-                          storeIdText: staffInfo!.storeName,
-                          roleName: staffInfo!.roleName,
-                          commissionText: staffInfo!.commission,
-                        ));
-                    //print(audit);
-                  }),
-                )
-                // : getButton(
-                //     Assets.icons.editor1.path,
-                //     '重新编辑',
-                //     () => setState(() {
-                //           Alert.show(
-                //               context,
-                //               NormalContentDialog(
-                //                 type: NormalTextDialogType.delete,
-                //                 title: '确认提示',
-                //                 content: const Text('确认重新提交员工信息并培训吗?'),
-                //                 items: const ['取消'],
-                //                 deleteItem: '确定',
-                //                 //监听器
-                //                 listener: (index) {
-                //                   Alert.dismiss(context);
-                //                   setState(() {
-                //                   });
-                //                 },
-                //                 deleteListener: () async {
-                //                   Alert.dismiss(context);
-                //                   var res = await BusinessFunc.getStaffadd(
-                //                       staffInfo!.name,
-                //                       staffInfo!.gender,
-                //                       staffInfo!.phone,
-                //                       staffInfo!.storeId,
-                //                       staffInfo!.roleId,
-                //                       staffInfo!.roleId == 1 ||
-                //                               staffInfo!.roleId == 3
-                //                           ? '0'
-                //                           : staffInfo!.commission);
-                //                   if (res) {
-                //                     Get.back();
-                //                   }
-                //                   setState(() {
-                //                   });
-                //                 },
-                //               ));
-                //         }))
-              ],
-            ),
-          )
-        ],
+              ]),
       ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border:
+                Border(top: BorderSide(color: Color(0xFFDDDDDD), width: 2.w))),
+        height: 100.w,
+        child: Row(
+          children: [
+            Offstage(
+              offstage: !_deletePermission,
+              child: Row(
+                children: [
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 100.w)),
+                  getButton(Assets.icons.delete.path, '删除', () async {
+                    await Get.dialog(NormalContentDialog(
+                      type: NormalTextDialogType.delete,
+                      title: '确认提示',
+                      content: const Text('确认删除该员工吗？'),
+                      items: const ['取消'],
+                      deleteItem: '确定',
+                      //监听器
+                      listener: (index) {
+                        Alert.dismiss(context);
+                        setState(() {});
+                      },
+                      deleteListener: () async {
+                        var res =
+                            await BusinessFunc.getStaffDelete(widget.staffId);
+                        if (res) {
+                          Get.back();
+                        }
+                        Get.back();
+                      },
+                    ));
+                  }),
+                  200.wb,
+                  Offstage(
+                    offstage: !_deletePermission,
+                    child: getButton(Assets.icons.editor1.path, '编辑', () async {
+                      res = await Get.to(() => EditorEmployeePage(
+                            roleId: staffInfo!.roleId,
+                            storeId: staffInfo!.storeId,
+                            staffId: widget.staffId,
+                            nameText: staffInfo!.name,
+                            gender: staffInfo!.genderEm,
+                            phoneText: staffInfo!.phone,
+                            storeIdText: staffInfo!.storeName,
+                            roleName: staffInfo!.roleName,
+                            commissionText: staffInfo!.commission,
+                          ));
+                      //print(audit);
+                    }),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ), //
     );
   }
 
   _getAudit() {
     return Offstage(
       offstage: staffInfo!.auditStatus == 1 ||
-          staffInfo!.auditStatus == 2||staffInfo!.roleId == 1,
+          staffInfo!.auditStatus == 2 ||
+          staffInfo!.roleId == 1,
       child: Image.asset(
         staffInfo!.auditStatus == 1
             ? Assets.icons.inreview.path
@@ -364,31 +345,34 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
-          padding: EdgeInsets.symmetric(vertical: 20.w),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Padding(
-              padding: EdgeInsets.only(left: 32.w),
-              child: Text(
-                staffInfo!.name,
-                style: TextStyle(
-                    color: BaseStyle.color333333,
-                    fontWeight: FontWeight.bold,
-                    fontSize: BaseStyle.fontSize36),
+          color: bodyColor,
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+            padding: EdgeInsets.symmetric(vertical: 20.w),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Padding(
+                padding: EdgeInsets.only(left: 32.w),
+                child: Text(
+                  staffInfo!.name,
+                  style: TextStyle(
+                      color: BaseStyle.color333333,
+                      fontWeight: FontWeight.bold,
+                      fontSize: BaseStyle.fontSize36),
+                ),
               ),
-            ),
-            getText('性别', staffInfo!.genderEm.typeStr),
-            getText('手机号', staffInfo!.phone),
-            getText('权限配置', staffInfo!.roleName),
-            getText('所属门店', staffInfo!.storeName),
-            //getText('所属入驻商', '宁波xx4s专营店'),
+              getText('性别', staffInfo!.genderEm.typeStr),
+              getText('手机号', staffInfo!.phone),
+              getText('权限配置', staffInfo!.roleName),
+              getText('所属门店', staffInfo!.storeName),
+              //getText('所属入驻商', '宁波xx4s专营店'),
 
-            ///widget.business
-            ///staffInfo!.Storeid
-          ]),
+              ///widget.business
+              ///staffInfo!.Storeid
+            ]),
+          ),
         ),
         Positioned(left: 534.w, top: 12.w, child: _getAudit())
       ],

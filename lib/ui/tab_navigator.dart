@@ -116,6 +116,8 @@ class _TabNavigatorState extends State<TabNavigator>
         currentIndex: _currentIndex,
         selectedFontSize: 20.sp,
         unselectedFontSize: 20.sp,
+        selectedItemColor: const Color(0xFF027AFF),
+        unselectedItemColor: const Color(0xFF111111),
         onTap: (index) {
           _tabController!.animateTo(index, curve: Curves.easeInOutCubic);
           setState(() => _currentIndex = index);

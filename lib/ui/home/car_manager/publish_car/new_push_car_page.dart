@@ -221,37 +221,37 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
                 fontWeight: FontWeight.bold)),
-        actions: [
-          Center(
-            child: GestureDetector(
-              onTap: (){},
-              child:  Padding(
-                padding: EdgeInsets.only(right: 32.w),
-                child: Text('草稿箱',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.w500),),
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   Center(
+        //     child: GestureDetector(
+        //       onTap: (){},
+        //       child:  Padding(
+        //         padding: EdgeInsets.only(right: 32.w),
+        //         child: Text('草稿箱',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.w500),),
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-
-
-      },child:
-
-      SizedBox(
-        width: 120.w,
-        height: 120.w,
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(60.w)),
-            child:   Image.asset(Assets.images.imgSave.path,width: 120.w,height: 120.w,),
-          ),
-        ),
-      ),
-      ),
-      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
-          FloatingActionButtonLocation.endDocked,2.w, -130.w),
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //
+      //
+      // },child:
+      //
+      // SizedBox(
+      //   width: 120.w,
+      //   height: 120.w,
+      //   child: AspectRatio(
+      //     aspectRatio: 1,
+      //     child: ClipRRect(
+      //       borderRadius: BorderRadius.all(Radius.circular(60.w)),
+      //       child:   Image.asset(Assets.images.imgSave.path,width: 120.w,height: 120.w,),
+      //     ),
+      //   ),
+      // ),
+      // ),
+      // floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+      //     FloatingActionButtonLocation.endDocked,2.w, -130.w),
       backgroundColor: bodyColor,
       extendBody: true,
       body: ListView(

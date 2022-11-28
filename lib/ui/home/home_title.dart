@@ -45,13 +45,16 @@ class HomeTitle extends StatelessWidget {
             children: [
               Text(
                 suffixTitle,
-                style: TextStyle(fontSize: 28.sp,fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 28.sp),
               ),
               8.wb,
-              Icon(
-                CupertinoIcons.chevron_forward,
-                size: 28.w,
-                color: const Color(0xFF999999),
+              Padding(
+                padding: EdgeInsets.only(top: 10.w),
+                child: Icon(
+                  CupertinoIcons.chevron_forward,
+                  size: 28.w,
+                  color: const Color(0xFF999999),
+                ),
               ),
             ],
           ),

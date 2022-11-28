@@ -18,7 +18,7 @@ class JurisdictionToast extends Dialog {
             children: [
               16.hb,
               Text(
-                '为成为合伙人，无法享受云云问车带来的',
+                '未成为合伙人，无法享受云云问车带来的',
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             Text(

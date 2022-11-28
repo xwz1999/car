@@ -443,32 +443,32 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                             Icons.keyboard_arrow_right,
                           )),
                     ),
-                    ListTile(
-                      onTap: () {
-                        Get.to(() => const RealNamePage());
-                      },
-                      title: Text('认证身份',
-                          style: Theme.of(context).textTheme.bodyText1),
-                      trailing: SizedBox(
-                          width: 40.w,
-                          height: 40.w,
-                          child: const Icon(
-                            Icons.keyboard_arrow_right,
-                          )),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Get.to(() => const BankCardPage());
-                      },
-                      title: Text('我的银行卡',
-                          style: Theme.of(context).textTheme.bodyText1),
-                      trailing: SizedBox(
-                          width: 40.w,
-                          height: 40.w,
-                          child: const Icon(
-                            Icons.keyboard_arrow_right,
-                          )),
-                    ),
+                    // ListTile(
+                    //   onTap: () {
+                    //     Get.to(() => const RealNamePage());
+                    //   },
+                    //   title: Text('认证身份',
+                    //       style: Theme.of(context).textTheme.bodyText1),
+                    //   trailing: SizedBox(
+                    //       width: 40.w,
+                    //       height: 40.w,
+                    //       child: const Icon(
+                    //         Icons.keyboard_arrow_right,
+                    //       )),
+                    // ),
+                    // ListTile(
+                    //   onTap: () {
+                    //     Get.to(() => const BankCardPage());
+                    //   },
+                    //   title: Text('我的银行卡',
+                    //       style: Theme.of(context).textTheme.bodyText1),
+                    //   trailing: SizedBox(
+                    //       width: 40.w,
+                    //       height: 40.w,
+                    //       child: const Icon(
+                    //         Icons.keyboard_arrow_right,
+                    //       )),
+                    // ),
                   ]).toList(),
                 ],
               ),
