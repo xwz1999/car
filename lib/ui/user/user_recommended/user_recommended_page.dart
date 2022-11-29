@@ -28,13 +28,12 @@ class _RecommendedPageState extends State<RecommendedPage>
 
   late TabController _tabController;
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
-  List<CustomerListModel> recommendedList = [
-  ];
-
+  List<CustomerListModel> recommendedList = [];
 
   ///滚动监听设置
   final ScrollController _scrollController = ScrollController();
-  final ScrollController _controller = ScrollController();
+
+  // final ScrollController _controller = ScrollController();
 
   int _page = 1;
   final int _size = 10;
@@ -69,207 +68,179 @@ class _RecommendedPageState extends State<RecommendedPage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-        extendBody: true,
-        body: NestedScrollView(
-
-          controller: _scrollController,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                primary: false,
-                floating: false,
-                //固定顶部
-                pinned: true,
-                snap: false,
-                elevation: 0,
-                expandedHeight: 800.w,
-                leadingWidth: 0,
-                titleSpacing: 0,
-                title: Container(
-                    //color: Colors.red,
-                    height: kToolbarHeight + MediaQuery.of(context).padding.top,
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top),
-                    child: Row(
-                      children: [
-                        32.wb,
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Image.asset(
-                            Assets.icons.back.path,
-                            height: 48.w,
-                            width: 48.w,
-                            color: Colors.black ,
-                          ),
-                        ),
-                        200.wb,
-                        Text(
-                          '我的推荐码',
-                          style: TextStyle(fontSize: 36.sp,color: Colors.black),
-                        ),
-                      ],
-                    )),
-
-                //左侧标题
-                leading: const SizedBox(),
-                //collapsedHeight: kToolbarHeight,
-                backgroundColor:
-                    headerWhite ? Colors.white : const Color(0xFFF6F6F6),
-                flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: EdgeInsets.zero,
-                  background: Container(
-                    alignment: Alignment.center,
-                    child: _flexibleSpace(),
-                  ),
-                ),
-                bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(kToolbarHeight + MediaQuery.of(context).padding.top),
-                  child: Container(
-                      width: 750.w,
-                      height: 138.w,
-                      color: bgColor,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 70.w,
-                            width: 750.w,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(16.w),
-                                    bottomRight: Radius.circular(16.w))),
-                            child: TabBar(
-                                onTap: (index) {
-                                  setState(() {});
-                                },
-                                isScrollable: true,
-                                //文本间距
-                                labelPadding: EdgeInsets.symmetric(
-                                    vertical: 12.w, horizontal: 48.w),
-                                controller: _tabController,
-                                indicatorWeight: 3,
-                                //选中与未选中的文字颜色
-                                labelColor: kPrimaryColor,
-                                unselectedLabelColor: BaseStyle.color333333,
-                                // indicatorPadding: EdgeInsets.symmetric(
-                                //     horizontal: 30.w, vertical: 30.w),
-                                //indicatorSize: TabBarIndicatorSize.label,
-                                labelStyle: TextStyle(
-                                  color: Colors.white.withOpacity(0.85),
-                                ),
-                                indicator: const BoxDecoration(),
-                                indicatorColor: kPrimaryColor,
-                                tabs: [_tab(0, '我邀请的客户')]),
-                          ),
-                          16.hb,
-                          // 24.hb,
-                          Padding(
-                            padding: EdgeInsets.only(left: 32.w),
-                            child: Text(
-                              '共找到${recommendedList.length}条信息',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(color: const Color(0xFF999999)),
-                            ),
-                          ),
-                        ],
-                      )),
-                ),
-              ),
-            ];
+      extendBody: true,
+      body: EasyRefresh.custom(
+        firstRefresh: true,
+        header: MaterialHeader(),
+        footer: MaterialFooter(),
+        scrollController: _scrollController,
+        controller: _easyRefreshController,
+        onRefresh: () async {
+          Future.delayed(const Duration(milliseconds: 0), () async {});
+          _page = 1;
+          recommendedList =
+              await CustomerFunc.getCustomerList(page: _page, size: _size);
+          setState(() {});
+        },
+        onLoad: () async {
+          _page++;
+          var baseList = await apiClient.requestList(API.customer.customerLists,
+              data: {'page': _page, 'size': _size});
+          if (baseList.nullSafetyTotal < recommendedList.length) {
+            recommendedList.addAll(baseList.nullSafetyList
+                .map((e) => CustomerListModel.fromJson(e))
+                .toList());
+          } else {
+            _easyRefreshController.finishLoad(noMore: true);
+          }
+          setState(() {});
+        },
+       slivers: [
+         SliverAppBar(
+           primary: false,
+           floating: false,
+           //固定顶部
+           pinned: true,
+           snap: false,
+           elevation: 0,
+           expandedHeight: 700.w,
+           leadingWidth: 0,
+           titleSpacing: 0,
+           title: Container(
+             //color: Colors.red,
+               height: kToolbarHeight + MediaQuery.of(context).padding.top,
+               alignment: Alignment.centerLeft,
+               padding: EdgeInsets.only(
+                   top: MediaQuery.of(context).padding.top),
+               child: Row(
+                 children: [
+                   32.wb,
+                   GestureDetector(
+                     onTap: () {
+                       Get.back();
+                     },
+                     child: Image.asset(
+                       Assets.icons.back.path,
+                       height: 48.w,
+                       width: 48.w,
+                       color: Colors.black,
+                     ),
+                   ),
+                   200.wb,
+                   Text(
+                     '我的推荐码',
+                     style:
+                     TextStyle(fontSize: 36.sp, color: Colors.black),
+                   ),
+                 ],
+               )),
+           //左侧标题
+           leading: const SizedBox(),
+           //collapsedHeight: kToolbarHeight,
+           backgroundColor:
+           headerWhite ? Colors.white : const Color(0xFFF6F6F6),
+           flexibleSpace: FlexibleSpaceBar(
+             titlePadding: EdgeInsets.zero,
+             background: Container(
+               alignment: Alignment.center,
+               child: _flexibleSpace(),
+             ),
+           ),
+           bottom: PreferredSize(
+             preferredSize: Size.fromHeight(
+                 kToolbarHeight + MediaQuery.of(context).padding.top),
+             child: Container(
+                 width: double.infinity,
+                 height: 140.w,
+                 color: bgColor,
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Container(
+                       height: 70.w,
+                       width: double.infinity,
+                       decoration: BoxDecoration(
+                           color: Colors.white,
+                           borderRadius: BorderRadius.only(
+                               bottomLeft: Radius.circular(16.w),
+                               bottomRight: Radius.circular(16.w))),
+                       child: TabBar(
+                           onTap: (index) {
+                             setState(() {});
+                           },
+                           isScrollable: true,
+                           //文本间距
+                           labelPadding: EdgeInsets.symmetric(
+                               vertical: 12.w, horizontal: 48.w),
+                           controller: _tabController,
+                           indicatorWeight: 3,
+                           //选中与未选中的文字颜色
+                           labelColor: kPrimaryColor,
+                           unselectedLabelColor: BaseStyle.color333333,
+                           // indicatorPadding: EdgeInsets.symmetric(
+                           //     horizontal: 30.w, vertical: 30.w),
+                           //indicatorSize: TabBarIndicatorSize.label,
+                           labelStyle: TextStyle(
+                             color: Colors.white.withOpacity(0.85),
+                           ),
+                           indicator: const BoxDecoration(),
+                           indicatorColor: kPrimaryColor,
+                           tabs: [_tab(0, '我邀请的客户')]),
+                     ),
+                     16.hb,
+                     // 24.hb,
+                     Padding(
+                       padding: EdgeInsets.only(left: 32.w),
+                       child: Text(
+                         '共找到${recommendedList.length}条信息',
+                         style: Theme.of(context)
+                             .textTheme
+                             .subtitle2
+                             ?.copyWith(color: const Color(0xFF999999)),
+                       ),
+                     ),
+                   ],
+                 )),
+           ),
+         ),
+         SliverList(
+           delegate: SliverChildBuilderDelegate(
+                 (BuildContext context, int index) {
+               return _getRecommended(recommendedList[index]);
+             },
+             childCount: recommendedList.length,
+           ),
+         ),
+       ],
+      ),
+      bottomSheet: Container(
+        height: 120.w,
+        padding: EdgeInsets.only(bottom: 50.w),
+        child: CloudBottomButton(
+          onTap: () {
+            Get.to(() => const ShareDetailCustomerWidget());
           },
-          body: Padding(
-              padding: EdgeInsets.only(top: 0.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  16.hb,
-                  Expanded(
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        EasyRefresh(
-                            firstRefresh: true,
-                            header: MaterialHeader(),
-                            footer: MaterialFooter(),
-                            scrollController: _controller,
-                            controller: _easyRefreshController,
-
-                            onRefresh: () async {
-                              Future.delayed(
-                                  const Duration(milliseconds: 0), () async {});
-                              _page = 1;
-                              recommendedList =
-                                  await CustomerFunc.getCustomerList(
-                                      page: _page, size: _size);
-                              setState(() {});
-                            },
-                            onLoad: () async {
-                              _page++;
-                              var baseList = await apiClient.requestList(
-                                  API.customer.customerLists,
-                                  data: {'page': _page, 'size': _size});
-                              if (baseList.nullSafetyTotal <
-                                  recommendedList.length) {
-                                recommendedList.addAll(baseList.nullSafetyList
-                                    .map((e) => CustomerListModel.fromJson(e))
-                                    .toList());
-                              } else {
-                                _easyRefreshController.finishLoad(noMore: true);
-                              }
-                              setState(() {});
-                            },
-                            child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return _getRecommended(recommendedList[index]);
-                              },
-                              itemCount: recommendedList.length,
-                            ))
-                      ],
-                    ),
-                  ),
-                ],
-              )),
+          text: '我的邀请码',
         ),
-        bottomSheet:  Container(
-          height: 120.w,
-          padding: EdgeInsets.only(bottom: 50.w),
-          child: CloudBottomButton(
-            onTap: () {
-              Get.to(() => const ShareDetailCustomerWidget());
-            },
-            text: '我的邀请码',
-          ),
-        ),
-
+      ),
     );
-
   }
 
   ///客户信息
   _getRecommended(CustomerListModel model) {
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w),
       margin: EdgeInsets.only(bottom: 20.w),
       child: GestureDetector(
-        onTap: ()async {
-          if(model.isImportant != 1){
-            bool success =
-                await CustomerFunc.setImportant(model.id);
+        onTap: () async {
+          if (model.isImportant != 1) {
+            bool success = await CustomerFunc.setImportant(model.id);
             if (success) {
               CloudToast.show('设置成功');
               _easyRefreshController.callRefresh();
               setState(() {});
             }
           }
-
         },
         child: DecoratedBox(
           decoration: BoxDecoration(
@@ -372,10 +343,9 @@ class _RecommendedPageState extends State<RecommendedPage>
   _flexibleSpace() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(bottom: 10.w),
-      height: 800.w,
-      child: Image.asset(Assets.images.shareFirstFigure.path,
-          fit: BoxFit.fill),
+      padding: EdgeInsets.only(bottom: 150.w),
+      height: 700.w,
+      child: Image.asset(Assets.images.shareFirstFigure.path, fit: BoxFit.fill),
     );
   }
 
@@ -407,44 +377,6 @@ class _RecommendedPageState extends State<RecommendedPage>
       ],
     );
   }
-
-
-  //邀请合伙人
-  // _getpartner() {
-  //   return Stack(
-  //     children: [
-  //       SizedBox(
-  //           width: 328.w,
-  //           height: 158.w,
-  //           child: Image.asset(Assets.images.invitePartners.path)),
-  //       Positioned(
-  //           left: 32.w,
-  //           top: 40.w,
-  //           child: Column(
-  //             children: [
-  //               Text(
-  //                 '邀请合伙人',
-  //                 style: Theme.of(context)
-  //                     .textTheme
-  //                     .subtitle1
-  //                     ?.copyWith(color: const Color(0xFF3C95F6)),
-  //               ),
-  //               16.hb,
-  //               GestureDetector(
-  //                 onTap: () {
-  //                   Get.to(() => const ShareDetailPartnerPage());
-  //                 },
-  //                 child: Text(
-  //                   "立即邀请>>>",
-  //                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
-  //                       color: const Color.fromRGBO(60, 149, 246, 0.8)),
-  //                 ),
-  //               ),
-  //             ],
-  //           ))
-  //     ],
-  //   );
-  // }
 
   @override
   bool get wantKeepAlive => true;

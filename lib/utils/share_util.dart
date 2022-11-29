@@ -23,6 +23,7 @@ class ShareUtil {
     if (data == null) {
       return;
     } else {
+
       var re = await fluwx.shareToWeChat(
         fluwx.WeChatShareImageModel(
           fluwx.WeChatImage.binary(data),
@@ -60,6 +61,7 @@ class ShareUtil {
       required String imgUrl,
       required List<int> carIds}) async {
     var data = await handleImage(imgUrl);
+
     if (data == null) return;
     var str = carIds.map((e) => e.toString()).join(',');
     String path = carIds.length == 1
@@ -111,7 +113,7 @@ class ShareUtil {
       minWidth: 500,
       quality: 96,
     );
-    if (result.length > 128000 && result.length < data.length) {
+    if (result.length > 128000 ) {
       result = await compressImageList(result);
     }
     return result;
@@ -120,6 +122,7 @@ class ShareUtil {
   /// 图片处理
   static Future<Uint8List?> handleImage(String imgUrl) async {
     var data = await getNetworkImageData(imgUrl.imageWithHost);
+
     if (data == null) {
       CloudToast.show('图片不存在');
       return null;
