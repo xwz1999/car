@@ -380,9 +380,6 @@ class CarFunc {
 
   ///发起出售合同
   static Future<bool> addPurchase(PurchaseCarInfo purchaseCarInfo,PurchaseInfo purchaseInfo,PurchasePhotoModel purchasePhotoModel) async {
-
-
-
     Map<String, dynamic> baseInfo = {
       "modelId":purchaseCarInfo.carModelId,
       "vin":purchaseCarInfo.viNum,
@@ -390,7 +387,7 @@ class CarFunc {
       "licensingDate":purchaseCarInfo.licensingDateStr,
       'licensePlate':purchaseCarInfo.licensePlate,
       "useCharacter":purchaseCarInfo.carNatureOfUseEM.typeStr,
-
+      "color":purchaseCarInfo.color,
       "marketDate":purchaseCarInfo.productionDateStr==''?null:purchaseCarInfo.productionDateStr,
       "mileage": purchaseCarInfo.mileage!=null? num.parse(purchaseCarInfo.mileage!)*10000:null,
       "compulsoryInsuranceDate":purchaseCarInfo.compulsoryInsuranceDateStr==''?null:purchaseCarInfo.compulsoryInsuranceDateStr,
@@ -403,17 +400,18 @@ class CarFunc {
       "phone": purchaseInfo.phoneNum,
       "bankCard": purchaseInfo.bankNum,
       "bank": purchaseInfo.bank,
+      "kind":purchaseInfo.kind,
     };
 
     Map<String, dynamic> priceInfo = {
       "DealPrice": purchaseInfo.transactionAmount,
-      "DownPaymentRate": purchaseInfo.downPaymentNum,
-
-
+      "DownPaymentRate": purchaseInfo.downPaymentAmount,
+      // purchaseInfo.downPaymentNum,
       // purchaseInfo.downPaymentNum!=null?
       // (num.parse(purchaseInfo.downPaymentNum!)/100).toString():
       // null,
-      "BalancePaymentRate": int.parse((purchaseInfo.transactionAmount)!)-int.parse((purchaseInfo.downPaymentNum)!),
+      "BalancePaymentRate":purchaseInfo.downPaymentAmount!=null && purchaseInfo.transactionAmount !=null?(num.parse(purchaseInfo.transactionAmount!)-num.parse(purchaseInfo.downPaymentAmount!)).toString():null,
+      // ( num.parse(purchaseInfo.transactionAmount!)-num.parse(purchaseInfo.downPaymentNum!)).toString(),
       // purchaseInfo.downPaymentNum!=null?
       // (1-num.parse(purchaseInfo.downPaymentNum!)/100).toString():null,
       "DeliverDate": purchaseInfo.deliveryDateStr,

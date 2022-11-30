@@ -37,25 +37,19 @@ class _CityListPageState extends State<CityListPage> {
   }
 
   void loadData() async {
-
-
     hotLists = UserTool.cityProvider.hotCities;
-
-
+    // print(hotLists);
     for (var element in hotLists) {
       hotCityList.add(AzRegionModel(name: element.name, model: element));
     }
-
     //加载城市列表
     chinaLists = UserTool.cityProvider.regions;
-
+    // print("这是数据，${chinaLists}");
     for (ChinaRegionModel element in chinaLists) {
       for(int i=0;i<element.children!.length;i++){
         cityList.add(AzRegionModel(name: element.children![i].name, model: element.children![i]));
       }
-
     }
-
     _handleList(cityList);
   }
 

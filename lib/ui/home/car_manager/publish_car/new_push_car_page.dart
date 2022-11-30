@@ -23,12 +23,15 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../model/sort/sort_brand_model.dart';
 import '../../../../model/sort/sort_car_model_model.dart';
 import '../../../../model/sort/sort_series_model.dart';
+import '../../../../model/user/staff_all_model.dart';
+import '../../../../model/user/storeall_model.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/picker/car_date_picker.dart';
 import '../../../../widget/sort_widget.dart';
 import '../../sort/choose_car_page.dart';
 import '../../sort/search_param_model.dart';
 import '../direct_sale/edit_item_widget.dart';
+import 'choose_purchaser_page.dart';
 import 'choose_shop_page.dart';
 
 class NewPushCarPage extends StatefulWidget {
@@ -81,6 +84,8 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
   final TextEditingController _commercialInsurancePriceController =
       TextEditingController();
   final TextEditingController _remarkController = TextEditingController();
+  final TextEditingController _purchasePrice=TextEditingController();
+  final TextEditingController _purchase=TextEditingController();
 
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
@@ -136,6 +141,8 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
 
   List<String> get carPurchaseTypeList =>
       CarPurchaseType.values.map((e) => e.typeStr).toList();
+  List<String> get purchaseTypeList =>
+      CarNatureOfUse.values.map((e) => e.typeStr).toList();
 
   @override
   void initState() {
@@ -308,6 +315,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                                   if (!canTap) {
                                     return;
                                   }
+                                  // print("这是数据${_publishCarInfo.}");
                                   Get.to(() => PushCarPicturePage(
                                         newPublishCarInfo:
                                             _publishCarInfo.value,
@@ -429,7 +437,30 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       },
       endText: '万',
     );
-
+    // var purchasePrice = EditItemWidget(
+    //   topIcon: false,
+    //   title: '采购价格',
+    //   tips: '请输入',
+    //   controller: _purchasePrice,
+    //   canChange: true,
+    //   inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
+    //   callback: (String content) {
+    //     _publishCarInfo.value.wholesalePrice = content;
+    //   },
+    //   endText: '万',
+    // );
+    // var purchase = EditItemWidget(
+    //   topIcon: false,
+    //   title: '采购人',
+    //   tips: '请输入',
+    //   controller: _purchase,
+    //   canChange: true,
+    //   inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
+    //   callback: (String content) {
+    //     _publishCarInfo.value.wholesalePrice = content;
+    //   },
+    //   endText: '',
+    // );
     var retrofittingFee = EditItemWidget(
       title: '加装费用',
       tips: '请输入',
@@ -685,7 +716,9 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                 _function(
                   '上牌地',
                       () async {
-                    await Get.to(() => ChooseCityPage(
+                    await Get.to(() =>
+
+                        ChooseCityPage(
                       callback: (ChinaRegionModel model) {
                         _publishCarInfo.value.attribution = model.name;
                         _publishCarInfo.value.attributionId = model.id;
@@ -874,6 +907,75 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
               children: [
                 wholesalePrice,
                 salePrice,
+                // purchasePrice,
+                    _function(
+                      '采购类型',
+                          () async {
+                        await showModalBottomSheet(
+                          context: context,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+                          builder: (context) {
+                            return CloudListPickerWidget(
+                                title: '采购类型',
+                                items: carPurchaseTypeList,
+                                onConfirm: (str, index) {
+                                  _publishCarInfo.value.purchaseType = index;
+                                  Get.back();
+                                  setState(() {});
+                                });
+                          },
+                        );
+                      },
+                      _publishCarInfo.value.purchaseTypeEM.typeStr,
+                      '请选择',
+                        topIcon: false
+                    ),
+                    // purchasePrice,
+                    _function(
+                        '采购日期',
+                            () async {
+                          var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime.now());
+                          _publishCarInfo.value.purchaseDate = firstDate;
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          setState(() {});
+                        },
+                        _publishCarInfo.value.purchaseDateStr,
+                        '请选择',
+                        topIcon: false
+                    ),
+                    _function(
+                        '采购人',
+                            () async {
+                              ///需要新接口
+                          Get.to(()=> ChoosePurchaserPage(callback: (StoreallModel model,String name) {
+                            // _publishCarInfo.value.purchasePerson = model.staffs;
+                            _publishCarInfo.value.purchasePerson =name;
+                            _publishCarInfo.value.purchaseStore=model.name;
+                            setState(() {});
+                          },));
+
+
+                        },
+                        _publishCarInfo.value.purchasePerson,
+                        '请选择',
+                        topIcon: false
+                    ),
+                    _function(
+                      '门店',
+                          () async {
+                            ///需要新接口
+                            // Get.to(()=> ChoosePurchaserPage(callback: (StaffAllModel model) {
+                            //
+                            // },));
+                        setState(() {});
+                      },
+                      _publishCarInfo.value.purchaseStore,
+                      '请选择',
+                      topIcon: false,
+
+                    ),
+                // purchase,
               ],
             ),
           ),

@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/contract/purchase_photo_model.dart';
@@ -17,12 +17,14 @@ import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 import '../car_manager/direct_sale/car_image_page.dart';
-
+///再带个个人与公司
 class PurchasePhotoPage extends StatefulWidget {
   final PurchaseCarInfo purchaseCarInfo;
   final PurchaseInfo purchaseInfo;
   final PurchasePhotoModel reportPhotoModel;
+  // final PushPhotoModel model;
   const PurchasePhotoPage(
   {super.key, required this.purchaseCarInfo, required this.purchaseInfo, required this.reportPhotoModel, });
 
@@ -32,22 +34,21 @@ class PurchasePhotoPage extends StatefulWidget {
 
 class _PurchasePhotoPageState extends State<PurchasePhotoPage>
     with TickerProviderStateMixin {
-  List<PushImgModel> _reportPhotos = [];
+  // List<dynamic> _reportPhotos = [];
+  List<dynamic> _reportPhotos = [];
   List<PushImgModel> _certificatesPhotos = [];
-  List<File> img=[];
+  // List<dynamic> _carPhotos = [];
   // String img='';
 
   @override
   void initState() {
-
-    _reportPhotos = [
-      PushImgModel(name: '正面',isMust:true ),
-      PushImgModel(name: '左面',isMust:true ),
-      PushImgModel(name: '后面',isMust:true ),
-      PushImgModel(name: '右面',isMust:true ),
-      PushImgModel(name: '表显里程',isMust:true ),
-
-    ];
+    // _reportPhotos = [
+    //   PushImgModel(name: '',isMust:true ),
+    //   PushImgModel(name: '左面',isMust:true ),
+    //   PushImgModel(name: '后面',isMust:true ),
+    //   PushImgModel(name: '右面',isMust:true ),
+    //   PushImgModel(name: '表显里程',isMust:true ),
+    // ];
 
     _certificatesPhotos=[
       PushImgModel(name: '行驶证',isMust:true ),
@@ -61,17 +62,19 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
       PushImgModel(name: '车主身份证明')
     ];
     //
-    for(int i=0;i<widget.reportPhotoModel.carPhotos!.length;i++){
-      for(int j=0;j<_reportPhotos.length;j++){
-        if(_reportPhotos[j].name == widget.reportPhotoModel.carPhotos![i].text){
-          if(widget.reportPhotoModel.carPhotos![i].photo!=null){
-            _reportPhotos[j].url = widget.reportPhotoModel.carPhotos![i].photo;
-          }
+    // for(int i=0;i<widget.reportPhotoModel.carPhotos!.length;i++){
+    //   for(int j=0;j<_reportPhotos.length;j++){
+    //     if(_reportPhotos[j].name == widget.reportPhotoModel.carPhotos![i].text){
+    //       if(widget.reportPhotoModel.carPhotos![i].photo!=null){
+    //         _reportPhotos[j].url = widget.reportPhotoModel.carPhotos![i].photo;
+    //       }
+    //     }
+    //   }
+    // }
 
-        }
-      }
+    for (var item in widget.reportPhotoModel.carPhotos!) {
+      _reportPhotos.add(item.photo);
     }
-
     for(int i=0;i<widget.reportPhotoModel.dataPhotos!.length;i++){
       for(int j=0;j<_certificatesPhotos.length;j++){
         if(_certificatesPhotos[j].name == widget.reportPhotoModel.dataPhotos![i].text){
@@ -86,15 +89,25 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
   }
 
   Future uploadPhotos() async {
-      widget.reportPhotoModel.carPhotos!.clear();
-      for (var i = 0; i < _reportPhotos.length; i++) {
-        if (_reportPhotos[i].url.runtimeType != String&&_reportPhotos[i].url.runtimeType != Null) {
-          var url = await apiClient.uploadImage(
-              _reportPhotos[i].url );
-          _reportPhotos[i].url = url;
-        }
-        widget.reportPhotoModel.carPhotos!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name)  );
+    widget.reportPhotoModel.carPhotos!.clear();
+    for (var i = 0; i < _reportPhotos.length; i++) {
+      if (_reportPhotos[i].runtimeType != String) {
+        var url = await apiClient.uploadImage(_reportPhotos[i]);
+        _reportPhotos.removeAt(i);
+        _reportPhotos.insert(i, url);
       }
+      widget.reportPhotoModel.carPhotos!
+          .add(CarPhotos(photo: _reportPhotos[i], text: '车辆照片'));
+    }
+      // widget.reportPhotoModel.carPhotos!.clear();
+      // for (var i = 0; i < _reportPhotos.length; i++) {
+      //   if (_reportPhotos[i].url.runtimeType != String&&_reportPhotos[i].url.runtimeType != Null) {
+      //     var url = await apiClient.uploadImage(
+      //         _reportPhotos[i].url );
+      //     _reportPhotos[i].url = url;
+      //   }
+      //   widget.reportPhotoModel.carPhotos!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name)  );
+      // }
 
       widget.reportPhotoModel.dataPhotos!.clear();
       for (var i = 0; i < _certificatesPhotos.length; i++) {
@@ -105,6 +118,7 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
         }
         widget.reportPhotoModel.dataPhotos!.add(CarPhotos(photo: _certificatesPhotos[i].url,text: _certificatesPhotos[i].name)  );
       }
+
   }
 
   @override
@@ -114,7 +128,6 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
       title: '车辆照片',
       body: ListView(
         children: [
-
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -128,12 +141,10 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
             color: Colors.white,
             padding: EdgeInsets.symmetric(vertical: 10.w),
             child:
-            CarImageItem(
-              imageBack: (List<File> image) {
-                img = image;
-              },
-              //isPadding: false,
-            ),
+
+            _getView1(_reportPhotos),
+            //   //isPadding: false,
+            // ),
             // _getView(_reportPhotos,true),
           ),
 
@@ -159,11 +170,13 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
               if (!canTap) {
                 return;
               }
-
+              print(widget.purchaseInfo.transactionAmount);
+              print(widget.purchaseInfo.downPaymentAmount);
             var result = await  CarFunc.addPurchase(widget.purchaseCarInfo,widget.purchaseInfo,widget.reportPhotoModel);
-              // if(result){
-              //   Get.to(() => const PublishFinishPage(title: '发起合同',));
-              // }
+
+              if(result){
+                Get.to(() => const PublishFinishPage(title: '发起合同',));
+              }
             },
             text: '发起合同',
           ),
@@ -174,10 +187,10 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
   }
 
   bool get canTap {
-    if(img.isEmpty){
-      BotToast.showText(text: "请先上传车辆照片");
-      return false;
-    }
+    // if(img.isEmpty){
+    //   BotToast.showText(text: "请先上传车辆照片");
+    //   return false;
+    // }
     for(var item in widget.reportPhotoModel.dataPhotos!){
       if(item.text=='行驶证'&&item.photo==null){
         BotToast.showText(text: '请先上传行驶证照片');
@@ -218,6 +231,32 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
         });
   }
 
+  Widget _getView1(
+      // int index,
+      List<dynamic> list,
+      ) {
+    return Padding(
+      padding: EdgeInsets.only(left: 30.w, right: 30.w, top: 20.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '按住照片拖动排序，第一张默认为首页',
+            style: TextStyle(color: const Color(0xFF999999), fontSize: 28.sp),
+          ),
+          20.hb,
+          MultiImagePickWidget(
+            photos: list,
+            onChanged: (files) {
+             _reportPhotos=files;
+              setState(() {});
+            },
+            maxCount:  null ,
+          ),
+        ],
+      ),
+    );
+  }
   Widget _buildChild(PushImgModel model,int index,bool isCar) {
     return GestureDetector(
       onTap: () async {

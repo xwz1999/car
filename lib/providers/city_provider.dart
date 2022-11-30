@@ -25,6 +25,9 @@ class CityProvider extends ChangeNotifier {
         await updateRegion();
         _regionBox.put('version', cloudVersion);
       } else {
+        // var baseModel = await apiClient.request(API.region.all);
+        // if (baseModel.code != 0) return [];
+          // _regions=[];
         _regions = (_regionBox.get('regions') as List)
             .cast<ChinaRegionModel>()
             .toList();
@@ -38,6 +41,7 @@ class CityProvider extends ChangeNotifier {
   Future updateRegion() async {
     var baseModel = await apiClient.request(API.region.all);
     if (baseModel.code != 0) return [];
+    // _regions=[];
     _regions = (baseModel.data as List<dynamic>)
         .map((e) => ChinaRegionModel.fromJson(e))
         .toList();

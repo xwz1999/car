@@ -108,58 +108,67 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                           text: '暂无客户信息',
                           paddingTop: 0,
                         )
-                      : CloudExpansionTile(
-                          backgroundColor:
-                              const Color(0xFF027AFF).withOpacity(0.1),
-                          collapsedBackgroundColor:
-                              const Color(0xFF333333).withOpacity(0.1),
-                          visualDensity: VisualDensity(vertical: -3.w),
-                          title: Row(
-                            children: [
-                              Text('入驻商',
-                                  style: TextStyle(
-                                      fontSize: BaseStyle.fontSize32,
-                                      color: const Color(0xFF027AFF))),
-                              24.wb,
-                              Padding(
-                                padding: EdgeInsets.only(top: 10.w),
-                                child: Text((storeallModel.staffs != null ? storeallModel.staffs!.length : 0).toString(),
-                                    style: TextStyle(
-                                        fontSize: BaseStyle.fontSize28,
-                                        color: const Color.fromRGBO(2, 122, 255, 0.8))),
-                              )
-                            ],
-                          ),
-                          children: [
-                            ...storeallModel.staffs != null
-                                ? storeallModel.staffs!.mapIndexed((e, index) {
-                                    return GestureDetector(
-                                      onTap: () async {
-                                        await Get.to(() => EmployeeDetailsPage(
-                                              staffId: e.id,
-                                            ));
-                                        _easyRefreshController.callRefresh();
-                                      },
-                                      child: getText(
-                                          e.roleName,
-                                          e.genderEM.typeNum,
-                                          e.name,
-                                          e.phone,
-                                          e.auditStatus,
-                                          e.roleEm),
-                                    );
-                                  }).toList()
-                                : [],
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return _getList(employees[index]);
-                              },
-                              itemCount: employees.length,
-                            ),
-                          ],
-                        )
+                      :  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return _getList(employees[index]);
+                    },
+                    itemCount: employees.length,
+                  ),
+
+                  // CloudExpansionTile(
+                  //         backgroundColor:
+                  //             const Color(0xFF027AFF).withOpacity(0.1),
+                  //         collapsedBackgroundColor:
+                  //             const Color(0xFF333333).withOpacity(0.1),
+                  //         visualDensity: VisualDensity(vertical: -3.w),
+                  //         title: Row(
+                  //           children: [
+                  //             // Text('入驻商',
+                  //             //     style: TextStyle(
+                  //             //         fontSize: BaseStyle.fontSize32,
+                  //             //         color: const Color(0xFF027AFF))),
+                  //             // 24.wb,
+                  //             Padding(
+                  //               padding: EdgeInsets.only(top: 10.w),
+                  //               child: Text((storeallModel.staffs != null ? storeallModel.staffs!.length : 0).toString(),
+                  //                   style: TextStyle(
+                  //                       fontSize: BaseStyle.fontSize28,
+                  //                       color: const Color.fromRGBO(2, 122, 255, 0.8))),
+                  //             )
+                  //           ],
+                  //         ),
+                  //         children: [
+                  //           ...storeallModel.staffs != null
+                  //               ? storeallModel.staffs!.mapIndexed((e, index) {
+                  //                   return GestureDetector(
+                  //                     onTap: () async {
+                  //                       await Get.to(() => EmployeeDetailsPage(
+                  //                             staffId: e.id,
+                  //                           ));
+                  //                       _easyRefreshController.callRefresh();
+                  //                     },
+                  //                     child: getText(
+                  //                         e.roleName,
+                  //                         e.genderEM.typeNum,
+                  //                         e.name,
+                  //                         e.phone,
+                  //                         e.auditStatus,
+                  //                         e.roleEm),
+                  //                   );
+                  //                 }).toList()
+                  //               : [],
+                  //           ListView.builder(
+                  //             shrinkWrap: true,
+                  //             physics: const NeverScrollableScrollPhysics(),
+                  //             itemBuilder: (context, index) {
+                  //               return _getList(employees[index]);
+                  //             },
+                  //             itemCount: employees.length,
+                  //           ),
+                  //         ],
+                  //       )
 
                   // ListView.builder(
                   //         itemBuilder: (context, index) {

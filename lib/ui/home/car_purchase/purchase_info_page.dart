@@ -127,11 +127,11 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     widget.purchaseInfo.bank = bankController.text;
 
     widget.purchaseInfo.transactionAmount = transactionAmountController.text;
-    widget.purchaseInfo.downPaymentAmount = downPaymentAmountController.text;
+    widget.purchaseInfo.downPaymentAmount = depositAmountController.text;
     widget.purchaseInfo.downPaymentNum = downPaymentNumController.text;
     widget.purchaseInfo.balanceAmountBackup = balanceAmountBackupController.text;
     widget.purchaseInfo.balanceAmountBackupNum = balanceAmountBackupNumController.text;
-
+    widget.purchaseInfo.kind=state+1;
     //widget.purchaseInfo.remark = remarkController.text;
 
 
@@ -679,6 +679,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
 
             setState(() {});
             callBack(choices.first);
+
             // _easyRefreshController.callRefresh();
             print(state);
 
@@ -745,6 +746,7 @@ class PurchaseInfo {
   String? bankNum;
 
   String? bank;
+  int? kind;
   // ///签订时间
   // DateTime? signingDate;
   // String get signingDateStr =>
@@ -785,6 +787,7 @@ class PurchaseInfo {
     ownerId:'',
     phoneNum:'',
     bankNum:'',
+    kind:null,
     // signingDate:null,
     signingAddress:'',
     transactionAmount:'',
@@ -800,6 +803,7 @@ class PurchaseInfo {
   );
 
   PurchaseInfo({
+    this.kind,
     this.ownerName,
     this.ownerId,
     this.phoneNum,

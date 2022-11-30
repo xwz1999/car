@@ -93,11 +93,10 @@ class BusinessFunc {
       'name': name,
       'gender': gender,
       'phone': phone,
-      'commision': num.parse(commission)
     };
 
     BaseModel res = await apiClient.request(API.storeManagement.storeAdd,
-        data: {'name': name, 'address': address, 'owner': params});
+        data: {'name': name, 'address': address, 'owner': params,'commision': num.parse(commission)});
     if (res.code == 0) {
       return true;
     } else {

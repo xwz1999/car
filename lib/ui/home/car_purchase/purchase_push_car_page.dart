@@ -20,6 +20,8 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../widget/picker/cloud_grid_picker_widget.dart';
+
 
 class PurchasePushCarPage extends StatefulWidget {
   const PurchasePushCarPage({super.key});
@@ -138,7 +140,9 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                           _publishCarInfo.value.licensingDate =
                               DateUtil.getDateTime(
                                   carInfoModel.vehicle.regdate);
-
+                          // _publishCarInfo.value.productionDate =
+                          //     DateUtil.getDateTime(
+                          //         CarCommonInfo.);
                           _engineController.text =
                               carInfoModel.vehicle.engineno;
                           setState(() {});
@@ -153,6 +157,9 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                               if (!canTap) {
                                 return;
                               }
+                              // print(_publishCarInfo.value);
+                              // print(purchaseInfo.value);
+                              // print(reportPhotoModel.value);
                               Get.to(()=>
                                   PurchaseInfoPage(
                                     purchaseCarInfo: _publishCarInfo.value,
@@ -217,6 +224,9 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       controller: _licenseColorController,
       topIcon: false,
       paddingStart: 0.w,
+      callback: (String content) {
+        _publishCarInfo.value.color = content;
+      },
     );
     var mile = EditItemWidget(
       topIcon: false,
@@ -321,7 +331,33 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
           ),
 
           mile,
-          licenseColor,
+          _function(
+            '车身颜色',
+                () async {
+              await showModalBottomSheet(
+                context: context,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(16.w))),
+                builder: (context) {
+                  return CloudGridPickerWidget(
+                      title: '车身颜色',
+                      items: colorList.map((e) => e.name).toList(),
+                      onConfirm: (strList, indexList) {
+                        if (strList.isNotEmpty) {
+                          _publishCarInfo.value.color = strList.first;
+                          Get.back();
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          setState(() {});
+                        }
+                      });
+                },
+              );
+            },
+            _publishCarInfo.value.color,
+            '请输入车身颜色',
+          ),
+          // licenseColor,
           // _function(
           //     '环保等级',
           //         () async {
@@ -463,7 +499,7 @@ class PurchaseCarInfo {
   ///发动机号
   String? engineNum;
 
-  ///车强险到期时间
+  ///交强险到期时间
   DateTime? compulsoryInsuranceDate;
   String get compulsoryInsuranceDateStr {
     if(compulsoryInsuranceDate==null){
@@ -475,6 +511,8 @@ class PurchaseCarInfo {
 
   ///表显里程
   String? mileage;
+  ///车身颜色
+  String? color;
 
   // ///环保等级
   // String? environmentalLevel;
@@ -485,6 +523,7 @@ class PurchaseCarInfo {
   int? customerId;
 
   static PurchaseCarInfo get empty => PurchaseCarInfo(
+        color:'',
         viNum: '',
         carName: '',
         carModelId: null,
@@ -509,6 +548,7 @@ class PurchaseCarInfo {
     this.carModelId,
     this.carNatureOfUse,
     //this.environmentalLevel,
-    this.compulsoryInsuranceDate
+    this.compulsoryInsuranceDate,
+    this.color,
   });
 }
