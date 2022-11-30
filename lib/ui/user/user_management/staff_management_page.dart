@@ -168,7 +168,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                   //         itemCount: employees.length,
                   //       ),
                   )),
-          UserTool.userProvider.userInfo.business.roleEM== Role.manager?
+          UserTool.userProvider.userInfo.business.roleEM== Role.manager || UserTool.userProvider.userInfo.business.roleEM== Role.settlers?
           Row(
             children: [
           UserTool.userProvider.userInfo.business.roleId ==

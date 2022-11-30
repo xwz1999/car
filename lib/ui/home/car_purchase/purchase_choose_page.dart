@@ -117,7 +117,11 @@ class _PurchaseChoosePageState extends State<PurchaseChoosePage> {
                       null) {
                     CloudToast.show('请先选择客户');
                   } else {
-                    Get.to(()=>PurchaseInfoPage(purchaseCarInfo: widget.purchaseCarInfo, purchaseInfo: widget.purchaseInfo, reportPhotoModel: widget.reportPhotoModel,));
+                    Get.to(()=>PurchaseInfoPage(
+
+                      purchaseCarInfo: widget.purchaseCarInfo,
+                      purchaseInfo: widget.purchaseInfo,
+                      reportPhotoModel: widget.reportPhotoModel,));
                   }
                 },
                 style: ButtonStyle(

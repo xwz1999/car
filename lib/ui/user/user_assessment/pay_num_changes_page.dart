@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class PayChangesPage extends StatefulWidget {
-  const PayChangesPage({super.key});
+  final int numberState; ///1：评估 2：合同
+  const PayChangesPage({super.key,required this.numberState});
 
   @override
   _PayChangesPageState createState() => _PayChangesPageState();
@@ -76,10 +77,11 @@ class _PayChangesPageState extends State<PayChangesPage> {
   int page = 1;
   final int size = 10;
 
-  _refresh() async {
+  _refresh( int kind) async {
     payNumList = await User.getHistory(
       page: page,
       size: size,
+      kind: kind,
     );
     sortByDate();
   }
@@ -108,7 +110,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
           controller: _easyRefreshController,
           onRefresh: () async {
             page = 1;
-            await _refresh();
+            await _refresh(widget.numberState);
 
             // for (var i = 0; i < payNumList.length; i++) {
             //   if (DateUtil.formatDateMs(payNumList[i].createdAt.toInt() * 1000,
@@ -129,7 +131,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
                 .requestList(API.user.wallet.assessHistory, data: {
               'page': page,
               'size': size,
-              'kind': 1,
+              'kind':widget.numberState,
             });
             if (baseList.nullSafetyTotal > payNumList.length) {
               payNumList.addAll(baseList.nullSafetyList
@@ -252,7 +254,7 @@ class _PayChangesPageState extends State<PayChangesPage> {
                 Row(
                   children: [
                     Text(
-                      '评估车辆${model.count.abs()}次',
+                      widget.numberState==2?'合同份数':'评估车辆${model.count.abs()}次',
                       style: TextStyle(
                           color: BaseStyle.color333333, fontSize: 28.sp),
                     ),

@@ -407,8 +407,15 @@ class CarFunc {
 
     Map<String, dynamic> priceInfo = {
       "DealPrice": purchaseInfo.transactionAmount,
-      "DownPaymentRate": purchaseInfo.downPaymentNum!=null? (num.parse(purchaseInfo.downPaymentNum!)/100).toString():null,
-      "BalancePaymentRate":  purchaseInfo.downPaymentNum!=null? (1-num.parse(purchaseInfo.downPaymentNum!)/100).toString():null,
+      "DownPaymentRate": purchaseInfo.downPaymentNum,
+
+
+      // purchaseInfo.downPaymentNum!=null?
+      // (num.parse(purchaseInfo.downPaymentNum!)/100).toString():
+      // null,
+      "BalancePaymentRate": int.parse((purchaseInfo.transactionAmount)!)-int.parse((purchaseInfo.downPaymentNum)!),
+      // purchaseInfo.downPaymentNum!=null?
+      // (1-num.parse(purchaseInfo.downPaymentNum!)/100).toString():null,
       "DeliverDate": purchaseInfo.deliveryDateStr,
     };
 

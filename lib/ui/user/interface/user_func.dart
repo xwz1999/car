@@ -27,10 +27,10 @@ class User {
   /// }
   ///评估记录
   static Future<List<HistoryModel>> getHistory(
-      {required int page, int size = 10}) async {
+      {required int page, int size = 10,required int kind}) async {
     BaseListModel res = await apiClient.requestList(
         API.user.wallet.assessHistory,
-        data: {'page': page, 'size': size,  'kind': 1,});
+        data: {'page': page, 'size': size,  'kind': kind,});
 
     if (res.code == 0) {
       return res.nullSafetyList.map((e) => HistoryModel.fromJson(e)).toList();

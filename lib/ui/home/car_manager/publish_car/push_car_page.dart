@@ -172,7 +172,7 @@ class _PushCarPageState extends State<PushCarPage> {
                             150.wb,
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => const UserAssessmentPage());
+                                Get.to(() =>  const UserAssessmentPage(assessmentState: 2,));
                               },
                               child: Container(
                                 width: 120.w,

@@ -54,7 +54,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
           padding: EdgeInsets.symmetric(vertical: 28.w),
           color: Colors.white,
           child: Text(
-            '退出登陆',
+            '退出登录',
             style: Theme.of(context)
                 .textTheme
                 .subtitle2

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/contract/purchase_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/publish_finish_page.dart';
@@ -15,6 +17,8 @@ import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../car_manager/direct_sale/car_image_page.dart';
+
 class PurchasePhotoPage extends StatefulWidget {
   final PurchaseCarInfo purchaseCarInfo;
   final PurchaseInfo purchaseInfo;
@@ -30,6 +34,8 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
     with TickerProviderStateMixin {
   List<PushImgModel> _reportPhotos = [];
   List<PushImgModel> _certificatesPhotos = [];
+  List<File> img=[];
+  // String img='';
 
   @override
   void initState() {
@@ -45,7 +51,9 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
 
     _certificatesPhotos=[
       PushImgModel(name: '行驶证',isMust:true ),
-      PushImgModel(name: '登记证书',isMust:true ),
+      PushImgModel(name: '维修记录',isMust: true),
+      PushImgModel(name: '表显里程',isMust:true ),
+      PushImgModel(name: '登记证书',),
       PushImgModel(name: '购置税发票'),
       PushImgModel(name: '年检凭证'),
       PushImgModel(name: '购车证明'),
@@ -112,14 +120,21 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
             children: [
               Padding(
                 padding:  EdgeInsets.all(24.w),
-                child: '上传车辆前后左右至少各一张及表显里程'.text.size(28.sp).color(const Color(0xFF999999)).make(),
+                child: '车辆照片'.text.size(32.sp).color(const Color(0xFF999999)).make(),
               ),
             ],
           ),
           Container(
             color: Colors.white,
             padding: EdgeInsets.symmetric(vertical: 10.w),
-            child: _getView(_reportPhotos,true),
+            child:
+            CarImageItem(
+              imageBack: (List<File> image) {
+                img = image;
+              },
+              //isPadding: false,
+            ),
+            // _getView(_reportPhotos,true),
           ),
 
           Row(
@@ -127,7 +142,7 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
             children: [
               Padding(
                 padding:  EdgeInsets.all(24.w),
-                child: '手续证件'.text.size(28.sp).color(const Color(0xFF999999)).make(),
+                child: '手续证件'.text.size(32.sp).color(const Color(0xFF999999)).make(),
               ),
             ],
           ),
@@ -146,10 +161,9 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
               }
 
             var result = await  CarFunc.addPurchase(widget.purchaseCarInfo,widget.purchaseInfo,widget.reportPhotoModel);
-
-              if(result){
-                Get.to(() => const PublishFinishPage(title: '发起合同',));
-              }
+              // if(result){
+              //   Get.to(() => const PublishFinishPage(title: '发起合同',));
+              // }
             },
             text: '发起合同',
           ),
@@ -160,36 +174,21 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
   }
 
   bool get canTap {
-    for(var item in widget.reportPhotoModel.carPhotos!){
-      if(item.text=='正面'&&item.photo==null){
-        BotToast.showText(text: '请先上传正面照片');
-        return false;
-      }
-      if(item.text=='左面'&&item.photo==null){
-        BotToast.showText(text: '请先上传左面照片');
-        return false;
-      }
-      if(item.text=='后面'&&item.photo==null){
-        BotToast.showText(text: '请先上传后面照片');
-        return false;
-      }
-      if(item.text=='右面'&&item.photo==null){
-        BotToast.showText(text: '请先上传右面照片');
-        return false;
-      }
-      if(item.text=='表显里程'&&item.photo==null){
-        BotToast.showText(text: '请先上传表显里程照片');
-        return false;
-      }
+    if(img.isEmpty){
+      BotToast.showText(text: "请先上传车辆照片");
+      return false;
     }
-
     for(var item in widget.reportPhotoModel.dataPhotos!){
       if(item.text=='行驶证'&&item.photo==null){
         BotToast.showText(text: '请先上传行驶证照片');
         return false;
       }
-      if(item.text=='登记证书'&&item.photo==null){
-        BotToast.showText(text: '请先上传登记证书照片');
+      if(item.text=='表显里程'&&item.photo==null){
+        BotToast.showText(text: '请先上传表显里程');
+        return false;
+      }
+      if(item.text=='维修记录' && item.photo==null){
+        BotToast.showText(text: '请先上传维修记录');
         return false;
       }
     }
@@ -222,7 +221,6 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
   Widget _buildChild(PushImgModel model,int index,bool isCar) {
     return GestureDetector(
       onTap: () async {
-
         var value =
         await CloudImagePicker.pickSingleImage(title: '选择图片');
         if(isCar){

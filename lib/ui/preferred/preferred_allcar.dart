@@ -176,14 +176,11 @@ class _AllCarState extends State<AllCar> {
               header: MaterialHeader(),
               onRefresh: () async {
                 _page = 1;
-
                 _carList = await CarFunc.getCarList(_page, _size,
                     order: CarMap.carSortString.getKeyFromValue(_pickSort),
                     searchParams: _params);
-                setState(() {});
-
+                // setState(() {});
                 _onLoad = false;
-
                 setState(() {});
               },
               onLoad: () async {

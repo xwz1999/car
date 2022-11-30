@@ -18,7 +18,10 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../../../widget/button/colud_check_radio.dart';
 
 class PurchaseInfoPage extends StatefulWidget {
   final PurchaseCarInfo purchaseCarInfo;
@@ -33,6 +36,7 @@ class PurchaseInfoPage extends StatefulWidget {
 class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   final TextEditingController ownerNameController = TextEditingController();
   final TextEditingController ownerIdController = TextEditingController();
+  final TextEditingController  institutionsController= TextEditingController();
   final TextEditingController phoneNumController = TextEditingController();
   final TextEditingController bankNumController = TextEditingController();
   final TextEditingController bankController = TextEditingController();
@@ -40,7 +44,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   // final TextEditingController signingAddressController = TextEditingController();
 
   final TextEditingController transactionAmountController = TextEditingController();
-  // final TextEditingController depositAmountController = TextEditingController();
+  final TextEditingController depositAmountController = TextEditingController();
   final TextEditingController downPaymentAmountController = TextEditingController();
   final TextEditingController balanceAmountBackupController = TextEditingController();
 
@@ -53,7 +57,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   final TextEditingController downPaymentNumController = TextEditingController();
   final TextEditingController balanceAmountBackupNumController = TextEditingController();
 
-
+  late int state=0;
   bool get canTap {
     if (ownerIdController.text.trim().isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
@@ -83,23 +87,27 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       BotToast.showText(text: '请先输入成交金额');
       return false;
     }
-    if (downPaymentNumController.text.trim().isEmpty) {
-      BotToast.showText(text: '请先输入首付占比');
+    if(depositAmountController.text.trim().isEmpty){
+      BotToast.showText(text: '请先输入定金金额');
       return false;
     }
-    if (downPaymentAmountController.text.trim().isEmpty) {
-      BotToast.showText(text: '请先输入首付金额');
-      return false;
-    }
+    // if (downPaymentNumController.text.trim().isEmpty) {
+    //   BotToast.showText(text: '请先输入首付占比');
+    //   return false;
+    // }
+    // if (downPaymentAmountController.text.trim().isEmpty) {
+    //   BotToast.showText(text: '请先输入首付金额');
+    //   return false;
+    // }
     if (balanceAmountBackupController.text.trim().isEmpty) {
       BotToast.showText(text: '请先输入尾款金额');
       return false;
     }
 
-    if (balanceAmountBackupNumController.text.trim().isEmpty) {
-      BotToast.showText(text: '请先输入尾款占比');
-      return false;
-    }
+    // if (balanceAmountBackupNumController.text.trim().isEmpty) {
+    //   BotToast.showText(text: '请先输入尾款占比');
+    //   return false;
+    // }
     if(  widget.purchaseInfo.deliveryDate==null){
       BotToast.showText(text: '请先选择交付日期');
       return false;
@@ -130,7 +138,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     return true;
   }
 
+  final List<int> _selectIndex2 = [0];
 
+  final List<String> _models1 = ['个人', '公司'];
   List<ChooseItem> formalitiesList = [
     ChooseItem(name: '行驶证'),
     ChooseItem(name: '登记证书'),
@@ -174,15 +184,15 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       ),
       backgroundColor: bodyColor,
       extendBody: true,
-      body: ListView(
+      body:  ListView(
         children: [
           Padding(padding: EdgeInsets.all(32.w),child:  '车主信息'.text.size(36.sp).color(const Color(0xFF999999)).make(),),
           Container(
-            padding: EdgeInsets.only(left: 32.w,right: 12.w),
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.white,),
-            child: _ownerInfo()
+              padding: EdgeInsets.only(left: 32.w,right: 12.w),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.white,),
+              child: _ownerInfo()
           ),
           Padding(padding: EdgeInsets.all(32.w),child:  '车款与交验车'.text.size(36.sp).color(const Color(0xFF999999)).make(),),
           Container(
@@ -220,7 +230,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           ).paddingAll(30.w),
         ],
       ),
-    );
+      );
   }
 
   _remark(){
@@ -277,7 +287,6 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
               fontSize: BaseStyle.fontSize28,),
             controller: remarkController,
             decoration: InputDecoration(
-
               contentPadding: EdgeInsets.zero,
               filled: true,
               isDense: true,
@@ -306,37 +315,61 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       endText: '元',
       inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
       callback: (text){
-        if(text.isNotEmpty&&downPaymentNumController.text.isNotEmpty){
-          num amount = num.parse(text);
-          num downPaymentNum = num.parse(downPaymentNumController.text);
+        if(depositAmountController.text.isNotEmpty){
+          balanceAmountBackupController.text=(num.parse(text)-num.parse(depositAmountController.text)).toString();
+          // num amount = num.parse(text);
+          // num downPaymentNum = num.parse(downPaymentNumController.text);
+          // downPaymentAmountController.text = (amount * downPaymentNum/100).toStringAsFixed(2);
+          // balanceAmountBackupNumController.text = (100-downPaymentNum).toStringAsFixed(2);
+          // balanceAmountBackupController.text =(( amount * (100-downPaymentNum))/100).toStringAsFixed(2);
+          setState(() {
 
-          downPaymentAmountController.text = (amount * downPaymentNum/100).toStringAsFixed(2);
-          balanceAmountBackupNumController.text = (100-downPaymentNum).toStringAsFixed(2);
-          balanceAmountBackupController.text =(( amount * (100-downPaymentNum))/100).toStringAsFixed(2);
+          });
+        }else{
+          balanceAmountBackupController.text='';
           setState(() {
 
           });
         }
       },
     );
-    // var depositAmount = EditItemWidget(
+    var depositAmount = EditItemWidget(
+      topIcon: false,
+      title: '定金金额',
+      paddingStart: 0.w,
+      tips: '请输入',
+      controller: depositAmountController,
+      endText: '元',
+      callback: (text){
+        if(transactionAmountController.text.isNotEmpty){
+          balanceAmountBackupController.text=(num.parse(transactionAmountController.text)-num.parse(text)).toString();
+          // num amount = num.parse(text);
+          // num downPaymentNum = num.parse(downPaymentNumController.text);
+          // downPaymentAmountController.text = (amount * downPaymentNum/100).toStringAsFixed(2);
+          // balanceAmountBackupNumController.text = (100-downPaymentNum).toStringAsFixed(2);
+          // balanceAmountBackupController.text =(( amount * (100-downPaymentNum))/100).toStringAsFixed(2);
+          setState(() {
+
+          });
+        }else{
+          balanceAmountBackupController.text='';
+          setState(() {
+
+          });
+        }
+      },
+    );
+    // var downPaymentAmount = EditItemWidget(
     //   topIcon: false,
-    //   title: '定金金额',
+    //   title: '首付金额',
     //   paddingStart: 0.w,
+    //   inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
     //   tips: '请输入',
-    //   controller: depositAmountController,
+    //   controller: downPaymentAmountController,
     //   endText: '元',
     // );
-    var downPaymentAmount = EditItemWidget(
-      topIcon: false,
-      title: '首付金额',
-      paddingStart: 0.w,
-      inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
-      tips: '请输入',
-      controller: downPaymentAmountController,
-      endText: '元',
-    );
     var balanceAmount = EditItemWidget(
+
       topIcon: false,
       title: '尾款金额',
       paddingStart: 0.w,
@@ -346,38 +379,38 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       endText: '元',
     );
 
-    var downPaymentNum = EditItemWidget(
-      topIcon: false,
-      title: '首付占比',
-      paddingStart: 0.w,
-      inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
-      tips: '请输入',
-      controller: downPaymentNumController,
-      endText: '%',
-      callback: (text){
-        if(text.isNotEmpty&&transactionAmountController.text.isNotEmpty){
-          num downPaymentNum = num.parse(text);
-          num  amount = num.parse(transactionAmountController.text);
+    // var downPaymentNum = EditItemWidget(
+    //   topIcon: false,
+    //   title: '首付占比',
+    //   paddingStart: 0.w,
+    //   inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
+    //   tips: '请输入',
+    //   controller: downPaymentNumController,
+    //   endText: '%',
+    //   callback: (text){
+    //     if(text.isNotEmpty&&transactionAmountController.text.isNotEmpty){
+    //       num downPaymentNum = num.parse(text);
+    //       num  amount = num.parse(transactionAmountController.text);
+    //
+    //       downPaymentAmountController.text = (amount * downPaymentNum/100).toStringAsFixed(2);
+    //       balanceAmountBackupNumController.text = (100-downPaymentNum).toStringAsFixed(2);
+    //       balanceAmountBackupController.text =(( amount * (100-downPaymentNum))/100).toStringAsFixed(2);
+    //       setState(() {
+    //
+    //       });
+    //     }
+    //   },
+    // );
 
-          downPaymentAmountController.text = (amount * downPaymentNum/100).toStringAsFixed(2);
-          balanceAmountBackupNumController.text = (100-downPaymentNum).toStringAsFixed(2);
-          balanceAmountBackupController.text =(( amount * (100-downPaymentNum))/100).toStringAsFixed(2);
-          setState(() {
-
-          });
-        }
-      },
-    );
-
-    var balanceAmountBackupNum = EditItemWidget(
-      topIcon: false,
-      title: '尾款占比',
-      paddingStart: 0.w,
-      inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
-      tips: '请输入',
-      controller: balanceAmountBackupNumController,
-      endText: '%',
-    );
+    // var balanceAmountBackupNum = EditItemWidget(
+    //   topIcon: false,
+    //   title: '尾款占比',
+    //   paddingStart: 0.w,
+    //   inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
+    //   tips: '请输入',
+    //   controller: balanceAmountBackupNumController,
+    //   endText: '%',
+    // );
 
 
     // var deliveryPlace = EditItemWidget(
@@ -417,13 +450,11 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     return Column(
       children: [
         transactionAmount,
-        downPaymentNum,
-        downPaymentAmount,
-
-
-        balanceAmountBackupNum,
+        depositAmount,
+        // downPaymentNum,
+        // downPaymentAmount,
+        // balanceAmountBackupNum,
         balanceAmount,
-
         _function(
           '交付时间',
               () async {
@@ -474,7 +505,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
 
    _ownerInfo() {
     var ownerName = EditItemWidget(
-      title: '车主姓名',
+      title: state==0?'姓名':'公司名称',
       tips: '请输入',
       controller: ownerNameController,
       topIcon: false,
@@ -508,14 +539,20 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         },
         child: Image.asset(
           Assets.icons.scan.path,
-          width: 32.w,
-          height: 32.w,
+          width: 42.w,
+          height: 42.w,
         ),
       ),
     );
-
+    var  institutionId= EditItemWidget(
+      title: '机构代码',
+      tips: '请输入',
+      controller: institutionsController,
+      topIcon: false,
+      paddingStart: 0.w,
+    );
     var phoneNum = EditItemWidget(
-      title: '手机号码',
+      title: state==0?'手机号码':'联系电话',
       tips: '请输入',
       controller: phoneNumController,
       topIcon: false,
@@ -551,14 +588,14 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         },
         child: Image.asset(
           Assets.icons.scan.path,
-          width: 32.w,
-          height: 32.w,
+          width: 42.w,
+          height: 42.w,
         ),
       ),
     );
 
     var bank = EditItemWidget(
-      title: '银行',
+      title: '开户行',
       tips: '请输入',
       controller: bankController,
       topIcon: false,
@@ -578,9 +615,33 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
 
     return Column(
       children: [
-        ownerId,
+        Padding(
+          padding: EdgeInsets.only(top: 40.w),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 170.w,
+                child: Text(
+                  '车主身份',
+                  style: TextStyle(
+                    fontSize: 32.sp,
+                    color: const Color(0xFF333333),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 50.w,
+                child: getChooseList(
+                        (int choice) {
+                              state=choice;
+                        }, _models1, _selectIndex2),
+              ),
+            ],
+          ),
+        ),
         ownerName,
-
+        state==0?ownerId:institutionId,
         phoneNum,
         bankNum,
         bank,
@@ -601,7 +662,49 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     );
   }
 
+  getChooseList(Function(int) callBack, List models, List<int> choices) {
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      children: [
+        ...models
+            .mapIndexed((currentValue, index) => GestureDetector(
+          onTap: () {
+            if (choices.contains(index)) {
+              choices.remove(index);
+            } else {
+              choices.clear();
+              choices.add(index);
+            }
 
+            setState(() {});
+            callBack(choices.first);
+            // _easyRefreshController.callRefresh();
+            print(state);
+
+          },
+          child: Container(
+            width: 160.w,
+            color: Colors.white,
+            child: Row(
+              children: [
+                BeeCheckRadio(
+                  value: index,
+                  groupValue: choices,
+                ),
+                16.wb,
+                Text(
+                  currentValue,
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+              ],
+            ),
+          ),
+        ))
+            .toList(),
+      ],
+    );
+  }
   _function(
       String title,
       VoidCallback onTap,
@@ -714,4 +817,5 @@ class PurchaseInfo {
     // this.serviceCharge,
     this.remark
   });
+
 }

@@ -39,7 +39,7 @@ enum CarSource {
   noData(0,''),
 
   individual(1, '个人直卖'),
-  carDealer(2, '车商');
+  carDealer(2, '公司收购');
 
   final int typeNum;
   final String typeStr;

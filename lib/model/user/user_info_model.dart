@@ -38,6 +38,7 @@ class UserInfoModel extends Equatable {
         assessCount: 0,
         inviteCount: 0,
         balance: '',
+        assessContractCount:0
       ),
       business: Business(storeName: '', roleName: '', roleId: 0,businessId: 0,businessName: '',storeId: 0), partner: Partner(expireDate: 0, isPartner: 0));
 
@@ -129,6 +130,7 @@ class ExtraData extends Equatable {
   final int assessCount;
   final String balance;
   final int inviteCount;
+  final int assessContractCount;
 
   factory ExtraData.fromJson(Map<String, dynamic> json) =>
       _$ExtraDataFromJson(json);
@@ -136,6 +138,7 @@ class ExtraData extends Equatable {
   Map<String, dynamic> toJson() => _$ExtraDataToJson(this);
 
   const ExtraData({
+    required this.assessContractCount,
     required this.assessCount,
     required this.balance,
     required this.inviteCount,
@@ -146,6 +149,7 @@ class ExtraData extends Equatable {
         assessCount,
         balance,
         inviteCount,
+        assessContractCount,
       ];
 }
 

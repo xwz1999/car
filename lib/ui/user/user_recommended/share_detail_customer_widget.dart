@@ -85,7 +85,8 @@ class _ShareDetailCustomerWidgetState extends State<ShareDetailCustomerWidget>
                           quality: 100,
                         );
                         if (re['isSuccess']) {
-                          CloudToast.show('图片已保存到${re['filePath']}',
+                          // 到${re['filePath']}
+                          CloudToast.show('图片已保存',
                               align: Alignment.center);
                         } else {
                           CloudToast.show('保存图片失败');

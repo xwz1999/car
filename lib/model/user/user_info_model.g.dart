@@ -46,12 +46,14 @@ ExtraData _$ExtraDataFromJson(Map<String, dynamic> json) => ExtraData(
       assessCount: json['assessCount'] as int,
       balance: json['balance'] as String,
       inviteCount: json['inviteCount'] as int,
+      assessContractCount:json['assessContractCount'] as int,
     );
 
 Map<String, dynamic> _$ExtraDataToJson(ExtraData instance) => <String, dynamic>{
       'assessCount': instance.assessCount,
       'balance': instance.balance,
       'inviteCount': instance.inviteCount,
+      'assessContractCount':instance.assessContractCount,
     };
 
 Business _$BusinessFromJson(Map<String, dynamic> json) => Business(

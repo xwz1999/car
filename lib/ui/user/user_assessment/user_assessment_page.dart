@@ -12,7 +12,8 @@ import 'package:velocity_x/velocity_x.dart';
 import 'assessment_pay_page.dart';
 
 class UserAssessmentPage extends StatefulWidget {
-  const UserAssessmentPage({super.key});
+  final  int assessmentState;///1:评估 2：合同
+  const UserAssessmentPage({super.key,required this.assessmentState});
 
   @override
   _UserAssessmentPageState createState() => _UserAssessmentPageState();
@@ -56,7 +57,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const PayChangesPage());
+                  Get.to(() =>  PayChangesPage(numberState: widget.assessmentState,));
                 },
                 child: Text(
                   '次数记录',
@@ -70,7 +71,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
           ),
           30.wb,
         ],
-        title: Text('评估次数充值', style: Theme.of(context).textTheme.headline6),
+        title: Text(widget.assessmentState==2?'合同份数充值':'评估次数充值', style: Theme.of(context).textTheme.headline6),
       ),
       body: ListView(
         children: [
@@ -106,7 +107,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
               Row(
                 children: [
                   Text(
-                    "剩余评估次数",
+                    widget.assessmentState==2?'剩余合同份数':"剩余评估次数",
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
@@ -114,7 +115,8 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                   ),
                   24.wb,
                   Text(
-                    (UserTool.userProvider.userInfo.data.assessCount)
+                    widget.assessmentState==2?(UserTool.userProvider.userInfo.data.assessContractCount)
+                        .toString(): (UserTool.userProvider.userInfo.data.assessCount)
                         .toString(),
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         fontSize: 42.sp,
@@ -215,7 +217,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
         if (_chooseItem != null) {
           Get.to(() => AssessmentPayPage(
                 price: _chooseItem!.pice,
-                count: _chooseItem!.count, title: '评估次数充值',
+                count: _chooseItem!.count, title: widget.assessmentState==2?"合同份数充值":'评估次数充值',
               ));
         } else {
           CloudToast.show('请先选择一个充值类型');

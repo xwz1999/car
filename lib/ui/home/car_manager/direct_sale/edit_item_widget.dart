@@ -40,7 +40,7 @@ class EditItemWidget extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.controller,
     this.value,
-    this.inputFormatters,this.textColor ,this.titleColor,this.haveBorder = true, this.titleSize
+    this.inputFormatters,this.textColor ,this.titleColor,this.haveBorder = true, this.titleSize,
   });
 
   @override

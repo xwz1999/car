@@ -50,6 +50,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
   final TextEditingController _engineController = TextEditingController();
   final TextEditingController _mileController = TextEditingController();
   final TextEditingController _licensePlateController = TextEditingController();
+  final TextEditingController _licenseColorController = TextEditingController();
 
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
@@ -132,9 +133,11 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                                 carInfoModel.vinModel!.first.modelId;
                           }
                           _viNumController.text = carInfoModel.vehicle.vin;
+                          _licensePlateController.text=carInfoModel.vehicle.lsnum;
+                          _licenseColorController.text=carInfoModel.vinModel!.first.color;
                           _publishCarInfo.value.licensingDate =
                               DateUtil.getDateTime(
-                                  carInfoModel.vehicle.issuedate);
+                                  carInfoModel.vehicle.regdate);
 
                           _engineController.text =
                               carInfoModel.vehicle.engineno;
@@ -150,7 +153,16 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                               if (!canTap) {
                                 return;
                               }
-                              Get.to(()=>PurchaseChoosePage(purchaseCarInfo: _publishCarInfo.value, purchaseInfo: purchaseInfo.value, reportPhotoModel: reportPhotoModel.value,));
+                              Get.to(()=>
+                                  PurchaseInfoPage(
+                                    purchaseCarInfo: _publishCarInfo.value,
+                                    purchaseInfo: purchaseInfo.value,
+                                    reportPhotoModel: reportPhotoModel.value,)
+                                //   PurchaseChoosePage(
+                                // purchaseCarInfo: _publishCarInfo.value,
+                                // purchaseInfo: purchaseInfo.value,
+                                // reportPhotoModel: reportPhotoModel.value,)
+                              );
                             },
                             style: ButtonStyle(
                               backgroundColor:
@@ -191,14 +203,21 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       paddingStart: 0.w,
     );
     var licensePlate = EditItemWidget(
+      // value: _publishCarInfo.value.licensePlate,
       title: '车辆牌照',
       tips: '请输入',
       controller: _licensePlateController,
       topIcon: false,
       paddingStart: 0.w,
     );
-
-
+    var licenseColor = EditItemWidget(
+      // value: _publishCarInfo.value.licensePlate,
+      title: '车身颜色',
+      tips: '请输入',
+      controller: _licenseColorController,
+      topIcon: false,
+      paddingStart: 0.w,
+    );
     var mile = EditItemWidget(
       topIcon: false,
       title: '行驶里程',
@@ -211,7 +230,6 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       },
       endText: '万公里',
     );
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -222,6 +240,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
         children: [
           20.heightBox,
           licensePlate,
+
           _function(
             '品牌车型',
             () async {
@@ -248,6 +267,8 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
             },
+            // _publishCarInfo.value.licensingDateStr,
+
             _publishCarInfo.value.licensingDateStr,
             '选择首次上牌时间',
           ),
@@ -288,7 +309,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
           ),
 
           _function(
-            '车强险',
+            '交强险',
                 () async {
                   var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime(DateTime.now().year+100));
               _publishCarInfo.value.compulsoryInsuranceDate = firstDate;
@@ -296,11 +317,11 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
               setState(() {});
             },
             _publishCarInfo.value.compulsoryInsuranceDateStr,
-            '选择车强险到期时间',
+            '选择交强险到期时间',
           ),
 
           mile,
-          licensePlate
+          licenseColor,
           // _function(
           //     '环保等级',
           //         () async {
@@ -361,7 +382,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
 
 
     if (_publishCarInfo.value.compulsoryInsuranceDate == null) {
-      BotToast.showText(text: '请选择车强险时间');
+      BotToast.showText(text: '请选择交强险时间');
       return false;
     }
 
@@ -378,7 +399,6 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
     _publishCarInfo.value.mileage = _mileController.text;
     _publishCarInfo.value.viNum = _viNumController.text;
     _publishCarInfo.value.engineNum = _engineController.text;
-
     _publishCarInfo.value.licensePlate = _licensePlateController.text;
     return true;
   }
