@@ -65,7 +65,6 @@ class CityProvider extends ChangeNotifier {
       '苏州',
       '西安'
     ];
-
     List hotss = [
       '杭州',
       '北京',

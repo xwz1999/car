@@ -67,7 +67,9 @@ enum CarType{
   noData(0,''),
   middleGauge(1, '二手车(中规)'),
   parallelImport(2, '二手车(平行进口)'),
-  handcart(3,'一手车')
+  handcart(3,'一手车'),
+  gauge(4,'新车(中规)'),
+  parallelImportNew(5,'新车(平行进口)')
   ///新车(中规)
   ///新车(平行进口)
 

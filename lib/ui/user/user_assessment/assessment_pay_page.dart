@@ -19,9 +19,10 @@ class AssessmentPayPage extends StatefulWidget {
   final String price;
   final int count;
   final String title;
+  final int state;
 
   const AssessmentPayPage(
-      {super.key, required this.price, required this.count, required this.title});
+      {super.key, required this.price, required this.count, required this.title,required this.state});
 
   @override
   _AssessmentPayPageState createState() => _AssessmentPayPageState();
@@ -127,10 +128,10 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
           CloudToast.loading;
           switch (_selectIndex) {
             case 0:
-              await _wxPayFunc();
+              await _wxPayFunc(widget.state);
               break;
             case 1:
-              await _aliPayFunc();
+              await _aliPayFunc(widget.state);
           }
         },
         child: Material(
@@ -186,9 +187,9 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
     );
   }
 
-  Future _wxPayFunc() async {
+  Future _wxPayFunc(int kind) async {
     var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
-      'kind': 1,
+      'kind': kind,
       'count': widget.count,
       'payType': 2,
     });
@@ -202,9 +203,9 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
     }
   }
 
-  Future _aliPayFunc() async {
+  Future _aliPayFunc(int kind) async {
     var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
-      'kind': 1,
+      'kind': kind,
       'count': widget.count,
       'payType': 1,
     });

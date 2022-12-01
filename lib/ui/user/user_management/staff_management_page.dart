@@ -94,6 +94,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                   footer: MaterialFooter(),
                   controller: _easyRefreshController,
                   onRefresh: () async {
+
                     employees = await BusinessFunc.getStoreall(_params);
                     for (var item in employees) {
                       if (item.id == 0) {
@@ -108,7 +109,9 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                           text: '暂无客户信息',
                           paddingTop: 0,
                         )
-                      :  ListView.builder(
+                      :
+
+                  ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
@@ -125,14 +128,14 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                   //         visualDensity: VisualDensity(vertical: -3.w),
                   //         title: Row(
                   //           children: [
-                  //             // Text('入驻商',
-                  //             //     style: TextStyle(
-                  //             //         fontSize: BaseStyle.fontSize32,
-                  //             //         color: const Color(0xFF027AFF))),
-                  //             // 24.wb,
+                  //             Text('入驻商',
+                  //                 style: TextStyle(
+                  //                     fontSize: BaseStyle.fontSize32,
+                  //                     color: const Color(0xFF027AFF))),
+                  //             24.wb,
                   //             Padding(
                   //               padding: EdgeInsets.only(top: 10.w),
-                  //               child: Text((storeallModel.staffs != null ? storeallModel.staffs!.length : 0).toString(),
+                  //               child: Text((storeallModel.staffs != null ? storeallModel.staffs!.length:0).toString(),
                   //                   style: TextStyle(
                   //                       fontSize: BaseStyle.fontSize28,
                   //                       color: const Color.fromRGBO(2, 122, 255, 0.8))),
@@ -140,25 +143,25 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                   //           ],
                   //         ),
                   //         children: [
-                  //           ...storeallModel.staffs != null
-                  //               ? storeallModel.staffs!.mapIndexed((e, index) {
-                  //                   return GestureDetector(
-                  //                     onTap: () async {
-                  //                       await Get.to(() => EmployeeDetailsPage(
-                  //                             staffId: e.id,
-                  //                           ));
-                  //                       _easyRefreshController.callRefresh();
-                  //                     },
-                  //                     child: getText(
-                  //                         e.roleName,
-                  //                         e.genderEM.typeNum,
-                  //                         e.name,
-                  //                         e.phone,
-                  //                         e.auditStatus,
-                  //                         e.roleEm),
-                  //                   );
-                  //                 }).toList()
-                  //               : [],
+                  //           // ...storeallModel.staffs != null
+                  //           //     ? storeallModel.staffs!.mapIndexed((e, index) {
+                  //           //         return GestureDetector(
+                  //           //           onTap: () async {
+                  //           //             await Get.to(() => EmployeeDetailsPage(
+                  //           //                   staffId: e.id,
+                  //           //                 ));
+                  //           //             _easyRefreshController.callRefresh();
+                  //           //           },
+                  //           //           child: getText(
+                  //           //               e.roleName,
+                  //           //               e.genderEM.typeNum,
+                  //           //               e.name,
+                  //           //               e.phone,
+                  //           //               e.auditStatus,
+                  //           //               e.roleEm),
+                  //           //         );
+                  //           //       }).toList()
+                  //           //     : [],
                   //           ListView.builder(
                   //             shrinkWrap: true,
                   //             physics: const NeverScrollableScrollPhysics(),
@@ -212,7 +215,6 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
       backgroundColor: const Color(0xFF027AFF).withOpacity(0.1),
       collapsedBackgroundColor: const Color(0xFF333333).withOpacity(0.1),
       visualDensity: VisualDensity(vertical: -3.w),
-
       tilePadding: EdgeInsets.only(left: 60.w, right: 40.w),
       title: Row(
         children: [
@@ -241,7 +243,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                     _easyRefreshController.callRefresh();
                   },
                   child: getText(e.roleName, e.genderEM.typeNum, e.name,
-                      e.phone, e.auditStatus, e.roleEm),
+                      e.phone, e.auditStatus, ),///e.roleEm
                 );
               }).toList()
             : []
@@ -250,7 +252,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
   }
 
   getText(String position, int gender, String name, String phone, int judge,
-      Role role) {
+     ) { ///Role role
     return Container(
       color: Colors.white,
       height: 94.w,
@@ -286,7 +288,7 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                 fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
           24.wb,
-          if (role == Role.manager) CloudTag.blue(text: '店长'),
+          // if (role == Role.manager) CloudTag.blue(text: '店长'),
           //if (model.roleEM == Role.defaultRole) CloudTag.blue(text: '店长'),
           SizedBox(
               child: judge == 1

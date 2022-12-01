@@ -845,7 +845,8 @@ class _ReservationPageState extends State<ReservationPage> {
 
 //车辆信息下拉
   _getList() {
-    return DropDown(
+    return
+      DropDown(
       border: true,
       title: _getTitle('车辆总价'),
       text: SizedBox(

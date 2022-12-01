@@ -47,6 +47,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
       _contractModel.value.carAmountModel = carAmountModel;
       _contractModel.value.origin = '微信小程序';
       _contractModel.value.carModel = widget.carModel;
+      _finalPriceController.text=widget.carModel.price ;
       setState(() {
       });
     });
@@ -132,7 +133,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                   title: '成交价',
                   controller: _finalPriceController,
                   endText: '元',
-                  canChange: false,
+                  canChange: true,
                   tips: '',
 
                 ),
@@ -143,7 +144,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                   topIcon: false,
                   controller: _depositController,
                   endText: '元',
-                  canChange: false,
+                  canChange: true,
                   tips: '',
 
                 ),
@@ -152,7 +153,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                   topIcon: false,
                   controller: _downPaymentsController,
                   endText: '元',
-                  canChange: false,
+                  canChange: true,
                   tips: '',
                 ),
 
@@ -162,7 +163,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                   tips: '',
                   controller: _balancePaymentController,
                   endText: '元',
-                  canChange: false,
+                  canChange: true,
                 ),
                 //
                 // EditItemWidget(

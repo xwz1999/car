@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
+import 'package:cloud_car/model/car/car_info_model.dart';
 import 'package:cloud_car/model/contract/purchase_photo_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/sort/sort_car_model_model.dart';
@@ -10,6 +11,7 @@ import 'package:cloud_car/ui/home/car_purchase/purchase_choose_page.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_info_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
+import 'package:cloud_car/ui/home/sort/sort_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/picker/car_date_picker.dart';
@@ -127,7 +129,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                         color: Colors.white,),
                     child: Column(
                       children: [
-                        ScanLicenseWidget(onLoadComplete: (carInfoModel) {
+                        ScanLicenseWidget(onLoadComplete: (carInfoModel) async{
                           if (carInfoModel.vinModel != null) {
                             _publishCarInfo.value.carName =
                                 carInfoModel.vinModel!.first.modelName;
@@ -140,6 +142,10 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                           _publishCarInfo.value.licensingDate =
                               DateUtil.getDateTime(
                                   carInfoModel.vehicle.regdate);
+                          ///出厂日期1
+                          var a= await SortFunc.getCarInfo(carInfoModel.vinModel!.first.modelId) ;
+                          _publishCarInfo.value.productionDate=DateUtil.getDateTime(a!.marketDate
+                              );
                           // _publishCarInfo.value.productionDate =
                           //     DateUtil.getDateTime(
                           //         CarCommonInfo.);
@@ -152,14 +158,14 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async{
                               FocusManager.instance.primaryFocus?.unfocus();
                               if (!canTap) {
                                 return;
                               }
                               // print(_publishCarInfo.value);
                               // print(purchaseInfo.value);
-                              // print(reportPhotoModel.value);
+                              // // print(reportPhotoModel.value);
                               Get.to(()=>
                                   PurchaseInfoPage(
                                     purchaseCarInfo: _publishCarInfo.value,
@@ -170,6 +176,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                                 // purchaseInfo: purchaseInfo.value,
                                 // reportPhotoModel: reportPhotoModel.value,)
                               );
+
                             },
                             style: ButtonStyle(
                               backgroundColor:

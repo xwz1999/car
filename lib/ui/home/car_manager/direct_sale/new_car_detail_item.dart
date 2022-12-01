@@ -228,9 +228,9 @@ class NewCarDetailItem extends StatelessWidget {
           _content('采购类型', '/', '采购人',  '/',),
           16.hb,
           _content('采购价格', '/', '采购日期',  '/',),
-          16.hb,
-          _content('外部价格', TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.priceInfo.purchasePrice))),
-            '门店', carInfoModel.carInfo.storeName,),
+          // 16.hb,
+          // _content('外部价格', TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.priceInfo.purchasePrice))),
+          //   '门店', carInfoModel.carInfo.storeName,),
           16.hb,
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -238,7 +238,7 @@ class NewCarDetailItem extends StatelessWidget {
               SizedBox(
                 width: 145.w,
                 child: Text(
-                  '内部价格',
+                  '门店',
                   style: TextStyle(
                       fontSize: 28.sp,
                       fontWeight: FontWeight.w400,
@@ -246,7 +246,7 @@ class NewCarDetailItem extends StatelessWidget {
                 ),
               ),
               Text(
-                TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.priceInfo.salePrice))),
+                carInfoModel.carInfo.storeName==''?'/':carInfoModel.carInfo.storeName,
                 style: TextStyle(
                     height: 1.5,
                     fontSize: 28.sp,
@@ -296,7 +296,8 @@ class NewCarDetailItem extends StatelessWidget {
 
 
   _content(String title1,String content1,String title2,String content2){
-    return  Row(
+    return
+      Row(
       children: [
         Expanded(
           child: Row(
@@ -351,6 +352,7 @@ class NewCarDetailItem extends StatelessWidget {
         ),
       ],
     );
+
   }
 
 

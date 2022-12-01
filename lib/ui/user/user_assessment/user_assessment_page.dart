@@ -218,6 +218,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
           Get.to(() => AssessmentPayPage(
                 price: _chooseItem!.pice,
                 count: _chooseItem!.count, title: widget.assessmentState==2?"合同份数充值":'评估次数充值',
+            state: widget.assessmentState,
               ));
         } else {
           CloudToast.show('请先选择一个充值类型');

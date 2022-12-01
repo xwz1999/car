@@ -6,6 +6,7 @@ import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
 
+import '../../../model/region/city_model.dart';
 import '../az_region_model.dart';
 
 ///适配新数据
@@ -22,6 +23,7 @@ class CityListPage extends StatefulWidget {
 class _CityListPageState extends State<CityListPage> {
   List<AzRegionModel> cityList = [];
   List<ChinaRegionModel> chinaLists = [];
+  // List<CityModel> chinaLists=[];
   List<ChinaRegionModel> hotLists = [];
 
   double susItemHeight = 36;
@@ -50,6 +52,7 @@ class _CityListPageState extends State<CityListPage> {
         cityList.add(AzRegionModel(name: element.children![i].name, model: element.children![i]));
       }
     }
+    print("这是数据$cityList");
     _handleList(cityList);
   }
 

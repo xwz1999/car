@@ -57,6 +57,9 @@ class _Car {
 
   ///调价
   String get adjustPrice => '/car/adjustPrice';
+
+  ///获取车辆详情
+  String get carInfo => '/car/model/info';
 }
 
 class _Collect {

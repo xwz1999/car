@@ -538,7 +538,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           }
         },
         child: Image.asset(
-          Assets.icons.scan.path,
+          Assets.icons.scan1.path,
           width: 42.w,
           height: 42.w,
         ),
@@ -587,7 +587,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           }
         },
         child: Image.asset(
-          Assets.icons.scan.path,
+          Assets.icons.scan1.path,
           width: 42.w,
           height: 42.w,
         ),
@@ -601,8 +601,6 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       topIcon: false,
       paddingStart: 0.w,
     );
-
-
 
     // var signingAddress = EditItemWidget(
     //   title: '签约地点',
@@ -640,7 +638,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
             ],
           ),
         ),
+
         ownerName,
+        // state==0?const Sizebox():ownerName
         state==0?ownerId:institutionId,
         phoneNum,
         bankNum,

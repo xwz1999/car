@@ -29,6 +29,10 @@ import 'package:flutter_swiper_tv/flutter_swiper.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../utils/text_utils.dart';
+import '../../share/edit_item_widget.dart';
+import 'detailed_price_page.dart';
+
 class NewCarsDetailPage extends StatefulWidget {
   // final bool isSelf;
   final CarListModel carListModel;
@@ -70,6 +74,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
   late ReportPhotoModel reportPhotoModel;
 
+  //下拉显示
+  bool downState = true;
+
   @override
   void initState() {
     ///自己发布的 tab2个 否则1个
@@ -97,17 +104,31 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
     if (widget.carListModel.isSelf == 1) {
       _reportPhotos = [
-        CarPhotos(text: '漆面数据',),
+        CarPhotos(
+          text: '漆面数据',
+        ),
         CarPhotos(text: '行驶证照片'),
-        CarPhotos(text: '检测报告',),
-        CarPhotos(text: '登记证书', ),
-        CarPhotos(text: '交强险', ),
-        CarPhotos(text: '商业险',),
+        CarPhotos(
+          text: '检测报告',
+        ),
+        CarPhotos(
+          text: '登记证书',
+        ),
+        CarPhotos(
+          text: '交强险',
+        ),
+        CarPhotos(
+          text: '商业险',
+        ),
       ];
     } else {
       _reportPhotos = [
-        CarPhotos(text: '漆面数据',),
-        CarPhotos(text: '检测报告',),
+        CarPhotos(
+          text: '漆面数据',
+        ),
+        CarPhotos(
+          text: '检测报告',
+        ),
       ];
     }
   }
@@ -143,14 +164,13 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
       }
     }
 
-
-
     for (int i = 0; i < carInfoModel!.carInfo.reportPhotos.length; i++) {
       for (int j = 0; j < _reportPhotos.length; j++) {
         if (_reportPhotos[j].text ==
             carInfoModel!.carInfo.reportPhotos[i].text) {
           if (carInfoModel!.carInfo.reportPhotos[i].photo != '') {
-            _reportPhotos[j].photo = carInfoModel!.carInfo.reportPhotos[i].photo;
+            _reportPhotos[j].photo =
+                carInfoModel!.carInfo.reportPhotos[i].photo;
           } else {
             _reportPhotos.removeAt(j);
           }
@@ -160,7 +180,8 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     pushPhotoModel = PushPhotoModel(
         carPhotos: carPhotos,
         interiorPhotos: interiorPhotos,
-        defectPhotos: defectPhotos,repairPhotos: repairPhotos);
+        defectPhotos: defectPhotos,
+        repairPhotos: repairPhotos);
 
     reportPhotoModel = ReportPhotoModel(paints: _reportPhotos);
 
@@ -238,7 +259,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                     SliverAppBar(
                         pinned: true,
                         stretch: true,
-                        expandedHeight: 940.w,
+                        expandedHeight: downState?945.w:1170.w,
                         elevation: 0,
                         backgroundColor:
                             headerWhite ? Colors.white : Colors.transparent,
@@ -325,10 +346,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                             alignment: Alignment.center,
                             width: double.infinity,
                             color: Colors.transparent,
-                            //
                             //height: double.infinity,
-
-                            child: Column(
+                            child:
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 135.hb,
@@ -349,6 +369,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                                       _label(),
                                       18.hb,
                                       _information(),
+                                      getDown(),
                                       30.hb,
                                       _shuffling(),
                                       // 32.hb,
@@ -356,7 +377,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                                     ],
                                   ),
                                 ),
-                                50.hb,
+                                // 50.hb,
                               ],
                             ),
                           ),
@@ -643,13 +664,14 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     return GestureDetector(
       onTap: () async {
         await Get.to(
-
           PushCarManagePhotoPage(
             isSelf: widget.carListModel.isSelf == 1,
             tabs: _titles,
             model: pushPhotoModel,
             initIndex: index,
-            imgCanTap: false, reportPhotoModel: reportPhotoModel, newPublishCarInfo: null,
+            imgCanTap: false,
+            reportPhotoModel: reportPhotoModel,
+            newPublishCarInfo: null,
           ),
         );
         setState(() {});
@@ -789,19 +811,193 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text.rich(TextSpan(children: [
-          TextSpan(
-              text: carInfoModel!.carInfo.price.priceFormat,
-              style: TextStyle(
-                  color: const Color(0xFFFF3B02),
-                  fontSize: BaseStyle.fontSize40)),
-          TextSpan(
-              text: '万',
-              style: TextStyle(
-                  color: const Color(0xFFFF3B02),
-                  fontSize: BaseStyle.fontSize32))
-        ]))
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: carInfoModel!.carInfo.price.priceFormat,
+                  style: TextStyle(
+                      color: const Color(0xFFFF3B02),
+                      fontSize: BaseStyle.fontSize40)),
+              TextSpan(
+                  text: '万',
+                  style: TextStyle(
+                      color: const Color(0xFFFF3B02),
+                      fontSize: BaseStyle.fontSize32))
+            ])),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 110.w,
+                  child: Text(
+                    '新车指导价',
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w400,
+                        color: BaseStyle.color999999),
+                  ),
+                ),
+                Text(
+                  TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
+                      num.parse(carInfoModel!.carInfo.newCarGuidePrice))),
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w400,
+                      color: BaseStyle.color999999),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const Spacer(),
+
+        ///详细价格
+
+        GestureDetector(
+          onTap: () {
+            downState = !downState;
+            print(downState);
+            setState(() {});
+          },
+          child: Container(
+            width: 200.w,
+            height: 70.w,
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.w),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(35.w)),
+                border: Border.all(width: 2.w, color: const Color(0xFF027AFF))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "详情价格",
+                  style: TextStyle(
+                      color: const Color(0xFF027AFF), fontSize: 28.sp),
+                ),
+                SizedBox(
+                  child: Icon(
+                    size: 40.w,
+                    downState ? Icons.arrow_drop_down : Icons.arrow_drop_up,
+                    color: const Color(0xFF027AFF),
+                  ),
+                )
+              ],
+            ),
+          ),
+        )
       ],
+    );
+  }
+
+  //下拉显示
+  getDown() {
+    return Offstage(
+      offstage: downState,
+      child: Container(
+        // height: 174.w,
+        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+        decoration: BoxDecoration(
+            color: Color(0xFFBBBBBB).withOpacity(0.1),
+            borderRadius: BorderRadius.all(Radius.circular(8.w))),
+        child: Column(
+          children: [
+            ///ceshizhong
+            Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 145.w,
+                        child: Text(
+                          '外部价格',
+                          style: TextStyle(
+                              fontSize: 28.sp,
+                              fontWeight: FontWeight.w400,
+                              color: BaseStyle.color999999),
+                        ),
+                      ),
+                      Text(
+                        'xxxxxx万',
+                        style: TextStyle(
+                            height: 1.5,
+                            fontSize: 28.sp,
+                            fontWeight: FontWeight.w500,
+                            color: BaseStyle.color333333),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 145.w,
+                        child: Text(
+                          "内部价格",
+                          style: TextStyle(
+                              fontSize: 28.sp,
+                              fontWeight: FontWeight.w400,
+                              color: BaseStyle.color999999),
+                        ),
+                      ),
+                      10.wb,
+                      Text(
+                        'xxxxxxx万',
+                        style: TextStyle(
+                            height: 1.5,
+                            fontSize: 28.sp,
+                            fontWeight: FontWeight.w500,
+                            color: BaseStyle.color333333),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            GestureDetector(
+              onTap: () {
+                  Get.to(()=>const DetailedPricePage());
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 16.w),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.w),
+                decoration: BoxDecoration(
+                    border:
+                        Border.all(width: 2.w, color: const Color(0xFFBBBBBB)),
+                    borderRadius: BorderRadius.all(Radius.circular(8.w))),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 144.w,
+                      child: Text(
+                        '降价记录：',
+                        style: TextStyle(
+                            color: const Color(0xFF999999), fontSize: 24.sp),
+                      ),
+                    ),
+                    Text(
+                      '最近降价xxxx元',
+                      style: TextStyle(
+                          color: const Color(0xFF999999), fontSize: 24.sp),
+                    ),
+                    const Spacer(),
+                    SizedBox(
+                      width: 28.w,
+                      height: 28.w,
+                      child: Image.asset(Assets.icons.icGoto.path),
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -829,7 +1025,8 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         children: [
           Expanded(
               child: _getBottom(
-                  UserTool.userProvider.userInfo.business.roleEM!= Role.salesTraffic
+                  UserTool.userProvider.userInfo.business.roleEM !=
+                          Role.salesTraffic
                       ? Assets.icons.editor.path
                       : Assets.icons.noEditor.path,
                   '编辑', () {
@@ -838,10 +1035,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             // }
           })),
           Expanded(
-              child: _getBottom(
-
-                  Assets.icons.transmission.path,
-                  '调价', () {
+              child: _getBottom(Assets.icons.transmission.path, '调价', () {
             if (carInfoModel != null) {
               if (carInfoModel!.carInfo.brokerInfo.brokerPhone != '') {
                 getPhone(carInfoModel!.carInfo.brokerInfo.brokerPhone);
@@ -863,14 +1057,10 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                 ));
           })),
           Expanded(
-              child: _getBottom(
-                  Assets.icons.download.path,
-                  '帮他下架', () {
-
-              Get.to(() => OffCarPage(
-                    carId: widget.carListModel.id,
-                  ));
-
+              child: _getBottom(Assets.icons.download.path, '帮他下架', () {
+            Get.to(() => OffCarPage(
+                  carId: widget.carListModel.id,
+                ));
           })),
         ],
       ),
