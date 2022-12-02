@@ -94,7 +94,6 @@ class _StaffManagementPageState extends State<StaffManagementPage> {
                   footer: MaterialFooter(),
                   controller: _easyRefreshController,
                   onRefresh: () async {
-
                     employees = await BusinessFunc.getStoreall(_params);
                     for (var item in employees) {
                       if (item.id == 0) {

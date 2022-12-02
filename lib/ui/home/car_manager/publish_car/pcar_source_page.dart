@@ -115,9 +115,11 @@ class _CarSourcePageState extends State<CarSourcePage> {
                       cancel();
                       if(success){
                         Get.to(() => const PublishFinishPage());
-                      }else{
-                        CloudToast.show('车辆发布失败');
                       }
+                      // else{
+                      //   // CloudToast.show();
+                      //   // CloudToast.show('车辆发布失败');
+                      // }
 
 
                   }

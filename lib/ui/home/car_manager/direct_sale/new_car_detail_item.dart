@@ -85,7 +85,7 @@ class NewCarDetailItem extends StatelessWidget {
             ],
           ),
           32.hb,
-          Row(
+          carInfoModel.carInfo.vin == "/"?const SizedBox():Row(
             children: [
               Text(
                 '车架号',

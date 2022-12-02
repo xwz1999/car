@@ -38,8 +38,13 @@ class _UserManagerPageState extends State<UserManagerPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   final ScrollController _scrollController = ScrollController();
 
+  Future _getUserManager() async{
+    _model = await CustomerFunc.getCustomerStatistics();
+    setState(() {});
+  }
   @override
   void initState() {
+    _getUserManager();
     super.initState();
   }
 
@@ -87,7 +92,7 @@ class _UserManagerPageState extends State<UserManagerPage> {
           24.hb,
           Expanded(
             child: EasyRefresh(
-              firstRefresh: true,
+              firstRefresh: false,
               header: MaterialHeader(),
               footer: MaterialFooter(),
               scrollController: _scrollController,

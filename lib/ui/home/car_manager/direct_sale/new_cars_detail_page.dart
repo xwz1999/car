@@ -921,7 +921,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                         ),
                       ),
                       Text(
-                        'xxxxxx万',
+                        TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(carInfoModel!.carInfo.priceInfo.purchasePrice))),
                         style: TextStyle(
                             height: 1.5,
                             fontSize: 28.sp,
@@ -947,7 +947,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       ),
                       10.wb,
                       Text(
-                        'xxxxxxx万',
+                        '20.0万元',
                         style: TextStyle(
                             height: 1.5,
                             fontSize: 28.sp,
@@ -961,7 +961,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             ),
             GestureDetector(
               onTap: () {
-                  Get.to(()=>const DetailedPricePage());
+                  // Get.to(()=>const DetailedPricePage());
               },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 16.w),
@@ -981,7 +981,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       ),
                     ),
                     Text(
-                      '最近降价xxxx元',
+                      '最近降价2000元',
                       style: TextStyle(
                           color: const Color(0xFF999999), fontSize: 24.sp),
                     ),
