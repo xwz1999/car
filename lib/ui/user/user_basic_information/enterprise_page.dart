@@ -36,7 +36,8 @@ class _EnterprisePageState extends State<EnterprisePage> {
           color: Colors.white,
           child: ListView(
             shrinkWrap: true,
-            children: ListTile.divideTiles(context: context, tiles: [
+            children:
+            ListTile.divideTiles(context: context, tiles: [
               ListTile(
                 title: Text(
                   '企业',

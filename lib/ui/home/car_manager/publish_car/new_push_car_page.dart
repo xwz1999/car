@@ -143,7 +143,6 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       CarPurchaseType.values.map((e) => e.typeStr).toList();
   List<String> get purchaseTypeList =>
       CarNatureOfUse.values.map((e) => e.typeStr).toList();
-
   @override
   void initState() {
     super.initState();
@@ -280,9 +279,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                               borderRadius: BorderRadius.circular(16.w),
                               color: Colors.white,
                             ),
-
                             child: ScanLicenseWidget(
-
                                 onLoadComplete: (carInfoModel) {
                               if (carInfoModel.vinModel != null) {
                                 _publishCarInfo.value.carName =
@@ -299,6 +296,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                               _carNumController.text = carInfoModel.vehicle.lsnum;
                               _engineController.text =
                                   carInfoModel.vehicle.engineno;
+
                               setState(() {});
                             }),
                           ),
@@ -320,8 +318,8 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                                         newPublishCarInfo:
                                             _publishCarInfo.value,
                                         carPhotoModel: carPhotoModel.value,
-                                        reportPhotoModel:
-                                            reportPhotoModel.value,
+                                        // reportPhotoModel:
+                                        //     reportPhotoModel.value,
                                       ));
                                 },
                                 style: ButtonStyle(

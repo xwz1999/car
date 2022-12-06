@@ -473,12 +473,13 @@ class CarFunc {
   static Future<bool> newPushCar({
     required NewPublishCarInfo newPublishCarInfo,
     required PushPhotoModel pushPhotoModel,
-    required ReportPhotoModel reportPhotoModel,
+    // required ReportPhotoModel reportPhotoModel,
   }) async {
     Map<String, dynamic> baseInfo = {
       "source":newPublishCarInfo.carSource,
       "sourceId":newPublishCarInfo.carShopId,
-      "type":newPublishCarInfo.carTypeEM.typeStr,
+      // "type":newPublishCarInfo.carTypeEM.typeStr,
+      "type":newPublishCarInfo.carTypeEM.typeNum,
       "modelId":newPublishCarInfo.carModelId,
       "vin":newPublishCarInfo.viNum,
       "engineNo":newPublishCarInfo.engineNum,
@@ -488,7 +489,8 @@ class CarFunc {
       "temporaryLicensePlate":newPublishCarInfo.carTemporaryNum,
       "parkingNo":newPublishCarInfo.carParkingNum,
       //"emissionStandard":newPublishCarInfo.environmentalLevel,
-      "useCharacter":newPublishCarInfo.natureOfUseEM.typeStr,
+      // "useCharacter":newPublishCarInfo.natureOfUseEM.typeStr,
+      "useCharacter":newPublishCarInfo.natureOfUseEM.typeNum,
       "shamMileage": newPublishCarInfo.mileage!=null?num.parse(newPublishCarInfo.mileage!):null,
       //"marketDate":newPublishCarInfo.productionDateStr==''?null:newPublishCarInfo.productionDateStr,
       "newCarGuidePrice": newPublishCarInfo.newCarPrice!=null? num.parse(newPublishCarInfo.newCarPrice!)*10000:null,
@@ -505,7 +507,6 @@ class CarFunc {
       "salePrice":newPublishCarInfo.salePrice!=null? num.parse(newPublishCarInfo.salePrice!)*10000:null,
 
     };
-
     Map<String, dynamic> certificateInfo = {
       "transfer": newPublishCarInfo.transferNum!=null?int.parse(newPublishCarInfo.transferNum!):null ,
       "keyCount":newPublishCarInfo.keyCount!=null?int.parse(newPublishCarInfo.keyCount!):null ,
@@ -515,7 +516,6 @@ class CarFunc {
       "commercialInsuranceDate":newPublishCarInfo.commercialInsuranceDateStr,
       "commercialInsurancePrice":newPublishCarInfo.commercialInsurancePrice!=null?num.parse(newPublishCarInfo.commercialInsurancePrice!):null ,
     };
-
     Map<String, dynamic> purchaseInfo = {
 
     };
@@ -524,7 +524,7 @@ class CarFunc {
     Map<String, dynamic> base = {
       "photos":pushPhotoModel.toJson(),
       "baseInfo":baseInfo,
-      "report":reportPhotoModel.toJson(),
+      // "report":reportPhotoModel.toJson(),
       "priceInfo":priceInfo,
       "certificateInfo":certificateInfo,
       "purchaseInfo":purchaseInfo

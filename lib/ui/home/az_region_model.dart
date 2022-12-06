@@ -10,7 +10,7 @@ class AzRegionModel extends ISuspensionBean {
   String name;
   String? tagIndex;
   String? namePinyin;
-  ChinaRegionModel? model;
+  List<ChinaRegionModel>? model;
 
   AzRegionModel({
     this.id,
@@ -18,6 +18,7 @@ class AzRegionModel extends ISuspensionBean {
     this.tagIndex,
     this.namePinyin,
     this.model
+
   });
 
   AzRegionModel.fromJson(Map<String, dynamic> json) : name = json['name'];

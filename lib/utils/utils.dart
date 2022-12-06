@@ -5,6 +5,9 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
+import '../model/region/china_region_model.dart';
+import '../ui/home/sort/citylist_item_page.dart';
+
 class Utils {
   static String getImgPath(String name, {String format = 'png'}) {
     return 'assets/images/$name.$format';
@@ -47,6 +50,7 @@ class Utils {
     return ListTile(
       title: Text(model.name),
       onTap: () {
+        print("${model.name}数据${model.id??0}");
         callBack(model.name,model.id??0);
       },
     );

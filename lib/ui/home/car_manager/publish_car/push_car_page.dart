@@ -275,11 +275,13 @@ class _PushCarPageState extends State<PushCarPage> {
       topIcon: false,
       paddingStart: 0.5,
     );
-    // var carNum = EditItemWidget(
-    //   title: '车牌号',
-    //   tips: '请输入车牌号',
-    //   controller: _carNumController,
-    // );
+    var carNum = EditItemWidget(
+      title: '车牌号',
+      tips: '请输入车牌号',
+      controller: _carNumController,
+      topIcon:false,
+      paddingStart: 0.5,
+    );
     // var version = _textarea(
     //     '发动机号',
     //     '请输入发动机号',
@@ -318,6 +320,7 @@ class _PushCarPageState extends State<PushCarPage> {
       child: Column(
         children: [
           20.heightBox,
+          carNum,
           vinNum,
           _function(
             '品牌车型',
@@ -466,6 +469,10 @@ class _PushCarPageState extends State<PushCarPage> {
   // }
 
   bool get canTap {
+    if (_carNumController.text.trim().isEmpty) {
+      BotToast.showText(text: '请输入车牌号');
+      return false;
+    }
     if (_viNumController.text.trim().isEmpty) {
       BotToast.showText(text: '请输入车架号');
       return false;

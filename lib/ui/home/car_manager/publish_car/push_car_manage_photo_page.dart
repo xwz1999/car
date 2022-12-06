@@ -22,7 +22,7 @@ import 'package:velocity_x/velocity_x.dart';
 class PushCarManagePhotoPage extends StatefulWidget {
   final List<String> tabs;
   final PushPhotoModel model;
-  final ReportPhotoModel reportPhotoModel;
+  // final ReportPhotoModel reportPhotoModel;
   final NewPublishCarInfo? newPublishCarInfo;
   final int initIndex;
   final bool imgCanTap;
@@ -35,7 +35,8 @@ class PushCarManagePhotoPage extends StatefulWidget {
       required this.model,
       this.initIndex = 0,
       this.imgCanTap = true,
-      required this.reportPhotoModel, this.newPublishCarInfo, this.isSelf = false});
+      // required this.reportPhotoModel,
+        this.newPublishCarInfo, this.isSelf = false});
 
   @override
   _PushCarManagePhotoPageState createState() => _PushCarManagePhotoPageState();
@@ -47,15 +48,14 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
   List<dynamic> _carPhotos = [];
   List<dynamic> _interiorPhotos = [];
-
-  List<dynamic> _repairPhotos = [];
-
+  // List<dynamic> _repairPhotos = [];
   List<dynamic> _defectPhotos = [];
-
+  // List<dynamic> _reportPhotos = [];
   List<PushImgModel> _reportPhotos = [];
 
   @override
   void initState() {
+    print(widget.tabs.length);
     _tabController = TabController(
         length: widget.tabs.length,
         vsync: this,
@@ -70,6 +70,8 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         PushImgModel(name: '登记证书', isMust: true),
         PushImgModel(name: '交强险', isMust: false),
         PushImgModel(name: '商业险', isMust: false),
+        ///添加新数据
+        PushImgModel(name: '维保记录', isMust: false),
       ];
     }else{
       if(!widget.isSelf){
@@ -90,29 +92,37 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
     }
 
+    // for (int i = 0; i < widget.reportPhotoModel.paints!.length; i++) {
+    //   for (int j = 0; j < _reportPhotos.length; j++) {
+    //     if (_reportPhotos[j].name == widget.reportPhotoModel.paints![i].text) {
+    //       if (widget.reportPhotoModel.paints![i].photo != '') {
+    //         _reportPhotos[j].url = widget.reportPhotoModel.paints![i].photo;
+    //       }
+    //     }
+    //   }
+    // }
 
-
-
-    for (int i = 0; i < widget.reportPhotoModel.paints!.length; i++) {
-      for (int j = 0; j < _reportPhotos.length; j++) {
-        if (_reportPhotos[j].name == widget.reportPhotoModel.paints![i].text) {
-          if (widget.reportPhotoModel.paints![i].photo != '') {
-            _reportPhotos[j].url = widget.reportPhotoModel.paints![i].photo;
+    for (int i = 0; i < widget.model.dataPhotos!.length; i++) {
+        for (int j = 0; j < _reportPhotos.length; j++) {
+        if (_reportPhotos[j].name == widget.model.dataPhotos![i].text) {
+          if (widget.model.dataPhotos![i].photo != '') {
+            _reportPhotos[j].url = widget.model.dataPhotos![i].photo;
           }
         }
       }
     }
-
     for (var item in widget.model.carPhotos!) {
       _carPhotos.add(item.photo);
     }
     for (var item in widget.model.interiorPhotos!) {
       _interiorPhotos.add(item.photo);
     }
-    for (var item in widget.model.repairPhotos??[]) {
-      _repairPhotos.add(item.photo);
-    }
-
+    // for (var item in widget.model.dataPhotos??[]) {
+    //   _repairPhotos.add(item.photo);
+    // }
+    // for (var item in widget.model.repairPhotos??[]) {
+    //   _repairPhotos.add(item.photo);
+    // }
     for (var item in widget.model.defectPhotos!) {
       _defectPhotos.add(item.photo);
     }
@@ -130,10 +140,10 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
       return false;
     }
 
-    if (_defectPhotos.isEmpty){
-      CloudToast.show('请上传缺陷照片');
-      return false;
-    }
+    // if (_defectPhotos.isEmpty){
+    //   CloudToast.show('请上传缺陷照片');
+    //   return false;
+    // }
     for(var item in _reportPhotos){
       if(item.name=='漆面数据'&&item.url==null){
         CloudToast.show('请先上传漆面数据');
@@ -153,10 +163,10 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
       }
     }
 
-    if (_repairPhotos.isEmpty){
-      CloudToast.show('请上传维保记录');
-      return false;
-    }
+    // if (_repairPhotos.isEmpty){
+    //   CloudToast.show('请上传维保记录');
+    //   return false;
+    // }
 
     return true;
   }
@@ -166,8 +176,9 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
     widget.model.carPhotos!.clear();
     widget.model.interiorPhotos!.clear();
     widget.model.defectPhotos!.clear();
-    widget.model.repairPhotos!.clear();
-    widget.reportPhotoModel.paints!.clear();
+    widget.model.dataPhotos!.clear();
+    // widget.model.repairPhotos!.clear();
+    // widget.reportPhotoModel.paints!.clear();
 
 
     for (var i = 0; i < _reportPhotos.length; i++) {
@@ -176,7 +187,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         var url = await apiClient.uploadImage(_reportPhotos[i].url);
         _reportPhotos[i].url = url;
       }
-      widget.reportPhotoModel.paints!.add(
+      widget.model.dataPhotos!.add(
           CarPhotos(photo: _reportPhotos[i].url, text: _reportPhotos[i].name));
     }
 
@@ -210,15 +221,15 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
           .add(CarPhotos(photo: _interiorPhotos[i], text: '内饰照片'));
     }
 
-    for (var i = 0; i < _repairPhotos.length; i++) {
-      if (_repairPhotos[i].runtimeType != String) {
-        var url = await apiClient.uploadImage(_repairPhotos[i]);
-        _repairPhotos.removeAt(i);
-        _repairPhotos.insert(i, url);
-      }
-      widget.model.repairPhotos!
-          .add(CarPhotos(photo: _repairPhotos[i], text: '维保记录'));
-    }
+    //   for (var i = 0; i < _repairPhotos.length; i++) {
+    //   if (_repairPhotos[i].runtimeType != String) {
+    //     var url = await apiClient.uploadImage(_repairPhotos[i]);
+    //     _repairPhotos.removeAt(i);
+    //     _repairPhotos.insert(i, url);
+    //   }
+    //   widget.model.repairPhotos!
+    //       .add(CarPhotos(photo: _repairPhotos[i], text: '维保记录'));
+    // }
   }
 
   @override
@@ -239,8 +250,10 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         _getView1(0, _carPhotos),
         _getView1(1, _interiorPhotos),
         _getView1(2, _defectPhotos),
-        _getView(3, _reportPhotos),
-        _getView1(4, _repairPhotos)
+        // _getView1(3, _reportPhotos),
+        _getView(4, _reportPhotos)
+        // _getView(3, _reportPhotos),
+        // _getView1(4, _repairPhotos)
       ]),
       bottomNavi: widget.imgCanTap? Container(
         margin: EdgeInsets.only(bottom: 40.w),
@@ -256,7 +269,9 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
             }
             await uploadPhotos();
             BotToast.closeAllLoading();
-            var result = await  CarFunc.newPushCar(reportPhotoModel: widget.reportPhotoModel,
+            // var result = await  CarFunc.newPushCar(reportPhotoModel: widget.reportPhotoModel,
+            //     pushPhotoModel: widget.model, newPublishCarInfo: widget.newPublishCarInfo!);
+            var result = await  CarFunc.newPushCar(
                 pushPhotoModel: widget.model, newPublishCarInfo: widget.newPublishCarInfo!);
             if(result){
               Get.to(() => const PublishFinishPage());
@@ -394,9 +409,13 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
                _interiorPhotos=files;
              }else if(index==2){
                _defectPhotos=files;
-             }else if(index==4){
-               _repairPhotos=files;
              }
+             // else if(index==3){
+             //   _reportPhotos=files;
+             // }
+             // else if(index==4){
+             //   _repairPhotos=files;
+             // }
               setState(() {});
             },
             maxCount: widget.imgCanTap ? null : list.length,

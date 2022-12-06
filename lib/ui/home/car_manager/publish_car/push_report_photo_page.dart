@@ -119,8 +119,10 @@ class _PushReportPhotoPageState extends State<PushReportPhotoPage>
               }
               await uploadPhotos();
               BotToast.closeAllLoading();
-            var result = await  CarFunc.newPushCar(reportPhotoModel: widget.reportPhotoModel,
-                pushPhotoModel: widget.pushPhotoModel, newPublishCarInfo: widget.newPublishCarInfo);
+            // var result = await  CarFunc.newPushCar(reportPhotoModel: widget.reportPhotoModel,
+              //             //     pushPhotoModel: widget.pushPhotoModel, newPublishCarInfo: widget.newPublishCarInfo);
+              var result = await  CarFunc.newPushCar(
+                  pushPhotoModel: widget.pushPhotoModel, newPublishCarInfo: widget.newPublishCarInfo);
               if(result){
                 Get.to(() => const PublishFinishPage());
               }

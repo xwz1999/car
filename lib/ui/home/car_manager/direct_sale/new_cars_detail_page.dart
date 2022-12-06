@@ -181,7 +181,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         carPhotos: carPhotos,
         interiorPhotos: interiorPhotos,
         defectPhotos: defectPhotos,
-        repairPhotos: repairPhotos);
+        dataPhotos: repairPhotos,
+        // repairPhotos: repairPhotos,
+    );
 
     reportPhotoModel = ReportPhotoModel(paints: _reportPhotos);
 
@@ -670,7 +672,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             model: pushPhotoModel,
             initIndex: index,
             imgCanTap: false,
-            reportPhotoModel: reportPhotoModel,
+            // reportPhotoModel: reportPhotoModel,
             newPublishCarInfo: null,
           ),
         );
@@ -862,9 +864,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             setState(() {});
           },
           child: Container(
-            width: 200.w,
-            height: 70.w,
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.w),
+            width: 150.w,
+            height: 65.w,
+            padding: EdgeInsets.only(left: 20.w),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(35.w)),
                 border: Border.all(width: 2.w, color: const Color(0xFF027AFF))),
@@ -874,7 +876,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                 Text(
                   "详情价格",
                   style: TextStyle(
-                      color: const Color(0xFF027AFF), fontSize: 28.sp),
+                      color: const Color(0xFF027AFF), fontSize: 20.sp),
                 ),
                 SizedBox(
                   child: Icon(
@@ -1107,7 +1109,6 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 //分页指示器
   _bulidPagination() {
     return SwiperPagination(
-
         //指示器显示的位置
         alignment: Alignment.bottomCenter, //位置在底部
         //距离调整

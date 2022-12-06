@@ -9,9 +9,11 @@ import 'package:velocity_x/velocity_x.dart';
 
 class PushCarManagePhotoWidget extends StatefulWidget {
   final PushPhotoModel model;
-  final ReportPhotoModel reportPhotoModel;
+  // final ReportPhotoModel reportPhotoModel;
   final NewPublishCarInfo newPublishCarInfo;
-  const PushCarManagePhotoWidget({super.key, required this.model, required this.reportPhotoModel, required this.newPublishCarInfo});
+  const PushCarManagePhotoWidget({super.key, required this.model,
+    // required this.reportPhotoModel,
+    required this.newPublishCarInfo});
 
   @override
   _PushCarManagePhotoWidgetState createState() => _PushCarManagePhotoWidgetState();
@@ -42,15 +44,17 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
           _titles[3],
           3,
         ),
-        _buildChild(
-          _titles[4],
-          4,
-        ),
+        // _buildChild(
+        //   _titles[4],
+        //   4,
+        // ),
       ],
     );
   }
 
-  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片','报告数据','维保数据'];
+  // final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片','报告数据','维保数据'];
+  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片','车辆数据'];
+
 
   Widget _buildChild(
     String bottom,
@@ -70,11 +74,14 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
         photos = widget.model.defectPhotos??[];
         break;
       case 3:
-        photos = widget.reportPhotoModel.paints??[];
+        photos = widget.model.dataPhotos??[];
         break;
-      case 4:
-        photos = widget.model.repairPhotos??[];
-        break;
+      // case 3:
+      //   photos = widget.reportPhotoModel.paints??[];
+      //   break;
+      // case 4:
+      //   photos = widget.model.repairPhotos??[];
+      //   break;
 
     }
 
@@ -87,12 +94,14 @@ class _PushCarManagePhotoWidgetState extends State<PushCarManagePhotoWidget> {
 
     return GestureDetector(
       onTap: () async {
+
         await Get.to(
           PushCarManagePhotoPage(
             tabs: _titles,
             model: widget.model,
             initIndex: index,
-            reportPhotoModel: widget.reportPhotoModel, newPublishCarInfo: widget.newPublishCarInfo,
+            // reportPhotoModel: widget.reportPhotoModel,
+            newPublishCarInfo: widget.newPublishCarInfo,
           ),
         );
         setState(() {});

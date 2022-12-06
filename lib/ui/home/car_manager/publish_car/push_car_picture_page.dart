@@ -8,13 +8,16 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 
-
 class PushCarPicturePage extends StatefulWidget {
   final NewPublishCarInfo newPublishCarInfo;
   final PushPhotoModel carPhotoModel;
-  final ReportPhotoModel reportPhotoModel;
+  // final ReportPhotoModel reportPhotoModel;
+
   const PushCarPicturePage({
-  super.key, required this.newPublishCarInfo, required this.carPhotoModel, required this.reportPhotoModel,
+    super.key,
+    required this.newPublishCarInfo,
+    required this.carPhotoModel,
+    // required this.reportPhotoModel,
   });
 
   @override
@@ -22,7 +25,8 @@ class PushCarPicturePage extends StatefulWidget {
 }
 
 class _PushCarPicturePageState extends State<PushCarPicturePage> {
-  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片','报告数据','维保数据'];
+  // final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片','报告数据','维保数据'];
+  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片', '车辆数据'];
 
   @override
   void initState() {
@@ -50,16 +54,22 @@ class _PushCarPicturePageState extends State<PushCarPicturePage> {
         child: Column(
           children: [
             Expanded(
-                child: PushCarManagePhotoWidget(model: widget.carPhotoModel, reportPhotoModel: widget.reportPhotoModel, newPublishCarInfo: widget.newPublishCarInfo,)),
+                child: PushCarManagePhotoWidget(
+              model: widget.carPhotoModel,
+              // reportPhotoModel: widget.reportPhotoModel,
+              newPublishCarInfo: widget.newPublishCarInfo,
+            )),
             30.hb,
             CloudBottomButton(
               onTap: () {
-                 Get.to(
+
+                Get.to(
                   PushCarManagePhotoPage(
                     tabs: _titles,
                     model: widget.carPhotoModel,
                     initIndex: 0,
-                    reportPhotoModel: widget.reportPhotoModel, newPublishCarInfo: widget.newPublishCarInfo,
+                    // reportPhotoModel: widget.reportPhotoModel,
+                    newPublishCarInfo: widget.newPublishCarInfo,
                   ),
                 );
               },

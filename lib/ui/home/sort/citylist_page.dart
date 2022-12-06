@@ -5,9 +5,13 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
+import 'package:velocity_x/velocity_x.dart';
 
+import '../../../model/region/az_city_model.dart';
 import '../../../model/region/city_model.dart';
 import '../az_region_model.dart';
+import 'car_three_city_list_page.dart';
+import 'citylist_item_page.dart';
 
 ///适配新数据
 typedef CityCallback = Function(ChinaRegionModel model);
@@ -16,6 +20,7 @@ class CityListPage extends StatefulWidget {
   final CityCallback cityCallback;
 
   const CityListPage({super.key, required this.cityCallback});
+
   @override
   _CityListPageState createState() => _CityListPageState();
 }
@@ -23,6 +28,7 @@ class CityListPage extends StatefulWidget {
 class _CityListPageState extends State<CityListPage> {
   List<AzRegionModel> cityList = [];
   List<ChinaRegionModel> chinaLists = [];
+
   // List<CityModel> chinaLists=[];
   List<ChinaRegionModel> hotLists = [];
 
@@ -42,20 +48,29 @@ class _CityListPageState extends State<CityListPage> {
     hotLists = UserTool.cityProvider.hotCities;
     // print(hotLists);
     for (var element in hotLists) {
-      hotCityList.add(AzRegionModel(name: element.name, model: element));
+      hotCityList
+          .add(AzRegionModel(name: element.name, model: element.children));
     }
     //加载城市列表
     chinaLists = UserTool.cityProvider.regions;
     // print("这是数据，${chinaLists}");
     for (ChinaRegionModel element in chinaLists) {
-      for(int i=0;i<element.children!.length;i++){
-        cityList.add(AzRegionModel(name: element.children![i].name, model: element.children![i]));
-      }
+      // print(element.name);
+      cityList.add(AzRegionModel(name: element.name, model: element.children));
+
+      // for(int i=0;i<element.children!.length;i++){
+      //   // print(element.children);
+      //   // cityList.add(AzRegionModel(name: element.name, model: element.children![i]));
+      //   cityList.add(AzRegionModel(name: element.children![i].name, model: element.children));
+      //
+      // }
     }
-    print("这是数据$cityList");
+    // print("这是数据$cityList");
+    // _handleList(cityList);
     _handleList(cityList);
   }
 
+  // void _handleList(List<AzRegionModel> list) {
   void _handleList(List<AzRegionModel> list) {
     if (list.isEmpty) return;
     for (int i = 0, length = list.length; i < length; i++) {
@@ -115,7 +130,9 @@ class _CityListPageState extends State<CityListPage> {
   _getCityView(AzRegionModel model, {bool isLocation = false}) {
     return GestureDetector(
       onTap: () {
-        widget.cityCallback(model.model!);
+        
+        // widget.cityCallback(model.model!);
+        // widget.cityCallback(model[1]);
       },
       child: Container(
         width: 56.w,
@@ -140,70 +157,83 @@ class _CityListPageState extends State<CityListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
-            child: Text(
-              "热门城市",
-              style: TextStyle(color: BaseStyle.color999999, fontSize: 24.sp),
-            ),
-          ),
-          _buildHeader(),
-          Expanded(
-            child: AzListView(
-              padding: EdgeInsets.symmetric(vertical: 30.w),
-              data: cityList,
-              itemCount: cityList.length,
-              itemBuilder: (BuildContext context, int index) {
-                // if (index == 0) return _buildHeader();
-                AzRegionModel model = cityList[index];
-                return Utils.getListItem(context, model, (name, id) {
-                  widget.cityCallback(model.model!);
-                });
-              },
-              susItemHeight: susItemHeight,
-              susItemBuilder: (BuildContext context, int index) {
-                AzRegionModel model = cityList[index];
-                String tag = model.getSuspensionTag();
-                if (imgFavorite == tag) {
-                  return Container();
-                }
-                return Utils.getSusItem(context, tag, susHeight: susItemHeight);
-              },
-              indexBarData: SuspensionUtil.getTagIndexList(cityList),
-              indexBarOptions: IndexBarOptions(
-                needRebuild: true,
-                color: Colors.transparent,
-                downColor: const Color(0xFFEEEEEE),
+    return
+      Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Padding(
+        //   padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 32.w),
+        //   child: Text(
+        //     "热门城市",
+        //     style: TextStyle(color: BaseStyle.color999999, fontSize: 24.sp),
+        //   ),
+        // ),
+        // _buildHeader(),
+        Expanded(
+          child:
+          AzListView(
+            padding: EdgeInsets.symmetric(vertical: 30.w),
+            data: cityList,
+            itemCount: cityList.length,
+            itemBuilder: (BuildContext context, int index) {
+              // if (index == 0) return _buildHeader();
+              AzRegionModel model = cityList[index];
+              return Utils.getListItem(context, model, (name, id) async{
+                // Get.to(()=>
+                //
+                // );
+                await Get.to(() => CityListItemPage(
+                  cityCallback: (ChinaRegionModel model) {
+                    // print("这是数据${model.name}");
+                    // print("这是数据${model.id}");
+                    widget.cityCallback(model);
+                  },
+                  cityName: model.name,
+                  cityList: model.model!,
+                ));
+                // widget.cityCallback(model.model!);
+              });
+            },
+            susItemHeight: susItemHeight,
+            susItemBuilder: (BuildContext context, int index) {
+              AzRegionModel model = cityList[index];
+              String tag = model.getSuspensionTag();
+              if (imgFavorite == tag) {
+                return Container();
+              }
+              return Utils.getSusItem(context, tag, susHeight: susItemHeight);
+            },
+            indexBarData: SuspensionUtil.getTagIndexList(cityList),
+            indexBarOptions: IndexBarOptions(
+              needRebuild: true,
+              color: Colors.transparent,
+              downColor: const Color(0xFFEEEEEE),
 
-                indexHintDecoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(Assets.icons.barBubbleGray.path),
-                    fit: BoxFit.contain,
-                  ),
+              indexHintDecoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Assets.icons.barBubbleGray.path),
+                  fit: BoxFit.contain,
                 ),
-                selectTextStyle: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500),
-                selectItemDecoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: kPrimaryColor),
-                indexHintAlignment: Alignment.centerRight,
-                indexHintChildAlignment: Alignment.center,
-                indexHintTextStyle:
-                    TextStyle(fontSize: 40.sp, color: Colors.black87),
-
-                indexHintOffset: const Offset(-10, 0),
-                indexHintWidth: 100.w,
-                indexHintHeight: 100.w,
-                localImages: [imgFavorite], //local images.
               ),
+              selectTextStyle: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500),
+              selectItemDecoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: kPrimaryColor),
+              indexHintAlignment: Alignment.centerRight,
+              indexHintChildAlignment: Alignment.center,
+              indexHintTextStyle:
+              TextStyle(fontSize: 40.sp, color: Colors.black87),
+
+              indexHintOffset: const Offset(-10, 0),
+              indexHintWidth: 100.w,
+              indexHintHeight: 100.w,
+              localImages: [imgFavorite], //local images.
             ),
           ),
-        ],
-
+        ),
+      ],
     );
   }
 }
