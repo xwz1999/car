@@ -32,7 +32,7 @@ class _ModifyPricePageState extends State<ModifyPricePage>
   @override
   void initState() {
     super.initState();
-    _guideController.text = (num.parse(widget.model.carInfo.newCarGuidePrice)/10000).toString();
+    // _guideController.text = (num.parse(widget.model.carInfo.newCarGuidePrice)/10000).toString();
 
 
     _showController.text = (num.parse(widget.model.carInfo.price)/10000).toString();

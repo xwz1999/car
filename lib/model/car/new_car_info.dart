@@ -31,6 +31,8 @@ class NewCarInfo extends Equatable {
 class CarNewInfo extends Equatable {
   final int id;
   final String modelName;
+  ///
+  final int modelId;
   final String vin;
   final String carSn;
   final int collect;
@@ -48,10 +50,11 @@ class CarNewInfo extends Equatable {
   final String color;
   final String interiorColor;
   final String temporaryLicensePlate;
-  final int parkingNo;
+  final String parkingNo;
+  // final int parkingNo;
   final String useCharacter;
   final String mileage;
-  final String newCarGuidePrice;
+  // final String newCarGuidePrice;
   final String purchaseTax;
   final String installationCost;
   final String location;
@@ -62,9 +65,11 @@ class CarNewInfo extends Equatable {
   final List<ImagePhoto> defectPhotos;
   final List<ImagePhoto> reportPhotos;
   final List<ImagePhoto> repairPhotos;
+  final List<ImagePhoto> dataPhotos;
   final BrokerInfo brokerInfo;
   final ModelInfo modelInfo;
   final PriceInfo priceInfo;
+  ///purchaseInfo
   final CertificateInfo certificateInfo;
   final ContractMasterInfo contractMasterInfo;
 
@@ -76,6 +81,8 @@ class CarNewInfo extends Equatable {
   List<Object?> get props => [
         id,
         modelName,
+    ///
+        modelId,
         vin,
         carSn,
         collect,
@@ -95,7 +102,7 @@ class CarNewInfo extends Equatable {
         parkingNo,
         useCharacter,
         mileage,
-        newCarGuidePrice,
+        // newCarGuidePrice,
         purchaseTax,
         installationCost,
         location,
@@ -113,8 +120,11 @@ class CarNewInfo extends Equatable {
         contractMasterInfo,
       ];
 
-  const CarNewInfo({
+  const CarNewInfo( {
+    required this.dataPhotos,
     required this.id,
+    ///
+    required  this.modelId,
     required this.modelName,
     required this.storeName,
     required this.vin,
@@ -136,7 +146,7 @@ class CarNewInfo extends Equatable {
     required this.parkingNo,
     required this.useCharacter,
     required this.mileage,
-    required this.newCarGuidePrice,
+    // required this.newCarGuidePrice,
     required this.purchaseTax,
     required this.installationCost,
     required this.location,
@@ -265,17 +275,17 @@ class ModelInfo extends Equatable{
 
 @JsonSerializable()
 class PriceInfo extends Equatable{
-  final String purchasePrice;
-  final String salePrice;
+  final String interiorPrice;
+  final String exteriorPrice;
   factory PriceInfo.fromJson(Map<String, dynamic> json) =>_$PriceInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$PriceInfoToJson(this);
   const PriceInfo({
-    required this.purchasePrice,
-    required this.salePrice,
+    required this.interiorPrice,
+    required this.exteriorPrice,
   });
   @override
-  List<Object?> get props => [purchasePrice,salePrice,];
+  List<Object?> get props => [interiorPrice,exteriorPrice,];
 }
 
 @JsonSerializable()

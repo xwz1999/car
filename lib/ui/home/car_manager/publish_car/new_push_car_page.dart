@@ -435,30 +435,30 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       },
       endText: '万',
     );
-    // var purchasePrice = EditItemWidget(
-    //   topIcon: false,
-    //   title: '采购价格',
-    //   tips: '请输入',
-    //   controller: _purchasePrice,
-    //   canChange: true,
-    //   inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
-    //   callback: (String content) {
-    //     _publishCarInfo.value.wholesalePrice = content;
-    //   },
-    //   endText: '万',
-    // );
-    // var purchase = EditItemWidget(
-    //   topIcon: false,
-    //   title: '采购人',
-    //   tips: '请输入',
-    //   controller: _purchase,
-    //   canChange: true,
-    //   inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
-    //   callback: (String content) {
-    //     _publishCarInfo.value.wholesalePrice = content;
-    //   },
-    //   endText: '',
-    // );
+    var purchasePrice = EditItemWidget(
+      topIcon: false,
+      title: '采购价格',
+      tips: '请输入',
+      controller: _purchasePrice,
+      canChange: true,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
+      callback: (String content) {
+        _publishCarInfo.value.purchasePrice = content;
+      },
+      endText: '万',
+    );
+    var purchase = EditItemWidget(
+      topIcon: false,
+      title: '采购人',
+      tips: '请输入',
+      controller: _purchase,
+      canChange: true,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
+      callback: (String content) {
+        _publishCarInfo.value.purchasePerson = content;
+      },
+      endText: '',
+    );
     var retrofittingFee = EditItemWidget(
       title: '加装费用',
       tips: '请输入',
@@ -906,29 +906,29 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                 wholesalePrice,
                 salePrice,
                 // purchasePrice,
-                    _function(
-                      '采购类型',
-                          () async {
-                        await showModalBottomSheet(
-                          context: context,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
-                          builder: (context) {
-                            return CloudListPickerWidget(
-                                title: '采购类型',
-                                items: carPurchaseTypeList,
-                                onConfirm: (str, index) {
-                                  _publishCarInfo.value.purchaseType = index;
-                                  Get.back();
-                                  setState(() {});
-                                });
-                          },
-                        );
-                      },
-                      _publishCarInfo.value.purchaseTypeEM.typeStr,
-                      '请选择',
-                        topIcon: false
-                    ),
+                //     _function(
+                //       '采购类型',
+                //           () async {
+                //         await showModalBottomSheet(
+                //           context: context,
+                //           shape: RoundedRectangleBorder(
+                //               borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+                //           builder: (context) {
+                //             return CloudListPickerWidget(
+                //                 title: '采购类型',
+                //                 items: carPurchaseTypeList,
+                //                 onConfirm: (str, index) {
+                //                   _publishCarInfo.value.purchaseType = index;
+                //                   Get.back();
+                //                   setState(() {});
+                //                 });
+                //           },
+                //         );
+                //       },
+                //       _publishCarInfo.value.purchaseTypeEM.typeStr,
+                //       '请选择',
+                //         topIcon: false
+                //     ),
                     // purchasePrice,
                     _function(
                         '采购日期',
@@ -942,37 +942,39 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                         '请选择',
                         topIcon: false
                     ),
-                    _function(
-                        '采购人',
-                            () async {
-                              ///需要新接口
-                          Get.to(()=> ChoosePurchaserPage(callback: (StoreallModel model,String name) {
-                            // _publishCarInfo.value.purchasePerson = model.staffs;
-                            _publishCarInfo.value.purchasePerson =name;
-                            _publishCarInfo.value.purchaseStore=model.name;
-                            setState(() {});
-                          },));
-
-
-                        },
-                        _publishCarInfo.value.purchasePerson,
-                        '请选择',
-                        topIcon: false
-                    ),
-                    _function(
-                      '门店',
-                          () async {
-                            ///需要新接口
-                            // Get.to(()=> ChoosePurchaserPage(callback: (StaffAllModel model) {
-                            //
-                            // },));
-                        setState(() {});
-                      },
-                      _publishCarInfo.value.purchaseStore,
-                      '请选择',
-                      topIcon: false,
-
-                    ),
+                purchasePrice,
+                purchase,
+                    // _function(
+                    //     '采购人',
+                    //         () async {
+                    //           ///需要新接口
+                    //       Get.to(()=> ChoosePurchaserPage(callback: (StoreallModel model,String name) {
+                    //         // _publishCarInfo.value.purchasePerson = model.staffs;
+                    //         _publishCarInfo.value.purchasePerson =name;
+                    //         _publishCarInfo.value.purchaseStore=model.name;
+                    //         setState(() {});
+                    //       },));
+                    //
+                    //
+                    //     },
+                    //     _publishCarInfo.value.purchasePerson,
+                    //     '请选择',
+                    //     topIcon: false
+                    // ),
+                    // _function(
+                    //   '门店',
+                    //       () async {
+                    //         ///需要新接口
+                    //         // Get.to(()=> ChoosePurchaserPage(callback: (StaffAllModel model) {
+                    //         //
+                    //         // },));
+                    //     setState(() {});
+                    //   },
+                    //   _publishCarInfo.value.purchaseStore,
+                    //   '请选择',
+                    //   topIcon: false,
+                    //
+                    // ),
                 // purchase,
               ],
             ),

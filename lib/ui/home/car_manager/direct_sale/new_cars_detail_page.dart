@@ -32,6 +32,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../utils/text_utils.dart';
 import '../../share/edit_item_widget.dart';
 import 'detailed_price_page.dart';
+import 'edit_car_page.dart';
 
 class NewCarsDetailPage extends StatefulWidget {
   // final bool isSelf;
@@ -135,13 +136,12 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
   _refresh() async {
     carInfoModel = await CarFunc.getNewCarInfo(widget.carListModel.id);
+    // print(carInfoModel!.carInfo);
     collect = carInfoModel?.carInfo.collect ?? 0;
-
     for (var item in carInfoModel!.carInfo.carPhotos) {
       if (item.photo.isNotEmpty && item.text.isNotEmpty) {
         carPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
-
       if (item.photo.isNotEmpty && item.text.isNotEmpty) {
         bannerList.add(item);
       }
@@ -158,31 +158,43 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         defectPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
     }
-    for (var item in carInfoModel!.carInfo.repairPhotos) {
-      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
-        repairPhotos.add(CarPhotos(photo: item.photo, text: item.text));
-      }
-    }
-
-    for (int i = 0; i < carInfoModel!.carInfo.reportPhotos.length; i++) {
+    // for (var item in carInfoModel!.carInfo.dataPhotos) {
+    //   if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+    //     repairPhotos.add(CarPhotos(photo: item.photo, text: item.text));
+    //   }
+    // }
+    for (int i = 0; i < carInfoModel!.carInfo.dataPhotos.length; i++) {
       for (int j = 0; j < _reportPhotos.length; j++) {
         if (_reportPhotos[j].text ==
-            carInfoModel!.carInfo.reportPhotos[i].text) {
-          if (carInfoModel!.carInfo.reportPhotos[i].photo != '') {
+            carInfoModel!.carInfo.dataPhotos[i].text) {
+          if (carInfoModel!.carInfo.dataPhotos[i].photo != '') {
             _reportPhotos[j].photo =
-                carInfoModel!.carInfo.reportPhotos[i].photo;
+                carInfoModel!.carInfo.dataPhotos[i].photo;
           } else {
             _reportPhotos.removeAt(j);
           }
         }
       }
     }
+    // for (int i = 0; i < carInfoModel!.carInfo.reportPhotos.length; i++) {
+    //   for (int j = 0; j < _reportPhotos.length; j++) {
+    //     if (_reportPhotos[j].text ==
+    //         carInfoModel!.carInfo.reportPhotos[i].text) {
+    //       if (carInfoModel!.carInfo.reportPhotos[i].photo != '') {
+    //         _reportPhotos[j].photo =
+    //             carInfoModel!.carInfo.reportPhotos[i].photo;
+    //       } else {
+    //         _reportPhotos.removeAt(j);
+    //       }
+    //     }
+    //   }
+    // }
     pushPhotoModel = PushPhotoModel(
-        carPhotos: carPhotos,
-        interiorPhotos: interiorPhotos,
-        defectPhotos: defectPhotos,
-        dataPhotos: repairPhotos,
-        // repairPhotos: repairPhotos,
+      carPhotos: carPhotos,
+      interiorPhotos: interiorPhotos,
+      defectPhotos: defectPhotos,
+      dataPhotos: repairPhotos,
+      // repairPhotos: repairPhotos,
     );
 
     reportPhotoModel = ReportPhotoModel(paints: _reportPhotos);
@@ -261,7 +273,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                     SliverAppBar(
                         pinned: true,
                         stretch: true,
-                        expandedHeight: downState?945.w:1170.w,
+                        expandedHeight: downState ? 945.w : 1170.w,
                         elevation: 0,
                         backgroundColor:
                             headerWhite ? Colors.white : Colors.transparent,
@@ -349,8 +361,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                             width: double.infinity,
                             color: Colors.transparent,
                             //height: double.infinity,
-                            child:
-                            Column(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 135.hb,
@@ -374,7 +385,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                                       getDown(),
                                       30.hb,
                                       _shuffling(),
-                                      // 32.hb,
+                                      32.hb,
                                       // _informations(),
                                     ],
                                   ),
@@ -831,24 +842,24 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 110.w,
-                  child: Text(
-                    '新车指导价',
-                    style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w400,
-                        color: BaseStyle.color999999),
-                  ),
-                ),
-                Text(
-                  TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
-                      num.parse(carInfoModel!.carInfo.newCarGuidePrice))),
-                  style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w400,
-                      color: BaseStyle.color999999),
-                ),
+                // SizedBox(
+                //   width: 110.w,
+                //   child: Text(
+                //     '新车指导价',
+                //     style: TextStyle(
+                //         fontSize: 20.sp,
+                //         fontWeight: FontWeight.w400,
+                //         color: BaseStyle.color999999),
+                //   ),
+                // ),
+                // Text(
+                //   TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
+                //       num.parse(carInfoModel!.carInfo.newCarGuidePrice))),
+                //   style: TextStyle(
+                //       fontSize: 20.sp,
+                //       fontWeight: FontWeight.w400,
+                //       color: BaseStyle.color999999),
+                // ),
               ],
             ),
           ],
@@ -923,7 +934,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                         ),
                       ),
                       Text(
-                        TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(carInfoModel!.carInfo.priceInfo.purchasePrice))),
+                        TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
+                            num.parse(carInfoModel!
+                                .carInfo.priceInfo.exteriorPrice))),
                         style: TextStyle(
                             height: 1.5,
                             fontSize: 28.sp,
@@ -949,7 +962,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       ),
                       10.wb,
                       Text(
-                        '20.0万元',
+                        TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
+                            num.parse(
+                                carInfoModel!.carInfo.priceInfo.interiorPrice))),
                         style: TextStyle(
                             height: 1.5,
                             fontSize: 28.sp,
@@ -963,7 +978,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             ),
             GestureDetector(
               onTap: () {
-                  // Get.to(()=>const DetailedPricePage());
+                // Get.to(()=>const DetailedPricePage());
               },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 16.w),

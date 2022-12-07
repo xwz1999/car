@@ -22,7 +22,11 @@ Map<String, dynamic> _$NewCarInfoToJson(NewCarInfo instance) =>
     };
 
 CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
+      dataPhotos: (json['dataPhotos'] as List<dynamic>)
+          .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       id: json['id'] as int,
+      modelId: json['modelId'] as int,
       modelName: json['modelName'] as String,
       storeName: json['storeName'] as String,
       vin: json['vin'] as String,
@@ -41,10 +45,9 @@ CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
       color: json['color'] as String,
       interiorColor: json['interiorColor'] as String,
       temporaryLicensePlate: json['temporaryLicensePlate'] as String,
-      parkingNo: json['parkingNo'] as int,
+      parkingNo: json['parkingNo'] as String,
       useCharacter: json['useCharacter'] as String,
       mileage: json['mileage'] as String,
-      newCarGuidePrice: json['newCarGuidePrice'] as String,
       purchaseTax: json['purchaseTax'] as String,
       installationCost: json['installationCost'] as String,
       location: json['location'] as String,
@@ -62,7 +65,7 @@ CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
       reportPhotos: (json['reportPhotos'] as List<dynamic>)
           .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      repairPhotos: json['repairPhotos']==null?[]: (json['repairPhotos'] as List<dynamic>)
+      repairPhotos: (json['repairPhotos'] as List<dynamic>)
           .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
           .toList(),
       brokerInfo:
@@ -79,6 +82,7 @@ Map<String, dynamic> _$CarNewInfoToJson(CarNewInfo instance) =>
     <String, dynamic>{
       'id': instance.id,
       'modelName': instance.modelName,
+      'modelId': instance.modelId,
       'vin': instance.vin,
       'carSn': instance.carSn,
       'collect': instance.collect,
@@ -99,7 +103,6 @@ Map<String, dynamic> _$CarNewInfoToJson(CarNewInfo instance) =>
       'parkingNo': instance.parkingNo,
       'useCharacter': instance.useCharacter,
       'mileage': instance.mileage,
-      'newCarGuidePrice': instance.newCarGuidePrice,
       'purchaseTax': instance.purchaseTax,
       'installationCost': instance.installationCost,
       'location': instance.location,
@@ -110,6 +113,7 @@ Map<String, dynamic> _$CarNewInfoToJson(CarNewInfo instance) =>
       'defectPhotos': instance.defectPhotos,
       'reportPhotos': instance.reportPhotos,
       'repairPhotos': instance.repairPhotos,
+      'dataPhotos': instance.dataPhotos,
       'brokerInfo': instance.brokerInfo,
       'modelInfo': instance.modelInfo,
       'priceInfo': instance.priceInfo,
@@ -198,13 +202,13 @@ Map<String, dynamic> _$ModelInfoToJson(ModelInfo instance) => <String, dynamic>{
     };
 
 PriceInfo _$PriceInfoFromJson(Map<String, dynamic> json) => PriceInfo(
-      purchasePrice: json['purchasePrice'] as String,
-      salePrice: json['salePrice'] as String,
+      interiorPrice: json['interiorPrice'] as String,
+      exteriorPrice: json['exteriorPrice'] as String,
     );
 
 Map<String, dynamic> _$PriceInfoToJson(PriceInfo instance) => <String, dynamic>{
-      'purchasePrice': instance.purchasePrice,
-      'salePrice': instance.salePrice,
+      'interiorPrice': instance.interiorPrice,
+      'exteriorPrice': instance.exteriorPrice,
     };
 
 CertificateInfo _$CertificateInfoFromJson(Map<String, dynamic> json) =>

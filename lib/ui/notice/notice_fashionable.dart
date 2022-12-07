@@ -3,6 +3,11 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../constants/api/api.dart';
+import '../../model/split_account/split_account_list_model.dart';
+import '../../utils/net_work/api_client.dart';
+import '../home/split_account/split_account_page.dart';
+
 
 class FashionablePage extends StatefulWidget {
   const FashionablePage({super.key});
@@ -36,8 +41,11 @@ class _FashionablePageState extends State<FashionablePage> {
       'conditions': 1,
     },
   ];
+  List<SplitAccountListModel> _models = [];
+  int _page = 1;
 
-  @override
+  final int _limit = 10;
+  final SplitAccountStatus _currentStatus = SplitAccountStatus.inProgress;
   @override
   void dispose() {
     super.dispose();
@@ -57,25 +65,50 @@ class _FashionablePageState extends State<FashionablePage> {
       ),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      body:  Expanded(
-        child: EasyRefresh(
-          firstRefresh: true,
-          header: MaterialHeader(),
-          controller: _refreshController,
-          onRefresh: () async {
-
-            setState(() {});
-          },
-          child:ListView.builder(
-            //padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
-            itemCount: fashionablelist.length,
-            itemBuilder: (context, index) {
-              return _fashionablecard(fashionablelist[index]);
-            },
-          ),
+      body:   EasyRefresh(
+        firstRefresh: true,
+        controller: _refreshController,
+        header: MaterialHeader(),
+        footer: MaterialFooter(),
+        onRefresh: () async {
+          _page = 1;
+          var baseList =
+          await apiClient.requestList(API.split.list, data: {
+            // 'status': _currentStatus.typeNum,
+            'page': _page,
+            'limit': _limit,
+          });
+          print("这是数据${baseList.data}");
+          if (baseList.code == 0) {
+            _models = baseList.nullSafetyList
+                .map((e) => SplitAccountListModel.fromJson(e))
+                .toList();
+          }
+          setState(() {});
+        },
+        onLoad: () async {
+          _page++;
+          var baseList =
+          await apiClient.requestList(API.split.list, data: {
+            // 'status': _currentStatus.typeNum,
+            'page': _page,
+            'limit': _limit,
+          });
+          if (baseList.nullSafetyTotal > _models.length) {
+            _models.addAll(baseList.nullSafetyList
+                .map((e) => SplitAccountListModel.fromJson(e))
+                .toList());
+          } else {
+            _refreshController.finishLoad(noMore: true);
+          }
+          setState(() {});
+        },
+        child: _models.isEmpty
+            ? const SizedBox()
+            : ListView(
+            children: _fashionablecard(fashionablelist)
         ),
       ),
-
     );
   }
 
@@ -196,4 +229,6 @@ class _FashionablePageState extends State<FashionablePage> {
   }
 
 }
+
+
 

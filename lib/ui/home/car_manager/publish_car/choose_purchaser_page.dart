@@ -147,7 +147,7 @@ class _ChoosePurchaserPageState extends State<ChoosePurchaserPage> {
               // _easyRefreshController.callRefresh();
             },
             child: getText(e.roleName, e.genderEM.typeNum, e.name,
-                e.phone, e.auditStatus, e.roleEm),
+                e.phone, e.auditStatus,),/// e.roleEm
           );
         }).toList()
             : []
@@ -155,7 +155,7 @@ class _ChoosePurchaserPageState extends State<ChoosePurchaserPage> {
     );
   }
   getText(String position, int gender, String name, String phone, int judge,
-      Role role) {
+      ) {///Role role
     return Container(
       color: Colors.white,
       height: 94.w,
@@ -191,7 +191,7 @@ class _ChoosePurchaserPageState extends State<ChoosePurchaserPage> {
                 fontSize: BaseStyle.fontSize24, color: BaseStyle.color999999),
           ),
           24.wb,
-          if (role == Role.manager) CloudTag.blue(text: '店长'),
+          // if (role == Role.manager) CloudTag.blue(text: '店长'),
           //if (model.roleEM == Role.defaultRole) CloudTag.blue(text: '店长'),
           SizedBox(
               child: judge == 1

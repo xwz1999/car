@@ -367,7 +367,9 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                             estimatePriceModel.price;
                         consignmentContractModel.value.priceId =
                             estimatePriceModel.id as int?;
-
+                        consignmentContractModel.value.useCharacter=widget.publishCarInfo.carNatureOfUse;
+                        consignmentContractModel.value.licensePlate=widget.publishCarInfo.carName;
+                        // consignmentContractModel.li
                         Get.to(() => CheckPushPage(
                               consignmentContractModel:
                                   consignmentContractModel,

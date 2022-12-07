@@ -329,7 +329,9 @@ class CarFunc {
       'customerId': contractModel.customerId,
       'price': contractModel.sellPrice,
       'masterInfo': params,
+          'licensePlate':contractModel.licensePlate,
       'keyCount': contractModel.keyCount,
+       'useCharacter':contractModel.useCharacter ,
       'compulsoryInsurance': contractModel.compulsoryInsurance,
       'compulsoryInsuranceDate': contractModel.compulsoryInsuranceDate,
       'commercialInsurance': contractModel.commercialInsurance,
@@ -386,7 +388,7 @@ class CarFunc {
       "engineNo":purchaseCarInfo.engineNum,
       "licensingDate":purchaseCarInfo.licensingDateStr,
       'licensePlate':purchaseCarInfo.licensePlate,
-      "useCharacter":purchaseCarInfo.carNatureOfUseEM.typeStr,
+      "useCharacter":purchaseCarInfo.carNatureOfUseEM.typeNum,
       "color":purchaseCarInfo.color,
       "marketDate":purchaseCarInfo.productionDateStr==''?null:purchaseCarInfo.productionDateStr,
       "mileage": purchaseCarInfo.mileage!=null? num.parse(purchaseCarInfo.mileage!)*10000:null,
@@ -487,7 +489,7 @@ class CarFunc {
       "color":newPublishCarInfo.carColor,
       "interiorColor":newPublishCarInfo.carDecorativeColor,
       "temporaryLicensePlate":newPublishCarInfo.carTemporaryNum,
-      "parkingNo":newPublishCarInfo.carParkingNum,
+      "parkingNo":(newPublishCarInfo.carParkingNum).toString(),
       //"emissionStandard":newPublishCarInfo.environmentalLevel,
       // "useCharacter":newPublishCarInfo.natureOfUseEM.typeStr,
       "useCharacter":newPublishCarInfo.natureOfUseEM.typeNum,
@@ -503,8 +505,8 @@ class CarFunc {
     };
     Map<String, dynamic> priceInfo = {
 
-      "purchasePrice":newPublishCarInfo.wholesalePrice!=null? num.parse(newPublishCarInfo.wholesalePrice!)*10000:null,
-      "salePrice":newPublishCarInfo.salePrice!=null? num.parse(newPublishCarInfo.salePrice!)*10000:null,
+      "interiorPrice":newPublishCarInfo.wholesalePrice!=null? num.parse(newPublishCarInfo.wholesalePrice!)*10000:null,
+      "exteriorPrice":newPublishCarInfo.salePrice!=null? num.parse(newPublishCarInfo.salePrice!)*10000:null,
 
     };
     Map<String, dynamic> certificateInfo = {
@@ -517,7 +519,9 @@ class CarFunc {
       "commercialInsurancePrice":newPublishCarInfo.commercialInsurancePrice!=null?num.parse(newPublishCarInfo.commercialInsurancePrice!):null ,
     };
     Map<String, dynamic> purchaseInfo = {
-
+      'price':newPublishCarInfo.purchasePrice,
+      'date':newPublishCarInfo.purchaseDateStr,
+      'liaison':newPublishCarInfo.purchasePerson,
     };
 
 

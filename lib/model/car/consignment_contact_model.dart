@@ -10,8 +10,10 @@ class ConsignmentContractModel {
   String? evaluationPrice;
   String? sellPrice;
   MasterInfo masterInfo;
+  String?licensePlate;
   int? keyCount;
   int? transferNum;///过户次数
+  int? useCharacter; ///车辆性质
 
 
   bool? get compulsory=> compulsoryInsurance==1;
@@ -53,7 +55,10 @@ class ConsignmentContractModel {
       this.publishCarInfo,
       this.bust,
       this.idBack,
-      this.idFront});
+      this.idFront,
+      this.useCharacter,
+       this.licensePlate,
+      });
 }
 
 class MasterInfo {

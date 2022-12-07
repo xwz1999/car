@@ -1,5 +1,9 @@
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
+import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../utils/toast/cloud_toast.dart';
 
 typedef ItemCallback = Function(ChooseItems item, int index);
 
@@ -62,8 +66,29 @@ class SortWidget extends StatelessWidget {
 
   _getItem(ChooseItems item, int index) {
     return GestureDetector(
-      onTap: () {
-        callback(item, index);
+      onTap: () async{
+        if(item.name=='自定义'){
+          // await showModalBottomSheet(
+          //   context: context,
+          //   shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+          //   builder: (context) {
+          //     return CloudListPickerWidget(
+          //         title: '使用性质',
+          //         items: carNatureOfUseList,
+          //         onConfirm: (str, index) {
+          //           _publishCarInfo.value.carNatureOfUse = index;
+          //           Get.back();
+          //           setState(() {});
+          //         });
+          //   },
+          // );
+
+        }else{
+          callback(item, index);
+        }
+
+
       },
       child: Container(
           alignment: Alignment.center,
@@ -77,7 +102,7 @@ class SortWidget extends StatelessWidget {
                   : Border.all(color: const Color(0xFF027AFF), width: 1.w)),
           child: Column(
             children: [
-              Padding(padding: EdgeInsets.only(top: 16.w)),
+              Padding(padding: EdgeInsets.only(top:item.name=="自定义"?32.w: 20.w)),
               Text(
                 item.name,
                 style: TextStyle(
@@ -87,13 +112,21 @@ class SortWidget extends StatelessWidget {
                     fontSize: BaseStyle.fontSize28),
               ),
               Text(
-
                "¥${item.pice}",
                 style: TextStyle(
                     color: pickItem == item
                         ? kPrimaryColor
                         : BaseStyle.color333333,
                     fontSize: BaseStyle.fontSize28),
+              ),
+              item.name=='自定义'?const SizedBox():
+              Text(
+                "${num.parse(item.pice)/item.count}元/份",
+                style: TextStyle(
+                    color: pickItem == item
+                        ? kPrimaryColor
+                        : BaseStyle.color999999,
+                    fontSize: BaseStyle.fontSize24),
               ),
             ],
           )),

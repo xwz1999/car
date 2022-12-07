@@ -12,8 +12,10 @@ import 'package:velocity_x/velocity_x.dart';
 import 'assessment_pay_page.dart';
 
 class UserAssessmentPage extends StatefulWidget {
-  final  int assessmentState;///1:评估 2：合同
-  const UserAssessmentPage({super.key,required this.assessmentState});
+  final int assessmentState;
+
+  ///1:评估 2：合同
+  const UserAssessmentPage({super.key, required this.assessmentState});
 
   @override
   _UserAssessmentPageState createState() => _UserAssessmentPageState();
@@ -22,15 +24,19 @@ class UserAssessmentPage extends StatefulWidget {
 class _UserAssessmentPageState extends State<UserAssessmentPage> {
   ChooseItems? _chooseItem;
   final List<ChooseItems> _piceList = [
-    ChooseItems(name: '充值10次', pice: '10.00', count: 10),
-    ChooseItems(name: '充值20次', pice: '20.00', count: 20),
-    ChooseItems(name: '充值30次', pice: '30.00', count: 30),
-    ChooseItems(name: '充值50次', pice: '50.00', count: 50),
-    ChooseItems(name: '充值100次', pice: '100.00', count: 100),
-    ChooseItems(name: '充值500次', pice: '500.00', count: 500),
-    // ChooseItems(name: '自定义', pice: '充值次数'),
+    ChooseItems(name: '充值10次', pice: '30.00', count: 10),
+    ChooseItems(name: '充值50次', pice: '125.00', count: 50),
+    ChooseItems(name: '充值100次', pice: '200.00', count: 100),
+    ChooseItems(name: '充值200次', pice: '300.00', count: 200),
+    ChooseItems(name: '自定义', pice: '充值份数', count: 0),
   ];
-
+  final List<ChooseItems> _piceList2 = [
+    ChooseItems(name: '充值10次', pice: '50.00', count: 10),
+    ChooseItems(name: '充值50次', pice: '150.00', count: 50),
+    ChooseItems(name: '充值100次', pice: '280.00', count: 100),
+    ChooseItems(name: '充值500次', pice: '1250.00', count: 500),
+    ChooseItems(name: '自定义', pice: '充值份数', count: 0),
+  ];
   @override
   void initState() {
     super.initState();
@@ -57,7 +63,9 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() =>  PayChangesPage(numberState: widget.assessmentState,));
+                  Get.to(() => PayChangesPage(
+                        numberState: widget.assessmentState,
+                      ));
                 },
                 child: Text(
                   '次数记录',
@@ -71,7 +79,8 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
           ),
           30.wb,
         ],
-        title: Text(widget.assessmentState==2?'合同份数充值':'评估次数充值', style: Theme.of(context).textTheme.headline6),
+        title: Text(widget.assessmentState == 2 ? '合同份数充值' : '评估次数充值',
+            style: Theme.of(context).textTheme.headline6),
       ),
       body: ListView(
         children: [
@@ -101,13 +110,13 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
           ),
         ),
         Container(
-         padding: EdgeInsets.only( left: 40.w),
+          padding: EdgeInsets.only(left: 40.w),
           child: Column(
             children: [
               Row(
                 children: [
                   Text(
-                    widget.assessmentState==2?'剩余合同份数':"剩余评估次数",
+                    widget.assessmentState == 2 ? '剩余合同份数' : "剩余评估次数",
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
@@ -115,9 +124,12 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                   ),
                   24.wb,
                   Text(
-                    widget.assessmentState==2?(UserTool.userProvider.userInfo.data.assessContractCount)
-                        .toString(): (UserTool.userProvider.userInfo.data.assessCount)
-                        .toString(),
+                    widget.assessmentState == 2
+                        ? (UserTool
+                                .userProvider.userInfo.data.assessContractCount)
+                            .toString()
+                        : (UserTool.userProvider.userInfo.data.assessCount)
+                            .toString(),
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         fontSize: 42.sp,
                         color: const Color(0xFF027AFF),
@@ -178,12 +190,13 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                     ),
                     child: SortWidget(
                       crossAxisSpacing: 24.w,
-                      itemList: _piceList,
-                      childAspectRatio: 216 / 98,
+                      itemList:widget.assessmentState==2?_piceList2: _piceList,
+                      childAspectRatio: 216 / 156,
                       crossAxisCount: 3,
                       mainAxisSpacing: 20.w,
                       callback: (item, index) {
                         _chooseItem = item;
+                        print(item);
                         setState(() {});
                       },
                       pickItem: _chooseItem,
@@ -217,8 +230,9 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
         if (_chooseItem != null) {
           Get.to(() => AssessmentPayPage(
                 price: _chooseItem!.pice,
-                count: _chooseItem!.count, title: widget.assessmentState==2?"合同份数充值":'评估次数充值',
-            state: widget.assessmentState,
+                count: _chooseItem!.count,
+                title: widget.assessmentState == 2 ? "合同份数充值" : '评估次数充值',
+                state: widget.assessmentState,
               ));
         } else {
           CloudToast.show('请先选择一个充值类型');

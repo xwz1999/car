@@ -114,7 +114,6 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
                     bool success = await CarFunc.addConsignment(
                         widget.consignmentContractModel.value);
                     cancel();
-
                     if (success) {
                       CloudToast.show('合同发布成功');
                       Get.offUntil(
@@ -127,9 +126,10 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
 
                       ///关闭估价和发布合同的所有页面 跳转到寄卖订单列表
 
-                    } else {
-                      CloudToast.show('合同发布失败');
                     }
+                    // else {
+                    //   CloudToast.show('合同发布失败');
+                    // }
                   }
                 },
                 style: ButtonStyle(

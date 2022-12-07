@@ -12,11 +12,13 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../constants/enums.dart';
 import '../../../../model/sort/sort_brand_model.dart';
 import '../../../../model/sort/sort_car_model_model.dart';
 import '../../../../model/sort/sort_series_model.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/picker/car_date_picker.dart';
+import '../../../../widget/picker/cloud_list_picker_widget.dart';
 import '../../../../widget/sort_widget.dart';
 import '../../sort/choose_car_page.dart';
 import '../../sort/search_param_model.dart';
@@ -62,9 +64,10 @@ class _PushCarPageState extends State<PushCarPage> {
     ChooseItem(name: '其他'),
   ];
 
-  List<ChooseItem> get list =>
-      CarSource.values.map((e) => ChooseItem(name: e.sourceName)).toList();
-
+  // List<ChooseItem> get list =>
+  //     CarSource.values.map((e) => ChooseItem(name: e.sourceName)).toList();
+  List<String> get carNatureOfUseList =>
+      CarNatureOfUse.values.map((e) =>  e.typeStr).toList();
   @override
   void initState() {
     super.initState();
@@ -172,7 +175,9 @@ class _PushCarPageState extends State<PushCarPage> {
                             150.wb,
                             GestureDetector(
                               onTap: () {
-                                Get.to(() =>  const UserAssessmentPage(assessmentState: 1,));
+                                Get.to(() => const UserAssessmentPage(
+                                      assessmentState: 1,
+                                    ));
                               },
                               child: Container(
                                 width: 120.w,
@@ -279,7 +284,7 @@ class _PushCarPageState extends State<PushCarPage> {
       title: '车牌号',
       tips: '请输入车牌号',
       controller: _carNumController,
-      topIcon:false,
+      topIcon: false,
       paddingStart: 0.5,
     );
     // var version = _textarea(
@@ -353,6 +358,29 @@ class _PushCarPageState extends State<PushCarPage> {
             },
             _publishCarInfo.licensingDateStr,
             '选择首次上牌时间',
+          ),
+          _function(
+            '使用性质',
+                () async {
+              await showModalBottomSheet(
+                context: context,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+                builder: (context) {
+                  return CloudListPickerWidget(
+                      title: '使用性质',
+                      items: carNatureOfUseList,
+                      onConfirm: (str, index) {
+                        _publishCarInfo.carNatureOfUse = index;
+
+                        Get.back();
+                        setState(() {});
+                      });
+                },
+              );
+            },
+            _publishCarInfo.carNatureOfUseEM.typeStr,
+            '请选择',
           ),
           // carNum,
           engineNum,
@@ -568,7 +596,8 @@ class PublishCarInfo {
       DateUtil.formatDate(licensingDate, format: 'yyyy-MM');
 
   // ///车牌号
-  // String? carNum;
+  String? carNum;
+
   /// 所在地区
   String? locationCity;
 
@@ -584,6 +613,12 @@ class PublishCarInfo {
   ///表显里程
   String? mileage;
 
+  ///使用性质
+  int? carNatureOfUse;
+
+  CarNatureOfUse get carNatureOfUseEM =>
+      CarNatureOfUse.getValue(carNatureOfUse ?? 0);
+
   static PublishCarInfo get empty => PublishCarInfo(
         viNum: '',
         // carNum: '',
@@ -595,6 +630,7 @@ class PublishCarInfo {
         licensingDate: DateTime.now(),
         engineNum: '',
         mileage: '',
+        carNatureOfUse: 0,
       );
 
   PublishCarInfo({
@@ -607,5 +643,6 @@ class PublishCarInfo {
     this.carColor,
     this.mileage,
     this.carModelId,
+    this.carNatureOfUse,
   });
 }
