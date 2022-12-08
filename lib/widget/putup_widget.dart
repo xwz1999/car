@@ -66,29 +66,11 @@ class SortWidget extends StatelessWidget {
 
   _getItem(ChooseItems item, int index) {
     return GestureDetector(
-      onTap: () async{
-        if(item.name=='自定义'){
-          // await showModalBottomSheet(
-          //   context: context,
-          //   shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
-          //   builder: (context) {
-          //     return CloudListPickerWidget(
-          //         title: '使用性质',
-          //         items: carNatureOfUseList,
-          //         onConfirm: (str, index) {
-          //           _publishCarInfo.value.carNatureOfUse = index;
-          //           Get.back();
-          //           setState(() {});
-          //         });
-          //   },
-          // );
-
-        }else{
-          callback(item, index);
-        }
-
-
+      onTap: () {
+        callback(item, index);
+        // if(item.name!='自定义'){
+        //
+        // }
       },
       child: Container(
           alignment: Alignment.center,

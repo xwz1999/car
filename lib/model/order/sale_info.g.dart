@@ -52,22 +52,36 @@ Map<String, dynamic> _$CarToJson(Car instance) => <String, dynamic>{
 
 Contract _$ContractFromJson(Map<String, dynamic> json) => Contract(
       contract: json['contract'] as int,
+      contractSn: json['contractSn'] as String,
       amount: json['amount'] as String,
       deposit: json['deposit'] as String,
       downPayment: json['downPayment'] as String,
       balancePayment: json['balancePayment'] as String,
-      serviceFee: json['serviceFee'] as String,
+      payTypeName: json['payTypeName'] as String,
+      transferTypeName: json['transferTypeName'] as String,
+      thirdPartKind: json['thirdPartKind'] as String,
+      thirdPartId: json['thirdPartId'] as int,
+      thirdPartName: json['thirdPartName'] as String,
+      saleServiceFee: json['saleServiceFee'] as String,
+      purchaseSaleServiceFee: json['purchaseSaleServiceFee'] as String,
       totalAmount: json['totalAmount'] as String,
       signAt: json['signAt'] as num,
     );
 
 Map<String, dynamic> _$ContractToJson(Contract instance) => <String, dynamic>{
       'contract': instance.contract,
+      'contractSn': instance.contractSn,
       'amount': instance.amount,
       'deposit': instance.deposit,
       'downPayment': instance.downPayment,
       'balancePayment': instance.balancePayment,
-      'serviceFee': instance.serviceFee,
+      'payTypeName': instance.payTypeName,
+      'transferTypeName': instance.transferTypeName,
+      'thirdPartKind': instance.thirdPartKind,
+      'thirdPartId': instance.thirdPartId,
+      'thirdPartName': instance.thirdPartName,
+      'saleServiceFee': instance.saleServiceFee,
+      'purchaseSaleServiceFee': instance.purchaseSaleServiceFee,
       'totalAmount': instance.totalAmount,
       'signAt': instance.signAt,
     };

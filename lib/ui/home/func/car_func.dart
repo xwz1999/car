@@ -262,7 +262,7 @@ class CarFunc {
   static Future<List<ConsignmentListModel>> getSaleList(
       {required int page, int size = 10}) async {
     BaseListModel res = await apiClient.requestList(
-        API.contract.consignmentList,
+        API.contract.soldList,
         data: {'size': size, 'page': page});
     if (res.code == 0) {
       return res.nullSafetyList
@@ -329,7 +329,7 @@ class CarFunc {
       'customerId': contractModel.customerId,
       'price': contractModel.sellPrice,
       'masterInfo': params,
-          'licensePlate':contractModel.licensePlate,
+       'licensePlate':contractModel.licensePlate,
       'keyCount': contractModel.keyCount,
        'useCharacter':contractModel.useCharacter ,
       'compulsoryInsurance': contractModel.compulsoryInsurance,
@@ -356,17 +356,36 @@ class CarFunc {
 
   ///发起出售合同
   static Future<bool> addSale(CarSaleContractModel saleModel) async {
+    Map<String,dynamic> priceInfo={
+      'dealPrice':saleModel.priceInfo.dealPrice,
+      'deposit':saleModel.priceInfo.deposit,
+      'downPayment':saleModel.priceInfo.downPayment,
+    };
+  Map<String,dynamic> masterInfo={
+    'name':saleModel.masterInfo.name,
+    'phone':saleModel.masterInfo.phone,
+    'idCard':saleModel.masterInfo.idCard,
+    'address':saleModel.masterInfo.address,
+    'bank':saleModel.masterInfo.bank,
+    'bankCard':saleModel.masterInfo.bankCard,
+    'bankAccount':saleModel.masterInfo.bankAccount,
+  };
+  Map<String,dynamic> thirdPartInfo={
+    'kind':saleModel.thirdPartInfo.kind,
+    'storeId':saleModel.thirdPartInfo.storeId,
+    'saleServiceFeeRate':saleModel.thirdPartInfo.saleServiceFeeRate,
+    'purchaseServiceFeeRate':saleModel.thirdPartInfo.purchaseServiceFeeRate,
+  };
     BaseModel model =
         await apiClient.request(API.contract.addSaleContract, data: {
-      'carId': saleModel.carId,
-      'customerId': saleModel.customerId,
-      'phone': saleModel.phone,
-      'name': saleModel.name,
-      'idCard': saleModel.idCard,
-      'address': saleModel.address,
-      'openBank': saleModel.openBank,
-      'bankCard': saleModel.bankCard,
-      'remark': saleModel.remark,
+          "carId":saleModel.carId,
+          'payType':saleModel.payType,
+          'transferType':saleModel.transferType,
+          'priceInfo':priceInfo,
+          'customerId':saleModel.customerId,
+          'masterInfo':masterInfo,
+          'thirdPartInfo':thirdPartInfo,
+          'remark':saleModel.remark ,
     });
     if (model.code == 0) {
       if (model.msg == '操作成功') {
@@ -380,7 +399,7 @@ class CarFunc {
     }
   }
 
-  ///发起出售合同
+  ///发起收购合同
   static Future<bool> addPurchase(PurchaseCarInfo purchaseCarInfo,PurchaseInfo purchaseInfo,PurchasePhotoModel purchasePhotoModel) async {
     Map<String, dynamic> baseInfo = {
       "modelId":purchaseCarInfo.carModelId,

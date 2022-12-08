@@ -6,6 +6,7 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -37,6 +38,10 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
     ChooseItems(name: '充值500次', pice: '1250.00', count: 500),
     ChooseItems(name: '自定义', pice: '充值份数', count: 0),
   ];
+  final TextEditingController _contractPrice = TextEditingController();
+  final TextEditingController _assessmentPrice = TextEditingController();
+  late String  _contract="";
+  late String  _assessment="";
   @override
   void initState() {
     super.initState();
@@ -44,6 +49,9 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
 
   @override
   void dispose() {
+
+    _assessmentPrice.dispose();
+    _contractPrice.dispose();
     super.dispose();
   }
 
@@ -190,12 +198,274 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                     ),
                     child: SortWidget(
                       crossAxisSpacing: 24.w,
-                      itemList:widget.assessmentState==2?_piceList2: _piceList,
+                      itemList:
+                          widget.assessmentState == 2 ? _piceList2 : _piceList,
                       childAspectRatio: 216 / 156,
                       crossAxisCount: 3,
                       mainAxisSpacing: 20.w,
                       callback: (item, index) {
                         _chooseItem = item;
+                        if (item.name == "自定义") {
+                          showModalBottomSheet(
+                              context: context,
+                              backgroundColor:
+                                  const Color.fromRGBO(255, 255, 255, 0),
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(
+                                    builder: (context, dialogSetState) {
+                                  return Container(
+                                    width: double.infinity,
+                                    height: 1000.w,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(16.w))),
+                                    child: Column(
+                                      children: [
+                                        32.hb,
+                                        Row(
+                                          children: [
+                                            30.wb,
+                                            SizedBox(
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  '取消',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .subtitle2
+                                                      ?.copyWith(
+                                                          color: BaseStyle
+                                                              .color999999),
+                                                ),
+                                              ),
+                                            ),
+                                            200.wb,
+                                            Text(
+                                              '自定义充值',
+                                              style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF111111),
+                                                  fontSize: 32.sp,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const Spacer(),
+                                            GestureDetector(
+                                              child: SizedBox(
+                                                child: GestureDetector(
+                                                  onTap: () async {
+                                                    ///_chooseItem?.pice=widget.assessmentState==2?_contractPrice.text:_assessmentPrice.text;
+                                                    if(widget.assessmentState==2){
+                                                      _chooseItem?.pice=_contractPrice.text;
+                                                      _chooseItem?.count=int.parse(_contract);
+                                                      // CloudToast.show(_contract);
+                                                      // CloudToast.show(_contractPrice.text);
+                                                    }else{
+                                                      _chooseItem?.count=int.parse(_assessment);
+                                                      _chooseItem?.pice=_assessmentPrice.text;
+                                                      // print(_assessment);
+                                                      // print(_assessmentPrice.text);
+                                                    }
+                                                    Get.back();
+                                                    setState(() {});
+                                                  },
+                                                  child: Text(
+                                                    '确认',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .subtitle2
+                                                        ?.copyWith(
+                                                            color: const Color(
+                                                                0xFF027AFF)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            30.wb,
+                                          ],
+                                        ),
+                                        40.hb,
+                                        Container(
+                                          width: 722.w,
+                                          height: 600.w,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 32.w),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: TextField(
+                                                      keyboardType:
+                                                          const TextInputType
+                                                              .numberWithOptions(),
+                                                      // controller:
+                                                      // widget.assessmentState ==
+                                                      //     2
+                                                      //     ? _contract
+                                                      //     : _assessment,
+                                                      onChanged: (text) {
+                                                        if(widget.assessmentState ==2){
+                                                          if(text!=""){
+                                                            _contract=text;
+                                                            if(int.parse(text)<=10 ) {
+                                                              _contractPrice.text=(int.parse(text)*5).toString();
+                                                            }else if(10<int.parse(text) && int.parse(text)<=50){
+                                                              _contractPrice.text=(int.parse(text)*3).toString();
+                                                            }else if(50<int.parse(text) && int.parse(text)<=100){
+                                                              _contractPrice.text=(int.parse(text)*2.8).toString();
+                                                            }else{
+                                                              _contractPrice.text=(int.parse(text)*2.5).toString();
+                                                            }
+                                                          }else{
+                                                            _contractPrice.text="";
+                                                          }
+                                                        }else{
+                                                          if(text!=""){
+                                                            _assessment=text;
+                                                            if(1<=int.parse(text)  && int.parse(text)<50) {
+                                                              _assessmentPrice.text=(int.parse(text)*3).toString();
+                                                            }else if(50<=int.parse(text) && int.parse(text)<100){
+                                                              _assessmentPrice.text=(int.parse(text)*2.5).toString();
+                                                            }else if(100<=int.parse(text) && int.parse(text)<200){
+                                                              _assessmentPrice.text=(int.parse(text)*2).toString();
+                                                            }else{
+                                                              _assessmentPrice.text=(int.parse(text)*1.5).toString();
+                                                            }
+                                                          }else{
+                                                            _assessmentPrice.text="";
+                                                          }
+
+                                                        }
+                                                      },
+                                                      decoration:
+                                                          const InputDecoration(
+                                                              hintText:
+                                                                  '请输入充值次数',
+                                                              hintStyle: TextStyle(
+                                                                  color: Color(
+                                                                      0x33333333)),
+                                                              border:
+                                                                  InputBorder
+                                                                      .none),
+                                                    )),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 0.w),
+                                                      child: const Text('次'),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: TextField(
+                                                      keyboardType:
+                                                          const TextInputType
+                                                              .numberWithOptions(),
+                                                      controller:
+                                                          widget.assessmentState ==
+                                                                  2
+                                                              ? _contractPrice
+                                                              : _assessmentPrice,
+                                                      decoration:
+                                                          const InputDecoration(
+                                                              hintText: '金额',
+                                                              hintStyle: TextStyle(
+                                                                  color: Color(
+                                                                      0x33333333)),
+                                                              border:
+                                                                  InputBorder
+                                                                      .none),
+                                                    )),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 0.w),
+                                                      child: const Text('元'),
+                                                    )
+                                                  ],
+                                                ),
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                ),
+                                                widget.assessmentState == 2
+                                                    ? const Text(
+                                                        '自定义充值合同次数规则',
+                                                      )
+                                                    : const Text(
+                                                        '自定义充值评估次数规则',
+                                                      ),
+                                                10.hb,
+                                                widget.assessmentState == 2
+                                                    ? const Text(
+                                                        '充值份数≤10为5元一份',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0x33333333)),
+                                                      )
+                                                    : const Text(
+                                                        '1≤充值份数＜50为3元一次',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0x33333333)),
+                                                      ),
+                                                widget.assessmentState == 2
+                                                    ? const Text(
+                                                        '10＜充值份数≤50为3元一份',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0x33333333)),
+                                                      )
+                                                    : const Text(
+                                                        '50≤充值份数＜100为2.5元一份',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0x33333333)),
+                                                      ),
+                                                widget.assessmentState == 2
+                                                    ? const Text(
+                                                        '50≤充值份数 ≤100为2.8元一份',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0x33333333)),
+                                                      )
+                                                    : const Text(
+                                                        '100≤充值份数＜200为2元一次',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0x33333333)),
+                                                      ),
+                                                widget.assessmentState == 2
+                                                    ? const Text(
+                                                        '100＜充值份数为2.5亓一份',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0x33333333)),
+                                                      )
+                                                    : const Text(
+                                                        '200＜充值份数为15元一次',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0x33333333)),
+                                                      ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                });
+                              });
+                        }
                         print(item);
                         setState(() {});
                       },

@@ -65,9 +65,10 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
   List<CarPhotos> carPhotos = [];
   List<CarPhotos> interiorPhotos = [];
   List<CarPhotos> defectPhotos = [];
-  List<CarPhotos> repairPhotos = [];
-
-  List<CarPhotos> _reportPhotos = [];
+  List<CarPhotos> dataPhotos=[];
+  // List<CarPhotos> repairPhotos = [];
+  //
+  // List<CarPhotos> _reportPhotos = [];
 
   List<ImagePhoto> bannerList = [];
 
@@ -104,7 +105,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     _chooseModels.add(widget.carListModel);
 
     if (widget.carListModel.isSelf == 1) {
-      _reportPhotos = [
+      dataPhotos = [
         CarPhotos(
           text: '漆面数据',
         ),
@@ -121,9 +122,12 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         CarPhotos(
           text: '商业险',
         ),
+        CarPhotos(
+          text: '维保记录',
+        ),
       ];
     } else {
-      _reportPhotos = [
+      dataPhotos = [
         CarPhotos(
           text: '漆面数据',
         ),
@@ -163,19 +167,24 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     //     repairPhotos.add(CarPhotos(photo: item.photo, text: item.text));
     //   }
     // }
-    for (int i = 0; i < carInfoModel!.carInfo.dataPhotos.length; i++) {
-      for (int j = 0; j < _reportPhotos.length; j++) {
-        if (_reportPhotos[j].text ==
-            carInfoModel!.carInfo.dataPhotos[i].text) {
-          if (carInfoModel!.carInfo.dataPhotos[i].photo != '') {
-            _reportPhotos[j].photo =
-                carInfoModel!.carInfo.dataPhotos[i].photo;
-          } else {
-            _reportPhotos.removeAt(j);
-          }
-        }
+    for (var item in carInfoModel!.carInfo.dataPhotos) {
+      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+        dataPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
     }
+    // for (int i = 0; i < carInfoModel!.carInfo.dataPhotos.length; i++) {
+    //   for (int j = 0; j < dataPhotos.length; j++) {
+    //     if (dataPhotos[j].text ==
+    //         carInfoModel!.carInfo.dataPhotos[i].text) {
+    //       if (carInfoModel!.carInfo.dataPhotos[i].photo != '') {
+    //         dataPhotos[j].photo =
+    //             carInfoModel!.carInfo.dataPhotos[i].photo;
+    //       } else {
+    //         dataPhotos.removeAt(j);
+    //       }
+    //     }
+    //   }
+    // }
     // for (int i = 0; i < carInfoModel!.carInfo.reportPhotos.length; i++) {
     //   for (int j = 0; j < _reportPhotos.length; j++) {
     //     if (_reportPhotos[j].text ==
@@ -193,11 +202,11 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
       carPhotos: carPhotos,
       interiorPhotos: interiorPhotos,
       defectPhotos: defectPhotos,
-      dataPhotos: repairPhotos,
+      dataPhotos: dataPhotos,
       // repairPhotos: repairPhotos,
     );
 
-    reportPhotoModel = ReportPhotoModel(paints: _reportPhotos);
+    reportPhotoModel = ReportPhotoModel(paints: dataPhotos);
 
     if (mounted) {
       setState(() {});
@@ -476,10 +485,10 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                                   _titles[3],
                                   3,
                                 ),
-                                _buildChild(
-                                  _titles[4],
-                                  4,
-                                ),
+                                // _buildChild(
+                                //   _titles[4],
+                                //   4,
+                                // ),
                               ],
                             ),
                             // Padding(
@@ -640,7 +649,8 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
           );
   }
 
-  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片', '报告数据', '维保数据'];
+  // final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片', '报告数据', '维保数据'];
+  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片', '报告数据'];
 
   Widget _buildChild(
     String bottom,
@@ -660,11 +670,11 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         photos = defectPhotos;
         break;
       case 3:
-        photos = _reportPhotos;
+        photos = dataPhotos;
         break;
-      case 4:
-        photos = repairPhotos;
-        break;
+      // case 4:
+      //   photos = repairPhotos;
+      //   break;
     }
 
     for (int i = 0; i < photos.length; i++) {

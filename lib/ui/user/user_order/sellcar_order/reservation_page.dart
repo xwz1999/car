@@ -92,7 +92,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 ],
               ),
             ),
-            _getContainer(
+            _consignmentInfo.customer.name==''?const SizedBox(): _getContainer(
               ///客户信息
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,7 +230,7 @@ class _ReservationPageState extends State<ReservationPage> {
             child: _getTitle('合同信息'),
           ),
           36.hb,
-          _getText('合同编号', (_consignmentInfo.contract.contract).toString(),
+          _getText('合同编号', (_consignmentInfo.contract.contractSn).toString(),
               BaseStyle.color333333),
           36.hb,
           _getText(
@@ -858,7 +858,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 .bodyText1
                 ?.copyWith(fontWeight: FontWeight.bold)),
         TextSpan(
-            text: _consignmentInfo.contract.totalAmount,
+            text: _consignmentInfo.contract.amount,
             style: Theme.of(context)
                 .textTheme
                 .subtitle2

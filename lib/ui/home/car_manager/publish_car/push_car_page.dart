@@ -220,7 +220,7 @@ class _PushCarPageState extends State<PushCarPage> {
                           ScanLicenseWidget(onLoadComplete: (carInfoModel) {
                             if (carInfoModel.vinModel != null) {
                               _publishCarInfo.carName =
-                                  carInfoModel.vinModel!.first.modelName;
+                                  carInfoModel.vehicle.lsnum;
                               _publishCarInfo.carModelId =
                                   carInfoModel.vinModel!.first.modelId;
                               _publishCarInfo.carColor =

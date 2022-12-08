@@ -14,6 +14,8 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../model/car/car_sale_contract_model.dart';
+
 class InitiateContractPage extends StatefulWidget {
   const InitiateContractPage({super.key});
 
@@ -25,7 +27,19 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
 
   final ValueNotifier<InitiateContractModel> _contractModel = ValueNotifier(
       InitiateContractModel());
-
+  CarSaleContractModel carSaleContract =  CarSaleContractModel(
+      thirdPartInfo: ThirdPartInfo(
+          kind: 0,
+          purchaseServiceFeeRate: '',
+          saleServiceFeeRate: '',
+          storeId: 0),
+      transferType: 0,
+      customerId: 0,
+      remark: '',
+      masterInfo: MasterInfo(name: "",bank: "",bankAccount: "",bankCard: "",idCard: "",address: "",phone: '',),
+      payType: 0,
+      priceInfo: PriceInfo(downPayment: '', dealPrice: '', deposit: ''),
+      carId: 0);
   CarListModel? carModel;
 
   CarAmountModel? carAmountModel;
@@ -310,7 +324,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
                 if(carModel==null){
                   CloudToast.show('请先选择车辆');
                 }else{
-                  Get.to(()=> SellCarOrderSecondPage(contractModel: _contractModel,));
+                  Get.to(()=> SellCarOrderSecondPage(contractModel: _contractModel, carSaleContract: carSaleContract,));
                 }
 
               },

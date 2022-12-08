@@ -18,12 +18,20 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../model/car/car_sale_contract_model.dart';
+import '../../../../model/car/id_card_info_model.dart';
+import 'car_Intermediary_agent_page.dart';
+
 typedef TextCallback = Function(String content);
 
 class SellCarOrderSecondPage extends StatefulWidget {
   final ValueNotifier<InitiateContractModel> contractModel;
+  final CarSaleContractModel carSaleContract;
 
-  const SellCarOrderSecondPage({super.key, required this.contractModel});
+  const SellCarOrderSecondPage({super.key,
+    required this.contractModel,
+    required this.carSaleContract
+  });
 
   @override
   _SellCarOrderSecondPageState createState() => _SellCarOrderSecondPageState();
@@ -38,18 +46,15 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController cardNoController = TextEditingController();
 
-
-
   final TextEditingController bankNumController = TextEditingController();
 
   final TextEditingController bankController = TextEditingController();
 
   CustomerListModel? customerListModel;
 
-  final List _models1 = ['微信小程序','其他'];
-
-
-  final List<int> _selectIndex1 = [];
+  final List _models1 = ['微信小程序', '其他'];
+  late int sourceCustomers = 0;
+  final List<int> _selectIndex1 = [0];
 
   @override
   void initState() {
@@ -81,7 +86,10 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
         backgroundColor: kForeGroundColor,
         title: Text(
           '卖车合同',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme
+              .of(context)
+              .textTheme
+              .headline4,
         ),
         actions: [
           GestureDetector(
@@ -124,17 +132,17 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                     name: widget.contractModel.value.carModel!.modelName,
                     time: DateUtil.formatDateMs(
                         widget.contractModel.value.carModel!.licensingDate
-                                .toInt() *
+                            .toInt() *
                             1000,
                         format: 'yyyy年MM月'),
                     distance:
-                        '${widget.contractModel.value.carModel!.mileage}万公里',
+                    '${widget.contractModel.value.carModel!.mileage}万公里',
                     //standard: '国六',
                     url: widget.contractModel.value.carModel!.mainPhoto,
                     price: NumUtil.divide(
-                            num.parse(
-                                widget.contractModel.value.carModel!.price),
-                            10000)
+                        num.parse(
+                            widget.contractModel.value.carModel!.price),
+                        10000)
                         .toString(),
                   )
 
@@ -155,7 +163,11 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
             padding: EdgeInsets.only(left: 24.w, top: 12.w),
             child: Text(
               '客户信息',
-              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .subtitle1
+                  ?.copyWith(
                   color: BaseStyle.color111111, fontWeight: FontWeight.bold),
             ),
           ),
@@ -167,19 +179,20 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              //   EditItemWidget(
-              //   title: '客户来源',
-              //   topIcon: false,
-              //   value: widget.contractModel.value.origin ?? '',
-              //   callback: (String content) {
-              //     widget.contractModel.value.origin = content;
-              //   },
-              // ),
+                //   EditItemWidget(
+                //   title: '客户来源',
+                //   topIcon: false,
+                //   value: widget.contractModel.value.origin ?? '',
+                //   callback: (String content) {
+                //     widget.contractModel.value.origin = content;
+                //   },
+                // ),
                 Container(
-                  padding: EdgeInsets.only(top: 30.w,bottom: 30.w),
+                  padding: EdgeInsets.only(top: 30.w, bottom: 30.w),
                   decoration: BoxDecoration(
-                      border:  Border(bottom:  BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
-                  ),
+                      border: Border(
+                          bottom: BorderSide(
+                              color: const Color(0xFFF6F6F6), width: 2.w))),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -205,23 +218,31 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                       ),
                       SizedBox(
                         height: 50.w,
-                        child: getChooseList(
-                                (String choice) {
-                                  widget.contractModel.value.origin = choice;
-                                }, _models1, _selectIndex1),
+                        child: getChooseList((String choice) {
+                          widget.contractModel.value.origin = choice;
+                          if (choice == "微信小程序") {
+                            sourceCustomers = 1;
+                          } else if (choice == "其他") {
+                            sourceCustomers = 2;
+                          }
+                        }, _models1, _selectIndex1),
                       ),
                     ],
                   ),
                 ),
 
-                getContentItem('客户', '请选择', path: Assets.icons.icGoto.path),
+                widget.contractModel.value.origin == "微信小程序"
+                    ? getContentItem('客户', '请选择',
+                    path: Assets.icons.icGoto.path)
+                    : const SizedBox(),
                 EditItemWidget(
                   title: '手机号',
                   //value: widget.contractModel.value.phone ?? '',
                   controller: phoneController,
 
                   callback: (String content) {
-                    widget.contractModel.value.phone = content;
+                    widget.carSaleContract.masterInfo.phone = content;
+                    // widget.contractModel.value.phone = content;
                   },
                 ),
                 EditItemWidget(
@@ -229,7 +250,8 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                   //value: widget.contractModel.value.name ?? "",
                   controller: nameController,
                   callback: (String content) {
-                    widget.contractModel.value.name = content;
+                    widget.carSaleContract.masterInfo.name = content;
+                    // widget.contractModel.value.name = content;
                   },
                 ),
                 EditItemWidget(
@@ -237,15 +259,47 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                   //value: widget.contractModel.value.cardNo ?? "",
                   controller: cardNoController,
                   callback: (String content) {
-                    widget.contractModel.value.cardNo = content;
+                    // widget.contractModel.value.cardNo = content;
+                    widget.carSaleContract.masterInfo.idCard = content;
                   },
+                  endIcon: GestureDetector(
+                    onTap: () async {
+                      File? file =
+                      await CloudImagePicker.pickSingleImage(title: '选择图片');
+                      if (file != null) {
+                        setState(() {});
+                        var cancel = CloudToast.loading;
+                        String urls = await apiClient.uploadImage(file);
+                        IdCardInfoModel?  idCardModel=
+                        await CarFunc.idCardOCR(urls);
+                        if (idCardModel != null) {
+                          // widget.contractModel.value.bankCard =
+                          //     bankCardInfoModel.bankCardNo;
+                          // widget.contractModel.value.bank =
+                          //     bankCardInfoModel.bankName;
+                       widget.carSaleContract.masterInfo.idCard=idCardModel.number;
+                       cardNoController.text=idCardModel.number;
+                       nameController.text=idCardModel.name;
+
+                        }
+                        cancel();
+                        setState(() {});
+                      }
+                    },
+                    child: Image.asset(
+                      Assets.icons.scan1.path,
+                      width: 42.w,
+                      height: 42.w,
+                    ),
+                  ),
                 ),
 
                 EditItemWidget(
                   title: '地址',
                   value: widget.contractModel.value.address ?? "",
                   callback: (String content) {
-                    widget.contractModel.value.address = content;
+                    // widget.contractModel.value.address = content;
+                    widget.carSaleContract.masterInfo.address = content;
                   },
                 ),
                 EditItemWidget(
@@ -259,7 +313,8 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                   title: '付款人',
                   value: widget.contractModel.value.payer ?? "",
                   callback: (String content) {
-                    widget.contractModel.value.payer = content;
+                    // widget.contractModel.value.payer = content;
+                    widget.carSaleContract.masterInfo.bankAccount = content;
                   },
                 ),
                 EditItemWidget(
@@ -267,34 +322,40 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                   //value: widget.contractModel.value.bankCard ?? "",
                   controller: bankNumController,
                   callback: (String content) {
-                    widget.contractModel.value.bankCard = content;
+                    // widget.contractModel.value.bankCard = content;
+                    widget.carSaleContract.masterInfo.bankCard = content;
 
                   },
                   endIcon: GestureDetector(
-                    onTap: ()async{
-                      File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
+                    onTap: () async {
+                      File? file =
+                      await CloudImagePicker.pickSingleImage(title: '选择图片');
                       if (file != null) {
                         setState(() {});
                         var cancel = CloudToast.loading;
                         String urls = await apiClient.uploadImage(file);
-                        BankCardInfoModel? bankCardInfoModel = await CarFunc.bankCardOCR(urls);
+                        BankCardInfoModel? bankCardInfoModel =
+                        await CarFunc.bankCardOCR(urls);
                         if (bankCardInfoModel != null) {
-                          widget.contractModel.value.bankCard = bankCardInfoModel.bankCardNo;
-                          widget.contractModel.value.bank = bankCardInfoModel.bankName;
-
+                          // widget.contractModel.value.bankCard =
+                          //     bankCardInfoModel.bankCardNo;
+                          // widget.contractModel.value.bank =
+                          //     bankCardInfoModel.bankName;
+                          widget.carSaleContract.masterInfo.bankCard =
+                              bankCardInfoModel.bankCardNo;
+                          widget.carSaleContract.masterInfo.bank =
+                              bankCardInfoModel.bankName;
                           bankNumController.text = bankCardInfoModel.bankCardNo;
                           bankController.text = bankCardInfoModel.bankName;
                         }
                         cancel();
-                        setState(() {
-
-                        });
+                        setState(() {});
                       }
                     },
                     child: Image.asset(
-                      Assets.icons.scan.path,
-                      width: 32.w,
-                      height: 32.w,
+                      Assets.icons.scan1.path,
+                      width: 42.w,
+                      height: 42.w,
                     ),
                   ),
                 ),
@@ -304,7 +365,8 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                   //value: widget.contractModel.value.bank ?? "",
                   controller: bankController,
                   callback: (String content) {
-                    widget.contractModel.value.bank = content;
+                    // widget.contractModel.value.bank = content;
+                    widget.carSaleContract.masterInfo.bank = content;
                   },
                 ),
 
@@ -335,7 +397,8 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
                         keyboardType: TextInputType.text,
                         onEditingComplete: () {},
                         onChanged: (text) {
-                          widget.contractModel.value.remarks = text;
+                          widget.carSaleContract.remark = text;
+                          // widget.contractModel.value.remarks = text;
                           setState(() {});
                         },
                         style: TextStyle(
@@ -370,18 +433,43 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
             height: 150.w,
             child: GestureDetector(
               onTap: () {
-                if (customerListModel == null ||
-                    widget.contractModel.value.phone == null||widget.contractModel.value.phone!.isEmpty||
-                    widget.contractModel.value.name == ''||widget.contractModel.value.name!.isEmpty||
-                    widget.contractModel.value.cardNo == ''||widget.contractModel.value.cardNo!.isEmpty||
-                    widget.contractModel.value.address == ''||widget.contractModel.value.address!.isEmpty||
-                    widget.contractModel.value.payer == ''||widget.contractModel.value.payer!.isEmpty||
-                    widget.contractModel.value.bankCard == ''||widget.contractModel.value.bankCard!.isEmpty||
-                    widget.contractModel.value.bank == ''||widget.contractModel.value.bank!.isEmpty
-                ){
-                  CloudToast.show('请先完善客户信息');
+                if (widget.contractModel.value.origin != "微信小程序") {
+                  widget.carSaleContract.customerId = null;
+                  if (widget.carSaleContract.masterInfo.name.isEmpty ||
+                      widget.carSaleContract.masterInfo.phone.isEmpty ||
+                      widget.carSaleContract.masterInfo.idCard.isEmpty ||
+                      widget.carSaleContract.masterInfo.address.isEmpty||
+                     widget.carSaleContract.masterInfo.bank.isEmpty||
+                      widget.carSaleContract.masterInfo.bankCard.isEmpty||
+                      widget.carSaleContract.masterInfo.bankAccount.isEmpty
+                  ){
+                    CloudToast.show('请先完善客户信息');
+                  }else{
+                    Get.to(() =>
+                        CarIntermediaryAgentPage(
+
+                          contractModel: widget.contractModel,
+                          carSaleContract: widget.carSaleContract,
+                        ));
+                  }
                 }else{
-                  Get.to(() => SellCarOrderThirdPage(contractModel: widget.contractModel,));
+                  if (widget.carSaleContract.customerId==null||
+                  widget.carSaleContract.masterInfo.name.isEmpty ||
+                      widget.carSaleContract.masterInfo.phone.isEmpty ||
+                      widget.carSaleContract.masterInfo.idCard.isEmpty ||
+                      widget.carSaleContract.masterInfo.address.isEmpty||
+                      widget.carSaleContract.masterInfo.bank.isEmpty||
+                      widget.carSaleContract.masterInfo.bankCard.isEmpty||
+                      widget.carSaleContract.masterInfo.bankAccount.isEmpty) {
+                    CloudToast.show('请先完善客户信息');
+                  } else {
+                    // Get.to(() => SellCarOrderThirdPage(contractModel: widget.contractModel,));
+                    Get.to(() =>
+                        CarIntermediaryAgentPage(
+                          contractModel: widget.contractModel,
+                          carSaleContract: widget.carSaleContract,
+                        ));
+                  }
                 }
 
               },
@@ -417,28 +505,35 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
       {isSpecial = false, path, topIcon = true}) {
     return Container(
       decoration: BoxDecoration(
-
-          border:  Border(bottom:BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
-      ),
-      padding: EdgeInsets.only(top: 30.w,bottom: 30.w),
+          border: Border(
+              bottom: BorderSide(color: const Color(0xFFF6F6F6), width: 2.w))),
+      padding: EdgeInsets.only(top: 30.w, bottom: 30.w),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => ChooseCustomerPage(
+          Get.to(() =>
+              ChooseCustomerPage(
                 callback: (CustomerListModel model) {
                   widget.contractModel.value.customerModel = model;
                   customerListModel = model;
-                  _editingController.text = customerListModel!.nickname;
-                  if(model.realName.isNotEmpty){
+                  _editingController.text=model.nickname;
+                  widget.carSaleContract.customerId=model.id;
+                  widget.carSaleContract.masterInfo.name = model.realName;
+                  widget.carSaleContract.masterInfo.phone = model.mobile;
+                  widget.carSaleContract.masterInfo.idCard = model.idCard;
+                  if (model.realName.isNotEmpty) {
                     nameController.text = model.realName;
-                    widget.contractModel.value.name = model.realName;
+                    widget.carSaleContract.masterInfo.name = model.realName;
+                    // widget.contractModel.value.name = model.realName;
                   }
-                  if(model.mobile.isNotEmpty){
+                  if (model.mobile.isNotEmpty) {
                     phoneController.text = model.mobile;
-                    widget.contractModel.value.phone = model.mobile;
+                    widget.carSaleContract.masterInfo.phone = model.mobile;
+                    // widget.contractModel.value.phone = model.mobile;
                   }
-                  if(model.idCard.isNotEmpty){
+                  if (model.idCard.isNotEmpty) {
                     cardNoController.text = model.idCard;
-                    widget.contractModel.value.cardNo = model.idCard;
+                    widget.carSaleContract.masterInfo.idCard = model.idCard;
+                    // widget.contractModel.value.cardNo = model.idCard;
                   }
                   setState(() {});
                 },
@@ -449,25 +544,25 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
           children: [
             topIcon
                 ? Padding(
-                    padding: EdgeInsets.only(top: 10.w),
-                    child: Text(
-                      '*  ',
-                      style: TextStyle(
-                        fontSize: 32.sp,
-                        color: const Color(0xFFE62222),
-                      ),
-                    ),
-                  )
+              padding: EdgeInsets.only(top: 10.w),
+              child: Text(
+                '*  ',
+                style: TextStyle(
+                  fontSize: 32.sp,
+                  color: const Color(0xFFE62222),
+                ),
+              ),
+            )
                 : Padding(
-                    padding: EdgeInsets.only(top: 10.w),
-                    child: Text(
-                      '*  ',
-                      style: TextStyle(
-                        fontSize: 32.sp,
-                        color: Colors.transparent,
-                      ),
-                    ),
-                  ),
+              padding: EdgeInsets.only(top: 10.w),
+              child: Text(
+                '*  ',
+                style: TextStyle(
+                  fontSize: 32.sp,
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
             SizedBox(
               width: 180.w,
               child: Text(
@@ -509,10 +604,10 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
             ),
             path != null
                 ? Image.asset(
-                    path,
-                    width: 32.w,
-                    height: 32.w,
-                  )
+              path,
+              width: 32.w,
+              height: 32.w,
+            )
                 : const SizedBox(),
           ],
         ),
@@ -526,35 +621,39 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
       shrinkWrap: true,
       children: [
         ...models
-            .mapIndexed((currentValue, index) => GestureDetector(
-                  onTap: () {
-                    if (choices.contains(index)) {
-                      choices.remove(index);
-                    } else {
-                      choices.clear();
-                      choices.add(index);
-                    }
-                    setState(() {});
-                    callBack(models[choices.first]);
-                  },
-                  child: Container(
-                    width: 160.w,
-                    color: Colors.white,
-                    child: Row(
-                      children: [
-                        BeeCheckRadio(
-                          value: index,
-                          groupValue: choices,
-                        ),
-                        16.wb,
-                        Text(
-                          currentValue,
-                          style: Theme.of(context).textTheme.subtitle2,
-                        ),
-                      ],
+            .mapIndexed((currentValue, index) =>
+            GestureDetector(
+              onTap: () {
+                if (choices.contains(index)) {
+                  choices.remove(index);
+                } else {
+                  choices.clear();
+                  choices.add(index);
+                }
+                setState(() {});
+                callBack(models[choices.first]);
+              },
+              child: Container(
+                width: 200.w,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    BeeCheckRadio(
+                      value: index,
+                      groupValue: choices,
                     ),
-                  ),
-                ))
+                    16.wb,
+                    Text(
+                      currentValue,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .subtitle2,
+                    ),
+                  ],
+                ),
+              ),
+            ))
             .toList(),
       ],
     );

@@ -14,10 +14,11 @@ typedef CarCallback = Function(StoreModel model);
 
 class ChooseShopPage extends StatefulWidget {
   final CarCallback callback;
-
+final String title;
   const ChooseShopPage({
     super.key,
     required this.callback,
+    this.title="选择车商"
   });
 
   @override
@@ -48,7 +49,7 @@ class _ChooseShopPageState extends State<ChooseShopPage> {
       extendBody: true,
       appBar: AppBar(
         leading: const CloudBackButton(),
-        title: const Text('选择车商'),
+        title:  Text(widget.title),
         backgroundColor: Colors.white,
       ),
       body: Column(

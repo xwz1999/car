@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/model/car/car_amount_model.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
@@ -6,6 +5,7 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_second_
 import 'package:cloud_car/model/contract/initiate_contract_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:cloud_car/widget/car_item_widget.dart';
@@ -13,8 +13,11 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../constants/enums.dart';
+import '../../../../model/car/car_sale_contract_model.dart';
+
 class SellCarOrderPage extends StatefulWidget {
-  final  CarListModel carModel;
+  final CarListModel carModel;
 
   const SellCarOrderPage({super.key, required this.carModel});
 
@@ -23,36 +26,60 @@ class SellCarOrderPage extends StatefulWidget {
 }
 
 class _SellCarOrderPageState extends State<SellCarOrderPage> {
+  final ValueNotifier<InitiateContractModel> _contractModel =
+      ValueNotifier(InitiateContractModel());
 
-
-  final ValueNotifier<InitiateContractModel> _contractModel = ValueNotifier(
-      InitiateContractModel());
+  // final ValueNotifier<CarSaleContractModel> carSaleContract =
+  // ValueNotifier(CarSaleContractModel());
   CarAmountModel? carAmountModel;
 
-  final List _models1 = ['全款','按揭'];
-  final List _models2 = ['本地','外地'];
+  final List _models1 = ['全款', '按揭'];
+  final List _models2 = ['本地', '外地'];
   final List<int> _selectIndex1 = [];
   final List<int> _selectIndex2 = [];
-
+  late int payType = 0;
+  late int transferType = 0;
   final TextEditingController _finalPriceController = TextEditingController();
   final TextEditingController _depositController = TextEditingController();
   final TextEditingController _downPaymentsController = TextEditingController();
-  final TextEditingController _balancePaymentController = TextEditingController();
+  final TextEditingController _balancePaymentController =
+      TextEditingController();
+  CarSaleContractModel carSaleContract = CarSaleContractModel(
+      thirdPartInfo: ThirdPartInfo(
+          kind: 0,
+          purchaseServiceFeeRate: '',
+          saleServiceFeeRate: '',
+          storeId: 0),
+      transferType: 0,
+      customerId: 0,
+      remark: '',
+      masterInfo: MasterInfo(
+        name: "",
+        bank: "",
+        bankAccount: "",
+        bankCard: "",
+        idCard: "",
+        address: "",
+        phone: '',
+      ),
+      payType: 0,
+      priceInfo: PriceInfo(downPayment: '', dealPrice: '', deposit: ''),
+      carId: 0);
 
   @override
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 0), () async {
-      carAmountModel = await CarFunc.getCarAmount(num.parse(widget.carModel.price));
+      carAmountModel =
+          await CarFunc.getCarAmount(num.parse(widget.carModel.price));
       _contractModel.value.carAmountModel = carAmountModel;
       _contractModel.value.origin = '微信小程序';
       _contractModel.value.carModel = widget.carModel;
-      _finalPriceController.text=widget.carModel.price ;
-      setState(() {
-      });
+      _finalPriceController.text = widget.carModel.price;
+
+      setState(() {});
     });
   }
-
 
   @override
   void dispose() {
@@ -62,6 +89,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
     _downPaymentsController.dispose();
     _balancePaymentController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,84 +98,104 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor,
-        title: Text('发起合同',
-          style: Theme.of(context)
-              .textTheme
-              .headline4,
+        title: Text(
+          '发起合同',
+          style: Theme.of(context).textTheme.headline4,
         ),
       ),
       backgroundColor: bodyColor,
       extendBody: true,
-
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
           16.hb,
           Padding(
-            padding:  EdgeInsets.all(24.w),
+            padding: EdgeInsets.all(24.w),
             child: Container(
               width: double.infinity,
-
               color: kForeGroundColor,
-              padding: EdgeInsets.only(left: 24.w,right: 24.w,top: 24.w,bottom: 24.w),
+              padding: EdgeInsets.only(
+                  left: 24.w, right: 24.w, top: 24.w, bottom: 24.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   CarItemWidget(
                     widgetPadding: EdgeInsets.zero,
                     name: widget.carModel.modelName,
-                    time:  DateUtil.formatDateMs(widget.carModel.licensingDate.toInt() * 1000,
+                    time: DateUtil.formatDateMs(
+                        widget.carModel.licensingDate.toInt() * 1000,
                         format: 'yyyy年MM月'),
-                    distance:  '${widget.carModel.mileage}万公里',
+                    distance: '${widget.carModel.mileage}万公里',
                     //standard: '国六',
-                    url:widget.carModel.mainPhoto,
-                    price:  NumUtil.divide(num.parse(widget.carModel.price), 10000).toString(),
+                    url: widget.carModel.mainPhoto,
+                    price:
+                        NumUtil.divide(num.parse(widget.carModel.price), 10000)
+                            .toString(),
                   )
                 ],
               ),
             ),
           ),
-
           Padding(
-            padding:  EdgeInsets.only(left: 24.w,top: 12.w),
-            child: Text('卖方信息',
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1?.copyWith(
-                  color: BaseStyle.color111111,fontWeight: FontWeight.bold
-              ),
+            padding: EdgeInsets.only(left: 24.w, top: 12.w),
+            child: Text(
+              '价格信息',
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  color: BaseStyle.color111111, fontWeight: FontWeight.bold),
             ),
           ),
           20.hb,
           Container(
             width: double.infinity,
-
             color: kForeGroundColor,
-            padding: EdgeInsets.only(left: 32.w,right: 32.w),
+            padding: EdgeInsets.only(left: 32.w, right: 32.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 EditItemWidget(
-                  paddingTop: 30.w,
-                  title: '成交价',
-                  controller: _finalPriceController,
-                  endText: '元',
-                  canChange: true,
-                  tips: '',
-
-                ),
+                    paddingTop: 30.w,
+                    title: '成交价',
+                    controller: _finalPriceController,
+                    endText: '元',
+                    canChange: true,
+                    tips: '',
+                    callback: (text) {
+                      if (text != "" &&
+                          _depositController.text != "" &&
+                          _downPaymentsController.text != "") {
+                        _balancePaymentController.text = (num.parse(text) -
+                                num.parse(_depositController.text) -
+                                num.parse(_downPaymentsController.text))
+                            .toString();
+                        setState(() {});
+                      } else {
+                        _balancePaymentController.text = "";
+                        setState(() {});
+                      }
+                    }),
 
                 EditItemWidget(
-
-                  title: '定金',
-                  topIcon: false,
-                  controller: _depositController,
-                  endText: '元',
-                  canChange: true,
-                  tips: '',
-
-                ),
+                    title: '定金',
+                    topIcon: false,
+                    controller: _depositController,
+                    endText: '元',
+                    canChange: true,
+                    tips: '',
+                    callback: (text) {
+                      if (text != "" &&
+                          _finalPriceController.text != "" &&
+                          _downPaymentsController.text != "") {
+                        _balancePaymentController.text =
+                            (num.parse(_finalPriceController.text) -
+                                    num.parse(text) -
+                                    num.parse(_downPaymentsController.text))
+                                .toString();
+                        setState(() {});
+                      } else {
+                        _balancePaymentController.text = "";
+                        setState(() {});
+                      }
+                    }),
                 EditItemWidget(
                   title: '首付',
                   topIcon: false,
@@ -155,6 +203,21 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                   endText: '元',
                   canChange: true,
                   tips: '',
+                  callback: (text) {
+                    if (text != "" &&
+                        _finalPriceController.text != "" &&
+                        _depositController.text != "") {
+                      _balancePaymentController.text =
+                          (num.parse(_finalPriceController.text) -
+                                  num.parse(_depositController.text) -
+                                  num.parse(text))
+                              .toString();
+                      setState(() {});
+                    } else {
+                      _balancePaymentController.text = "";
+                      setState(() {});
+                    }
+                  },
                 ),
 
                 EditItemWidget(
@@ -177,10 +240,11 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                 //
                 // ),
                 Container(
-                  padding: EdgeInsets.only(top: 30.w,bottom: 30.w),
+                  padding: EdgeInsets.only(top: 30.w, bottom: 30.w),
                   decoration: BoxDecoration(
-                      border:  Border(bottom:  BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
-                  ),
+                      border: Border(
+                          bottom: BorderSide(
+                              color: const Color(0xFFF6F6F6), width: 2.w))),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -206,10 +270,13 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                       ),
                       SizedBox(
                         height: 50.w,
-                        child: getChooseList(
-                                (String choice) {
-
-                                }, _models1, _selectIndex1),
+                        child: getChooseList((String choice) {
+                          if (choice == "全款") {
+                            payType = 1;
+                          } else if (choice == "按揭") {
+                            payType = 2;
+                          }
+                        }, _models1, _selectIndex1),
                       ),
                     ],
                   ),
@@ -242,35 +309,55 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                       ),
                       SizedBox(
                         height: 50.w,
-                        child: getChooseList(
-                                (String choice) {
-
-                                }, _models2, _selectIndex2),
+                        child: getChooseList((String choice) {
+                          if (choice == "本地") {
+                            transferType = 1;
+                          } else if (choice == "外地") {
+                            transferType = 2;
+                          }
+                        }, _models2, _selectIndex2),
                       ),
                     ],
                   ),
                 ),
                 30.hb,
-
               ],
             ),
           ),
-
           30.hb,
-
           Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 30.w),
             height: 150.w,
-            child:
-            GestureDetector(
-              onTap: (){
+            child: GestureDetector(
+              onTap: () {
+                carSaleContract.carId = widget.carModel.id;
+                carSaleContract.priceInfo.dealPrice =
+                    _finalPriceController.text;
+                carSaleContract.priceInfo.deposit = _depositController.text;
+                carSaleContract.priceInfo.downPayment =
+                    _downPaymentsController.text;
+                carSaleContract.payType = payType;
 
-                  Get.to(()=> SellCarOrderSecondPage(contractModel: _contractModel,));
+                ///  支付方式 1全框2按揭
+                carSaleContract.transferType = transferType;
 
-
+                ///过户方式 1本地2外地
+                if (carSaleContract.carId == 0 ||
+                    carSaleContract.priceInfo.dealPrice == "" ||
+                    carSaleContract.priceInfo.deposit == "" ||
+                    carSaleContract.priceInfo.downPayment == "" ||
+                    carSaleContract.payType == 0 ||
+                    carSaleContract.transferType == 0) {
+                  CloudToast.show('请完善车辆信息');
+                }else{
+                  Get.to(() => SellCarOrderSecondPage(
+                    carSaleContract: carSaleContract,
+                    contractModel: _contractModel,
+                  ));
+                }
               },
-              child:Container(
+              child: Container(
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(horizontal: 32.w),
                 padding: EdgeInsets.symmetric(vertical: 16.w),
@@ -293,8 +380,6 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
             ),
           ),
           30.hb,
-
-
         ],
       ),
     );
@@ -307,38 +392,38 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
       children: [
         ...models
             .mapIndexed((currentValue, index) => GestureDetector(
-          onTap: () {
-            if (choices.contains(index)) {
-              choices.remove(index);
-            } else {
-              choices.clear();
-              choices.add(index);
-            }
-            setState(() {});
-            callBack(models[choices.first]);
-          },
-          child: Container(
-            width: 160.w,
-            color: Colors.white,
-            child: Row(
-              children: [
-                BeeCheckRadio(
-                  value: index,
-                  groupValue: choices,
-                ),
-                16.wb,
-                Text(
-                  currentValue,
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-              ],
-            ),
-          ),
-        ))
+                  onTap: () {
+                    if (choices.contains(index)) {
+                      choices.remove(index);
+                    } else {
+                      choices.clear();
+                      choices.add(index);
+                    }
+                    setState(() {});
+                    callBack(
+                      models[choices.first],
+                    );
+                  },
+                  child: Container(
+                    width: 160.w,
+                    color: Colors.white,
+                    child: Row(
+                      children: [
+                        BeeCheckRadio(
+                          value: index,
+                          groupValue: choices,
+                        ),
+                        16.wb,
+                        Text(
+                          currentValue,
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ))
             .toList(),
       ],
     );
   }
 }
-
-

@@ -126,6 +126,9 @@ class _EditItemWidgetState extends State<EditItemWidget> {
               },
               onChanged: (text) {
                 widget.callback?.call(text);
+                // setState(() {
+                //
+                // });
               },
               style: TextStyle(
                 color: widget.textColor?? BaseStyle.color333333,

@@ -15,8 +15,10 @@ typedef TextCallback = Function(String content);
 
 class SellCarOrderThirdPage extends StatefulWidget {
   final ValueNotifier<InitiateContractModel> contractModel;
+  final CarSaleContractModel carSaleContract;
 
-  const SellCarOrderThirdPage({super.key, required this.contractModel});
+  const SellCarOrderThirdPage(
+      {super.key, required this.contractModel, required this.carSaleContract});
 
   @override
   _SellCarOrderThirdPageState createState() => _SellCarOrderThirdPageState();
@@ -115,7 +117,7 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
           Padding(
             padding: EdgeInsets.only(left: 24.w, top: 12.w),
             child: Text(
-              '销售信息',
+              '价格信息',
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   color: BaseStyle.color111111, fontWeight: FontWeight.bold),
             ),
@@ -144,13 +146,19 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                     widget.contractModel.value.carAmountModel!.balancePayment,
                     endText: '元', isSpecial: true, topIcon: false),
 
-                getContentItem('服务费比例',
-                    '${double.parse(widget.contractModel.value.carAmountModel!.serviceFeeRate) * 100}%',
-                    isGrey: true, isSpecial: true),
+                // getContentItem('服务费比例',
+                //     '${double.parse(widget.contractModel.value.carAmountModel!.serviceFeeRate) * 100}%',
+                //     isGrey: true, isSpecial: true),
 
-                // getContentItem('付款方式','全款',),
-                //
-                // getContentItem('过户方式','本地',),
+                getContentItem(
+                  '付款方式',
+                  widget.carSaleContract.payType == 1 ? '全款' : '按揭',
+                ),
+
+                getContentItem(
+                  '过户方式',
+                  widget.carSaleContract.transferType == 1 ? '本地' : '外地',
+                ),
                 30.hb,
               ],
             ),
@@ -159,7 +167,72 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
           Padding(
             padding: EdgeInsets.only(left: 24.w, top: 12.w),
             child: Text(
-              '客户信息',
+              '买方信息',
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  color: BaseStyle.color111111, fontWeight: FontWeight.bold),
+            ),
+          ),
+          20.hb,
+          Container(
+            width: double.infinity,
+            color: kForeGroundColor,
+            padding: EdgeInsets.only(left: 32.w, right: 32.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                widget.contractModel.value.origin == "其他"
+                    ? const SizedBox()
+                    : getContentItem(
+                        '客户', widget.carSaleContract.masterInfo.name
+                        // widget.contractModel.value.customerModel!.nickname,
+                        ),
+                getContentItem(
+                    '手机号', widget.carSaleContract.masterInfo.phone ,
+                    isSpecial: true),
+                getContentItem(
+                  '姓名',
+                  widget.carSaleContract.masterInfo.name ,
+                ),
+                getContentItem(
+                    '身份证号', widget.carSaleContract.masterInfo.idCard ,
+                    isSpecial: true),
+                widget.contractModel.value.origin == "其他"
+                    ? const SizedBox()
+                    : getContentItem(
+                        '客户来源',
+                        widget.carSaleContract.thirdPartInfo.kind == 2
+                            ? '云云问车'
+                            : "其他" ,
+                      ),
+                getContentItem(
+                  '地址',
+                  widget.carSaleContract.masterInfo.address ,
+                ),
+                getContentItem('所在地', widget.contractModel.value.location ?? '',
+                    topIcon: false),
+                getContentItem(
+                  '付款人',
+                  widget.carSaleContract.masterInfo.bankAccount ,
+                ),
+                getContentItem(
+                  '开户行',
+                  widget.carSaleContract.masterInfo.bank ,
+                ),
+                getContentItem(
+                  '银行卡号',
+                  widget.carSaleContract.masterInfo.bankCard ,
+                ),
+                getContentItem('备注描述', widget.carSaleContract.remark ,
+                    topIcon: false),
+                30.hb,
+              ],
+            ),
+          ),
+          20.hb,
+          Padding(
+            padding: EdgeInsets.only(left: 24.w, top: 12.w),
+            child: Text(
+              '居间方信息',
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   color: BaseStyle.color111111, fontWeight: FontWeight.bold),
             ),
@@ -173,41 +246,37 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 getContentItem(
-                  '客户',
-                  widget.contractModel.value.customerModel!.nickname,
-                ),
-                getContentItem('手机号', widget.contractModel.value.phone ?? '',
-                    isSpecial: true),
-                getContentItem(
-                  '姓名',
-                  widget.contractModel.value.name ?? '',
-                ),
-                getContentItem('身份证号', widget.contractModel.value.cardNo ?? '',
-                    isSpecial: true),
-                getContentItem(
-                  '客户来源',
-                  widget.contractModel.value.origin ?? '',
+                  '居间方',
+                  "云云问车",
                 ),
                 getContentItem(
-                  '地址',
-                  widget.contractModel.value.address ?? '',
+                    '成交价', widget.contractModel.value.carModel!.price,
+                    endText: '元', isSpecial: true, topIcon: false),
+                getContentItem(
+                  '卖方服务费',
+                  widget.carSaleContract.thirdPartInfo.kind==1?"0":(num.parse( widget.carSaleContract.thirdPartInfo.saleServiceFeeRate)*0.01).toString(),
+                  endText: '%',
+                  isSpecial: true,
                 ),
-                getContentItem('所在地', widget.contractModel.value.location ?? '',
+                getContentItem(
+                    '服务费金额',
+                    widget.carSaleContract.thirdPartInfo.kind==1?"0":(num.parse(widget.contractModel.value.carModel!.price) *
+                            (num.parse(widget.carSaleContract.thirdPartInfo
+                                .saleServiceFeeRate)/100))
+                        .toString(),
+                    isSpecial: true,
                     topIcon: false),
                 getContentItem(
-                  '付款人',
-                  widget.contractModel.value.payer ?? '',
+                  '卖方服务费',
+                  widget.carSaleContract.thirdPartInfo.kind==1?"0":(num.parse( widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate)*0.01).toString(),
+                  endText: '%',
+                  isSpecial: true,
                 ),
-                getContentItem(
-                  '开户行',
-                  widget.contractModel.value.bank ?? '',
-                ),
-                getContentItem(
-                  '银行卡号',
-                  widget.contractModel.value.bankCard ?? '',
-                ),
-                getContentItem('备注描述', widget.contractModel.value.remarks ?? '',
-                    topIcon: false),
+                getContentItem('服务费金额',  widget.carSaleContract.thirdPartInfo.kind==1?"0":(num.parse(widget.contractModel.value.carModel!.price) *
+                    (num.parse(widget.carSaleContract.thirdPartInfo
+                        .purchaseServiceFeeRate)/100))
+                    .toString(),
+                    isSpecial: true, topIcon: false),
                 30.hb,
               ],
             ),
@@ -268,27 +337,18 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                           deleteListener: () async {
                             Alert.dismiss(context);
                             await CarFunc.addSale(CarSaleContractModel(
-                                    carId:
-                                        widget.contractModel.value.carModel!.id,
-                                    customerId: widget
-                                        .contractModel.value.customerModel!.id,
-                                    phone:
-                                        widget.contractModel.value.phone ?? '',
-                                    idCard:
-                                        widget.contractModel.value.name ?? '',
-                                    address:
-                                        widget.contractModel.value.address ??
-                                            '',
-                                    openBank:
-                                        widget.contractModel.value.bank ?? '',
-                                    bankCard:
-                                        widget.contractModel.value.bankCard ??
-                                            '',
-                                    remark:
-                                        widget.contractModel.value.remarks ??
-                                            '',
-                                    name:
-                                        widget.contractModel.value.name ?? ''))
+                                    carId: widget.carSaleContract.carId,
+                                    priceInfo: widget.carSaleContract.priceInfo,
+                                    payType: widget.carSaleContract.payType,
+                                    remark: widget.carSaleContract.remark ,
+                                    masterInfo:
+                                        widget.carSaleContract.masterInfo,
+                                    transferType:
+                                        widget.carSaleContract.transferType,
+                                    customerId:
+                                        widget.carSaleContract.customerId,
+                                    thirdPartInfo:
+                                        widget.carSaleContract.thirdPartInfo))
                                 .then((value) {
                               if (value) {
                                 Get.off(() => SuccessFailurePage(
@@ -304,11 +364,10 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                                         Get.back();
                                         Get.back();
                                         Get.back();
+                                        Get.back();
                                       },
                                       text: '返回汽车详情',
                                     )));
-                              } else {
-                                CloudToast.show('合同发起失败');
                               }
                             });
                           },

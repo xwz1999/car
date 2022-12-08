@@ -175,6 +175,25 @@ enum PermissionLevel {
 
   const PermissionLevel(this.typeNum, this.typeStr);
 }
-
-
+///出售合同
+///支付方式
+enum SellPayType{
+  full(1,'全款'),
+  mortgage(2,'按揭');
+  final int typeNum;
+  final String typeStr;
+  static SellPayType getValue(String  value) =>
+      SellPayType.values.firstWhere((element) => element.typeStr == value);
+  const SellPayType(this.typeNum,this.typeStr);
+}
+///过户方式
+enum TransferType{
+  local(1,'本地'),
+  nonLocal(2,'外地');
+  final int typeNum;
+  final String typeStr;
+  static TransferType getValue(String  value) =>
+      TransferType.values.firstWhere((element) =>  element.typeStr == value);
+  const TransferType(this.typeNum,this.typeStr);
+}
 

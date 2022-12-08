@@ -62,12 +62,6 @@ CarNewInfo _$CarNewInfoFromJson(Map<String, dynamic> json) => CarNewInfo(
       defectPhotos: (json['defectPhotos'] as List<dynamic>)
           .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      reportPhotos: (json['reportPhotos'] as List<dynamic>)
-          .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      repairPhotos: (json['repairPhotos'] as List<dynamic>)
-          .map((e) => ImagePhoto.fromJson(e as Map<String, dynamic>))
-          .toList(),
       brokerInfo:
           BrokerInfo.fromJson(json['brokerInfo'] as Map<String, dynamic>),
       modelInfo: ModelInfo.fromJson(json['modelInfo'] as Map<String, dynamic>),
@@ -111,8 +105,6 @@ Map<String, dynamic> _$CarNewInfoToJson(CarNewInfo instance) =>
       'carPhotos': instance.carPhotos,
       'interiorPhotos': instance.interiorPhotos,
       'defectPhotos': instance.defectPhotos,
-      'reportPhotos': instance.reportPhotos,
-      'repairPhotos': instance.repairPhotos,
       'dataPhotos': instance.dataPhotos,
       'brokerInfo': instance.brokerInfo,
       'modelInfo': instance.modelInfo,

@@ -111,7 +111,7 @@ class _SearchPageState extends State<SearchPage> {
                 fontSize: 32.sp,
                 color: Colors.black,
               ),
-              controller: _editingController,
+
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 14.w),
                 fillColor: Colors.white,

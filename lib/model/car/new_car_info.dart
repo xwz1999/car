@@ -63,8 +63,8 @@ class CarNewInfo extends Equatable {
   final List<ImagePhoto> carPhotos;
   final List<ImagePhoto> interiorPhotos;
   final List<ImagePhoto> defectPhotos;
-  final List<ImagePhoto> reportPhotos;
-  final List<ImagePhoto> repairPhotos;
+  // final List<ImagePhoto> reportPhotos;
+  // final List<ImagePhoto> repairPhotos;
   final List<ImagePhoto> dataPhotos;
   final BrokerInfo brokerInfo;
   final ModelInfo modelInfo;
@@ -111,8 +111,8 @@ class CarNewInfo extends Equatable {
         carPhotos,
         interiorPhotos,
         defectPhotos,
-        reportPhotos,
-        repairPhotos,
+        // reportPhotos,
+        // repairPhotos,
         brokerInfo,
         modelInfo,
         priceInfo,
@@ -155,8 +155,8 @@ class CarNewInfo extends Equatable {
     required this.carPhotos,
     required this.interiorPhotos,
     required this.defectPhotos,
-    required this.reportPhotos,
-    required this.repairPhotos,
+    // required this.reportPhotos,
+    // required this.repairPhotos,
     required this.brokerInfo,
     required this.modelInfo,
     required this.priceInfo,

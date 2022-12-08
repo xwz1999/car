@@ -30,14 +30,21 @@ class SaleInfo extends Equatable {
           modelName: '',
           transfer: 0),
       contract: Contract(
-        amount: '',
+        contract: 0,
+        contractSn:'',
+        downPayment: '',
+        thirdPartName: '',
+        thirdPartId: 0,
+        payTypeName: '',
         deposit: '',
         balancePayment: '',
-        contract: 0,
-        downPayment: '',
-        serviceFee: '',
         signAt: 0,
         totalAmount: '',
+        amount: '',
+        saleServiceFee: '',
+        purchaseSaleServiceFee: '',
+        transferTypeName: '',
+        thirdPartKind: '',
       ),
       deposit: Deposit(amount: '', createdAt: 0, payType: ''),
       downPayment: DownPayment(
@@ -107,13 +114,29 @@ class Car extends Equatable {
 @JsonSerializable()
 class Contract extends Equatable {
   final int contract;
+  final String contractSn;
   final String amount;
   final String deposit;
   final String downPayment;
   final String balancePayment;
-  final String serviceFee;
+  final String payTypeName;
+  final String transferTypeName;
+  final String thirdPartKind;
+  final int thirdPartId;
+  final String thirdPartName;
+  final String saleServiceFee;
+  final String purchaseSaleServiceFee;
   final String totalAmount;
   final num signAt;
+
+  // final int contract;
+  // final String amount;
+  // final String deposit;
+  // final String downPayment;
+  // final String balancePayment;
+  // final String serviceFee;
+  // final String totalAmount;
+  // final num signAt;
 
   factory Contract.fromJson(Map<String, dynamic> json) =>
       _$ContractFromJson(json);
@@ -122,11 +145,18 @@ class Contract extends Equatable {
 
   const Contract({
     required this.contract,
+    required this.contractSn,
     required this.amount,
     required this.deposit,
     required this.downPayment,
     required this.balancePayment,
-    required this.serviceFee,
+    required this.payTypeName,
+    required this.transferTypeName,
+    required this.thirdPartKind,
+    required this.thirdPartId,
+    required this.thirdPartName,
+    required this.saleServiceFee,
+    required this.purchaseSaleServiceFee,
     required this.totalAmount,
     required this.signAt,
   });
@@ -134,14 +164,43 @@ class Contract extends Equatable {
   @override
   List<Object?> get props => [
         contract,
+        contractSn,
         amount,
         deposit,
         downPayment,
-        balancePayment,
-        serviceFee,
+        // balancePayment,
+        payTypeName,
+        transferTypeName,
+        thirdPartKind,
+        thirdPartId,
+        thirdPartName,
+        saleServiceFee,
+        purchaseSaleServiceFee,
         totalAmount,
-        signAt
+        signAt,
       ];
+// const Contract({
+//   required this.contract,
+//   required this.amount,
+//   required this.deposit,
+//   required this.downPayment,
+//   required this.balancePayment,
+//   required this.serviceFee,
+//   required this.totalAmount,
+//   required this.signAt,
+// });
+//
+// @override
+// List<Object?> get props => [
+//       contract,
+//       amount,
+//       deposit,
+//       downPayment,
+//       balancePayment,
+//       serviceFee,
+//       totalAmount,
+//       signAt
+//     ];
 }
 
 @JsonSerializable()

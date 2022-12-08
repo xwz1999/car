@@ -504,7 +504,7 @@ class _MakeDealDataState extends State<MakeDealData> {
                 color: BaseStyle.coloreeeeee,
               ),
               36.wb,
-              _getCar('车辆尾款', _consignmentInfo.contract.balancePayment),
+              _getCar('车辆尾款', "1000000"),
             ],
           )),
     );

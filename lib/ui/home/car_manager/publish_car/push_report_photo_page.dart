@@ -212,7 +212,7 @@ class _PushReportPhotoPageState extends State<PushReportPhotoPage>
                 : Stack(
               clipBehavior: Clip.antiAliasWithSaveLayer,
               children: [
-                Container(
+               Container(
                   // width: 210.w,
                   // height: 158.w,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -220,7 +220,7 @@ class _PushReportPhotoPageState extends State<PushReportPhotoPage>
                       borderRadius: BorderRadius.circular(16.w),
                     ),
                     child: image(model.url)
-                ),
+                )
               ],
             ),
             Row(
