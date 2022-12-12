@@ -28,11 +28,14 @@ class _AddStoresPageState extends State<AddStoresPage> {
 
   final TextEditingController storesNameController = TextEditingController();
   final TextEditingController storesAddressController = TextEditingController();
-
   final TextEditingController nameController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController commissionController = TextEditingController();
+  final TextEditingController codeCreditController=TextEditingController();
+  final TextEditingController storesPhotoController=TextEditingController();
+  final TextEditingController idCardController=TextEditingController();
+
 
   List<ChooseItem> colorList = [
     ChooseItem(name: '男'),
@@ -45,6 +48,9 @@ class _AddStoresPageState extends State<AddStoresPage> {
   @override
   void dispose() {
     super.dispose();
+    codeCreditController.dispose();
+    storesPhotoController.dispose();
+    idCardController.dispose();
     storesNameController.dispose();
     storesAddressController.dispose();
     nameController.dispose();
@@ -108,7 +114,7 @@ class _AddStoresPageState extends State<AddStoresPage> {
                   return;
                 }
                 res = await BusinessFunc.getStoreadd(storesNameController.text, storesAddressController.text,
-                  nameController.text,_gender!.typeNum,phoneController.text,commissionController.text,);
+                  nameController.text,_gender!.typeNum,phoneController.text,commissionController.text,idCardController.text,codeCreditController.text);
                 if(res){
                   BotToast.showText(text: '新增成功');
                   Get.back();
@@ -148,6 +154,24 @@ class _AddStoresPageState extends State<AddStoresPage> {
             controller: storesAddressController,
             title: '门店地址',
             tips: '请输入门店地址',
+          ),
+          EditItemWidget(
+            topIcon: false,
+            paddingStart: 0,
+            titleColor: const Color(0xFF999999),
+            titleSize: 28.sp,
+            controller: codeCreditController,
+            title: '信用代码',
+            tips: '请输入社会信用代码',
+          ),
+          EditItemWidget(
+            topIcon: false,
+            paddingStart: 0,
+            titleColor: const Color(0xFF999999),
+            titleSize: 28.sp,
+            controller: storesPhotoController,
+            title: '联系电话',
+            tips: '请输入联系电话',
           ),
 
         ],
@@ -220,6 +244,18 @@ class _AddStoresPageState extends State<AddStoresPage> {
             tips: '请输入',
             inputFormatters: <TextInputFormatter>[
               LengthLimitingTextInputFormatter(11)//限制长度
+            ],
+          ),
+          EditItemWidget(
+            topIcon: false,
+            paddingStart: 0,
+            titleColor: const Color(0xFF999999),
+            titleSize: 28.sp,
+            controller: idCardController,
+            title: '身份证',
+            tips: '请输入身份证号',
+            inputFormatters: <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(18)//限制长度
             ],
           ),
           EditItemWidget(

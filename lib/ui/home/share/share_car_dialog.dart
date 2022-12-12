@@ -137,6 +137,7 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
+
                           ShareUtil.shareMiniProgram(
                             title:
                                 '${UserTool.userProvider.userInfo.nickname}分享了${widget.model.length}辆好车',
@@ -165,14 +166,14 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
-                          Get.back();
+
                           ShareUtil.shareWebPage(
                             shareUrl,
                             title:  shareTitle,
                             scene: fluwx.WeChatScene.TIMELINE,
                             image: widget.model.first.mainPhoto,
                           );
-
+                          Get.back();
                           // ShareUtil.shareNetWorkImage(
                           //     title: widget.model.first.modelName,
                           //     imgUrl: widget.model.first.mainPhoto,
@@ -446,11 +447,15 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
+                          print( widget.model.first.modelName);
+                          print( widget.model.first.mainPhoto);
+                          print( widget.model.first.id);
                           ShareUtil.shareMiniProgram(
                             title: widget.model.first.modelName,
                             imgUrl: widget.model.first.mainPhoto,
                             carIds: [widget.model.first.id],
                           );
+                          // Get.back();
                         },
                         child: Column(
                           children: [

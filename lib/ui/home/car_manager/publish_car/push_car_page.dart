@@ -219,8 +219,9 @@ class _PushCarPageState extends State<PushCarPage> {
                         children: [
                           ScanLicenseWidget(onLoadComplete: (carInfoModel) {
                             if (carInfoModel.vinModel != null) {
+
                               _publishCarInfo.carName =
-                                  carInfoModel.vehicle.lsnum;
+                                  carInfoModel.vinModel!.first.modelName;
                               _publishCarInfo.carModelId =
                                   carInfoModel.vinModel!.first.modelId;
                               _publishCarInfo.carColor =
@@ -279,6 +280,9 @@ class _PushCarPageState extends State<PushCarPage> {
       controller: _viNumController,
       topIcon: false,
       paddingStart: 0.5,
+      callback: (text){
+
+      },
     );
     var carNum = EditItemWidget(
       title: '车牌号',

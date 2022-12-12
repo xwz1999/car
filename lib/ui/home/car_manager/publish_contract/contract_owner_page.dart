@@ -227,7 +227,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               }
             },
             child: Image.asset(
-              Assets.icons.scan.path,
+              Assets.icons.scan1.path,
               width: 32.w,
               height: 32.w,
             ),
@@ -289,7 +289,7 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
               }
             },
             child: Image.asset(
-              Assets.icons.scan.path,
+              Assets.icons.scan1.path,
               width: 32.w,
               height: 32.w,
             ),

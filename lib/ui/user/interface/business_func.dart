@@ -87,16 +87,32 @@ class BusinessFunc {
   }
 
   ///添加门店
-  static Future<bool> getStoreadd(String storeName, String address, String name,
-      int gender, String phone, String commission) async {
+  static Future<bool> getStoreadd(
+      String storeName,
+      String address,
+      String name,
+      int gender,
+      String phone,
+      String commission,
+      String idCard,
+      String creditCode) async {
     Map params = {
       'name': name,
       'gender': gender,
       'phone': phone,
+      'idCard': idCard,
+      // 'idCardFront':idCardFront,
+      // 'idCardBack':idCardBack,
     };
 
-    BaseModel res = await apiClient.request(API.storeManagement.storeAdd,
-        data: {'name': name, 'address': address, 'owner': params,'commision': num.parse(commission)});
+    BaseModel res =
+        await apiClient.request(API.storeManagement.storeAdd, data: {
+      'name': name,
+      'address': address,
+      'owner': params,
+      'commision': num.parse(commission),
+      'creditCode': creditCode
+    });
     if (res.code == 0) {
       return true;
     } else {

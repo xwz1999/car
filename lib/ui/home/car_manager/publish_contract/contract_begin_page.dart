@@ -307,7 +307,7 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
               }
             },
             child: Image.asset(
-              Assets.icons.scan.path,
+              Assets.icons.scan1.path,
               width: 32.w,
               height: 32.w,
             ),
@@ -370,7 +370,7 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
               }
             },
             child: Image.asset(
-              Assets.icons.scan.path,
+              Assets.icons.scan1.path,
               width: 32.w,
               height: 32.w,
             ),

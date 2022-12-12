@@ -273,7 +273,7 @@ packages:
       name: decimal
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   device_info_plus:
     dependency: transitive
     description:
@@ -510,7 +510,7 @@ packages:
       name: fluwx
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.11.0+1"
+    version: "3.12.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -771,7 +771,7 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   nested:
     dependency: transitive
     description:
@@ -1030,7 +1030,7 @@ packages:
       name: rational
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.1"
+    version: "2.2.2"
   rxdart:
     dependency: transitive
     description:

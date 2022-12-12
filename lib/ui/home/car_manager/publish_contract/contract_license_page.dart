@@ -257,20 +257,20 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
   Column showLicense() {
     return Column(
       children: [
-        EditItemWidget(
-          titleColor: const Color(0xFF999999),
-          topIcon: false,
-          title: '过户次数',
-          endText: '次',
-          keyboardType: TextInputType.number,
-          value: widget.consignmentContractModel.value.transferNum == null
-              ? ''
-              : widget.consignmentContractModel.value.transferNum.toString(),
-          callback: (String content) {
-            widget.consignmentContractModel.value.transferNum =
-                int.parse(content);
-          },
-        ),
+        // EditItemWidget(
+        //   titleColor: const Color(0xFF999999),
+        //   topIcon: false,
+        //   title: '过户次数',
+        //   endText: '次',
+        //   keyboardType: TextInputType.number,
+        //   value: widget.consignmentContractModel.value.transferNum == null
+        //       ? ''
+        //       : widget.consignmentContractModel.value.transferNum.toString(),
+        //   callback: (String content) {
+        //     widget.consignmentContractModel.value.transferNum =
+        //         int.parse(content);
+        //   },
+        // ),
         EditItemWidget(
           titleColor: const Color(0xFF999999),
           topIcon: false,

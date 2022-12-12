@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/publish_finish_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
@@ -52,14 +51,16 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
   // List<dynamic> _repairPhotos = [];
   List<dynamic> _defectPhotos = [];
+
   ///维保记录
-   List<dynamic> maintenance=[];
+  List<PushImgModel> maintenance = [];
+
 // List<dynamic> _reportPhotos = [];
 //   List<dynamic> _reportPhotos = [];
   List<PushImgModel> _reportPhotos = [];
+
   @override
   void initState() {
-    print(_reportPhotos);
     _tabController = TabController(
         length: widget.tabs.length,
         vsync: this,
@@ -90,6 +91,8 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
           PushImgModel(name: '登记证书', isMust: false),
           PushImgModel(name: '交强险', isMust: false),
           PushImgModel(name: '商业险', isMust: false),
+          // ///添加新数据
+          // PushImgModel(name: '维保记录', isMust: false),
         ];
       }
     }
@@ -105,14 +108,40 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
     // }
 
     for (int i = 0; i < widget.model.dataPhotos!.length; i++) {
-      for (int j = 0; j < _reportPhotos.length; j++) {
-        if (_reportPhotos[j].name == widget.model.dataPhotos![i].text) {
-          if (widget.model.dataPhotos![i].photo != '') {
-            _reportPhotos[j].url = widget.model.dataPhotos![i].photo;
+      if (widget.model.dataPhotos![i].text == '维保记录') {
+        _reportPhotos.add(
+            PushImgModel(name: '维保记录', url: widget.model.dataPhotos![i].photo));
+      } else {
+        // print( widget.model.dataPhotos![i].text==null);
+        for (int j = 0; j < _reportPhotos.length; j++) {
+          if (_reportPhotos[j].name == widget.model.dataPhotos![i].text) {
+            // print(widget.model.dataPhotos![i].text);
+            if (widget.model.dataPhotos![i].photo != '') {
+              // print("这是我判断的数据${widget.model.dataPhotos![i].photo}");
+              _reportPhotos[j].url = widget.model.dataPhotos![i].photo;
+            }
           }
         }
+
+        // print(widget.model.dataPhotos![i].text);
+        // print(_reportPhotos[i].name);
+        // _reportPhotos.map((e) => e.url=widget.model.dataPhotos![i].photo);
+        // for (int j = 0; j < _reportPhotos.length; j++) {
+        //   print("这是我没有判断的数据${widget.model.dataPhotos![i].photo}");
+
+        // }
       }
+      // for (int j = 0; j < _reportPhotos.length; j++) {
+      //   if (_reportPhotos[j].name == widget.model.dataPhotos![i].text) {
+      //     if (widget.model.dataPhotos![i].photo != '') {
+      //       _reportPhotos[j].url = widget.model.dataPhotos![i].photo;
+      //     }
+      //   }
+      // }
     }
+// for(int i=0;i<widget.model.dataPhotos!.length; i++){
+//   _reportPhotos.add(PushImgModel(name: widget.model.dataPhotos![i].text,url:widget.model.dataPhotos![i].photo ));
+// }
     for (var item in widget.model.carPhotos!) {
       _carPhotos.add(item.photo);
     }
@@ -159,10 +188,10 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         CloudToast.show('请先上传检测报告');
         return false;
       }
-      if (item.name == '登记证书' && item.url == null) {
-        CloudToast.show('请先上登记证书');
-        return false;
-      }
+      // if (item.name == '登记证书' && item.url == null) {
+      //   CloudToast.show('请先上登记证书');
+      //   return false;
+      // }
       // if (item.name == '维保记录' && item.url == null) {
       //   CloudToast.show('请先上维保记录');
       //   return false;
@@ -193,7 +222,6 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
       }
       widget.model.dataPhotos!.add(
           CarPhotos(photo: _reportPhotos[i].url, text: _reportPhotos[i].name));
-
     }
 
     for (var i = 0; i < _defectPhotos.length; i++) {
@@ -313,7 +341,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
   }
 
   Widget _buildChild(
-      PushImgModel model, int index, int type, List<PushImgModel> list ) {
+      PushImgModel model, int index, int type, List<PushImgModel> list) {
     List<File> fileLists = [];
     List<String> stringLists = [];
     for (var item in list) {
@@ -328,7 +356,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
     return GestureDetector(
       onTap: () async {
-        if(model.name!='维保记录') {
+        if (model.name != '维保记录') {
           if (widget.imgCanTap) {
             var value = await CloudImagePicker.pickSingleImage(title: '选择图片');
             _reportPhotos[index].url = value;
@@ -346,14 +374,33 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
               }
             }
           }
-        }else{
-          var value =
-          await CloudImagePicker.pickMultiAndSingleImage(title: '选择图片');
-          _reportPhotos[6].url=value.first;
-          for(int i=1;i<value.length;i++){
-              _reportPhotos.add(PushImgModel(name: '维保记录',url: value[i]));
+        } else {
+          if (!(widget.imgCanTap)) {
+            if (model.url.runtimeType == String) {
+              if (model.url != '') {
+                await CloudImagePreviewList.toPath(
+                    path: stringLists, index: index);
+              }
+            } else {
+              if (model.url != null) {
+                await CloudImagePreviewList.toFile(
+                    file: fileLists, index: index);
+              }
+            }
+          } else {
+            var value =
+                await CloudImagePicker.pickMultiAndSingleImage(title: '选择图片');
+            _reportPhotos[6].url = value.first;
+            for (int i = 1; i < value.length; i++) {
+              _reportPhotos.add(PushImgModel(name: '维保记录', url: value[i]));
+            }
+            for (var item in value) {
+              maintenance.add(PushImgModel(name: '维保记录', url: item));
+            }
+
+            setState(() {});
           }
-          setState(() {});
+
           // maintenance.add(value);
         }
       },
@@ -362,9 +409,8 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         child: Column(
           children: [
             /// model.url == null || model.url == '' ||
-            model.name =='维保记录；'
-                ?
-            Container(
+           model.url == null || model.url == ''
+                ? Container(
                     width: 210.w,
                     height: 158.w,
                     decoration: BoxDecoration(

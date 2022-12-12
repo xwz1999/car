@@ -3,7 +3,7 @@ description: A new Flutter project.
 publish_to: 'none'
 
 
-version: 1.0.25+26
+version: 1.0.26+27
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -69,6 +69,7 @@ dependencies:
   #极光推送
 #  jpush_flutter: ^2.3.4
   #微信登录及支付
+#  fluwx: ^3.12.0
   fluwx: ^3.8.3
   #支付宝支付
   tobias: ^2.4.0+2

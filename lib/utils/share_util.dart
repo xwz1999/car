@@ -61,7 +61,6 @@ class ShareUtil {
       required String imgUrl,
       required List<int> carIds}) async {
     var data = await handleImage(imgUrl);
-
     if (data == null) return;
     var str = carIds.map((e) => e.toString()).join(',');
     String path = carIds.length == 1
@@ -106,21 +105,46 @@ class ShareUtil {
   }
 
   /// 压缩图片
-  static Future<Uint8List> compressImageList(Uint8List data) async {
+
+  static Future<Uint8List> compressImageList(Uint8List data,) async {
+    // int i=0;
     var result = await FlutterImageCompress.compressWithList(
       data,
       minHeight: 300,
       minWidth: 500,
-      quality: 96,
+      quality:80,
     );
-    if (result.length > 128000 ) {
-      result = await compressImageList(result);
+
+    if (result.length > 128000) {
+    // i++;
+    //   print("这是数据${quality--}");
+      ///&& result.length < data.length
+      // result = await FlutterImageCompress.compressWithList(
+      //       result,
+      //       minHeight: 300,
+      //       minWidth: 500,
+      //       quality:90-i,
+      //     );
+      result = await compressImageList(result,);
     }
     return result;
   }
+  // static Future<Uint8List> compressImageList(Uint8List data) async {
+  //   var result = await FlutterImageCompress.compressWithList(
+  //     data,
+  //     minHeight: 300,
+  //     minWidth: 500,
+  //     quality: 96,
+  //   );
+  //   if (result.length > 128000 ) {
+  //     result = await compressImageList(result);
+  //   }
+  //   return result;
+  // }
 
   /// 图片处理
   static Future<Uint8List?> handleImage(String imgUrl) async {
+
     var data = await getNetworkImageData(imgUrl.imageWithHost);
 
     if (data == null) {
@@ -128,7 +152,7 @@ class ShareUtil {
       return null;
     }
     if (data.length > 128000) {
-      data = await compressImageList(data);
+      data = await compressImageList(data,);
     }
     return data;
   }

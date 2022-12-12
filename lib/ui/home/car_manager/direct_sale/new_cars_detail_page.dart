@@ -122,9 +122,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         CarPhotos(
           text: '商业险',
         ),
-        CarPhotos(
-          text: '维保记录',
-        ),
+        // CarPhotos(
+        //   text: '维保记录',
+        // ),
       ];
     } else {
       dataPhotos = [
@@ -686,6 +686,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
     return GestureDetector(
       onTap: () async {
+
         await Get.to(
           PushCarManagePhotoPage(
             isSelf: widget.carListModel.isSelf == 1,
