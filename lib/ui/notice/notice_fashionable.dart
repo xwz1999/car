@@ -74,7 +74,7 @@ class _FashionablePageState extends State<FashionablePage> {
           _page = 1;
           var baseList =
           await apiClient.requestList(API.split.list, data: {
-            // 'status': _currentStatus.typeNum,
+            'status': _currentStatus.typeNum,
             'page': _page,
             'limit': _limit,
           });

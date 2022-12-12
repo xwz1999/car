@@ -50,4 +50,15 @@ class SortFunc{
     }
 
  }
+
+ ///验证vin合理性
+ static Future<bool> getVinCheck(String vin)async{
+    var model=await apiClient.request(API.car.vinCheck,data: {'vin':vin});
+    if(model.code==0){
+      return true;
+    }else{
+      CloudToast.show(model.msg);
+      return false;
+    }
+ }
 }

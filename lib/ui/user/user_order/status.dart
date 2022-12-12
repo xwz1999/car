@@ -250,3 +250,31 @@ enum OrderType {
 
   const OrderType(this.typeNum, this.typeStr);
 }
+
+///车务，店长
+enum ReminderApprovalType{
+  all(1,'全部'),
+  applicationSale(2,'出售申请'),
+  modify(3,'修改申请'),
+  release(4,'发布审核'),
+  shelves(5,'下架申请'),
+  acquisition(6,'收购申请');
+  final int typeNum;
+  final String typeStr;
+  static ReminderApprovalType getValue(int value)=>
+      ReminderApprovalType.values.firstWhere((element) => element.typeNum==value);
+  const ReminderApprovalType(this.typeNum,this.typeStr);
+}
+
+///经济人
+enum ExaminationType{
+  all(1,'全部'),
+  sell(2,'出售申请'),
+  shelves(3,'下架申请'),
+  acquisition(4,'收购申请');
+  final int typeNum;
+  final String typeStr;
+  static ExaminationType getValue(int value)=>
+      ExaminationType.values.firstWhere((element) => element.typeNum==value);
+  const ExaminationType(this.typeNum,this.typeStr);
+}

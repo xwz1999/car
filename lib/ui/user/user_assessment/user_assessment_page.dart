@@ -445,7 +445,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                                                       ),
                                                 widget.assessmentState == 2
                                                     ? const Text(
-                                                        '100＜充值份数为2.5亓一份',
+                                                        '100＜充值份数为2.5元一份',
                                                         style: TextStyle(
                                                             color: Color(
                                                                 0x33333333)),

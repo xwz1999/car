@@ -60,6 +60,9 @@ class _Car {
 
   ///获取车辆详情
   String get carInfo => '/car/model/info';
+
+  ///验证vin合理
+ String get vinCheck =>'/broker/car/vin/check';
 }
 
 class _Collect {
