@@ -38,10 +38,12 @@ class HomeTitle extends StatelessWidget {
         ),
         const Spacer(),
         MaterialButton(
-          shape: const StadiumBorder(),
+          // shape: const StadiumBorder(),
           padding: EdgeInsets.symmetric(horizontal: 12.w),
           onPressed: onTap,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 suffixTitle,
@@ -49,10 +51,10 @@ class HomeTitle extends StatelessWidget {
               ),
               8.wb,
               Padding(
-                padding: EdgeInsets.only(top: 10.w),
+                padding: EdgeInsets.only(top: 3.w),
                 child: Icon(
                   CupertinoIcons.chevron_forward,
-                  size: 28.w,
+                  size: 32.w,
                   color: const Color(0xFF999999),
                 ),
               ),

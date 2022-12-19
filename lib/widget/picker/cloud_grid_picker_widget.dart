@@ -15,12 +15,13 @@ class CloudGridPickerWidget extends StatefulWidget {
   final double? childAspectRatio;
   final bool multi;
   final bool isWrap;
-
+  final bool time;///是否显示确定取消
   const CloudGridPickerWidget(
       {super.key,
       required this.title,
       required this.items,
       required this.onConfirm,
+        this.time=true,
       this.initIndex,
       this.crossAxisCount = 4,
       this.mainAxisSpacing,
@@ -33,6 +34,7 @@ class CloudGridPickerWidget extends StatefulWidget {
       required this.title,
       required this.items,
       required this.onConfirm,
+        this.time=true,
       this.initIndex,
       this.crossAxisCount = 4,
       this.mainAxisSpacing,
@@ -46,6 +48,7 @@ class CloudGridPickerWidget extends StatefulWidget {
   required this.title,
   required this.items,
   required this.onConfirm,
+    this.time=true,
   this.initIndex,
   this.crossAxisCount = 4,
   this.mainAxisSpacing,
@@ -75,6 +78,7 @@ class _CloudGridPickerWidgetState extends State<CloudGridPickerWidget> {
   @override
   Widget build(BuildContext context) {
     return CarPickerBox(
+      time: widget.time,
       height: (widget.items.length / widget.crossAxisCount!) *50.w + 300.w,
       title: widget.title,
       onPressed: () => widget.onConfirm(_groupString, _groupIndex),
@@ -123,6 +127,8 @@ class _CloudGridPickerWidgetState extends State<CloudGridPickerWidget> {
           _groupIndex.add(index);
           _groupString.add(item);
         }
+        widget.onConfirm(_groupString, _groupIndex);
+        Get.back();
         setState(() {});
       },
       child: Container(

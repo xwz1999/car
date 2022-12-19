@@ -19,7 +19,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 class DirectSaleManagerPage extends StatefulWidget {
   final int initIndex;
   final CarManageType initType;
-
+  // final bool carState;
   const DirectSaleManagerPage(
       {super.key, this.initIndex = 0, this.initType = CarManageType.all});
 
@@ -139,7 +139,8 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
               widthPercent: 0.86,
               backgroundColor: Colors.white,
               callback: (bool isOpened) {},
-              child: _getSortList())),
+              child: _getSortList())
+      ),
     );
   }
 
@@ -154,6 +155,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
 
       case CarManageType.company:
         return SelfSalePage(
+
             initIndex: widget.initIndex,
             refreshController: asRefreshController,
             pickCar: _pickCar);

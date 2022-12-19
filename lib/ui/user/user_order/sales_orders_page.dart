@@ -95,7 +95,7 @@ class _SalesOrderPageState extends State<SalesOrderPage> {
           body: TitleDropDownWidget(
               _dropDownHeaderItemStrings1, listWidget,
               isSearch: false,
-              height: kToolbarHeight + 30.w,
+              height: kToolbarHeight * 2,
               bottomHeight: 30.w,
               headFontSize: 36.sp,
               leftWidget: const CloudBackButton(

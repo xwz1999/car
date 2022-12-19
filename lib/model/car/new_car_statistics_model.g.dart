@@ -30,6 +30,7 @@ BusinessCount _$BusinessCountFromJson(Map<String, dynamic> json) =>
       reserveCount: json['reserveCount'] as int,
       soldCount: json['soldCount'] as int,
       backOutCount: json['backOutCount'] as int,
+      signingCount: json['signingCount'] as int,
     );
 
 Map<String, dynamic> _$BusinessCountToJson(BusinessCount instance) =>
@@ -38,6 +39,7 @@ Map<String, dynamic> _$BusinessCountToJson(BusinessCount instance) =>
       'reserveCount': instance.reserveCount,
       'soldCount': instance.soldCount,
       'backOutCount': instance.backOutCount,
+      'signingCount': instance.signingCount,
     };
 
 StoreCount _$StoreCountFromJson(Map<String, dynamic> json) => StoreCount(
@@ -45,6 +47,7 @@ StoreCount _$StoreCountFromJson(Map<String, dynamic> json) => StoreCount(
       reserveCount: json['reserveCount'] as int,
       soldCount: json['soldCount'] as int,
       backOutCount: json['backOutCount'] as int,
+      signingCount: json['signingCount'] as int,
     );
 
 Map<String, dynamic> _$StoreCountToJson(StoreCount instance) =>
@@ -53,6 +56,7 @@ Map<String, dynamic> _$StoreCountToJson(StoreCount instance) =>
       'reserveCount': instance.reserveCount,
       'soldCount': instance.soldCount,
       'backOutCount': instance.backOutCount,
+      'signingCount': instance.signingCount,
     };
 
 OwnCount _$OwnCountFromJson(Map<String, dynamic> json) => OwnCount(
@@ -60,6 +64,7 @@ OwnCount _$OwnCountFromJson(Map<String, dynamic> json) => OwnCount(
       reserveCount: json['reserveCount'] as int,
       soldCount: json['soldCount'] as int,
       backOutCount: json['backOutCount'] as int,
+      signingCount: json['signingCount'] as int,
     );
 
 Map<String, dynamic> _$OwnCountToJson(OwnCount instance) => <String, dynamic>{
@@ -67,4 +72,5 @@ Map<String, dynamic> _$OwnCountToJson(OwnCount instance) => <String, dynamic>{
       'reserveCount': instance.reserveCount,
       'soldCount': instance.soldCount,
       'backOutCount': instance.backOutCount,
+      'signingCount': instance.signingCount,
     };

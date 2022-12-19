@@ -25,7 +25,8 @@ class _CarWidgetState extends State<CarWidget> {
       //height: 88.w,
       decoration: BoxDecoration(
           color: kForeGroundColor, borderRadius: BorderRadius.circular(16.w)),
-      child: ListView(
+      child:
+      ListView(
         scrollDirection: Axis.horizontal,
         children: [
           ...widget.items.mapIndexed(

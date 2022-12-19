@@ -115,31 +115,9 @@ class _RealNamePageState extends State<RealNamePage> {
                         onTap: () {
                           getImage();
                         },
-                        child: Stack(
-                          children: [
-                            SizedBox(
-                              child: Image.asset(
-                                Assets.images.realNameHead.path,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Positioned(
-                              left: 65.w,
-                              top: 40.w,
-                              child: Container(
-                                padding: EdgeInsets.all(20.w),
-                                width: 72.w,
-                                height: 72.w,
-                                decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(0, 0, 0, 0.5),
-                                    borderRadius: BorderRadius.circular(36.w)),
-                                child: Image.asset(
-                                  Assets.images.camera.path,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            )
-                          ],
+                        child: Image.asset(
+                          Assets.images.carPersonHead.path,
+                          fit: BoxFit.fill,
                         )),
                     // GestureDetector(
                     //     onTap: () {
@@ -157,31 +135,9 @@ class _RealNamePageState extends State<RealNamePage> {
                         onTap: () {
                           getImage();
                         },
-                        child: Stack(
-                          children: [
-                            SizedBox(
-                              child: Image.asset(
-                                Assets.images.realNameBadge.path,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Positioned(
-                              left: 65.w,
-                              top: 40.w,
-                              child: Container(
-                                padding: EdgeInsets.all(20.w),
-                                width: 72.w,
-                                height: 72.w,
-                                decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(0, 0, 0, 0.5),
-                                    borderRadius: BorderRadius.circular(36.w)),
-                                child: Image.asset(
-                                  Assets.images.camera.path,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            )
-                          ],
+                        child: Image.asset(
+                          Assets.images.carPersonBack.path,
+                          fit: BoxFit.fill,
                         )),
                   )
                 ],

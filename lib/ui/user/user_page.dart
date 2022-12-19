@@ -6,6 +6,7 @@ import 'package:cloud_car/ui/user/user_about/about_page.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/ui/user/user_basic_information/basic_information_page.dart';
 import 'package:cloud_car/ui/user/user_feedback/feedback_page.dart';
+import 'package:cloud_car/ui/user/user_install/real_name_page.dart';
 import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/consignment_contract_page.dart';
 import 'package:cloud_car/ui/user/user_management/staff_management_page.dart';
@@ -26,6 +27,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 import '../../utils/user_tool.dart';
 import '../../widget/cloud_avatar_widget.dart';
 import '../home/home_page.dart';
+import '../notice/notice_examination.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -53,6 +55,8 @@ class _UserPageState extends State<UserPage> {
     _kingCoinUserList
         .add(KingCoin(name: '查看合同', url: Assets.icons.userviewContract.path));
     _kingCoinUserList
+        .add(KingCoin(name: '我的审批', url: Assets.icons.examination.path));
+    _kingCoinUserList
         .add(KingCoin(name: '产品手册', url: Assets.icons.userproduct.path));
     _kingCoinUserList
         .add(KingCoin(name: '意见反馈', url: Assets.icons.userfeedback.path));
@@ -60,6 +64,7 @@ class _UserPageState extends State<UserPage> {
         .add(KingCoin(name: '关于云云', url: Assets.icons.userabout.path));
     _kingCoinUserList
         .add(KingCoin(name: '我的邀约', url: Assets.icons.userInvitation.path));
+    _kingCoinUserList.add(KingCoin(name: '实名认证',url: Assets.icons.realName.path));
     _kingCoinUserList
         .add(KingCoin(name: '联系客服', url: Assets.icons.servicePhone.path));
   }
@@ -165,8 +170,8 @@ class _UserPageState extends State<UserPage> {
               ],
             ),
 
-            Positioned(top: 2,right: 5,child: Image.asset(Assets.images.bubble.path,width: 112.w,height: 46.w,),),
-            Positioned(top: 3,right: 10,child:   Text('首年6折',style: TextStyle(color: Colors.white,fontSize: 24.sp),),),
+            // Positioned(top: 2,right: 5,child: Image.asset(Assets.images.bubble.path,width: 112.w,height: 46.w,),),
+            // Positioned(top: 3,right: 10,child:   Text('首年6折',style: TextStyle(color: Colors.white,fontSize: 24.sp),),),
           ],
         )
       ),
@@ -375,7 +380,7 @@ class _UserPageState extends State<UserPage> {
   _share() {
     return Container(
       width: double.infinity,
-      height: 460.w,
+      height: 600.w,///460.w,
       padding: EdgeInsets.only(
         left: 32.w,
         top: 40.w,
@@ -421,7 +426,7 @@ class _UserPageState extends State<UserPage> {
         //横纵轴间距
         crossAxisSpacing: 10,
         //子组件宽高长度比例
-        childAspectRatio: 1,
+        childAspectRatio: 1,//1,
       ),
       itemBuilder: (BuildContext context, int index) {
         return _kingCoinItem(
@@ -434,6 +439,12 @@ class _UserPageState extends State<UserPage> {
     return GestureDetector(
       onTap: () {
         switch (name) {
+          case '实名认证':
+            Get.to(()=>const RealNamePage());
+            break;
+          case '我的审批':
+            Get.to(()=>const ExaminationPage());
+            break;
           case '我的订单':
             if(UserTool.userProvider.userInfo.levelEM ==
                 PermissionLevel.normal){

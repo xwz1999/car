@@ -1,9 +1,12 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
 import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
 import 'package:cloud_car/ui/home/sort/car_three_city_list_page.dart';
+import 'package:cloud_car/ui/home/sort/sort_func.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
@@ -45,7 +48,7 @@ class _PushCarPageState extends State<PushCarPage> {
   final TextEditingController _carNumController = TextEditingController();
   final TextEditingController _engineController = TextEditingController();
   final TextEditingController _mileController = TextEditingController();
-
+  List<int> colorNum=[];
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
     ChooseItem(name: '紫色'),
@@ -241,7 +244,12 @@ class _PushCarPageState extends State<PushCarPage> {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async{
+                                var res=await SortFunc.getVinCheck(_viNumController.text);
+                                if(res?.isLegal==0){
+                                  CloudToast.show(res!.message);
+                                  return ;
+                                }
                                 if (!canTap) {
                                   return;
                                 }
@@ -280,6 +288,8 @@ class _PushCarPageState extends State<PushCarPage> {
       controller: _viNumController,
       topIcon: false,
       paddingStart: 0.5,
+      // errState: true,
+      // errText: ,
       callback: (text){
 
       },
@@ -335,6 +345,7 @@ class _PushCarPageState extends State<PushCarPage> {
             '品牌车型',
             () async {
               await Get.to(() => ChooseCarPage(
+
                     callback: () {
                       Get.back();
                       _publishCarInfo.carName = _pickCar.value.car.name;
@@ -374,6 +385,7 @@ class _PushCarPageState extends State<PushCarPage> {
                   return CloudListPickerWidget(
                       title: '使用性质',
                       items: carNatureOfUseList,
+                      initIndex:  _publishCarInfo.carNatureOfUse,
                       onConfirm: (str, index) {
                         _publishCarInfo.carNatureOfUse = index;
 
@@ -394,16 +406,21 @@ class _PushCarPageState extends State<PushCarPage> {
               await showModalBottomSheet(
                 context: context,
                 shape: RoundedRectangleBorder(
+
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
                   return CloudGridPickerWidget(
+
+                      time: false,
                       title: '车身颜色',
+                      initIndex: colorNum.isEmpty?[]:[colorNum.first],
                       items: colorList.map((e) => e.name).toList(),
                       onConfirm: (strList, indexList) {
                         if (strList.isNotEmpty) {
                           _publishCarInfo.carColor = strList.first;
-                          Get.back();
+                          colorNum=indexList;
+                          // Get.back();
                           FocusManager.instance.primaryFocus?.unfocus();
                           setState(() {});
                         }
@@ -557,6 +574,7 @@ class _PushCarPageState extends State<PushCarPage> {
       child: Material(
         color: Colors.transparent,
         child: EditItemWidget(
+
           title: title,
           tips: msg,
           value: content ?? '',

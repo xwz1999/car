@@ -840,7 +840,8 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
           children: [
             Text.rich(TextSpan(children: [
               TextSpan(
-                  text: carInfoModel!.carInfo.price.priceFormat,
+                  text:  (num.parse(carInfoModel!
+                      .carInfo.priceInfo.interiorPrice)/10000).toString(),
                   style: TextStyle(
                       color: const Color(0xFFFF3B02),
                       fontSize: BaseStyle.fontSize40)),
@@ -927,7 +928,6 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             borderRadius: BorderRadius.all(Radius.circular(8.w))),
         child: Column(
           children: [
-            ///ceshizhong
             Row(
               children: [
                 Expanded(

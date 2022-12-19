@@ -333,7 +333,7 @@ class _CarValuationPageState extends State<CarValuationPage> {
                     return CarListPicker(
                       items: colorList,
                       callback: (String content, int value) {
-                        Get.back();
+                        // Get.back();
                         _carInfo.color = content;
                         setState(() {});
                       },

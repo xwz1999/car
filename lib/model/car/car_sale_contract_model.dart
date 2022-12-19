@@ -15,6 +15,7 @@ class CarSaleContractModel extends Equatable{
    int transferType; ///过户方式1=本地 2=外迁
    PriceInfo priceInfo;
    int? customerId;
+   int? customerChannel;
    MasterInfo masterInfo;
    ThirdPartInfo thirdPartInfo;
    String remark;
@@ -30,9 +31,10 @@ class CarSaleContractModel extends Equatable{
     required this.masterInfo,
     required this.thirdPartInfo,
     required this.remark,
+     required this.customerChannel,
   });
   @override
-  List<Object?> get props => [carId,payType,transferType,priceInfo,customerId,masterInfo,thirdPartInfo,remark];
+  List<Object?> get props => [carId,payType,transferType,priceInfo,customerId,masterInfo,thirdPartInfo,remark,customerChannel];
 }
 
 @JsonSerializable()

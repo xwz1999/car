@@ -19,6 +19,7 @@ CarSaleContractModel _$CarSaleContractModelFromJson(
       thirdPartInfo:
           ThirdPartInfo.fromJson(json['thirdPartInfo'] as Map<String, dynamic>),
       remark: json['remark'] as String,
+      customerChannel: json['customerChannel'] as int?,
     );
 
 Map<String, dynamic> _$CarSaleContractModelToJson(
@@ -29,6 +30,7 @@ Map<String, dynamic> _$CarSaleContractModelToJson(
       'transferType': instance.transferType,
       'priceInfo': instance.priceInfo,
       'customerId': instance.customerId,
+      'customerChannel': instance.customerChannel,
       'masterInfo': instance.masterInfo,
       'thirdPartInfo': instance.thirdPartInfo,
       'remark': instance.remark,

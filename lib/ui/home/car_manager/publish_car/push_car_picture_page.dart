@@ -63,9 +63,18 @@ class _PushCarPicturePageState extends State<PushCarPicturePage> {
             CloudBottomButton(
               onTap: () {
 
+                // Get.to(
+                //   PushCarManagePhotoPage(
+                //     tabs: _titles,
+                //     model: widget.carPhotoModel,
+                //     initIndex: 0,
+                //     // reportPhotoModel: widget.reportPhotoModel,
+                //     newPublishCarInfo: widget.newPublishCarInfo,
+                //   ),
+                // );
                 Get.to(
                   PushCarManagePhotoPage(
-                    tabs: _titles,
+                    tabs:  const ['车辆照片', '内饰照片', '缺陷照片', '车辆数据'],
                     model: widget.carPhotoModel,
                     initIndex: 0,
                     // reportPhotoModel: widget.reportPhotoModel,

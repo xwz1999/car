@@ -6,12 +6,14 @@ class ChooseWidget<T> extends StatefulWidget {
   final T? item;
   final List<T> items;
   final Function(int) callBack;
-
+  final bool carState;
   const ChooseWidget(
       {super.key,
       required this.items,
       required this.callBack,
-      required this.item});
+      required this.item,
+      this.carState=false
+      });
 
   @override
   _ChooseWidgetState createState() => _ChooseWidgetState();
@@ -20,28 +22,64 @@ class ChooseWidget<T> extends StatefulWidget {
 class _ChooseWidgetState extends State<ChooseWidget> {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return widget.carState?
+    SizedBox(
+      width: 750.w,
+      height: 100.w,
+      child: ListView(
+      scrollDirection: Axis.horizontal,
       children: [
         ...widget.items.mapIndexed(
-          (e, index) => Expanded(
+              (e, index) => SizedBox(
+            // height: 88.w,
               child: GestureDetector(
-            onTap: () => widget.callBack(index),
-            child: Container(
-                color: Colors.white,
-                alignment: Alignment.center,
-                width: 100.w,
-                padding: EdgeInsets.symmetric(vertical: 20.w),
-                child: Text(
-                  e,
-                  style: TextStyle(
-                      fontSize: 28.sp,
-                      color: e == widget.item
-                          ? kPrimaryColor
-                          : BaseStyle.color333333),
-                )),
-          )),
+                onTap: () => widget.callBack(index),
+                child: Container(
+                    color: Colors.white,
+                    alignment: Alignment.center,
+                    width: 150.w,
+                    padding: EdgeInsets.symmetric(vertical: 20.w),
+                    child: Text(
+                      e,
+                      style: TextStyle(
+                          fontSize: 28.sp,
+                          color: e == widget.item
+                              ? kPrimaryColor
+                              : BaseStyle.color333333),
+                    )),
+              )),
         )
       ],
+    )):
+
+      SizedBox(
+      width: 750.w,
+      height: 100.w,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          ...widget.items.mapIndexed(
+            (e, index) => SizedBox(
+                // height: 88.w,
+                child: GestureDetector(
+                  onTap: () => widget.callBack(index),
+                  child: Container(
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      width: 130.w,
+                      padding: EdgeInsets.symmetric(vertical: 20.w),
+                      child: Text(
+                        e,
+                        style: TextStyle(
+                            fontSize: 28.sp,
+                            color: e == widget.item
+                                ? kPrimaryColor
+                                : BaseStyle.color333333),
+                      )),
+                )),
+          )
+        ],
+      ),
     );
   }
 }

@@ -18,10 +18,20 @@ SaleInfo _$SaleInfoFromJson(Map<String, dynamic> json) => SaleInfo(
       report: Report.fromJson(json['report'] as Map<String, dynamic>),
       means: Means.fromJson(json['means'] as Map<String, dynamic>),
       customer: SaleCustomer.fromJson(json['customer'] as Map<String, dynamic>),
+      customerChannel: json['customerChannel'] as int,
+      customerChannelName: json['customerChannelName'] as String,
+      status: json['status'] as int,
+      statusName: json['statusName'] as String,
+      createdAt: json['createdAt'] as num,
     );
 
 Map<String, dynamic> _$SaleInfoToJson(SaleInfo instance) => <String, dynamic>{
       'id': instance.id,
+      'customerChannel': instance.customerChannel,
+      'customerChannelName': instance.customerChannelName,
+      'status': instance.status,
+      'statusName': instance.statusName,
+      'createdAt': instance.createdAt,
       'car': instance.car,
       'contract': instance.contract,
       'deposit': instance.deposit,
@@ -87,18 +97,21 @@ Map<String, dynamic> _$ContractToJson(Contract instance) => <String, dynamic>{
     };
 
 Deposit _$DepositFromJson(Map<String, dynamic> json) => Deposit(
+      id: json['id'] as int,
       amount: json['amount'] as String,
       payType: json['payType'] as String,
       createdAt: json['createdAt'] as num,
     );
 
 Map<String, dynamic> _$DepositToJson(Deposit instance) => <String, dynamic>{
+      'id': instance.id,
       'amount': instance.amount,
       'payType': instance.payType,
       'createdAt': instance.createdAt,
     };
 
 DownPayment _$DownPaymentFromJson(Map<String, dynamic> json) => DownPayment(
+      id: json['id'] as int,
       amount: json['amount'] as String,
       proof: json['proof'] as String,
       createdAt: json['createdAt'] as num,
@@ -106,6 +119,7 @@ DownPayment _$DownPaymentFromJson(Map<String, dynamic> json) => DownPayment(
 
 Map<String, dynamic> _$DownPaymentToJson(DownPayment instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'amount': instance.amount,
       'proof': instance.proof,
       'createdAt': instance.createdAt,
@@ -113,6 +127,7 @@ Map<String, dynamic> _$DownPaymentToJson(DownPayment instance) =>
 
 BalancePayment _$BalancePaymentFromJson(Map<String, dynamic> json) =>
     BalancePayment(
+      id: json['id'] as int,
       amount: json['amount'] as String,
       proof: json['proof'] as String,
       createdAt: json['createdAt'] as num,
@@ -120,22 +135,24 @@ BalancePayment _$BalancePaymentFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$BalancePaymentToJson(BalancePayment instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'amount': instance.amount,
       'proof': instance.proof,
       'createdAt': instance.createdAt,
     };
 
 Report _$ReportFromJson(Map<String, dynamic> json) => Report(
-      reportId: json['reportId'] as int,
+      id: json['id'] as int,
       path: json['path'] as String,
     );
 
 Map<String, dynamic> _$ReportToJson(Report instance) => <String, dynamic>{
-      'reportId': instance.reportId,
+      'id': instance.id,
       'path': instance.path,
     };
 
 Means _$MeansFromJson(Map<String, dynamic> json) => Means(
+      id: json['id'] as int,
       certificate: json['certificate'] as String,
       vehicleLicense: json['vehicleLicense'] as String,
       invoice: json['invoice'] as String,
@@ -143,6 +160,7 @@ Means _$MeansFromJson(Map<String, dynamic> json) => Means(
     );
 
 Map<String, dynamic> _$MeansToJson(Means instance) => <String, dynamic>{
+      'id': instance.id,
       'certificate': instance.certificate,
       'vehicleLicense': instance.vehicleLicense,
       'invoice': instance.invoice,
@@ -150,12 +168,14 @@ Map<String, dynamic> _$MeansToJson(Means instance) => <String, dynamic>{
     };
 
 SaleCustomer _$SaleCustomerFromJson(Map<String, dynamic> json) => SaleCustomer(
+      id: json['id'] as int,
       name: json['name'] as String,
       phone: json['phone'] as String,
     );
 
 Map<String, dynamic> _$SaleCustomerToJson(SaleCustomer instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'phone': instance.phone,
     };

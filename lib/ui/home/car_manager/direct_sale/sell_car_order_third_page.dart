@@ -254,7 +254,7 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                     endText: '元', isSpecial: true, topIcon: false),
                 getContentItem(
                   '卖方服务费',
-                  widget.carSaleContract.thirdPartInfo.kind==1?"0":(num.parse( widget.carSaleContract.thirdPartInfo.saleServiceFeeRate)*0.01).toString(),
+                  widget.carSaleContract.thirdPartInfo.kind==1?"0":widget.carSaleContract.thirdPartInfo.saleServiceFeeRate,///(num.parse( widget.carSaleContract.thirdPartInfo.saleServiceFeeRate)*0.01).toString(),
                   endText: '%',
                   isSpecial: true,
                 ),
@@ -268,7 +268,7 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                     topIcon: false),
                 getContentItem(
                   '卖方服务费',
-                  widget.carSaleContract.thirdPartInfo.kind==1?"0":(num.parse( widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate)*0.01).toString(),
+                  widget.carSaleContract.thirdPartInfo.kind==1?"0":widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate,///(num.parse( widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate)*0.01).toString(),
                   endText: '%',
                   isSpecial: true,
                 ),
@@ -348,7 +348,7 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                                     customerId:
                                         widget.carSaleContract.customerId,
                                     thirdPartInfo:
-                                        widget.carSaleContract.thirdPartInfo))
+                                        widget.carSaleContract.thirdPartInfo, customerChannel:widget.carSaleContract.customerChannel ))
                                 .then((value) {
                               if (value) {
                                 Get.off(() => SuccessFailurePage(

@@ -339,14 +339,15 @@ class NewCarDetailItem extends StatelessWidget {
                 ),
               ),
               10.wb,
-              Text(
+              Flexible(child: Text(
                 content2,
                 style: TextStyle(
                     height: 1.5,
                     fontSize: 28.sp,
                     fontWeight: FontWeight.w500,
                     color: BaseStyle.color333333),
-              ),
+              ),),
+
             ],
           ),
         ),

@@ -11,7 +11,7 @@ import 'package:map_launcher/map_launcher.dart';
 class InvitationDetailsList extends StatefulWidget {
   final int customerId;
   final int type;
-
+  // final int
   const InvitationDetailsList(
       {super.key, required this.customerId, required this.type});
 
@@ -154,9 +154,13 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                         ),
                       ),
                       Text(
+                        model.contentType==2?
                         DateUtil.formatDate(
                             DateUtil.getDateTimeByMs(
                                 model.createdAt.toInt() * 1000),
+                            format: 'yyyy-MM-dd HH:mm:ss'): DateUtil.formatDate(
+                            DateUtil.getDateTimeByMs(
+                                model.reserve.reserveAt.toInt()*1000),
                             format: 'yyyy-MM-dd HH:mm:ss'),
                         style: TextStyle(
                           color: const Color(0xFFAAAAAA),
@@ -312,8 +316,22 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
             children: [
               Text(
                 widget.type == 3
-                    ? '邀约时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(model.invite.inviteAt * 1000), format: 'yyyy-MM-dd HH:mm:ss')}'
-                    : '邀约到店时间：${DateUtil.formatDate(DateUtil.getDateTimeByMs(model.invite.inviteAt * 1000), format: 'yyyy-MM-dd HH:mm:ss')}',
+                    ? '邀约时间：${ model.contentType==2?
+                DateUtil.formatDate(
+                    DateUtil.getDateTimeByMs(
+                        model.createdAt.toInt() * 1000),
+                    format: 'yyyy-MM-dd HH:mm:ss'): DateUtil.formatDate(
+                    DateUtil.getDateTimeByMs(
+                        model.reserve.reserveAt.toInt()*1000),
+                    format: 'yyyy-MM-dd HH:mm:ss')}'
+                    : '邀约到店时间：${ model.contentType==2?
+                DateUtil.formatDate(
+                    DateUtil.getDateTimeByMs(
+                        model.createdAt.toInt() * 1000),
+                    format: 'yyyy-MM-dd HH:mm:ss'): DateUtil.formatDate(
+                    DateUtil.getDateTimeByMs(
+                        model.reserve.reserveAt.toInt()*1000),
+                    format: 'yyyy-MM-dd HH:mm:ss')}',
                 style: TextStyle(
                   color: const Color(0xFF333333),
                   fontSize: 28.sp,
@@ -411,10 +429,14 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
                       child: getCarItem(
                         model.invite.mainPhoto,
                         model.invite.modelName,
+                        model.contentType==2?
                         DateUtil.formatDate(
                             DateUtil.getDateTimeByMs(
-                                model.invite.inviteAt.toInt() * 1000),
-                            format: 'yyyy年MM月'),
+                                model.createdAt.toInt() * 1000),
+                            format: 'yyyy-MM-dd HH:mm:ss'): DateUtil.formatDate(
+                            DateUtil.getDateTimeByMs(
+                                model.reserve.reserveAt.toInt()*1000),
+                            format: 'yyyy-MM-dd HH:mm:ss'),
                         '${model.invite.mileage}万公里',
                         model.invite.price,
                       ),
@@ -462,6 +484,7 @@ class _InvitationDetailsListState extends State<InvitationDetailsList> {
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
                 child: CloudImageNetworkWidget.car(
+                  according: true,
                   urls: [url],
                 ),
               ),

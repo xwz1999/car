@@ -1,9 +1,11 @@
 
 import 'package:cloud_car/constants/api/api.dart';
+import 'package:cloud_car/model/car/vin_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/sort/sort_car_model_model.dart';
 import 'package:cloud_car/model/sort/sort_series_model.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+
 
 import '../../../model/car/car_info_model.dart';
 import '../../../utils/toast/cloud_toast.dart';
@@ -52,13 +54,13 @@ class SortFunc{
  }
 
  ///验证vin合理性
- static Future<bool> getVinCheck(String vin)async{
+ static Future<VinModel?> getVinCheck(String vin)async{
     var model=await apiClient.request(API.car.vinCheck,data: {'vin':vin});
     if(model.code==0){
-      return true;
+      return VinModel.fromJson(model.data);
     }else{
       CloudToast.show(model.msg);
-      return false;
+      return null;
     }
  }
 }

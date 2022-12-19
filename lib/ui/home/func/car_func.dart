@@ -383,6 +383,7 @@ class CarFunc {
           'transferType':saleModel.transferType,
           'priceInfo':priceInfo,
           'customerId':saleModel.customerId,
+          'customerChannel':saleModel.customerChannel,
           'masterInfo':masterInfo,
           'thirdPartInfo':thirdPartInfo,
           'remark':saleModel.remark ,
@@ -402,6 +403,7 @@ class CarFunc {
   ///发起收购合同
   static Future<bool> addPurchase(PurchaseCarInfo purchaseCarInfo,PurchaseInfo purchaseInfo,PurchasePhotoModel purchasePhotoModel) async {
     Map<String, dynamic> baseInfo = {
+      'channel':purchaseCarInfo.channel,
       "modelId":purchaseCarInfo.carModelId,
       "vin":purchaseCarInfo.viNum,
       "engineNo":purchaseCarInfo.engineNum,
@@ -431,7 +433,7 @@ class CarFunc {
       // purchaseInfo.downPaymentNum!=null?
       // (num.parse(purchaseInfo.downPaymentNum!)/100).toString():
       // null,
-      "BalancePaymentRate":purchaseInfo.downPaymentAmount!=null && purchaseInfo.transactionAmount !=null?(num.parse(purchaseInfo.transactionAmount!)-num.parse(purchaseInfo.downPaymentAmount!)).toString():null,
+      ////"BalancePaymentRate":purchaseInfo.downPaymentAmount!=null && purchaseInfo.transactionAmount !=null?(num.parse(purchaseInfo.transactionAmount!)-num.parse(purchaseInfo.downPaymentAmount!)).toString():null,
       // ( num.parse(purchaseInfo.transactionAmount!)-num.parse(purchaseInfo.downPaymentNum!)).toString(),
       // purchaseInfo.downPaymentNum!=null?
       // (1-num.parse(purchaseInfo.downPaymentNum!)/100).toString():null,
@@ -538,7 +540,7 @@ class CarFunc {
       "commercialInsurancePrice":newPublishCarInfo.commercialInsurancePrice!=null?num.parse(newPublishCarInfo.commercialInsurancePrice!):null ,
     };
     Map<String, dynamic> purchaseInfo = {
-      'price':newPublishCarInfo.purchasePrice,
+      'price':num.parse(newPublishCarInfo.purchasePrice!)*10000,
       'date':newPublishCarInfo.purchaseDateStr,
       'liaison':newPublishCarInfo.purchasePerson,
     };

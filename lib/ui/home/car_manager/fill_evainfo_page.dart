@@ -398,6 +398,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
       child: Material(
         color: Colors.transparent,
         child: EditItemWidget(
+
           titleColor:const Color(0xFF999999),
           title: title,
           titleWidth: titleWidth,
@@ -425,6 +426,8 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
       builder: (context) {
         return CarListPicker(
+
+          according: false,
           carString: _transferListMap[_carInfo.transfer] ?? '',
           items: transferList,
           callback: (String content, int value) {
@@ -447,6 +450,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
       builder: (context) {
         return CarListPicker(
+          according: false,
           carString: _paintListMap[_carInfo.paint] ?? '',
           items: paintList,
           callback: (String content, int value) {
@@ -470,6 +474,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
       builder: (context) {
         return CarListPicker(
+          according: false,
           carString: _paintListMap[_carInfo.plate] ?? "",
           items: paintList,
           callback: (String content, int value) {
@@ -492,6 +497,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
       builder: (context) {
         return CloudListPickerWidget(
+
           title: '更换件情况',
           items: replaceList.map((e) => e.name).toList(),
           onConfirm: (String? content, int? value) async {
@@ -530,6 +536,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
             if (index == 0) {
               await Get.bottomSheet(
                 CloudListPickerWidget(
+
                   title: '变速箱情况',
                   items: haveFixList,
                   onConfirm: (str, index) {
@@ -602,11 +609,13 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
   // 真是公里数点击事件
   void _mileageOnTap() async {
     await showModalBottomSheet(
+
       context: context,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
       builder: (context) {
         return CloudListPickerWidget(
+
             title: '有无更改真实公里数',
             items: shamMileage,
             onConfirm: (str, index) {

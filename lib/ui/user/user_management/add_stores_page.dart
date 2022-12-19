@@ -18,10 +18,7 @@ class AddStoresPage extends StatefulWidget {
   State<AddStoresPage> createState() => _AddStoresPageState();
 }
 
-
 class _AddStoresPageState extends State<AddStoresPage> {
-
-
   // String storesName = '';
   // String storesAddress = '';
   bool res = false;
@@ -32,10 +29,9 @@ class _AddStoresPageState extends State<AddStoresPage> {
   final TextEditingController genderController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController commissionController = TextEditingController();
-  final TextEditingController codeCreditController=TextEditingController();
-  final TextEditingController storesPhotoController=TextEditingController();
-  final TextEditingController idCardController=TextEditingController();
-
+  final TextEditingController codeCreditController = TextEditingController();
+  final TextEditingController storesPhotoController = TextEditingController();
+  final TextEditingController idCardController = TextEditingController();
 
   List<ChooseItem> colorList = [
     ChooseItem(name: '男'),
@@ -43,7 +39,6 @@ class _AddStoresPageState extends State<AddStoresPage> {
   ];
 
   Gender? _gender;
-
 
   @override
   void dispose() {
@@ -109,13 +104,19 @@ class _AddStoresPageState extends State<AddStoresPage> {
             72.hb,
             CloudBottomButton(
               onTap: () async {
-
-                if(!canTap){
+                if (!canTap) {
                   return;
                 }
-                res = await BusinessFunc.getStoreadd(storesNameController.text, storesAddressController.text,
-                  nameController.text,_gender!.typeNum,phoneController.text,commissionController.text,idCardController.text,codeCreditController.text);
-                if(res){
+                res = await BusinessFunc.getStoreadd(
+                    storesNameController.text,
+                    storesAddressController.text,
+                    nameController.text,
+                    _gender!.typeNum,
+                    phoneController.text,
+                    commissionController.text,
+                    idCardController.text,
+                    codeCreditController.text);
+                if (res) {
                   BotToast.showText(text: '新增成功');
                   Get.back();
                 }
@@ -127,7 +128,6 @@ class _AddStoresPageState extends State<AddStoresPage> {
       ),
     );
   }
-
 
   _real() {
     return Container(
@@ -145,7 +145,6 @@ class _AddStoresPageState extends State<AddStoresPage> {
             title: '门店名称',
             tips: '请输入门店名称',
           ),
-
           EditItemWidget(
             topIcon: false,
             paddingStart: 0,
@@ -173,7 +172,6 @@ class _AddStoresPageState extends State<AddStoresPage> {
             title: '联系电话',
             tips: '请输入联系电话',
           ),
-
         ],
       ),
     );
@@ -195,26 +193,25 @@ class _AddStoresPageState extends State<AddStoresPage> {
             title: '姓名',
             tips: '请输入',
           ),
-
           GestureDetector(
-            onTap: ()async{
+            onTap: () async {
               await showModalBottomSheet(
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                  borderRadius:
-                  BorderRadius.vertical(top: Radius.circular(16.w))),
-              builder: (context) {
-              return CloudListPickerWidget(
-              title: '性别',
-              items: colorList.map((e) => e.name).toList(),
-              onConfirm: (strList, indexList) {
-                genderController.text = strList;
-                _gender = Gender.getValue(indexList+1);
-              Get.back();
-              FocusManager.instance.primaryFocus?.unfocus();
-              setState(() {});
-              });
-              },
+                context: context,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(16.w))),
+                builder: (context) {
+                  return CloudListPickerWidget(
+                      title: '性别',
+                      items: colorList.map((e) => e.name).toList(),
+                      onConfirm: (strList, indexList) {
+                        genderController.text = strList;
+                        _gender = Gender.getValue(indexList + 1);
+                        Get.back();
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        setState(() {});
+                      });
+                },
               );
             },
             child: EditItemWidget(
@@ -226,12 +223,11 @@ class _AddStoresPageState extends State<AddStoresPage> {
               title: '性别',
               tips: '请选择',
               endIcon: Image(
-                image: AssetImage(Assets.icons.icGoto.path) ,
+                image: AssetImage(Assets.icons.icGoto.path),
                 width: 32.w,
                 height: 32.w,
               ),
               canChange: false,
-
             ),
           ),
           EditItemWidget(
@@ -243,7 +239,7 @@ class _AddStoresPageState extends State<AddStoresPage> {
             title: '手机号',
             tips: '请输入',
             inputFormatters: <TextInputFormatter>[
-              LengthLimitingTextInputFormatter(11)//限制长度
+              LengthLimitingTextInputFormatter(11) //限制长度
             ],
           ),
           EditItemWidget(
@@ -255,11 +251,13 @@ class _AddStoresPageState extends State<AddStoresPage> {
             title: '身份证',
             tips: '请输入身份证号',
             inputFormatters: <TextInputFormatter>[
-              LengthLimitingTextInputFormatter(18)//限制长度
+              LengthLimitingTextInputFormatter(18) //限制长度
             ],
           ),
           EditItemWidget(
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
+            ],
             topIcon: false,
             paddingStart: 0,
             titleColor: const Color(0xFF999999),
@@ -269,7 +267,6 @@ class _AddStoresPageState extends State<AddStoresPage> {
             tips: '请输入',
             endText: '%',
           ),
-
         ],
       ),
     );
@@ -303,5 +300,4 @@ class _AddStoresPageState extends State<AddStoresPage> {
 
     return true;
   }
-
 }

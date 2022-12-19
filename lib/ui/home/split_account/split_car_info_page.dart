@@ -249,7 +249,8 @@ class _SplitCarInfoPageState extends State<SplitCarInfoPage> {
           _function(
             '首次上牌',
                 () async {
-              var firstDate = await CarDatePicker.calenderPicker(DateTime(1960), DateTime.now());
+                  var firstDate = await CarDatePicker.pick(DateTime.now(),);
+             /// var firstDate = await CarDatePicker.calenderPicker(DateTime(1960), DateTime.now());
               _publishCarInfo.licensingDate = firstDate;
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
@@ -266,13 +267,13 @@ class _SplitCarInfoPageState extends State<SplitCarInfoPage> {
                     borderRadius:
                     BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
-                  return CloudGridPickerWidget(
+                  return CloudGridPickerWidget(time: false,
                       title: '车身颜色',
                       items: colorList.map((e) => e.name).toList(),
                       onConfirm: (strList, indexList) {
                         if(strList.isNotEmpty){
                           _publishCarInfo.carColor = strList.first;
-                          Get.back();
+                          // Get.back();
                           FocusManager.instance.primaryFocus?.unfocus();
                           setState(() {});
                         }

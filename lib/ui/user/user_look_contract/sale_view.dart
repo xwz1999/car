@@ -25,6 +25,7 @@ class _SaleViewState extends State<SaleView>
     with AutomaticKeepAliveClientMixin {
   int _page = 1;
   final int _size = 10;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -57,21 +58,26 @@ class _SaleViewState extends State<SaleView>
         slivers: [
           SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-                var model = widget.saleList[index];
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
-                  child: _getCard(
-                    model.status,
-                    '出售合同（${model.contractSn}）',
-                    model.modelName,
-                    model.customerName,
-                    model.status != 1
-                        ? '/'
-                        : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
-                        format: 'yyyy-MM-dd'),
-                  ),
-                );
-              }, childCount: widget.saleList.length))
+            var model = widget.saleList[index];
+            return GestureDetector(
+              onTap: () {
+                // print("这是数据");
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+                child: _getCard(
+                  model.status,
+                  '出售合同（${model.contractSn}）',
+                  model.modelName,
+                  model.customerName,
+                  model.status != 1
+                      ? '/'
+                      : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
+                          format: 'yyyy-MM-dd'),
+                ),
+              ),
+            );
+          }, childCount: widget.saleList.length))
         ]);
   }
 

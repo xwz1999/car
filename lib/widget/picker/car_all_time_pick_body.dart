@@ -116,7 +116,6 @@ class _CarAllTimePickBodyState extends State<CarAllTimePickBody> {
     _pickMonth = widget.initTime.month;
     _pickDay = widget.initTime.day;
     _pickHour = widget.initTime.hour;
-
     _pickMinute = widget.initTime.minute;
     super.initState();
   }

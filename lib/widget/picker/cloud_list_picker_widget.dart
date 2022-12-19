@@ -41,12 +41,14 @@ class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
     return CarPickerBox(
         height: widget.items.length * (widget.itemHeight ?? 30.w) + 300.w,
         title: widget.title,
+        time: false,
         onPressed: () {
           if (_pickIndex == null) {
             return;
           } else {
             widget.onConfirm(_pickString!, _pickIndex!);
           }
+          Navigator.pop(context);
         },
         child: ListView.builder(
           shrinkWrap: true,
@@ -60,8 +62,8 @@ class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
   _getListItem(String item, int index) {
     return GestureDetector(
       onTap: () {
-        _pickString = item;
-        _pickIndex = index;
+        // _pickString = item;
+        // _pickIndex = index;
         setState(() {});
       },
       child: Container(
@@ -83,15 +85,28 @@ class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
                     height: 30.w,
                   ),
             10.wb,
-            Text(
-              item,
-              style: TextStyle(
-                  color: _pickString == item
-                      ? kPrimaryColor
-                      : BaseStyle.color333333,
-                  fontWeight:
-                      _pickString == item ? FontWeight.bold : FontWeight.normal,
-                  fontSize: BaseStyle.fontSize30),
+            GestureDetector(
+              onTap: () {
+                _pickString = item;
+                _pickIndex = index;
+                if (_pickIndex == null) {
+                  return;
+                } else {
+                  widget.onConfirm(item, index);
+                }
+                setState(() {});
+              },
+              child: Text(
+                item,
+                style: TextStyle(
+                    color: _pickString == item
+                        ? kPrimaryColor
+                        : BaseStyle.color333333,
+                    fontWeight: _pickString == item
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                    fontSize: BaseStyle.fontSize30),
+              ),
             ),
             10.wb,
             _pickString == item ? 30.wb : const SizedBox(),

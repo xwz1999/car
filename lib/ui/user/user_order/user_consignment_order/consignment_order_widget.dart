@@ -184,6 +184,7 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
                       width: 196.w,
                       height: 150.w,
                       child: CloudImageNetworkWidget.car(
+                        according: true,
                         urls: [model.carPhoto],
                       ),
                     ),

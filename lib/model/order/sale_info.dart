@@ -6,6 +6,11 @@ part 'sale_info.g.dart';
 @JsonSerializable()
 class SaleInfo extends Equatable {
   final int id;
+  final int customerChannel;
+  final String customerChannelName;
+  final int status;
+  final String statusName;
+  final num createdAt;
   final Car car;
   final Contract contract;
   final Deposit deposit;
@@ -22,6 +27,11 @@ class SaleInfo extends Equatable {
 
   static SaleInfo get init => const SaleInfo(
       id: 0,
+      customerChannel: 0,
+      customerChannelName: '',
+      status: 0,
+      statusName: '',
+      createdAt: 0,
       car: Car(
           licensingDate: 0,
           carId: 0,
@@ -31,7 +41,7 @@ class SaleInfo extends Equatable {
           transfer: 0),
       contract: Contract(
         contract: 0,
-        contractSn:'',
+        contractSn: '',
         downPayment: '',
         thirdPartName: '',
         thirdPartId: 0,
@@ -46,21 +56,35 @@ class SaleInfo extends Equatable {
         transferTypeName: '',
         thirdPartKind: '',
       ),
-      deposit: Deposit(amount: '', createdAt: 0, payType: ''),
+      deposit: Deposit(amount: '', createdAt: 0, payType: '', id: 0),
       downPayment: DownPayment(
         amount: '',
         createdAt: 0,
         proof: '',
+        id: 0,
       ),
-      balancePayment: BalancePayment(amount: '', createdAt: 0, proof: ''),
-      report: Report(path: '', reportId: 0),
-      customer: SaleCustomer(name: '', phone: ''),
+      balancePayment:
+          BalancePayment(amount: '', createdAt: 0, proof: '', id: 0),
+      report: Report(
+        path: '',
+        id: 0,
+      ),
+      customer: SaleCustomer(name: '', phone: '', id: 0),
       means: Means(
-          certificate: '', guaranteeSlip: '', invoice: '', vehicleLicense: ''));
+          certificate: '',
+          guaranteeSlip: '',
+          invoice: '',
+          vehicleLicense: '',
+          id: 0));
 
   @override
   List<Object?> get props => [
         id,
+        customerChannel,
+        customerChannelName,
+        status,
+        statusName,
+        createdAt,
         car,
         contract,
         deposit,
@@ -81,6 +105,11 @@ class SaleInfo extends Equatable {
     required this.report,
     required this.means,
     required this.customer,
+    required this.customerChannel,
+    required this.customerChannelName,
+    required this.status,
+    required this.statusName,
+    required this.createdAt,
   });
 }
 
@@ -205,6 +234,7 @@ class Contract extends Equatable {
 
 @JsonSerializable()
 class Deposit extends Equatable {
+  final int id;
   final String amount;
   final String payType;
   final num createdAt;
@@ -215,17 +245,19 @@ class Deposit extends Equatable {
   Map<String, dynamic> toJson() => _$DepositToJson(this);
 
   const Deposit({
+    required this.id,
     required this.amount,
     required this.payType,
     required this.createdAt,
   });
 
   @override
-  List<Object?> get props => [amount, payType, createdAt];
+  List<Object?> get props => [id, amount, payType, createdAt];
 }
 
 @JsonSerializable()
 class DownPayment extends Equatable {
+  final int id;
   final String amount;
   final String proof;
   final num createdAt;
@@ -236,17 +268,19 @@ class DownPayment extends Equatable {
   Map<String, dynamic> toJson() => _$DownPaymentToJson(this);
 
   const DownPayment({
+    required this.id,
     required this.amount,
     required this.proof,
     required this.createdAt,
   });
 
   @override
-  List<Object?> get props => [amount, proof, createdAt];
+  List<Object?> get props => [id, amount, proof, createdAt];
 }
 
 @JsonSerializable()
 class BalancePayment extends Equatable {
+  final int id;
   final String amount;
   final String proof;
   final num createdAt;
@@ -257,18 +291,19 @@ class BalancePayment extends Equatable {
   Map<String, dynamic> toJson() => _$BalancePaymentToJson(this);
 
   const BalancePayment({
+    required this.id,
     required this.amount,
     required this.proof,
     required this.createdAt,
   });
 
   @override
-  List<Object?> get props => [amount, proof, createdAt];
+  List<Object?> get props => [id, amount, proof, createdAt];
 }
 
 @JsonSerializable()
 class Report extends Equatable {
-  final int reportId;
+  final int id;
   final String path;
 
   factory Report.fromJson(Map<String, dynamic> json) => _$ReportFromJson(json);
@@ -276,16 +311,17 @@ class Report extends Equatable {
   Map<String, dynamic> toJson() => _$ReportToJson(this);
 
   const Report({
-    required this.reportId,
+    required this.id,
     required this.path,
   });
 
   @override
-  List<Object?> get props => [reportId, path];
+  List<Object?> get props => [id, path];
 }
 
 @JsonSerializable()
 class Means extends Equatable {
+  final int id;
   final String certificate;
   final String vehicleLicense;
   final String invoice;
@@ -296,6 +332,7 @@ class Means extends Equatable {
   Map<String, dynamic> toJson() => _$MeansToJson(this);
 
   const Means({
+    required this.id,
     required this.certificate,
     required this.vehicleLicense,
     required this.invoice,
@@ -304,16 +341,18 @@ class Means extends Equatable {
 
   @override
   List<Object?> get props =>
-      [certificate, vehicleLicense, invoice, guaranteeSlip];
+      [id, certificate, vehicleLicense, invoice, guaranteeSlip];
 }
 
 @JsonSerializable()
 class SaleCustomer extends Equatable {
+  final int id;
   final String name;
   final String phone;
 
   @override
   List<Object?> get props => [
+        id,
         name,
         phone,
       ];
@@ -324,6 +363,7 @@ class SaleCustomer extends Equatable {
   Map<String, dynamic> toJson() => _$SaleCustomerToJson(this);
 
   const SaleCustomer({
+    required this.id,
     required this.name,
     required this.phone,
   });

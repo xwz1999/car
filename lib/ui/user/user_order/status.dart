@@ -1,6 +1,6 @@
 ///售车订单状态
 enum OrderSaleStatus {
-  cancel(0, '交易取消'),
+  cancel(60, '交易取消'),
   unSign(1, '待签订'),
   sign(2, '已签订'),
   deposit(3, '待检测'),
@@ -22,12 +22,14 @@ enum OrderSaleStatus {
 
   int get progressNum {
     switch (num) {
-      case 0:
+      case 60:
         return 3;
       case 1:
-        return 1;
+        return 0;
       case 2:
-        return 2;
+        return 1;
+      case 3:
+          return 2;
       case 10:
         return 2;
       case 11:
@@ -54,6 +56,32 @@ enum OrderSaleStatus {
   const OrderSaleStatus(this.num, this.str);
 }
 
+
+enum QOrderSaleStatus{
+  unSign(1, '待签订'),
+  sign(2, '已签订'),
+  orderFinal(50, '交易完成'),
+  cancel(60, '交易取消');
+  final int num;
+  final String str;
+  static QOrderSaleStatus getStatus(int value) =>
+      QOrderSaleStatus.values.firstWhere((element) => element.num == value);
+  int get progressNum2 {
+    switch(num){
+      case 1:
+        return 0;
+      case 2:
+        return 2;
+      case 50:
+        return 3;
+      case 60:
+        return 3;
+      default:
+        return -1;
+    }
+  }
+  const QOrderSaleStatus(this.num, this.str);
+}
 /// 售车订单筛选状态
 
 enum OrderSaleSearchStatus {
@@ -253,12 +281,12 @@ enum OrderType {
 
 ///车务，店长
 enum ReminderApprovalType{
-  all(1,'全部'),
-  applicationSale(2,'出售申请'),
-  modify(3,'修改申请'),
-  release(4,'发布审核'),
-  shelves(5,'下架申请'),
-  acquisition(6,'收购申请');
+  all(0,'全部'),
+  applicationSale(1,'出售申请'),
+  modify(2,'修改申请'),
+  release(3,'发布审核'),
+  shelves(4,'下架申请'),
+  acquisition(5,'收购申请');
   final int typeNum;
   final String typeStr;
   static ReminderApprovalType getValue(int value)=>

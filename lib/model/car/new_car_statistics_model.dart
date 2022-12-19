@@ -40,6 +40,8 @@ class BusinessCount extends Equatable{
   final int reserveCount;
   final int soldCount;
   final int backOutCount;
+  final int signingCount;
+  // final int signedCount;
 
   factory BusinessCount.fromJson(Map<String, dynamic> json) =>_$BusinessCountFromJson(json);
   @override
@@ -48,12 +50,16 @@ class BusinessCount extends Equatable{
     reserveCount,
     soldCount,
     backOutCount,
+    signingCount,
+    // signedCount,
   ];
   const BusinessCount({
     required this.sellCount,
     required this.reserveCount,
     required this.soldCount,
     required this.backOutCount,
+    required this.signingCount,
+    // required this.signedCount
   });
 
   Map<String, dynamic> toJson() => _$BusinessCountToJson(this);
@@ -61,7 +67,11 @@ class BusinessCount extends Equatable{
     sellCount: 0,
     reserveCount: 0,
     soldCount: 0,
-    backOutCount: 0,);
+    backOutCount: 0,
+  // signedCount: 0,
+    signingCount: 0,
+
+  );
 }
 
 @JsonSerializable()
@@ -72,6 +82,8 @@ class StoreCount extends Equatable{
   final int reserveCount;
   final int soldCount;
   final int backOutCount;
+  final int signingCount;
+  // final int signedCount;
 
   @override
   List<Object?> get props => [
@@ -79,6 +91,8 @@ class StoreCount extends Equatable{
     reserveCount,
     soldCount,
     backOutCount,
+    signingCount,
+    // signedCount,
   ];
 
   Map<String, dynamic> toJson() => _$StoreCountToJson(this);
@@ -87,13 +101,19 @@ class StoreCount extends Equatable{
     required this.reserveCount,
     required this.soldCount,
     required this.backOutCount,
+    // required this.signedCount,
+    required this.signingCount,
+
   });
 
   static StoreCount get init => const StoreCount(
     sellCount: 0,
     reserveCount: 0,
     soldCount: 0,
-    backOutCount: 0,);
+    backOutCount: 0,
+  signingCount: 0,
+    // signedCount: 0,
+  );
 }
 
 @JsonSerializable()
@@ -103,6 +123,8 @@ class OwnCount extends Equatable{
   final int reserveCount;
   final int soldCount;
   final int backOutCount;
+  final int signingCount;
+  // final int signedCount;
 
   @override
   List<Object?> get props => [
@@ -110,6 +132,8 @@ class OwnCount extends Equatable{
     reserveCount,
     soldCount,
     backOutCount,
+    signingCount,
+    // signedCount,
   ];
 
   Map<String, dynamic> toJson() => _$OwnCountToJson(this);
@@ -118,11 +142,16 @@ class OwnCount extends Equatable{
     required this.reserveCount,
     required this.soldCount,
     required this.backOutCount,
+    // required this.signedCount,
+    required this.signingCount,
   });
 
   static OwnCount get init => const OwnCount(
     sellCount: 0,
     reserveCount: 0,
     soldCount: 0,
-    backOutCount: 0,);
+    backOutCount: 0,
+   // signedCount: 0,
+    signingCount: 0,
+  );
 }

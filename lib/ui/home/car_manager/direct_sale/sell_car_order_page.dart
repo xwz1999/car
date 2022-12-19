@@ -64,7 +64,7 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
       ),
       payType: 0,
       priceInfo: PriceInfo(downPayment: '', dealPrice: '', deposit: ''),
-      carId: 0);
+      carId: 0, customerChannel: 0);
 
   @override
   void initState() {

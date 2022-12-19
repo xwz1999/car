@@ -67,7 +67,7 @@ class _LoginBySmsPageState extends State<LoginBySmsPage> {
             Image.asset(
               Assets.images.loginBg.path,
               width: 308.w,
-              height: 60.w,
+              height: 200.w,
             ),
             100.hb,
             CloudPhoneTextFieldWidget(

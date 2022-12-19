@@ -63,7 +63,7 @@ class _NoticePageState extends State<NoticePage>
                 Message(title:'客户邀约提醒',msg:'您的邀约客户将于24小时后到店',date: '01-01 11:11',type: 3 ),
                 Message(title:'分账确认提示',msg:'分账公告',date: '01-01 11:11',type: 4 ),
                 Message(title:'审批提醒',msg:'您的车辆发布审批被驳回',date: '01-01 11:11',type: 5 ),
-                Message(title:'系统通知',msg:'1.0.1版本功能升级了，立即查看>>>',date: '01-01 11:11',type: 6 ),
+               ///Message(title:'系统通知',msg:'1.0.1版本功能升级了，立即查看>>>',date: '01-01 11:11',type: 6 ),
               ];
               setState(() {});
             },

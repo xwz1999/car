@@ -106,18 +106,20 @@ class ShareUtil {
 
   /// 压缩图片
 
-  static Future<Uint8List> compressImageList(Uint8List data,) async {
+  static Future<Uint8List> compressImageList(Uint8List data) async {
     // int i=0;
     var result = await FlutterImageCompress.compressWithList(
       data,
       minHeight: 300,
       minWidth: 500,
-      quality:80,
+      quality:85
     );
-
+      print("这是数据${result.length}");
     if (result.length > 128000) {
     // i++;
-    //   print("这是数据${quality--}");
+    //   print("这是数据${result.length}");
+    //   print("这是数据${height--}");
+    //   print("这是数据${width--}");
       ///&& result.length < data.length
       // result = await FlutterImageCompress.compressWithList(
       //       result,
@@ -125,7 +127,8 @@ class ShareUtil {
       //       minWidth: 500,
       //       quality:90-i,
       //     );
-      result = await compressImageList(result,);
+
+      result = await compressImageList(result);
     }
     return result;
   }
@@ -143,7 +146,7 @@ class ShareUtil {
   // }
 
   /// 图片处理
-  static Future<Uint8List?> handleImage(String imgUrl) async {
+  static Future<Uint8List?> handleImage(String imgUrl,) async {
 
     var data = await getNetworkImageData(imgUrl.imageWithHost);
 
@@ -152,7 +155,8 @@ class ShareUtil {
       return null;
     }
     if (data.length > 128000) {
-      data = await compressImageList(data,);
+      print('图片进过处理');
+      data = await compressImageList(data);
     }
     return data;
   }

@@ -184,7 +184,7 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
               if(!widget.isRenew){
                 if(orderId!=0){
                   Get.to(() =>  AgentPayPage(
-                    price: '3000',
+                    price: '2998',
                     orderId: orderId,
                     title: '开通经纪人',
                   ));
@@ -192,7 +192,7 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
               }else{
                 if(orderId!=0){
                   Get.to(() =>  AgentPayPage(
-                    price: '1000',
+                    price: '2998',
                     orderId: orderId,
                     title: '续费经纪人',
                   ));
@@ -239,9 +239,6 @@ class _AgentCenterPageState extends State<AgentCenterPage> {
                           setState(() {
                             //_getSure;
                           });
-
-
-
                           //print(_getSure);
                           //Value = true;
                           //(Value);

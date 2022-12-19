@@ -8,12 +8,14 @@ class BeeCheckRadio<T> extends StatefulWidget {
   final Widget? indent;
   final Color? backColor;
   final bool? border;
+  final bool according;
   const BeeCheckRadio({
     super.key,
     this.value,
     this.groupValue,
     this.indent,
     this.backColor,
+    this.according=false,
     this.border = true,
   });
 
@@ -22,8 +24,9 @@ class BeeCheckRadio<T> extends StatefulWidget {
 }
 
 class _BeeCheckRadioState extends State<BeeCheckRadio> {
+  // widget.according? widget.groupValue?.first==widget.value:
   bool get _selected {
-    if (widget.groupValue!.contains(widget.value)) {
+    if ( widget.groupValue!.contains(widget.value)) {
       return true;
     } else {
       return false;

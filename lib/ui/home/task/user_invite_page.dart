@@ -261,7 +261,8 @@ class _UserInvitePageState extends State<UserInvitePage>
                     context,
                     NormalContentDialog(
                       type: NormalTextDialogType.delete,
-                      content: RichText(
+                      content:
+                      RichText(
                         text: TextSpan(
                             text: '是否拨打电话',
                             style: TextStyle(

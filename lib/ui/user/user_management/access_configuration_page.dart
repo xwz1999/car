@@ -36,7 +36,8 @@ class _AccessConfigurationPageState extends State<AccessConfigurationPage> {
   }
 
   _refresh() async {
-    permissions = await BusinessFunc.getRoleall();
+    // permissions = await BusinessFunc.getRoleall();
+    permissions=[RoleallModel(id: 0, describe: '负责录入车辆信息,编辑店里车辆', name: '车务'),RoleallModel(id: 1, describe: '参与平台卖车', name: '经纪人')];
     setState(() {});
   }
 
@@ -75,7 +76,7 @@ class _AccessConfigurationPageState extends State<AccessConfigurationPage> {
               onTap: () {
                 // print(permissions);
                 if (_selectIndex.isEmpty) {
-                  BotToast.showText(text: '请先选择车辆');
+                  BotToast.showText(text: '请先选择权限');
                 } else {
                   widget.callback(permissions[_selectIndex.first].name,
                       permissions[_selectIndex.first].id);

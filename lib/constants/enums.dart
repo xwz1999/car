@@ -197,3 +197,15 @@ enum TransferType{
   const TransferType(this.typeNum,this.typeStr);
 }
 
+
+///居间方信息
+  enum Square{
+    without(1,'无'),
+    cloudCar(2,'云云问车'),
+    other(3,'其他');
+    final int typeNum;
+    final String typeStr;
+    static Square getValue(int value) =>
+        Square.values.firstWhere((element) => element.typeNum==value);
+    const Square(this.typeNum,this.typeStr);
+  }

@@ -3,7 +3,7 @@ description: A new Flutter project.
 publish_to: 'none'
 
 
-version: 1.0.26+27
+version: 1.0.30+31
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -36,6 +36,7 @@ dependencies:
   #本地化存储
   hive: ^2.0.4
   hive_flutter: ^1.1.0
+  shared_preferences: ^2.0.15
   #刷新组件
   flutter_easyrefresh: ^2.2.1
   extended_image: ^7.0.0-dev.1
@@ -69,8 +70,8 @@ dependencies:
   #极光推送
 #  jpush_flutter: ^2.3.4
   #微信登录及支付
-#  fluwx: ^3.12.0
-  fluwx: ^3.8.3
+  fluwx: ^3.12.0
+#  fluwx: ^3.8.3
   #支付宝支付
   tobias: ^2.4.0+2
   #widget转image
@@ -108,6 +109,7 @@ dependencies:
   flutter_inappwebview: 5.4.3
   #图片缓存
   cached_network_image: ^3.2.1
+
 
 
 dev_dependencies:

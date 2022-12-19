@@ -155,6 +155,7 @@ class _PushCarOrderWidgetState extends State<PushCarOrderWidget> {
                       width: 196.w,
                       height: 150.w,
                       child: CloudImageNetworkWidget.car(
+                        according: true,
                         urls: [model.carPhoto],
                       ),
                     ),

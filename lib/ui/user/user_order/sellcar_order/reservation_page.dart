@@ -77,39 +77,51 @@ class _ReservationPageState extends State<ReservationPage> {
               height: 120.w,
               color: Colors.white,
               child: ProgressBar(
-                length: 6,
-                num: widget.status.progressNum,
+                length: _consignmentInfo.customerChannel == 2?3:6,
+                num: _consignmentInfo.customerChannel == 2
+                    ? QOrderSaleStatus.getStatus(_consignmentInfo.status)
+                        .progressNum2
+                    : widget.status.progressNum,
                 direction: false,
                 cancel: widget.status.num != 0,
-                HW: 96,
-                texts: [
-                  _text('预定'),
-                  _text('检测'),
-                  widget.status.num == 0 ? _text('订单取消') : _text('首付'),
-                  _text('过户'),
-                  _text('尾款'),
-                  _text('完成'),
-                ],
+                HW:  _consignmentInfo.customerChannel == 2?256:96,///96,
+                texts: _consignmentInfo.customerChannel == 2
+                    ? [
+                        _text('签订'),
+                        _text('预定'),
+                        _text('完成'),
+                      ]
+                    : [
+                        _text('预定'),
+                        _text('检测'),
+                        widget.status.num == 0 ? _text('订单取消') : _text('首付'),
+                        _text('过户'),
+                        _text('尾款'),
+                        _text('完成'),
+                      ],
               ),
             ),
-            _consignmentInfo.customer.name==''?const SizedBox(): _getContainer(
-              ///客户信息
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.w),
-                    child: _getTitle('客户信息'),
+            _consignmentInfo.customer.name == ''
+                ? const SizedBox()
+                : _getContainer(
+                    ///客户信息
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 0.w),
+                          child: _getTitle('客户信息'),
+                        ),
+                        36.hb,
+                        _getText('客户姓名', _consignmentInfo.customer.name,
+                            BaseStyle.color333333),
+                        36.hb,
+                        _getText('手机号', _consignmentInfo.customer.phone,
+                            BaseStyle.color333333)
+                      ],
+                    ),
                   ),
-                  36.hb,
-                  _getText('客户姓名', _consignmentInfo.customer.name,
-                      BaseStyle.color333333),
-                  36.hb,
-                  _getText('手机号', _consignmentInfo.customer.phone,
-                      BaseStyle.color333333)
-                ],
-              ),
-            ),
+
             ///车辆信息
             _getContainer(
               GestureDetector(
@@ -164,7 +176,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
             ///支付信息
             Offstage(
-              offstage: widget.status.num == 1||widget.status.num == 2,
+              offstage: widget.status.num == 1 || widget.status.num == 2,
               child: _getPay(),
             ),
 
@@ -172,10 +184,10 @@ class _ReservationPageState extends State<ReservationPage> {
             Offstage(
               offstage: widget.status.num == 1 ||
                   widget.status.num == 3 ||
-                  widget.status.num == 2 ,
-                  // widget.status.num == 10 ||
-                  // widget.status.num == 11 ||
-                  // widget.status.num == 20,
+                  widget.status.num == 2,
+              // widget.status.num == 10 ||
+              // widget.status.num == 11 ||
+              // widget.status.num == 20,
               child: _getReport(),
             ),
             // widget.status.num == 0
@@ -200,7 +212,8 @@ class _ReservationPageState extends State<ReservationPage> {
             ///车辆检测报告2
             Offstage(
               offstage: !(widget.status.num == 40 ||
-                  widget.status.num == 41 ||widget.status.num == 31||
+                  widget.status.num == 41 ||
+                  widget.status.num == 31 ||
                   widget.status.num == 50),
               child: _getReport2(),
             ),
@@ -259,7 +272,7 @@ class _ReservationPageState extends State<ReservationPage> {
           36.hb,
 
           Offstage(
-            offstage: widget.status.num == 0||widget.status.num == 1,
+            offstage: widget.status.num == 0 || widget.status.num == 1,
             child: Column(
               children: [
                 _getText('定金支付', '¥${_consignmentInfo.contract.deposit}',
@@ -278,28 +291,33 @@ class _ReservationPageState extends State<ReservationPage> {
           ),
 
           Offstage(
-            offstage: widget.status.num == 0||widget.status.num == 1||widget.status.num == 2||widget.status.num == 3||widget.status.num == 10||widget.status.num == 11,
+            offstage: widget.status.num == 0 ||
+                widget.status.num == 1 ||
+                widget.status.num == 2 ||
+                widget.status.num == 3 ||
+                widget.status.num == 10 ||
+                widget.status.num == 11,
             child: Column(
               children: [
                 40.hb,
                 widget.status.num == 20 || widget.status.num == 20
                     ? widget.status.num == 20
-                    ? _getText(
-                    '首付支付',
-                    '¥${_consignmentInfo.contract.downPayment}(审核中)',
-                    const Color(0xFF027AFF))
+                        ? _getText(
+                            '首付支付',
+                            '¥${_consignmentInfo.contract.downPayment}(审核中)',
+                            const Color(0xFF027AFF))
+                        : _getText(
+                            '首付支付',
+                            '¥${_consignmentInfo.contract.downPayment}(审核驳回)',
+                            const Color(0xFFE62222))
                     : _getText(
-                    '首付支付',
-                    '¥${_consignmentInfo.contract.downPayment}(审核驳回)',
-                    const Color(0xFFE62222))
-                    : _getText('首付支付', '¥${_consignmentInfo.contract.downPayment}',
-                    BaseStyle.color333333),
+                        '首付支付',
+                        '¥${_consignmentInfo.contract.downPayment}',
+                        BaseStyle.color333333),
                 widget.status.num == 20 ? 36.hb : 0.hb,
               ],
             ),
           ),
-
-
 
           // Offstage(
           //   offstage: widget.status.num != 20,
@@ -307,11 +325,14 @@ class _ReservationPageState extends State<ReservationPage> {
           // ),
           36.hb,
 
-
           Offstage(
-            offstage: widget.status.num == 0||widget.status.num == 1
-                ||widget.status.num == 2||widget.status.num == 3
-                ||widget.status.num == 10||widget.status.num == 11||widget.status.num == 20,
+            offstage: widget.status.num == 0 ||
+                widget.status.num == 1 ||
+                widget.status.num == 2 ||
+                widget.status.num == 3 ||
+                widget.status.num == 10 ||
+                widget.status.num == 11 ||
+                widget.status.num == 20,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -323,14 +344,15 @@ class _ReservationPageState extends State<ReservationPage> {
                 ),
                 16.hb,
                 GestureDetector(
-                  onTap: ()async{
-                    await CloudImagePreview.toPath(path: _consignmentInfo.downPayment.proof);
+                  onTap: () async {
+                    await CloudImagePreview.toPath(
+                        path: _consignmentInfo.downPayment.proof);
                   },
                   child: Container(
                     width: 200.w,
                     height: 150.w,
                     color: Colors.transparent,
-                    child:  CloudImageNetworkWidget(
+                    child: CloudImageNetworkWidget(
                       urls: [_consignmentInfo.downPayment.proof],
                     ),
                   ),
@@ -416,7 +438,7 @@ class _ReservationPageState extends State<ReservationPage> {
         _getTitle('车辆检测报告'),
         36.hb,
         GestureDetector(
-          onTap: ()async{
+          onTap: () async {
             await CloudImagePreview.toPath(path: _consignmentInfo.report.path);
           },
           child: SizedBox(
@@ -446,20 +468,11 @@ class _ReservationPageState extends State<ReservationPage> {
           _consignmentInfo.means.certificate,
         ),
         36.hb,
-        _getPhoto(
-          '行驶证',
-            _consignmentInfo.means.vehicleLicense
-        ),
+        _getPhoto('行驶证', _consignmentInfo.means.vehicleLicense),
         36.hb,
-        _getPhoto(
-          '发票',
-            _consignmentInfo.means.invoice
-        ),
+        _getPhoto('发票', _consignmentInfo.means.invoice),
         36.hb,
-        _getPhoto(
-          '保单',
-            _consignmentInfo.means.guaranteeSlip
-        ),
+        _getPhoto('保单', _consignmentInfo.means.guaranteeSlip),
         SizedBox(
           width: 686.w,
         ),
@@ -717,7 +730,7 @@ class _ReservationPageState extends State<ReservationPage> {
               color: BaseStyle.color333333, fontSize: BaseStyle.fontSize28),
         ),
         GestureDetector(
-          onTap: ()async{
+          onTap: () async {
             await CloudImagePreview.toPath(path: url);
           },
           child: SizedBox(
@@ -845,8 +858,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
 //车辆信息下拉
   _getList() {
-    return
-      DropDown(
+    return DropDown(
       border: true,
       title: _getTitle('车辆总价'),
       text: SizedBox(

@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
               Image.asset(
                 Assets.images.loginBg.path,
                 width: 308.w,
-                height: 60.w,
+                height: 200.w,
               ),
               120.hb,
               // Row(

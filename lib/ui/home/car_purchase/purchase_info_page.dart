@@ -11,23 +11,31 @@ import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/picker/car_date_picker.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:common_utils/common_utils.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../utils/share_util.dart';
 import '../../../widget/button/colud_check_radio.dart';
 
 class PurchaseInfoPage extends StatefulWidget {
   final PurchaseCarInfo purchaseCarInfo;
   final PurchaseInfo purchaseInfo;
   final PurchasePhotoModel reportPhotoModel;
-  const PurchaseInfoPage({super.key, required this.purchaseCarInfo, required this.purchaseInfo, required this.reportPhotoModel});
+
+  const PurchaseInfoPage({super.key,
+    required this.purchaseCarInfo,
+    required this.purchaseInfo,
+    required this.reportPhotoModel});
 
   @override
   _PurchaseInfoPageState createState() => _PurchaseInfoPageState();
@@ -36,17 +44,20 @@ class PurchaseInfoPage extends StatefulWidget {
 class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   final TextEditingController ownerNameController = TextEditingController();
   final TextEditingController ownerIdController = TextEditingController();
-  final TextEditingController  institutionsController= TextEditingController();
+  final TextEditingController institutionsController = TextEditingController();
   final TextEditingController phoneNumController = TextEditingController();
   final TextEditingController bankNumController = TextEditingController();
   final TextEditingController bankController = TextEditingController();
 
   // final TextEditingController signingAddressController = TextEditingController();
 
-  final TextEditingController transactionAmountController = TextEditingController();
+  final TextEditingController transactionAmountController =
+  TextEditingController();
   final TextEditingController depositAmountController = TextEditingController();
-  final TextEditingController downPaymentAmountController = TextEditingController();
-  final TextEditingController balanceAmountBackupController = TextEditingController();
+  final TextEditingController downPaymentAmountController =
+  TextEditingController();
+  final TextEditingController balanceAmountBackupController =
+  TextEditingController();
 
   // final TextEditingController deliveryPlaceController = TextEditingController();
   // final TextEditingController transferTaxController = TextEditingController();
@@ -54,40 +65,54 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   // final TextEditingController serviceChargeController = TextEditingController();
   final TextEditingController remarkController = TextEditingController();
 
-  final TextEditingController downPaymentNumController = TextEditingController();
-  final TextEditingController balanceAmountBackupNumController = TextEditingController();
+  final TextEditingController downPaymentNumController =
+  TextEditingController();
+  final TextEditingController balanceAmountBackupNumController =
+  TextEditingController();
+  final TextEditingController designationController = TextEditingController();
+  late int state = 0;
 
-  late int state=0;
   bool get canTap {
-    if (ownerIdController.text.trim().isEmpty) {
+    if (ownerIdController.text
+        .trim()
+        .isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-    if (ownerNameController.text.trim().isEmpty) {
+    if (ownerNameController.text
+        .trim()
+        .isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-    if (phoneNumController.text.trim().isEmpty) {
+    if (phoneNumController.text
+        .trim()
+        .isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-    if (bankNumController.text.trim().isEmpty) {
+    if (bankNumController.text
+        .trim()
+        .isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-    if (bankController.text.trim().isEmpty) {
+    if (bankController.text
+        .trim()
+        .isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
 
-
-
-
-    if (transactionAmountController.text.trim().isEmpty) {
+    if (transactionAmountController.text
+        .trim()
+        .isEmpty) {
       BotToast.showText(text: '请先输入成交金额');
       return false;
     }
-    if(depositAmountController.text.trim().isEmpty){
+    if (depositAmountController.text
+        .trim()
+        .isEmpty) {
       BotToast.showText(text: '请先输入定金金额');
       return false;
     }
@@ -99,7 +124,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     //   BotToast.showText(text: '请先输入首付金额');
     //   return false;
     // }
-    if (balanceAmountBackupController.text.trim().isEmpty) {
+    if (balanceAmountBackupController.text
+        .trim()
+        .isEmpty) {
       BotToast.showText(text: '请先输入尾款金额');
       return false;
     }
@@ -108,13 +135,12 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     //   BotToast.showText(text: '请先输入尾款占比');
     //   return false;
     // }
-    if(  widget.purchaseInfo.deliveryDate==null){
+    if (widget.purchaseInfo.deliveryDate == null) {
       BotToast.showText(text: '请先选择交付日期');
       return false;
     }
 
-
-    if(  widget.purchaseInfo.remark==''){
+    if (widget.purchaseInfo.remark == '') {
       BotToast.showText(text: '请先输入车况描述');
       return false;
     }
@@ -129,18 +155,20 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     widget.purchaseInfo.transactionAmount = transactionAmountController.text;
     widget.purchaseInfo.downPaymentAmount = depositAmountController.text;
     widget.purchaseInfo.downPaymentNum = downPaymentNumController.text;
-    widget.purchaseInfo.balanceAmountBackup = balanceAmountBackupController.text;
-    widget.purchaseInfo.balanceAmountBackupNum = balanceAmountBackupNumController.text;
-    widget.purchaseInfo.kind=state+1;
+    widget.purchaseInfo.balanceAmountBackup =
+        balanceAmountBackupController.text;
+    widget.purchaseInfo.balanceAmountBackupNum =
+        balanceAmountBackupNumController.text;
+    widget.purchaseInfo.kind = state + 1;
     //widget.purchaseInfo.remark = remarkController.text;
-
 
     return true;
   }
 
   final List<int> _selectIndex2 = [0];
-
   final List<String> _models1 = ['个人', '公司'];
+  final List<int> _selectIndex3 = [];
+  final List<String> _models2 = ['公司', '门店'];
   List<ChooseItem> formalitiesList = [
     ChooseItem(name: '行驶证'),
     ChooseItem(name: '登记证书'),
@@ -165,6 +193,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     remarkController.dispose();
     downPaymentNumController.dispose();
     balanceAmountBackupNumController.dispose();
+    designationController.dispose();
     super.dispose();
   }
 
@@ -184,43 +213,80 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       ),
       backgroundColor: bodyColor,
       extendBody: true,
-      body:  ListView(
+      body: ListView(
         children: [
-          Padding(padding: EdgeInsets.all(32.w),child:  '车主信息'.text.size(36.sp).color(const Color(0xFF999999)).make(),),
+          Padding(
+            padding: EdgeInsets.all(32.w),
+            child:
+            '车主信息'.text.size(36.sp).color(const Color(0xFF999999)).make(),
+          ),
           Container(
-              padding: EdgeInsets.only(left: 32.w,right: 12.w),
+              padding: EdgeInsets.only(left: 32.w, right: 12.w),
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: Colors.white,),
-              child: _ownerInfo()
+                color: Colors.white,
+              ),
+              child: _ownerInfo()),
+          Padding(
+            padding: EdgeInsets.all(32.w),
+            child:
+            '车款与交验车'.text.size(36.sp).color(const Color(0xFF999999)).make(),
           ),
-          Padding(padding: EdgeInsets.all(32.w),child:  '车款与交验车'.text.size(36.sp).color(const Color(0xFF999999)).make(),),
           Container(
-              padding: EdgeInsets.only(left: 32.w,right: 12.w),
+              padding: EdgeInsets.only(left: 32.w, right: 12.w),
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: Colors.white,),
-              child: _priceInfo()
+                color: Colors.white,
+              ),
+              child: _priceInfo()),
+          Padding(
+            padding: EdgeInsets.all(32.w),
+            child:
+            '收购方选择'.text.size(36.sp).color(const Color(0xFF999999)).make(),
           ),
-          Padding(padding: EdgeInsets.all(32.w),child:  '车况描述'.text.size(36.sp).color(const Color(0xFF999999)).make(),),
           Container(
-              padding: EdgeInsets.only(left: 32.w,right: 32.w),
+              padding: EdgeInsets.only(left: 32.w, right: 32.w),
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: Colors.white,),
-              child: _remark()
+                color: Colors.white,
+              ),
+              child: getAcquiring()),
+          Padding(
+            padding: EdgeInsets.all(32.w),
+            child:
+            '车况描述'.text.size(36.sp).color(const Color(0xFF999999)).make(),
           ),
-
+          Container(
+              padding: EdgeInsets.only(left: 32.w, right: 32.w),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              child: _remark()),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async{
+                // try{
+                //   var res =await Dio().get('contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF');
+                //   print(res);
+                // }catch(e){
+                //   print(e);
+                // }
+
+                // ShareUtil.saveNetImageToGallery(
+                //     'contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF');
+               // var res= await Dio().download("contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF", '');
+               // print(res.data.stream);
                 FocusManager.instance.primaryFocus?.unfocus();
                 if (!canTap) {
                   return;
                 }
-                Get.to(()=>PurchasePhotoPage(purchaseInfo: widget.purchaseInfo,
-                    purchaseCarInfo: widget.purchaseCarInfo, reportPhotoModel: widget.reportPhotoModel));
+                Get.to(() =>
+                    PurchasePhotoPage(
+                        purchaseInfo: widget.purchaseInfo,
+                        purchaseCarInfo: widget.purchaseCarInfo,
+                        reportPhotoModel: widget.reportPhotoModel));
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -230,11 +296,11 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           ).paddingAll(30.w),
         ],
       ),
-      );
+    );
   }
 
-  _remark(){
-    return  Column(
+  _remark() {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Row(
@@ -268,23 +334,20 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           width: double.infinity,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              border: Border.all(color: BaseStyle.colordddddd,width: 2.w)
-          ),
-          padding: EdgeInsets.symmetric(vertical: 16.w,horizontal: 20.w),
+              border: Border.all(color: BaseStyle.colordddddd, width: 2.w)),
+          padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
           height: 200.w,
           child: TextField(
             maxLines: 50,
             keyboardType: TextInputType.text,
-            onEditingComplete: () {
-
-            },
+            onEditingComplete: () {},
             onChanged: (text) {
               widget.purchaseInfo.remark = text;
             },
-
             style: TextStyle(
               color: BaseStyle.color333333,
-              fontSize: BaseStyle.fontSize28,),
+              fontSize: BaseStyle.fontSize28,
+            ),
             controller: remarkController,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.zero,
@@ -305,7 +368,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     );
   }
 
-  _priceInfo(){
+  _priceInfo() {
     var transactionAmount = EditItemWidget(
       topIcon: false,
       title: '成交金额',
@@ -314,22 +377,20 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       controller: transactionAmountController,
       endText: '元',
       inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
-      callback: (text){
-        if(depositAmountController.text.isNotEmpty){
-          balanceAmountBackupController.text=(num.parse(text)-num.parse(depositAmountController.text)).toString();
+      callback: (text) {
+        if (depositAmountController.text.isNotEmpty) {
+          balanceAmountBackupController.text =
+              (num.parse(text) - num.parse(depositAmountController.text))
+                  .toString();
           // num amount = num.parse(text);
           // num downPaymentNum = num.parse(downPaymentNumController.text);
           // downPaymentAmountController.text = (amount * downPaymentNum/100).toStringAsFixed(2);
           // balanceAmountBackupNumController.text = (100-downPaymentNum).toStringAsFixed(2);
           // balanceAmountBackupController.text =(( amount * (100-downPaymentNum))/100).toStringAsFixed(2);
-          setState(() {
-
-          });
-        }else{
-          balanceAmountBackupController.text='';
-          setState(() {
-
-          });
+          setState(() {});
+        } else {
+          balanceAmountBackupController.text = '';
+          setState(() {});
         }
       },
     );
@@ -340,22 +401,20 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       tips: '请输入',
       controller: depositAmountController,
       endText: '元',
-      callback: (text){
-        if(transactionAmountController.text.isNotEmpty){
-          balanceAmountBackupController.text=(num.parse(transactionAmountController.text)-num.parse(text)).toString();
+      callback: (text) {
+        if (transactionAmountController.text.isNotEmpty) {
+          balanceAmountBackupController.text =
+              (num.parse(transactionAmountController.text) - num.parse(text))
+                  .toString();
           // num amount = num.parse(text);
           // num downPaymentNum = num.parse(downPaymentNumController.text);
           // downPaymentAmountController.text = (amount * downPaymentNum/100).toStringAsFixed(2);
           // balanceAmountBackupNumController.text = (100-downPaymentNum).toStringAsFixed(2);
           // balanceAmountBackupController.text =(( amount * (100-downPaymentNum))/100).toStringAsFixed(2);
-          setState(() {
-
-          });
-        }else{
-          balanceAmountBackupController.text='';
-          setState(() {
-
-          });
+          setState(() {});
+        } else {
+          balanceAmountBackupController.text = '';
+          setState(() {});
         }
       },
     );
@@ -369,7 +428,6 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     //   endText: '元',
     // );
     var balanceAmount = EditItemWidget(
-
       topIcon: false,
       title: '尾款金额',
       paddingStart: 0.w,
@@ -412,7 +470,6 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     //   endText: '%',
     // );
 
-
     // var deliveryPlace = EditItemWidget(
     //   topIcon: false,
     //   title: '交付地点',
@@ -446,7 +503,6 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     //   endText: '元',
     // );
 
-
     return Column(
       children: [
         transactionAmount,
@@ -458,7 +514,11 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         _function(
           '交付时间',
               () async {
-            var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime(DateTime.now().year+100));
+            var firstDate = await CarDatePicker.pick(
+              DateTime.now(),
+            );
+
+            /// var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime(DateTime.now().year+100));
             widget.purchaseInfo.deliveryDate = firstDate;
             FocusManager.instance.primaryFocus?.unfocus();
             setState(() {});
@@ -498,14 +558,13 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         //   widget.purchaseInfo.formalities,
         //   '请选择',
         // ),
-
       ],
     );
   }
 
-   _ownerInfo() {
+  _ownerInfo() {
     var ownerName = EditItemWidget(
-      title: state==0?'姓名':'公司名称',
+      title: state == 0 ? '姓名' : '公司名称',
       tips: '请输入',
       controller: ownerNameController,
       topIcon: false,
@@ -518,8 +577,8 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       topIcon: false,
       paddingStart: 0.w,
       endIcon: GestureDetector(
-        onTap: ()async{
-          File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
+        onTap: () async {
+          File? file = await CloudImagePicker.pickSingleImage(title: '选择图片');
           if (file != null) {
             setState(() {});
             var cancel = CloudToast.loading;
@@ -532,9 +591,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
               ownerNameController.text = carInfoModel.name;
             }
             cancel();
-            setState(() {
-
-            });
+            setState(() {});
           }
         },
         child: Image.asset(
@@ -544,7 +601,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         ),
       ),
     );
-    var  institutionId= EditItemWidget(
+    var institutionId = EditItemWidget(
       title: '机构代码',
       tips: '请输入',
       controller: institutionsController,
@@ -552,7 +609,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       paddingStart: 0.w,
     );
     var phoneNum = EditItemWidget(
-      title: state==0?'手机号码':'联系电话',
+      title: state == 0 ? '手机号码' : '联系电话',
       tips: '请输入',
       controller: phoneNumController,
       topIcon: false,
@@ -566,24 +623,22 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       topIcon: false,
       paddingStart: 0.w,
       endIcon: GestureDetector(
-        onTap: ()async{
-          File? file= await CloudImagePicker.pickSingleImage(title: '选择图片');
+        onTap: () async {
+          File? file = await CloudImagePicker.pickSingleImage(title: '选择图片');
           if (file != null) {
             setState(() {});
             var cancel = CloudToast.loading;
             String urls = await apiClient.uploadImage(file);
-            BankCardInfoModel? bankCardInfoModel = await CarFunc.bankCardOCR(urls);
+            BankCardInfoModel? bankCardInfoModel =
+            await CarFunc.bankCardOCR(urls);
             if (bankCardInfoModel != null) {
               widget.purchaseInfo.bankNum = bankCardInfoModel.bankCardNo;
               bankNumController.text = bankCardInfoModel.bankCardNo;
               widget.purchaseInfo.bank = bankCardInfoModel.bankName;
               bankController.text = bankCardInfoModel.bankName;
-
             }
             cancel();
-            setState(() {
-
-            });
+            setState(() {});
           }
         },
         child: Image.asset(
@@ -610,7 +665,6 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     //   paddingStart: 0.w,
     // );
 
-
     return Column(
       children: [
         Padding(
@@ -630,10 +684,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
               ),
               SizedBox(
                 height: 50.w,
-                child: getChooseList(
-                        (int choice) {
-                              state=choice;
-                        }, _models1, _selectIndex2),
+                child: getChooseList((int choice) {
+                  state = choice;
+                }, _models1, _selectIndex2),
               ),
             ],
           ),
@@ -641,7 +694,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
 
         ownerName,
         // state==0?const Sizebox():ownerName
-        state==0?ownerId:institutionId,
+        state == 0 ? ownerId : institutionId,
         phoneNum,
         bankNum,
         bank,
@@ -657,7 +710,60 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         //   '请选择',
         // ),
         // signingAddress,
+      ],
+    );
+  }
 
+  getAcquiring() {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 40.w),
+          child: Container(
+            padding: EdgeInsets.only(bottom: 30.w),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom:
+                    BorderSide(color: const Color(0xFFF6F6F6), width: 2.w)),
+                color: Colors.transparent),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 170.w,
+                  child: Text(
+                    '收购方',
+                    style: TextStyle(
+                      fontSize: 32.sp,
+                      color: const Color(0xFF333333),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50.w,
+                  child: getChooseList((int choice) async {
+                    // await Dio().get(
+                    //     'contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF');
+
+                    //
+
+                    widget.purchaseCarInfo.channel=choice+1;
+                    designationController.text=UserTool.userProvider.userInfo.business.storeName;
+                    // state = choice;
+                  }, _models2, _selectIndex3),
+                ),
+              ],
+            ),
+          ),
+        ),
+        // const Divider(color: Colors.grey,),
+        _selectIndex3.isEmpty ? const SizedBox() : EditItemWidget(
+          title: '名称',
+          tips: '请输入',
+          controller: designationController,
+          topIcon: false,
+          paddingStart: 0.w,
+        )
       ],
     );
   }
@@ -668,50 +774,50 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       shrinkWrap: true,
       children: [
         ...models
-            .mapIndexed((currentValue, index) => GestureDetector(
-          onTap: () {
-            if (choices.contains(index)) {
-              choices.remove(index);
-            } else {
-              choices.clear();
-              choices.add(index);
-            }
+            .mapIndexed((currentValue, index) =>
+            GestureDetector(
+              onTap: () {
+                if (choices.contains(index)) {
+                  choices.remove(index);
+                } else {
+                  choices.clear();
+                  choices.add(index);
+                }
 
-            setState(() {});
-            callBack(choices.first);
+                setState(() {});
+                callBack(choices.first);
 
-            // _easyRefreshController.callRefresh();
-            print(state);
-
-          },
-          child: Container(
-            width: 160.w,
-            color: Colors.white,
-            child: Row(
-              children: [
-                BeeCheckRadio(
-                  value: index,
-                  groupValue: choices,
+                // _easyRefreshController.callRefresh();
+                print(state);
+              },
+              child: Container(
+                width: 160.w,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    BeeCheckRadio(
+                      value: index,
+                      groupValue: choices,
+                    ),
+                    16.wb,
+                    Text(
+                      currentValue,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .subtitle2,
+                    ),
+                  ],
                 ),
-                16.wb,
-                Text(
-                  currentValue,
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-              ],
-            ),
-          ),
-        ))
+              ),
+            ))
             .toList(),
       ],
     );
   }
-  _function(
-      String title,
-      VoidCallback onTap,
-      String? content,
-      String msg,{bool topIcon = false}
-      ) {
+
+  _function(String title, VoidCallback onTap, String? content, String msg,
+      {bool topIcon = false}) {
     return GestureDetector(
       onTap: onTap,
       child: Material(
@@ -733,12 +839,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       ),
     );
   }
-
 }
 
-
 class PurchaseInfo {
-
   String? ownerName;
   String? ownerId;
   String? phoneNum;
@@ -747,13 +850,16 @@ class PurchaseInfo {
 
   String? bank;
   int? kind;
+
   // ///签订时间
   // DateTime? signingDate;
   // String get signingDateStr =>
   //     DateUtil.formatDate(signingDate, format: 'yyyy-MM-dd');
   String? signingAddress;
+
   ///成交金额
   String? transactionAmount;
+
   // String? depositAmount;
 
   ///首付金额
@@ -764,10 +870,12 @@ class PurchaseInfo {
 
   ///尾款金额
   String? balanceAmountBackup;
+
   ///尾款比例
   String? balanceAmountBackupNum;
 
   DateTime? deliveryDate;
+
   String get deliveryDateStr =>
       DateUtil.formatDate(deliveryDate, format: 'yyyy-MM-dd');
 
@@ -782,28 +890,27 @@ class PurchaseInfo {
 
   String? remark;
 
-  static PurchaseInfo get empty => PurchaseInfo(
-    ownerName:'',
-    ownerId:'',
-    phoneNum:'',
-    bankNum:'',
-    kind:null,
-    // signingDate:null,
-    signingAddress:'',
-    transactionAmount:'',
-    //depositAmount:'',
-    downPaymentAmount:'',
-    balanceAmountBackup:'',
-    deliveryDate:null,
-    deliveryPlace:'',
-    // transferTax:'',
-    // handlingFee:'',
-    // serviceCharge:'',
-    remark:''
-  );
+  static PurchaseInfo get empty =>
+      PurchaseInfo(
+          ownerName: '',
+          ownerId: '',
+          phoneNum: '',
+          bankNum: '',
+          kind: null,
+          // signingDate:null,
+          signingAddress: '',
+          transactionAmount: '',
+          //depositAmount:'',
+          downPaymentAmount: '',
+          balanceAmountBackup: '',
+          deliveryDate: null,
+          deliveryPlace: '',
+          // transferTax:'',
+          // handlingFee:'',
+          // serviceCharge:'',
+          remark: '');
 
-  PurchaseInfo({
-    this.kind,
+  PurchaseInfo({this.kind,
     this.ownerName,
     this.ownerId,
     this.phoneNum,
@@ -819,7 +926,5 @@ class PurchaseInfo {
     // this.transferTax,
     // this.handlingFee,
     // this.serviceCharge,
-    this.remark
-  });
-
+    this.remark});
 }

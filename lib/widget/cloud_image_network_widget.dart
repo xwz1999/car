@@ -14,7 +14,7 @@ class CloudImageNetworkWidget extends StatelessWidget {
   final BorderRadius borderRadius;
   final int memCacheHeight;///本地缓存大小 太大的图片无法缓存需要设置
   final int memCacheWidth;///本地缓存大小 太大的图片无法缓存需要设置
-
+  final bool according;
   const CloudImageNetworkWidget(
       {super.key,
       this.width,
@@ -22,6 +22,7 @@ class CloudImageNetworkWidget extends StatelessWidget {
       this.urls,
       this.fit = BoxFit.cover,
       this.isCar = false,
+      this.according=false,
       this.borderRadius = BorderRadius.zero,  this.memCacheHeight = 0,  this.memCacheWidth = 0});
 
   String get imagePath {
@@ -37,6 +38,7 @@ class CloudImageNetworkWidget extends StatelessWidget {
 
   const CloudImageNetworkWidget.car(
       {super.key,
+        this.according=false,
       this.width,
       this.height,
       this.urls,
@@ -59,13 +61,13 @@ class CloudImageNetworkWidget extends StatelessWidget {
               height: height ?? 160.w,
               fit: fit,
               placeholder: (context, url) => Image.asset(
-                Assets.images.carPlaceholder.path,
+                according? Assets.images.carPlaceholder1.path: Assets.images.carPlaceholder.path,
                 width: width ?? 160.w,
                 height: height ?? 160.w,
                 fit: BoxFit.cover,
               ),
               errorWidget: (context, url, error) => Image.asset(
-                Assets.images.carPlaceholder.path,
+                according? Assets.images.carPlaceholder1.path: Assets.images.carPlaceholder.path,
                 width: width ?? 160.w,
                 height: height ?? 160.w,
                 fit: BoxFit.cover,
@@ -77,13 +79,13 @@ class CloudImageNetworkWidget extends StatelessWidget {
               height: height ?? 160.w,
               fit: fit,
               placeholder: (context, url) => Image.asset(
-                Assets.images.carPlaceholder.path,
+                according? Assets.images.carPlaceholder1.path: Assets.images.carPlaceholder.path,
                 width: width ?? 160.w,
                 height: height ?? 160.w,
                 fit: BoxFit.cover,
               ),
               errorWidget: (context, url, error) => Image.asset(
-                Assets.images.carPlaceholder.path,
+                according? Assets.images.carPlaceholder1.path: Assets.images.carPlaceholder.path,
                 width: width ?? 160.w,
                 height: height ?? 160.w,
                 fit: BoxFit.cover,
@@ -102,13 +104,13 @@ class CloudImageNetworkWidget extends StatelessWidget {
               height: height ?? 160.w,
               fit: fit,
               placeholder: (context, url) => Image.asset(
-                Assets.images.carPlaceholder.path,
+                according? Assets.images.carPlaceholder1.path: Assets.images.carPlaceholder.path,
                 width: width ?? 160.w,
                 height: height ?? 160.w,
                 fit: BoxFit.cover,
               ),
               errorWidget: (context, url, error) => Image.asset(
-                Assets.images.carPlaceholder.path,
+                according? Assets.images.carPlaceholder1.path: Assets.images.carPlaceholder.path,
                 width: width ?? 160.w,
                 height: height ?? 160.w,
                 fit: BoxFit.cover,
@@ -120,13 +122,13 @@ class CloudImageNetworkWidget extends StatelessWidget {
               height: height ?? 160.w,
               fit: fit,
               placeholder: (context, url) => Image.asset(
-                Assets.images.carPlaceholder.path,
+                according? Assets.images.carPlaceholder1.path: Assets.images.carPlaceholder.path,
                 width: width ?? 160.w,
                 height: height ?? 160.w,
                 fit: BoxFit.cover,
               ),
               errorWidget: (context, url, error) => Image.asset(
-                Assets.images.carPlaceholder.path,
+                according? Assets.images.carPlaceholder1.path: Assets.images.carPlaceholder.path,
                 width: width ?? 160.w,
                 height: height ?? 160.w,
                 fit: BoxFit.cover,

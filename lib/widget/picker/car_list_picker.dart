@@ -14,13 +14,14 @@ class CarListPicker extends StatefulWidget {
   final bool isGrid;
   final List<ChooseItem> items;
   final String carString;
-
+  final bool according;
   const CarListPicker(
       {super.key,
       required this.callback,
       this.confirmString = '确认',
       this.title,
       this.isGrid = true,
+        this.according=true,
       required this.items, this.carString=''});
 
   @override
@@ -49,7 +50,7 @@ class _CarListPickerState extends State<CarListPicker> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _buildButton(
-                title: '取消',
+                title: widget.according?'取消':'',
                 onPressed: () => Navigator.pop(context),
                 color: Colors.black26,
               ),
@@ -65,7 +66,7 @@ class _CarListPickerState extends State<CarListPicker> {
                 ),
               ),
               _buildButton(
-                title: widget.confirmString,
+                title:  widget.according?widget.confirmString:'',
                 onPressed: () => widget.callback(_chooseItem,_value),
                 color: Colors.blue,
               ),
@@ -78,6 +79,7 @@ class _CarListPickerState extends State<CarListPicker> {
             callback: (String item,int num) async{
               _chooseItem = item;
               _value = num;
+              widget.callback(_chooseItem,_value);
               setState(() {});
             },
             mainAxisSpacing: 24.w,

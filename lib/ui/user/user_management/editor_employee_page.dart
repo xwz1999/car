@@ -311,6 +311,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
             callback: (String content) {},
           ),
           32.hb,
+
           TextEditItemWidget(
             title: '手机号',
             editor: false,

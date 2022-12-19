@@ -252,6 +252,10 @@ class $AssetsIconsGen {
   AssetGenImage get estimateLocation =>
       const AssetGenImage('assets/icons/estimate_location.png');
 
+  /// File path: assets/icons/examination.png
+  AssetGenImage get examination =>
+      const AssetGenImage('assets/icons/examination.png');
+
   /// File path: assets/icons/feedback.png
   AssetGenImage get feedback =>
       const AssetGenImage('assets/icons/feedback.png');
@@ -436,6 +440,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/payment.png
   AssetGenImage get payment => const AssetGenImage('assets/icons/payment.png');
+
+  /// File path: assets/icons/realName.png
+  AssetGenImage get realName =>
+      const AssetGenImage('assets/icons/realName.png');
 
   /// File path: assets/icons/recommended_code.png
   AssetGenImage get recommendedCode =>
@@ -677,6 +685,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/car_placeholder.png
   AssetGenImage get carPlaceholder =>
       const AssetGenImage('assets/images/car_placeholder.png');
+
+  /// File path: assets/images/car_placeholder1.png
+  AssetGenImage get carPlaceholder1 =>
+      const AssetGenImage('assets/images/car_placeholder1.png');
 
   /// File path: assets/images/car_valuation_bg.png
   AssetGenImage get carValuationBg =>

@@ -13,17 +13,22 @@ import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/hive_store.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/picker/car_date_picker.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:cloud_car/widget/scan_license_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../widget/alert.dart';
 import '../../../widget/picker/cloud_grid_picker_widget.dart';
-
 
 class PurchasePushCarPage extends StatefulWidget {
   const PurchasePushCarPage({super.key});
@@ -40,22 +45,22 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
           car: SortCarModelModel.init,
           returnType: 3));
   late CarDistinguishModel? carInfoModel;
-  
-  final ValueNotifier<PurchaseCarInfo> _publishCarInfo = ValueNotifier(PurchaseCarInfo.empty);
 
+  final ValueNotifier<PurchaseCarInfo> _publishCarInfo =
+      ValueNotifier(PurchaseCarInfo.empty);
 
-  final ValueNotifier<PurchaseInfo> purchaseInfo = ValueNotifier(PurchaseInfo.empty);
+  final ValueNotifier<PurchaseInfo> purchaseInfo =
+      ValueNotifier(PurchaseInfo.empty);
 
   final ValueNotifier<PurchasePhotoModel> reportPhotoModel =
-  ValueNotifier(PurchasePhotoModel.init);
-  
+      ValueNotifier(PurchasePhotoModel.init);
+
   // final PurchaseCarInfo _publishCarInfo = PurchaseCarInfo.empty;
   final TextEditingController _viNumController = TextEditingController();
   final TextEditingController _engineController = TextEditingController();
   final TextEditingController _mileController = TextEditingController();
   final TextEditingController _licensePlateController = TextEditingController();
   final TextEditingController _licenseColorController = TextEditingController();
-
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
     ChooseItem(name: '紫色'),
@@ -82,11 +87,25 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
     ChooseItem(name: '国五'),
     ChooseItem(name: '国六'),
   ];
-  List<String> get carNatureOfUseList =>
-      CarNatureOfUse.values.map((e) =>  e.typeStr).toList();
 
+  List<String> get carNatureOfUseList =>
+      CarNatureOfUse.values.map((e) => e.typeStr).toList();
   @override
   void initState() {
+    Future.delayed(const Duration(seconds: 0),()async{
+      await (HiveStore.carBox?.get('carInfo')) as PurchaseCarInfo;
+      await (HiveStore.carBox?.get('info')) as PurchaseInfo;
+      await (HiveStore.carBox?.get('photo')) as PurchasePhotoModel;
+      await HiveStore.carBox?.get('save');
+      PurchaseCarInfo carInfo=await HiveStore.carBox?.get('carInfo');
+      if(HiveStore.carBox?.get('save')){
+        _licensePlateController.text=carInfo.licensePlate ?? '';
+        _publishCarInfo.value.carName=carInfo.carName ?? '';
+        // _publishCarInfo.value.carModelId=carInfo.carModelId;
+
+      }
+    });
+
     super.initState();
   }
 
@@ -104,9 +123,72 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 8.w),
+          child: IconButton(
+            onPressed: () {
+              Alert.show(
+                  context,
+                  NormalContentDialog(
+                    type: NormalTextDialogType.delete,
+                    title: '提示',
+                    content: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '是否保留此次发布编辑的信息,下次打开',
+                          style: TextStyle(fontSize:28.sp),
+                        ),
+                        Text('直接继续发布', style: TextStyle(fontSize: 28.sp))
+                      ],
+                    ),
+                    items: const ['取消'],
+                    deleteItem: '确定',
+                    //监听器
+                    listener: (index) {
+                      Alert.dismiss(context);
+                      // _getSure = false;
+                        Get.back();
+                      setState(() {
+                        //_getSure;
+                      });
+                      //Value = false;
+                      //(Value);
+                    },
+                    deleteListener: () async{
+                      Alert.dismiss(context);
+                      // _getSure = true;
+                      HiveStore.carBox?.delete('carInfo');
+                      HiveStore.carBox?.delete('info');
+                      HiveStore.carBox?.delete('photo');
+                      HiveStore.carBox?.delete('save');
+                      await HiveStore.carBox?.put('carInfo', _publishCarInfo.value);
+                      await HiveStore.carBox?.put('info', purchaseInfo.value);
+                      await HiveStore.carBox?.put('photo', reportPhotoModel.value);
+                      await HiveStore.carBox?.put('save', true);
+                      Get.back();
+                      setState(() {
+
+                        //_getSure;
+                      });
+                      //print(_getSure);
+                      //Value = true;
+                      //(Value);
+                    },
+                  ));
+            },
+            icon: const Icon(
+              CupertinoIcons.chevron_back,
+              color: Color(0xFF111111),
+            ),
+          ),
         ),
+
+        // const CloudBackButton(
+        //
+        //   isSpecial: true,
+        // ),
         backgroundColor: kForeGroundColor,
         title: Text('车辆收购',
             style: TextStyle(
@@ -126,10 +208,11 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                     padding: const EdgeInsets.all(20),
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                        color: Colors.white,),
+                      color: Colors.white,
+                    ),
                     child: Column(
                       children: [
-                        ScanLicenseWidget(onLoadComplete: (carInfoModel) async{
+                        ScanLicenseWidget(onLoadComplete: (carInfoModel) async {
                           if (carInfoModel.vinModel != null) {
                             _publishCarInfo.value.carName =
                                 carInfoModel.vinModel!.first.modelName;
@@ -137,15 +220,19 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                                 carInfoModel.vinModel!.first.modelId;
                           }
                           _viNumController.text = carInfoModel.vehicle.vin;
-                          _licensePlateController.text=carInfoModel.vehicle.lsnum;
-                          _licenseColorController.text=carInfoModel.vinModel!.first.color;
+                          _licensePlateController.text =
+                              carInfoModel.vehicle.lsnum;
+                          _licenseColorController.text =
+                              carInfoModel.vinModel!.first.color;
                           _publishCarInfo.value.licensingDate =
                               DateUtil.getDateTime(
                                   carInfoModel.vehicle.regdate);
+
                           ///出厂日期1
-                          var a= await SortFunc.getCarInfo(carInfoModel.vinModel!.first.modelId) ;
-                          _publishCarInfo.value.productionDate=DateUtil.getDateTime(a!.marketDate
-                              );
+                          var a = await SortFunc.getCarInfo(
+                              carInfoModel.vinModel!.first.modelId);
+                          _publishCarInfo.value.productionDate =
+                              DateUtil.getDateTime(a!.marketDate);
                           // _publishCarInfo.value.productionDate =
                           //     DateUtil.getDateTime(
                           //         CarCommonInfo.);
@@ -158,7 +245,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () async{
+                            onPressed: () async {
                               FocusManager.instance.primaryFocus?.unfocus();
                               if (!canTap) {
                                 return;
@@ -166,17 +253,17 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                               // print(_publishCarInfo.value);
                               // print(purchaseInfo.value);
                               // // print(reportPhotoModel.value);
-                              Get.to(()=>
-                                  PurchaseInfoPage(
-                                    purchaseCarInfo: _publishCarInfo.value,
-                                    purchaseInfo: purchaseInfo.value,
-                                    reportPhotoModel: reportPhotoModel.value,)
-                                //   PurchaseChoosePage(
-                                // purchaseCarInfo: _publishCarInfo.value,
-                                // purchaseInfo: purchaseInfo.value,
-                                // reportPhotoModel: reportPhotoModel.value,)
-                              );
-
+                              Get.to(() => PurchaseInfoPage(
+                                        purchaseCarInfo: _publishCarInfo.value,
+                                        purchaseInfo: purchaseInfo.value,
+                                        reportPhotoModel:
+                                            reportPhotoModel.value,
+                                      )
+                                  //   PurchaseChoosePage(
+                                  // purchaseCarInfo: _publishCarInfo.value,
+                                  // purchaseInfo: purchaseInfo.value,
+                                  // reportPhotoModel: reportPhotoModel.value,)
+                                  );
                             },
                             style: ButtonStyle(
                               backgroundColor:
@@ -265,7 +352,8 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                     callback: () {
                       Get.back();
                       _publishCarInfo.value.carName = _pickCar.value.car.name;
-                      _publishCarInfo.value.carModelId = _pickCar.value.car.modelId;
+                      _publishCarInfo.value.carModelId =
+                          _pickCar.value.car.modelId;
                       FocusManager.instance.primaryFocus?.unfocus();
                     },
                     pickCar: _pickCar,
@@ -279,7 +367,11 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
           _function(
             '首次上牌',
             () async {
-              var firstDate = await CarDatePicker.calenderPicker(DateTime(1960), DateTime.now());
+              var firstDate = await CarDatePicker.pick(
+                DateTime.now(),
+              );
+
+              ///var firstDate = await CarDatePicker.calenderPicker(DateTime(1960), DateTime.now());
               _publishCarInfo.value.licensingDate = firstDate;
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
@@ -291,11 +383,12 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
           ),
           _function(
             '使用性质',
-                () async {
+            () async {
               await showModalBottomSheet(
                 context: context,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
                   return CloudListPickerWidget(
                       title: '使用性质',
@@ -315,8 +408,12 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
 
           _function(
             '出厂日期',
-                () async {
-              var firstDate = await CarDatePicker.calenderPicker(DateTime(1960), DateTime.now());
+            () async {
+              var firstDate = await CarDatePicker.pick(
+                DateTime.now(),
+              );
+
+              ///var firstDate = await CarDatePicker.calenderPicker(DateTime(1960), DateTime.now());
               _publishCarInfo.value.productionDate = firstDate;
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
@@ -327,8 +424,12 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
 
           _function(
             '交强险',
-                () async {
-                  var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime(DateTime.now().year+100));
+            () async {
+              var firstDate = await CarDatePicker.pick(
+                DateTime.now(),
+              );
+
+              /// var firstDate = await CarDatePicker.calenderPicker(DateTime(1960),DateTime(DateTime.now().year+100));
               _publishCarInfo.value.compulsoryInsuranceDate = firstDate;
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {});
@@ -340,20 +441,21 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
           mile,
           _function(
             '车身颜色',
-                () async {
+            () async {
               await showModalBottomSheet(
                 context: context,
                 shape: RoundedRectangleBorder(
                     borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(16.w))),
+                        BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
                   return CloudGridPickerWidget(
+                      time: false,
                       title: '车身颜色',
                       items: colorList.map((e) => e.name).toList(),
                       onConfirm: (strList, indexList) {
                         if (strList.isNotEmpty) {
                           _publishCarInfo.value.color = strList.first;
-                          Get.back();
+                          // Get.back();
                           FocusManager.instance.primaryFocus?.unfocus();
                           setState(() {});
                         }
@@ -388,13 +490,10 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
           //     _publishCarInfo.value.environmentalLevel,
           //     '请选择'
           // ),
-
         ],
       ),
     );
   }
-
-
 
   bool get canTap {
     if (_publishCarInfo.value.carName.isEmptyOrNull) {
@@ -410,7 +509,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       BotToast.showText(text: '请选择首次上牌时间');
       return false;
     }
-    if (_publishCarInfo.value.carNatureOfUse==0) {
+    if (_publishCarInfo.value.carNatureOfUse == 0) {
       BotToast.showText(text: '请先选择使用性质');
       return false;
     }
@@ -423,7 +522,6 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       return false;
     }
 
-
     if (_publishCarInfo.value.compulsoryInsuranceDate == null) {
       BotToast.showText(text: '请选择交强险时间');
       return false;
@@ -434,7 +532,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       return false;
     }
 
-    if (_publishCarInfo.value.licensePlate=='') {
+    if (_publishCarInfo.value.licensePlate == '') {
       BotToast.showText(text: '请输入车辆牌照');
       return false;
     }
@@ -446,12 +544,8 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
     return true;
   }
 
-  _function(
-    String title,
-    VoidCallback onTap,
-    String? content,
-    String msg,{bool topIcon = false}
-  ) {
+  _function(String title, VoidCallback onTap, String? content, String msg,
+      {bool topIcon = false}) {
     return GestureDetector(
       onTap: onTap,
       child: Material(
@@ -475,8 +569,10 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
   }
 }
 
-
 class PurchaseCarInfo {
+  ///渠道1=入驻商 2=车商
+  int? channel;
+
   ///车型
   String? carName;
   int? carModelId;
@@ -501,50 +597,54 @@ class PurchaseCarInfo {
 
   ///使用性质
   int? carNatureOfUse;
-  CarNatureOfUse get carNatureOfUseEM => CarNatureOfUse.getValue(carNatureOfUse??0);
+
+  CarNatureOfUse get carNatureOfUseEM =>
+      CarNatureOfUse.getValue(carNatureOfUse ?? 0);
 
   ///发动机号
   String? engineNum;
 
   ///交强险到期时间
   DateTime? compulsoryInsuranceDate;
+
   String get compulsoryInsuranceDateStr {
-    if(compulsoryInsuranceDate==null){
+    if (compulsoryInsuranceDate == null) {
       return '';
-    }else{
+    } else {
       return DateUtil.formatDate(compulsoryInsuranceDate, format: 'yyyy-MM-dd');
     }
   }
 
   ///表显里程
   String? mileage;
+
   ///车身颜色
   String? color;
 
   // ///环保等级
   // String? environmentalLevel;
 
-
   String? customer;
-  
+
   int? customerId;
 
   static PurchaseCarInfo get empty => PurchaseCarInfo(
-        color:'',
-        viNum: '',
-        carName: '',
-        carModelId: null,
-        licensingDate: null,
-        engineNum: '',
-        customer:'',
-        customerId:null,
-        mileage: '',
-        carNatureOfUse:0,
-        //environmentalLevel:'',
-        compulsoryInsuranceDate:null
-      );
+      channel: null,
+      color: '',
+      viNum: '',
+      carName: '',
+      carModelId: null,
+      licensingDate: null,
+      engineNum: '',
+      customer: '',
+      customerId: null,
+      mileage: '',
+      carNatureOfUse: 0,
+      //environmentalLevel:'',
+      compulsoryInsuranceDate: null);
 
   PurchaseCarInfo({
+    this.channel,
     this.carName,
     this.licensingDate,
     this.viNum,

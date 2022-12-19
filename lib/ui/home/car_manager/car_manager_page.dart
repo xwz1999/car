@@ -4,6 +4,7 @@ import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../manager_container_item.dart';
 import 'direct_sale/direct_sale_manager_page.dart';
@@ -85,8 +86,8 @@ class _CarManagerPageState extends State<CarManagerPage> {
               initType: CarManageType.all,
             ));
           },
-          text: '已预订',
-          num: '${carCount.storeCount.reserveCount}',
+          text: '签订中',
+          num: '${carCount.storeCount.signingCount}',
         ),
         ManagerContainerItem(
           onTap: () {
@@ -96,8 +97,8 @@ class _CarManagerPageState extends State<CarManagerPage> {
               initType: CarManageType.all,
             ));
           },
-          text: '已售',
-          num: '${carCount.storeCount.soldCount}',
+          text: '交易中',
+          num: '${carCount.storeCount.reserveCount}',
         ),
         ManagerContainerItem(
               onTap: () {
@@ -107,9 +108,31 @@ class _CarManagerPageState extends State<CarManagerPage> {
                   initType: CarManageType.all,
                 ));
               },
+              text: '已售',
+              num: '${carCount.storeCount.soldCount}',
+            ),
+            ManagerContainerItem(
+              onTap: () {
+                Get.to(() =>
+                const DirectSaleManagerPage(
+                  initIndex:4,
+                  initType: CarManageType.all,
+                ));
+              },
               text: '退库',
               num: '${carCount.storeCount.backOutCount}',
-            )
+            ),
+            // ManagerContainerItem(
+            //   onTap: () {
+            //     Get.to(() =>
+            //     const DirectSaleManagerPage(
+            //       initIndex: 4,
+            //       initType: CarManageType.all,
+            //     ));
+            //   },
+            //   text: '已签订',
+            //   num: '${carCount.storeCount.signedCount}',
+            // ),
           ]),
       40.hb,
       _buildMainClassification(text: '公司车辆', items: [
@@ -132,14 +155,25 @@ class _CarManagerPageState extends State<CarManagerPage> {
               initType: CarManageType.company,
             ));
           },
-          text: '已预订',
-          num: '${carCount.businessCount.reserveCount}',
+          text: '签订中',
+          num: '${carCount.businessCount.signingCount}',
         ),
         ManagerContainerItem(
           onTap: () {
             Get.to(() =>
             const DirectSaleManagerPage(
               initIndex: 2,
+              initType: CarManageType.company,
+            ));
+          },
+          text: '交易中',
+          num: '${carCount.businessCount.reserveCount}',
+        ),
+        ManagerContainerItem(
+          onTap: () {
+            Get.to(() =>
+            const DirectSaleManagerPage(
+              initIndex: 3,
               initType: CarManageType.company,
             ));
           },
@@ -150,13 +184,24 @@ class _CarManagerPageState extends State<CarManagerPage> {
           onTap: () {
             Get.to(() =>
             const DirectSaleManagerPage(
-              initIndex: 3,
+              initIndex: 4,
               initType: CarManageType.company,
             ));
           },
           text: '退库',
           num: '${carCount.businessCount.backOutCount}',
         ),
+        // ManagerContainerItem(
+        //   onTap: () {
+        //     Get.to(() =>
+        //     const DirectSaleManagerPage(
+        //       initIndex: 3,
+        //       initType: CarManageType.company,
+        //     ));
+        //   },
+        //   text: '已签订',
+        //   num: '${carCount.businessCount.signedCount}',
+        // ),
       ]),
       40.hb,
             _buildMainClassification(text: '个人寄卖', items: [
@@ -179,14 +224,25 @@ class _CarManagerPageState extends State<CarManagerPage> {
                     initType: CarManageType.person,
                   ));
                 },
-                text: '已预订',
-                num: '${carCount.ownCount.reserveCount}',
+                text: '签订中',
+                num: '${carCount.ownCount.signingCount}',
               ),
               ManagerContainerItem(
                 onTap: () {
                   Get.to(() =>
                   const DirectSaleManagerPage(
                     initIndex: 2,
+                    initType: CarManageType.person,
+                  ));
+                },
+                text: '交易中',
+                num: '${carCount.ownCount.reserveCount}',
+              ),
+              ManagerContainerItem(
+                onTap: () {
+                  Get.to(() =>
+                  const DirectSaleManagerPage(
+                    initIndex: 3,
                     initType: CarManageType.person,
                   ));
                 },
@@ -197,17 +253,29 @@ class _CarManagerPageState extends State<CarManagerPage> {
                 onTap: () {
                   Get.to(() =>
                   const DirectSaleManagerPage(
-                    initIndex: 3,
+                    initIndex: 4,
                     initType: CarManageType.person,
                   ));
                 },
                 text: '退库',
                 num: '${carCount.ownCount.backOutCount}',
               ),
+              // ManagerContainerItem(
+              //   onTap: () {
+              //     Get.to(() =>
+              //     const DirectSaleManagerPage(
+              //       initIndex: 5,
+              //       initType: CarManageType.person,
+              //     ));
+              //   },
+              //   text: '已签订',
+              //   num: '${carCount.ownCount.signedCount}',
+              // ),
             ]),
       // Column(
       //   crossAxisAlignment: CrossAxisAlignment.start,
       //   children: [
+      //     32.hb,
       //     Padding(
       //       padding: const EdgeInsets.only(left: 12),
       //       child: Text('库存预警',
@@ -282,7 +350,8 @@ class _CarManagerPageState extends State<CarManagerPage> {
       //         )),
       //         32.wb,
       //       ],
-      //     )
+      //     ),
+      //     32.hb
       //   ],
       // ),
       ],

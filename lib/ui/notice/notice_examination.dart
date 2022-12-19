@@ -2,13 +2,13 @@ import 'package:cloud_car/model/user/user_info_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/car_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../constants/enums.dart';
 import '../../widget/car_widget.dart';
 import '../user/user_order/status.dart';
+import 'examination_details.dart';
 
 class ExaminationPage extends StatefulWidget {
   const ExaminationPage({super.key});
@@ -20,18 +20,69 @@ class ExaminationPage extends StatefulWidget {
 class _ExaminationPageState extends State<ExaminationPage> {
   List<dynamic>? data;
 
-  final auditlist = [
+  final auditList = [
+    {
+      'name': '奥迪A3',
+      'time': '2021-12-01 12:00:22',
+      'text': '',
+      'conditions': 1,
+      'state': 1,
+      'reasonText': '',
+      'results': 0,
+    },
     {
       'name': '奥迪A3',
       'time': '2021-12-01 12:00:22',
       'text': '车辆信息未填写完整',
       'conditions': 1,
+      'state': 0,
+      'reasonText': '车子有人私下买了，最后成交价远高于你这份合同，这个合同就当浪费了，你跟客户沟通一下，看其他的车子吧',
+      'results': 1,
+    },
+    {
+      'name': '奥迪A3',
+      'time': '2021-12-01 12:00:22',
+      'text': '',
+      'conditions': 1,
+      'state': 0,
+      'reasonText': '',
+      'results': 0,
     },
     {
       'name': '奥迪A3',
       'time': '2021-12-01 12:00:22',
       'text': '',
       'conditions': 2,
+      'state': 1,
+      'reasonText': '车子有人私下买了',
+      'results': 0,
+    },
+    {
+      'name': '奥迪A3',
+      'time': '2021-12-01 12:00:22',
+      'text': '',
+      'conditions': 3,
+      'state': 1,
+      'reasonText': '车子有人私下买了',
+      'results': 1,
+    },
+    {
+      'name': '奥迪A3',
+      'time': '2021-12-01 12:00:22',
+      'text': '',
+      'conditions': 4,
+      'state': 0,
+      'reasonText': '车子有人私下买了，最后成交价远高于你这份合同，这个合同就当浪费了，你跟客户沟通一下，看其他的车子吧',
+      'results': 1,
+    },
+    {
+      'name': '奥迪A3',
+      'time': '2021-12-01 12:00:22',
+      'text': '',
+      'conditions': 5,
+      'state': 0,
+      'reasonText': '车子有人私下买了，最后成交价远高于你这份合同，这个合同就当浪费了，你跟客户沟通一下，看其他的车子吧',
+      'results': 1,
     },
   ];
   late final EasyRefreshController _refreshController = EasyRefreshController();
@@ -65,7 +116,7 @@ class _ExaminationPageState extends State<ExaminationPage> {
             SizedBox(
               height: 88.w,
               child: CarWidget(
-                  items:_getList(),
+                  items: _getList(),
                   callBack: (index) {
                     examinationState = ReminderApprovalType.values[index];
                     _refreshController.callRefresh();
@@ -73,12 +124,15 @@ class _ExaminationPageState extends State<ExaminationPage> {
             ),
             Expanded(
                 child: EasyRefresh(
+                    firstRefresh: true,
+                    controller: _refreshController,
+                    onRefresh: () async {},
                     child: ListView.builder(
-              itemBuilder: (context, index) {
-                return _release(auditlist[index]);
-              },
-              itemCount: auditlist.length,
-            )))
+                      itemBuilder: (context, index) {
+                        return _release(auditList[index]);
+                      },
+                      itemCount: auditList.length,
+                    )))
           ],
         ));
   }
@@ -92,13 +146,13 @@ class _ExaminationPageState extends State<ExaminationPage> {
           margin: EdgeInsets.only(left: 150.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.w),
-              color: state == 2
+              color: state == 1
                   ? const Color(0xFF027AFF).withOpacity(0.1)
                   : const Color(0xFF999999).withOpacity(0.1)),
           child: Text(
-            state == 2 ? "未读" : '已读',
+            state == 1 ? "待审核" : '已审核',
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                color: state == 2
+                color: state == 1
                     ? const Color(0xFF027AFF)
                     : const Color(0xFF999999)),
           ),
@@ -107,14 +161,16 @@ class _ExaminationPageState extends State<ExaminationPage> {
     );
   }
 
-
   ///判断列表
- List<String> _getList(){
-    if(  UserTool.userProvider.userInfo.business.roleEM== Role.manager ||UserTool.userProvider.userInfo.business.roleEM== Role.carService){
-      return  ReminderApprovalType.values.map((e) => e.typeStr).toList();
-    }else if( UserTool.userProvider.userInfo.business.roleEM== Role.salesTraffic){
+  List<String> _getList() {
+    if (UserTool.userProvider.userInfo.business.roleEM == Role.manager ||
+        UserTool.userProvider.userInfo.business.roleEM == Role.carService ||
+        UserTool.userProvider.userInfo.business.roleEM == Role.settlers) {
+      return ReminderApprovalType.values.map((e) => e.typeStr).toList();
+    } else if (UserTool.userProvider.userInfo.business.roleEM ==
+        Role.salesTraffic) {
       return ExaminationType.values.map((e) => e.typeStr).toList();
-    }else{
+    } else {
       return [];
     }
   }
@@ -123,96 +179,102 @@ class _ExaminationPageState extends State<ExaminationPage> {
   _release(item) {
     return GestureDetector(
       onTap: () {
-        showModalBottomSheet(
-            context: context,
-            isDismissible: true,
-            isScrollControlled: true,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15))),
-            builder: (BuildContext context) {
-              return Container(
-                width: double.infinity,
-                height: 500.w,
-                decoration: BoxDecoration(
-                    color: BaseStyle.colorf6f6f6,
-                    borderRadius: BorderRadius.all(Radius.circular(16.w))),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(32.w),
-                            child: Text(
-                              '拒绝',
-                              style: TextStyle(
-                                  color: const Color(0xFF999999),
-                                  fontSize: 28.sp),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '车辆确认',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: const Color(0xFF111111),
-                                fontSize: 32.sp),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(32.w),
-                            child: Text(
-                              '同意',
-                              style: TextStyle(
-                                  color: const Color(0xFF027AFF),
-                                  fontSize: 28.sp),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      '客户对你的这辆车有购买意愿，是否同意出售',
-                      style: TextStyle(
-                          color: const Color(0xFF333333), fontSize: 28.sp),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(24.w),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(10.w, 17.w),
-                            blurRadius: 10.w,
-                            spreadRadius: -10.w,
-                            color: const Color(0x33027AFF),
-                          )
-                        ],
-                      ),
-                      child: CarItemWidget(
-                        widgetPadding: EdgeInsets.all(24.w),
-                        name: '奥迪A8',
-                        time: '2022-11-04',
-                        distance: '2万公里',
-                        standard: '国六',
-                        url: '',
-                        price: '27.43',
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            });
+        Get.to(() => ExaminationDetails(
+              state: ReminderApprovalType.getValue(item['conditions']).typeNum,
+              auditState: item['state'],
+              reasonText: item['reasonText'],
+              resultsState: item['results'],
+            ));
+        // showModalBottomSheet(
+        //     context: context,
+        //     isDismissible: true,
+        //     isScrollControlled: true,
+        //     shape: const RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.only(
+        //             topLeft: Radius.circular(15),
+        //             topRight: Radius.circular(15))),
+        //     builder: (BuildContext context) {
+        //       return Container(
+        //         width: double.infinity,
+        //         height: 500.w,
+        //         decoration: BoxDecoration(
+        //             color: BaseStyle.colorf6f6f6,
+        //             borderRadius: BorderRadius.all(Radius.circular(16.w))),
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.center,
+        //           children: [
+        //             Row(
+        //               children: [
+        //                 GestureDetector(
+        //                   onTap: () {
+        //                     Get.back();
+        //                   },
+        //                   child: Container(
+        //                     padding: EdgeInsets.all(32.w),
+        //                     child: Text(
+        //                       '拒绝',
+        //                       style: TextStyle(
+        //                           color: const Color(0xFF999999),
+        //                           fontSize: 28.sp),
+        //                     ),
+        //                   ),
+        //                 ),
+        //                 Expanded(
+        //                   child: Text(
+        //                     '车辆确认',
+        //                     textAlign: TextAlign.center,
+        //                     style: TextStyle(
+        //                         color: const Color(0xFF111111),
+        //                         fontSize: 32.sp),
+        //                   ),
+        //                 ),
+        //                 GestureDetector(
+        //                   onTap: () {
+        //                     Get.back();
+        //                   },
+        //                   child: Container(
+        //                     padding: EdgeInsets.all(32.w),
+        //                     child: Text(
+        //                       '同意',
+        //                       style: TextStyle(
+        //                           color: const Color(0xFF027AFF),
+        //                           fontSize: 28.sp),
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //             Text(
+        //               '客户对你的这辆车有购买意愿，是否同意出售',
+        //               style: TextStyle(
+        //                   color: const Color(0xFF333333), fontSize: 28.sp),
+        //             ),
+        //             Container(
+        //               margin: EdgeInsets.all(24.w),
+        //               decoration: BoxDecoration(
+        //                 boxShadow: [
+        //                   BoxShadow(
+        //                     offset: Offset(10.w, 17.w),
+        //                     blurRadius: 10.w,
+        //                     spreadRadius: -10.w,
+        //                     color: const Color(0x33027AFF),
+        //                   )
+        //                 ],
+        //               ),
+        //               child: CarItemWidget(
+        //                 widgetPadding: EdgeInsets.all(24.w),
+        //                 name: '奥迪A8',
+        //                 time: '2022-11-04',
+        //                 distance: '2万公里',
+        //                 standard: '国六',
+        //                 url: '',
+        //                 price: '27.43',
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       );
+        //     });
       },
       child: Container(
         decoration: BoxDecoration(
@@ -223,13 +285,13 @@ class _ExaminationPageState extends State<ExaminationPage> {
           Row(
             children: [
               Text(
-                item['conditions'] == 2 ? "修改审核" : "发布审核",
+                ReminderApprovalType.getValue(item['conditions']).typeStr,
                 style: TextStyle(
                     fontSize: 32.sp,
                     color: const Color.fromRGBO(51, 51, 51, 1)),
               ),
               const Spacer(),
-              _isPass(item['conditions'])
+              _isPass(item['state'])
             ],
           ),
           24.hb,
@@ -272,19 +334,20 @@ class _ExaminationPageState extends State<ExaminationPage> {
           item['conditions'] == 1
               ? Row(
                   children: [
-                    Text(
+                    item['reasonText']=='' ?const SizedBox():Text(
                       '驳回原因',
                       style: TextStyle(
                           fontSize: 28.sp,
                           color: const Color.fromRGBO(102, 102, 102, 1)),
                     ),
                     48.wb,
-                    Text(
-                      item['text'],
+                    Flexible(
+                        child: Text(
+                      item['reasonText'],
                       style: TextStyle(
                           fontSize: 28.sp,
                           color: const Color.fromRGBO(51, 51, 51, 1)),
-                    )
+                    ))
                   ],
                 )
               : const SizedBox(),

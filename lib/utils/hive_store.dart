@@ -15,6 +15,11 @@ class HiveStore {
 
   static Box? get dataBox => _dataBox;
 
+      static Box? _carBox;
+  static Box? get carBox => _carBox;
+
+
+
   static Future init() async {
     if (!kIsWeb) {
       var dir = await getApplicationDocumentsDirectory();
@@ -24,6 +29,7 @@ class HiveStore {
       _appBox = await Hive.openBox('app');
       _userBox = await Hive.openBox('userBox');
       _dataBox = await Hive.openBox('dataBox');
+      _carBox =await Hive.openBox('car');
     }
   }
 }

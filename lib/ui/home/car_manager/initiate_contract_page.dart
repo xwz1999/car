@@ -39,7 +39,7 @@ class _InitiateContractPageState extends State<InitiateContractPage> {
       masterInfo: MasterInfo(name: "",bank: "",bankAccount: "",bankCard: "",idCard: "",address: "",phone: '',),
       payType: 0,
       priceInfo: PriceInfo(downPayment: '', dealPrice: '', deposit: ''),
-      carId: 0);
+      carId: 0, customerChannel: 0);
   CarListModel? carModel;
 
   CarAmountModel? carAmountModel;

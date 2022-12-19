@@ -10,12 +10,14 @@ class CarPickerBox extends StatelessWidget {
   final String? title;
   final Widget child;
   final double? height;
+  final bool time;
 
   const CarPickerBox(
       {super.key,
       this.onPressed,
       this.confirmString = '确定',
       this.title,
+        this.time=true,
       required this.child,  this.height,});
 
   _buildButton({
@@ -49,7 +51,8 @@ class CarPickerBox extends StatelessWidget {
               height: 88.w,
               child: NavigationToolbar(
                 leading: _buildButton(
-                  title: '取消',
+                  title:time?'取消':'',
+                  // title: '',
                   onPressed: () => Navigator.pop(context),
                   color:Colors.black26,
                 ),
@@ -62,7 +65,8 @@ class CarPickerBox extends StatelessWidget {
                   ),
                 ),
                 trailing: _buildButton(
-                  title: confirmString,
+                  title: time?confirmString:'',
+                  // title: '',
                   onPressed: onPressed,
                   color: Colors.blue,
                 ),

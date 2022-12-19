@@ -21,9 +21,13 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 enum AllCarStatus {
   onSale(1, '在售'),
-  schedule(2, '预定'),
-  sold(3, '已售'),
-  returnBack(4, '退库');
+  underContract(2,'签订中'),
+  schedule(3, '已预订'),
+  sold(4, '已售'),
+  returnBack(5, '退库'),
+  inventoryWarning(6,'库存预计'),
+  inventoryAlarm(7,'库存报警');
+
 
   final int typeNum;
   final String typeStr;

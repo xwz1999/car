@@ -107,7 +107,7 @@ class BusinessFunc {
 
     BaseModel res =
         await apiClient.request(API.storeManagement.storeAdd, data: {
-      'name': name,
+      'name': storeName,
       'address': address,
       'owner': params,
       'commision': num.parse(commission),

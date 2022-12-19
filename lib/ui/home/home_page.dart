@@ -72,7 +72,8 @@ class _HomePageState extends State<HomePage>
     _kingCoinList.add(KingCoin(name: '车辆发布', url: Assets.icons.carPush.path));
     _kingCoinList
         .add(KingCoin(name: '车险报价', url: Assets.icons.carMortgage.path));
-    _kingCoinList.add(KingCoin(name: '车辆收购', url: Assets.icons.carCquisition.path));
+    _kingCoinList
+        .add(KingCoin(name: '车辆收购', url: Assets.icons.carCquisition.path));
     _kingCoinList
         .add(KingCoin(name: '维保查询', url: Assets.icons.carMaintain.path));
     _kingCoinList
@@ -193,36 +194,38 @@ class _HomePageState extends State<HomePage>
   }
 
   _kingCoinItem(String name, String url) {
-
     return GestureDetector(
       onTap: () {
         switch (name) {
           case '车辆管理':
-
-            if(UserTool.userProvider.userInfo.levelEM ==
-                PermissionLevel.normal){
+            if (UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal) {
               Alert.show(context, const JurisdictionToast());
-            }else{
+            } else {
               Get.to(() => const CarManagerPage());
             }
             break;
           case '客户管理':
-
-            if(UserTool.userProvider.userInfo.levelEM ==
-                PermissionLevel.normal){
+            if (UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal) {
               Alert.show(context, const JurisdictionToast());
-            }else{
+            } else {
               Get.to(() => const UserManagerPage());
             }
 
             break;
           case '车辆发布':
-
-            if(UserTool.userProvider.userInfo.business.roleEM!= Role.salesTraffic&&UserTool.userProvider.userInfo.levelEM ==
-                PermissionLevel.settledMerchants ){
+            if (UserTool.userProvider.userInfo.business.roleEM !=
+                    Role.salesTraffic &&
+                UserTool.userProvider.userInfo.levelEM ==
+                    PermissionLevel.settledMerchants) {
               Get.to(() => const NewPushCarPage());
-            }else{
-              Alert.show(context, const JurisdictionToast(type: 2,));
+            } else {
+              Alert.show(
+                  context,
+                  const JurisdictionToast(
+                    type: 2,
+                  ));
             }
 
             break;
@@ -230,13 +233,12 @@ class _HomePageState extends State<HomePage>
           //   Get.to(() => const CarValuationPage());
           //   break;
           case '车辆寄卖':
-
-          if(UserTool.userProvider.userInfo.levelEM ==
-              PermissionLevel.normal){
-            Alert.show(context, const JurisdictionToast());
-          }else{
-            Get.to(() => const PushCarPage());
-          }
+            if (UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal) {
+              Alert.show(context, const JurisdictionToast());
+            } else {
+              Get.to(() => const PushCarPage());
+            }
             break;
           case '车险报价':
             Get.to(() => const CarMortgagePage());
@@ -251,9 +253,12 @@ class _HomePageState extends State<HomePage>
 
             break;
           case '车辆收购':
-
-            Get.to(() => const PurchasePushCarPage());////ooooooo
-
+            if (UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal) {
+              Alert.show(context, const JurisdictionToast());
+            } else {
+              Get.to(() => const PurchasePushCarPage());
+            }
           // Get.to(() => const DetailedPricePage());
         }
       },
@@ -262,11 +267,20 @@ class _HomePageState extends State<HomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             Image.asset(
               url,
-              width: name=='车辆管理'|| name=='客户管理'||name=='车辆寄卖'||name=='车辆发布'? 96.w:72.w,
-              height: name=='车辆管理'|| name=='客户管理'||name=='车辆寄卖'||name=='车辆发布'? 96.w:72.w,
+              width: name == '车辆管理' ||
+                      name == '客户管理' ||
+                      name == '车辆寄卖' ||
+                      name == '车辆发布'
+                  ? 96.w
+                  : 72.w,
+              height: name == '车辆管理' ||
+                      name == '客户管理' ||
+                      name == '车辆寄卖' ||
+                      name == '车辆发布'
+                  ? 96.w
+                  : 72.w,
             ),
             8.hb,
             Text(
@@ -286,13 +300,13 @@ class _HomePageState extends State<HomePage>
       padding: EdgeInsets.only(left: 32.w, right: 32.w),
       child: Row(
         children: [
-
-          Expanded(child: GestureDetector(
-            onTap: (){
-              if(UserTool.userProvider.userInfo.levelEM ==
-                  PermissionLevel.normal){
+          Expanded(
+              child: GestureDetector(
+            onTap: () {
+              if (UserTool.userProvider.userInfo.levelEM ==
+                  PermissionLevel.normal) {
                 Alert.show(context, const JurisdictionToast());
-              }else{
+              } else {
                 Get.to(() => const MyOrderPage());
               }
             },
@@ -300,8 +314,7 @@ class _HomePageState extends State<HomePage>
               padding: EdgeInsets.all(24.w),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16.w)
-              ),
+                  borderRadius: BorderRadius.circular(16.w)),
               child: Row(
                 children: [
                   Column(
@@ -321,13 +334,14 @@ class _HomePageState extends State<HomePage>
                       9.hb,
                       Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xFF027AFF),width: 2.w),
-                            borderRadius: BorderRadius.circular(20.w)
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 4.w,horizontal: 16.w),
-                        child:Text('进入 ->',
+                            border: Border.all(
+                                color: const Color(0xFF027AFF), width: 2.w),
+                            borderRadius: BorderRadius.circular(20.w)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 4.w, horizontal: 16.w),
+                        child: Text('进入 ->',
                             style: TextStyle(
-                                color:  const Color(0xFF027AFF),
+                                color: const Color(0xFF027AFF),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.sp)),
                       )
@@ -345,13 +359,13 @@ class _HomePageState extends State<HomePage>
             ),
           )),
           24.wb,
-
-          Expanded(child: GestureDetector(
-            onTap: (){
-              if(UserTool.userProvider.userInfo.levelEM ==
-                  PermissionLevel.normal){
+          Expanded(
+              child: GestureDetector(
+            onTap: () {
+              if (UserTool.userProvider.userInfo.levelEM ==
+                  PermissionLevel.normal) {
                 Alert.show(context, const JurisdictionToast());
-              }else{
+              } else {
                 Get.to(() => const UserInvitationPage());
               }
             },
@@ -359,8 +373,7 @@ class _HomePageState extends State<HomePage>
               padding: EdgeInsets.all(24.w),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16.w)
-              ),
+                  borderRadius: BorderRadius.circular(16.w)),
               child: Row(
                 children: [
                   Column(
@@ -380,13 +393,14 @@ class _HomePageState extends State<HomePage>
                       9.hb,
                       Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xFF027AFF),width: 2.w),
-                            borderRadius: BorderRadius.circular(20.w)
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 4.w,horizontal: 16.w),
-                        child:Text('进入 ->',
+                            border: Border.all(
+                                color: const Color(0xFF027AFF), width: 2.w),
+                            borderRadius: BorderRadius.circular(20.w)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 4.w, horizontal: 16.w),
+                        child: Text('进入 ->',
                             style: TextStyle(
-                                color:  const Color(0xFF027AFF),
+                                color: const Color(0xFF027AFF),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.sp)),
                       )
@@ -415,10 +429,10 @@ class _HomePageState extends State<HomePage>
           title: '快速分享',
           suffixTitle: '查看全部',
           onTap: () {
-            if(UserTool.userProvider.userInfo.levelEM ==
-                PermissionLevel.normal){
+            if (UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal) {
               Alert.show(context, const JurisdictionToast());
-            }else{
+            } else {
               Get.to(() => const ShareHomePage());
             }
           },
@@ -458,10 +472,10 @@ class _HomePageState extends State<HomePage>
           title: '海报',
           suffixTitle: '查看全部',
           onTap: () {
-            if(UserTool.userProvider.userInfo.levelEM ==
-                PermissionLevel.normal){
+            if (UserTool.userProvider.userInfo.levelEM ==
+                PermissionLevel.normal) {
               Alert.show(context, const JurisdictionToast());
-            }else{
+            } else {
               Get.to(() => const PosterListPage());
             }
           },
@@ -498,13 +512,12 @@ class _HomePageState extends State<HomePage>
   _shareItem(CarListModel model) {
     return GestureDetector(
       onTap: () {
-        if(UserTool.userProvider.userInfo.levelEM ==
-            PermissionLevel.normal){
+        if (UserTool.userProvider.userInfo.levelEM == PermissionLevel.normal) {
           Alert.show(context, const JurisdictionToast());
-        }else{
+        } else {
           Get.to(() => NewCarsDetailPage(
-            carListModel: model,
-          ));
+                carListModel: model,
+              ));
         }
       },
       child: Container(
@@ -566,19 +579,66 @@ class _HomePageState extends State<HomePage>
                       const Spacer(),
                       GestureDetector(
                         onTap: () async {
-                          print(model.modelName);
-                          print(model.mainPhoto);
-                          print(model.id);
-                          ShareUtil.shareMiniProgram(
-                            title: model.modelName,
-                            imgUrl: model.mainPhoto,
-                            carIds: [model.id],
-                          );
+                          // print(model.modelName);
+                          // print(model.mainPhoto);
+                          // print(model.id);
+                          // showDialog(
+                          //     context: context,
+                          //     builder: (BuildContext context) {
+                          //       return Center(
+                          //         child: Material(
+                          //           type: MaterialType.transparency,
+                          //           child: SizedBox(
+                          //             width: 120.w,
+                          //             height: 120.w,
+                          //             child: Container(
+                          //               decoration: ShapeDecoration(
+                          //                 color: Color(0x585858),
+                          //                 shape: RoundedRectangleBorder(
+                          //                     borderRadius: BorderRadius.all(
+                          //                         Radius.circular(8.w))),
+                          //               ),
+                          //               child: Column(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment.center,
+                          //                 crossAxisAlignment:
+                          //                     CrossAxisAlignment.center,
+                          //                 children: [
+                          //                   const CircularProgressIndicator(
+                          //                     color: Colors.white,
+                          //                   ),
+                          //                   Padding(
+                          //                     padding:
+                          //                         EdgeInsets.only(top: 7.w),
+                          //                     child: Text(
+                          //                       '加载中.....',
+                          //                       style: TextStyle(
+                          //                           color: Colors.white,
+                          //                           fontSize: 28.sp),
+                          //                     ),
+                          //                   )
+                          //                 ],
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       );
+                          //     });
+                          if (UserTool.userProvider.userInfo.levelEM ==
+                              PermissionLevel.normal) {
+                            Alert.show(context, const JurisdictionToast());
+                          } else {
+                            ShareUtil.shareMiniProgram(
+                              title: model.modelName,
+                              imgUrl: model.mainPhoto,
+                              carIds: [model.id],
+                            );
+                          }
                         },
                         child: Image.asset(
                           Assets.icons.homeShare.path,
-                          width: 28.w,
-                          height: 28.w,
+                          width: 36.w,
+                          height: 36.w,
                         ),
                       ),
                       16.wb,
@@ -597,13 +657,11 @@ class _HomePageState extends State<HomePage>
   _posterItem(PosterListModel model) {
     return GestureDetector(
       onTap: () {
-        if(UserTool.userProvider.userInfo.levelEM ==
-            PermissionLevel.normal){
+        if (UserTool.userProvider.userInfo.levelEM == PermissionLevel.normal) {
           Alert.show(context, const JurisdictionToast());
-        }else{
+        } else {
           Get.to(() => PosterEditPage(model: model));
         }
-
       },
       child: Container(
         width: 240.w,
