@@ -104,60 +104,96 @@ class ShareUtil {
     CloudToast.show('已复制到粘贴板');
   }
 
-  /// 压缩图片
 
-  static Future<Uint8List> compressImageList(Uint8List data) async {
-    // int i=0;
+
+  /// 压缩图片
+  static Future<Uint8List> compressImageList(Uint8List data,int num) async {
+    print(num);
+    print(data.length);
     var result = await FlutterImageCompress.compressWithList(
       data,
-      minHeight: 300,
+      minHeight: 400,
       minWidth: 500,
-      quality:85
+      quality: 95 - num*10,
     );
-      print("这是数据${result.length}");
-    if (result.length > 128000) {
-    // i++;
-    //   print("这是数据${result.length}");
-    //   print("这是数据${height--}");
-    //   print("这是数据${width--}");
-      ///&& result.length < data.length
-      // result = await FlutterImageCompress.compressWithList(
-      //       result,
-      //       minHeight: 300,
-      //       minWidth: 500,
-      //       quality:90-i,
-      //     );
+    print(result.length);
 
-      result = await compressImageList(result);
+    if (result.length > 128000&&result.length<=data.length) {
+      result = await compressImageList(result, num+1);
     }
     return result;
   }
-  // static Future<Uint8List> compressImageList(Uint8List data) async {
-  //   var result = await FlutterImageCompress.compressWithList(
-  //     data,
-  //     minHeight: 300,
-  //     minWidth: 500,
-  //     quality: 96,
-  //   );
-  //   if (result.length > 128000 ) {
-  //     result = await compressImageList(result);
-  //   }
-  //   return result;
-  // }
 
   /// 图片处理
-  static Future<Uint8List?> handleImage(String imgUrl,) async {
-
+  static Future<Uint8List?> handleImage(String imgUrl) async {
+    int num = 0;
     var data = await getNetworkImageData(imgUrl.imageWithHost);
-
     if (data == null) {
       CloudToast.show('图片不存在');
       return null;
     }
     if (data.length > 128000) {
-      print('图片进过处理');
-      data = await compressImageList(data);
+      print('图片原大小：');
+      print(data.length);
+      data = await compressImageList(data,num);
     }
     return data;
   }
+
+  // /// 压缩图片
+  //
+  // static Future<Uint8List> compressImageList(Uint8List data) async {
+  //   // int i=0;
+  //   var result = await FlutterImageCompress.compressWithList(
+  //     data,
+  //     minHeight: 300,
+  //     minWidth: 500,
+  //     quality:90
+  //   );
+  //     print("这是数据${result.length}");
+  //   if (result.length > 128000) {
+  //   // i++;
+  //   //   print("这是数据${result.length}");
+  //   //   print("这是数据${height--}");
+  //   //   print("这是数据${width--}");
+  //     ///&& result.length < data.length
+  //     // result = await FlutterImageCompress.compressWithList(
+  //     //       result,
+  //     //       minHeight: 300,
+  //     //       minWidth: 500,
+  //     //       quality:90-i,
+  //     //     );
+  //
+  //     result = await compressImageList(result);
+  //   }
+  //   return result;
+  // }
+  // // static Future<Uint8List> compressImageList(Uint8List data) async {
+  // //   var result = await FlutterImageCompress.compressWithList(
+  // //     data,
+  // //     minHeight: 300,
+  // //     minWidth: 500,
+  // //     quality: 96,
+  // //   );
+  // //   if (result.length > 128000 && result.length < data.length) {
+  // //     result = await compressImageList(result);
+  // //   }
+  // //   return result;
+  // // }
+  //
+  // /// 图片处理
+  // static Future<Uint8List?> handleImage(String imgUrl,) async {
+  //
+  //   var data = await getNetworkImageData(imgUrl.imageWithHost);
+  //
+  //   if (data == null) {
+  //     CloudToast.show('图片不存在');
+  //     return null;
+  //   }
+  //   if (data.length > 128000) {
+  //     print('图片进过处理');
+  //     data = await compressImageList(data);
+  //   }
+  //   return data;
+  // }
 }
