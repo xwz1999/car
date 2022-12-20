@@ -83,6 +83,9 @@ class _CarOwnerPageState extends State<CarOwnerPage> {
                         callback: (String content) {},
                       ),
                       EditItemWidget(
+                        paddingState: true,
+                        errText: '手机号格式错误',
+                        length: 11,
                         topIcon: true,
                         title: '手机号码',
                         value: '12345678909',

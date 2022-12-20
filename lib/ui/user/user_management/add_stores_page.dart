@@ -231,6 +231,9 @@ class _AddStoresPageState extends State<AddStoresPage> {
             ),
           ),
           EditItemWidget(
+            paddingState: true,
+            errText: '手机号格式错误',
+            length: 11,
             topIcon: false,
             paddingStart: 0,
             titleColor: const Color(0xFF999999),

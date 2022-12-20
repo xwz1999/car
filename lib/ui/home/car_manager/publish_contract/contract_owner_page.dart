@@ -244,6 +244,9 @@ class _ContractOwnerPageState extends State<ContractOwnerPage> {
         ),
 
         EditItemWidget(
+          paddingState: true,
+          errText: '手机号格式错误',
+          length: 11,
           titleColor: const Color(0xFF999999),
           title: '手机号码',
           value: widget.consignmentContractModel.value.masterInfo.phone ?? "",

@@ -392,7 +392,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                                       18.hb,
                                       _information(),
                                       getDown(),
-                                      30.hb,
+                                      // 24.hb,
                                       _shuffling(),
                                       32.hb,
                                       // _informations(),
@@ -683,7 +683,6 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         length++;
       }
     }
-
     return GestureDetector(
       onTap: () async {
 
@@ -854,24 +853,23 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // SizedBox(
-                //   width: 110.w,
-                //   child: Text(
-                //     '新车指导价',
-                //     style: TextStyle(
-                //         fontSize: 20.sp,
-                //         fontWeight: FontWeight.w400,
-                //         color: BaseStyle.color999999),
-                //   ),
-                // ),
-                // Text(
-                //   TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
-                //       num.parse(carInfoModel!.carInfo.newCarGuidePrice))),
-                //   style: TextStyle(
-                //       fontSize: 20.sp,
-                //       fontWeight: FontWeight.w400,
-                //       color: BaseStyle.color999999),
-                // ),
+                SizedBox(
+                  width: 110.w,
+                  child: Text(
+                    '新车指导价',
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w400,
+                        color: BaseStyle.color999999),
+                  ),
+                ),
+                Text(
+                  carInfoModel!.carInfo.modelInfo.price==''?'无':'${carInfoModel!.carInfo.modelInfo.price}万元',
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w400,
+                      color: BaseStyle.color999999),
+                ),
               ],
             ),
           ],
@@ -879,7 +877,6 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         const Spacer(),
 
         ///详细价格
-
         GestureDetector(
           onTap: () {
             downState = !downState;
@@ -890,9 +887,10 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             width: 150.w,
             height: 65.w,
             padding: EdgeInsets.only(left: 20.w),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(35.w)),
-                border: Border.all(width: 2.w, color: const Color(0xFF027AFF))),
+            decoration: const BoxDecoration(
+                // borderRadius: BorderRadius.all(Radius.circular(35.w)),
+                // border: Border.all(width: 2.w, color: const Color(0xFF027AFF))
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -915,7 +913,6 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
       ],
     );
   }
-
   //下拉显示
   getDown() {
     return Offstage(
@@ -1114,7 +1111,6 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
       ),
     );
   }
-
 //文本
   _textview(String text) {
     return Container(

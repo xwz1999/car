@@ -20,69 +20,120 @@ class ExaminationPage extends StatefulWidget {
 class _ExaminationPageState extends State<ExaminationPage> {
   List<dynamic>? data;
 
+  // ReminderApprovalType
   final auditList = [
     {
       'name': '奥迪A3',
       'time': '2021-12-01 12:00:22',
-      'text': '',
-      'conditions': 1,
-      'state': 1,
+      'auditState': 1,
+
+      ///审核状态   1待审核 2已审核
+      'noPass': 0,
+
+      ///审核结果 1通过2驳回
       'reasonText': '',
-      'results': 0,
+
+      ///驳回理由
+      'price': '27.43',
+      'releaseName': '张三',
+      'conditionsState': 1,
+
+      ///1出售，2修改 3发布  4 收购
+
+      ///审批状态
     },
     {
       'name': '奥迪A3',
       'time': '2021-12-01 12:00:22',
-      'text': '车辆信息未填写完整',
-      'conditions': 1,
-      'state': 0,
-      'reasonText': '车子有人私下买了，最后成交价远高于你这份合同，这个合同就当浪费了，你跟客户沟通一下，看其他的车子吧',
-      'results': 1,
-    },
-    {
-      'name': '奥迪A3',
-      'time': '2021-12-01 12:00:22',
-      'text': '',
-      'conditions': 1,
-      'state': 0,
+      'auditState': 1,
+
+      ///审核状态   1已审核2待审核
+      'noPass': 1,
+
+      ///审核结果 1通过2驳回
       'reasonText': '',
-      'results': 0,
+
+      ///驳回理由
+      'price': '27.43',
+      'releaseName': '张三',
+      'conditionsState': 1,
     },
     {
       'name': '奥迪A3',
       'time': '2021-12-01 12:00:22',
-      'text': '',
-      'conditions': 2,
-      'state': 1,
-      'reasonText': '车子有人私下买了',
-      'results': 0,
+      'auditState': 1,
+
+      ///审核状态   1已审核2待审核
+      'noPass': 2,
+
+      ///审核结果 1通过2驳回
+      'reasonText': '车子有私下买下来了，最后成交价远高于你这份合同，这合同就当浪费了，你和客户沟通一下',
+      // 'reasonText': '车子卖了',
+
+      ///驳回理由
+      'price': '27.43',
+      'releaseName': '张三',
+      'conditionsState': 1,
     },
     {
       'name': '奥迪A3',
       'time': '2021-12-01 12:00:22',
-      'text': '',
-      'conditions': 3,
-      'state': 1,
-      'reasonText': '车子有人私下买了',
-      'results': 1,
+      'auditState': 1,
+
+      ///审核状态   1已审核2待审核
+      'noPass': 1,
+
+      ///审核结果 1通过2驳回
+      'reasonText': '',
+
+      ///驳回理由
+      'price': '27.43',
+      'releaseName': '张三',
+      'conditionsState': 2,
+
+      ///1出售，2修改 3发布  4 收购
+
+      ///审批状态
     },
     {
       'name': '奥迪A3',
       'time': '2021-12-01 12:00:22',
-      'text': '',
-      'conditions': 4,
-      'state': 0,
-      'reasonText': '车子有人私下买了，最后成交价远高于你这份合同，这个合同就当浪费了，你跟客户沟通一下，看其他的车子吧',
-      'results': 1,
+      'auditState': 1,
+
+      ///审核状态   1已审核2待审核
+      'noPass': 1,
+
+      ///审核结果 1通过2驳回
+      'reasonText': '',
+
+      ///驳回理由
+      'price': '27.43',
+      'releaseName': '张三',
+      'conditionsState': 3,
+
+      ///1出售，2修改 3发布  4 收购
+
+      ///审批状态
     },
     {
       'name': '奥迪A3',
       'time': '2021-12-01 12:00:22',
-      'text': '',
-      'conditions': 5,
-      'state': 0,
-      'reasonText': '车子有人私下买了，最后成交价远高于你这份合同，这个合同就当浪费了，你跟客户沟通一下，看其他的车子吧',
-      'results': 1,
+      'auditState': 1,
+
+      ///审核状态   1已审核2待审核
+      'noPass': 1,
+
+      ///审核结果 1通过2驳回
+      'reasonText': '',
+
+      ///驳回理由
+      'price': '27.43',
+      'releaseName': '张三',
+      'conditionsState': 4,
+
+      ///1出售，2修改 3发布  4 收购
+
+      ///审批状态
     },
   ];
   late final EasyRefreshController _refreshController = EasyRefreshController();
@@ -124,6 +175,13 @@ class _ExaminationPageState extends State<ExaminationPage> {
             ),
             Expanded(
                 child: EasyRefresh(
+                    header: ClassicalHeader(
+                        infoText: '下拉刷新',
+                        refreshedText: '刷新完成',
+                        refreshText: '刷新中....',
+                        refreshReadyText: '下拉刷新',
+                        // refreshFailedText: '11111',
+                        refreshingText: '刷新中....'),
                     firstRefresh: true,
                     controller: _refreshController,
                     onRefresh: () async {},
@@ -180,10 +238,8 @@ class _ExaminationPageState extends State<ExaminationPage> {
     return GestureDetector(
       onTap: () {
         Get.to(() => ExaminationDetails(
-              state: ReminderApprovalType.getValue(item['conditions']).typeNum,
-              auditState: item['state'],
-              reasonText: item['reasonText'],
-              resultsState: item['results'],
+              state: item['conditionsState'], auditState: item['noPass'], reasonText: item['reasonText'],
+
             ));
         // showModalBottomSheet(
         //     context: context,
@@ -285,13 +341,13 @@ class _ExaminationPageState extends State<ExaminationPage> {
           Row(
             children: [
               Text(
-                ReminderApprovalType.getValue(item['conditions']).typeStr,
+                ReminderApprovalType.getValue(item['conditionsState']).typeStr,
                 style: TextStyle(
                     fontSize: 32.sp,
                     color: const Color.fromRGBO(51, 51, 51, 1)),
               ),
               const Spacer(),
-              _isPass(item['state'])
+              _isPass(item['noPass'])
             ],
           ),
           24.hb,
@@ -316,7 +372,9 @@ class _ExaminationPageState extends State<ExaminationPage> {
           Row(
             children: [
               Text(
-                '审核时间',
+                item['conditionsState'] == 1 || item['conditionsState'] == 3
+                    ? '发布时间'
+                    : '审核时间',
                 style: TextStyle(
                     fontSize: 28.sp,
                     color: const Color.fromRGBO(102, 102, 102, 1)),
@@ -330,16 +388,18 @@ class _ExaminationPageState extends State<ExaminationPage> {
               )
             ],
           ),
-          item['conditions'] == 1 ? 28.hb : 0.hb,
-          item['conditions'] == 1
+          item['conditionsState'] == 1 ? 28.hb : 0.hb,
+          item['reasonText'] != ''
               ? Row(
                   children: [
-                    item['reasonText']=='' ?const SizedBox():Text(
-                      '驳回原因',
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(102, 102, 102, 1)),
-                    ),
+                    item['reasonText'] == ''
+                        ? const SizedBox()
+                        : Text(
+                            '驳回原因',
+                            style: TextStyle(
+                                fontSize: 28.sp,
+                                color: const Color.fromRGBO(102, 102, 102, 1)),
+                          ),
                     48.wb,
                     Flexible(
                         child: Text(

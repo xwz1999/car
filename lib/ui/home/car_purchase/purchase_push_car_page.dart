@@ -90,17 +90,18 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
 
   List<String> get carNatureOfUseList =>
       CarNatureOfUse.values.map((e) => e.typeStr).toList();
+
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 0),()async{
+    Future.delayed(const Duration(seconds: 0), () async {
       await (HiveStore.carBox?.get('carInfo')) as PurchaseCarInfo;
       await (HiveStore.carBox?.get('info')) as PurchaseInfo;
       await (HiveStore.carBox?.get('photo')) as PurchasePhotoModel;
       await HiveStore.carBox?.get('save');
-      PurchaseCarInfo carInfo=await HiveStore.carBox?.get('carInfo');
-      if(HiveStore.carBox?.get('save')){
-        _licensePlateController.text=carInfo.licensePlate ?? '';
-        _publishCarInfo.value.carName=carInfo.carName ?? '';
+      PurchaseCarInfo carInfo = await HiveStore.carBox?.get('carInfo');
+      if (HiveStore.carBox?.get('save')) {
+        _licensePlateController.text = carInfo.licensePlate ?? '';
+        _publishCarInfo.value.carName = carInfo.carName ?? '';
         // _publishCarInfo.value.carModelId=carInfo.carModelId;
 
       }
@@ -138,7 +139,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                       children: [
                         Text(
                           '是否保留此次发布编辑的信息,下次打开',
-                          style: TextStyle(fontSize:28.sp),
+                          style: TextStyle(fontSize: 28.sp),
                         ),
                         Text('直接继续发布', style: TextStyle(fontSize: 28.sp))
                       ],
@@ -149,27 +150,28 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                     listener: (index) {
                       Alert.dismiss(context);
                       // _getSure = false;
-                        Get.back();
+                      Get.back();
                       setState(() {
                         //_getSure;
                       });
                       //Value = false;
                       //(Value);
                     },
-                    deleteListener: () async{
+                    deleteListener: () async {
                       Alert.dismiss(context);
                       // _getSure = true;
                       HiveStore.carBox?.delete('carInfo');
                       HiveStore.carBox?.delete('info');
                       HiveStore.carBox?.delete('photo');
                       HiveStore.carBox?.delete('save');
-                      await HiveStore.carBox?.put('carInfo', _publishCarInfo.value);
+                      await HiveStore.carBox
+                          ?.put('carInfo', _publishCarInfo.value);
                       await HiveStore.carBox?.put('info', purchaseInfo.value);
-                      await HiveStore.carBox?.put('photo', reportPhotoModel.value);
+                      await HiveStore.carBox
+                          ?.put('photo', reportPhotoModel.value);
                       await HiveStore.carBox?.put('save', true);
                       Get.back();
                       setState(() {
-
                         //_getSure;
                       });
                       //print(_getSure);

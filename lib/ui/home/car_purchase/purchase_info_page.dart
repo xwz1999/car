@@ -609,6 +609,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       paddingStart: 0.w,
     );
     var phoneNum = EditItemWidget(
+      paddingState: true,
+      errText: '手机号格式错误',
+      length: 11,
       title: state == 0 ? '手机号码' : '联系电话',
       tips: '请输入',
       controller: phoneNumController,

@@ -55,7 +55,10 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
   final List _models1 = ['微信小程序', '其他'];
   late int sourceCustomers = 0;
   final List<int> _selectIndex1 = [];
+
 bool phone=false;
+  // String phone = '';
+
   @override
   void initState() {
     _editingController = TextEditingController();
@@ -242,25 +245,55 @@ bool phone=false;
                     ? getContentItem('客户', '请选择',
                         path: Assets.icons.icGoto.path)
                     : const SizedBox(),
+
+                // TextField(
+                //   onChanged: (text) {
+                //     setState(() {
+                //       if (text != "hello") {
+                //         phone = text;
+                //       }
+                //       ;
+                //     });
+                //   },
+                //   decoration: InputDecoration(
+                //     icon: Row(
+                //       children: [
+                //         Padding(
+                //           padding: EdgeInsets.only(top: 10.w),
+                //           child: Text(
+                //             '*  ',
+                //             style: TextStyle(
+                //               fontSize: 28.sp,
+                //               color: const Color(0xFFE62222),
+                //             ),
+                //           ),
+                //         ),
+                //         SizedBox(
+                //           width:  100.w,
+                //           child: Text(
+                //             '手机号',
+                //             style: TextStyle(
+                //               color:  BaseStyle.color333333,
+                //               fontSize:  BaseStyle.fontSize32,
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //     hintText: "请输入",
+                //     errorText: phone.length==11?'':"手机号格式错误",
+                //   ),
+                // ),
                 EditItemWidget(
                   paddingState: true,
                   errText: '手机号格式错误',
+                  length: 11,
                   title: '手机号',
                   //value: widget.contractModel.value.phone ?? '',
                   controller: phoneController,
-                  judgeText: phone,
-                  // inputFormatters: [
-                  //   FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
-                  //   LengthLimitingTextInputFormatter(11),
-                  // ],
-                  // callback2: (bool type) {
-                  //   if(!type){
-                  //     CloudToast.show('格式错误');
-                  //   }
-                  // },
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]")),LengthLimitingTextInputFormatter(11)],
                   callback: (String content) {
                     widget.carSaleContract.masterInfo.phone = content;
-                    phone=content.length!=11;
                     // widget.contractModel.value.phone = content;
                   },
                 ),
@@ -277,7 +310,9 @@ bool phone=false;
                   title: '身份证号',
                   //value: widget.contractModel.value.cardNo ?? "",
                   controller: cardNoController,
-
+                  paddingState: true,
+                  errText: '身份证格式错误',
+                  length: 18,
                   callback: (String content) {
                     // widget.contractModel.value.cardNo = content;
                     widget.carSaleContract.masterInfo.idCard = content;

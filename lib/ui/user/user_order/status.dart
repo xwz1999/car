@@ -285,8 +285,8 @@ enum ReminderApprovalType{
   applicationSale(1,'出售申请'),
   modify(2,'修改申请'),
   release(3,'发布审核'),
-  shelves(4,'下架申请'),
-  acquisition(5,'收购申请');
+  // shelves(4,'下架申请'),
+  acquisition(4,'收购申请');
   final int typeNum;
   final String typeStr;
   static ReminderApprovalType getValue(int value)=>
@@ -296,10 +296,10 @@ enum ReminderApprovalType{
 
 ///经济人
 enum ExaminationType{
-  all(1,'全部'),
-  sell(2,'出售申请'),
-  shelves(3,'下架申请'),
-  acquisition(4,'收购申请');
+  all(0,'全部'),
+  sell(1,'出售申请'),
+  // shelves(3,'下架申请'),
+  acquisition(2,'收购申请');
   final int typeNum;
   final String typeStr;
   static ExaminationType getValue(int value)=>

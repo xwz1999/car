@@ -69,7 +69,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
             Container(
               color: Colors.white,
               padding: EdgeInsets.only(left: 34.w,),
-              child: const EditItemWidget(
+              child:  EditItemWidget(
                 textColor: Color(0xFF999999),
                 title: '服务费比列',
                 keyboardType: TextInputType.number,

@@ -32,12 +32,12 @@ class EditItemWidget extends StatefulWidget {
   final bool haveBorder;
   final bool paddingState;
   final String errText;
-  final bool judgeText;
+   final int length;
   // final FocusNode focusNode;
   // final int idCard;
 // final bool errState;
 // final String errText;
-  const EditItemWidget({
+   EditItemWidget({
     super.key,
     required this.title,
     this.canChange = true,
@@ -61,7 +61,7 @@ class EditItemWidget extends StatefulWidget {
     this.titleSize,
     this.paddingState=false,
     this.errText="",
-    this.judgeText=false,
+    this.length=0,
     // this.focusNode=FocusNode(),
     // this.errState=false,
     // this.errText="",
@@ -76,7 +76,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
   late double paddingTop = 0;
   // final FocusNode _focusNode = FocusNode();
   final String _focusNodeText = '';
-
+late String judgeText='';
   @override
   void initState() {
     if (widget.paddingTop == 0) {
@@ -121,7 +121,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
   Widget build(BuildContext context) {
     return
       Container(
-      padding: EdgeInsets.only(top: paddingTop, bottom: paddingTop),
+      padding: widget.paddingState ?EdgeInsets.only(top: 0.w, bottom: 0.w):EdgeInsets.only(top:paddingTop, bottom: paddingTop),
       decoration: BoxDecoration(
           border: Border(
               bottom: widget.haveBorder
@@ -157,7 +157,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
             ),
           ),
           Expanded(
-            child:widget.paddingState?Padding(padding: EdgeInsets.only(top: 40.w),child:TextField(
+            child:widget.paddingState?Padding(padding: EdgeInsets.only(top: 20.w),child:TextField(
               // focusNode: _focusNode,
               enabled: widget.canChange,
               inputFormatters: widget.inputFormatters,
@@ -174,9 +174,10 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                 // _focusNode.addListener(() {
                 //   _focusNode
                 // });
-                // setState(() {
-                //
-                // });
+                judgeText=text;
+                setState(() {
+
+                });
               },
               style: TextStyle(
                 color: widget.textColor ?? BaseStyle.color333333,
@@ -186,7 +187,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
               controller: _editingController,
               decoration: InputDecoration(
 
-                errorText: widget.judgeText?'':widget.errText,
+                errorText: judgeText.length!=widget.length?widget.errText:'',
                 //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
                 filled: true,
                 isCollapsed: true,
