@@ -5,6 +5,8 @@ import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
 import 'package:cloud_car/utils/net_work/inner_model/base_model.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 
+import '../../../model/user/real_name_model.dart';
+
 class User {
   ///获取剩余评估次数
   static Future<String> getWallet() async {
@@ -40,18 +42,22 @@ class User {
     }
   }
 
-  // ///支付宝实名认证
-  // static Future<String> getAil(
-  //     String name, String idCard, String idCardFront, String idCardBack) async {
-  //   BaseModel res = await apiClient.request(API.user.ail.certifyAil, data: {
-  //     'name': name,
-  //     'idCard': idCard,
-  //     'idCardFront': idCardFront,
-  //     'idCardBack': idCardBack,
-  //   });
-  //   if (res.data! == 0) return '0';
-  //   return (res.msg).toString();
-  // }
+  ///支付宝实名认证
+  static Future<RealNameModel?> getAil(
+      String name, String idCard, String idCardFront, String idCardBack) async {
+    BaseModel res = await apiClient.request(API.user.ail.certifyAil, data: {
+      'name': name,
+      'idCard': idCard,
+      'idCardFront': idCardFront,
+      'idCardBack': idCardBack,
+    });
+if(res.code==0){
+  return RealNameModel.fromJson(res.data);
+}else{
+  CloudToast.show(res.msg);
+  return null;
+}
+  }
   //
   // ///获取支付宝实名认证结果
   // static Future<String> getResult(

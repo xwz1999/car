@@ -137,7 +137,10 @@ class _ExaminationPageState extends State<ExaminationPage> {
     },
   ];
   late final EasyRefreshController _refreshController = EasyRefreshController();
-  ReminderApprovalType examinationState = ReminderApprovalType.all;
+  var examinationState =
+      UserTool.userProvider.userInfo.business.roleEM == Role.salesTraffic
+          ? ExaminationType.all
+          : ReminderApprovalType.all;
 
   @override
   @override
@@ -169,7 +172,11 @@ class _ExaminationPageState extends State<ExaminationPage> {
               child: CarWidget(
                   items: _getList(),
                   callBack: (index) {
-                    examinationState = ReminderApprovalType.values[index];
+                    examinationState =
+                        UserTool.userProvider.userInfo.business.roleEM ==
+                                Role.salesTraffic
+                            ? ExaminationType.values[index]
+                            : ReminderApprovalType.values[index];
                     _refreshController.callRefresh();
                   }),
             ),
@@ -238,8 +245,9 @@ class _ExaminationPageState extends State<ExaminationPage> {
     return GestureDetector(
       onTap: () {
         Get.to(() => ExaminationDetails(
-              state: item['conditionsState'], auditState: item['noPass'], reasonText: item['reasonText'],
-
+              state: item['conditionsState'],
+              auditState: item['noPass'],
+              reasonText: item['reasonText'],
             ));
         // showModalBottomSheet(
         //     context: context,

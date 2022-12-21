@@ -7,7 +7,8 @@ import '../../../tab_navigator.dart';
 
 class PublishFinishPage extends StatefulWidget {
   final String title;
-  const PublishFinishPage({super.key,  this.title='车辆发布'});
+  final String remindText;
+  const PublishFinishPage({super.key,  this.title='车辆发布',this.remindText='提交成功，等待平台审核'});
 
   @override
   State<PublishFinishPage> createState() => _PublishFinishPageState();
@@ -41,7 +42,7 @@ class _PublishFinishPageState extends State<PublishFinishPage> {
             40.heightBox,
             Assets.icons.successful.image(width: 200.w,height: 200.h),
             20.heightBox,
-            '提交成功，等待平台审核'.text.bold.size(32.sp).make(),
+            widget.remindText.text.bold.size(32.sp).make(),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

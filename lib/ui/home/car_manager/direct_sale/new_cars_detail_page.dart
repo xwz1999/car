@@ -65,7 +65,8 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
   List<CarPhotos> carPhotos = [];
   List<CarPhotos> interiorPhotos = [];
   List<CarPhotos> defectPhotos = [];
-  List<CarPhotos> dataPhotos=[];
+  List<CarPhotos> dataPhotos = [];
+
   // List<CarPhotos> repairPhotos = [];
   //
   // List<CarPhotos> _reportPhotos = [];
@@ -282,7 +283,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                     SliverAppBar(
                         pinned: true,
                         stretch: true,
-                        expandedHeight: downState ? 945.w : 1170.w,
+                        expandedHeight: downState ? 920.w : 1250.w,
                         elevation: 0,
                         backgroundColor:
                             headerWhite ? Colors.white : Colors.transparent,
@@ -391,6 +392,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                                       _label(),
                                       18.hb,
                                       _information(),
+                                      8.hb,
                                       getDown(),
                                       // 24.hb,
                                       _shuffling(),
@@ -685,7 +687,6 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     }
     return GestureDetector(
       onTap: () async {
-
         await Get.to(
           PushCarManagePhotoPage(
             isSelf: widget.carListModel.isSelf == 1,
@@ -839,8 +840,10 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
           children: [
             Text.rich(TextSpan(children: [
               TextSpan(
-                  text:  (num.parse(carInfoModel!
-                      .carInfo.priceInfo.interiorPrice)/10000).toString(),
+                  text: (num.parse(
+                              carInfoModel!.carInfo.priceInfo.interiorPrice) /
+                          10000)
+                      .toString(),
                   style: TextStyle(
                       color: const Color(0xFFFF3B02),
                       fontSize: BaseStyle.fontSize40)),
@@ -864,7 +867,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                   ),
                 ),
                 Text(
-                  carInfoModel!.carInfo.modelInfo.price==''?'无':'${carInfoModel!.carInfo.modelInfo.price}万元',
+                  carInfoModel!.carInfo.modelInfo.price == ''
+                      ? '无'
+                      : '${carInfoModel!.carInfo.modelInfo.price}万元',
                   style: TextStyle(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w400,
@@ -890,12 +895,12 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             decoration: const BoxDecoration(
                 // borderRadius: BorderRadius.all(Radius.circular(35.w)),
                 // border: Border.all(width: 2.w, color: const Color(0xFF027AFF))
-            ),
+                ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "详情价格",
+                  "内部价格",
                   style: TextStyle(
                       color: const Color(0xFF027AFF), fontSize: 20.sp),
                 ),
@@ -913,108 +918,167 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
       ],
     );
   }
+
   //下拉显示
   getDown() {
     return Offstage(
       offstage: downState,
       child: Container(
         // height: 174.w,
-        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+        padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 8.w),
         decoration: BoxDecoration(
-            color: Color(0xFFBBBBBB).withOpacity(0.1),
+            // color: const Color(0xFFBBBBBB).withOpacity(0.1),
             borderRadius: BorderRadius.all(Radius.circular(8.w))),
         child: Column(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 145.w,
-                        child: Text(
-                          '外部价格',
-                          style: TextStyle(
-                              fontSize: 28.sp,
-                              fontWeight: FontWeight.w400,
-                              color: BaseStyle.color999999),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                color: const Color(0xFFBBBBBB).withOpacity(0.1),
+                // border: Border.all(width: 2.w, color: const Color(0xFFBBBBBB)),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 145.w,
+                          child: Text(
+                            '外部价格',
+                            style: TextStyle(
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.w400,
+                                color: BaseStyle.color999999),
+                          ),
                         ),
-                      ),
-                      Text(
-                        TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
-                            num.parse(carInfoModel!
-                                .carInfo.priceInfo.exteriorPrice))),
-                        style: TextStyle(
-                            height: 1.5,
-                            fontSize: 28.sp,
-                            fontWeight: FontWeight.w500,
-                            color: BaseStyle.color333333),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 145.w,
-                        child: Text(
-                          "内部价格",
+                        Text(
+                          TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
+                              num.parse(carInfoModel!
+                                  .carInfo.priceInfo.exteriorPrice))),
                           style: TextStyle(
+                              height: 1.5,
                               fontSize: 28.sp,
-                              fontWeight: FontWeight.w400,
-                              color: BaseStyle.color999999),
+                              fontWeight: FontWeight.w500,
+                              color: BaseStyle.color333333),
                         ),
-                      ),
-                      10.wb,
-                      Text(
-                        TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
-                            num.parse(
-                                carInfoModel!.carInfo.priceInfo.interiorPrice))),
-                        style: TextStyle(
-                            height: 1.5,
-                            fontSize: 28.sp,
-                            fontWeight: FontWeight.w500,
-                            color: BaseStyle.color333333),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  50.wb,
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 145.w,
+                          child: Text(
+                            "内部价格",
+                            style: TextStyle(
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.w400,
+                                color: BaseStyle.color999999),
+                          ),
+                        ),
+                        10.wb,
+                        Text(
+                          TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
+                              num.parse(carInfoModel!
+                                  .carInfo.priceInfo.interiorPrice))),
+                          style: TextStyle(
+                              height: 1.5,
+                              fontSize: 28.sp,
+                              fontWeight: FontWeight.w500,
+                              color: BaseStyle.color333333),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             GestureDetector(
               onTap: () {
                 // Get.to(()=>const DetailedPricePage());
               },
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 16.w),
+                margin: EdgeInsets.symmetric(horizontal: 0.w, vertical: 16.w),
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.w),
                 decoration: BoxDecoration(
-                    border:
-                        Border.all(width: 2.w, color: const Color(0xFFBBBBBB)),
+                    color: const Color(0xFFBBBBBB).withOpacity(0.1),
+                    // border:
+                    //     Border.all(width: 2.w, color: const Color(0xFFBBBBBB)),
                     borderRadius: BorderRadius.all(Radius.circular(8.w))),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 144.w,
-                      child: Text(
-                        '降价记录：',
-                        style: TextStyle(
-                            color: const Color(0xFF999999), fontSize: 24.sp),
-                      ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 144.w,
+                          child: Text(
+                            '调价记录：',
+                            style: TextStyle(
+                                color: const Color(0xFF333333),
+                                fontSize: 28.sp),
+                          ),
+                        ),
+                        340.wb,
+                        Text(
+                          '查看历史降价',
+                          style: TextStyle(
+                              color: const Color(0xFF999999), fontSize: 20.sp),
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                          height: 20.w,
+                          child: Image.asset(Assets.icons.icGoto.path),
+                        )
+                      ],
                     ),
-                    Text(
-                      '最近降价2000元',
-                      style: TextStyle(
-                          color: const Color(0xFF999999), fontSize: 24.sp),
+                    24.hb,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 26.w,
+                          height: 26.w,
+                          child: Image.asset(Assets.icons.pricing1.path),
+                        ),
+                        16.wb,
+                        Text(
+                          '近一个月调价2次',
+                          style: TextStyle(
+                              color: const Color(0xFF333333), fontSize: 24.sp),
+                        ),
+                      ],
                     ),
-                    const Spacer(),
-                    SizedBox(
-                      width: 28.w,
-                      height: 28.w,
-                      child: Image.asset(Assets.icons.icGoto.path),
+                    Container(
+                      width: 0.w,
+                      height:18.w,
+                      margin: EdgeInsets.only(left: 13.w),
+                      decoration: BoxDecoration(
+                          // color: Color(0xFF027AFF),
+                          border: Border.all(
+                        width: 2.w,
+                        color: const Color(0xFF027AFF),
+                      )),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 26.w,
+                          height: 26.w,
+                          child: Image.asset(Assets.icons.pricing.path),
+                        ),
+                        16.wb,
+                        Text(
+                          '2022年12月20日降价3000元',
+                          style: TextStyle(
+                              color: const Color(0xFF333333), fontSize: 24.sp),
+                        ),
+                      ],
                     )
                   ],
                 ),
@@ -1111,6 +1175,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
       ),
     );
   }
+
 //文本
   _textview(String text) {
     return Container(

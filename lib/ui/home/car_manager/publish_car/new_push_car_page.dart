@@ -584,6 +584,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                               top: Radius.circular(16.w))),
                       builder: (context) {
                         return CloudListPickerWidget(
+                          initIndex:  _publishCarInfo.value.carSource?? 1,
                             title: '车辆来源',
                             items: carSourceList,
                             onConfirm: (str, index) {
@@ -625,6 +626,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                               top: Radius.circular(16.w))),
                       builder: (context) {
                         return CloudListPickerWidget(
+                          initIndex:  _publishCarInfo.value.carType ?? 1,
                             title: '车辆类型',
                             items: carTypeList,
                             onConfirm: (str, index) {

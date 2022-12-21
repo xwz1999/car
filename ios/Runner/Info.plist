@@ -45,7 +45,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>App需要访问相机用于扫描行驶证等功能</string>
+	<string>App需要访问相机用于扫描行驶证实名认证等功能</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App需要访问相册以提供上传车辆照片、保存海报等功能</string>
 	<key>UILaunchStoryboardName</key>

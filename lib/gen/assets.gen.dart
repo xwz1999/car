@@ -441,6 +441,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/payment.png
   AssetGenImage get payment => const AssetGenImage('assets/icons/payment.png');
 
+  /// File path: assets/icons/pricing.png
+  AssetGenImage get pricing => const AssetGenImage('assets/icons/pricing.png');
+
+  /// File path: assets/icons/pricing1.png
+  AssetGenImage get pricing1 =>
+      const AssetGenImage('assets/icons/pricing1.png');
+
   /// File path: assets/icons/realName.png
   AssetGenImage get realName =>
       const AssetGenImage('assets/icons/realName.png');

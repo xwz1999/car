@@ -1,13 +1,26 @@
 
+import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../model/user/real_name_model.dart';
+import '../../../utils/net_work/api_client.dart';
+import '../../../utils/pay_util.dart';
+import '../../../utils/toast/cloud_toast.dart';
 import '../../../widget/button/cloud_back_button.dart';
+import '../../../widget/picker/cloud_image_picker.dart';
+
+import '../../home/car_manager/direct_sale/edit_item_widget.dart';
+
+import '../interface/user_func.dart';
 
 class RealNamePage extends StatefulWidget {
   const RealNamePage({super.key});
@@ -17,17 +30,23 @@ class RealNamePage extends StatefulWidget {
 }
 
 class _RealNamePageState extends State<RealNamePage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController idController = TextEditingController();
+
   List<dynamic>? data;
   bool _getSure = false;
   final picker = ImagePicker();
+  File? _file;
+  File? _file2;
+  String urls = '';
+  String urls2 = '';
+  late RealNameModel rName;
   Future getImage() async {
     // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     setState(() {
       if (pickedFile != null) {
-      } else {
-
-      }
+      } else {}
     });
   }
 
@@ -38,6 +57,8 @@ class _RealNamePageState extends State<RealNamePage> {
 
   @override
   void dispose() {
+    nameController.dispose();
+    idController.dispose();
     super.dispose();
   }
 
@@ -65,8 +86,39 @@ class _RealNamePageState extends State<RealNamePage> {
             72.hb,
             CloudBottomButton(
                 text: '提交',
-                onTap: () {
+                onTap: () async {
                   if (_getSure) {
+                    var res = await User.getAil(
+                      nameController.text,
+                      idController.text,
+                      urls,
+                      urls2,
+                    );
+                    // if(res!=null){
+                    //   var re = await PayUtil().callAliPay(res!.url);
+                    //   if (re) {
+                    //     CloudToast.show('成功');
+                    //     // _paySuccess();
+                    //   } else {
+                    //     BotToast.closeAllLoading();
+                    //   }
+                    //   // launchUrl(Uri.parse(res.url));
+                    // }
+
+                    // apiClient.request(API.user.ail.certifyAil,data: {
+                    //   'name':nameController.text,
+                    //   'idCard':idController.text,
+                    //   'idCardFront':urls,
+                    //   'idCardBack':urls2,
+                    // });
+                    // if (res.code != 0) {
+                    //   CloudToast.show(res.msg);
+                    // } else {
+                    //   // launchUrl();
+                    //   // var model=await apiClient.request(API.user.ail.ailResult,);
+                    //   // CloudToast.show(model.msg);
+                    //   return true;
+                    // }
                   } else {
                     BotToast.showText(text: '请同意实名认证协议');
                   }
@@ -89,9 +141,37 @@ class _RealNamePageState extends State<RealNamePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           12.hb,
-          getText('姓名', '请填写您的真实姓名'),
-          64.hb,
-          getText('身份证号', '请填写身份证号'),
+          EditItemWidget(
+            title: '姓名',
+            controller: nameController,
+            tips: '请填写您的真实姓名',
+            // value: content ?? '',
+            topIcon: false,
+            // paddingStart: 0.5,
+            canChange: true,
+            callback: (String content) {},
+          ),
+          EditItemWidget(
+            paddingState: true,
+            errText: '身份证号格式错误',
+            length: 18,
+            title: '身份证号',
+            controller: idController,
+            tips: '请填写身份证号',
+            inputFormatters: [LengthLimitingTextInputFormatter(18)],
+            // value: content ?? '',
+            topIcon: false,
+            // paddingStart: 0.5,
+            canChange: true,
+            callback: (String content) {},
+            // endIcon: Image.asset(
+            //   Assets.icons.icGoto.path,
+            //   width: 32.w,
+            //   height: 32.w,
+            // ),
+          ),
+          // // getText('姓名', '请填写您的真实姓名'),
+          // getText('身份证号', '请填写身份证号'),
           64.hb,
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,45 +181,106 @@ class _RealNamePageState extends State<RealNamePage> {
                 child: Text(
                   '身份证照',
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                        color: const Color(0xFF999999),
+                        color: const Color(0xFF333333),
                       ),
                 ),
               ),
               40.wb,
               Row(
                 children: [
-                  SizedBox(
-                    width: 200.w,
-                    height: 150.w,
-                    child: GestureDetector(
-                        onTap: () {
-                          getImage();
-                        },
-                        child: Image.asset(
-                          Assets.images.carPersonHead.path,
-                          fit: BoxFit.fill,
-                        )),
-                    // GestureDetector(
-                    //     onTap: () {
-                    //       Get.to(() => const FaceRecognitionPage());
-                    //     },
-                    //     child:
-
-                    //     ),
+                  GestureDetector(
+                    onTap: () async {
+                      _file =
+                          await CloudImagePicker.pickSingleImage(title: '选择图片');
+                      if (_file != null) {
+                        setState(() {});
+                        var cancel = CloudToast.loading;
+                        urls = await apiClient.uploadImage(_file!);
+                        print(urls);
+                        // var carInfoModel = await CarFunc.carDistinguish(urls);
+                        // if (carInfoModel != null) {
+                        //   // widget.onLoadComplete(carInfoModel);
+                        // }
+                        cancel();
+                      }
+                    },
+                    child: SizedBox(
+                      width: 200.w,
+                      height: 150.w,
+                      child: _file == null
+                          ? Assets.images.carPersonHead.image()
+                          : Image.file(_file!),
+                    ),
                   ),
+                  // SizedBox(
+                  //   width: 200.w,
+                  //   height: 150.w,
+                  //   child: GestureDetector(
+                  //       onTap: () async {
+                  //         _file = await CloudImagePicker.pickSingleImage(
+                  //             title: '选择图片');
+                  //         if (_file != null) {
+                  //           setState(() {});
+                  //           var cancel = CloudToast.loading;
+                  //           urls = await apiClient.uploadImage(_file!);
+                  //           // var carInfoModel = await CarFunc.carDistinguish(urls);
+                  //           // if (carInfoModel != null) {
+                  //           //   // widget.onLoadComplete(carInfoModel);
+                  //           // }
+                  //           cancel();
+                  //         }
+                  //       },
+                  //       child: Image.asset(
+                  //         Assets.images.carPersonBack.path,
+                  //         fit: BoxFit.fill,
+                  //       )),
+                  //   // GestureDetector(
+                  //   //     onTap: () {
+                  //   //       Get.to(() => const FaceRecognitionPage());
+                  //   //     },
+                  //   //     child:
+                  //
+                  //   //     ),
+                  // ),
                   24.wb,
-                  SizedBox(
-                    width: 200.w,
-                    height: 150.w,
-                    child: GestureDetector(
-                        onTap: () {
-                          getImage();
-                        },
-                        child: Image.asset(
-                          Assets.images.carPersonBack.path,
-                          fit: BoxFit.fill,
-                        )),
-                  )
+
+                  GestureDetector(
+                    onTap: () async {
+                      _file2 =
+                          await CloudImagePicker.pickSingleImage(title: '选择图片');
+                      if (_file2 != null) {
+                        setState(() {});
+                        var cancel = CloudToast.loading;
+                        urls2 = await apiClient.uploadImage(_file2!);
+                        print(urls2);
+                        // var carInfoModel = await CarFunc.carDistinguish(urls);
+                        // if (carInfoModel != null) {
+                        //   // widget.onLoadComplete(carInfoModel);
+                        // }
+                        cancel();
+                      }
+                    },
+                    child: SizedBox(
+                      width: 200.w,
+                      height: 150.w,
+                      child: _file2 == null
+                          ? Assets.images.carPersonBack.image()
+                          : Image.file(_file2!),
+                    ),
+                  ),
+
+                  // SizedBox(
+                  //   width: 200.w,
+                  //   height: 150.w,
+                  //   child: GestureDetector(
+                  //       onTap: () {
+                  //         ScanLicenseWidget(onLoadComplete: (CarDistinguishModel ) {  },);
+                  //       },
+                  //       child: Image.asset(
+                  //         Assets.images.carPersonBack.path,
+                  //         fit: BoxFit.fill,
+                  //       )),
+                  // )
                 ],
               ),
               32.wb,
@@ -213,6 +354,7 @@ class _RealNamePageState extends State<RealNamePage> {
           ),
           Expanded(
             child: TextField(
+              // controller: ,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(bottom: 21.w), //文字与边框的距离
                   border: InputBorder.none, //去掉下划线

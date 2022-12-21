@@ -190,7 +190,7 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                     color: Colors.white,
                     border: Border(
                         bottom: BorderSide(
-                            color: const Color(0xFFF6F6F6), width: 2.w))),
+                            color: const Color(0xFFF6F6F6), width: 0.w))),
                 child: EditItemWidget(
                   topIcon: false,
                   title: '成交价',
@@ -213,7 +213,7 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                     color: Colors.white,
                     border: Border(
                         bottom: BorderSide(
-                            color: const Color(0xFFF6F6F6), width: 2.w))),
+                            color: const Color(0xFFF6F6F6), width: 0.w))),
                 child: EditItemWidget(
                   topIcon: true,
                   title: '卖方服务费',
