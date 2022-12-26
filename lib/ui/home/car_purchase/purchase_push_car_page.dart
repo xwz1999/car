@@ -27,6 +27,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../model/purchase_car_info_model.dart';
 import '../../../widget/alert.dart';
 import '../../../widget/picker/cloud_grid_picker_widget.dart';
 
@@ -61,6 +62,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
   final TextEditingController _mileController = TextEditingController();
   final TextEditingController _licensePlateController = TextEditingController();
   final TextEditingController _licenseColorController = TextEditingController();
+  late PurchaseCarInfoModel carInfo = PurchaseCarInfoModel();
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
     ChooseItem(name: '紫色'),
@@ -94,17 +96,19 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 0), () async {
-      await (HiveStore.carBox?.get('carInfo')) as PurchaseCarInfo;
-      await (HiveStore.carBox?.get('info')) as PurchaseInfo;
-      await (HiveStore.carBox?.get('photo')) as PurchasePhotoModel;
-      await HiveStore.carBox?.get('save');
-      PurchaseCarInfo carInfo = await HiveStore.carBox?.get('carInfo');
-      if (HiveStore.carBox?.get('save')) {
-        _licensePlateController.text = carInfo.licensePlate ?? '';
-        _publishCarInfo.value.carName = carInfo.carName ?? '';
-        // _publishCarInfo.value.carModelId=carInfo.carModelId;
-
-      }
+      // await (HiveStore.carBox?.get('carInfo'));
+      // await (HiveStore.carBox?.get('info')) as PurchaseInfo;
+      // await (HiveStore.carBox?.get('photo')) as PurchasePhotoModel;
+      // await HiveStore.carBox?.get('save');
+      // PurchaseCarInfo carInfo = await HiveStore.carBox?.get('carInfo');
+      // if (HiveStore.carBox?.get('save')) {
+      //   _licensePlateController.text = carInfo.licensePlate ?? '';
+      //   _publishCarInfo.value.carName = carInfo.carName ?? '';
+      //   // _publishCarInfo.value.carModelId=carInfo.carModelId;
+      //
+      // }
+      // carInfo = await HiveStore.carBox?.getAt(2);
+      // print(carInfo );
     });
 
     super.initState();
@@ -160,16 +164,68 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
                     deleteListener: () async {
                       Alert.dismiss(context);
                       // _getSure = true;
-                      HiveStore.carBox?.delete('carInfo');
-                      HiveStore.carBox?.delete('info');
-                      HiveStore.carBox?.delete('photo');
-                      HiveStore.carBox?.delete('save');
-                      await HiveStore.carBox
-                          ?.put('carInfo', _publishCarInfo.value);
-                      await HiveStore.carBox?.put('info', purchaseInfo.value);
-                      await HiveStore.carBox
-                          ?.put('photo', reportPhotoModel.value);
-                      await HiveStore.carBox?.put('save', true);
+                      // HiveStore.carBox?.delete('carInfo');
+                      // HiveStore.carBox?.delete('info');
+                      // HiveStore.carBox?.delete('photo');
+                      // HiveStore.carBox?.delete('save');
+                      // HiveStore.carBox?.delete(PurchaseCarInfoModel()
+                      //   ..color = _publishCarInfo.value.color ?? ''
+                      //   ..viNum = _viNumController.text ?? ''
+                      //   ..carName = _publishCarInfo.value.carName ?? ''
+                      //   ..licensingDate = _publishCarInfo.value.licensingDate ??
+                      //       DateTime.now()
+                      //   ..engineNum = _engineController.text ?? ''
+                      //   ..mileage = _publishCarInfo.value.mileage ?? ''
+                      //   ..carNatureOfUse =
+                      //       _publishCarInfo.value.carNatureOfUse ?? 0
+                      // //environmentalLevel:'',
+                      //   ..compulsoryInsuranceDate =
+                      //       _publishCarInfo.value.compulsoryInsuranceDate ??
+                      //           DateTime.now()
+                      //   ..licensePlate = _licensePlateController.text ?? ''
+                      //   ..productionDate =
+                      //       _publishCarInfo.value.productionDate ??
+                      //           DateTime.now());
+                      // HiveStore.carBox?.add(PurchaseCarInfoModel()
+                      //   ..color = _publishCarInfo.value.color ?? ''
+                      //   ..viNum = _viNumController.text ?? ''
+                      //   ..carName = _publishCarInfo.value.carName ?? ''
+                      //   ..licensingDate = _publishCarInfo.value.licensingDate ??
+                      //       DateTime.now()
+                      //   ..engineNum = _engineController.text ?? ''
+                      //   ..mileage = _publishCarInfo.value.mileage ?? ''
+                      //   ..carNatureOfUse =
+                      //       _publishCarInfo.value.carNatureOfUse ?? 0
+                      // //environmentalLevel:'',
+                      //   ..compulsoryInsuranceDate =
+                      //       _publishCarInfo.value.compulsoryInsuranceDate ??
+                      //           DateTime.now()
+                      //   ..licensePlate = _licensePlateController.text ?? ''
+                      //   ..productionDate =
+                      //       _publishCarInfo.value.productionDate ??
+                      //           DateTime.now());
+                      // carInfoModel.save();
+                      // print(HiveStore.carBox!.getAt(2));
+                      //  await HiveStore.carBox?.put('carInfo', {
+                      //    'channel': _publishCarInfo.value.channel,
+                      //    'color': _publishCarInfo.value.color,
+                      //    'viNum': _publishCarInfo.value.viNum,
+                      //    'carName': _publishCarInfo.value.carName,
+                      //    'carModelId': _publishCarInfo.value.carModelId,
+                      //    'licensingDate': _publishCarInfo.value.licensingDate,
+                      //    'engineNum': _publishCarInfo.value.engineNum,
+                      //    'customer': _publishCarInfo.value.customer,
+                      //    'customerId': _publishCarInfo.value.customerId,
+                      //    'mileage': _publishCarInfo.value.mileage,
+                      //    'carNatureOfUse': _publishCarInfo.value.carNatureOfUse,
+                      //    //environmentalLevel:'',
+                      //    'compulsoryInsuranceDate':
+                      //        _publishCarInfo.value.compulsoryInsuranceDate
+                      //  });
+                      // await HiveStore.carBox?.put('info', purchaseInfo.value);
+                      // await HiveStore.carBox
+                      //     ?.put('photo', reportPhotoModel.value);
+                      // await HiveStore.carBox?.put('save', true);
                       Get.back();
                       setState(() {
                         //_getSure;
@@ -297,6 +353,11 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
       controller: _viNumController,
       topIcon: false,
       paddingStart: 0.w,
+      value: carInfo.licensePlate != ''
+          ? carInfo.licensePlate
+          : _publishCarInfo.value.licensePlate != ''
+              ? _publishCarInfo.value.licensePlate
+              : '',
     );
     var engineNum = EditItemWidget(
       title: '发动机号',
@@ -346,7 +407,6 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
         children: [
           20.heightBox,
           licensePlate,
-
           _function(
             '品牌车型',
             () async {

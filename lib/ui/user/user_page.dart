@@ -121,12 +121,12 @@ class _UserPageState extends State<UserPage> {
                     ],
                   )),
             ),
-            Text("云云问车 ${UserTool.appProvider.packageInfo.version}",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(color: const Color(0xFFCCCCCC))),
-            64.hb,
+            // Text("云云问车 ${UserTool.appProvider.packageInfo.version}",
+            //     style: Theme.of(context)
+            //         .textTheme
+            //         .bodyText1
+            //         ?.copyWith(color: const Color(0xFFCCCCCC))),
+            // 64.hb,
           ],
         ),
       ),

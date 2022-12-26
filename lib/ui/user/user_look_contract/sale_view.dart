@@ -36,6 +36,7 @@ class _SaleViewState extends State<SaleView>
         footer: MaterialFooter(),
         onRefresh: () async {
           _page = 1;
+          // var list = await CarFunc.getSaleDealer(page: _page, size: _size);
           var list = await CarFunc.getSaleList(page: _page, size: _size);
           widget.saleList.clear();
           widget.saleList.addAll(list);

@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../model/purchase_car_info_model.dart';
+
 class HiveStore {
   static Box? _appBox;
 
@@ -26,6 +28,7 @@ class HiveStore {
       Hive.init(dir.path);
       Hive.registerAdapter(ChinaRegionModelAdapter()); //type 0
       Hive.registerAdapter(AzCityModelAdapter());
+      Hive.registerAdapter(PurchaseCarInfoModelAdapter());
       _appBox = await Hive.openBox('app');
       _userBox = await Hive.openBox('userBox');
       _dataBox = await Hive.openBox('dataBox');

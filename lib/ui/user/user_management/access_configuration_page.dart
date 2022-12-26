@@ -37,7 +37,7 @@ class _AccessConfigurationPageState extends State<AccessConfigurationPage> {
 
   _refresh() async {
     // permissions = await BusinessFunc.getRoleall();
-    permissions=[RoleallModel(id: 0, describe: '负责录入车辆信息,编辑店里车辆', name: '车务'),RoleallModel(id: 1, describe: '参与平台卖车', name: '经纪人')];
+    permissions=[const RoleallModel(id: 2, describe: '负责录入车辆信息,编辑店里车辆', name: '车务'),const RoleallModel(id:3, describe: '参与平台卖车', name: '经纪人')];
     setState(() {});
   }
 

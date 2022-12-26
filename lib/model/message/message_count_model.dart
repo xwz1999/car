@@ -13,6 +13,8 @@ class MessageCountModel extends Equatable {
   final int customerCareCount; // 用户关怀
   final int billCount; // 分账
   final int carAuditCount; // 车辆审批
+  final int contractAuditCount; //合同审核
+  final int systemCount; //版本
 
   factory MessageCountModel.fromJson(Map<String, dynamic> json) =>
       _$MessageCountModelFromJson(json);
@@ -20,14 +22,17 @@ class MessageCountModel extends Equatable {
   Map<String, dynamic> toJson() => _$MessageCountModelToJson(this);
 
   static MessageCountModel get init => const MessageCountModel(
-      normalCount: 0,
-      customerNormalCount: 0,
-      customerPayCount: 0,
-      customerTrailCount: 0,
-      customerInviteCount: 0,
-      customerCareCount: 0,
-      billCount: 0,
-      carAuditCount: 0);
+        normalCount: 0,
+        customerNormalCount: 0,
+        customerPayCount: 0,
+        customerTrailCount: 0,
+        customerInviteCount: 0,
+        customerCareCount: 0,
+        billCount: 0,
+        carAuditCount: 0,
+        contractAuditCount: 0,
+        systemCount: 0,
+      );
 
   @override
   List<Object?> get props => [
@@ -39,6 +44,8 @@ class MessageCountModel extends Equatable {
         customerCareCount,
         billCount,
         carAuditCount,
+        contractAuditCount,
+        systemCount,
       ];
 
   const MessageCountModel({
@@ -50,5 +57,7 @@ class MessageCountModel extends Equatable {
     required this.customerCareCount,
     required this.billCount,
     required this.carAuditCount,
+    required this.contractAuditCount,
+    required this.systemCount,
   });
 }

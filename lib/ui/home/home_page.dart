@@ -637,8 +637,8 @@ class _HomePageState extends State<HomePage>
                         },
                         child: Image.asset(
                           Assets.icons.homeShare.path,
-                          width: 36.w,
-                          height: 36.w,
+                          width: 32.w,
+                          height: 32.w,
                         ),
                       ),
                       16.wb,

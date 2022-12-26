@@ -315,6 +315,7 @@ class _LoginPageState extends State<LoginPage> {
               GestureDetector(
                 onTap: () {
                   _chooseAgreement = !_chooseAgreement;
+
                   setState(() {});
                 },
                 child: Row(

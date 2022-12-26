@@ -46,73 +46,100 @@ class _NoticePageState extends State<NoticePage>
     super.build(context);
 
     return CloudScaffold(
-        path: Assets.images.homeBg.path,
-        systemStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-        ),
-        extendBody: true,
-        body: Expanded(
-          child: EasyRefresh(
-            firstRefresh: true,
-            header: MaterialHeader(),
-            controller: _refreshController,
-            onRefresh: () async {
-              messageLists = [
-                Message(title:'客户付款',msg:'您发起的购车合同，客户已付定金',date: '01-01 11:11',type: 1 ),
-                Message(title:'客户跟踪',msg:'您的绑定客服浏览了车辆信息',date: '01-01 11:11',type: 2 ),
-                Message(title:'客户邀约提醒',msg:'您的邀约客户将于24小时后到店',date: '01-01 11:11',type: 3 ),
-                Message(title:'分账确认提示',msg:'分账公告',date: '01-01 11:11',type: 4 ),
-                Message(title:'审批提醒',msg:'您的车辆发布审批被驳回',date: '01-01 11:11',type: 5 ),
-               ///Message(title:'系统通知',msg:'1.0.1版本功能升级了，立即查看>>>',date: '01-01 11:11',type: 6 ),
-              ];
-              setState(() {});
+      path: Assets.images.homeBg.path,
+      systemStyle: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      extendBody: true,
+      body: Expanded(
+        child: EasyRefresh(
+          firstRefresh: true,
+          header: MaterialHeader(),
+          controller: _refreshController,
+          onRefresh: () async {
+            messageLists = [
+              Message(
+                  title: '客户付款',
+                  msg: '您发起的购车合同，客户已付定金',
+                  date: '01-01 11:11',
+                  type: 1),
+              //Message(title:'客户跟踪',msg:'您的绑定客服浏览了车辆信息',date: '01-01 11:11',type: 2 ),
+              Message(
+                  title: '客户邀约提醒',
+                  msg: '您的邀约客户将于24小时后到店',
+                  date: '01-01 11:11',
+                  type: 2),
+              Message(
+                  title: '分账确认提示', msg: '分账公告', date: '01-01 11:11', type: 3),
+              Message(
+                  title: '合同审批',
+                  msg: '你有新的出售合同待审批',
+                  date: '01-01 11:11',
+                  type: 4),
+              Message(
+                  title: '车辆审批',
+                  msg: '您有车辆发布审批待查看',
+                  date: '01-01 11:11',
+                  type: 5),
+
+              ///Message(title:'系统通知',msg:'1.0.1版本功能升级了，立即查看>>>',date: '01-01 11:11',type: 6 ),
+            ];
+            setState(() {});
+          },
+          child: ListView.separated(
+            //physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.only(top: 120.w),
+            itemBuilder: (BuildContext context, int index) {
+              return _messageItem(
+                messageLists[index].title ?? '',
+                messageLists[index].msg ?? '',
+                messageLists[index].date ?? '',
+                messageLists[index].type ?? 1,
+              );
             },
-            child:
-            ListView.separated(
-              //physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(top: 120.w),
-              itemBuilder: (BuildContext context, int index) {
-                  return _messageItem(messageLists[index].title??'',
-                    messageLists[index].msg??'',messageLists[index].date??'',
-                    messageLists[index].type??1,);
-              },
-              itemCount: messageLists.length, separatorBuilder: (BuildContext context, int index) {
-                return Divider(height: 2.w,thickness: 2.w,color: const Color(0xFFf9f9f9),indent: 10.w,endIndent: 10.w,);
+            itemCount: messageLists.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return Divider(
+                height: 2.w,
+                thickness: 2.w,
+                color: const Color(0xFFf9f9f9),
+                indent: 10.w,
+                endIndent: 10.w,
+              );
             },
-            ),
-            ),
           ),
-
-
-
-        );
+        ),
+      ),
+    );
   }
 
-
-  _messageItem(String title,String content,String date,int type){
-
+  _messageItem(String title, String content, String date, int type) {
     return GestureDetector(
-      onTap: (){
-        switch(type){
+      onTap: () {
+        switch (type) {
           case 1:
-            Get.to(() =>
-            const SalesOrderPage(orderType: OrderType.personal));
+            Get.to(() => const SalesOrderPage(orderType: OrderType.personal));
             break;
+          // case 2:
+          //   Get.to(() => const UserManagerDetailPage(
+          //         customerClassify: CustomerClassify.normal,
+          //       ));
+          //   break;
           case 2:
-            Get.to(() => const UserManagerDetailPage(customerClassify: CustomerClassify.normal,));
-            break;
-          case 3:
             Get.to(() => const UserInvitationPage());
             break;
-          case 4:
+          case 3:
             Get.to(() => const FashionablePage());
             break;
+          case 4:
+            Get.to(() => const ExaminationPage());
+            break;
           case 5:
-            Get.to(()=> const ExaminationPage());
+            Get.to(() => const SystemPage());
             break;
-          case 6:
-            Get.to(()=> const SystemPage());
-            break;
+          // case 7:
+          //   Get.to(()=>)
+          //   break;
         }
       },
       child: Container(
@@ -122,7 +149,11 @@ class _NoticePageState extends State<NoticePage>
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(getPath(type),width: 88.w,height: 88.w,),
+            Image.asset(
+              getPath(type),
+              width: 88.w,
+              height: 88.w,
+            ),
             20.wb,
             Expanded(
               child: Column(
@@ -130,33 +161,30 @@ class _NoticePageState extends State<NoticePage>
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(title),
-
-                      Text(date)
-                    ],
+                    children: [Text(title), Text(date)],
                   ),
                   10.hb,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(content),
-                      getCount(type,context)<=0?const SizedBox():
-                      Badge(
-                        //文本内容为空时子组件为null时则返回一个红点
-                        badgeContent: Text(
-                          getCount(type,context).toString(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        //child: Icon(Icons.settings), //子组件
-                        badgeColor: const Color.fromRGBO(230, 34, 34, 1),
-                        //小红点颜色
-                        showBadge: true,
-                        //刷新时会在右侧摆动
-                        animationDuration: const Duration(seconds: 10),
-                        //摆动时间
-                        toAnimate: false, //允许摆动
-                      )
+                      getCount(type, context) <= 0
+                          ? const SizedBox()
+                          : Badge(
+                              //文本内容为空时子组件为null时则返回一个红点
+                              badgeContent: Text(
+                                getCount(type, context).toString(),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              //child: Icon(Icons.settings), //子组件
+                              badgeColor: const Color.fromRGBO(230, 34, 34, 1),
+                              //小红点颜色
+                              showBadge: true,
+                              //刷新时会在右侧摆动
+                              animationDuration: const Duration(seconds: 10),
+                              //摆动时间
+                              toAnimate: false, //允许摆动
+                            )
                     ],
                   ),
                 ],
@@ -168,40 +196,42 @@ class _NoticePageState extends State<NoticePage>
     );
   }
 
-
-  getPath(int type){
-    switch(type){
+  getPath(int type) {
+    switch (type) {
       case 1:
         return Assets.icons.noticeCustomerPay.path;
+      // case 2:
+      //   return Assets.icons.customerTrack.path;
       case 2:
-        return Assets.icons.customerTrack.path;
-      case 3:
         return Assets.icons.noticeCustomerInvite.path;
-      case 4:
+      case 3:
         return Assets.icons.noticeFashionable.path;
-      case 5:
+      case 4:
         return Assets.icons.noticeExamination.path;
-      case 6:
-        return Assets.icons.noticeSystem.path;
+      case 5:
+        return Assets.icons.carOptions.path;
+      // case 6:
+      //   return Assets.icons.carOptions.path;
     }
   }
 
-
-  getCount(int type,BuildContext context){
+  getCount(int type, BuildContext context) {
     final message = Provider.of<MessageProvider>(context);
-    switch(type){
+    switch (type) {
       case 1:
         return message.unReadMesCount.customerPayCount;
+      // case 2:
+      //   return message.unReadMesCount.customerTrailCount;
       case 2:
-        return message.unReadMesCount.customerTrailCount;
-      case 3:
         return message.unReadMesCount.customerInviteCount;
-      case 4:
+      case 3:
         return message.unReadMesCount.billCount;
-      case 5:
+      case 4:
         return message.unReadMesCount.carAuditCount;
-      case 6:
+      case 5:
         return message.unReadMesCount.normalCount;
+      case 6:
+        return message.unReadMesCount.carAuditCount;
     }
   }
 
@@ -268,7 +298,7 @@ class _NoticePageState extends State<NoticePage>
   bool get wantKeepAlive => true;
 }
 
-class Message{
+class Message {
   String? title;
   String? msg;
   String? date;

@@ -358,6 +358,9 @@ class $AssetsIconsGen {
   AssetGenImage get keyboard =>
       const AssetGenImage('assets/icons/keyboard.png');
 
+  /// File path: assets/icons/logoyun.png
+  AssetGenImage get logoyun => const AssetGenImage('assets/icons/logoyun.png');
+
   /// File path: assets/icons/main_menu.png
   AssetGenImage get mainMenu =>
       const AssetGenImage('assets/icons/main_menu.png');
@@ -588,6 +591,10 @@ class $AssetsIconsGen {
   AssetGenImage get xxbankhead =>
       const AssetGenImage('assets/icons/xxbankhead.png');
 
+  /// File path: assets/icons/yunyunaskcar.png
+  AssetGenImage get yunyunaskcar =>
+      const AssetGenImage('assets/icons/yunyunaskcar.png');
+
   /// File path: assets/icons/zfb_pay.png
   AssetGenImage get zfbPay => const AssetGenImage('assets/icons/zfb_pay.png');
 }
@@ -663,6 +670,18 @@ class $AssetsImagesGen {
   /// File path: assets/images/bbgg.png
   AssetGenImage get bbgg => const AssetGenImage('assets/images/bbgg.png');
 
+  /// File path: assets/images/boot1.png
+  AssetGenImage get boot1 => const AssetGenImage('assets/images/boot1.png');
+
+  /// File path: assets/images/boot2.png
+  AssetGenImage get boot2 => const AssetGenImage('assets/images/boot2.png');
+
+  /// File path: assets/images/boot3.png
+  AssetGenImage get boot3 => const AssetGenImage('assets/images/boot3.png');
+
+  /// File path: assets/images/boot4.png
+  AssetGenImage get boot4 => const AssetGenImage('assets/images/boot4.png');
+
   /// File path: assets/images/bubble.png
   AssetGenImage get bubble => const AssetGenImage('assets/images/bubble.png');
 
@@ -700,6 +719,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/car_valuation_bg.png
   AssetGenImage get carValuationBg =>
       const AssetGenImage('assets/images/car_valuation_bg.png');
+
+  /// File path: assets/images/cehsi.jpg
+  AssetGenImage get cehsi => const AssetGenImage('assets/images/cehsi.jpg');
 
   /// File path: assets/images/chinabankbg.png
   AssetGenImage get chinabankbg =>

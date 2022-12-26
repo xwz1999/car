@@ -306,3 +306,6 @@ enum ExaminationType{
       ExaminationType.values.firstWhere((element) => element.typeNum==value);
   const ExaminationType(this.typeNum,this.typeStr);
 }
+
+
+

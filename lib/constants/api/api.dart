@@ -136,6 +136,13 @@ class _Contract {
 
   ///收购合同列表
   String get purchaseList => '/contract/purchase/lists';
+
+  ///车商出售合同列表
+  String get dealerSale =>'/contract/sale/dealer/lists';
+
+  ///车商收购合同列表
+  String get carDealerAcquisition   =>'/contract/purchase/dealer/lists';
+
 }
 
 class _File {

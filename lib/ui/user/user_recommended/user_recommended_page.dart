@@ -102,16 +102,17 @@ class _RecommendedPageState extends State<RecommendedPage>
            //固定顶部
            pinned: true,
            snap: false,
-           elevation: 0,
+           elevation:0,
            expandedHeight: 700.w,
            leadingWidth: 0,
-           titleSpacing: 0,
-           title: Container(
+           titleSpacing: 10.w,
+           title:
+           Container(
              //color: Colors.red,
                height: kToolbarHeight + MediaQuery.of(context).padding.top,
                alignment: Alignment.centerLeft,
                padding: EdgeInsets.only(
-                   top: MediaQuery.of(context).padding.top),
+                   top: MediaQuery.of(context).padding.top-20.w),
                child: Row(
                  children: [
                    32.wb,

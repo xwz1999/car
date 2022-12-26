@@ -841,7 +841,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             Text.rich(TextSpan(children: [
               TextSpan(
                   text: (num.parse(
-                              carInfoModel!.carInfo.priceInfo.interiorPrice) /
+                              carInfoModel!.carInfo.priceInfo.exteriorPrice) /
                           10000)
                       .toString(),
                   style: TextStyle(

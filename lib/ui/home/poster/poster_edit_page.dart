@@ -54,7 +54,67 @@ class _PosterEditPageState extends State<PosterEditPage> {
       ),
       body: Column(
         children: [
-          _posterWidget(),
+          Stack(
+            children: [
+              Container(
+                  constraints: BoxConstraints(maxHeight: 1100.w),
+                  margin: EdgeInsets.symmetric(
+                    vertical: 32.w,
+                    horizontal: 64.w,
+                  ),
+                  child:
+                  // Image.asset(
+                  //   Assets.images.cehsi.path,
+                  //   fit: BoxFit.fill,
+                  // )
+
+                  CloudImageNetworkWidget(
+                    width: double.infinity,
+                    height: double.infinity,
+                    urls: [widget.model.path],
+                    ///widget.model.path
+                  ),
+                  ),
+              Positioned(
+                  bottom: 97.w,
+                  right: 113.w,
+                  // top: double.parse(widget.model.axisY),
+                  // left: double.parse(widget.model.axisX),
+                  child: Container(
+                      padding: EdgeInsets.all(4.w),
+                      color: Colors.white,
+                      child: Stack(
+                        children: [
+                          BarcodeWidget(
+
+                              // width: double.infinity,
+                              // height: double.infinity,
+                              width: 130.w,
+
+                              ///double.parse(widget.model.size),
+                              height: 130.w,
+
+                              ///double.parse(widget.model.size),
+                              data:
+                                  '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
+                              barcode: Barcode.qrCode(
+                                errorCorrectLevel:
+                                    BarcodeQRCorrectionLevel.high,
+                              )),
+                          Padding(
+                            padding: EdgeInsets.only(top: 50.w, left: 50.w),
+                            child: Container(
+                              color: Colors.white,
+                              width: 34.w,
+                              height: 34.w,
+                              child:Image.asset(Assets.icons.logoyun.path)  ,///const FlutterLogo(),
+                            ),
+                          ),
+                        ],
+                      )))
+            ],
+          ),
+          // _posterWidget(),
           44.hb,
           Row(
             children: [
@@ -153,24 +213,34 @@ class _PosterEditPageState extends State<PosterEditPage> {
       child: Stack(
         children: [
           Container(
-            constraints: BoxConstraints(maxHeight: 1100.w),
-            margin: EdgeInsets.symmetric(
-              vertical: 32.w,
-              horizontal: 64.w,
-            ),
-            child: CloudImageNetworkWidget(
-              width: double.infinity,
-              height: double.infinity,
-              urls: [widget.model.path],
-            ),
-          ),
+              constraints: BoxConstraints(maxHeight: 1100.w),
+              margin: EdgeInsets.symmetric(
+                vertical: 32.w,
+                horizontal: 64.w,
+              ),
+              child: Image.asset(
+                Assets.images.cehsi.path,
+                fit: BoxFit.fill,
+              )
+
+              // CloudImageNetworkWidget(
+              //   width: double.infinity,
+              //   height: double.infinity,
+              //   urls: [widget.model.path],
+              //   ///widget.model.path
+              // ),
+              ),
           Positioned(
-              top: double.parse(widget.model.axisY),
-              left: double.parse(widget.model.axisX),
+              top: 50.w,
+              left: 100.w,
+              // top: double.parse(widget.model.axisY),
+              // left: double.parse(widget.model.axisX),
               child: Container(
                 padding: EdgeInsets.all(4.w),
                 color: Colors.white,
                 child: BarcodeWidget(
+                    // width: double.infinity,
+                    // height: double.infinity,
                     width: double.parse(widget.model.size),
                     height: double.parse(widget.model.size),
                     data:

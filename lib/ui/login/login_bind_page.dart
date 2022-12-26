@@ -13,6 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/api/api.dart';
+import '../boot_page.dart';
 
 class LoginBindPage extends StatefulWidget {
   final String token;

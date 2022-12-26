@@ -301,9 +301,9 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                                   ? (carInfoModel.vinModel!.first.modelPrice).toString()
                                   :'无' ;
                               _viNumController.text = carInfoModel.vehicle.vin;
-                              _publishCarInfo.value.licensingDate =
+                              _publishCarInfo.value.licensingDate =///carInfoModel.vehicle.regdate as DateTime?;
                                   DateUtil.getDateTime(
-                                      carInfoModel.vehicle.issuedate);
+                                      carInfoModel.vehicle.regdate);
                               _carNumController.text =
                                   carInfoModel.vehicle.lsnum;
                               _engineController.text =

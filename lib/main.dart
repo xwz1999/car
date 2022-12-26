@@ -5,6 +5,7 @@ import 'package:cloud_car/providers/app_provider.dart';
 import 'package:cloud_car/providers/city_provider.dart';
 import 'package:cloud_car/providers/message_provider.dart';
 import 'package:cloud_car/providers/user_provider.dart';
+import 'package:cloud_car/ui/boot_page.dart';
 import 'package:cloud_car/ui/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,12 +13,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runApp(const MyApp(
+
+  ));
   if (Platform.isAndroid) {
     SystemUiOverlayStyle style = const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -28,6 +32,8 @@ void main() async {
         statusBarIconBrightness: Brightness.dark);
     SystemChrome.setSystemUIOverlayStyle(style);
   }
+  // Obtain shared preferences.
+
 }
 
 class MyApp extends StatelessWidget {

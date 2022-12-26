@@ -16,10 +16,11 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+//        flatDir {
+//            dirs project(':aliyun_face_plugin').file('libs')
+//        }
     }
-    flatDir {
-        dirs project(':aliyun_face_plugin').file('libs')
-    }
+
 }
 
 rootProject.buildDir = '../build'

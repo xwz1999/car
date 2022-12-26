@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -13,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../model/user/real_name_model.dart';
 import '../../../utils/net_work/api_client.dart';
-import '../../../utils/pay_util.dart';
+// import 'package:aliyun_face_plugin/aliyun_face_plugin.dart';
 import '../../../utils/toast/cloud_toast.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/picker/cloud_image_picker.dart';
@@ -32,7 +31,8 @@ class RealNamePage extends StatefulWidget {
 class _RealNamePageState extends State<RealNamePage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController idController = TextEditingController();
-
+  // final _aliyunFacePlugin = AliyunFacePlugin();
+  String _infos = 'Unknown';
   List<dynamic>? data;
   bool _getSure = false;
   final picker = ImagePicker();
@@ -41,6 +41,7 @@ class _RealNamePageState extends State<RealNamePage> {
   String urls = '';
   String urls2 = '';
   late RealNameModel rName;
+
   Future getImage() async {
     // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.camera);
@@ -94,6 +95,12 @@ class _RealNamePageState extends State<RealNamePage> {
                       urls,
                       urls2,
                     );
+                    if (res != null) {
+                      launchUrl(Uri.parse(res.url),mode: LaunchMode.externalNonBrowserApplication,);
+                      // launchUrl(Uri.parse(res.url));
+                    }
+                    //res!.certifyId
+                    // startVerify();
                     // if(res!=null){
                     //   var re = await PayUtil().callAliPay(res!.url);
                     //   if (re) {
@@ -129,8 +136,37 @@ class _RealNamePageState extends State<RealNamePage> {
           ],
         ));
   }
-
-//相机
+  //
+  // Future<void> getMetaInfos() async {
+  //   String metainfos;
+  //   try {
+  //     // 获取客户端metainfos，将信息发送到服务器端，调用服务器端相关接口获取认证ID，即CertifyId。
+  //     metainfos = await _aliyunFacePlugin.getMetaInfos() ?? 'Unknown metainfos';
+  //   } on PlatformException {
+  //     metainfos = '获取metainfos失败';
+  //   }
+  //
+  //   setState(() {
+  //     _infos = "metainfos: " + metainfos;
+  //   });
+  // }
+  //
+  // Future<void> startVerify() async {
+  //   // String certifyId
+  //   String verifyResult;
+  //   try {
+  //     // 调用认证接口，CertifyId需要调用服务器端接口获取。
+  //     // 每个CertifyId只能使用一次，否则会返回code: "2002(iOS), 1001(Android)"。
+  //     verifyResult = await _aliyunFacePlugin.verify(
+  //             "certifyId", 'shac05691e3bf2e1826a968793c1a17d') ??
+  //         '-1,error';
+  //   } on PlatformException {
+  //     verifyResult = '-2,exception';
+  //   }
+  //   setState(() {
+  //     _infos = "verifyResult: " + verifyResult;
+  //   });
+  // }
 
 //实名认证
   _real() {
@@ -300,7 +336,6 @@ class _RealNamePageState extends State<RealNamePage> {
         GestureDetector(
           onTap: () {
             _getSure = !_getSure;
-
             setState(() {});
           },
           child: SizedBox(

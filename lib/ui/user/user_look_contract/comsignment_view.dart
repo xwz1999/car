@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
@@ -10,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:screenshot/screenshot.dart';
 
-
+import '../../../model/contract/consignment_model.dart';
 
 class ConsignmentView extends StatefulWidget {
   final EasyRefreshController refreshController;
-  final List<ConsignmentListModel> consignmentList;
+  final List<ConsignmentModel> consignmentList;
 
   // final int id;
   const ConsignmentView({
@@ -33,6 +31,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
   int _page = 1;
   final int _size = 10;
   final ScreenshotController _screenshotController = ScreenshotController();
+
   //bool _onload = true;
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
               data: {'size': _size, 'page': _page});
           if (baseList.nullSafetyTotal > widget.consignmentList.length) {
             widget.consignmentList.addAll(baseList.nullSafetyList
-                .map((e) => ConsignmentListModel.fromJson(e))
+                .map((e) => ConsignmentModel.fromJson(e))
                 .toList());
           } else {
             widget.refreshController.finishLoad(noMore: true);
@@ -72,13 +71,12 @@ class _ConsignmentViewState extends State<ConsignmentView>
               delegate: SliverChildBuilderDelegate((context, index) {
             var model = widget.consignmentList[index];
             return GestureDetector(
-              onTap: () async{
+              onTap: () async {
                 // core.download(url, options);
                 // var docPath=await getApplicationDocumentsDirectory();
                 // String _localPath='${docPath.path}${Platform.pathSeparator}download';
                 // final savedDir=Directory(_localPath);
                 // var response=await Dio().download('contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF', '');///下载pdf
-
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
@@ -108,7 +106,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
               height: 340.w,
               child: Image.asset(
                 int == 1
-                    ? Assets.images.nosignedBg.path
+                    ?        Assets.images.nosignedBg.path
                     : Assets.images.signedBg.path,
                 fit: BoxFit.fill,
               )),
@@ -139,11 +137,15 @@ class _ConsignmentViewState extends State<ConsignmentView>
                             color: BaseStyle.color666666),
                       ),
                     ),
-                    Text(
-                      car,
-                      overflow: TextOverflow.clip,
-                      maxLines: 2,
-                      style: Theme.of(context).textTheme.subtitle2,
+                    SizedBox(
+                      width: 450.w,
+                      child: Flexible(
+                          child: Text(
+                        car,
+                        overflow: TextOverflow.clip,
+                        maxLines: 2,
+                        style: Theme.of(context).textTheme.subtitle2,
+                      )),
                     )
                   ],
                 ),

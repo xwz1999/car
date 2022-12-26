@@ -6,6 +6,7 @@ import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../../model/contract/consignment_model.dart';
 import '../../../utils/headers.dart';
 
 class ConsignmentContractPage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
 
   final EasyRefreshController _purchaseRefreshController = EasyRefreshController();
 
-  final List<ConsignmentListModel> _consignmentList = [];
+  final List<ConsignmentModel> _consignmentList = [];
 
   final List<ConsignmentListModel> _saleList = [];
 

@@ -20,6 +20,9 @@ import 'acquisition_widget.dart';
 import 'modified_release_model.dart';
 
 class ExaminationDetails extends StatefulWidget {
+
+
+
   ///审批状态  1出售，2修改 3发布  4 收购
   final int state;
 

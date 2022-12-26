@@ -56,38 +56,38 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                   trailing: const Icon(Icons.keyboard_arrow_right),
                 ),
-                ListTile(
-                  onTap: () {
-                    setState(() {
-                      Alert.show(
-                          context,
-                          NormalContentDialog(
-                            type: NormalTextDialogType.delete,
-                            title: '发现新版本',
-                            content: const Text('是否前往下载新版本？'),
-                            items: const ['取消'],
-                            deleteItem: '确定',
-                            //监听器
-                            listener: (index) {
-                              Alert.dismiss(context);
-                            },
-                            deleteListener: () {
-                              Alert.dismiss(context);
-                            },
-                          ));
-                    });
-                  },
-                  leading: Text(
-                    '版本号',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  trailing: Text(
-                    UserTool.appProvider.packageInfo.version,
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize28,
-                        color: BaseStyle.color999999),
-                  ),
-                ),
+                // ListTile(
+                //   onTap: () {
+                //     setState(() {
+                //       Alert.show(
+                //           context,
+                //           NormalContentDialog(
+                //             type: NormalTextDialogType.delete,
+                //             title: '发现新版本',
+                //             content: const Text('是否前往下载新版本？'),
+                //             items: const ['取消'],
+                //             deleteItem: '确定',
+                //             //监听器
+                //             listener: (index) {
+                //               Alert.dismiss(context);
+                //             },
+                //             deleteListener: () {
+                //               Alert.dismiss(context);
+                //             },
+                //           ));
+                //     });
+                //   },
+                //   leading: Text(
+                //     '版本号',
+                //     style: Theme.of(context).textTheme.subtitle2,
+                //   ),
+                //   trailing: Text(
+                //     UserTool.appProvider.packageInfo.version,
+                //     style: TextStyle(
+                //         fontSize: BaseStyle.fontSize28,
+                //         color: BaseStyle.color999999),
+                //   ),
+                // ),
               ]).toList(),
             )));
   }

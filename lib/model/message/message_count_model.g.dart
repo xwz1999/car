@@ -16,6 +16,8 @@ MessageCountModel _$MessageCountModelFromJson(Map<String, dynamic> json) =>
       customerCareCount: json['customerCareCount'] as int,
       billCount: json['billCount'] as int,
       carAuditCount: json['carAuditCount'] as int,
+      contractAuditCount: json['contractAuditCount'] as int,
+      systemCount: json['systemCount'] as int,
     );
 
 Map<String, dynamic> _$MessageCountModelToJson(MessageCountModel instance) =>
@@ -28,4 +30,6 @@ Map<String, dynamic> _$MessageCountModelToJson(MessageCountModel instance) =>
       'customerCareCount': instance.customerCareCount,
       'billCount': instance.billCount,
       'carAuditCount': instance.carAuditCount,
+      'contractAuditCount': instance.contractAuditCount,
+      'systemCount': instance.systemCount,
     };

@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 
 import 'package:barcode_widget/barcode_widget.dart';
@@ -23,93 +22,101 @@ class _ShareDetailCustomerWidgetState extends State<ShareDetailCustomerWidget>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
   List<Uint8List> images = [];
-
+  bool save = false;
   final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Screenshot(
-      controller: _screenshotController,
-      child: Scaffold(
-          body:
-          Stack(
-            children: [
-              Image.asset(
-                Assets.images.inviteCodeBg.path,
-                fit: BoxFit.fill,
-              ),
-              Positioned(
-                  right: 60.w,
-                  bottom: 110.w,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 32.w),
-                    child: SizedBox(
-                      width: 152.w,
-                      height: 152.w,
-                      child: Container(
-                        padding: EdgeInsets.all(4.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.w),
-                          color: Colors.white,
+    return Scaffold(
+      body: Stack(
+        children: [
+          Screenshot(
+              controller: _screenshotController,
+              child: Stack(
+                children: [
+                  Image.asset(
+                    Assets.images.inviteCodeBg.path,
+                    fit: BoxFit.fill,
+                  ),
+                  Positioned(
+                      right: 60.w,
+                      bottom: 110.w,
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 32.w),
+                        child: SizedBox(
+                          width: 152.w,
+                          height: 152.w,
+                          child: Container(
+                            padding: EdgeInsets.all(4.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.w),
+                              color: Colors.white,
+                            ),
+                            child: BarcodeWidget(
+                                width: 152.w,
+                                height: 152.w,
+                                data:
+                                    '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
+                                barcode: Barcode.qrCode()),
+                          ),
                         ),
-                        child: BarcodeWidget(
-                            width: 152.w,
-                            height: 152.w,
-                            data:
-                                '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
-                            barcode: Barcode.qrCode()),
-                      ),
-                    ),
-                  )),
-              Positioned(
-                  bottom: 20.w,
-                  right: 32.w,
-                  child: GestureDetector(
-                    onTap: () async {
-                      var permission = await Permission.storage.isGranted;
-                      if (!permission) {
-                        await Permission.storage.request();
-                        var permissionTwice =
-                            await Permission.storage.isGranted;
-                        if (!permissionTwice) {
-                          CloudToast.show('权限未授予');
-                          return;
-                        }
+                      )),
+                ],
+              )),
+          Positioned(
+              bottom: 20.w,
+              right: 32.w,
+              child: Offstage(
+                offstage: save,
+                child: GestureDetector(
+                  onTap: () async {
+                    var permission = await Permission.storage.isGranted;
+                    if (!permission) {
+                      await Permission.storage.request();
+                      var permissionTwice = await Permission.storage.isGranted;
+                      if (!permissionTwice) {
+                        CloudToast.show('权限未授予');
+                        return;
                       }
-                      var u8List = await _screenshotController.capture(
-                          delay: const Duration(milliseconds: 10));
-                      if (u8List != null) {
-                        var re = await ImageGallerySaver.saveImage(
-                          u8List,
-                          quality: 100,
-                        );
-                        if (re['isSuccess']) {
-                          // 到${re['filePath']}
-                          CloudToast.show('图片已保存',
-                              align: Alignment.center);
-                        } else {
-                          CloudToast.show('保存图片失败');
-                        }
+                    }
+                    var u8List = await _screenshotController.capture(
+                        delay: const Duration(milliseconds: 10));
+                    if (u8List != null) {
+                      var re = await ImageGallerySaver.saveImage(
+                        u8List,
+                        quality: 100,
+                      );
+                      if (re['isSuccess']) {
+                        // 到${re['filePath']}
+                        CloudToast.show('图片已保存', align: Alignment.center);
+
+                        setState(() {
+                          save = true;
+                        });
                       } else {
-                        CloudToast.show('图片生成失败');
+                        CloudToast.show('保存图片失败');
                       }
-                    },
-                    child: Container(
-                      width: 72.w,
-                      height: 72.w,
-                      padding: EdgeInsets.all(20.w),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFF000000).withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(36.w)),
-                      child: Image.asset(
-                        Assets.images.download.path,
-                        fit: BoxFit.fill,
-                      ),
+                    } else {
+                      CloudToast.show('图片生成失败');
+                    }
+                  },
+                  child: Container(
+                    width: 72.w,
+                    height: 72.w,
+                    padding: EdgeInsets.all(20.w),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF000000).withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(36.w)),
+                    child: Image.asset(
+                      Assets.images.download.path,
+                      fit: BoxFit.fill,
                     ),
-                  )),
-            ],
-          )),
+                  ),
+                ),
+              )),
+        ],
+      ),
     );
   }
 
@@ -356,4 +363,3 @@ class _ShareDetailCustomerWidgetState extends State<ShareDetailCustomerWidget>
   @override
   bool get wantKeepAlive => true;
 }
-

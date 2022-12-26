@@ -233,7 +233,7 @@ class _PushCarPageState extends State<PushCarPage> {
                             _viNumController.text = carInfoModel.vehicle.vin;
                             _publishCarInfo.licensingDate =
                                 DateUtil.getDateTime(
-                                    carInfoModel.vehicle.issuedate);
+                                    carInfoModel.vehicle.regdate);
                             _carNumController.text = carInfoModel.vehicle.lsnum;
                             _engineController.text =
                                 carInfoModel.vehicle.engineno;

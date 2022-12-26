@@ -32,6 +32,7 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flustars/flustars.dart';
 
 import '../../../model/car/dealer_list_model.dart';
+import '../../../model/contract/consignment_model.dart';
 
 class CarFunc {
 
@@ -100,7 +101,7 @@ class CarFunc {
       'search': searchParams
     };
     BaseListModel baseList =
-        await apiClient.requestList(API.car.getCarLists, data: data);
+    await apiClient.requestList(API.car.getCarLists, data: data);
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
@@ -112,8 +113,8 @@ class CarFunc {
   }
 
   ///获取评估列表
-  static Future<List<CarEvaluationModel>> getCarEvaluationList(
-      int page, int size,
+  static Future<List<CarEvaluationModel>> getCarEvaluationList(int page,
+      int size,
       {String? keyWords}) async {
     var data = {
       'page': page,
@@ -121,7 +122,7 @@ class CarFunc {
       'modelName': keyWords,
     };
     BaseListModel baseList =
-        await apiClient.requestList(API.car.getCarEvaluationList, data: data);
+    await apiClient.requestList(API.car.getCarEvaluationList, data: data);
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
@@ -133,11 +134,10 @@ class CarFunc {
   }
 
   ///获取我的⻋辆列表 new_create=最新创建 max_price=标价最⾼ min_price=标价最低 min_age=⻋龄最短 min_mileage=⾥程最少 new_update=最近更新
-  static Future<List<CarListModel>> getMyCarList(
-      {required int page,
-      int size = 10,
-      String? order,
-      Map<String, dynamic>? searchParams}) async {
+  static Future<List<CarListModel>> getMyCarList({required int page,
+    int size = 10,
+    String? order,
+    Map<String, dynamic>? searchParams}) async {
     var baseList = await apiClient.requestList(API.car.getCarSelfLists, data: {
       'page': page,
       'size': size,
@@ -166,6 +166,7 @@ class CarFunc {
       return null;
     }
   }
+
   static Future<CarInfoModel?> getCarInfo(int carId) async {
     BaseModel model = await apiClient.request(API.car.getCarIfo, data: {
       'carId': carId,
@@ -200,7 +201,7 @@ class CarFunc {
       'color': carModel.color,
       'licensingDate': DateUtil.formatDate(carModel.licensingDate,
           format: DateFormats.y_mo_d),
-      'mileage': (num.parse(carModel.mileage!)*10000).toString(),
+      'mileage': (num.parse(carModel.mileage!) * 10000).toString(),
     });
     if (model.code == 0) {
       UserTool.userProvider.updateUserInfo();
@@ -220,7 +221,7 @@ class CarFunc {
       'color': carInfo.color,
       'licensingDate': DateUtil.formatDate(carInfo.licensingDate,
           format: DateFormats.y_mo_d),
-      'Mileage': (num.parse(carInfo.mileage!)*10000).toString(),
+      'Mileage': (num.parse(carInfo.mileage!) * 10000).toString(),
       'Transfer': carInfo.transfer,
       'Paint': carInfo.paint,
       'Plate': carInfo.plate,
@@ -244,14 +245,14 @@ class CarFunc {
   }
 
   ///寄卖合同列表
-  static Future<List<ConsignmentListModel>> getConsignmentList(
+  static Future<List<ConsignmentModel>> getConsignmentList(
       {required int page, int size = 10}) async {
     BaseListModel res = await apiClient.requestList(
         API.contract.consignmentList,
         data: {'size': size, 'page': page});
     if (res.code == 0) {
       return res.nullSafetyList
-          .map((e) => ConsignmentListModel.fromJson(e))
+          .map((e) => ConsignmentModel.fromJson(e))
           .toList();
     } else {
       return [];
@@ -289,13 +290,47 @@ class CarFunc {
     }
   }
 
-
+  ///车商出售合同列表
+  static Future<List<ConsignmentListModel>> getSaleDealerList(
+      {required int page, int size = 10}) async{
+    BaseListModel res=await apiClient.requestList(API.contract.dealerSale,data: {
+      'size': size, 'page': page
+    });
+    if(res.code==0){
+      return res.nullSafetyList.map((e) => ConsignmentListModel.fromJson(e)).toList();
+    }else{
+      return [];
+    }
+  }
+  ///车商出售合同列表
+  static Future<List<ConsignmentListModel>> getSaleDealer(
+      {required int page, int size = 10}) async{
+    BaseListModel res=await apiClient.requestList(API.contract.dealerSale,data: {
+      'size': size, 'page': page
+    });
+    if(res.code==0){
+      return res.nullSafetyList.map((e) => ConsignmentListModel.fromJson(e)).toList();
+    }else{
+      return [];
+    }
+  }///车商收购合同列表
+  static Future<List<ConsignmentListModel>> getPurchaseDealerList(
+      {required int page, int size = 10}) async{
+    BaseListModel res=await apiClient.requestList(API.contract.carDealerAcquisition,data: {
+      'size': size, 'page': page
+    });
+    if(res.code==0){
+      return res.nullSafetyList.map((e) => ConsignmentListModel.fromJson(e)).toList();
+    }else{
+      return [];
+    }
+  }
   ///发起寄卖合同
   static Future<bool> adjustPrice(int id,
       num price) async {
     BaseModel model =
     await apiClient.request(API.car.adjustPrice, data: {
-      'carId':id,'price':price
+      'carId': id, 'price': price
     });
     if (model.code == 0) {
       if (model.msg == '操作成功') {
@@ -324,14 +359,14 @@ class CarFunc {
       "photo": '',
     };
     BaseModel model =
-        await apiClient.request(API.contract.addConsignment, data: {
+    await apiClient.request(API.contract.addConsignment, data: {
       'priceId': contractModel.priceId,
       'customerId': contractModel.customerId,
       'price': contractModel.sellPrice,
       'masterInfo': params,
-       'licensePlate':contractModel.licensePlate,
+      'licensePlate': contractModel.licensePlate,
       'keyCount': contractModel.keyCount,
-       'useCharacter':contractModel.useCharacter ,
+      'useCharacter': contractModel.useCharacter,
       'compulsoryInsurance': contractModel.compulsoryInsurance,
       'compulsoryInsuranceDate': contractModel.compulsoryInsuranceDate,
       'commercialInsurance': contractModel.commercialInsurance,
@@ -356,37 +391,37 @@ class CarFunc {
 
   ///发起出售合同
   static Future<bool> addSale(CarSaleContractModel saleModel) async {
-    Map<String,dynamic> priceInfo={
-      'dealPrice':saleModel.priceInfo.dealPrice,
-      'deposit':saleModel.priceInfo.deposit,
-      'downPayment':saleModel.priceInfo.downPayment,
+    Map<String, dynamic> priceInfo = {
+      'dealPrice': saleModel.priceInfo.dealPrice,
+      'deposit': saleModel.priceInfo.deposit,
+      'downPayment': saleModel.priceInfo.downPayment,
     };
-  Map<String,dynamic> masterInfo={
-    'name':saleModel.masterInfo.name,
-    'phone':saleModel.masterInfo.phone,
-    'idCard':saleModel.masterInfo.idCard,
-    'address':saleModel.masterInfo.address,
-    'bank':saleModel.masterInfo.bank,
-    'bankCard':saleModel.masterInfo.bankCard,
-    'bankAccount':saleModel.masterInfo.bankAccount,
-  };
-  Map<String,dynamic> thirdPartInfo={
-    'kind':saleModel.thirdPartInfo.kind,
-    'storeId':saleModel.thirdPartInfo.storeId,
-    'saleServiceFeeRate':saleModel.thirdPartInfo.saleServiceFeeRate,
-    'purchaseServiceFeeRate':saleModel.thirdPartInfo.purchaseServiceFeeRate,
-  };
+    Map<String, dynamic> masterInfo = {
+      'name': saleModel.masterInfo.name,
+      'phone': saleModel.masterInfo.phone,
+      'idCard': saleModel.masterInfo.idCard,
+      'address': saleModel.masterInfo.address,
+      'bank': saleModel.masterInfo.bank,
+      'bankCard': saleModel.masterInfo.bankCard,
+      'bankAccount': saleModel.masterInfo.bankAccount,
+    };
+    Map<String, dynamic> thirdPartInfo = {
+      'kind': saleModel.thirdPartInfo.kind,
+      'storeId': saleModel.thirdPartInfo.storeId,
+      'saleServiceFeeRate': saleModel.thirdPartInfo.saleServiceFeeRate,
+      'purchaseServiceFeeRate': saleModel.thirdPartInfo.purchaseServiceFeeRate,
+    };
     BaseModel model =
-        await apiClient.request(API.contract.addSaleContract, data: {
-          "carId":saleModel.carId,
-          'payType':saleModel.payType,
-          'transferType':saleModel.transferType,
-          'priceInfo':priceInfo,
-          'customerId':saleModel.customerId,
-          'customerChannel':saleModel.customerChannel,
-          'masterInfo':masterInfo,
-          'thirdPartInfo':thirdPartInfo,
-          'remark':saleModel.remark ,
+    await apiClient.request(API.contract.addSaleContract, data: {
+      "carId": saleModel.carId,
+      'payType': saleModel.payType,
+      'transferType': saleModel.transferType,
+      'priceInfo': priceInfo,
+      'customerId': saleModel.customerId,
+      'customerChannel': saleModel.customerChannel,
+      'masterInfo': masterInfo,
+      'thirdPartInfo': thirdPartInfo,
+      'remark': saleModel.remark,
     });
     if (model.code == 0) {
       if (model.msg == '操作成功') {
@@ -401,29 +436,34 @@ class CarFunc {
   }
 
   ///发起收购合同
-  static Future<bool> addPurchase(PurchaseCarInfo purchaseCarInfo,PurchaseInfo purchaseInfo,PurchasePhotoModel purchasePhotoModel) async {
+  static Future<bool> addPurchase(PurchaseCarInfo purchaseCarInfo,
+      PurchaseInfo purchaseInfo, PurchasePhotoModel purchasePhotoModel) async {
     Map<String, dynamic> baseInfo = {
-      'channel':purchaseCarInfo.channel,
-      "modelId":purchaseCarInfo.carModelId,
-      "vin":purchaseCarInfo.viNum,
-      "engineNo":purchaseCarInfo.engineNum,
-      "licensingDate":purchaseCarInfo.licensingDateStr,
-      'licensePlate':purchaseCarInfo.licensePlate,
-      "useCharacter":purchaseCarInfo.carNatureOfUseEM.typeNum,
-      "color":purchaseCarInfo.color,
-      "marketDate":purchaseCarInfo.productionDateStr==''?null:purchaseCarInfo.productionDateStr,
-      "mileage": purchaseCarInfo.mileage!=null? num.parse(purchaseCarInfo.mileage!)*10000:null,
-      "compulsoryInsuranceDate":purchaseCarInfo.compulsoryInsuranceDateStr==''?null:purchaseCarInfo.compulsoryInsuranceDateStr,
-      "condition":purchaseInfo.remark,
+      'channel': purchaseCarInfo.channel,
+      "modelId": purchaseCarInfo.carModelId,
+      "vin": purchaseCarInfo.viNum,
+      "engineNo": purchaseCarInfo.engineNum,
+      "licensingDate": purchaseCarInfo.licensingDateStr,
+      'licensePlate': purchaseCarInfo.licensePlate,
+      "useCharacter": purchaseCarInfo.carNatureOfUseEM.typeNum,
+      "color": purchaseCarInfo.color,
+      "marketDate": purchaseCarInfo.productionDateStr == ''
+          ? null
+          : purchaseCarInfo.productionDateStr,
+      "mileage": purchaseCarInfo.mileage != null ? num.parse(
+          purchaseCarInfo.mileage!) * 10000 : null,
+      "compulsoryInsuranceDate": purchaseCarInfo.compulsoryInsuranceDateStr ==
+          '' ? null : purchaseCarInfo.compulsoryInsuranceDateStr,
+      "condition": purchaseInfo.remark,
     };
 
     Map<String, dynamic> masterInfo = {
       "name": purchaseInfo.ownerName,
-      "idCard":purchaseInfo.ownerId,
+      "idCard": purchaseInfo.ownerId,
       "phone": purchaseInfo.phoneNum,
       "bankCard": purchaseInfo.bankNum,
       "bank": purchaseInfo.bank,
-      "kind":purchaseInfo.kind,
+      "kind": purchaseInfo.kind,
     };
 
     Map<String, dynamic> priceInfo = {
@@ -442,16 +482,16 @@ class CarFunc {
 
 
     Map<String, dynamic> base = {
-      "customerId":purchaseCarInfo.customerId,
-      "baseInfo":baseInfo,
-      "masterInfo":masterInfo,
-      "PriceInfo":priceInfo,
-      "photos":purchasePhotoModel.toJson(),
+      "customerId": purchaseCarInfo.customerId,
+      "baseInfo": baseInfo,
+      "masterInfo": masterInfo,
+      "PriceInfo": priceInfo,
+      "photos": purchasePhotoModel.toJson(),
     };
 
     BaseModel model =
     await apiClient.request(API.contract.addPurchase, data:
-      base
+    base
     );
     if (model.code == 0) {
       if (model.msg == '操作成功') {
@@ -464,9 +504,6 @@ class CarFunc {
       return false;
     }
   }
-
-
-
 
 
   ///获取车商列表
@@ -487,9 +524,9 @@ class CarFunc {
 
   static Future<List<StoreModel>> getStructureAll() async {
     var res =
-    await apiClient.request(API.storeManagement.structureAll,data: {});
+    await apiClient.request(API.storeManagement.structureAll, data: {});
 
-    if (res.data==null) return [];
+    if (res.data == null) return [];
     return (res.data as List).map((e) => StoreModel.fromJson(e)).toList();
   }
 
@@ -499,60 +536,69 @@ class CarFunc {
     // required ReportPhotoModel reportPhotoModel,
   }) async {
     Map<String, dynamic> baseInfo = {
-      "source":newPublishCarInfo.carSource,
-      "sourceId":newPublishCarInfo.carShopId,
+      "source": newPublishCarInfo.carSource,
+      "sourceId": newPublishCarInfo.carShopId,
       // "type":newPublishCarInfo.carTypeEM.typeStr,
-      "type":newPublishCarInfo.carTypeEM.typeNum,
-      "modelId":newPublishCarInfo.carModelId,
-      "vin":newPublishCarInfo.viNum,
-      "engineNo":newPublishCarInfo.engineNum,
-      "licensingDate":newPublishCarInfo.licensingDateStr,
-      "color":newPublishCarInfo.carColor,
-      "interiorColor":newPublishCarInfo.carDecorativeColor,
-      "temporaryLicensePlate":newPublishCarInfo.carTemporaryNum,
-      "parkingNo":(newPublishCarInfo.carParkingNum).toString(),
+      "type": newPublishCarInfo.carTypeEM.typeNum,
+      "modelId": newPublishCarInfo.carModelId,
+      "vin": newPublishCarInfo.viNum,
+      "engineNo": newPublishCarInfo.engineNum,
+      "licensingDate": newPublishCarInfo.licensingDateStr,
+      "color": newPublishCarInfo.carColor,
+      "interiorColor": newPublishCarInfo.carDecorativeColor,
+      "temporaryLicensePlate": newPublishCarInfo.carTemporaryNum,
+      "parkingNo": (newPublishCarInfo.carParkingNum).toString(),
       //"emissionStandard":newPublishCarInfo.environmentalLevel,
       // "useCharacter":newPublishCarInfo.natureOfUseEM.typeStr,
-      "useCharacter":newPublishCarInfo.natureOfUseEM.typeNum,
-      "shamMileage": newPublishCarInfo.mileage!=null?num.parse(newPublishCarInfo.mileage!):null,
+      "useCharacter": newPublishCarInfo.natureOfUseEM.typeNum,
+      "shamMileage": newPublishCarInfo.mileage != null ? num.parse(
+          newPublishCarInfo.mileage!) : null,
       //"marketDate":newPublishCarInfo.productionDateStr==''?null:newPublishCarInfo.productionDateStr,
-      "newCarGuidePrice": newPublishCarInfo.newCarPrice!=null? num.parse(newPublishCarInfo.newCarPrice!)*10000:null,
-      "purchaseTax":newPublishCarInfo.purchaseTax!=null? num.parse(newPublishCarInfo.purchaseTax!)*10000:null,
-      "installationCost":newPublishCarInfo.retrofittingFee!=null?num.parse(newPublishCarInfo.retrofittingFee!):null,
-      "location":newPublishCarInfo.locationCityId,
-      'attribution':newPublishCarInfo.attributionId,
-      "condition":newPublishCarInfo.carDescription,
-      "remark":newPublishCarInfo.remark,
+      "newCarGuidePrice": newPublishCarInfo.newCarPrice != null ? num.parse(
+          newPublishCarInfo.newCarPrice!) * 10000 : null,
+      "purchaseTax": newPublishCarInfo.purchaseTax != null ? num.parse(
+          newPublishCarInfo.purchaseTax!) * 10000 : null,
+      "installationCost": newPublishCarInfo.retrofittingFee != null ? num.parse(
+          newPublishCarInfo.retrofittingFee!) : null,
+      "location": newPublishCarInfo.locationCityId,
+      'attribution': newPublishCarInfo.attributionId,
+      "condition": newPublishCarInfo.carDescription,
+      "remark": newPublishCarInfo.remark,
     };
     Map<String, dynamic> priceInfo = {
 
-      "interiorPrice":newPublishCarInfo.wholesalePrice!=null? num.parse(newPublishCarInfo.wholesalePrice!)*10000:null,
-      "exteriorPrice":newPublishCarInfo.salePrice!=null? num.parse(newPublishCarInfo.salePrice!)*10000:null,
+      "interiorPrice": newPublishCarInfo.wholesalePrice != null ? num.parse(
+          newPublishCarInfo.wholesalePrice!) * 10000 : null,
+      "exteriorPrice": newPublishCarInfo.salePrice != null ? num.parse(
+          newPublishCarInfo.salePrice!) * 10000 : null,
 
     };
     Map<String, dynamic> certificateInfo = {
-      "transfer": newPublishCarInfo.transferNum!=null?int.parse(newPublishCarInfo.transferNum!):null ,
-      "keyCount":newPublishCarInfo.keyCount!=null?int.parse(newPublishCarInfo.keyCount!):null ,
-      "compulsoryInsurance":newPublishCarInfo.haveCompulsoryInsurance,
-      "compulsoryInsuranceDate":newPublishCarInfo.compulsoryInsuranceDateStr,
-      "commercialInsurance":newPublishCarInfo.haveCommercialInsurance,
-      "commercialInsuranceDate":newPublishCarInfo.commercialInsuranceDateStr,
-      "commercialInsurancePrice":newPublishCarInfo.commercialInsurancePrice!=null?num.parse(newPublishCarInfo.commercialInsurancePrice!):null ,
+      "transfer": newPublishCarInfo.transferNum != null ? int.parse(
+          newPublishCarInfo.transferNum!) : null,
+      "keyCount": newPublishCarInfo.keyCount != null ? int.parse(
+          newPublishCarInfo.keyCount!) : null,
+      "compulsoryInsurance": newPublishCarInfo.haveCompulsoryInsurance,
+      "compulsoryInsuranceDate": newPublishCarInfo.compulsoryInsuranceDateStr,
+      "commercialInsurance": newPublishCarInfo.haveCommercialInsurance,
+      "commercialInsuranceDate": newPublishCarInfo.commercialInsuranceDateStr,
+      "commercialInsurancePrice": newPublishCarInfo.commercialInsurancePrice !=
+          null ? num.parse(newPublishCarInfo.commercialInsurancePrice!) : null,
     };
     Map<String, dynamic> purchaseInfo = {
-      'price':num.parse(newPublishCarInfo.purchasePrice!)*10000,
-      'date':newPublishCarInfo.purchaseDateStr,
-      'liaison':newPublishCarInfo.purchasePerson,
+      'price': num.parse(newPublishCarInfo.purchasePrice!) * 10000,
+      'date': newPublishCarInfo.purchaseDateStr,
+      'liaison': newPublishCarInfo.purchasePerson,
     };
 
 
     Map<String, dynamic> base = {
-      "photos":pushPhotoModel.toJson(),
-      "baseInfo":baseInfo,
+      "photos": pushPhotoModel.toJson(),
+      "baseInfo": baseInfo,
       // "report":reportPhotoModel.toJson(),
-      "priceInfo":priceInfo,
-      "certificateInfo":certificateInfo,
-      "purchaseInfo":purchaseInfo
+      "priceInfo": priceInfo,
+      "certificateInfo": certificateInfo,
+      "purchaseInfo": purchaseInfo
     };
 
     BaseModel model = await apiClient.request(API.order.newPushCar, data: base);
@@ -568,10 +614,6 @@ class CarFunc {
       return false;
     }
   }
-
-
-
-
 
 
   ///车商发布车辆
@@ -608,18 +650,18 @@ class CarFunc {
       "keyCount": businessPushModel.other.keyCount,
       "compulsoryInsurance": businessPushModel.other.compulsoryInsurance,
       "compulsoryInsuranceDate":
-          businessPushModel.other.compulsoryInsuranceDate == ''
-              ? null
-              : businessPushModel.other.compulsoryInsuranceDate,
+      businessPushModel.other.compulsoryInsuranceDate == ''
+          ? null
+          : businessPushModel.other.compulsoryInsuranceDate,
       "commercialInsurance": businessPushModel.other.commercialInsurance,
       "commercialInsuranceDate":
-          businessPushModel.other.commercialInsuranceDate == ''
-              ? null
-              : businessPushModel.other.commercialInsuranceDate,
+      businessPushModel.other.commercialInsuranceDate == ''
+          ? null
+          : businessPushModel.other.commercialInsuranceDate,
       "commercialInsurancePrice":
-          businessPushModel.other.commercialInsurancePrice == ''
-              ? null
-              : businessPushModel.other.commercialInsurancePrice,
+      businessPushModel.other.commercialInsurancePrice == ''
+          ? null
+          : businessPushModel.other.commercialInsurancePrice,
     };
 
     BaseModel model = await apiClient.request(API.order.addConsignment, data: {
@@ -672,7 +714,7 @@ class CarFunc {
     };
 
     BaseModel model =
-        await apiClient.request(API.order.consignmentPublish, data: {
+    await apiClient.request(API.order.consignmentPublish, data: {
       'orderId': orderId,
       'photos': photos,
       'baseInfo': baseInfo,

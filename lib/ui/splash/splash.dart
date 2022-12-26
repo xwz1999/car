@@ -20,10 +20,13 @@ import 'package:fluwx/fluwx.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:power_logger/power_logger.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:velocity_x/velocity_x.dart';
+// import 'package:aliyun_face_plugin/aliyun_face_plugin.dart';
 
 import '../../constants/environment/environment.dart';
 import '../../providers/user_provider.dart';
+import '../boot_page.dart';
 import '../login/login_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -37,6 +40,7 @@ class _SplashPageState extends State<SplashPage> {
   final TapGestureRecognizer _agreementRecognizer = TapGestureRecognizer();
   final TapGestureRecognizer _privacyRecognizer = TapGestureRecognizer();
 
+  // final _aliyunFacePlugin=AliyunFacePlugin();
   bool agree = false;
 
   Future initialAll(context) async {
@@ -117,7 +121,10 @@ class _SplashPageState extends State<SplashPage> {
                             color: agree
                                 ? const Color(0xFF0593FF)
                                 : Colors.transparent,
-                            borderRadius: BorderRadius.circular(16.w),border: !agree? Border.all(color: const Color(0xFFCCCCCC)):Border.all(color: Colors.transparent)),
+                            borderRadius: BorderRadius.circular(16.w),
+                            border: !agree
+                                ? Border.all(color: const Color(0xFFCCCCCC))
+                                : Border.all(color: Colors.transparent)),
                         child: agree
                             ? Icon(
                                 CupertinoIcons.checkmark,
@@ -168,9 +175,11 @@ class _SplashPageState extends State<SplashPage> {
                 child: const Text('取消'),
               ),
               CupertinoDialogAction(
-                onPressed: agree? () => Get.back(result: true):(){
-                  CloudToast.show('请勾选同意协议');
-                },
+                onPressed: agree
+                    ? () => Get.back(result: true)
+                    : () {
+                        CloudToast.show('请勾选同意协议');
+                      },
                 child: Text(
                   '同意',
                   style: TextStyle(
@@ -189,6 +198,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    // _aliyunFacePlugin.init();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final app = Provider.of<AppProvider>(context, listen: false);
     var env = const String.fromEnvironment('ENV', defaultValue: 'dev');
@@ -198,17 +208,23 @@ class _SplashPageState extends State<SplashPage> {
     AppENV.instance.setEnv(env);
     //AppENV.instance.setEnv('release');
 
-    Future.delayed(const Duration(milliseconds: 1000), () async {
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      final prefs = await SharedPreferences.getInstance();
+
       await initialAll(context);
 
       /// 苹果上架审核 先检测微信是否安装 若未安装则隐藏微信登录
       var wxInstall = await fluwx.isWeChatInstalled;
       app.wxInstall = wxInstall;
       if (!await userProvider.init()) {
-        await Get.offAll(() => const LoginPage());
+        // Get.offAll(()=>const BootPage());
+         prefs.getString('first') != null
+            ? Get.offAll(() => const LoginPage())
+            : Get.offAll(() => const BootPage());
       } else {
         await Get.offAll(() => const TabNavigator());
       }
+      prefs.setString('first', 'first');
     });
   }
 

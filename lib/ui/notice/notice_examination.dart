@@ -7,6 +7,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../constants/enums.dart';
 import '../../widget/car_widget.dart';
+import '../home/manager_container_item.dart';
 import '../user/user_order/status.dart';
 import 'examination_details.dart';
 
@@ -152,54 +153,91 @@ class _ExaminationPageState extends State<ExaminationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          backgroundColor: kForeGroundColor,
-          title: Text('审批提醒', style: Theme.of(context).textTheme.headline6),
-          //leading:  Container(width: 10.w, child: const CloudBackButton()),
+      appBar: AppBar(
+        leading: const CloudBackButton(
+          isSpecial: true,
         ),
-        extendBody: false,
-        extendBodyBehindAppBar: true,
-        body: Column(
-          children: [
-            SizedBox(
-              height: kToolbarHeight + 50.w,
-            ),
-            SizedBox(
-              height: 88.w,
-              child: CarWidget(
-                  items: _getList(),
-                  callBack: (index) {
-                    examinationState =
-                        UserTool.userProvider.userInfo.business.roleEM ==
-                                Role.salesTraffic
-                            ? ExaminationType.values[index]
-                            : ReminderApprovalType.values[index];
-                    _refreshController.callRefresh();
-                  }),
-            ),
-            Expanded(
-                child: EasyRefresh(
-                    header: ClassicalHeader(
-                        infoText: '下拉刷新',
-                        refreshedText: '刷新完成',
-                        refreshText: '刷新中....',
-                        refreshReadyText: '下拉刷新',
-                        // refreshFailedText: '11111',
-                        refreshingText: '刷新中....'),
-                    firstRefresh: true,
-                    controller: _refreshController,
-                    onRefresh: () async {},
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return _release(auditList[index]);
-                      },
-                      itemCount: auditList.length,
-                    )))
-          ],
-        ));
+        backgroundColor: kForeGroundColor,
+        title: Text('审批提醒', style: Theme.of(context).textTheme.headline6),
+        //leading:  Container(width: 10.w, child: const CloudBackButton()),
+      ),
+      extendBody: true,
+      backgroundColor: kForeGroundColor,
+      body: GridView.count(
+        shrinkWrap: true,
+        padding: EdgeInsets.only(left: 32.w, right: 32.w),
+        physics: const NeverScrollableScrollPhysics(),
+        crossAxisCount: 3,
+        mainAxisSpacing: 24.w,
+        //横轴间距
+        crossAxisSpacing: 40.w,
+        childAspectRatio: 200 / 176,
+        children: [
+          ManagerContainerItem(
+            text: '出售申请',
+            num: '0',
+            onTap: () {
+
+
+
+            },
+          ),
+          ManagerContainerItem(
+            onTap: () {},
+            text: '修改申请',
+            num: '0',
+          ),
+          ManagerContainerItem(
+            onTap: () {},
+            text: '发布审核',
+            num: '0',
+          ),
+          ManagerContainerItem(
+            onTap: () {},
+            text: '收购审核',
+            num: '0',
+          ),
+        ],
+      ),
+      // Column(
+      //   children: [
+      //     SizedBox(
+      //       height: kToolbarHeight + 50.w,
+      //     ),
+      //     SizedBox(
+      //       height: 88.w,
+      //       child: CarWidget(
+      //           items: _getList(),
+      //           callBack: (index) {
+      //             examinationState =
+      //                 UserTool.userProvider.userInfo.business.roleEM ==
+      //                         Role.salesTraffic
+      //                     ? ExaminationType.values[index]
+      //                     : ReminderApprovalType.values[index];
+      //             _refreshController.callRefresh();
+      //           }),
+      //     ),
+      //     Expanded(
+      //         child: EasyRefresh(
+      //             header: ClassicalHeader(
+      //                 infoText: '下拉刷新',
+      //                 refreshedText: '刷新完成',
+      //                 refreshText: '刷新中....',
+      //                 refreshReadyText: '下拉刷新',
+      //                 // refreshFailedText: '11111',
+      //                 refreshingText: '刷新中....'),
+      //             firstRefresh: true,
+      //             controller: _refreshController,
+      //             onRefresh: () async {},
+      //             child: ListView.builder(
+      //               itemBuilder: (context, index) {
+      //                 return _release(auditList[index]);
+      //               },
+      //               itemCount: auditList.length,
+      //             )))
+      //   ],
+      // )
+    );
   }
 
 //驳回 通过
