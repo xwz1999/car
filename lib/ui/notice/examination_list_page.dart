@@ -1,155 +1,282 @@
-// import 'package:cloud_car/model/user/user_info_model.dart';
-// import 'package:cloud_car/utils/headers.dart';
-// import 'package:cloud_car/utils/user_tool.dart';
-// import 'package:cloud_car/widget/button/cloud_back_button.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:flutter_easyrefresh/easy_refresh.dart';
-//
-// import '../../constants/enums.dart';
-// import '../../utils/title_drop_widget.dart';
-// import '../../widget/car_widget.dart';
-// import '../../widget/screen_widget.dart';
-// import '../../widget/sort_widget.dart';
-// import '../home/manager_container_item.dart';
-// import '../user/user_order/status.dart';
-// import 'examination_details.dart';
-// import 'examination_widget.dart';
-//
-// class ExaminationListPage extends StatefulWidget {
-//   final ReminderApprovalType approvalType;
-//
-//   const ExaminationListPage({super.key, required this.approvalType});
-//
-//   @override
-//   _ExaminationListPageState createState() => _ExaminationListPageState();
-// }
-//
-// class _ExaminationListPageState extends State<ExaminationListPage> {
-//   late final EasyRefreshController _refreshController = EasyRefreshController();
-//   final _scaffoldKey = GlobalKey<ScaffoldState>();
-//   late List<String> _dropDownHeaderItemStrings1;
-//   bool isClick = false;
-//   String orderName = '';
-//   TitleScreenControl screenControl1 = TitleScreenControl();
-//   List<Widget> listWidget = []; //创建方法列表
-//   List<ChooseItem> get _sortList =>
-//       UserTool.userProvider.userInfo.business.businessAscription ==
-//           BusinessAscription.normal
-//           ? [
-//         ChooseItem(name: '出售申请'),
-//         ChooseItem(name: '修改申请'),
-//         ChooseItem(name: '发布申请'),
-//         ChooseItem(name: '收购申请'),
-//       ]
-//           : [
-//         ChooseItem(name: '出售申请'),
-//         ChooseItem(name: '收购申请'),
-//       ];
-//
-//
-//   var examinationState =
-//       UserTool.userProvider.userInfo.business.roleEM == Role.salesTraffic
-//           ? ExaminationType.all
-//           : ReminderApprovalType.all;
-//
-//   @override
-//   void initState() {
-//     _dropDownHeaderItemStrings1 = [
-//       widget.approvalType.typeStr,
-//     ];
-//     listWidget = [
-//       Container(
-//         width: double.infinity,
-//         decoration: BoxDecoration(
-//             borderRadius: BorderRadius.all(Radius.circular(16.w)),
-//             color: kForeGroundColor),
-//         clipBehavior: Clip.antiAlias,
-//         child: ScreenWidget(
-//           pickString: '',
-//           childAspectRatio: 200 / 56,
-//           callback: (String item, int value) {
-//             _dropDownHeaderItemStrings1 = [item];
-//             isClick = true;
-//             orderName = item;
-//             screenControl1.screenHide();
-//             setState(() {});
-//           },
-//           mainAxisSpacing: 10.w,
-//           crossAxisSpacing: 24.w,
-//           crossAxisCount: 3,
-//           itemList: _sortList,
-//         ),
-//       ),
-//     ];
-//     super.initState();
-//   }
-//   @override
-//   void dispose() {
-//     _refreshController.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-//     return AnnotatedRegion<SystemUiOverlayStyle>(
-//         value: const SystemUiOverlayStyle(
-//           statusBarIconBrightness: Brightness.dark,
-//         ),
-//         child: Scaffold(
-//           key: _scaffoldKey,
-//           //backgroundColor: Colors.red,
-//           extendBodyBehindAppBar: true,
-//           extendBody: true,
-//           body: TitleDropDownWidget(
-//               _dropDownHeaderItemStrings1, listWidget,
-//               isSearch: false,
-//               height: kToolbarHeight * 2,
-//               bottomHeight: 30.w,
-//               headFontSize: 36.sp,
-//               leftWidget: const CloudBackButton(
-//                 isSpecial: true,
-//               ),
-//               screenControl: screenControl1,
-//               child: _get(
-//                   isClick ? orderName : widget.approvalType.typeStr)),
-//         ));
-//
-//
-//
-//     //   Scaffold(
-//     //   appBar: AppBar(
-//     //     leading: const CloudBackButton(
-//     //       isSpecial: true,
-//     //     ),
-//     //     backgroundColor: kForeGroundColor,
-//     //     title: Text('审批提醒', style: Theme.of(context).textTheme.headline6),
-//     //     //leading:  Container(width: 10.w, child: const CloudBackButton()),
-//     //   ),
-//     //   extendBody: true,
-//     //   backgroundColor: kForeGroundColor,
-//     //   body: GridView.count(
-//     //     shrinkWrap: true,
-//     //     padding: EdgeInsets.only(left: 32.w, right: 32.w),
-//     //     physics: const NeverScrollableScrollPhysics(),
-//     //     crossAxisCount: 3,
-//     //     mainAxisSpacing: 24.w,
-//     //     //横轴间距
-//     //     crossAxisSpacing: 40.w,
-//     //     childAspectRatio: 200 / 176,
-//     //     children: [
-//     //
-//     //     ],
-//     //   ),
-//     // );
-//   }
-//
-//
-//   _get(String status){
-//     switch(status){
-//       case '出售申请':
-//         return ExaminationWidget();
-//     }
-//   }
-// }
+import 'package:cloud_car/ui/notice/publish_info_page.dart';
+import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
+import 'package:cloud_car/utils/user_tool.dart';
+import 'package:flustars/flustars.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:screenshot/screenshot.dart';
+
+import '../../constants/api/api.dart';
+import '../../constants/enums.dart';
+import '../../model/car/car_list_model.dart';
+import '../../model/car/economic_release_model.dart';
+import '../../widget/cloud_image_network_widget.dart';
+import '../../widget/no_data_widget.dart';
+import '../home/car_manager/direct_sale/new_cars_detail_page.dart';
+import '../home/func/car_func.dart';
+
+class ExaminationListPage extends StatefulWidget {
+  final EasyRefreshController refreshController;
+
+  // final List<EconomicReleaseModel> releaseList;
+
+  // final int id;
+  const ExaminationListPage({
+    super.key,
+    required this.refreshController,
+    // required this.releaseList,
+    //required this.id
+  });
+
+  @override
+  State<ExaminationListPage> createState() => _ExaminationListPageState();
+}
+
+class _ExaminationListPageState extends State<ExaminationListPage>
+    with AutomaticKeepAliveClientMixin {
+  final ScreenshotController _screenshotController = ScreenshotController();
+  List<EconomicReleaseModel> releaseList = [EconomicReleaseModel.init];
+  late List<CarListModel> carInfoModel;
+
+  //bool _onload = true;
+  int _page = 1;
+  final int _size = 10;
+
+  @override
+  Widget build(BuildContext context) {
+    return EasyRefresh.custom(
+        firstRefresh: true,
+        controller: widget.refreshController,
+        header: MaterialHeader(),
+        footer: MaterialFooter(),
+        onRefresh: () async {
+          _page = 1;
+          if (UserTool.userProvider.userInfo.business.roleEM != Role.manager) {
+            releaseList = await CarFunc.getPubLists(page: _page);
+          } else {
+            releaseList = await CarFunc.getEconomicPubLists(page: _page);
+          }
+          // widget.releaseList.clear();
+          // widget.releaseList=list;
+          //_onload = false;
+          setState(() {});
+        },
+        onLoad: () async {
+          _page++;
+          BaseListModel baseList;
+          if (UserTool.userProvider.userInfo.business.roleEM != Role.manager) {
+            baseList = await apiClient.requestList(API.order.pubLists,
+                data: {'size': _size, 'page': _page});
+          } else {
+            baseList = await apiClient.requestList(API.order.dealerPubLists,
+                data: {'size': _size, 'page': _page});
+          }
+          if (baseList.nullSafetyTotal > releaseList.length) {
+            releaseList.addAll(baseList.nullSafetyList
+                .map((e) => EconomicReleaseModel.fromJson(e))
+                .toList());
+          } else {
+            widget.refreshController.finishLoad(noMore: true);
+          }
+          setState(() {});
+        },
+        slivers: [
+          // SliverToBoxAdapter(
+          //   child: 10.hb,
+          // ),
+          releaseList.isEmpty
+              ? const NoDataWidget(
+                  text: '暂无发布信息',
+                  paddingTop: 0,
+                )
+              : SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                  var model = releaseList[index];
+                  return GestureDetector(
+                    onTap: () async {
+                      // core.download(url, options);
+                      // var docPath=await getApplicationDocumentsDirectory();
+                      // String _localPath='${docPath.path}${Platform.pathSeparator}download';
+                      // final savedDir=Directory(_localPath);
+                      // var response=await Dio().download('contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF', '');///下载pdf
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 32.w, vertical: 4.w),
+                      child: _getCard(
+                          model.status,
+                          model.mainPhoto,
+                          model.modelName,
+                          model.createdAt,
+                          model.mileage,
+                          model.id
+                          //model.
+                          ),
+                    ),
+                  );
+                }, childCount: releaseList.length))
+        ]);
+  }
+
+  _getCard(int status, String carUrl, String carName, num carTime,
+      String carMileage, int carId) {
+    return Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.w)),
+        child: Container(
+          // padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
+          child: GestureDetector(
+            onTap: () async {
+              carInfoModel = await CarFunc.getCarList(1, 10);
+              Get.to(() => PublishInfoPage(
+                    carId: carId,
+                  ));
+              // Get.to(() => DealerConsignmentSigned(
+              //       status: model.statusEnum,
+              //       price: model.price,
+              //       id: model.id,
+              //
+              //       auditStatus: model.auditStatus,
+              //       //stat: '审核中',
+              //     ));
+
+              //   case 0:
+              //     Get.to(() => const DealerConsignmentRejected());
+              //     break;
+              // }
+            },
+            child: Container(
+                padding: EdgeInsets.only(left: 32.w, top: 24.w),
+                decoration: BoxDecoration(
+                    color: kForeGroundColor,
+                    borderRadius: BorderRadius.circular(16.w)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 0.w),
+                      child: _getText(status),
+                    ),
+                    // 24.hb,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 196.w,
+                          height: 150.w,
+                          child: CloudImageNetworkWidget.car(
+                            urls: [carUrl],
+                          ),
+                        ),
+                        20.wb,
+                        SizedBox(
+                          width: 400.w,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(carName,
+                                  style: TextStyle(
+                                      fontSize: BaseStyle.fontSize28,
+                                      color: BaseStyle.color111111)),
+                              32.hb,
+                              Padding(
+                                padding: EdgeInsets.only(right: 16.w),
+                                child: getText(
+                                    DateUtil.formatDateMs(
+                                        carTime.toInt() * 1000,
+                                        format: 'yyyy年MM月'),
+                                    '$carMileage万公里'),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    32.hb,
+                  ],
+                )),
+          ),
+        ));
+  }
+
+  getText(String time, String distance) {
+    return Row(
+      children: [
+        //Padding(padding: EdgeInsets.symmetric(horizontal: 16.w)),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
+          decoration: BoxDecoration(
+              color: const Color(0xFF4F5A74).withOpacity(0.08),
+              borderRadius: BorderRadius.circular(4.w)),
+          child: Text(
+            time,
+            style: TextStyle(
+                fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
+          ),
+        ),
+        16.wb,
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.w),
+          decoration: BoxDecoration(
+              color: const Color(0xFF4F5A74).withOpacity(0.08),
+              borderRadius: BorderRadius.circular(4.w)),
+          child: Text(
+            distance,
+            style: TextStyle(
+                fontSize: BaseStyle.fontSize20, color: const Color(0xFF4F5A74)),
+          ),
+        )
+        // Padding(padding: EdgeInsets.symmetric(horizontal: 24.w)),
+        // Chip(
+        //   label: Text(num),
+        //   labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
+        //   backgroundColor: const Color(0xFF027AFF).withOpacity(0.08),
+        //   labelStyle: TextStyle(
+        //       fontSize: BaseStyle.fontSize20, color: const Color(0xFF027AFF)),
+        //   shape:
+        //       BeveledRectangleBorder(borderRadius: BorderRadius.circular(4.w)),
+        // ),
+        // ChipTheme(
+        //     data: ChipThemeData(
+        //       backgroundColor: const Color(0xFF4F5A74).withOpacity(0.08),
+        //       labelStyle: TextStyle(
+        //           fontSize: BaseStyle.fontSize20,
+        //           color: const Color(0xFF4F5A74)),
+        //       shape: BeveledRectangleBorder(
+        //           borderRadius: BorderRadius.circular(4.w)),
+        //       labelPadding: EdgeInsets.only(left: 8.w, top: 8.w),
+        //     ),
+        //     child: Wrap(
+        //       children: [Chip(label: Text(time)), Chip(label: Text(distance))],
+        //     ))
+      ],
+    );
+  }
+
+  _getText(int status) {
+    return Text(
+      Audit.getValueAuditId(status).typeStr,
+      style: TextStyle(
+        fontSize: 28.sp,
+        color: getColor(Audit.getValueAuditId(status).typeNum),
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
+  Color getColor(int status) {
+    switch (status) {
+      case 1:
+        return const Color(0xFFFE8029);
+      case 2:
+        return const Color(0xFF027AFF);
+      case 3:
+        return const Color(0xFFFF3B02);
+      default:
+        return const Color(0xFFFE8029);
+    }
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}

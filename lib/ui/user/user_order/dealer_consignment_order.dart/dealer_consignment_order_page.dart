@@ -143,7 +143,8 @@ class _DealerConsignmentOrderPageState
   }
 
   _getCar(ListsModel model) {
-    return Container(
+    return
+      Container(
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
       child: GestureDetector(
         onTap: () {

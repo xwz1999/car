@@ -6,10 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../constants/enums.dart';
+import '../../model/car/economic_release_model.dart';
 import '../../widget/car_widget.dart';
+import '../../widget/choose_widget.dart';
+import '../../widget/screen_widget.dart';
+import '../../widget/search_bar_widget.dart';
 import '../home/manager_container_item.dart';
+import '../user/user_look_contract/comsignment_view.dart';
 import '../user/user_order/status.dart';
 import 'examination_details.dart';
+import 'examination_list_page.dart';
 
 class ExaminationPage extends StatefulWidget {
   const ExaminationPage({super.key});
@@ -18,7 +24,7 @@ class ExaminationPage extends StatefulWidget {
   _ExaminationPageState createState() => _ExaminationPageState();
 }
 
-class _ExaminationPageState extends State<ExaminationPage> {
+class _ExaminationPageState extends State<ExaminationPage> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin{
   List<dynamic>? data;
 
   // ReminderApprovalType
@@ -137,106 +143,222 @@ class _ExaminationPageState extends State<ExaminationPage> {
       ///审批状态
     },
   ];
+  late final EasyRefreshController _examinationRefreshController = EasyRefreshController();
   late final EasyRefreshController _refreshController = EasyRefreshController();
+  late Audit _releaseCarStatus;
+  // late List<EconomicReleaseModel> releaseList;
+  late TabController _tabController;
   var examinationState =
       UserTool.userProvider.userInfo.business.roleEM == Role.salesTraffic
           ? ExaminationType.all
           : ReminderApprovalType.all;
 
   @override
+  void initState() {
+    _releaseCarStatus=Audit.all;
+   _tabController=TabController(length: 2, initialIndex: 0, vsync: this);
+    super.initState();
+  }
   @override
   void dispose() {
+    _examinationRefreshController.dispose();
     _refreshController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
-      appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
-        ),
-        backgroundColor: kForeGroundColor,
-        title: Text('审批提醒', style: Theme.of(context).textTheme.headline6),
-        //leading:  Container(width: 10.w, child: const CloudBackButton()),
-      ),
-      extendBody: true,
-      backgroundColor: kForeGroundColor,
-      body: GridView.count(
-        shrinkWrap: true,
-        padding: EdgeInsets.only(left: 32.w, right: 32.w),
-        physics: const NeverScrollableScrollPhysics(),
-        crossAxisCount: 3,
-        mainAxisSpacing: 24.w,
-        //横轴间距
-        crossAxisSpacing: 40.w,
-        childAspectRatio: 200 / 176,
-        children: [
-          ManagerContainerItem(
-            text: '出售申请',
-            num: '0',
-            onTap: () {
-
-
-
-            },
-          ),
-          ManagerContainerItem(
-            onTap: () {},
-            text: '修改申请',
-            num: '0',
-          ),
-          ManagerContainerItem(
-            onTap: () {},
-            text: '发布审核',
-            num: '0',
-          ),
-          ManagerContainerItem(
-            onTap: () {},
-            text: '收购审核',
-            num: '0',
-          ),
-        ],
-      ),
-      // Column(
-      //   children: [
-      //     SizedBox(
-      //       height: kToolbarHeight + 50.w,
-      //     ),
-      //     SizedBox(
-      //       height: 88.w,
-      //       child: CarWidget(
-      //           items: _getList(),
-      //           callBack: (index) {
-      //             examinationState =
-      //                 UserTool.userProvider.userInfo.business.roleEM ==
-      //                         Role.salesTraffic
-      //                     ? ExaminationType.values[index]
-      //                     : ReminderApprovalType.values[index];
-      //             _refreshController.callRefresh();
-      //           }),
-      //     ),
-      //     Expanded(
-      //         child: EasyRefresh(
-      //             header: ClassicalHeader(
-      //                 infoText: '下拉刷新',
-      //                 refreshedText: '刷新完成',
-      //                 refreshText: '刷新中....',
-      //                 refreshReadyText: '下拉刷新',
-      //                 // refreshFailedText: '11111',
-      //                 refreshingText: '刷新中....'),
-      //             firstRefresh: true,
-      //             controller: _refreshController,
-      //             onRefresh: () async {},
-      //             child: ListView.builder(
-      //               itemBuilder: (context, index) {
-      //                 return _release(auditList[index]);
-      //               },
-      //               itemCount: auditList.length,
-      //             )))
-      //   ],
+      // appBar: AppBar(
       // )
+      // AppBar(
+      //   toolbarHeight: 88.w,
+      //   backgroundColor: kForeGroundColor,
+      //   leading: const CloudBackButton(
+      //     isSpecial: true,
+      //   ),
+      //   title: PreferredSize(
+      //       preferredSize: Size.fromHeight(1.w),
+      //       child: SizedBox(
+      //         child:
+      // TabBar(
+      //             // indicator:
+      //             //     BoxDecoration(borderRadius: BorderRadius.circular(4.w)),
+      //             indicatorColor: const Color(0xFF027AFF),
+      //             indicatorPadding: EdgeInsets.only(top: 16.w),
+      //             //indicatorWeight: 3,
+      //             indicatorSize: TabBarIndicatorSize.label,
+      //             isScrollable: true,
+      //             controller: _tabController,
+      //             tabs: [_tab(0, '寄卖合同'), _tab(1, '售车合同')]),
+      //       )),
+      //   actions: [
+      //     GestureDetector(
+      //       onTap: () {
+      //         Get.to(() => const SearchPage());
+      //       },
+      //       child: Image.asset(Assets.icons.mainSearch.path,
+      //           height: 48.w, width: 48.w),
+      //     ),
+      //   ],
+      // ),
+        backgroundColor: bodyColor,
+        //extendBody: true,
+        extendBodyBehindAppBar: true,
+        body:
+
+
+        Column(
+          children: [
+            SearchBarWidget(
+
+              callback: (String text) {
+                //sortModel.value.name = text;
+                // _refreshController.callRefresh();
+                setState(() {});
+              },
+              tips: '请输入客户名称',
+              title: Container(
+                alignment: Alignment.center,
+                child:
+                TabBar(
+                  // indicator:
+                  //     BoxDecoration(borderRadius: BorderRadius.circular(4.w)),
+                    indicatorColor: const Color(0xFF027AFF),
+                    indicatorPadding: EdgeInsets.only(top: 16.w),
+                    //indicatorWeight: 3,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    isScrollable: true,
+                    controller: _tabController,
+                    tabs: [_tab(0, '发布记录'), _tab(1, '修改记录'),]),
+              ),
+            ),
+            ChooseWidget(
+              carState: true,
+              callBack: (index) {
+                _releaseCarStatus = Audit.values[index];
+                _examinationRefreshController.callRefresh();
+                setState(() {
+
+                });
+              },
+              items: Audit.values.map((e) => e.typeStr).toList(),
+              item: _releaseCarStatus.typeStr,
+            ),
+
+            Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    ExaminationListPage(
+                      // releaseList: releaseList,
+                      refreshController: _examinationRefreshController,
+                    ),
+                    ExaminationListPage(
+                      // releaseList: releaseList,
+                      refreshController: _examinationRefreshController,
+                    ),
+                  ],
+                ))
+          ],
+        ));
+
+
+    //   Scaffold(
+    //   appBar: AppBar(
+    //     leading: const CloudBackButton(
+    //       isSpecial: true,
+    //     ),
+    //     backgroundColor: kForeGroundColor,
+    //     title: Text('审批提醒', style: Theme.of(context).textTheme.headline6),
+    //     //leading:  Container(width: 10.w, child: const CloudBackButton()),
+    //   ),
+    //   extendBody: true,
+    //   backgroundColor: kForeGroundColor,
+    //   body:
+    //
+    //
+    //   GridView.count(
+    //     shrinkWrap: true,
+    //     padding: EdgeInsets.only(left: 32.w, right: 32.w),
+    //     physics: const NeverScrollableScrollPhysics(),
+    //     crossAxisCount: 3,
+    //     mainAxisSpacing: 24.w,
+    //     //横轴间距
+    //     crossAxisSpacing: 40.w,
+    //     childAspectRatio: 200 / 176,
+    //     children: [
+    //       ManagerContainerItem(
+    //         text: '出售申请',
+    //         num: '0',
+    //         onTap: () {
+    //         },
+    //       ),
+    //       ManagerContainerItem(
+    //         onTap: () {},
+    //         text: '修改申请',
+    //         num: '0',
+    //       ),
+    //       ManagerContainerItem(
+    //         onTap: () {},
+    //         text: '发布审核',
+    //         num: '0',
+    //       ),
+    //       ManagerContainerItem(
+    //         onTap: () {},
+    //         text: '收购审核',
+    //         num: '0',
+    //       ),
+    //     ],
+    //   ),
+    //   // Column(
+    //   //   children: [
+    //   //     SizedBox(
+    //   //       height: kToolbarHeight + 50.w,
+    //   //     ),
+    //   //     SizedBox(
+    //   //       height: 88.w,
+    //   //       child: CarWidget(
+    //   //           items: _getList(),
+    //   //           callBack: (index) {
+    //   //             examinationState =
+    //   //                 UserTool.userProvider.userInfo.business.roleEM ==
+    //   //                         Role.salesTraffic
+    //   //                     ? ExaminationType.values[index]
+    //   //                     : ReminderApprovalType.values[index];
+    //   //             _refreshController.callRefresh();
+    //   //           }),
+    //   //     ),
+    //   //     Expanded(
+    //   //         child: EasyRefresh(
+    //   //             header: ClassicalHeader(
+    //   //                 infoText: '下拉刷新',
+    //   //                 refreshedText: '刷新完成',
+    //   //                 refreshText: '刷新中....',
+    //   //                 refreshReadyText: '下拉刷新',
+    //   //                 // refreshFailedText: '11111',
+    //   //                 refreshingText: '刷新中....'),
+    //   //             firstRefresh: true,
+    //   //             controller: _refreshController,
+    //   //             onRefresh: () async {},
+    //   //             child: ListView.builder(
+    //   //               itemBuilder: (context, index) {
+    //   //                 return _release(auditList[index]);
+    //   //               },
+    //   //               itemCount: auditList.length,
+    //   //             )))
+    //   //   ],
+    //   // )
+    // );
+  }
+
+
+  _tab(int int, String string) {
+    return Text(
+      string,
+      style: TextStyle(
+          fontSize: BaseStyle.fontSize28, color: BaseStyle.color111111),
     );
   }
 
@@ -461,6 +583,9 @@ class _ExaminationPageState extends State<ExaminationPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   ///审批提醒 经纪人身份和车务身份
 // _release1(item) {

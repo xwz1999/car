@@ -6,12 +6,15 @@ import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
 import 'package:cloud_car/ui/user/user_order/sales_orders_page.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/enums.dart';
+import '../user/user_look_contract/consignment_contract_page.dart';
 import 'car_system_informs.dart';
 import 'notice_examination.dart';
 import 'notice_fashionable.dart';
@@ -76,11 +79,13 @@ class _NoticePageState extends State<NoticePage>
                   msg: '你有新的出售合同待审批',
                   date: '01-01 11:11',
                   type: 4),
-              Message(
+              UserTool.userProvider.userInfo.business.roleEM == Role.manager ||
+                  UserTool.userProvider.userInfo.business.roleEM ==
+                      Role.carService || UserTool.userProvider.userInfo.business.roleEM == Role.settlers ? Message(
                   title: '车辆审批',
                   msg: '您有车辆发布审批待查看',
                   date: '01-01 11:11',
-                  type: 5),
+                  type: 5):Message(),
 
               ///Message(title:'系统通知',msg:'1.0.1版本功能升级了，立即查看>>>',date: '01-01 11:11',type: 6 ),
             ];
@@ -120,11 +125,11 @@ class _NoticePageState extends State<NoticePage>
           case 1:
             Get.to(() => const SalesOrderPage(orderType: OrderType.personal));
             break;
-          // case 2:
-          //   Get.to(() => const UserManagerDetailPage(
-          //         customerClassify: CustomerClassify.normal,
-          //       ));
-          //   break;
+        // case 2:
+        //   Get.to(() => const UserManagerDetailPage(
+        //         customerClassify: CustomerClassify.normal,
+        //       ));
+        //   break;
           case 2:
             Get.to(() => const UserInvitationPage());
             break;
@@ -132,14 +137,14 @@ class _NoticePageState extends State<NoticePage>
             Get.to(() => const FashionablePage());
             break;
           case 4:
-            Get.to(() => const ExaminationPage());
+            Get.to(() => const ConsignmentContractPage());
             break;
           case 5:
-            Get.to(() => const SystemPage());
+            Get.to(() => const ExaminationPage());
             break;
-          // case 7:
-          //   Get.to(()=>)
-          //   break;
+        // case 7:
+        //   Get.to(()=>)
+        //   break;
         }
       },
       child: Container(
@@ -149,7 +154,7 @@ class _NoticePageState extends State<NoticePage>
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
+            title==''?const SizedBox(): Image.asset(
               getPath(type),
               width: 88.w,
               height: 88.w,
@@ -171,20 +176,20 @@ class _NoticePageState extends State<NoticePage>
                       getCount(type, context) <= 0
                           ? const SizedBox()
                           : Badge(
-                              //文本内容为空时子组件为null时则返回一个红点
-                              badgeContent: Text(
-                                getCount(type, context).toString(),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                              //child: Icon(Icons.settings), //子组件
-                              badgeColor: const Color.fromRGBO(230, 34, 34, 1),
-                              //小红点颜色
-                              showBadge: true,
-                              //刷新时会在右侧摆动
-                              animationDuration: const Duration(seconds: 10),
-                              //摆动时间
-                              toAnimate: false, //允许摆动
-                            )
+                        //文本内容为空时子组件为null时则返回一个红点
+                        badgeContent: Text(
+                          getCount(type, context).toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        //child: Icon(Icons.settings), //子组件
+                        badgeColor: const Color.fromRGBO(230, 34, 34, 1),
+                        //小红点颜色
+                        showBadge: true,
+                        //刷新时会在右侧摆动
+                        animationDuration: const Duration(seconds: 10),
+                        //摆动时间
+                        toAnimate: false, //允许摆动
+                      )
                     ],
                   ),
                 ],
@@ -200,8 +205,8 @@ class _NoticePageState extends State<NoticePage>
     switch (type) {
       case 1:
         return Assets.icons.noticeCustomerPay.path;
-      // case 2:
-      //   return Assets.icons.customerTrack.path;
+    // case 2:
+    //   return Assets.icons.customerTrack.path;
       case 2:
         return Assets.icons.noticeCustomerInvite.path;
       case 3:
@@ -210,8 +215,10 @@ class _NoticePageState extends State<NoticePage>
         return Assets.icons.noticeExamination.path;
       case 5:
         return Assets.icons.carOptions.path;
-      // case 6:
-      //   return Assets.icons.carOptions.path;
+      // default :
+      //   return '';
+    // case 6:
+    //   return Assets.icons.carOptions.path;
     }
   }
 
@@ -220,8 +227,8 @@ class _NoticePageState extends State<NoticePage>
     switch (type) {
       case 1:
         return message.unReadMesCount.customerPayCount;
-      // case 2:
-      //   return message.unReadMesCount.customerTrailCount;
+    // case 2:
+    //   return message.unReadMesCount.customerTrailCount;
       case 2:
         return message.unReadMesCount.customerInviteCount;
       case 3:

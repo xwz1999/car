@@ -51,7 +51,10 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
+    return
+
+
+      Scaffold(
         // appBar: AppBar(
         // )
         // AppBar(

@@ -222,7 +222,6 @@ class _Order {
   ///发布车辆详情
   get consignmentInfoCar => '/order/consignment/info/car';
 
-
   ///添加车商寄卖订单 车商发布订单
   get newPushCar => '/car/publish';
 
@@ -245,6 +244,15 @@ class _Order {
 
   /// 寄卖订单详情
   String get callCarInfo => '/order/call/car/info';
+
+  ///发布车辆列表(个人)
+ String get  pubLists=> '/car/publish/lists';
+
+  ///发布车辆列表(车商)
+ String get dealerPubLists=>'/publish/dealer/lists';
+
+ ///发布车辆详情
+ String get publishInfo=>'/car/publish/info';
 }
 
 class _Poster {

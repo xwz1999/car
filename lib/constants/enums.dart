@@ -209,3 +209,31 @@ enum TransferType{
         Square.values.firstWhere((element) => element.typeNum==value);
     const Square(this.typeNum,this.typeStr);
   }
+
+  ///发布记录状态
+  enum Audit{
+  all(0,'全部'),
+  wait(1,'待审批'),
+  pass(2,'已审核'),
+  reject(3,'已驳回');
+  final String typeStr;
+  final int typeNum;
+  static Audit getValue(int value)=> Audit.values.firstWhere((element) => element.typeNum==value);
+    static Audit getValueAuditId(int auditId){
+        switch(auditId){
+          case 1:
+            return Audit.wait;
+          case 2:
+            return Audit.wait;
+          case 3:
+            return Audit.pass;
+          case 4:
+            return Audit.reject;
+          case 5:
+            return Audit.reject;
+          default:
+            return Audit.all;
+        }
+    }
+  const Audit(this.typeNum,this.typeStr);
+  }

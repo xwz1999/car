@@ -1,22 +1,18 @@
-import 'package:cloud_car/constants/api/api.dart';
+
 import 'package:cloud_car/constants/enums.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/model/contract/report_photo_model.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
+
 import 'package:cloud_car/ui/home/car_manager/direct_sale/new_car_detail_item.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/off_car_page.dart';
-import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_page.dart';
+
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/ui/home/share/share_car_dialog.dart';
 import 'package:cloud_car/utils/custom_floating_action_button_location.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
-import 'package:cloud_car/utils/user_tool.dart';
+
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
@@ -31,29 +27,25 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../model/publish_info_model.dart';
 import '../../../../utils/text_utils.dart';
-import '../../../user/user_order/status.dart';
-import '../../share/edit_item_widget.dart';
-import '../publish_car/publish_finish_page.dart';
-import 'detailed_price_page.dart';
-import 'edit_car_page.dart';
+import '../home/car_manager/publish_car/publish_finish_page.dart';
+import '../user/user_order/status.dart';
 
-class NewCarsDetailPage extends StatefulWidget {
 
+class PublishInfoPage extends StatefulWidget {
+    final int carId;
   // final bool isSelf;
-  final CarListModel carListModel;
 
-  const NewCarsDetailPage({
+  const PublishInfoPage({
     super.key,
-
-    required this.carListModel,
+    required this.carId,
     // required this.isSelf,
   });
 
   @override
-  _NewCarsDetailPageState createState() => _NewCarsDetailPageState();
+  _PublishInfoPageState createState() => _PublishInfoPageState();
 }
 
-class _NewCarsDetailPageState extends State<NewCarsDetailPage>
+class _PublishInfoPageState extends State<PublishInfoPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -71,7 +63,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
   List<CarPhotos> interiorPhotos = [];
   List<CarPhotos> defectPhotos = [];
   List<CarPhotos> dataPhotos = [];
-  late PublishInfoModel publishInfoModel;
+  late PublishInfoModel publishInfoModel=PublishInfoModel.init;
   // List<CarPhotos> repairPhotos = [];
   //
   // List<CarPhotos> _reportPhotos = [];
@@ -87,6 +79,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
   @override
   void initState() {
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      await _refresh();
+    });
     ///自己发布的 tab2个 否则1个
     tabs = ['车辆详情', '车辆照片']; //'车辆轨迹'
     _tabController =
@@ -104,48 +99,47 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         setState(() {});
       }
     });
-    Future.delayed(const Duration(milliseconds: 0), () async {
-      await _refresh();
-    });
 
-    _chooseModels.add(widget.carListModel);
 
-    if (widget.carListModel.isSelf == 1) {
-      dataPhotos = [
-        CarPhotos(
-          text: '漆面数据',
-        ),
-        CarPhotos(text: '行驶证照片'),
-        CarPhotos(
-          text: '检测报告',
-        ),
-        CarPhotos(
-          text: '登记证书',
-        ),
-        CarPhotos(
-          text: '交强险',
-        ),
-        CarPhotos(
-          text: '商业险',
-        ),
-        // CarPhotos(
-        //   text: '维保记录',
-        // ),
-      ];
-    } else {
-      dataPhotos = [
-        CarPhotos(
-          text: '漆面数据',
-        ),
-        CarPhotos(
-          text: '检测报告',
-        ),
-      ];
-    }
+    // _chooseModels.add(widget.carListModel);
+    dataPhotos = [
+      CarPhotos(
+        text: '漆面数据',
+      ),
+      CarPhotos(text: '行驶证照片'),
+      CarPhotos(
+        text: '检测报告',
+      ),
+      CarPhotos(
+        text: '登记证书',
+      ),
+      CarPhotos(
+        text: '交强险',
+      ),
+      CarPhotos(
+        text: '商业险',
+      ),
+      // CarPhotos(
+      //   text: '维保记录',
+      // ),
+    ];
+    // if (widget.carListModel.isSelf == 1) {
+    //
+    // } else {
+    //   dataPhotos = [
+    //     CarPhotos(
+    //       text: '漆面数据',
+    //     ),
+    //     CarPhotos(
+    //       text: '检测报告',
+    //     ),
+    //   ];
+    // }
   }
 
   _refresh() async {
-    carInfoModel = await CarFunc.getNewCarInfo(widget.carListModel.id);
+    // carInfoModel = await CarFunc.getNewCarInfo();
+    publishInfoModel=await CarFunc.getPublishInfo(widget.carId);
     // print(carInfoModel!.carInfo);
     collect = carInfoModel?.carInfo.collect ?? 0;
     for (var item in carInfoModel!.carInfo.carPhotos) {
@@ -281,263 +275,215 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         child: carInfoModel == null
             ? const SizedBox()
             : NestedScrollView(
-                controller: _scrollController,
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return [
-                    SliverAppBar(
-                        pinned: true,
-                        stretch: true,
-                        expandedHeight: downState ? 920.w : 1250.w,
-                        elevation: 0,
-                        backgroundColor:
-                            headerWhite ? Colors.white : Colors.transparent,
-                        systemOverlayStyle: SystemUiOverlayStyle.light,
-                        snap: false,
-                        centerTitle: false,
-                        title: headerWhite
-                            ? Text(
-                                carInfoModel?.carInfo.modelName ?? '',
-                                style: TextStyle(
-                                  color: const Color(0xFF333333),
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 36.sp,
-                                ),
-                              )
-                            : const Text(''),
-                        leading: const CloudBackButton(),
-                        actions: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(() => CallOrderPage(
-                                    carListModel: widget.carListModel,
-                                  ));
-                            },
-                            child: Image.asset(Assets.icons.carDetail.path,
-                                height: 48.w, width: 48.w),
-                          ),
-                          24.wb,
-
-                          ///收藏按钮 自己发布的车辆没有该按钮
-                          !(widget.carListModel.isSelf == 1)
-                              ? GestureDetector(
-                                  onTap: () async {
-                                    var re = await apiClient.request(
-                                        collect == 0
-                                            ? API.car.collect.add
-                                            : API.car.collect.cancel,
-                                        data: {
-                                          'carId': carInfoModel?.carInfo.id
-                                        },
-                                        showMessage: true);
-                                    if (re.code == 0) {
-                                      collect == 0 ? collect = 1 : collect = 0;
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: SizedBox(
-                                    width: 48.w,
-                                    height: 48.w,
-                                    child: Image.asset(
-                                        collect == 1
-                                            ? Assets.icons.alreadyCollected.path
-                                            : Assets.icons.collection.path,
-                                        height: 48.w,
-                                        width: 48.w),
-                                  ))
-                              : const SizedBox(),
-                          24.wb,
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  isDismissible: true,
-                                  isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(15),
-                                          topRight: Radius.circular(15))),
-                                  builder: (BuildContext context) {
-                                    return ShareCarDialog(
-                                      model: _chooseModels,
-                                      isMore: false,
-                                    );
-                                  });
-                            },
-                            child: Image.asset(Assets.icons.icShare.path,
-                                color: Colors.black, height: 40.w, width: 40.w),
-                          ),
-                          16.wb,
-                        ],
-                        flexibleSpace: FlexibleSpaceBar(
-                          //centerTitle: true,
-                          background: Container(
-                            alignment: Alignment.center,
-                            width: double.infinity,
-                            color: Colors.transparent,
-                            //height: double.infinity,
+          controller: _scrollController,
+          headerSliverBuilder:
+              (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                  pinned: true,
+                  stretch: true,
+                  expandedHeight: downState ? 920.w : 1250.w,
+                  elevation: 0,
+                  backgroundColor:
+                  headerWhite ? Colors.white : Colors.transparent,
+                  systemOverlayStyle: SystemUiOverlayStyle.light,
+                  snap: false,
+                  centerTitle: false,
+                  title: headerWhite
+                      ? Text(
+                    carInfoModel?.carInfo.modelName ?? '',
+                    style: TextStyle(
+                      color: const Color(0xFF333333),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 36.sp,
+                    ),
+                  )
+                      : const Text(''),
+                  leading: const CloudBackButton(),
+                  actions: [
+                    GestureDetector(
+                      onTap: () {
+                        // Get.to(() => CallOrderPage(
+                        //   carListModel: widget.carListModel,
+                        // ));
+                      },
+                      child: Image.asset(Assets.icons.carDetail.path,
+                          height: 48.w, width: 48.w),
+                    ),
+                    24.wb,
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            isDismissible: true,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15))),
+                            builder: (BuildContext context) {
+                              return ShareCarDialog(
+                                model: _chooseModels,
+                                isMore: false,
+                              );
+                            });
+                      },
+                      child: Image.asset(Assets.icons.icShare.path,
+                          color: Colors.black, height: 40.w, width: 40.w),
+                    ),
+                    16.wb,
+                  ],
+                  flexibleSpace: FlexibleSpaceBar(
+                    //centerTitle: true,
+                    background: Container(
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      color: Colors.transparent,
+                      //height: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          135.hb,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: headerWhite
+                                  ? Colors.white
+                                  : Colors.transparent,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 32.w, vertical: 24.w),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
                               children: [
-                                135.hb,
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: headerWhite
-                                        ? Colors.white
-                                        : Colors.transparent,
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 32.w, vertical: 24.w),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      _title(),
-                                      32.hb,
-                                      _label(),
-                                      18.hb,
-                                      _information(),
-                                      8.hb,
-                                      getDown(),
-                                      // 24.hb,
-                                      _shuffling(),
-                                      32.hb,
-                                      // _informations(),
-                                    ],
-                                  ),
-                                ),
-                                // 50.hb,
+                                _title(),
+                                32.hb,
+                                _label(),
+                                18.hb,
+                                _information(),
+                                8.hb,
+                                getDown(),
+                                // 24.hb,
+                                _shuffling(),
+                                32.hb,
+                                // _informations(),
                               ],
                             ),
                           ),
-                        ),
-                        bottom: PreferredSize(
-                          preferredSize: Size.fromHeight(kToolbarHeight - 10.w),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.w),
-                            child: Container(
-                              height: kToolbarHeight - 10.w,
-                              width: double.infinity,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                      top: BorderSide(
-                                          color: const Color(0xFFF6F6F6),
-                                          width: 2.w))),
-                              child: TabBar(
-                                  onTap: (index) {
-                                    setState(() {});
-                                  },
-                                  isScrollable: true,
-                                  labelPadding: EdgeInsets.symmetric(
-                                      vertical: 10.w, horizontal: 80.w),
-                                  controller: _tabController,
-                                  indicatorWeight: 3,
-                                  labelColor: kPrimaryColor,
-                                  unselectedLabelColor: BaseStyle.color333333,
-                                  unselectedLabelStyle: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    color: BaseStyle.color333333,
-                                  ),
-                                  indicatorPadding: EdgeInsets.symmetric(
-                                      horizontal: 30.w, vertical: 0.w),
-                                  indicatorSize: TabBarIndicatorSize.tab,
-                                  labelStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.85),
-                                  ),
-                                  indicator: const BoxDecoration(),
-                                  indicatorColor: kPrimaryColor,
-                                  tabs: [
-                                    _tab(0, tabs[0]),
-                                    _tab(1, tabs[1]),
-                                  ]),
-                            ),
-                          ),
-                        )),
-                  ];
-                },
-                body: Padding(
-                  padding: EdgeInsets.only(bottom: 120.w),
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      NewCarDetailItem(
-                        carInfoModel: carInfoModel!,
+                          // 50.hb,
+                        ],
                       ),
-                      ColoredBox(
-                        color: Colors.white,
-                        child: ListView(
-                          padding: EdgeInsets.only(top: 20.w),
-                          children: [
-                            GridView.count(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              crossAxisCount: 3,
-                              children: [
-                                _buildChild(
-                                  _titles[0],
-                                  0,
-                                ),
-                                _buildChild(
-                                  _titles[1],
-                                  1,
-                                ),
-                                _buildChild(
-                                  _titles[2],
-                                  2,
-                                ),
-                                _buildChild(
-                                  _titles[3],
-                                  3,
-                                ),
-                                // _buildChild(
-                                //   _titles[4],
-                                //   4,
-                                // ),
-                              ],
-                            ),
-                            // Padding(
-                            //   padding:  EdgeInsets.only(left: 20.w,bottom: 20.w),
-                            //   child: Text('报告数据',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.bold),),
-                            // ),
-                            // _getView(_reportPhotos)
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-      ),
-      bottomNavi: _bottom(),
-      fab:  FloatingActionButton(
-              onPressed: () {
-                if (carInfoModel != null) {
-                  if (carInfoModel!.carInfo.brokerInfo.brokerPhone != '') {
-                    getPhone(carInfoModel!.carInfo.brokerInfo.brokerPhone);
-                  }
-                } else {
-                  CloudToast.show('没有找到联系方式！');
-                }
-              },
-              child: SizedBox(
-                width: 120.w,
-                height: 120.w,
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(60.w)),
-                    child: Image.asset(
-                      Assets.images.imgPhone.path,
-                      width: 120.w,
-                      height: 120.w,
                     ),
                   ),
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(kToolbarHeight - 10.w),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.w),
+                      child: Container(
+                        height: kToolbarHeight - 10.w,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border(
+                                top: BorderSide(
+                                    color: const Color(0xFFF6F6F6),
+                                    width: 2.w))),
+                        child: TabBar(
+                            onTap: (index) {
+                              setState(() {});
+                            },
+                            isScrollable: true,
+                            labelPadding: EdgeInsets.symmetric(
+                                vertical: 10.w, horizontal: 80.w),
+                            controller: _tabController,
+                            indicatorWeight: 3,
+                            labelColor: kPrimaryColor,
+                            unselectedLabelColor: BaseStyle.color333333,
+                            unselectedLabelStyle: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: BaseStyle.color333333,
+                            ),
+                            indicatorPadding: EdgeInsets.symmetric(
+                                horizontal: 30.w, vertical: 0.w),
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            labelStyle: TextStyle(
+                              color: Colors.white.withOpacity(0.85),
+                            ),
+                            indicator: const BoxDecoration(),
+                            indicatorColor: kPrimaryColor,
+                            tabs: [
+                              _tab(0, tabs[0]),
+                              _tab(1, tabs[1]),
+                            ]),
+                      ),
+                    ),
+                  )),
+            ];
+          },
+          body: Padding(
+            padding: EdgeInsets.only(bottom: 120.w),
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                NewCarDetailItem(
+                  carInfoModel: carInfoModel!,
                 ),
-              ),
+                ColoredBox(
+                  color: Colors.white,
+                  child: ListView(
+                    padding: EdgeInsets.only(top: 20.w),
+                    children: [
+                      GridView.count(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        crossAxisCount: 3,
+                        children: [
+                          _buildChild(
+                            _titles[0],
+                            0,
+                          ),
+                          _buildChild(
+                            _titles[1],
+                            1,
+                          ),
+                          _buildChild(
+                            _titles[2],
+                            2,
+                          ),
+                          _buildChild(
+                            _titles[3],
+                            3,
+                          ),
+                          // _buildChild(
+                          //   _titles[4],
+                          //   4,
+                          // ),
+                        ],
+                      ),
+                      // Padding(
+                      //   padding:  EdgeInsets.only(left: 20.w,bottom: 20.w),
+                      //   child: Text('报告数据',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.bold),),
+                      // ),
+                      // _getView(_reportPhotos)
+                    ],
+                  ),
+                )
+              ],
             ),
+          ),
+        ),
+      ),
+      bottomNavi:Container(
+        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 8.w),
+        decoration: BoxDecoration(
+            border: Border.all(width: 1.w, color: const Color(0xFFEEEEEE)),
+            color: Colors.white),
+        height:  200.w, //double.infinity,
+        child: getBottomState(),
+      ),
+      fab:null,
       fbLocation: CustomFloatingActionButtonLocation(
           FloatingActionButtonLocation.endDocked, 2.w, -130.w),
     );
@@ -641,28 +587,213 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
   //   );
   // }
 
+  getBottomState() {
+    // switch (widget.state) {
+    //
+    //   ///出售申请
+    //   case 1:
+    return
+
+      Audit.getValueAuditId(publishInfoModel.status).typeNum == 1
+      ///1待审核 2已审核
+          ? Row(
+        children: [
+          getContact(),
+          28.wb,
+          Expanded(
+              child: Row(
+                children: [
+                  getBox('驳回', Colors.white, 2, const Color(0xFF027AFF),
+                      const Color(0xFF027AFF), () {
+                        Alert.show(
+                            context,
+                            NormalContentDialog(
+                              type: NormalTextDialogType.delete,
+                              title: '驳回理由',
+                              content: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(4.w)),
+                                child: const TextField(
+                                  maxLines: null,
+                                  minLines: 1,
+                                  decoration: InputDecoration(
+                                    hintText: '请输入',
+                                    border: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                              items: const ['取消'],
+                              deleteItem: '确定',
+                              //监听器
+                              listener: (index) {
+                                Get.back();
+                                Alert.dismiss(context);
+                              },
+                              deleteListener: () {
+                                CloudToast.show('驳回成功');
+                                Alert.dismiss(context);
+                              },
+                            ));
+                      }),
+                  16.wb,
+                  getBox('通过', const Color(0xFF027AFF), 0, Colors.white,
+                      Colors.white, () {
+                        Get.to(() => PublishFinishPage(
+                          title: ReminderApprovalType.getValue(publishInfoModel.status)
+                              .typeStr,
+                          remindText: '已同意',
+                        ));
+                      }),
+                ],
+              )),
+        ],
+      )
+          : Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Audit.getValueAuditId(publishInfoModel.status).typeNum==2 ? 32.hb : 0.hb,
+            Row(
+              children: [
+                getContact(),
+                const Spacer(),
+                Text(
+                  Audit.getValueAuditId(publishInfoModel.status).typeNum==2 ? "已同意" : '已驳回',
+                  style: TextStyle(
+                      color:  Audit.getValueAuditId(publishInfoModel.status).typeNum==2
+                          ? const Color(0xFF027AFF)
+                          : const Color(0xFFFF3B02),
+                      fontSize: 28.sp,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            // const Spacer(),
+            8.hb,
+            Audit.getValueAuditId(publishInfoModel.status).typeNum==2
+                ? const SizedBox()
+                : Flexible(
+              child: Text(
+                '驳回理由:${publishInfoModel.deaerRejectReason}',
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    color: const Color(0xFF333333),
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+            const Divider(),
+            getBox(
+                '重新发布',
+                const Color(0xFF027AFF),
+                0,
+                Colors.white,
+                Colors.white,
+                    () {})
+            // widget.state == 2 || widget.state == 3
+            //     ? const Divider()
+            //     : const SizedBox(),
+            // widget.state == 2 || widget.state == 3
+            //     ? getBox(
+            //     widget.state == 2 ? '重新编辑' : '重新发布',
+            //     const Color(0xFF027AFF),
+            //     0,
+            //     Colors.white,
+            //     Colors.white,
+            //         () {})
+
+            // : Row(
+            //     children: [
+            //       Text(
+            //         '驳回理由:',
+            //         style: TextStyle(
+            //             fontSize: 28.sp,
+            //             color: const Color(0xFF333333),
+            //             fontWeight: FontWeight.w600),
+            //       ),
+            //
+            //     ],
+            //   )
+          ],
+        ),
+      );
+    // }
+  }
+
+  getContact() {
+    return GestureDetector(
+      onTap: () {},
+      child: Row(
+        children: [
+          SizedBox(
+            width: 64.w,
+            height: 64.w,
+            child: Image.asset(Assets.images.imgPhone.path),
+          ),
+          18.wb,
+          Text(
+            '联系TA',
+            style: TextStyle(
+              fontSize: 24.sp,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  getBox(String text, Color bgColor, int bWidth, Color bColor, Color tColor,
+      VoidCallback ontap) {
+    return GestureDetector(
+      onTap: () {
+        ontap();
+      },
+      child: Container(
+        width: 240.w,
+        height: 72.w,
+        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.w),
+          color: bgColor,
+          border: Border.all(width: bWidth.w, color: bColor),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+              fontSize: 28.w, color: tColor, fontWeight: FontWeight.w600),
+        ),
+      ),
+    );
+  }
+
+
+
+
   Widget image(dynamic file) {
     return file.runtimeType == String
         ? CloudImageNetworkWidget(
-            width: 210.w,
-            height: 158.w,
-            urls: [file],
-          )
+      width: 210.w,
+      height: 158.w,
+      urls: [file],
+    )
         : Image.file(
-            file,
-            fit: BoxFit.fill,
-            width: 210.w,
-            height: 158.w,
-          );
+      file,
+      fit: BoxFit.fill,
+      width: 210.w,
+      height: 158.w,
+    );
   }
 
   // final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片', '报告数据', '维保数据'];
   final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片', '报告数据'];
 
   Widget _buildChild(
-    String bottom,
-    int index,
-  ) {
+      String bottom,
+      int index,
+      ) {
     List<CarPhotos> photos = [];
     int length = 0;
     String firstPhoto = '';
@@ -679,9 +810,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
       case 3:
         photos = dataPhotos;
         break;
-      // case 4:
-      //   photos = repairPhotos;
-      //   break;
+    // case 4:
+    //   photos = repairPhotos;
+    //   break;
     }
 
     for (int i = 0; i < photos.length; i++) {
@@ -692,17 +823,17 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     }
     return GestureDetector(
       onTap: () async {
-        await Get.to(
-          PushCarManagePhotoPage(
-            isSelf: widget.carListModel.isSelf == 1,
-            tabs: _titles,
-            model: pushPhotoModel,
-            initIndex: index,
-            imgCanTap: false,
-            // reportPhotoModel: reportPhotoModel,
-            newPublishCarInfo: null,
-          ),
-        );
+        // await Get.to(
+        //   PushCarManagePhotoPage(
+        //     isSelf: widget.carListModel.isSelf == 1,
+        //     tabs: _titles,
+        //     model: pushPhotoModel,
+        //     initIndex: index,
+        //     imgCanTap: false,
+        //     // reportPhotoModel: reportPhotoModel,
+        //     newPublishCarInfo: null,
+        //   ),
+        // );
         setState(() {});
       },
       child: Material(
@@ -711,54 +842,54 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
           children: [
             length == 0
                 ? Container(
-                    width: 210.w,
-                    height: 158.w,
+              width: 210.w,
+              height: 158.w,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(Assets.images.addcar.path),
+                ),
+              ),
+            )
+                : Stack(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              children: [
+                Container(
+                  width: 210.w,
+                  height: 158.w,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.w),
+                  ),
+                  child: CloudImageNetworkWidget(
+                    urls: [firstPhoto],
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    width: 66.w,
+                    height: 36.w,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(Assets.images.addcar.path),
+                      color: Colors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16.w),
+                        bottomRight: Radius.circular(16.w),
                       ),
                     ),
-                  )
-                : Stack(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    children: [
-                      Container(
-                        width: 210.w,
-                        height: 158.w,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.w),
-                        ),
-                        child: CloudImageNetworkWidget(
-                          urls: [firstPhoto],
-                        ),
+                    child: Text(
+                      '$length张',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        color: Colors.white,
                       ),
-                      Positioned(
-                        right: 0,
-                        bottom: 0,
-                        child: Container(
-                          width: 66.w,
-                          height: 36.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.5),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16.w),
-                              bottomRight: Radius.circular(16.w),
-                            ),
-                          ),
-                          child: Text(
-                            '$length张',
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
+                ),
+              ],
+            ),
             10.hb,
             bottom.text.size(28.sp).black.bold.make(),
           ],
@@ -767,27 +898,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     );
   }
 
-  _getBottom(String url, String text, Function callBack) {
-    return GestureDetector(
-      onTap: () {
-        callBack();
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            url,
-            width: 56.w,
-            height: 56.w,
-          ),
-          Text(
-            text,
-            style: TextStyle(color: BaseStyle.color333333, fontSize: 24.sp),
-          )
-        ],
-      ),
-    );
-  }
+
 
   _tab(int index, String text) {
     return SizedBox(width: 150.w, child: Text(text));
@@ -799,12 +910,12 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
       children: [
         Flexible(
             child: Text(
-          carInfoModel?.carInfo.modelName ?? '',
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              ?.copyWith(color: const Color(0xFF111111), fontSize: 40.sp),
-        )),
+              carInfoModel?.carInfo.modelName ?? '',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(color: const Color(0xFF111111), fontSize: 40.sp),
+            )),
       ],
     );
   }
@@ -846,8 +957,8 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             Text.rich(TextSpan(children: [
               TextSpan(
                   text: (num.parse(
-                              carInfoModel!.carInfo.priceInfo.exteriorPrice) /
-                          10000)
+                      carInfoModel!.carInfo.priceInfo.exteriorPrice) /
+                      10000)
                       .toString(),
                   style: TextStyle(
                       color: const Color(0xFFFF3B02),
@@ -898,9 +1009,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             height: 65.w,
             padding: EdgeInsets.only(left: 20.w),
             decoration: const BoxDecoration(
-                // borderRadius: BorderRadius.all(Radius.circular(35.w)),
-                // border: Border.all(width: 2.w, color: const Color(0xFF027AFF))
-                ),
+              // borderRadius: BorderRadius.all(Radius.circular(35.w)),
+              // border: Border.all(width: 2.w, color: const Color(0xFF027AFF))
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -932,7 +1043,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         // height: 174.w,
         padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 8.w),
         decoration: BoxDecoration(
-            // color: const Color(0xFFBBBBBB).withOpacity(0.1),
+          // color: const Color(0xFFBBBBBB).withOpacity(0.1),
             borderRadius: BorderRadius.all(Radius.circular(8.w))),
         child: Column(
           children: [
@@ -1064,11 +1175,11 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       height: 18.w,
                       margin: EdgeInsets.only(left: 13.w),
                       decoration: BoxDecoration(
-                          // color: Color(0xFF027AFF),
+                        // color: Color(0xFF027AFF),
                           border: Border.all(
-                        width: 2.w,
-                        color: const Color(0xFF027AFF),
-                      )),
+                            width: 2.w,
+                            color: const Color(0xFF027AFF),
+                          )),
                     ),
                     Row(
                       children: [
@@ -1105,59 +1216,6 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
           child: _bannerStyle(),
         )
       ],
-    );
-  }
-
-  ///自己发布的车辆可以编辑、调价、出售、下架。其他销售看见我发布的车辆详情时，只有出售操作。no去掉
-
-  _bottom() {
-    return Container(
-      color: Colors.white,
-      height: 120.w,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-              child: _getBottom(
-                  UserTool.userProvider.userInfo.business.roleEM !=
-                          Role.salesTraffic
-                      ? Assets.icons.editor.path
-                      : Assets.icons.noEditor.path,
-                  '编辑', () {
-            // if (widget.carListModel.isSelf == 1) {
-            //   Get.to(() => const EditCarPage());
-            // }
-          })),
-          Expanded(
-              child: _getBottom(Assets.icons.transmission.path, '调价', () {
-            if (carInfoModel != null) {
-              if (carInfoModel!.carInfo.brokerInfo.brokerPhone != '') {
-                getPhone(carInfoModel!.carInfo.brokerInfo.brokerPhone);
-              }
-            } else {
-              CloudToast.show('没有找到联系方式！');
-            }
-            // if (widget.carListModel.isSelf == 1) {
-            //   Get.to(() => const ModifyPricePage());
-            // }
-            // if(carInfoModel!.IsSelfBusiness==1&&carInfoModel!.isSelfStore==1){
-            //   Get.to(() => ModifyPricePage(model: carInfoModel!,));
-            // }
-          })),
-          Expanded(
-              child: _getBottom(Assets.icons.upload.path, '出售', () {
-            Get.to(() => SellCarOrderPage(
-                  carModel: widget.carListModel,
-                ));
-          })),
-          Expanded(
-              child: _getBottom(Assets.icons.download.path, '帮他下架', () {
-            Get.to(() => OffCarPage(
-                  carId: widget.carListModel.id,
-                ));
-          })),
-        ],
-      ),
     );
   }
 
@@ -1201,7 +1259,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 //分页指示器
   _bulidPagination() {
     return SwiperPagination(
-        //指示器显示的位置
+      //指示器显示的位置
         alignment: Alignment.bottomCenter, //位置在底部
         //距离调整
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 10), //坐上右下
@@ -1211,19 +1269,19 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             activeFontSize: 20.sp,
             fontSize: 20.sp,
             activeColor: Colors.white)
-        // builder: DotSwiperPaginationBuilder(
-        //   //点之间的间距
-        //   space: 2,
-        //   //没选中时的大小
-        //   size: 6,
-        //   //选中时的大小
-        //   activeSize: 12,
-        //   //没选中时的颜色
-        //   color: Colors.black,
-        //   //选中时的颜色
-        //   activeColor: Colors.white,
-        // )
-        );
+      // builder: DotSwiperPaginationBuilder(
+      //   //点之间的间距
+      //   space: 2,
+      //   //没选中时的大小
+      //   size: 6,
+      //   //选中时的大小
+      //   activeSize: 12,
+      //   //没选中时的颜色
+      //   color: Colors.black,
+      //   //选中时的颜色
+      //   activeColor: Colors.white,
+      // )
+    );
   }
 
 //图片样式
