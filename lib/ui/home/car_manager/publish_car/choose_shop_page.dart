@@ -52,60 +52,53 @@ class _ChooseShopPageState extends State<ChooseShopPage> {
         title:  Text(widget.title),
         backgroundColor: Colors.white,
       ),
-      body: Column(
-        children: [
-          // _getAppbar() ?? const SizedBox(),
-          Expanded(
-            child: EasyRefresh(
-              firstRefresh: true,
-              header: MaterialHeader(),
-              footer: MaterialFooter(),
-              controller: _easyRefreshController,
-              onRefresh: () async {
-                _list = await CarFunc.getStructureAll();
+      body: EasyRefresh(
+        firstRefresh: true,
+        header: MaterialHeader(),
+        footer: MaterialFooter(),
+        controller: _easyRefreshController,
+        onRefresh: () async {
+          _list = await CarFunc.getStructureAll();
 
-                _onLoad = false;
-                setState(() {});
-              },
-              // onLoad: () async {
-              //   _page++;
-              //   BaseListModel baseList = await apiClient.requestList(
-              //       API.car.dealerList,
-              //       data: {'page': _page, 'size': 10,});
-              //
-              //   if (baseList.nullSafetyTotal > _list.length) {
-              //     _list.addAll(baseList.nullSafetyList
-              //         .map((e) => DealerListModel.fromJson(e))
-              //         .toList());
-              //   } else {
-              //     _easyRefreshController.finishLoad(noMore: true);
-              //   }
-              //   setState(() {});
-              // },
-              child: _onLoad
-                  ? const SizedBox()
-                  : _list.isEmpty
-                      ? const NoDataWidget(
-                          text: '未找到相关车商',
-                          paddingTop: 300,
-                        )
-                      : ListView.separated(
-                          padding: EdgeInsets.only(
-                              left: 24.w, right: 24.w, top: 20.w),
-                          itemBuilder: (context, index) {
-                            return _getCustom(index, _list[index]);
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return Container(
-                              color: const Color(0xFFF6F6F6),
-                              height: 16.w,
-                            );
-                          },
-                          itemCount: _list.length,
-                        ),
-            ),
-          ),
-        ],
+          _onLoad = false;
+          setState(() {});
+        },
+        // onLoad: () async {
+        //   _page++;
+        //   BaseListModel baseList = await apiClient.requestList(
+        //       API.car.dealerList,
+        //       data: {'page': _page, 'size': 10,});
+        //
+        //   if (baseList.nullSafetyTotal > _list.length) {
+        //     _list.addAll(baseList.nullSafetyList
+        //         .map((e) => DealerListModel.fromJson(e))
+        //         .toList());
+        //   } else {
+        //     _easyRefreshController.finishLoad(noMore: true);
+        //   }
+        //   setState(() {});
+        // },
+        child: _onLoad
+            ? const SizedBox()
+            : _list.isEmpty
+            ? const NoDataWidget(
+          text: '未找到相关车商',
+          paddingTop: 300,
+        )
+            : ListView.separated(
+          padding: EdgeInsets.only(
+              left: 24.w, right: 24.w, top: 20.w),
+          itemBuilder: (context, index) {
+            return _getCustom(index, _list[index]);
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Container(
+              color: const Color(0xFFF6F6F6),
+              height: 16.w,
+            );
+          },
+          itemCount: _list.length,
+        ),
       ),
       bottomNavigationBar: Container(
         width: double.infinity,

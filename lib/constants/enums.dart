@@ -218,6 +218,7 @@ enum TransferType{
   release(3,'已发布'),
   reject(4,'已驳回');
 
+
   final String typeStr;
   final int typeNum;
   static Audit getValue(int value)=> Audit.values.firstWhere((element) => element.typeNum==value);

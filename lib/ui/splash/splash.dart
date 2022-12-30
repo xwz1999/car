@@ -46,7 +46,6 @@ class _SplashPageState extends State<SplashPage> {
 
   Future initialAll(context) async {
     await HiveStore.init();
-    await FilePreview.initTBS();
     var agreement = await HiveStore.appBox?.get('agreement') ?? false;
     if (!agreement) {
       var result = await _showLoginVerify();

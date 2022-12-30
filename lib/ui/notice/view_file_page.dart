@@ -1,42 +1,59 @@
+
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:file_preview/file_preview.dart';
 import 'package:flutter/material.dart';
 
+
 import '../../widget/button/cloud_back_button.dart';
 
-class ViewFilePage extends StatelessWidget {
-  final String url;
+class ViewFilePage extends StatefulWidget {
   final String title;
+  final String url;
+  const ViewFilePage({Key? key,required this.title, required this.url}) : super(key: key);
 
-  const ViewFilePage({Key? key, required this.url, required this.title})
-      : super(key: key);
+  @override
+  _ViewFilePageState createState() => _ViewFilePageState();
+}
+
+class _ViewFilePageState extends State<ViewFilePage> {
+  @override
+  void initState() {
+    //使用前进行判断是否已经初始化
+    Future.delayed(const Duration(seconds: 0),()async
+    {
+      var isInit = await FilePreview.tbsHasInit();
+      if (!isInit) {
+        await FilePreview.initTBS();
+        return;
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          backgroundColor: kForeGroundColor,
-          title: Text(title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 34.sp,
-                color: const Color(0xFF333333),
-              )),
+      appBar: AppBar(
+        leading: const CloudBackButton(
+          isSpecial: true,
         ),
-        backgroundColor: const Color(0xFFF6F6F6),
-        extendBody: true,
-        body: ListView(
-          children: [
-            url==''?const SizedBox():
-            FilePreviewWidget(
-              width: 750.w,
-              height: double.infinity,
-              path: url,
-            ),
-          ],
-        ));
+        backgroundColor: kForeGroundColor,
+        title: Text(widget.title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 34.sp,
+              color: const Color(0xFF333333),
+            )),
+      ),
+      backgroundColor: const Color(0xFFF6F6F6),
+      extendBody: true,
+      body: widget.url==''?const SizedBox():
+      FilePreviewWidget(
+        width: 750.w,
+        height: double.infinity,
+        path: widget.url,
+      ),);
   }
 }

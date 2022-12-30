@@ -6,7 +6,6 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import '../../constants/api/api.dart';
 import '../../constants/enums.dart';
-import '../../model/car/new_car_info.dart';
 import '../../model/customer/customer_detail_model.dart';
 import '../../model/sale_info_model.dart';
 import '../../utils/drop_down_body.dart';
@@ -42,20 +41,17 @@ class ExaminationDetails extends StatefulWidget {
 
 class _ExaminationDetailsState extends State<ExaminationDetails> {
   SaleInfoModel? saleInfo;
-  NewCarInfo? carInfo;
   CustomerDetailModel? customerDetail;
   TextEditingController rejectController = TextEditingController();
 
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 0), () async {
+    Future.delayed(const Duration(seconds: 0),()async{
       saleInfo = await CarFunc.getSaleInfo(widget.modelId);
-      carInfo=await CarFunc.getNewCarInfo(saleInfo!.baseInfo.carId);
-      // customerDetail=await CustomerFunc.getCustomerDetailModel(saleInfo!.sourceCustomerInfo.id);
+      setState((){});
     });
     super.initState();
   }
-
   @override
   void dispose() {
     rejectController.dispose();
@@ -65,10 +61,6 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
   @override
   Widget build(BuildContext context) {
     return
-        // saleInfo == null
-        //   ? const Scaffold()
-        //   :
-
         Scaffold(
       appBar: AppBar(
         leading: const CloudBackButton(
@@ -107,7 +99,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                         SizedBox(
                           width: 196.w,
                           height: 150.w,
-                          child: const CloudImageNetworkWidget.car(urls: []),
+                          child:  CloudImageNetworkWidget.car(urls: [saleInfo?.baseInfo.mainPhoto ?? '']),
                         ),
                         20.wb,
                         SizedBox(
@@ -120,14 +112,13 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                                       color: BaseStyle.color111111)),
                               26.hb,
                               _getChip(
-                                '过户${carInfo?.carInfo.certificateInfo.transfer ?? 0}次',
-                                carInfo?.carInfo.licensingDate != null
-                                    ? DateUtil.formatDateMs(
-                                        carInfo!.carInfo.licensingDate.toInt() *
+                                '过户${saleInfo?.baseInfo.transfer ?? 0}次',
+                                saleInfo?.baseInfo.licensingData!=null?DateUtil.formatDateMs(
+                                      saleInfo!.baseInfo.licensingData.toInt() *
                                             1000,
-                                        format: 'yyyy年 ')
-                                    : '0',
-                                '${carInfo?.carInfo.mileage ?? 0}万公里',
+                                        format: 'yyyy年 '):'0年',
+
+                                '${saleInfo?.baseInfo.mileage}万公里',
                               )
                             ],
                           ),
@@ -202,7 +193,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
           16.hb,
           _getTitle('银行卡号', saleInfo?.buyerMasterInfo.bankCard ?? ''),
           16.hb,
-          _getTitle('备注', '蓝色，无损坏'),
+          _getTitle('备注', saleInfo?.baseInfo.remark ?? ''),
         ])),
         saleInfo?.thirdPartKind == 1
             ?_gexFramework(
@@ -282,7 +273,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
   // }
 
   getBottomState() {
-    return widget.status == 0
+    return widget.status == 1
         ? ContractStatus.getValueAuditId(saleInfo!.status).typeNum == 1
             ? Row(
                 children: [
@@ -441,9 +432,9 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                 ),
                 // const Spacer(),
                 8.hb,
-                ContractStatus.getValueAuditId(saleInfo!.status).typeNum == 4 ||
+                ContractStatus.getValueAuditId(saleInfo!.status).typeNum != 4 ||
                         ContractStatus.getValueAuditId(saleInfo!.status)
-                                .typeNum ==
+                                .typeNum !=
                             5
                     ? const SizedBox()
                     : Flexible(
@@ -477,8 +468,8 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
   }
 
   getText(int status) {
-    if (widget.status == 0) {
-      switch (Audit.getValueAuditId(status).typeNum) {
+    if (widget.status == 1) {
+      switch (ContractStatus.getValueAuditId(status).typeNum) {
         case 2:
           return '已通过';
         case 4:
@@ -487,7 +478,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
           return "";
       }
     } else {
-      switch (Audit.getValueAuditId(status).typeNum) {
+      switch (ContractStatus.getValueAuditId(status).typeNum) {
         case 1:
           return '待审批';
         case 2:
@@ -501,14 +492,14 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
   }
 
   getColor(int status) {
-    if (widget.status == 0) {
+    if (widget.status == 1) {
       switch (ContractStatus.getValueAuditId(status).typeNum) {
         case 2:
           return const Color(0xFF027AFF);
         case 4:
           return const Color(0xFFFE8029);
         default:
-          return "";
+          return const Color(0xFF027AFF);
       }
     } else {
       switch (ContractStatus.getValueAuditId(status).typeNum) {
@@ -519,7 +510,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
         case 4:
           return const Color(0xFFFF3B02);
         default:
-          return "";
+          return const Color(0xFFFF3B02);
       }
     }
   }

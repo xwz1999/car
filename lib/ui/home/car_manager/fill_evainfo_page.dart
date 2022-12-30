@@ -497,7 +497,6 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
       builder: (context) {
         return CloudListPickerWidget(
-
           title: '更换件情况',
           items: replaceList.map((e) => e.name).toList(),
           onConfirm: (String? content, int? value) async {
@@ -508,7 +507,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                   title: '更换件情况',
                   items: replaceDetailList.map((e) => e.name).toList(),
                   onConfirm: (strList, indexList) {
-                    Get.back();
+                    // Get.back();
                     _carInfo.parts = indexList.map((e) => e + 1).toList();
                   }));
             }

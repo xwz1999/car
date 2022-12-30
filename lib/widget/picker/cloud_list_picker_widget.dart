@@ -9,6 +9,7 @@ class CloudListPickerWidget extends StatefulWidget {
   final int? initIndex;
   final MainAxisAlignment? textAlignment;
   final double? itemHeight;
+  final bool according;
 
   const CloudListPickerWidget(
       {super.key,
@@ -17,7 +18,9 @@ class CloudListPickerWidget extends StatefulWidget {
       required this.onConfirm,
       this.initIndex,
       this.textAlignment,
-      this.itemHeight});
+      this.itemHeight,
+      this.according=true,
+      });
 
   @override
   _CloudListPickerWidgetState createState() => _CloudListPickerWidgetState();
@@ -42,6 +45,7 @@ class _CloudListPickerWidgetState extends State<CloudListPickerWidget> {
         height: widget.items.length * (widget.itemHeight ?? 30.w) + 300.w,
         title: widget.title,
         time: false,
+
         onPressed: () {
           if (_pickIndex == null) {
             return;

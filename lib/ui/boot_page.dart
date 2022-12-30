@@ -1,9 +1,9 @@
 import 'package:cloud_car/gen/assets.gen.dart';
-import 'package:cloud_car/ui/splash/splash.dart';
+import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'login/login_page.dart';
-
 
 class BootPage extends StatefulWidget {
   const BootPage({Key? key}) : super(key: key);
@@ -18,9 +18,9 @@ class _BootPageState extends State<BootPage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Stack(children: [
-      _createPageView()
-    ],);
+    return Stack(
+      children: [_createPageView()],
+    );
   }
 
   Widget _createPageView() {
@@ -34,11 +34,29 @@ class _BootPageState extends State<BootPage> {
         });
       },
       children: [
-        Image.asset(Assets.images.boot1.path,fit: BoxFit.fill,),
-        Image.asset(Assets.images.boot2.path,fit: BoxFit.fill,),
-        Image.asset(Assets.images.boot3.path,fit: BoxFit.fill,),
-        Image.asset(Assets.images.boot4.path,fit: BoxFit.fill,),
-        const LoginPage()
+        Image.asset(
+          Assets.images.boot1.path,
+          fit: BoxFit.fill,
+        ),
+        Image.asset(
+          Assets.images.boot2.path,
+          fit: BoxFit.fill,
+        ),
+        Image.asset(
+          Assets.images.boot3.path,
+          fit: BoxFit.fill,
+        ),
+
+        GestureDetector(
+          onTap: () {
+            Get.to(()=>const LoginPage());
+          },
+          child: Image.asset(
+            Assets.images.boot4.path,
+            fit: BoxFit.fill,
+          ),
+        ),
+
         // Future.delayed(Duration)
         //  const SplashPage(),
       ],

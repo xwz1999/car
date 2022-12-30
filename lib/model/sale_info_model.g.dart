@@ -53,6 +53,10 @@ BaseInfo _$BaseInfoFromJson(Map<String, dynamic> json) => BaseInfo(
       carId: json['carId'] as int,
       modelId: json['modelId'] as int,
       modelName: json['modelName'] as String,
+      mainPhoto: json['mainPhoto'] as String,
+      transfer: json['transfer'] as int,
+      licensingData: json['licensingData'] as num,
+      mileage: json['mileage'] as String,
       contractSn: json['contractSn'] as String,
       amount: json['amount'] as String,
       deposit: json['deposit'] as String,
@@ -62,12 +66,17 @@ BaseInfo _$BaseInfoFromJson(Map<String, dynamic> json) => BaseInfo(
       saleServiceFeeRate: json['saleServiceFeeRate'] as String,
       purchaseServiceFee: json['purchaseServiceFee'] as String,
       purchaseServiceFeeRate: json['purchaseServiceFeeRate'] as String,
+      remark: json['remark'] as String,
     );
 
 Map<String, dynamic> _$BaseInfoToJson(BaseInfo instance) => <String, dynamic>{
       'carId': instance.carId,
       'modelId': instance.modelId,
       'modelName': instance.modelName,
+      'mainPhoto': instance.mainPhoto,
+      'transfer': instance.transfer,
+      'licensingData': instance.licensingData,
+      'mileage': instance.mileage,
       'contractSn': instance.contractSn,
       'amount': instance.amount,
       'deposit': instance.deposit,
@@ -77,6 +86,7 @@ Map<String, dynamic> _$BaseInfoToJson(BaseInfo instance) => <String, dynamic>{
       'saleServiceFeeRate': instance.saleServiceFeeRate,
       'purchaseServiceFee': instance.purchaseServiceFee,
       'purchaseServiceFeeRate': instance.purchaseServiceFeeRate,
+      'remark': instance.remark,
     };
 
 BrokerInfo _$BrokerInfoFromJson(Map<String, dynamic> json) => BrokerInfo(

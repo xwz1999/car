@@ -3,7 +3,7 @@ description: A new Flutter project.
 publish_to: 'none'
 
 
-version: 1.0.34+35
+version: 1.0.35+36
 
 environment:
   sdk: ">=2.18.2 <3.0.0"
@@ -109,9 +109,10 @@ dependencies:
   flutter_inappwebview: 5.4.3
   #图片缓存
   cached_network_image: ^3.2.1
-#  查看插件
+  #查看插件
   file_preview: ^1.1.4
-
+#  #保存图片
+#  flutter_gen_runner: ^5.1.0+1
 
 dev_dependencies:
   flutter_test:

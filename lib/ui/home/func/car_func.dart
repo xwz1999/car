@@ -392,7 +392,7 @@ class CarFunc {
       'customerId': contractModel.customerId,
       'price': contractModel.sellPrice,
       'masterInfo': params,
-      'licensePlate': contractModel.licensePlate,
+      'licensePlate': contractModel.publishCarInfo?.carNum ?? '',
       'keyCount': contractModel.keyCount,
       'useCharacter': contractModel.useCharacter,
       'compulsoryInsurance': contractModel.compulsoryInsurance,
@@ -465,7 +465,7 @@ class CarFunc {
 
   ///发起收购合同
   static Future<bool> addPurchase(PurchaseCarInfo purchaseCarInfo,
-      PurchaseInfo purchaseInfo, PurchasePhotoModel purchasePhotoModel) async {
+      PurchaseInfo purchaseInfo, PurchasePhotoModel purchasePhotoModel,String legalName) async {
     Map<String, dynamic> baseInfo = {
       'channel': purchaseCarInfo.channel,
       "modelId": purchaseCarInfo.carModelId,
@@ -495,6 +495,7 @@ class CarFunc {
       "bankCard": purchaseInfo.bankNum,
       "bank": purchaseInfo.bank,
       "kind": purchaseInfo.kind,
+      'legalName':legalName,
     };
 
     Map<String, dynamic> priceInfo = {

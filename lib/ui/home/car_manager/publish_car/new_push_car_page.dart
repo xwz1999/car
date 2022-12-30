@@ -631,7 +631,6 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                             items: carTypeList,
                             onConfirm: (str, index) {
                               _publishCarInfo.value.carType = index;
-
                               Get.back();
                               setState(() {});
                             });

@@ -53,21 +53,6 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
   final List<ConsignmentListModel> _saleList = [];
 
   final List<ConsignmentListModel> _purchaseList = [
-    const ConsignmentListModel(
-        id: 0,
-        contractSn: '',
-        carId: 0,
-        modelName: '',
-        brokerId: 0,
-        brokerName: '',
-        customerId: 0,
-        customerName: '',
-        status: 0,
-        statusName: '',
-        dealerAuditAt: 0,
-        signAt: 0,
-        essFileUrl: '',
-        createdAt: 0)
   ];
 
   ConsignmentType _currentType = ConsignmentType.consignment;
@@ -255,7 +240,7 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
     switch (_currentType) {
       case ConsignmentType.sellCars:
         return SaleView(
-          status: 1,
+          status: 0,
           saleList: _saleList,
           refreshController: _saleRefreshController,
         );
@@ -267,19 +252,19 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
         );
       case ConsignmentType.collectCar:
         return PurchaseContractPage(
-          status: 1,
+          status: 0,
           purchaseList: _purchaseList,
           refreshController: _purchaseRefreshController,
         );
       case ConsignmentType.sellExamine:
         return SaleView(
-          status: 0,
+          status: 1,
           saleList: _saleList,
           refreshController: _saleRefreshController,
         );
       case ConsignmentType.collectExamine:
         return PurchaseContractPage(
-          status: 0,
+          status: 1,
           purchaseList: _purchaseList,
           refreshController: _purchaseRefreshController,
         );

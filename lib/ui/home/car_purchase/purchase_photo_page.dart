@@ -24,9 +24,10 @@ class PurchasePhotoPage extends StatefulWidget {
   final PurchaseCarInfo purchaseCarInfo;
   final PurchaseInfo purchaseInfo;
   final PurchasePhotoModel reportPhotoModel;
+  final String legalName;
   // final PushPhotoModel model;
   const PurchasePhotoPage(
-  {super.key, required this.purchaseCarInfo, required this.purchaseInfo, required this.reportPhotoModel, });
+  {super.key, required this.purchaseCarInfo, required this.purchaseInfo, required this.reportPhotoModel, required this.legalName});
 
   @override
   _PurchasePhotoPageState createState() => _PurchasePhotoPageState();
@@ -170,9 +171,9 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
               if (!canTap) {
                 return;
               }
-              print(widget.purchaseInfo.transactionAmount);
-              print(widget.purchaseInfo.downPaymentAmount);
-            var result = await  CarFunc.addPurchase(widget.purchaseCarInfo,widget.purchaseInfo,widget.reportPhotoModel);
+              // print(widget.purchaseInfo.transactionAmount);
+              // print(widget.purchaseInfo.downPaymentAmount);
+            var result = await  CarFunc.addPurchase(widget.purchaseCarInfo,widget.purchaseInfo,widget.reportPhotoModel,widget.legalName);
 
               if(result){
                 Get.to(() => const PublishFinishPage(title: '发起合同',));

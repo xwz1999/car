@@ -574,6 +574,10 @@ class $AssetsIconsGen {
   AssetGenImage get userviewContract =>
       const AssetGenImage('assets/icons/userview contract.png');
 
+  /// File path: assets/icons/vehicle_records.png
+  AssetGenImage get vehicleRecords =>
+      const AssetGenImage('assets/icons/vehicle_records.png');
+
   /// File path: assets/icons/voice.png
   AssetGenImage get voice => const AssetGenImage('assets/icons/voice.png');
 

@@ -12,6 +12,7 @@ import 'package:screenshot/screenshot.dart';
 import '../../../constants/enums.dart';
 import '../../../model/contract/consignment_model.dart';
 import '../../../widget/choose_widget.dart';
+import '../../notice/view_file_page.dart';
 
 class ConsignmentView extends StatefulWidget {
   final EasyRefreshController refreshController;
@@ -103,6 +104,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
                 var model = widget.consignmentList[index];
                 return GestureDetector(
                   onTap: () async {
+                    Get.to(()=> ViewFilePage(title:'', url: model.essFileUrl!=''?'${API.imageHost}/${model.essFileUrl}':'',));
                     // core.download(url, options);
                     // var docPath=await getApplicationDocumentsDirectory();
                     // String _localPath='${docPath.path}${Platform.pathSeparator}download';

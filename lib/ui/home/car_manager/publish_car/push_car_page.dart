@@ -617,7 +617,7 @@ class PublishCarInfo {
   String get licensingDateStr =>
       DateUtil.formatDate(licensingDate, format: 'yyyy-MM');
 
-  // ///车牌号
+  ///车牌号
   String? carNum;
 
   /// 所在地区

@@ -11,12 +11,14 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../../../constants/enums.dart';
 import '../../../utils/user_tool.dart';
 import '../../../widget/choose_widget.dart';
+import '../../../widget/no_data_widget.dart';
 import '../../notice/examination_details.dart';
 
 class SaleView extends StatefulWidget {
   final EasyRefreshController refreshController;
   final List<ConsignmentListModel> saleList;
   final int status;
+
   const SaleView({
     super.key,
     required this.refreshController,
@@ -33,11 +35,13 @@ class _SaleViewState extends State<SaleView>
   int _page = 1;
   final int _size = 10;
   late ContractStatus _releaseCarStatus;
+
   @override
   void initState() {
-    _releaseCarStatus=ContractStatus.all;
+    _releaseCarStatus = ContractStatus.all;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -56,7 +60,19 @@ class _SaleViewState extends State<SaleView>
           items: ContractStatus.values.map((e) => e.typeStr).toList(),
           item: _releaseCarStatus.typeStr,
         ),
-        Expanded(child:EasyRefresh.custom(
+        Expanded(child:
+
+
+        widget.status == 1 &&
+            UserTool.userProvider.userInfo.business.roleEM !=
+                Role.manager &&
+                UserTool.userProvider.userInfo.business.roleEM !=
+                    Role.settlers
+            ?const NoDataWidget(
+          text: '权限不足',
+          paddingTop: 0,
+        )
+            :EasyRefresh.custom(
             firstRefresh: true,
             controller: widget.refreshController,
             header: MaterialHeader(),
@@ -64,12 +80,16 @@ class _SaleViewState extends State<SaleView>
             onRefresh: () async {
               _page = 1;
               // var list = await CarFunc.getSaleDealer(page: _page, size: _size);
-              if (widget.status==0) {
-                var list = await CarFunc.getSaleList(page: _page, size: _size,status: _releaseCarStatus.typeNum);
+              if (widget.status == 0) {
+                var list = await CarFunc.getSaleList(page: _page,
+                    size: _size,
+                    status: _releaseCarStatus.typeNum);
                 widget.saleList.clear();
                 widget.saleList.addAll(list);
               } else {
-                var list = await CarFunc.getSaleDealer(page: _page, size: _size,status: _releaseCarStatus.typeNum);
+                var list = await CarFunc.getSaleDealer(page: _page,
+                    size: _size,
+                    status:    _releaseCarStatus.typeNum);
                 widget.saleList.clear();
                 widget.saleList.addAll(list);
               }
@@ -78,7 +98,7 @@ class _SaleViewState extends State<SaleView>
             onLoad: () async {
               _page++;
               BaseListModel baseList;
-              if (widget.status==0) {
+              if (widget.status == 0) {
                 baseList = await apiClient.requestList(API.contract.soldList,
                     data: {'size': _size, 'page': _page});
               } else {
@@ -101,15 +121,19 @@ class _SaleViewState extends State<SaleView>
                     var model = widget.saleList[index];
                     return GestureDetector(
                       onTap: () {
-                        Get.to(() => ExaminationDetails(
-                          auditState:
-                          ContractStatus.getValueAuditId(model.status).typeNum,
-                          modelId: model.id, status: widget.status,
-                        ));
+                        Get.to(() =>
+                            ExaminationDetails(
+                              auditState:
+                              ContractStatus
+                                  .getValueAuditId(model.status)
+                                  .typeNum,
+                              modelId: model.id, status: widget.status,
+                            ));
                         // print("这是数据");
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 32.w, vertical: 24.w),
                         child: _getCard(
                           model.status,
                           '出售合同（${model.contractSn}）',
@@ -117,16 +141,17 @@ class _SaleViewState extends State<SaleView>
                           model.customerName,
                           model.status != 1
                               ? '/'
-                              : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
+                              : DateUtil.formatDateMs(model.signAt.toInt() *
+                              1000,
                               format: 'yyyy-MM-dd'),
                         ),
                       ),
                     );
                   }, childCount: widget.saleList.length))
-            ]) )
+            ]))
       ],
     )
-      ;
+    ;
   }
 
   _getCard(int int, String title, String car, String name, String time) {
@@ -153,7 +178,10 @@ class _SaleViewState extends State<SaleView>
                   padding: EdgeInsets.only(left: 0.w),
                   child: Text(
                     title,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .subtitle1,
                   ),
                 ),
                 30.hb,
@@ -172,7 +200,10 @@ class _SaleViewState extends State<SaleView>
                       car,
                       overflow: TextOverflow.clip,
                       maxLines: 2,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .subtitle2,
                     )
                   ],
                 ),
@@ -191,7 +222,10 @@ class _SaleViewState extends State<SaleView>
                     Text(
                       name,
                       overflow: TextOverflow.clip,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .subtitle2,
                     )
                   ],
                 ),
@@ -210,7 +244,10 @@ class _SaleViewState extends State<SaleView>
                     Text(
                       time,
                       overflow: TextOverflow.clip,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .subtitle2,
                     )
                   ],
                 ),
@@ -231,7 +268,9 @@ class _SaleViewState extends State<SaleView>
   }
 
   getUrl(int status) {
-    switch (ContractStatus.getValueAuditId(status).typeNum) {
+    switch (ContractStatus
+        .getValueAuditId(status)
+        .typeNum) {
       case 1:
         return Assets.images.wait.path;
       case 2:

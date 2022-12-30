@@ -72,7 +72,7 @@ class _ExaminationPageState extends State<ExaminationPage>
               //     pRefreshController.callRefresh();
               //     break;
               // }
-              _examinationRefreshController.callRefresh();
+              // _examinationRefreshController.callRefresh();
               if (mounted) {
                 setState(() {});
               }

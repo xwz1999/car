@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../../constants/enums.dart';
+import '../../../utils/user_tool.dart';
 import '../../../widget/choose_widget.dart';
+import '../../../widget/no_data_widget.dart';
 import '../../notice/acquisition_widget.dart';
 
 class PurchaseContractPage extends StatefulWidget {
@@ -59,104 +61,105 @@ class _PurchaseContractPageState extends State<PurchaseContractPage>
           item: _releaseCarStatus.typeStr,
         ),
         Expanded(
-            child: EasyRefresh.custom(
-                firstRefresh: true,
-                controller: widget.refreshController,
-                header: MaterialHeader(),
-                footer: MaterialFooter(),
-                onRefresh: () async {
-                  _page = 1;
-                  List<ConsignmentListModel> list;
-                  if (widget.status == 0) {
-                    list= [const ConsignmentListModel(
-                        id: 0,
-                        contractSn: '',
-                        carId: 0,
-                        modelName: '',
-                        brokerId: 0,
-                        brokerName: '',
-                        customerId: 0,
-                        customerName: '',
-                        status: 0,
-                        statusName: '',
-                        dealerAuditAt: 0,
-                        signAt: 0, essFileUrl: '', createdAt: 0)];
-                    // list = await CarFunc.getPurchaseList(
-                    //     page: _page,
-                    //     size: _size,
-                    //     status: _releaseCarStatus.typeNum);
-                  } else {
-                    list= [const ConsignmentListModel(
-                        id: 0,
-                        contractSn: '',
-                        carId: 0,
-                        modelName: '',
-                        brokerId: 0,
-                        brokerName: '',
-                        customerId: 0,
-                        customerName: '',
-                        status: 0,
-                        statusName: '',
-                        dealerAuditAt: 0,
-                        signAt: 0, essFileUrl: '', createdAt: 0)];
-                    // list = await CarFunc.getPurchaseDealerList(
-                    //     page: _page,
-                    //     size: _size,
-                    //     status: _releaseCarStatus.typeNum);
-                  }
-                  widget.purchaseList.clear();
-                  widget.purchaseList.addAll(list);
-                  setState(() {});
-                },
-                onLoad: () async {
-                  _page++;
-                  BaseListModel baseList;
-                  if (widget.status == 0) {
-                    baseList = await apiClient.requestList(
-                        API.contract.purchaseList,
-                        data: {'size': _size, 'page': _page});
-                  } else {
-                    baseList = await apiClient.requestList(
-                        API.contract.carDealerAcquisition,
-                        data: {'size': _size, 'page': _page});
-                  }
+            child: widget.status == 1 &&
+                    UserTool.userProvider.userInfo.business.roleEM !=
+                        Role.manager &&
+                    UserTool.userProvider.userInfo.business.roleEM !=
+                        Role.settlers
+                ? const NoDataWidget(
+                    text: '权限不足',
+                    paddingTop: 0,
+                  )
+                : EasyRefresh.custom(
+                    firstRefresh: true,
+                    controller: widget.refreshController,
+                    header: MaterialHeader(),
+                    footer: MaterialFooter(),
+                    onRefresh: () async {
+                      _page = 1;
+                      List<ConsignmentListModel> list;
+                      if (widget.status == 0) {
+                        list = await CarFunc.getPurchaseList(
+                            page: _page,
+                            size: _size,
+                            status: _releaseCarStatus.typeNum);
+                      } else {
+                        // list= [const ConsignmentListModel(
+                        //     id: 0,
+                        //     contractSn: '',
+                        //     carId: 0,
+                        //     modelName: '',
+                        //     brokerId: 0,
+                        //     brokerName: '',
+                        //     customerId: 0,
+                        //     customerName: '',
+                        //     status: 0,
+                        //     statusName: '',
+                        //     dealerAuditAt: 0,
+                        //     signAt: 0, essFileUrl: '', createdAt: 0)];
+                        list = await CarFunc.getPurchaseDealerList(
+                            page: _page,
+                            size: _size,
+                            status: _releaseCarStatus.typeNum);
+                      }
+                      widget.purchaseList.clear();
+                      widget.purchaseList.addAll(list);
+                      setState(() {});
+                    },
+                    onLoad: () async {
+                      _page++;
+                      BaseListModel baseList;
+                      if (widget.status == 0) {
+                        baseList = await apiClient.requestList(
+                            API.contract.purchaseList,
+                            data: {'size': _size, 'page': _page});
+                      } else {
+                        baseList = await apiClient.requestList(
+                            API.contract.carDealerAcquisition,
+                            data: {'size': _size, 'page': _page});
+                      }
 
-                  if (baseList.nullSafetyTotal > widget.purchaseList.length) {
-                    widget.purchaseList.addAll(baseList.nullSafetyList
-                        .map((e) => ConsignmentListModel.fromJson(e))
-                        .toList());
-                  } else {
-                    widget.refreshController.finishLoad(noMore: true);
-                  }
-                  setState(() {});
-                },
-                slivers: [
-              SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                var model = widget.purchaseList
-
-                [index];
-                return GestureDetector(
-                  onTap: (){
-                        Get.to(()=>AcquisitionWidget(modelId: model.id, status: widget.status, url: model.essFileUrl,));
-                  },
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
-                    child: _getCard(
-                      model.status,
-                      '收车合同（${model.contractSn}）',
-                      model.modelName,
-                      model.customerName,
-                      model.status != 1
-                          ? '/'
-                          : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
-                              format: 'yyyy-MM-dd'),
-                    ),
-                  ),
-                );
-              }, childCount: widget.purchaseList.length))
-            ]))
+                      if (baseList.nullSafetyTotal >
+                          widget.purchaseList.length) {
+                        widget.purchaseList.addAll(baseList.nullSafetyList
+                            .map((e) => ConsignmentListModel.fromJson(e))
+                            .toList());
+                      } else {
+                        widget.refreshController.finishLoad(noMore: true);
+                      }
+                      setState(() {});
+                    },
+                    slivers: [
+                        SliverList(
+                            delegate:
+                                SliverChildBuilderDelegate((context, index) {
+                          var model = widget.purchaseList[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(() => AcquisitionWidget(
+                                    modelId: model.id,
+                                    status: widget.status,
+                                    url: model.essFileUrl,
+                                  ));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 32.w, vertical: 24.w),
+                              child: _getCard(
+                                model.status,
+                                '收车合同（${model.contractSn}）',
+                                model.modelName,
+                                model.customerName,
+                                model.status != 1
+                                    ? '/'
+                                    : DateUtil.formatDateMs(
+                                        model.signAt.toInt() * 1000,
+                                        format: 'yyyy-MM-dd'),
+                              ),
+                            ),
+                          );
+                        }, childCount: widget.purchaseList.length))
+                      ]))
       ],
     );
   }

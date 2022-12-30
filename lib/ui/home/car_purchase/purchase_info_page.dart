@@ -43,6 +43,7 @@ class PurchaseInfoPage extends StatefulWidget {
 
 class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   final TextEditingController ownerNameController = TextEditingController();
+  final TextEditingController legalPersonController=TextEditingController();
   final TextEditingController ownerIdController = TextEditingController();
   final TextEditingController institutionsController = TextEditingController();
   final TextEditingController phoneNumController = TextEditingController();
@@ -103,7 +104,12 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-
+    if(_selectIndex2.first!=0){
+      if(legalPersonController.text.trim().isEmpty){
+        BotToast.showText(text: '请先完善法人信息');
+        return false;
+      }
+    }
     if (transactionAmountController.text
         .trim()
         .isEmpty) {
@@ -286,7 +292,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
                     PurchasePhotoPage(
                         purchaseInfo: widget.purchaseInfo,
                         purchaseCarInfo: widget.purchaseCarInfo,
-                        reportPhotoModel: widget.reportPhotoModel));
+                        reportPhotoModel: widget.reportPhotoModel, legalName: legalPersonController.text,
+
+                    ));
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -570,6 +578,13 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       topIcon: false,
       paddingStart: 0.w,
     );
+    var  legalPerson= EditItemWidget(
+      title: '法人信息',
+      tips: '请输入',
+      controller: legalPersonController,
+      topIcon: false,
+      paddingStart: 0.w,
+    );
     var ownerId = EditItemWidget(
       title: '身份证号',
       tips: '请输入',
@@ -696,7 +711,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         ),
 
         ownerName,
-        // state==0?const Sizebox():ownerName
+        state==0?const SizedBox():legalPerson,
         state == 0 ? ownerId : institutionId,
         phoneNum,
         bankNum,
@@ -747,9 +762,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
                   child: getChooseList((int choice) async {
                     // await Dio().get(
                     //     'contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF');
-
                     //
-
                     widget.purchaseCarInfo.channel=choice+1;
                     designationController.text=UserTool.userProvider.userInfo.business.storeName;
                     // state = choice;

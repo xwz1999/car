@@ -19,9 +19,10 @@ class PublishInfoModel extends Equatable {
   final String price;
   final String lastPrice;
   final String downPayment;
-  final String source;
-  final int sourceId;
-  final String storeName;
+  final String sourceName;
+  final int source;
+
+  // final String storeName;
   final String type;
   final String engineNo;
   final num licensingDate;
@@ -41,6 +42,7 @@ class PublishInfoModel extends Equatable {
   final List<ImagePhotos> defectPhotos;
   final List<ImagePhotos> dataPhotos;
   final BrokerInfo brokerInfo;
+  final DealerInfo dealerInfo;
   final ModelInfo modelInfo;
   final PriceInfo priceInfo;
   final PurchaseInfos purchaseInfo;
@@ -55,8 +57,7 @@ class PublishInfoModel extends Equatable {
   factory PublishInfoModel.fromJson(Map<String, dynamic> json) =>
       _$PublishInfoModelFromJson(json);
 
-  static get init =>
-      const PublishInfoModel(
+  static get init => const PublishInfoModel(
         id: 0,
         modelId: 0,
         modelName: '',
@@ -65,13 +66,14 @@ class PublishInfoModel extends Equatable {
         theUpper: 0,
         theUpperName: '',
         vin: '',
-        transfer:0,
+        transfer: 0,
         price: '',
         lastPrice: '',
         downPayment: '',
-        source: '',
-        sourceId: 0,
-        storeName: '',
+        source: 0,
+        sourceName: '',
+        // sourceId: 0,
+        // storeName: '',
         type: '',
         engineNo: '',
         licensingDate: 0,
@@ -95,6 +97,12 @@ class PublishInfoModel extends Equatable {
             brokerNickname: '',
             brokerHeadImg: '',
             brokerPhone: ''),
+        dealerInfo: DealerInfo(
+            id: 0,
+            name: '',
+            ownerBrokerId: 0,
+            ownerBrokerName: '',
+            ownerBrokerTel: ''),
         modelInfo: ModelInfo(
           year: 0,
           price: '',
@@ -132,16 +140,13 @@ class PublishInfoModel extends Equatable {
             commercialInsuranceDate: 0,
             commercialInsurancePrice: ''),
         contractMasterInfo: ContractMasterInfo(
-            name: '',
-            idCard: '',
-            phone: '',
-            bankCard: '',
-            bank: ''),
+            name: '', idCard: '', phone: '', bankCard: '', bank: ''),
         dealerAuditAt: 0,
-        dealerRejectReason:'',
+        dealerRejectReason: '',
         auditAt: 0,
         rejectReason: '',
-        createdAt: 0,);
+        createdAt: 0,
+      );
 
   Map<String, dynamic> toJson() => _$PublishInfoModelToJson(this);
 
@@ -159,8 +164,9 @@ class PublishInfoModel extends Equatable {
     required this.lastPrice,
     required this.downPayment,
     required this.source,
-    required this.sourceId,
-    required this.storeName,
+    required this.sourceName,
+    // required this.sourceId,
+    // required this.storeName,
     required this.type,
     required this.engineNo,
     required this.licensingDate,
@@ -180,6 +186,7 @@ class PublishInfoModel extends Equatable {
     required this.defectPhotos,
     required this.dataPhotos,
     required this.brokerInfo,
+    required this.dealerInfo,
     required this.modelInfo,
     required this.priceInfo,
     required this.purchaseInfo,
@@ -193,8 +200,7 @@ class PublishInfoModel extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         modelId,
         modelName,
         status,
@@ -207,8 +213,9 @@ class PublishInfoModel extends Equatable {
         lastPrice,
         downPayment,
         source,
-        sourceId,
-        storeName,
+        sourceName,
+        // sourceId,
+        // storeName,
         type,
         engineNo,
         licensingDate,
@@ -228,6 +235,7 @@ class PublishInfoModel extends Equatable {
         defectPhotos,
         dataPhotos,
         brokerInfo,
+        dealerInfo,
         modelInfo,
         priceInfo,
         purchaseInfo,
@@ -291,8 +299,7 @@ class BaseInfo extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         type,
         typeName,
         modelId,
@@ -335,8 +342,7 @@ class BrokerInfo extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         brokerId,
         brokerNickname,
         brokerPhone,
@@ -366,8 +372,7 @@ class DealerInfo extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         id,
         name,
         ownerBrokerId,
@@ -395,8 +400,7 @@ class Photos extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         interiorPhotos,
         defectPhotos,
         dataPhotos,
@@ -412,8 +416,7 @@ class ImagePhotos extends Equatable {
       _$ImagePhotosFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         Photo,
         Text,
       ];
@@ -450,8 +453,7 @@ class CertificateInfo extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         transfer,
         keyCount,
         compulsoryInsurance,
@@ -478,8 +480,7 @@ class PurchaseInfos extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         price,
         date,
         liaison,

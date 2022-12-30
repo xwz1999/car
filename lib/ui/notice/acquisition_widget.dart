@@ -47,7 +47,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
   TextEditingController rejectController = TextEditingController();
 
   _refresh() async {
-    acquisitionInfo = await CarFunc.getPurchaseInfo(144);
+    acquisitionInfo = await CarFunc.getPurchaseInfo(widget.modelId);
     // print(carInfoModel!.carInfo);
     // collect = acquisitionInfo?.carInfo.collect ?? 0;
     for (var item in acquisitionInfo!.photos.CarPhotos) {
@@ -114,6 +114,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
   void initState() {
     Future.delayed(const Duration(seconds: 0), () {
       _refresh();
+      setState((){});
     });
     super.initState();
   }
@@ -210,10 +211,9 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                     16.hb,
                     _getTitle(
                         '交付日期',
-                        DateUtil.formatDateMs(
-                            acquisitionInfo?.priceInfo.deliverDate.toInt() ??
-                                0 * 1000,
-                            format: 'yyyy年MM月dd日 ')),
+                    acquisitionInfo?.priceInfo.deliverDate!=null? DateUtil.formatDateMs(
+                            acquisitionInfo!.priceInfo.deliverDate.toInt() * 1000,
+                            format: 'yyyy年MM月dd日 '):''),
                   ],
                 )),
                 _gexFramework(Column(
@@ -294,7 +294,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                         3
                     ? GestureDetector(
                   onTap: (){
-                    Get.to(()=> ViewFilePage(url: widget.url, title: '收购合同',));
+                    Get.to(()=> ViewFilePage(url: widget.url!=''?'${API.imageHost}/${widget.url}':'', title: '收购合同',));
                   },
                         child: Container(
                           margin: EdgeInsets.symmetric(
@@ -334,7 +334,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
   }
 
   getBottomState() {
-    return widget.status == 0
+    return widget.status == 1
         ? ContractStatus.getValueAuditId(acquisitionInfo!.status).typeNum == 1
             ? Row(
                 children: [

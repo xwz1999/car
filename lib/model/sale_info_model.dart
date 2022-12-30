@@ -11,6 +11,7 @@ class SaleInfoModel extends Equatable {
   final int thirdPartKind;
   final String thirdPartKindName;
   final num createdAt;
+
   final BaseInfo baseInfo;
   final BrokerInfo brokerInfo;
   final BrokerInfo customerInfo;
@@ -65,6 +66,10 @@ class BaseInfo extends Equatable {
   final int carId;
   final int modelId;
   final String modelName;
+  final String mainPhoto;
+  final int transfer;
+  final num licensingData;
+  final String mileage;
   final String contractSn;
   final String amount;
   final String deposit;
@@ -74,7 +79,7 @@ class BaseInfo extends Equatable {
   final String saleServiceFeeRate;
   final String purchaseServiceFee;
   final String purchaseServiceFeeRate;
-
+  final String remark;
   factory BaseInfo.fromJson(Map<String, dynamic> json) =>
       _$BaseInfoFromJson(json);
 
@@ -84,6 +89,10 @@ class BaseInfo extends Equatable {
     required this.carId,
     required this.modelId,
     required this.modelName,
+    required this.mainPhoto,
+    required this.transfer,
+    required this.licensingData,
+    required this.mileage,
     required this.contractSn,
     required this.amount,
     required this.deposit,
@@ -93,6 +102,7 @@ class BaseInfo extends Equatable {
     required this.saleServiceFeeRate,
     required this.purchaseServiceFee,
     required this.purchaseServiceFeeRate,
+    required this.remark,
   });
 
   @override
@@ -100,6 +110,10 @@ class BaseInfo extends Equatable {
         carId,
         modelId,
         modelName,
+        mainPhoto,
+        transfer,
+        licensingData,
+        mileage,
         contractSn,
         amount,
         deposit,
@@ -109,6 +123,7 @@ class BaseInfo extends Equatable {
         saleServiceFeeRate,
         purchaseServiceFee,
         purchaseServiceFeeRate,
+        remark,
       ];
 }
 

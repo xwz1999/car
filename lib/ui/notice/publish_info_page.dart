@@ -30,6 +30,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../model/publish_info_model.dart';
 import '../../../../utils/text_utils.dart';
 import '../../constants/api/api.dart';
+import '../home/car_manager/publish_car/new_push_car_page.dart';
 import '../home/car_manager/publish_car/publish_finish_page.dart';
 import '../user/user_order/status.dart';
 
@@ -786,7 +787,9 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                             0,
                             Colors.white,
                             Colors.white,
-                            () {}),
+                            () {
+                              Get.to(()=>const NewPushCarPage( ));
+                            }),
                       )
                     : const SizedBox()
                 // : Row(

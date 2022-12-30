@@ -53,7 +53,6 @@ int index=0;
   @override
   void initState() {
     _releaseCarStatus = Audit.values[widget.type];
-
     super.initState();
   }
 

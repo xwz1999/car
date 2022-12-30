@@ -285,9 +285,9 @@ class PublishDetailItem extends StatelessWidget {
                 ),
               ),
               Text(
-                publishInfoModel.storeName == ''
+                publishInfoModel.dealerInfo.ownerBrokerName == ''
                     ? '/'
-                    : publishInfoModel.storeName,
+                    :  publishInfoModel.dealerInfo.ownerBrokerName,
                 style: TextStyle(
                     height: 1.5,
                     fontSize: 28.sp,
@@ -599,7 +599,7 @@ class PublishDetailItem extends StatelessWidget {
                 ],
               ),
               getContentItem('车辆类型', publishInfoModel.type),
-              getContentItem('车辆来源', publishInfoModel.source),
+              getContentItem('车辆来源', publishInfoModel.sourceName),
               getContentItem('品牌车型', publishInfoModel.modelName),
               getContentItem('车架号', publishInfoModel.vin),
               getContentItem('发动机号', publishInfoModel.engineNo),

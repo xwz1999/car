@@ -212,7 +212,7 @@ class _NoticePageState extends State<NoticePage>
       case 4:
         return Assets.icons.noticeExamination.path;
       case 5:
-        return Assets.icons.carOptions.path;
+        return Assets.icons.vehicleRecords.path;
       // default :
       //   return '';
     // case 6:
