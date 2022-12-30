@@ -1,7 +1,5 @@
 import 'package:badges/badges.dart';
 import 'package:cloud_car/providers/message_provider.dart';
-import 'package:cloud_car/ui/home/user_manager/user_manager_detail_page.dart';
-import 'package:cloud_car/ui/home/user_manager/user_manager_page.dart';
 import 'package:cloud_car/ui/user/user_invitation/user_invitation_page.dart';
 import 'package:cloud_car/ui/user/user_order/sales_orders_page.dart';
 import 'package:cloud_car/ui/user/user_order/status.dart';
@@ -15,7 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../constants/enums.dart';
 import '../user/user_look_contract/consignment_contract_page.dart';
-import 'car_system_informs.dart';
+
 import 'notice_examination.dart';
 import 'notice_fashionable.dart';
 

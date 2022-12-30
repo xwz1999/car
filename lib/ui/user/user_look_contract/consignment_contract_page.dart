@@ -6,8 +6,30 @@ import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../../constants/enums.dart';
 import '../../../model/contract/consignment_model.dart';
 import '../../../utils/headers.dart';
+import '../../../utils/title_drop_widget.dart';
+import '../../../widget/button/cloud_back_button.dart';
+import '../../../widget/choose_widget.dart';
+import '../../../widget/screen_widget.dart';
+import '../../../widget/sort_widget.dart';
+
+enum ConsignmentType {
+  consignment(1, '寄卖合同'),
+  sellCars(2, '售车合同'),
+  collectCar(3, '收车合同'),
+  sellExamine(4, '售车审批'),
+  collectExamine(5, '收购审批');
+
+  final int typeNum;
+  final String typeStr;
+
+  static ConsignmentType getValue(int value) =>
+      ConsignmentType.values.firstWhere((element) => element.typeNum == value);
+
+  const ConsignmentType(this.typeNum, this.typeStr);
+}
 
 class ConsignmentContractPage extends StatefulWidget {
   const ConsignmentContractPage({super.key});
@@ -19,42 +41,85 @@ class ConsignmentContractPage extends StatefulWidget {
 
 class _ConsignmentContractPageState extends State<ConsignmentContractPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  late EasyRefreshController _refreshController;
   final EasyRefreshController _consignmentRefreshController =
       EasyRefreshController();
   final EasyRefreshController _saleRefreshController = EasyRefreshController();
 
-  final EasyRefreshController _purchaseRefreshController = EasyRefreshController();
+  final EasyRefreshController _purchaseRefreshController =
+      EasyRefreshController();
 
   final List<ConsignmentModel> _consignmentList = [];
 
   final List<ConsignmentListModel> _saleList = [];
 
-  final List<ConsignmentListModel> _purchaseList = [];
+  final List<ConsignmentListModel> _purchaseList = [
+    const ConsignmentListModel(
+        id: 0,
+        contractSn: '',
+        carId: 0,
+        modelName: '',
+        brokerId: 0,
+        brokerName: '',
+        customerId: 0,
+        customerName: '',
+        status: 0,
+        statusName: '',
+        dealerAuditAt: 0,
+        signAt: 0,
+        essFileUrl: '',
+        createdAt: 0)
+  ];
+
+  ConsignmentType _currentType = ConsignmentType.consignment;
+  TitleScreenControl screenControl = TitleScreenControl();
+  List<ChooseItem> _sortList = [];
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
+    _sortList =
+        ConsignmentType.values.map((e) => ChooseItem(name: e.typeStr)).toList();
     super.initState();
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
     _consignmentRefreshController.dispose();
     _saleRefreshController.dispose();
     _purchaseRefreshController.dispose();
     super.dispose();
   }
 
+  List<Widget> get listWidget => [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16.w)),
+              color: kForeGroundColor),
+          clipBehavior: Clip.antiAlias,
+          child: ScreenWidget(
+            pickString: _currentType.typeStr,
+            childAspectRatio: 200 / 56,
+            callback: (String item, int value) {
+              screenControl.screenHide();
+              _currentType = ConsignmentType.values[value];
+              // _examinationRefreshController.callRefresh();
+              if (mounted) {
+                setState(() {});
+              }
+            },
+            mainAxisSpacing: 10.w,
+            crossAxisSpacing: 24.w,
+            crossAxisCount: 3,
+            haveButton: true,
+            itemList: _sortList,
+          ),
+        ),
+      ];
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return
-
-
-      Scaffold(
+    return Scaffold(
         // appBar: AppBar(
         // )
         // AppBar(
@@ -91,49 +156,134 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
         backgroundColor: bodyColor,
         //extendBody: true,
         extendBodyBehindAppBar: true,
-        body: Column(
-          children: [
-            SearchBarWidget(
-              callback: (String text) {
-                //sortModel.value.name = text;
-                _refreshController.callRefresh();
-                setState(() {});
-              },
-              tips: '请输入客户名称',
-              title: Container(
-                alignment: Alignment.center,
-                child: TabBar(
-                    // indicator:
-                    //     BoxDecoration(borderRadius: BorderRadius.circular(4.w)),
-                    indicatorColor: const Color(0xFF027AFF),
-                    indicatorPadding: EdgeInsets.only(top: 16.w),
-                    //indicatorWeight: 3,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    isScrollable: true,
-                    controller: _tabController,
-                    tabs: [_tab(0, '寄卖合同'), _tab(1, '售车合同'), _tab(1, '收车合同')]),
-              ),
-            ),
-            Expanded(
-                child: TabBarView(
-              controller: _tabController,
-              children: [
-                ConsignmentView(
-                  consignmentList: _consignmentList,
-                  refreshController: _consignmentRefreshController,
+        body: Builder(
+          builder: (context) {
+            return TitleDropDownWidget([_currentType.typeStr], listWidget,
+                height: kToolbarHeight + MediaQuery.of(context).padding.top,
+                bottomHeight: 30.w,
+                screenControl: screenControl,
+                headFontSize: 36.sp,
+                isSearch: true,
+                callback: (text) {
+                  // _examinationRefreshController.callRefresh();
+                  // switch (text) {
+                  //   case '发布车辆':
+                  //     _examinationRefreshController.callRefresh();
+                  //     break;
+                  //   case '修改记录':
+                  //     _examinationRefreshController.callRefresh();
+                  //     break;
+                  //   case '我的审批':
+                  //     _examinationRefreshController.callRefresh();
+                  //     break;
+                  // }
+                  if (mounted) {
+                    setState(() {});
+                  }
+                },
+                leftWidget: const CloudBackButton(
+                  isSpecial: true,
                 ),
-                SaleView(
-                  saleList: _saleList,
-                  refreshController: _saleRefreshController,
-                ),
-                PurchaseContractPage(
-                  saleList: _purchaseList,
-                  refreshController: _purchaseRefreshController,
-                ),
-              ],
-            ))
-          ],
+                // screen: '筛选',
+                onTap: () {
+                  screenControl.screenHide();
+                  Scaffold.of(context).openEndDrawer();
+                },
+                child: _getCurrentPage());
+            // SearchBarWidget(
+            //   callback: (String text) {
+            //     //sortModel.value.name = text;
+            //     // _releaseCarStatus = ContractStatus.all;
+            //     // _refreshController.callRefresh();
+            //     setState(() {});
+            //   },
+            //   tips: '请输入客户名称',
+            //   title: Container(
+            //     alignment: Alignment.center,
+            //     child: TabBar(
+            //         // indicator:
+            //         //     BoxDecoration(borderRadius: BorderRadius.circular(4.w)),
+            //         indicatorColor: const Color(0xFF027AFF),
+            //         indicatorPadding: EdgeInsets.only(top: 16.w),
+            //         //indicatorWeight: 3,
+            //         indicatorSize: TabBarIndicatorSize.label,
+            //         isScrollable: true,
+            //         controller: _tabController,
+            //         tabs: [_tab(0, '寄卖合同'), _tab(1, '售车合同'), _tab(1, '收车合同')]),
+            //   ),
+            // ),
+            // ChooseWidget(
+            //   carState: true,
+            //   callBack: (index) {
+            //     if (_tabController.index == 0) {
+            //       _consignmentRefreshController.callRefresh();
+            //     } else if (_tabController.index == 1) {
+            //       _saleRefreshController.callRefresh();
+            //     } else {
+            //       _purchaseRefreshController.callRefresh();
+            //     }
+            //     _releaseCarStatus = ContractStatus.values[index];
+            //     // _examinationRefreshController.callRefresh();
+            //     setState(() {});
+            //   },
+            //   items: ContractStatus.values.map((e) => e.typeStr).toList(),
+            //   item: _releaseCarStatus.typeStr,
+            // ),
+            // Expanded(
+            //     child: TabBarView(
+            //   controller: _tabController,
+            //   children: [
+            //     ConsignmentView(
+            //       consignmentList: _consignmentList,
+            //       refreshController: _consignmentRefreshController,
+            //     ),
+            //     SaleView(
+            //       saleList: _saleList,
+            //       refreshController: _saleRefreshController,
+            //     ),
+            //     PurchaseContractPage(
+            //       saleList: _purchaseList,
+            //       refreshController: _purchaseRefreshController,
+            //     ),
+            //   ],
+            // ))
+          },
         ));
+  }
+
+  _getCurrentPage() {
+    switch (_currentType) {
+      case ConsignmentType.sellCars:
+        return SaleView(
+          status: 1,
+          saleList: _saleList,
+          refreshController: _saleRefreshController,
+        );
+
+      case ConsignmentType.consignment:
+        return ConsignmentView(
+          consignmentList: _consignmentList,
+          refreshController: _consignmentRefreshController,
+        );
+      case ConsignmentType.collectCar:
+        return PurchaseContractPage(
+          status: 1,
+          purchaseList: _purchaseList,
+          refreshController: _purchaseRefreshController,
+        );
+      case ConsignmentType.sellExamine:
+        return SaleView(
+          status: 0,
+          saleList: _saleList,
+          refreshController: _saleRefreshController,
+        );
+      case ConsignmentType.collectExamine:
+        return PurchaseContractPage(
+          status: 0,
+          purchaseList: _purchaseList,
+          refreshController: _purchaseRefreshController,
+        );
+    }
   }
 
   // _getList(

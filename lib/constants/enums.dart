@@ -214,8 +214,10 @@ enum TransferType{
   enum Audit{
   all(0,'全部'),
   wait(1,'待审批'),
-  pass(2,'已审核'),
-  reject(3,'已驳回');
+  pass(2,'已通过'),
+  release(3,'已发布'),
+  reject(4,'已驳回');
+
   final String typeStr;
   final int typeNum;
   static Audit getValue(int value)=> Audit.values.firstWhere((element) => element.typeNum==value);
@@ -224,12 +226,12 @@ enum TransferType{
           case 1:
             return Audit.wait;
           case 2:
-            return Audit.wait;
-          case 3:
             return Audit.pass;
-          case 4:
+          case 3:
+            return Audit.release;
+          case 11:
             return Audit.reject;
-          case 5:
+          case 12:
             return Audit.reject;
           default:
             return Audit.all;
@@ -237,3 +239,42 @@ enum TransferType{
     }
   const Audit(this.typeNum,this.typeStr);
   }
+
+///出售合同状态
+enum ContractStatus{
+  all(0,'全部'),
+  wait(1,'待审核'),
+  signed(2,'待签订'),
+  already(3,'已签订'),
+  initiateFailure(4,'发起失败'),
+  failure(5,'合同失效');
+
+  final String typeStr;
+  final int typeNum;
+  static ContractStatus getValue(int value)=> ContractStatus.values.firstWhere((element) => element.typeNum==value);
+  static ContractStatus getValueAuditId(int auditId){
+    switch(auditId){
+      case 1:
+        return ContractStatus.signed;
+      case 2:
+        return ContractStatus.already;
+      case 3:
+        return ContractStatus.failure;
+      case 4:
+        return ContractStatus.failure;
+      case 5:
+        return ContractStatus.failure;
+      case 6:
+        return ContractStatus.failure;
+      case 11:
+         return ContractStatus.wait;
+      case 12:
+        return ContractStatus.signed;
+      case 13:
+        return ContractStatus.initiateFailure;
+      default:
+        return ContractStatus.all;
+    }
+  }
+  const ContractStatus(this.typeNum,this.typeStr);
+}

@@ -32,6 +32,9 @@ class _AddStoresPageState extends State<AddStoresPage> {
   final TextEditingController codeCreditController = TextEditingController();
   final TextEditingController storesPhotoController = TextEditingController();
   final TextEditingController idCardController = TextEditingController();
+  final TextEditingController bankCardController = TextEditingController();
+  final TextEditingController bankController = TextEditingController();
+  final TextEditingController bankAccountController = TextEditingController();
 
   List<ChooseItem> colorList = [
     ChooseItem(name: '男'),
@@ -52,6 +55,9 @@ class _AddStoresPageState extends State<AddStoresPage> {
     genderController.dispose();
     phoneController.dispose();
     commissionController.dispose();
+    bankCardController.dispose();
+    bankController.dispose();
+    bankAccountController.dispose();
   }
 
   @override
@@ -115,7 +121,11 @@ class _AddStoresPageState extends State<AddStoresPage> {
                     phoneController.text,
                     commissionController.text,
                     idCardController.text,
-                    codeCreditController.text);
+                    codeCreditController.text,
+                    bankCardController.text,
+                  bankController.text,
+                  bankAccountController.text,
+                );
                 if (res) {
                   BotToast.showText(text: '新增成功');
                   Get.back();
@@ -243,6 +253,42 @@ class _AddStoresPageState extends State<AddStoresPage> {
             tips: '请输入',
             inputFormatters: <TextInputFormatter>[
               LengthLimitingTextInputFormatter(11) //限制长度
+            ],
+          ),
+          EditItemWidget(
+            topIcon: false,
+            paddingStart: 0,
+            titleColor: const Color(0xFF999999),
+            titleSize: 28.sp,
+            controller: bankCardController,
+            title: '银行账号',
+            tips: '请输入银行账号',
+            inputFormatters: <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(18) //限制长度
+            ],
+          ),
+          EditItemWidget(
+            topIcon: false,
+            paddingStart: 0,
+            titleColor: const Color(0xFF999999),
+            titleSize: 28.sp,
+            controller: bankCardController,
+            title: '开户行',
+            tips: '请输入开户行',
+            inputFormatters: <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(18) //限制长度
+            ],
+          ),
+          EditItemWidget(
+            topIcon: false,
+            paddingStart: 0,
+            titleColor: const Color(0xFF999999),
+            titleSize: 28.sp,
+            controller: bankAccountController,
+            title: '账户名',
+            tips: '请输入账户名',
+            inputFormatters: <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(18) //限制长度
             ],
           ),
           EditItemWidget(

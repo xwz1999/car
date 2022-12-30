@@ -2,21 +2,45 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/car/new_car_info.dart';
+import '../../model/customer/customer_detail_model.dart';
+import '../../model/sale_info_model.dart';
 import '../../utils/drop_down_body.dart';
 import '../../widget/cloud_image_network_widget.dart';
+import '../home/func/car_func.dart';
 
 class SellWidget extends StatefulWidget {
-  const SellWidget({Key? key}) : super(key: key);
+  // final SaleInfoModel? saleInfo;
+  final int saleId;
+final  CustomerDetailModel? customerDetail;
+  const SellWidget({Key? key, required this.saleId,required this.customerDetail})
+      : super(key: key);
 
   @override
   _SellWidgetState createState() => _SellWidgetState();
 }
 
 class _SellWidgetState extends State<SellWidget> {
-  bool middleSide=true; ///居间方   无
+  bool middleSide = true;
+  SaleInfoModel? saleInfo;
+  NewCarInfo? carInfo;
+  ///居间方   无
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 0),()async{
+    saleInfo=  await CarFunc.getSaleInfo(widget.saleId);
+    carInfo=await CarFunc.getNewCarInfo(saleInfo!.baseInfo.carId);
+
+    });
+    print('执行成');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return
+
+      ListView(
       children: [
         _gexFramework(Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,16 +73,21 @@ class _SellWidgetState extends State<SellWidget> {
                           width: 406.w,
                           child: Column(
                             children: [
-                              Text("奥迪Q3 2020款 35 TFSI 进取型 SUV",
+                              Text(saleInfo?.baseInfo.modelName ?? '',
                                   style: TextStyle(
                                       fontSize: BaseStyle.fontSize28,
                                       color: BaseStyle.color111111)),
                               26.hb,
                               _getChip(
-                                '过户${1}次',
-                                DateUtil.formatDateMs(6700383.toInt() * 1000,
-                                    format: 'yyyy年 '),
-                                '${10}万公里',
+                                '过户${carInfo?.carInfo.certificateInfo.transfer ?? 0}次',
+                               carInfo?.carInfo.licensingDate != null
+                                    ? DateUtil.formatDateMs(
+                                       carInfo!.carInfo.licensingDate
+                                                .toInt() *
+                                            1000,
+                                        format: 'yyyy年 ')
+                                    : '0',
+                                '${carInfo?.carInfo.mileage ?? 0}万公里',
                               )
                             ],
                           ),
@@ -119,55 +148,59 @@ class _SellWidgetState extends State<SellWidget> {
                 fontWeight: FontWeight.w800),
           ),
           32.hb,
-          _getTitle('客户姓名', '里斯'),
-              16.hb,
-          _getTitle('手机号', '133xxxxxx'),
-              16.hb,
-          _getTitle('身份证号', '73647813473241'),
-              16.hb,
-          _getTitle('地址', '浙江省宁波事鄞州区茂城西路xx新校区35栋907室'),
-              16.hb,
-          _getTitle('付款人', '里斯'),
-              16.hb,
-          _getTitle('开户行', '中国银行'),
-              16.hb,
-          _getTitle('银行卡号', '7348926496418'),
-              16.hb,
+          _getTitle('客户姓名', saleInfo?.buyerMasterInfo.name ?? ''),
+          16.hb,
+          _getTitle('手机号', saleInfo?.buyerMasterInfo.phone ?? ''),
+          16.hb,
+          _getTitle('身份证号', saleInfo?.buyerMasterInfo.idCard ?? ''),
+          16.hb,
+          _getTitle('地址', saleInfo?.buyerMasterInfo.address ?? ''),
+          16.hb,
+          _getTitle('付款人', saleInfo?.buyerMasterInfo.bank ?? ''),
+          16.hb,
+          _getTitle('开户行', saleInfo?.buyerMasterInfo.bankAccount ?? ''),
+          16.hb,
+          _getTitle('银行卡号', saleInfo?.buyerMasterInfo.bankCard ?? ''),
+          16.hb,
           _getTitle('备注', '蓝色，无损坏'),
         ])),
-        middleSide? _gexFramework(
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                '居间方信息',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color(0xFF333333),
-                    fontWeight: FontWeight.w800),
-              ),
-              32.hb,
-              _getTitle('居间方', '云云问车'),
-              16.hb,
-              _getTitle('卖方服务费', '1%'),
-              16.hb,
-              _getTitle('服务费金额', '3000'),
-              16.hb,
-              _getTitle('买方服务费', '1%'),
-              16.hb,
-              _getTitle('服务费金额', '30000'),
-
-
-            ])):_gexFramework(
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                '居间方信息',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color(0xFF333333),
-                    fontWeight: FontWeight.w800),
-              ),
-              32.hb,
-              _getTitle('居间方', '无'),
-            ])),
+        saleInfo!.thirdPartKind !=1
+            ? _gexFramework(
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(
+                  '居间方信息',
+                  style: TextStyle(
+                      fontSize: 28.sp,
+                      color: const Color(0xFF333333),
+                      fontWeight: FontWeight.w800),
+                ),
+                32.hb,
+                _getTitle('居间方', saleInfo?.thirdPartKindName ??'' ),
+                16.hb,
+                _getTitle('卖方服务费',
+                    '${saleInfo?.baseInfo.saleServiceFeeRate ?? ''}%'),
+                16.hb,
+                _getTitle(
+                    '服务费金额', saleInfo?.baseInfo.saleServiceFee ?? ''),
+                16.hb,
+                _getTitle('买方服务费',
+                    '${saleInfo?.baseInfo.purchaseServiceFeeRate ?? ''}%'),
+                16.hb,
+                _getTitle('服务费金额',
+                    saleInfo?.baseInfo.purchaseServiceFee ?? ''),
+              ]))
+            : _gexFramework(
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(
+                  '居间方信息',
+                  style: TextStyle(
+                      fontSize: 28.sp,
+                      color: const Color(0xFF333333),
+                      fontWeight: FontWeight.w800),
+                ),
+                32.hb,
+                _getTitle('居间方', '无'),
+              ])),
       ],
     );
   }
@@ -264,7 +297,7 @@ class _SellWidgetState extends State<SellWidget> {
                 .bodyText1
                 ?.copyWith(fontWeight: FontWeight.bold)),
         TextSpan(
-            text: '90,000,000',
+            text:saleInfo?.baseInfo.amount ?? '',
             style: Theme.of(context)
                 .textTheme
                 .subtitle2
@@ -278,7 +311,7 @@ class _SellWidgetState extends State<SellWidget> {
               _getCar(
                   '车辆定金',
                   //(_consignmentInfoList.contractSignAt).toString()),
-                  '100000'),
+                  saleInfo?.baseInfo.deposit ?? ''),
               46.wb,
               Container(
                 width: 1.w,
@@ -286,7 +319,7 @@ class _SellWidgetState extends State<SellWidget> {
                 color: BaseStyle.coloreeeeee,
               ),
               46.wb,
-              _getCar('车辆首付', '800000'),
+              _getCar('车辆首付', saleInfo?.baseInfo.downPayment ?? ''),
               46.wb,
               Container(
                 width: 1.w,
@@ -294,7 +327,7 @@ class _SellWidgetState extends State<SellWidget> {
                 color: BaseStyle.coloreeeeee,
               ),
               46.wb,
-              _getCar('车辆尾款', '7000000'),
+              _getCar('车辆尾款',saleInfo?.baseInfo.balancePayment ?? ''),
             ],
           )),
     );
@@ -331,4 +364,7 @@ class _SellWidgetState extends State<SellWidget> {
       ),
     );
   }
+
+
+
 }

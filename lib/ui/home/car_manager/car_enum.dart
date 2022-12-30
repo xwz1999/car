@@ -21,3 +21,13 @@ enum CarManageType {
 
   const CarManageType(this.typeNum, this.typeStr);
 }
+
+enum Release{
+  record(1,'发布记录'),
+  modify(2,'修改记录'),
+  mine(3,'发布审批'),
+  modifyExamine(4,'修改审批');
+  final int typeNum;
+  final String typeStr;
+  const Release(this.typeNum,this.typeStr);
+}

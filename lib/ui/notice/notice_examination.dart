@@ -1,20 +1,18 @@
-import 'package:cloud_car/model/user/user_info_model.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-
 import '../../constants/enums.dart';
-import '../../model/car/economic_release_model.dart';
-import '../../widget/car_widget.dart';
+import '../../utils/title_drop_widget.dart';
+import '../../widget/button/cloud_back_button.dart';
 import '../../widget/choose_widget.dart';
+import '../../widget/custom_drawer.dart';
 import '../../widget/screen_widget.dart';
 import '../../widget/search_bar_widget.dart';
-import '../home/manager_container_item.dart';
-import '../user/user_look_contract/comsignment_view.dart';
+import '../../widget/sort_widget.dart';
+import '../home/car_manager/car_enum.dart';
 import '../user/user_order/status.dart';
-import 'examination_details.dart';
+
 import 'examination_list_page.dart';
 
 class ExaminationPage extends StatefulWidget {
@@ -24,152 +22,84 @@ class ExaminationPage extends StatefulWidget {
   _ExaminationPageState createState() => _ExaminationPageState();
 }
 
-class _ExaminationPageState extends State<ExaminationPage> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin{
+class _ExaminationPageState extends State<ExaminationPage>
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
 
   // ReminderApprovalType
-  final auditList = [
-    {
-      'name': '奥迪A3',
-      'time': '2021-12-01 12:00:22',
-      'auditState': 1,
-
-      ///审核状态   1待审核 2已审核
-      'noPass': 0,
-
-      ///审核结果 1通过2驳回
-      'reasonText': '',
-
-      ///驳回理由
-      'price': '27.43',
-      'releaseName': '张三',
-      'conditionsState': 1,
-
-      ///1出售，2修改 3发布  4 收购
-
-      ///审批状态
-    },
-    {
-      'name': '奥迪A3',
-      'time': '2021-12-01 12:00:22',
-      'auditState': 1,
-
-      ///审核状态   1已审核2待审核
-      'noPass': 1,
-
-      ///审核结果 1通过2驳回
-      'reasonText': '',
-
-      ///驳回理由
-      'price': '27.43',
-      'releaseName': '张三',
-      'conditionsState': 1,
-    },
-    {
-      'name': '奥迪A3',
-      'time': '2021-12-01 12:00:22',
-      'auditState': 1,
-
-      ///审核状态   1已审核2待审核
-      'noPass': 2,
-
-      ///审核结果 1通过2驳回
-      'reasonText': '车子有私下买下来了，最后成交价远高于你这份合同，这合同就当浪费了，你和客户沟通一下',
-      // 'reasonText': '车子卖了',
-
-      ///驳回理由
-      'price': '27.43',
-      'releaseName': '张三',
-      'conditionsState': 1,
-    },
-    {
-      'name': '奥迪A3',
-      'time': '2021-12-01 12:00:22',
-      'auditState': 1,
-
-      ///审核状态   1已审核2待审核
-      'noPass': 1,
-
-      ///审核结果 1通过2驳回
-      'reasonText': '',
-
-      ///驳回理由
-      'price': '27.43',
-      'releaseName': '张三',
-      'conditionsState': 2,
-
-      ///1出售，2修改 3发布  4 收购
-
-      ///审批状态
-    },
-    {
-      'name': '奥迪A3',
-      'time': '2021-12-01 12:00:22',
-      'auditState': 1,
-
-      ///审核状态   1已审核2待审核
-      'noPass': 1,
-
-      ///审核结果 1通过2驳回
-      'reasonText': '',
-
-      ///驳回理由
-      'price': '27.43',
-      'releaseName': '张三',
-      'conditionsState': 3,
-
-      ///1出售，2修改 3发布  4 收购
-
-      ///审批状态
-    },
-    {
-      'name': '奥迪A3',
-      'time': '2021-12-01 12:00:22',
-      'auditState': 1,
-
-      ///审核状态   1已审核2待审核
-      'noPass': 1,
-
-      ///审核结果 1通过2驳回
-      'reasonText': '',
-
-      ///驳回理由
-      'price': '27.43',
-      'releaseName': '张三',
-      'conditionsState': 4,
-
-      ///1出售，2修改 3发布  4 收购
-
-      ///审批状态
-    },
-  ];
-  late final EasyRefreshController _examinationRefreshController = EasyRefreshController();
+  late final EasyRefreshController _examinationRefreshController =
+      EasyRefreshController();
   late final EasyRefreshController _refreshController = EasyRefreshController();
-  late Audit _releaseCarStatus;
-  // late List<EconomicReleaseModel> releaseList;
+
+  // List<EconomicReleaseModel> releaseList=[];
   late TabController _tabController;
   var examinationState =
       UserTool.userProvider.userInfo.business.roleEM == Role.salesTraffic
           ? ExaminationType.all
           : ReminderApprovalType.all;
+  Release _currentType = Release.record;
+  TitleScreenControl screenControl = TitleScreenControl();
+  List<ChooseItem> _sortList = [];
 
   @override
   void initState() {
-    _releaseCarStatus=Audit.all;
-   _tabController=TabController(length: 2, initialIndex: 0, vsync: this);
+    _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
+    _sortList = Release.values.map((e) => ChooseItem(name: e.typeStr)).toList();
     super.initState();
   }
+
+  List<Widget> get listWidget => [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16.w)),
+              color: kForeGroundColor),
+          clipBehavior: Clip.antiAlias,
+          child: ScreenWidget(
+            pickString: _currentType.typeStr,
+            childAspectRatio: 200 / 56,
+            callback: (String item, int value) {
+              screenControl.screenHide();
+              _currentType = Release.values[value];
+              // switch (_currentType) {
+              //   case Release.record:
+              //     _examinationRefreshController.callRefresh();
+              //     break;
+              //   case Release.modify:
+              //     asRefreshController.callRefresh();
+              //     break;
+              //   case Release.mine:
+              //     pRefreshController.callRefresh();
+              //     break;
+              // }
+              _examinationRefreshController.callRefresh();
+              if (mounted) {
+                setState(() {});
+              }
+            },
+            mainAxisSpacing: 10.w,
+            crossAxisSpacing: 24.w,
+            crossAxisCount: 3,
+            haveButton: true,
+            itemList: _sortList,
+          ),
+        ),
+      ];
+
   @override
   void dispose() {
     _examinationRefreshController.dispose();
     _refreshController.dispose();
+    // asRefreshController.dispose();
+    // pRefreshController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
+    return
+      Scaffold(
       // appBar: AppBar(
       // )
       // AppBar(
@@ -203,67 +133,87 @@ class _ExaminationPageState extends State<ExaminationPage> with AutomaticKeepAli
       //     ),
       //   ],
       // ),
-        backgroundColor: bodyColor,
-        //extendBody: true,
-        extendBodyBehindAppBar: true,
-        body:
+      backgroundColor: bodyColor,
+      //extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: Builder(builder: (context) {
+        return
 
-
-        Column(
-          children: [
-            SearchBarWidget(
-
-              callback: (String text) {
-                //sortModel.value.name = text;
-                // _refreshController.callRefresh();
+          TitleDropDownWidget([_currentType.typeStr], listWidget,
+            height: kToolbarHeight + MediaQuery.of(context).padding.top,
+            bottomHeight: 30.w,
+            screenControl: screenControl,
+            headFontSize: 36.sp,
+            isSearch: true,
+            callback: (text) {
+              // _examinationRefreshController.callRefresh();
+              // switch (text) {
+              //   case '发布车辆':
+              //     _examinationRefreshController.callRefresh();
+              //     break;
+              //   case '修改记录':
+              //     _examinationRefreshController.callRefresh();
+              //     break;
+              //   case '我的审批':
+              //     _examinationRefreshController.callRefresh();
+              //     break;
+              // }
+              if (mounted) {
                 setState(() {});
-              },
-              tips: '请输入客户名称',
-              title: Container(
-                alignment: Alignment.center,
-                child:
-                TabBar(
-                  // indicator:
-                  //     BoxDecoration(borderRadius: BorderRadius.circular(4.w)),
-                    indicatorColor: const Color(0xFF027AFF),
-                    indicatorPadding: EdgeInsets.only(top: 16.w),
-                    //indicatorWeight: 3,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    isScrollable: true,
-                    controller: _tabController,
-                    tabs: [_tab(0, '发布记录'), _tab(1, '修改记录'),]),
-              ),
+              }
+            },
+            leftWidget: const CloudBackButton(
+              isSpecial: true,
             ),
-            ChooseWidget(
-              carState: true,
-              callBack: (index) {
-                _releaseCarStatus = Audit.values[index];
-                _examinationRefreshController.callRefresh();
-                setState(() {
+            // screen: '筛选',
+            onTap: () {
+              screenControl.screenHide();
+              Scaffold.of(context).openEndDrawer();
+            },
+            child: _getCurrentPage());
+      }),
+      // endDrawer: CustomDrawer(
+      //     widthPercent: 0.86,
+      //     backgroundColor: Colors.white,
+      //     callback: (bool isOpened) {},
+      //     child: const SizedBox())
 
-                });
-              },
-              items: Audit.values.map((e) => e.typeStr).toList(),
-              item: _releaseCarStatus.typeStr,
-            ),
+      // ChooseWidget(
+      //     carState: true,
+      //     callBack: (index) {
+      //       _releaseCarStatus = Audit.values[index];
+      //       _examinationRefreshController.callRefresh();
+      //       setState(() {});
+      //     },
+      //     items: Audit.values.map((e) => e.typeStr).toList(),
+      //     item: _releaseCarStatus.typeStr,
+      //   ),
+    );
 
-            Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    ExaminationListPage(
-                      // releaseList: releaseList,
-                      refreshController: _examinationRefreshController,
-                    ),
-                    ExaminationListPage(
-                      // releaseList: releaseList,
-                      refreshController: _examinationRefreshController,
-                    ),
-                  ],
-                ))
-          ],
-        ));
-
+    // Column(
+    //   children: [
+    //
+    //     // ChooseWidget(
+    //     //   carState: true,
+    //     //   callBack: (index) {
+    //     //     _releaseCarStatus = Audit.values[index];
+    //     //     _examinationRefreshController.callRefresh();
+    //     //     setState(() {});
+    //     //   },
+    //     //   items: Audit.values.map((e) => e.typeStr).toList(),
+    //     //   item: _releaseCarStatus.typeStr,
+    //     // ),
+    //     // Expanded(
+    //     //     child: TabBarView(
+    //     //       controller: _tabController,
+    //     //       children: [
+    //     //
+    //     //       ,
+    //     //       ,
+    //     //       ],
+    //     //     ))
+    //   ],
+    // ));
 
     //   Scaffold(
     //   appBar: AppBar(
@@ -353,6 +303,41 @@ class _ExaminationPageState extends State<ExaminationPage> with AutomaticKeepAli
     // );
   }
 
+  _getCurrentPage() {
+    switch (_currentType) {
+      case Release.record:
+        return ExaminationListPage(
+          type: 0,
+          index: 0,
+          // releaseList: releaseList,
+          refreshController: _examinationRefreshController,
+        );
+
+      case Release.modify:
+        return ExaminationListPage(
+          type: 0,
+          index: 1,
+          // releaseList: releaseList,
+          refreshController: _examinationRefreshController,
+        );
+
+      case Release.mine:
+        return ExaminationListPage(
+          type: 0,
+          index: 2,
+          // releaseList: releaseList,
+          refreshController:
+          _examinationRefreshController, //_examinationRefreshController,
+        );
+      case Release.modifyExamine:
+        return ExaminationListPage(
+          type: 0,
+          index: 1,
+          // releaseList: releaseList,
+          refreshController: _examinationRefreshController,
+        );
+    }
+  }
 
   _tab(int int, String string) {
     return Text(
@@ -363,226 +348,226 @@ class _ExaminationPageState extends State<ExaminationPage> with AutomaticKeepAli
   }
 
 //驳回 通过
-  _isPass(int state) {
-    return Row(
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
-          margin: EdgeInsets.only(left: 150.w),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.w),
-              color: state == 1
-                  ? const Color(0xFF027AFF).withOpacity(0.1)
-                  : const Color(0xFF999999).withOpacity(0.1)),
-          child: Text(
-            state == 1 ? "待审核" : '已审核',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                color: state == 1
-                    ? const Color(0xFF027AFF)
-                    : const Color(0xFF999999)),
-          ),
-        )
-      ],
-    );
-  }
+//   _isPass(int state) {
+//     return Row(
+//       children: [
+//         Container(
+//           padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 16.w),
+//           margin: EdgeInsets.only(left: 150.w),
+//           decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(8.w),
+//               color: state == 1
+//                   ? const Color(0xFF027AFF).withOpacity(0.1)
+//                   : const Color(0xFF999999).withOpacity(0.1)),
+//           child: Text(
+//             state == 1 ? "待审核" : '已审核',
+//             style: Theme.of(context).textTheme.bodyText1?.copyWith(
+//                 color: state == 1
+//                     ? const Color(0xFF027AFF)
+//                     : const Color(0xFF999999)),
+//           ),
+//         )
+//       ],
+//     );
+//   }
+//
+//   ///判断列表
+//   List<String> _getList() {
+//     if (UserTool.userProvider.userInfo.business.roleEM == Role.manager ||
+//         UserTool.userProvider.userInfo.business.roleEM == Role.carService ||
+//         UserTool.userProvider.userInfo.business.roleEM == Role.settlers) {
+//       return ReminderApprovalType.values.map((e) => e.typeStr).toList();
+//     } else if (UserTool.userProvider.userInfo.business.roleEM ==
+//         Role.salesTraffic) {
+//       return ExaminationType.values.map((e) => e.typeStr).toList();
+//     } else {
+//       return [];
+//     }
+//   }
 
-  ///判断列表
-  List<String> _getList() {
-    if (UserTool.userProvider.userInfo.business.roleEM == Role.manager ||
-        UserTool.userProvider.userInfo.business.roleEM == Role.carService ||
-        UserTool.userProvider.userInfo.business.roleEM == Role.settlers) {
-      return ReminderApprovalType.values.map((e) => e.typeStr).toList();
-    } else if (UserTool.userProvider.userInfo.business.roleEM ==
-        Role.salesTraffic) {
-      return ExaminationType.values.map((e) => e.typeStr).toList();
-    } else {
-      return [];
-    }
-  }
-
-  ///审批提醒 店长身份
-  _release(item) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => ExaminationDetails(
-              state: item['conditionsState'],
-              auditState: item['noPass'],
-              reasonText: item['reasonText'],
-            ));
-        // showModalBottomSheet(
-        //     context: context,
-        //     isDismissible: true,
-        //     isScrollControlled: true,
-        //     shape: const RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.only(
-        //             topLeft: Radius.circular(15),
-        //             topRight: Radius.circular(15))),
-        //     builder: (BuildContext context) {
-        //       return Container(
-        //         width: double.infinity,
-        //         height: 500.w,
-        //         decoration: BoxDecoration(
-        //             color: BaseStyle.colorf6f6f6,
-        //             borderRadius: BorderRadius.all(Radius.circular(16.w))),
-        //         child: Column(
-        //           crossAxisAlignment: CrossAxisAlignment.center,
-        //           children: [
-        //             Row(
-        //               children: [
-        //                 GestureDetector(
-        //                   onTap: () {
-        //                     Get.back();
-        //                   },
-        //                   child: Container(
-        //                     padding: EdgeInsets.all(32.w),
-        //                     child: Text(
-        //                       '拒绝',
-        //                       style: TextStyle(
-        //                           color: const Color(0xFF999999),
-        //                           fontSize: 28.sp),
-        //                     ),
-        //                   ),
-        //                 ),
-        //                 Expanded(
-        //                   child: Text(
-        //                     '车辆确认',
-        //                     textAlign: TextAlign.center,
-        //                     style: TextStyle(
-        //                         color: const Color(0xFF111111),
-        //                         fontSize: 32.sp),
-        //                   ),
-        //                 ),
-        //                 GestureDetector(
-        //                   onTap: () {
-        //                     Get.back();
-        //                   },
-        //                   child: Container(
-        //                     padding: EdgeInsets.all(32.w),
-        //                     child: Text(
-        //                       '同意',
-        //                       style: TextStyle(
-        //                           color: const Color(0xFF027AFF),
-        //                           fontSize: 28.sp),
-        //                     ),
-        //                   ),
-        //                 ),
-        //               ],
-        //             ),
-        //             Text(
-        //               '客户对你的这辆车有购买意愿，是否同意出售',
-        //               style: TextStyle(
-        //                   color: const Color(0xFF333333), fontSize: 28.sp),
-        //             ),
-        //             Container(
-        //               margin: EdgeInsets.all(24.w),
-        //               decoration: BoxDecoration(
-        //                 boxShadow: [
-        //                   BoxShadow(
-        //                     offset: Offset(10.w, 17.w),
-        //                     blurRadius: 10.w,
-        //                     spreadRadius: -10.w,
-        //                     color: const Color(0x33027AFF),
-        //                   )
-        //                 ],
-        //               ),
-        //               child: CarItemWidget(
-        //                 widgetPadding: EdgeInsets.all(24.w),
-        //                 name: '奥迪A8',
-        //                 time: '2022-11-04',
-        //                 distance: '2万公里',
-        //                 standard: '国六',
-        //                 url: '',
-        //                 price: '27.43',
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       );
-        //     });
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
-        margin: EdgeInsets.only(top: 10.w, left: 32.w, right: 32.w),
-        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
-        child: Column(children: [
-          Row(
-            children: [
-              Text(
-                ReminderApprovalType.getValue(item['conditionsState']).typeStr,
-                style: TextStyle(
-                    fontSize: 32.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
-              ),
-              const Spacer(),
-              _isPass(item['noPass'])
-            ],
-          ),
-          24.hb,
-          Row(
-            children: [
-              Text(
-                '车辆名称',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(102, 102, 102, 1)),
-              ),
-              48.wb,
-              Text(
-                item['name'],
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
-              )
-            ],
-          ),
-          28.hb,
-          Row(
-            children: [
-              Text(
-                item['conditionsState'] == 1 || item['conditionsState'] == 3
-                    ? '发布时间'
-                    : '审核时间',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(102, 102, 102, 1)),
-              ),
-              48.wb,
-              Text(
-                item['time'],
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color.fromRGBO(51, 51, 51, 1)),
-              )
-            ],
-          ),
-          item['conditionsState'] == 1 ? 28.hb : 0.hb,
-          item['reasonText'] != ''
-              ? Row(
-                  children: [
-                    item['reasonText'] == ''
-                        ? const SizedBox()
-                        : Text(
-                            '驳回原因',
-                            style: TextStyle(
-                                fontSize: 28.sp,
-                                color: const Color.fromRGBO(102, 102, 102, 1)),
-                          ),
-                    48.wb,
-                    Flexible(
-                        child: Text(
-                      item['reasonText'],
-                      style: TextStyle(
-                          fontSize: 28.sp,
-                          color: const Color.fromRGBO(51, 51, 51, 1)),
-                    ))
-                  ],
-                )
-              : const SizedBox(),
-        ]),
-      ),
-    );
-  }
+  // ///审批提醒 店长身份
+  // _release(item) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       Get.to(() => ExaminationDetails(
+  //             state: item['conditionsState'],
+  //             auditState: item['noPass'],
+  //             reasonText: item['reasonText'],
+  //           ));
+  //       // showModalBottomSheet(
+  //       //     context: context,
+  //       //     isDismissible: true,
+  //       //     isScrollControlled: true,
+  //       //     shape: const RoundedRectangleBorder(
+  //       //         borderRadius: BorderRadius.only(
+  //       //             topLeft: Radius.circular(15),
+  //       //             topRight: Radius.circular(15))),
+  //       //     builder: (BuildContext context) {
+  //       //       return Container(
+  //       //         width: double.infinity,
+  //       //         height: 500.w,
+  //       //         decoration: BoxDecoration(
+  //       //             color: BaseStyle.colorf6f6f6,
+  //       //             borderRadius: BorderRadius.all(Radius.circular(16.w))),
+  //       //         child: Column(
+  //       //           crossAxisAlignment: CrossAxisAlignment.center,
+  //       //           children: [
+  //       //             Row(
+  //       //               children: [
+  //       //                 GestureDetector(
+  //       //                   onTap: () {
+  //       //                     Get.back();
+  //       //                   },
+  //       //                   child: Container(
+  //       //                     padding: EdgeInsets.all(32.w),
+  //       //                     child: Text(
+  //       //                       '拒绝',
+  //       //                       style: TextStyle(
+  //       //                           color: const Color(0xFF999999),
+  //       //                           fontSize: 28.sp),
+  //       //                     ),
+  //       //                   ),
+  //       //                 ),
+  //       //                 Expanded(
+  //       //                   child: Text(
+  //       //                     '车辆确认',
+  //       //                     textAlign: TextAlign.center,
+  //       //                     style: TextStyle(
+  //       //                         color: const Color(0xFF111111),
+  //       //                         fontSize: 32.sp),
+  //       //                   ),
+  //       //                 ),
+  //       //                 GestureDetector(
+  //       //                   onTap: () {
+  //       //                     Get.back();
+  //       //                   },
+  //       //                   child: Container(
+  //       //                     padding: EdgeInsets.all(32.w),
+  //       //                     child: Text(
+  //       //                       '同意',
+  //       //                       style: TextStyle(
+  //       //                           color: const Color(0xFF027AFF),
+  //       //                           fontSize: 28.sp),
+  //       //                     ),
+  //       //                   ),
+  //       //                 ),
+  //       //               ],
+  //       //             ),
+  //       //             Text(
+  //       //               '客户对你的这辆车有购买意愿，是否同意出售',
+  //       //               style: TextStyle(
+  //       //                   color: const Color(0xFF333333), fontSize: 28.sp),
+  //       //             ),
+  //       //             Container(
+  //       //               margin: EdgeInsets.all(24.w),
+  //       //               decoration: BoxDecoration(
+  //       //                 boxShadow: [
+  //       //                   BoxShadow(
+  //       //                     offset: Offset(10.w, 17.w),
+  //       //                     blurRadius: 10.w,
+  //       //                     spreadRadius: -10.w,
+  //       //                     color: const Color(0x33027AFF),
+  //       //                   )
+  //       //                 ],
+  //       //               ),
+  //       //               child: CarItemWidget(
+  //       //                 widgetPadding: EdgeInsets.all(24.w),
+  //       //                 name: '奥迪A8',
+  //       //                 time: '2022-11-04',
+  //       //                 distance: '2万公里',
+  //       //                 standard: '国六',
+  //       //                 url: '',
+  //       //                 price: '27.43',
+  //       //               ),
+  //       //             ),
+  //       //           ],
+  //       //         ),
+  //       //       );
+  //       //     });
+  //     },
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //           color: Colors.white, borderRadius: BorderRadius.circular(8.w)),
+  //       margin: EdgeInsets.only(top: 10.w, left: 32.w, right: 32.w),
+  //       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+  //       child: Column(children: [
+  //         Row(
+  //           children: [
+  //             Text(
+  //               ReminderApprovalType.getValue(item['conditionsState']).typeStr,
+  //               style: TextStyle(
+  //                   fontSize: 32.sp,
+  //                   color: const Color.fromRGBO(51, 51, 51, 1)),
+  //             ),
+  //             const Spacer(),
+  //             _isPass(item['noPass'])
+  //           ],
+  //         ),
+  //         24.hb,
+  //         Row(
+  //           children: [
+  //             Text(
+  //               '车辆名称',
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(102, 102, 102, 1)),
+  //             ),
+  //             48.wb,
+  //             Text(
+  //               item['name'],
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(51, 51, 51, 1)),
+  //             )
+  //           ],
+  //         ),
+  //         28.hb,
+  //         Row(
+  //           children: [
+  //             Text(
+  //               item['conditionsState'] == 1 || item['conditionsState'] == 3
+  //                   ? '发布时间'
+  //                   : '审核时间',
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(102, 102, 102, 1)),
+  //             ),
+  //             48.wb,
+  //             Text(
+  //               item['time'],
+  //               style: TextStyle(
+  //                   fontSize: 28.sp,
+  //                   color: const Color.fromRGBO(51, 51, 51, 1)),
+  //             )
+  //           ],
+  //         ),
+  //         item['conditionsState'] == 1 ? 28.hb : 0.hb,
+  //         item['reasonText'] != ''
+  //             ? Row(
+  //                 children: [
+  //                   item['reasonText'] == ''
+  //                       ? const SizedBox()
+  //                       : Text(
+  //                           '驳回原因',
+  //                           style: TextStyle(
+  //                               fontSize: 28.sp,
+  //                               color: const Color.fromRGBO(102, 102, 102, 1)),
+  //                         ),
+  //                   48.wb,
+  //                   Flexible(
+  //                       child: Text(
+  //                     item['reasonText'],
+  //                     style: TextStyle(
+  //                         fontSize: 28.sp,
+  //                         color: const Color.fromRGBO(51, 51, 51, 1)),
+  //                   ))
+  //                 ],
+  //               )
+  //             : const SizedBox(),
+  //       ]),
+  //     ),
+  //   );
+  // }
 
   @override
   bool get wantKeepAlive => true;

@@ -1,17 +1,17 @@
-import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/text_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../model/publish_info_model.dart';
 
-class NewCarDetailItem extends StatelessWidget {
-  final NewCarInfo carInfoModel;
-  // final PublishInfoModel publishInfoModel;
-  const NewCarDetailItem({super.key,
-    required this.carInfoModel,
-    // required this.publishInfoModel
+class PublishDetailItem extends StatelessWidget {
+  // final NewCarInfo carInfoModel;
+  final PublishInfoModel publishInfoModel;
 
-  });
+  const PublishDetailItem(
+      {super.key,
+      // required this.carInfoModel,
+      required this.publishInfoModel});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +31,8 @@ class NewCarDetailItem extends StatelessWidget {
           _carCondition(),
           16.hb,
           //getItem4('评估采购信息'),
-          _carConfiguration(),
-          16.hb,
+          // _carConfiguration(),
+          // 16.hb,
           //getItem6('牌证信息'),
           _purchasingInformation(),
           16.hb,
@@ -89,7 +89,8 @@ class NewCarDetailItem extends StatelessWidget {
             ],
           ),
           32.hb,
-          carInfoModel.carInfo.vin == "/"
+          publishInfoModel.vin == ''
+              // carInfoModel.carInfo.vin == "/"
               ? const SizedBox()
               : Row(
                   children: [
@@ -102,7 +103,7 @@ class NewCarDetailItem extends StatelessWidget {
                     ),
                     10.wb,
                     Text(
-                      carInfoModel.carInfo.vin,
+                      publishInfoModel.vin,
                       style: TextStyle(
                           height: 1.5,
                           fontSize: 28.sp,
@@ -118,14 +119,14 @@ class NewCarDetailItem extends StatelessWidget {
             '库存状态',
             '在厅',
             '使用性质',
-            carInfoModel.carInfo.useCharacter,
+            publishInfoModel.useCharacter,
           ),
           16.hb,
           _content(
             '所在地',
-            carInfoModel.carInfo.location,
+            publishInfoModel.location,
             '归属地',
-            carInfoModel.carInfo.attribution,
+            publishInfoModel.attribution,
           ),
         ],
       ),
@@ -158,7 +159,7 @@ class NewCarDetailItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.w),
             ),
             child: Text(
-              carInfoModel.carInfo.condition,
+              publishInfoModel.condition,
               style: TextStyle(
                   fontSize: 28.sp,
                   fontWeight: FontWeight.bold,
@@ -190,16 +191,16 @@ class NewCarDetailItem extends StatelessWidget {
           24.hb,
           _content(
             '排量',
-            carInfoModel.carInfo.modelInfo.liter,
+            publishInfoModel.modelInfo.liter,
             '变速箱类型',
-            carInfoModel.carInfo.modelInfo.gearType,
+            publishInfoModel.modelInfo.gearType,
           ),
           16.hb,
           _content(
             '燃料类型',
-            carInfoModel.carInfo.modelInfo.fuelTypeName,
+            publishInfoModel.modelInfo.fuelTypeName,
             '车身结构',
-            carInfoModel.carInfo.modelInfo.driveName,
+            publishInfoModel.modelInfo.driveName,
           ),
           16.hb,
           Row(
@@ -216,7 +217,7 @@ class NewCarDetailItem extends StatelessWidget {
                 ),
               ),
               Text(
-                '${carInfoModel.carInfo.modelInfo.seatNumber}座',
+                '${publishInfoModel.modelInfo.seatNumber}座',
                 style: TextStyle(
                     height: 1.5,
                     fontSize: 28.sp,
@@ -252,14 +253,19 @@ class NewCarDetailItem extends StatelessWidget {
             '采购类型',
             '/',
             '采购人',
-            '/',
+            publishInfoModel.purchaseInfo.liaison == ''
+                ? '/'
+                : publishInfoModel.purchaseInfo.liaison,
           ),
           16.hb,
           _content(
             '采购价格',
-            '/',
+            publishInfoModel.purchaseInfo.price == ''
+                ? '/'
+                : publishInfoModel.purchaseInfo.price,
             '采购日期',
-            "/",
+            TextUtils.getTimeByInt(
+                (publishInfoModel.purchaseInfo.date).toInt()),
           ),
           // 16.hb,
           // _content('外部价格', TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.priceInfo.purchasePrice))),
@@ -279,9 +285,9 @@ class NewCarDetailItem extends StatelessWidget {
                 ),
               ),
               Text(
-                carInfoModel.carInfo.storeName == ''
+                publishInfoModel.storeName == ''
                     ? '/'
-                    : carInfoModel.carInfo.storeName,
+                    : publishInfoModel.storeName,
                 style: TextStyle(
                     height: 1.5,
                     fontSize: 28.sp,
@@ -315,29 +321,31 @@ class NewCarDetailItem extends StatelessWidget {
           24.hb,
           _content(
             '过户次数',
-            '${carInfoModel.carInfo.certificateInfo.transfer}次',
+            '${publishInfoModel.certificateInfo.transfer}次',
             '钥匙数量',
-            '${carInfoModel.carInfo.certificateInfo.keyCount}把',
+            '${publishInfoModel.certificateInfo.keyCount}把',
           ),
           16.hb,
           _content(
             '交强险',
-            carInfoModel.carInfo.certificateInfo.commercialInsurance == 1
+            publishInfoModel.certificateInfo.commercialInsurance == 1
                 ? '有'
                 : '无',
             '交强险到期',
             TextUtils.getTimeByInt(
-                carInfoModel.carInfo.certificateInfo.compulsoryInsuranceDate),
+                (publishInfoModel.certificateInfo.compulsoryInsuranceDate)
+                    .toInt()),
           ),
           16.hb,
           _content(
               '商业险',
-              carInfoModel.carInfo.certificateInfo.compulsoryInsurance == 1
+              publishInfoModel.certificateInfo.compulsoryInsurance == 1
                   ? '有'
                   : '无',
               '商业险到期',
-              TextUtils.getTimeByInt(carInfoModel
-                  .carInfo.certificateInfo.commercialInsuranceDate)),
+              TextUtils.getTimeByInt(
+                  (publishInfoModel.certificateInfo.commercialInsuranceDate)
+                      .toInt())),
           16.hb,
         ],
       ),
@@ -425,7 +433,7 @@ class NewCarDetailItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${carInfoModel.carInfo.mileage}万公里',
+                    '${publishInfoModel.mileage}万公里',
                     style: TextStyle(
                         color: BaseStyle.color333333,
                         fontWeight: FontWeight.bold,
@@ -468,7 +476,7 @@ class NewCarDetailItem extends StatelessWidget {
                     children: [
                       Text(
                         TextUtils.getTimeByIntYM(
-                            carInfoModel.carInfo.licensingDate),
+                            (publishInfoModel.licensingDate).toInt()),
                         style: TextStyle(
                             color: BaseStyle.color333333,
                             fontWeight: FontWeight.bold,
@@ -511,7 +519,7 @@ class NewCarDetailItem extends StatelessWidget {
                 children: [
                   Padding(padding: EdgeInsets.symmetric(horizontal: 68.w)),
                   Text(
-                    carInfoModel.carInfo.modelInfo.dischargeStandard,
+                    publishInfoModel.modelInfo.dischargeStandard,
                     style: TextStyle(
                         color: BaseStyle.color333333,
                         fontWeight: FontWeight.bold,
@@ -590,45 +598,45 @@ class NewCarDetailItem extends StatelessWidget {
                   ),
                 ],
               ),
-              getContentItem('车辆类型', carInfoModel.carInfo.type),
-              getContentItem('车辆来源', carInfoModel.carInfo.source),
-              getContentItem('品牌车型', carInfoModel.carInfo.modelName),
-              getContentItem('车架号', carInfoModel.carInfo.vin),
-              getContentItem('发动机号', carInfoModel.carInfo.carSn),
-              getContentItem('首次上牌',
-                  TextUtils.getTimeByIntYM(carInfoModel.carInfo.licensingDate)),
+              getContentItem('车辆类型', publishInfoModel.type),
+              getContentItem('车辆来源', publishInfoModel.source),
+              getContentItem('品牌车型', publishInfoModel.modelName),
+              getContentItem('车架号', publishInfoModel.vin),
+              getContentItem('发动机号', publishInfoModel.engineNo),
+              getContentItem(
+                  '首次上牌',
+                  TextUtils.getTimeByIntYM(
+                      (publishInfoModel.licensingDate).toInt())),
 
-              getContentItem('车身颜色', carInfoModel.carInfo.color),
+              getContentItem('车身颜色', publishInfoModel.color),
               getContentItem('内饰颜色',
-                  TextUtils.carInfoIsEmpty(carInfoModel.carInfo.interiorColor)),
+                  TextUtils.carInfoIsEmpty(publishInfoModel.interiorColor)),
               getContentItem(
                   '临时车牌',
                   TextUtils.carInfoIsEmpty(
-                      carInfoModel.carInfo.temporaryLicensePlate)),
-              getContentItem(
-                  '车位编号',
-                  TextUtils.carInfoIsEmpty(carInfoModel.carInfo.parkingNo) ??
-                      ''),
+                      publishInfoModel.temporaryLicensePlate)),
+              getContentItem('车位编号',
+                  TextUtils.carInfoIsEmpty(publishInfoModel.parkingNo) ?? ''),
               getContentItem('库存状态', '在厅'),
 
-              getContentItem('使用性质', carInfoModel.carInfo.useCharacter),
-              getContentItem('表显里程', '${carInfoModel.carInfo.mileage}万公里'),
+              getContentItem('使用性质', publishInfoModel.useCharacter),
+              getContentItem('表显里程', '${publishInfoModel.mileage}万公里'),
 
-              getContentItem('出厂日期', carInfoModel.carInfo.modelInfo.marketDate),
+              getContentItem('出厂日期', publishInfoModel.modelInfo.marketDate),
               // getContentItem('新车指导价', TextUtils.carInfoIsEmpty( TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.newCarGuidePrice)) )),
               getContentItem(
                   '购置税',
                   TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
-                      num.parse(carInfoModel.carInfo.purchaseTax)))),
+                      num.parse(publishInfoModel.purchaseTax)))),
               getContentItem(
                   '加装费用',
                   TextUtils.carInfoIsEmpty(
-                      '${carInfoModel.carInfo.installationCost}元')),
-              getContentItem('车辆所在地',
-                  TextUtils.carInfoIsEmpty(carInfoModel.carInfo.location)),
+                      '${publishInfoModel.installationCost}元')),
+              getContentItem(
+                  '车辆所在地', TextUtils.carInfoIsEmpty(publishInfoModel.location)),
 
               getContentItem(
-                  '环保等级', carInfoModel.carInfo.modelInfo.dischargeStandard),
+                  '环保等级', publishInfoModel.modelInfo.dischargeStandard),
               50.hb,
             ],
           ),
@@ -648,13 +656,12 @@ class NewCarDetailItem extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: BaseStyle.color333333),
         ),
-        getContentItem('排量', '${carInfoModel.carInfo.modelInfo.liter}L'),
-        getContentItem('变速箱类型', carInfoModel.carInfo.modelInfo.gearType),
-        getContentItem('燃料形式', carInfoModel.carInfo.modelInfo.fuelTypeName),
-        getContentItem('车身结构', carInfoModel.carInfo.modelInfo.carStruct),
-        getContentItem('座位数', carInfoModel.carInfo.modelInfo.seatNumber),
-        getContentItem(
-            '排放标准', carInfoModel.carInfo.modelInfo.dischargeStandard),
+        getContentItem('排量', '${publishInfoModel.modelInfo.liter}L'),
+        getContentItem('变速箱类型', publishInfoModel.modelInfo.gearType),
+        getContentItem('燃料形式', publishInfoModel.modelInfo.fuelTypeName),
+        getContentItem('车身结构', publishInfoModel.modelInfo.carStruct),
+        getContentItem('座位数', publishInfoModel.modelInfo.seatNumber),
+        getContentItem('排放标准', publishInfoModel.modelInfo.dischargeStandard),
       ],
     );
   }
@@ -673,11 +680,11 @@ class NewCarDetailItem extends StatelessWidget {
         getContentItem(
             '批发价格',
             TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
-                num.parse(carInfoModel.carInfo.priceInfo.interiorPrice)))),
+                num.parse(publishInfoModel.priceInfo.interiorPrice)))),
         getContentItem(
             '销售价格',
             TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
-                num.parse(carInfoModel.carInfo.priceInfo.exteriorPrice)))),
+                num.parse(publishInfoModel.priceInfo.exteriorPrice)))),
         getContentItem('系统估价', '/'),
       ],
     );
@@ -714,26 +721,22 @@ class NewCarDetailItem extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: BaseStyle.color333333),
         ),
-        getContentItem(
-            '车主姓名',
-            TextUtils.carInfoIsEmpty(
-                carInfoModel.carInfo.contractMasterInfo.name)),
+        getContentItem('车主姓名',
+            TextUtils.carInfoIsEmpty(publishInfoModel.contractMasterInfo.name)),
         getContentItem(
             '手机号码',
             TextUtils.carInfoIsEmpty(
-                carInfoModel.carInfo.contractMasterInfo.phone)),
+                publishInfoModel.contractMasterInfo.phone)),
         getContentItem(
             '银行卡号',
             TextUtils.carInfoIsEmpty(
-                carInfoModel.carInfo.contractMasterInfo.bankCard)),
-        getContentItem(
-            '开户行',
-            TextUtils.carInfoIsEmpty(
-                carInfoModel.carInfo.contractMasterInfo.bank)),
+                publishInfoModel.contractMasterInfo.bankCard)),
+        getContentItem('开户行',
+            TextUtils.carInfoIsEmpty(publishInfoModel.contractMasterInfo.bank)),
         getContentItem(
             '身份证号',
             TextUtils.carInfoIsEmpty(
-                carInfoModel.carInfo.contractMasterInfo.idCard)),
+                publishInfoModel.contractMasterInfo.idCard)),
       ],
     );
   }
@@ -749,28 +752,28 @@ class NewCarDetailItem extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: BaseStyle.color333333),
         ),
-        getContentItem(
-            '过户次数', '${carInfoModel.carInfo.certificateInfo.transfer}次'),
-        getContentItem(
-            '钥匙数量', '${carInfoModel.carInfo.certificateInfo.keyCount}把'),
+        getContentItem('过户次数', '${publishInfoModel.certificateInfo.transfer}次'),
+        getContentItem('钥匙数量', '${publishInfoModel.certificateInfo.keyCount}把'),
         getContentItem(
             '交强险',
-            carInfoModel.carInfo.certificateInfo.commercialInsurance == 1
+            publishInfoModel.certificateInfo.commercialInsurance == 1
                 ? '有'
                 : '无'),
         getContentItem(
             '交强险到期',
             TextUtils.getTimeByInt(
-                carInfoModel.carInfo.certificateInfo.compulsoryInsuranceDate)),
+                (publishInfoModel.certificateInfo.compulsoryInsuranceDate)
+                    .toInt())),
         getContentItem(
             '商业险',
-            carInfoModel.carInfo.certificateInfo.compulsoryInsurance == 1
+            publishInfoModel.certificateInfo.compulsoryInsurance == 1
                 ? '有'
                 : '无'),
         getContentItem(
             '商业险到期',
             TextUtils.getTimeByInt(
-                carInfoModel.carInfo.certificateInfo.commercialInsuranceDate))
+                (publishInfoModel.certificateInfo.commercialInsuranceDate)
+                    .toInt()))
       ],
     );
   }

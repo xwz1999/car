@@ -95,12 +95,19 @@ class BusinessFunc {
       String phone,
       String commission,
       String idCard,
-      String creditCode) async {
+      String creditCode,
+      String bankCard,
+      String bank,
+      String bankAccount
+      ) async {
     Map params = {
       'name': name,
       'gender': gender,
       'phone': phone,
       'idCard': idCard,
+      'bankCard':bankCard,
+      'bank':bank,
+      'bankAccount':bankAccount,
       // 'idCardFront':idCardFront,
       // 'idCardBack':idCardBack,
     };
@@ -110,7 +117,7 @@ class BusinessFunc {
       'name': storeName,
       'address': address,
       'owner': params,
-      'commision': num.parse(commission),
+      'commission': num.parse(commission),
       'creditCode': creditCode
     });
     if (res.code == 0) {

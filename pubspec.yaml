@@ -109,7 +109,8 @@ dependencies:
   flutter_inappwebview: 5.4.3
   #图片缓存
   cached_network_image: ^3.2.1
-
+#  查看插件
+  file_preview: ^1.1.4
 
 
 dev_dependencies:

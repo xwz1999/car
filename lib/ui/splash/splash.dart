@@ -11,6 +11,7 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/utils/web_socket/websocket_message_model.dart';
 import 'package:cloud_car/utils/web_socket/websocket_util.dart';
+import 'package:file_preview/file_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -45,6 +46,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Future initialAll(context) async {
     await HiveStore.init();
+    await FilePreview.initTBS();
     var agreement = await HiveStore.appBox?.get('agreement') ?? false;
     if (!agreement) {
       var result = await _showLoginVerify();

@@ -143,6 +143,23 @@ class _Contract {
   ///车商收购合同列表
   String get carDealerAcquisition   =>'/contract/purchase/dealer/lists';
 
+  ///出售合同详情
+ String get saleInfo =>'/contract/sale/info';
+
+ ///收购合同详情
+ String get purchaseInfo =>'/contract/purchase/info';
+
+ ///车商出售合同驳回
+ String get saleReject =>'/contract/sale/reject';
+
+ ///车商出售合同同意
+ String get saleAdopt=>'/contract/sale/adopt';
+
+ ///车商收购驳回
+String get purchaseReject =>'/contract/purchase/reject';
+
+ ///车商收购同意
+String get purchaseAdopt=>'/contract/purchase/adopt';
 }
 
 class _File {
@@ -249,7 +266,7 @@ class _Order {
  String get  pubLists=> '/car/publish/lists';
 
   ///发布车辆列表(车商)
- String get dealerPubLists=>'/publish/dealer/lists';
+ String get dealerPubLists=>'/car/publish/dealer/lists';
 
  ///发布车辆详情
  String get publishInfo=>'/car/publish/info';

@@ -54,7 +54,6 @@ class _Car {
   ///下架/退库
   String get offShelf => '/car/down';
 
-
   ///调价
   String get adjustPrice => '/car/adjustPrice';
 
@@ -62,7 +61,13 @@ class _Car {
   String get carInfo => '/car/model/info';
 
   ///验证vin合理
- String get vinCheck =>'/car/vin/check';
+  String get vinCheck => '/car/vin/check';
+
+  ///车商审核通过
+  String get publishAdopt => '/car/publish/adopt';
+
+  ///车商审核拒绝
+  String get publishReject => '/car/publish/reject';
 }
 
 class _Collect {

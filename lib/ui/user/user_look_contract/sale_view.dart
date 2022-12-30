@@ -3,18 +3,25 @@ import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
+import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../../../constants/enums.dart';
+import '../../../utils/user_tool.dart';
+import '../../../widget/choose_widget.dart';
+import '../../notice/examination_details.dart';
+
 class SaleView extends StatefulWidget {
   final EasyRefreshController refreshController;
   final List<ConsignmentListModel> saleList;
-
+  final int status;
   const SaleView({
     super.key,
     required this.refreshController,
     required this.saleList,
+    required this.status
   });
 
   @override
@@ -25,61 +32,101 @@ class _SaleViewState extends State<SaleView>
     with AutomaticKeepAliveClientMixin {
   int _page = 1;
   final int _size = 10;
-
+  late ContractStatus _releaseCarStatus;
+  @override
+  void initState() {
+    _releaseCarStatus=ContractStatus.all;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return EasyRefresh.custom(
-        firstRefresh: true,
-        controller: widget.refreshController,
-        header: MaterialHeader(),
-        footer: MaterialFooter(),
-        onRefresh: () async {
-          _page = 1;
-          // var list = await CarFunc.getSaleDealer(page: _page, size: _size);
-          var list = await CarFunc.getSaleList(page: _page, size: _size);
-          widget.saleList.clear();
-          widget.saleList.addAll(list);
-          setState(() {});
-        },
-        onLoad: () async {
-          _page++;
-          var baseList = await apiClient.requestList(
-              API.contract.consignmentList,
-              data: {'size': _size, 'page': _page});
-          if (baseList.nullSafetyTotal > widget.saleList.length) {
-            widget.saleList.addAll(baseList.nullSafetyList
-                .map((e) => ConsignmentListModel.fromJson(e))
-                .toList());
-          } else {
-            widget.refreshController.finishLoad(noMore: true);
-          }
-          setState(() {});
-        },
-        slivers: [
-          SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-            var model = widget.saleList[index];
-            return GestureDetector(
-              onTap: () {
-                // print("这是数据");
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
-                child: _getCard(
-                  model.status,
-                  '出售合同（${model.contractSn}）',
-                  model.modelName,
-                  model.customerName,
-                  model.status != 1
-                      ? '/'
-                      : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
-                          format: 'yyyy-MM-dd'),
-                ),
-              ),
-            );
-          }, childCount: widget.saleList.length))
-        ]);
+    return Column(
+      children: [
+        SizedBox(
+          height: kToolbarHeight + 50.w,
+        ),
+        ChooseWidget(
+          carState: true,
+          callBack: (index) {
+            _releaseCarStatus = ContractStatus.values[index];
+            widget.refreshController.callRefresh();
+            setState(() {});
+          },
+          items: ContractStatus.values.map((e) => e.typeStr).toList(),
+          item: _releaseCarStatus.typeStr,
+        ),
+        Expanded(child:EasyRefresh.custom(
+            firstRefresh: true,
+            controller: widget.refreshController,
+            header: MaterialHeader(),
+            footer: MaterialFooter(),
+            onRefresh: () async {
+              _page = 1;
+              // var list = await CarFunc.getSaleDealer(page: _page, size: _size);
+              if (widget.status==0) {
+                var list = await CarFunc.getSaleList(page: _page, size: _size,status: _releaseCarStatus.typeNum);
+                widget.saleList.clear();
+                widget.saleList.addAll(list);
+              } else {
+                var list = await CarFunc.getSaleDealer(page: _page, size: _size,status: _releaseCarStatus.typeNum);
+                widget.saleList.clear();
+                widget.saleList.addAll(list);
+              }
+              setState(() {});
+            },
+            onLoad: () async {
+              _page++;
+              BaseListModel baseList;
+              if (widget.status==0) {
+                baseList = await apiClient.requestList(API.contract.soldList,
+                    data: {'size': _size, 'page': _page});
+              } else {
+                baseList = await apiClient.requestList(API.contract.dealerSale,
+                    data: {'size': _size, 'page': _page});
+              }
+
+              if (baseList.nullSafetyTotal > widget.saleList.length) {
+                widget.saleList.addAll(baseList.nullSafetyList
+                    .map((e) => ConsignmentListModel.fromJson(e))
+                    .toList());
+              } else {
+                widget.refreshController.finishLoad(noMore: true);
+              }
+              setState(() {});
+            },
+            slivers: [
+              SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    var model = widget.saleList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(() => ExaminationDetails(
+                          auditState:
+                          ContractStatus.getValueAuditId(model.status).typeNum,
+                          modelId: model.id, status: widget.status,
+                        ));
+                        // print("这是数据");
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+                        child: _getCard(
+                          model.status,
+                          '出售合同（${model.contractSn}）',
+                          model.modelName,
+                          model.customerName,
+                          model.status != 1
+                              ? '/'
+                              : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
+                              format: 'yyyy-MM-dd'),
+                        ),
+                      ),
+                    );
+                  }, childCount: widget.saleList.length))
+            ]) )
+      ],
+    )
+      ;
   }
 
   _getCard(int int, String title, String car, String name, String time) {
@@ -91,9 +138,7 @@ class _SaleViewState extends State<SaleView>
               width: 686.w,
               height: 340.w,
               child: Image.asset(
-                int == 1
-                    ? Assets.images.nosignedBg.path
-                    : Assets.images.signedBg.path,
+                Assets.images.comsignmentBg.path,
                 fit: BoxFit.fill,
               )),
         ),
@@ -171,9 +216,31 @@ class _SaleViewState extends State<SaleView>
                 ),
                 32.hb,
               ],
+            )),
+        Positioned(
+            bottom: 32.w,
+            right: 40.w,
+            child: Image.asset(
+              getUrl(int),
+              fit: BoxFit.fill,
+              width: 134.w,
+              height: 134.w,
             ))
       ]),
     );
+  }
+
+  getUrl(int status) {
+    switch (ContractStatus.getValueAuditId(status).typeNum) {
+      case 1:
+        return Assets.images.wait.path;
+      case 2:
+        return Assets.images.signed.path;
+      case 3:
+        return Assets.images.sign.path;
+      case 4:
+        return Assets.images.failure.path;
+    }
   }
 
   @override

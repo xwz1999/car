@@ -109,12 +109,10 @@ class _SelfSalePageState extends State<SelfSalePage>
       ChooseItem(name: '里程最少'),
       ChooseItem(name: '最近更新'),
     ];
-
     _dropDownHeaderItemStrings = [
       '排序',
     ];
   }
-
   List<Widget> get listWidgets => [
         Container(
           width: double.infinity,

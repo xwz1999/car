@@ -101,8 +101,10 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           backgroundColor: bodyColor,
           extendBodyBehindAppBar: true,
           extendBody: true,
-          body: Builder(builder: (context) {
-            return TitleDropDownWidget ([_currentType.typeStr], listWidget,
+          body:
+          Builder(builder: (context) {
+            return
+              TitleDropDownWidget ( [_currentType.typeStr], listWidget,
                 height: kToolbarHeight + MediaQuery.of(context).padding.top,
                 bottomHeight: 30.w,
                 screenControl: screenControl,

@@ -731,6 +731,10 @@ class $AssetsImagesGen {
   AssetGenImage get citicbankbg =>
       const AssetGenImage('assets/images/citicbankbg.png');
 
+  /// File path: assets/images/comsignment_bg.png
+  AssetGenImage get comsignmentBg =>
+      const AssetGenImage('assets/images/comsignment_bg.png');
+
   /// File path: assets/images/download.png
   AssetGenImage get download =>
       const AssetGenImage('assets/images/download.png');
@@ -742,6 +746,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/driving_license2.png
   AssetGenImage get drivingLicense2 =>
       const AssetGenImage('assets/images/driving_license2.png');
+
+  /// File path: assets/images/failure.png
+  AssetGenImage get failure => const AssetGenImage('assets/images/failure.png');
 
   /// File path: assets/images/head.png
   AssetGenImage get head => const AssetGenImage('assets/images/head.png');
@@ -863,6 +870,12 @@ class $AssetsImagesGen {
   AssetGenImage get shooting =>
       const AssetGenImage('assets/images/shooting.png');
 
+  /// File path: assets/images/sign.png
+  AssetGenImage get sign => const AssetGenImage('assets/images/sign.png');
+
+  /// File path: assets/images/signed.png
+  AssetGenImage get signed => const AssetGenImage('assets/images/signed.png');
+
   /// File path: assets/images/signed_bg.png
   AssetGenImage get signedBg =>
       const AssetGenImage('assets/images/signed_bg.png');
@@ -889,6 +902,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/user_bg.png
   AssetGenImage get userBg => const AssetGenImage('assets/images/user_bg.png');
+
+  /// File path: assets/images/wait.png
+  AssetGenImage get wait => const AssetGenImage('assets/images/wait.png');
 
   /// File path: assets/images/xxbankbg.png
   AssetGenImage get xxbankbg =>

@@ -314,7 +314,7 @@ class _EditorEmployeePageState extends State<EditorEmployeePage> {
 
           TextEditItemWidget(
             title: '手机号',
-            editor: false,
+            editor: true,
             value: phoneText,
             onTap: () {},
             callback: (String content) {

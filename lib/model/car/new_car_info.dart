@@ -7,8 +7,10 @@ part 'new_car_info.g.dart';
 class NewCarInfo extends Equatable {
   final CarNewInfo carInfo;
   final int isSelf;
+
   ///是否是自己的门店
   final int isSelfStore;
+
   ///是否是经纪人
   final int isSelfBusiness;
 
@@ -23,14 +25,16 @@ class NewCarInfo extends Equatable {
     required this.isSelfStore,
     required this.isSelfBusiness,
   });
+
   @override
-  List<Object?> get props => [carInfo,isSelf,isSelfStore,isSelfBusiness];
+  List<Object?> get props => [carInfo, isSelf, isSelfStore, isSelfBusiness];
 }
 
 @JsonSerializable()
 class CarNewInfo extends Equatable {
   final int id;
   final String modelName;
+
   ///
   final int modelId;
   final String vin;
@@ -51,9 +55,11 @@ class CarNewInfo extends Equatable {
   final String interiorColor;
   final String temporaryLicensePlate;
   final String parkingNo;
+
   // final int parkingNo;
   final String useCharacter;
   final String mileage;
+
   // final String newCarGuidePrice;
   final String purchaseTax;
   final String installationCost;
@@ -63,17 +69,20 @@ class CarNewInfo extends Equatable {
   final List<ImagePhoto> carPhotos;
   final List<ImagePhoto> interiorPhotos;
   final List<ImagePhoto> defectPhotos;
+
   // final List<ImagePhoto> reportPhotos;
   // final List<ImagePhoto> repairPhotos;
   final List<ImagePhoto> dataPhotos;
   final BrokerInfo brokerInfo;
   final ModelInfo modelInfo;
   final PriceInfo priceInfo;
+
   ///purchaseInfo
   final CertificateInfo certificateInfo;
   final ContractMasterInfo contractMasterInfo;
 
   Map<String, dynamic> toJson() => _$CarNewInfoToJson(this);
+
   factory CarNewInfo.fromJson(Map<String, dynamic> json) =>
       _$CarNewInfoFromJson(json);
 
@@ -81,7 +90,8 @@ class CarNewInfo extends Equatable {
   List<Object?> get props => [
         id,
         modelName,
-    ///
+
+        ///
         modelId,
         vin,
         carSn,
@@ -120,11 +130,12 @@ class CarNewInfo extends Equatable {
         contractMasterInfo,
       ];
 
-  const CarNewInfo( {
+  const CarNewInfo({
     required this.dataPhotos,
     required this.id,
+
     ///
-    required  this.modelId,
+    required this.modelId,
     required this.modelName,
     required this.storeName,
     required this.vin,
@@ -180,6 +191,7 @@ class ImagePhoto extends Equatable {
       ];
 
   Map<String, dynamic> toJson() => _$ImagePhotoToJson(this);
+
   const ImagePhoto({
     required this.photo,
     required this.text,
@@ -197,6 +209,7 @@ class BrokerInfo extends Equatable {
       _$BrokerInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$BrokerInfoToJson(this);
+
   const BrokerInfo({
     required this.brokerId,
     required this.brokerNickname,
@@ -205,12 +218,16 @@ class BrokerInfo extends Equatable {
   });
 
   @override
-  List<Object?> get props => [brokerId,brokerNickname,brokerHeadImg,brokerPhone,];
+  List<Object?> get props => [
+        brokerId,
+        brokerNickname,
+        brokerHeadImg,
+        brokerPhone,
+      ];
 }
 
-
 @JsonSerializable()
-class ModelInfo extends Equatable{
+class ModelInfo extends Equatable {
   final int year;
   final String price;
   final String liter;
@@ -235,7 +252,9 @@ class ModelInfo extends Equatable{
   final String carStruct;
   final int isParallel;
   final String priceAllowance;
-  factory ModelInfo.fromJson(Map<String, dynamic> json) =>_$ModelInfoFromJson(json);
+
+  factory ModelInfo.fromJson(Map<String, dynamic> json) =>
+      _$ModelInfoFromJson(json);
 
   const ModelInfo({
     required this.year,
@@ -265,31 +284,60 @@ class ModelInfo extends Equatable{
   });
 
   Map<String, dynamic> toJson() => _$ModelInfoToJson(this);
+
   @override
-  List<Object?> get props => [year,price,liter,dischargeStandard,fuelTypeName,
-    enginePower,enginePowerKw,isGreen,modelCode,driveName,driveType,modelStatus,
-    gearType,marketDate,minRegYear,maxRegYear,stopMakeYear,intake,seatNumber,
-    bodyType,doorNumber,carStruct,isParallel,priceAllowance,];
+  List<Object?> get props => [
+        year,
+        price,
+        liter,
+        dischargeStandard,
+        fuelTypeName,
+        enginePower,
+        enginePowerKw,
+        isGreen,
+        modelCode,
+        driveName,
+        driveType,
+        modelStatus,
+        gearType,
+        marketDate,
+        minRegYear,
+        maxRegYear,
+        stopMakeYear,
+        intake,
+        seatNumber,
+        bodyType,
+        doorNumber,
+        carStruct,
+        isParallel,
+        priceAllowance,
+      ];
 }
 
-
 @JsonSerializable()
-class PriceInfo extends Equatable{
+class PriceInfo extends Equatable {
   final String interiorPrice;
   final String exteriorPrice;
-  factory PriceInfo.fromJson(Map<String, dynamic> json) =>_$PriceInfoFromJson(json);
+
+  factory PriceInfo.fromJson(Map<String, dynamic> json) =>
+      _$PriceInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$PriceInfoToJson(this);
+
   const PriceInfo({
     required this.interiorPrice,
     required this.exteriorPrice,
   });
+
   @override
-  List<Object?> get props => [interiorPrice,exteriorPrice,];
+  List<Object?> get props => [
+        interiorPrice,
+        exteriorPrice,
+      ];
 }
 
 @JsonSerializable()
-class CertificateInfo extends Equatable{
+class CertificateInfo extends Equatable {
   final int transfer;
   final int keyCount;
   final int compulsoryInsurance;
@@ -298,9 +346,11 @@ class CertificateInfo extends Equatable{
   final int commercialInsuranceDate;
   final String commercialInsurancePrice;
 
-  factory CertificateInfo.fromJson(Map<String, dynamic> json) =>_$CertificateInfoFromJson(json);
+  factory CertificateInfo.fromJson(Map<String, dynamic> json) =>
+      _$CertificateInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$CertificateInfoToJson(this);
+
   const CertificateInfo({
     required this.transfer,
     required this.keyCount,
@@ -310,22 +360,32 @@ class CertificateInfo extends Equatable{
     required this.commercialInsuranceDate,
     required this.commercialInsurancePrice,
   });
+
   @override
-  List<Object?> get props => [transfer,keyCount,compulsoryInsurance,
-    compulsoryInsuranceDate,commercialInsurance,commercialInsuranceDate,
-    commercialInsurancePrice,];
+  List<Object?> get props => [
+        transfer,
+        keyCount,
+        compulsoryInsurance,
+        compulsoryInsuranceDate,
+        commercialInsurance,
+        commercialInsuranceDate,
+        commercialInsurancePrice,
+      ];
 }
 
 @JsonSerializable()
-class ContractMasterInfo extends Equatable{
+class ContractMasterInfo extends Equatable {
   final String name;
   final String idCard;
   final String phone;
   final String bankCard;
   final String bank;
-  factory ContractMasterInfo.fromJson(Map<String, dynamic> json) =>_$ContractMasterInfoFromJson(json);
+
+  factory ContractMasterInfo.fromJson(Map<String, dynamic> json) =>
+      _$ContractMasterInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$ContractMasterInfoToJson(this);
+
   const ContractMasterInfo({
     required this.name,
     required this.idCard,
@@ -333,11 +393,13 @@ class ContractMasterInfo extends Equatable{
     required this.bankCard,
     required this.bank,
   });
+
   @override
-  List<Object?> get props => [name,idCard,phone,bankCard,bank,];
+  List<Object?> get props => [
+        name,
+        idCard,
+        phone,
+        bankCard,
+        bank,
+      ];
 }
-
-
-
-
-
