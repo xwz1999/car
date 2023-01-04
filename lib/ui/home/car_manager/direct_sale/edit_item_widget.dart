@@ -6,9 +6,8 @@ import 'package:velocity_x/velocity_x.dart';
 
 typedef TextCallback = Function(String content);
 typedef TextCallback2 = Function(bool callBack);
+
 class EditItemWidget extends StatefulWidget {
-
-
   final bool topIcon;
   final String title;
 
@@ -32,12 +31,13 @@ class EditItemWidget extends StatefulWidget {
   final bool haveBorder;
   final bool paddingState;
   final String errText;
-   final int length;
+  final int length;
+
   // final FocusNode focusNode;
   // final int idCard;
 // final bool errState;
 // final String errText;
-   EditItemWidget({
+  EditItemWidget({
     super.key,
     required this.title,
     this.canChange = true,
@@ -59,9 +59,9 @@ class EditItemWidget extends StatefulWidget {
     this.titleColor,
     this.haveBorder = true,
     this.titleSize,
-    this.paddingState=false,
-    this.errText="",
-    this.length=0,
+    this.paddingState = false,
+    this.errText = "",
+    this.length = 0,
     // this.focusNode=FocusNode(),
     // this.errState=false,
     // this.errText="",
@@ -74,9 +74,11 @@ class EditItemWidget extends StatefulWidget {
 class _EditItemWidgetState extends State<EditItemWidget> {
   late TextEditingController _editingController;
   late double paddingTop = 0;
+
   // final FocusNode _focusNode = FocusNode();
   final String _focusNodeText = '';
-late String judgeText='';
+  late String judgeText = '';
+
   @override
   void initState() {
     if (widget.paddingTop == 0) {
@@ -86,7 +88,6 @@ late String judgeText='';
     }
     _editingController =
         widget.controller ?? TextEditingController(text: widget.value);
-
 
     // _focusNode.addListener((){
     //   if (_focusNode.hasFocus) {
@@ -119,9 +120,10 @@ late String judgeText='';
 
   @override
   Widget build(BuildContext context) {
-    return
-      Container(
-      padding: widget.paddingState ?EdgeInsets.only(top: 0.w, bottom: 0.w):EdgeInsets.only(top:paddingTop, bottom: paddingTop),
+    return Container(
+      padding: widget.paddingState
+          ? EdgeInsets.only(top: 0.w, bottom: 0.w)
+          : EdgeInsets.only(top: paddingTop, bottom: paddingTop),
       decoration: BoxDecoration(
           border: Border(
               bottom: widget.haveBorder
@@ -157,91 +159,95 @@ late String judgeText='';
             ),
           ),
           Expanded(
-            child:widget.paddingState?Padding(padding: EdgeInsets.only(top: 20.w),child:TextField(
-              // focusNode: _focusNode,
-              enabled: widget.canChange,
-              inputFormatters: widget.inputFormatters,
-              keyboardType: widget.keyboardType,
-              // onEditingComplete: () {
-              //       // CloudToast.show('12345678912345');
-              // },
-              // onSubmitted: (text){
-              //   widget.callback2?.call(num.parse(text).length==11);
-              // },
-              onChanged: (text) {
-                widget.callback?.call(text);
+            child: widget.paddingState
+                ? Padding(
+                    padding: EdgeInsets.only(top: 20.w),
+                    child: TextField(
+                      // focusNode: _focusNode,
+                      enabled: widget.canChange,
+                      inputFormatters: widget.inputFormatters,
+                      keyboardType: widget.keyboardType,
+                      // onEditingComplete: () {
+                      //       // CloudToast.show('12345678912345');
+                      // },
+                      // onSubmitted: (text){
+                      //   widget.callback2?.call(num.parse(text).length==11);
+                      // },
+                      onChanged: (text) {
+                        widget.callback?.call(text);
 
-                // _focusNode.addListener(() {
-                //   _focusNode
-                // });
-                judgeText=text;
-                setState(() {
+                        // _focusNode.addListener(() {
+                        //   _focusNode
+                        // });
+                        judgeText = text;
+                        setState(() {});
+                      },
+                      style: TextStyle(
+                        color: widget.textColor ?? BaseStyle.color333333,
+                        fontSize: BaseStyle.fontSize28,
+                      ),
+                      maxLines: null,
+                      controller: _editingController,
+                      decoration: InputDecoration(
+                        errorText: judgeText.isEmpty
+                            ? ''
+                            : judgeText.length != widget.length
+                                ? widget.errText
+                                : '',
+                        //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
+                        filled: true,
+                        isCollapsed: true,
+                        fillColor: Colors.white,
+                        hintText: widget.tips,
+                        hintStyle: TextStyle(
+                            color: const Color(0xFFcccccc),
+                            fontSize: 28.sp,
+                            fontWeight: FontWeight.w300),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  )
+                : TextField(
+                    // focusNode: _focusNode,
+                    enabled: widget.canChange,
+                    inputFormatters: widget.inputFormatters,
+                    keyboardType: widget.keyboardType,
+                    // onEditingComplete: () {
+                    //       // CloudToast.show('12345678912345');
+                    // },
+                    // onSubmitted: (text){
+                    //   widget.callback2?.call(num.parse(text).length==11);
+                    // },
+                    onChanged: (text) {
+                      widget.callback?.call(text);
 
-                });
-              },
-              style: TextStyle(
-                color: widget.textColor ?? BaseStyle.color333333,
-                fontSize: BaseStyle.fontSize28,
-              ),
-              maxLines: null,
-              controller: _editingController,
-              decoration: InputDecoration(
-
-                errorText: judgeText.length!=widget.length?widget.errText:'',
-                //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
-                filled: true,
-                isCollapsed: true,
-                fillColor: Colors.white,
-                hintText: widget.tips,
-                hintStyle: TextStyle(
-                    color: const Color(0xFFcccccc),
-                    fontSize: 28.sp,
-                    fontWeight: FontWeight.w300),
-                border: InputBorder.none,
-              ),
-            ),):
-            TextField(
-              // focusNode: _focusNode,
-              enabled: widget.canChange,
-              inputFormatters: widget.inputFormatters,
-              keyboardType: widget.keyboardType,
-              // onEditingComplete: () {
-              //       // CloudToast.show('12345678912345');
-              // },
-              // onSubmitted: (text){
-              //   widget.callback2?.call(num.parse(text).length==11);
-              // },
-              onChanged: (text) {
-                widget.callback?.call(text);
-
-                // _focusNode.addListener(() {
-                //   _focusNode
-                // });
-                // setState(() {
-                //
-                // });
-              },
-              style: TextStyle(
-                color: widget.textColor ?? BaseStyle.color333333,
-                fontSize: BaseStyle.fontSize28,
-              ),
-              maxLines: null,
-              controller: _editingController,
-              decoration: InputDecoration(
-
-                // errorText:widget.errState?widget.errText:'' ,
-                //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
-                filled: true,
-                isCollapsed: true,
-                fillColor: Colors.white,
-                hintText: widget.tips,
-                hintStyle: TextStyle(
-                    color: const Color(0xFFcccccc),
-                    fontSize: 28.sp,
-                    fontWeight: FontWeight.w300),
-                border: InputBorder.none,
-              ),
-            ),
+                      // _focusNode.addListener(() {
+                      //   _focusNode
+                      // });
+                      // setState(() {
+                      //
+                      // });
+                    },
+                    style: TextStyle(
+                      color: widget.textColor ?? BaseStyle.color333333,
+                      fontSize: BaseStyle.fontSize28,
+                    ),
+                    maxLines: null,
+                    controller: _editingController,
+                    decoration: InputDecoration(
+                      // errorText:widget.errState?widget.errText:'' ,
+                      //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
+                      filled: true,
+                      isCollapsed: true,
+                      fillColor: Colors.white,
+                      hintText: widget.tips,
+                      hintStyle: TextStyle(
+                          color: const Color(0xFFcccccc),
+                          fontSize: 28.sp,
+                          fontWeight: FontWeight.w300),
+                      border: InputBorder.none,
+                    ),
+                  ),
           ),
           widget.endIcon != null
               ? Padding(

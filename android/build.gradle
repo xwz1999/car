@@ -4,11 +4,21 @@ buildscript {
         google()
         mavenCentral()
     }
-
+    android {
+        // 添加以下内容
+        useLibrary 'org.apache.http.legacy'
+    }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        // 添加如下内容
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+        compile "com.alibaba:fastjson:1.2.48@jar"
+        compile(name: 'deviceid-release-6.0.7.20210629', ext: 'aar')
+        compile(name: 'faceverify-1.0.1.210629164332', ext: 'aar')
+        compile(name: 'stlport_shared-1.0', ext: 'aar')
+        compile (name:'verifysdk-2.1.2.210629171441', ext:'aar')
+        compile 'com.squareup:otto:1.3.8'
     }
 }
 
@@ -16,9 +26,9 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-//        flatDir {
-//            dirs project(':aliyun_face_plugin').file('libs')
-//        }
+        flatDir {
+            dirs 'libs'
+        }
     }
 
 }

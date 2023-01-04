@@ -66,6 +66,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>pulsesecure</string> // url scheme name of the app
+    </array>
 	<false/>
+
 </dict>
 </plist>

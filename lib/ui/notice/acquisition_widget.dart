@@ -8,7 +8,6 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../constants/api/api.dart';
 import '../../constants/enums.dart';
 import '../../model/acquisition_info_model.dart';
-import '../../model/car/new_car_info.dart';
 import '../../model/contract/report_photo_model.dart';
 import '../../model/publish_info_model.dart';
 import '../../utils/net_work/api_client.dart';
@@ -27,9 +26,13 @@ class AcquisitionWidget extends StatefulWidget {
   // final int state;///1出售，2修改 3发布  4 收购
   final int modelId;
   final int status;
-final String url;
+  final String url;
+
   const AcquisitionWidget(
-      {Key? key, required this.modelId, required this.status,required this.url})
+      {Key? key,
+      required this.modelId,
+      required this.status,
+      required this.url})
       : super(key: key);
 
   @override
@@ -39,7 +42,6 @@ final String url;
 class _AcquisitionWidgetState extends State<AcquisitionWidget> {
   List<CarPhotos> carPhotos = [];
   List<CarPhotos> dataPhotos = [];
-  List<ImagePhotos> bannerList = [];
   late PushPhotoModel pushPhotoModel;
   late ReportPhotoModel reportPhotoModel;
   int collect = 0;
@@ -50,32 +52,36 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
     acquisitionInfo = await CarFunc.getPurchaseInfo(widget.modelId);
     // print(carInfoModel!.carInfo);
     // collect = acquisitionInfo?.carInfo.collect ?? 0;
-    for (var item in acquisitionInfo!.photos.CarPhotos) {
-      if (item.Photo.isNotEmpty && item.Text.isNotEmpty) {
-        carPhotos.add(CarPhotos(photo: item.Photo, text: item.Text));
-      }
-      if (item.Photo.isNotEmpty && item.Text.isNotEmpty) {
-        bannerList.add(item);
-      }
-    }
-
+    // for (var item in acquisitionInfo!.photos.carPhotos) {
+    //   if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+    //     carPhotos.add(CarPhotos(photo: item.photo, text: item.text));
+    //   }
+    //   // if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+    //   //   bannerList.add(item);
+    //   // }
+    // }
     // for (var item in carInfoModel!.carInfo.dataPhotos) {
     //   if (item.photo.isNotEmpty && item.text.isNotEmpty) {
     //     repairPhotos.add(CarPhotos(photo: item.photo, text: item.text));
     //   }
     // }
-    for (var item in acquisitionInfo!.photos.DataPhotos) {
-      if (item.Photo.isNotEmpty && item.Text.isNotEmpty) {
-        dataPhotos.add(CarPhotos(photo: item.Photo, text: item.Text));
+    for (var item in acquisitionInfo!.photos.carPhotos) {
+      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+        carPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
     }
-    // for (int i = 0; i < carInfoModel!.carInfo.dataPhotos.length; i++) {
+    for (var item in acquisitionInfo!.photos.dataPhotos) {
+      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+        dataPhotos.add(CarPhotos(photo: item.photo, text: item.text));
+      }
+    }
+    // for (int i = 0; i < acquisitionInfo!.photos.dataPhotos.length; i++) {
     //   for (int j = 0; j < dataPhotos.length; j++) {
     //     if (dataPhotos[j].text ==
-    //         carInfoModel!.carInfo.dataPhotos[i].text) {
-    //       if (carInfoModel!.carInfo.dataPhotos[i].photo != '') {
+    //         acquisitionInfo!.photos.dataPhotos[i].text) {
+    //       if (acquisitionInfo!.photos.dataPhotos[i].photo != '') {
     //         dataPhotos[j].photo =
-    //             carInfoModel!.carInfo.dataPhotos[i].photo;
+    //             acquisitionInfo!.photos.dataPhotos[i].photo;
     //       } else {
     //         dataPhotos.removeAt(j);
     //       }
@@ -95,6 +101,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
     //     }
     //   }
     // }
+
     pushPhotoModel = PushPhotoModel(
       carPhotos: carPhotos,
       interiorPhotos: [],
@@ -104,7 +111,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
     );
 
     reportPhotoModel = ReportPhotoModel(paints: dataPhotos);
-
+   // print(pushPhotoModel);
     if (mounted) {
       setState(() {});
     }
@@ -114,7 +121,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
   void initState() {
     Future.delayed(const Duration(seconds: 0), () {
       _refresh();
-      setState((){});
+      setState(() {});
     });
     super.initState();
   }
@@ -211,9 +218,12 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                     16.hb,
                     _getTitle(
                         '交付日期',
-                    acquisitionInfo?.priceInfo.deliverDate!=null? DateUtil.formatDateMs(
-                            acquisitionInfo!.priceInfo.deliverDate.toInt() * 1000,
-                            format: 'yyyy年MM月dd日 '):''),
+                        acquisitionInfo?.priceInfo.deliverDate != null
+                            ? DateUtil.formatDateMs(
+                                acquisitionInfo!.priceInfo.deliverDate.toInt() *
+                                    1000,
+                                format: 'yyyy年MM月dd日 ')
+                            : ''),
                   ],
                 )),
                 _gexFramework(Column(
@@ -289,32 +299,65 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                           )
                   ],
                 )),
-                ContractStatus.getValueAuditId(acquisitionInfo!.status)
-                            .typeNum ==
-                        3
-                    ? GestureDetector(
-                  onTap: (){
-                    Get.to(()=> ViewFilePage(url: widget.url!=''?'${API.imageHost}/${widget.url}':'', title: '收购合同',));
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => ViewFilePage(
+                      url: widget.url != ''
+                          ? '${API.imageHost}/${widget.url}'
+                          : '',
+                      title: '收购合同',
+                    ));
                   },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 32.w, vertical: 16.w),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 228.w, vertical: 16.w),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF0593FF),
-                            borderRadius: BorderRadius.circular(8.w),
-                          ),
-                          child: Text(
-                            '查看附件',
-                            style: TextStyle(
-                                fontSize: 28.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          ),
-                        ),
-                      )
-                    : const SizedBox()
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(
+                        horizontal: 32.w, vertical: 16.w),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 228.w, vertical: 16.w),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF0593FF),
+                      borderRadius: BorderRadius.circular(8.w),
+                    ),
+                    child: Text(
+                      '查看附件',
+                      style: TextStyle(
+                          fontSize: 28.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ),
+                )
+                // ContractStatus.getValue(acquisitionInfo!.status).typeNum==12
+                //     ?
+                //
+                // GestureDetector(
+                //         onTap: () {
+                //           Get.to(() => ViewFilePage(
+                //                 url: widget.url != ''
+                //                     ? '${API.imageHost}/${widget.url}'
+                //                     : '',
+                //                 title: '收购合同',
+                //               ));
+                //         },
+                //         child: Container(
+                //           margin: EdgeInsets.symmetric(
+                //               horizontal: 32.w, vertical: 16.w),
+                //           padding: EdgeInsets.symmetric(
+                //               horizontal: 228.w, vertical: 16.w),
+                //           decoration: BoxDecoration(
+                //             color: const Color(0xFF0593FF),
+                //             borderRadius: BorderRadius.circular(8.w),
+                //           ),
+                //           child: Text(
+                //             '查看附件',
+                //             style: TextStyle(
+                //                 fontSize: 28.sp,
+                //                 fontWeight: FontWeight.w600,
+                //                 color: Colors.white),
+                //           ),
+                //         ),
+                //       )
+                //     : const SizedBox()
               ],
             ),
             bottomNavigationBar: Container(
@@ -323,9 +366,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                   border:
                       Border.all(width: 1.w, color: const Color(0xFFEEEEEE)),
                   color: Colors.white),
-              height: ContractStatus.getValueAuditId(acquisitionInfo!.status)
-                          .typeNum !=
-                      3
+              height: ContractStatus.getValue(acquisitionInfo!.status).typeNum!=2
                   ? 160.w
                   : 200.w, //double.infinity,
               child: getBottomState(),
@@ -335,7 +376,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
 
   getBottomState() {
     return widget.status == 1
-        ? ContractStatus.getValueAuditId(acquisitionInfo!.status).typeNum == 1
+        ? ContractStatus.getValue(acquisitionInfo!.status).typeNum == 11
             ? Row(
                 children: [
                   getContact(),
@@ -416,9 +457,8 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ContractStatus.getValueAuditId(acquisitionInfo!.status)
-                                .typeNum ==
-                            2
+                    ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
+                            12
                         ? 32.hb
                         : 0.hb,
                     Row(
@@ -426,17 +466,13 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                         getContact(),
                         const Spacer(),
                         Text(
-                          ContractStatus.getValueAuditId(
-                                          acquisitionInfo!.status)
-                                      .typeNum ==
-                                  2
+                          ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
+                                  12
                               ? "已同意"
                               : '已驳回',
                           style: TextStyle(
-                              color: ContractStatus.getValueAuditId(
-                                              acquisitionInfo!.status)
-                                          .typeNum ==
-                                      2
+                              color: ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
+                                      12
                                   ? const Color(0xFF027AFF)
                                   : const Color(0xFFFF3B02),
                               fontSize: 28.sp,
@@ -446,9 +482,8 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                     ),
                     // const Spacer(),
                     8.hb,
-                    ContractStatus.getValueAuditId(acquisitionInfo!.status)
-                                .typeNum ==
-                            2
+                    ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
+                            12
                         ? const SizedBox()
                         : Flexible(
                             child: Text(
@@ -479,9 +514,8 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ContractStatus.getValueAuditId(acquisitionInfo!.status)
-                            .typeNum ==
-                        2
+                ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
+                        12
                     ? 32.hb
                     : 0.hb,
                 Row(
@@ -489,7 +523,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                     getContact(),
                     const Spacer(),
                     Text(
-                      getText(acquisitionInfo!.status),
+                      ContractStatus.getValue(acquisitionInfo!.status).typeStr,
                       style: TextStyle(
                           color: getColor(acquisitionInfo!.status),
                           fontSize: 28.sp,
@@ -499,19 +533,19 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                 ),
                 // const Spacer(),
                 8.hb,
-                ContractStatus.getValueAuditId(acquisitionInfo!.status)
-                                .typeNum ==
+                ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
+                            3 ||
+                    ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
                             4 ||
-                        ContractStatus.getValueAuditId(acquisitionInfo!.status)
-                                .typeNum ==
-                            5
+                    ContractStatus.getValue(acquisitionInfo!.status).typeNum == 5
+                 || ContractStatus.getValue(acquisitionInfo!.status).typeNum == 6||
+                    ContractStatus.getValue(acquisitionInfo!.status).typeNum == 13
+
                     ? const SizedBox()
                     : Flexible(
                         child: Text(
-                          ContractStatus.getValueAuditId(
-                                          acquisitionInfo!.status)
-                                      .typeNum ==
-                                  4
+                          ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
+                                  13
                               ? '驳回理由:${acquisitionInfo!.dealerAuditInfo.dealerRejectReason}'
                               : '失败理由:${acquisitionInfo!.dealerAuditInfo.dealerRejectReason}',
                           style: TextStyle(
@@ -588,7 +622,6 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
       //   photos = repairPhotos;
       //   break;
     }
-
     for (int i = 0; i < photos.length; i++) {
       if (photos[i].photo != null && photos[i].photo != '') {
         firstPhoto = photos[i].photo!;
@@ -597,10 +630,11 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
     }
     return GestureDetector(
       onTap: () async {
+        // CloudToast.show(pushPhotoModel.carPhotos?[2].text ?? '没有数据');
         await Get.to(
           PushCarManagePhotoPage(
             isSelf: true,
-
+            consignmentPhoto: true,
             ///widget.carListModel.isSelf == 1,
             tabs: _titles,
             model: pushPhotoModel,
@@ -674,37 +708,37 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
     );
   }
 
-  getText(int status) {
-    if (UserTool.userProvider.userInfo.business.roleEM == Role.manager) {
-      switch (ContractStatus.getValueAuditId(status).typeNum) {
-        case 2:
-          return '待签订';
-        case 3:
-          return '客户已签订';
-        case 4:
-          return '已驳回';
-        case 5:
-          return '签订失败';
-      }
-    } else {
-      switch (ContractStatus.getValueAuditId(status).typeNum) {
-        case 1:
-          return '待审批';
-        case 2:
-          return '待签订';
-        case 3:
-          return '客户已签订';
-        case 4:
-          return '已驳回';
-        case 5:
-          return '签订失败';
-      }
-    }
-  }
+  // getText(int status) {
+  //   if (UserTool.userProvider.userInfo.business.roleEM == Role.manager) {
+  //     switch (ContractStatus.getValueAuditId(status).typeNum) {
+  //       case 2:
+  //         return '待签订';
+  //       case 3:
+  //         return '客户已签订';
+  //       case 4:
+  //         return '已驳回';
+  //       case 5:
+  //         return '签订失败';
+  //     }
+  //   } else {
+  //     switch (ContractStatus.getValueAuditId(status).typeNum) {
+  //       case 1:
+  //         return '待审批';
+  //       case 2:
+  //         return '待签订';
+  //       case 3:
+  //         return '客户已签订';
+  //       case 4:
+  //         return '已驳回';
+  //       case 5:
+  //         return '签订失败';
+  //     }
+  //   }
+  // }
 
   getColor(int status) {
     if (UserTool.userProvider.userInfo.business.roleEM == Role.manager) {
-      switch (ContractStatus.getValueAuditId(status).typeNum) {
+      switch (ContractStatus.getValue(acquisitionInfo!.status).typeNum) {
         case 2:
           return const Color(0xFFFE8029);
         case 3:
@@ -713,9 +747,11 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
           return const Color(0xFFFF3B02);
         case 5:
           return const Color(0xFFFF3B02);
+        default:
+          return  const Color(0xFFFE8029);
       }
     } else {
-      switch (ContractStatus.getValueAuditId(status).typeNum) {
+      switch (ContractStatus.getValue(acquisitionInfo!.status).typeNum) {
         case 1:
           return const Color(0xFFFE8029);
         case 2:
@@ -726,6 +762,8 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
           return const Color(0xFFFF3B02);
         case 5:
           return const Color(0xFFFF3B02);
+        default:
+          return  const Color(0xFFFE8029);
       }
     }
   }

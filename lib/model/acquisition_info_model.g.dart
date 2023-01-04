@@ -145,17 +145,17 @@ Map<String, dynamic> _$PriceInfoToJson(PriceInfo instance) => <String, dynamic>{
     };
 
 Photos _$PhotosFromJson(Map<String, dynamic> json) => Photos(
-      CarPhotos: (json['CarPhotos'] as List<dynamic>)
+      carPhotos: (json['carPhotos'] as List<dynamic>)
           .map((e) => ImagePhotos.fromJson(e as Map<String, dynamic>))
           .toList(),
-      DataPhotos: (json['DataPhotos'] as List<dynamic>)
+      dataPhotos: (json['dataPhotos'] as List<dynamic>)
           .map((e) => ImagePhotos.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$PhotosToJson(Photos instance) => <String, dynamic>{
-      'CarPhotos': instance.CarPhotos,
-      'DataPhotos': instance.DataPhotos,
+      'carPhotos': instance.carPhotos,
+      'dataPhotos': instance.dataPhotos,
     };
 
 DealerAuditInfo _$DealerAuditInfoFromJson(Map<String, dynamic> json) =>

@@ -237,22 +237,22 @@ class PriceInfo extends Equatable {
 
 @JsonSerializable()
 class Photos extends Equatable {
-  final List<ImagePhotos> CarPhotos;
-  final List<ImagePhotos> DataPhotos;
+  final List<ImagePhotos> carPhotos;
+  final List<ImagePhotos> dataPhotos;
 
   factory Photos.fromJson(Map<String, dynamic> json) => _$PhotosFromJson(json);
 
   Map<String, dynamic> toJson() => _$PhotosToJson(this);
 
   const Photos({
-    required this.CarPhotos,
-    required this.DataPhotos,
+    required this.carPhotos,
+    required this.dataPhotos,
   });
 
   @override
   List<Object?> get props => [
-        CarPhotos,
-        DataPhotos,
+    carPhotos,
+    dataPhotos,
       ];
 }
 

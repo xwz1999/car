@@ -17,6 +17,7 @@ import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../utils/toast/cloud_toast.dart';
 import '../../../widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 import '../car_manager/direct_sale/car_image_page.dart';
 ///再带个个人与公司
@@ -167,10 +168,13 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
           20.hb,
           CloudBottomButton(
             onTap: () async{
-              await uploadPhotos();
+              CloudToast.loading;
               if (!canTap) {
                 return;
               }
+              await uploadPhotos();
+              BotToast.closeAllLoading();
+              ///发起寄买合同
               // print(widget.purchaseInfo.transactionAmount);
               // print(widget.purchaseInfo.downPaymentAmount);
             var result = await  CarFunc.addPurchase(widget.purchaseCarInfo,widget.purchaseInfo,widget.reportPhotoModel,widget.legalName);

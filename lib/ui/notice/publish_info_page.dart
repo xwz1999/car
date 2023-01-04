@@ -152,23 +152,23 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     // print(carInfoModel!.carInfo);
     // collect = carInfoModel?.carInfo.collect ?? 0;
     for (var item in publishInfoModel.carPhotos) {
-      if (item.Photo.isNotEmpty && item.Text.isNotEmpty) {
-        carPhotos.add(CarPhotos(photo: item.Photo, text: item.Text));
+      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+        carPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
-      if (item.Photo.isNotEmpty && item.Text.isNotEmpty) {
+      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
         bannerList.add(item);
       }
     }
 
     for (var item in publishInfoModel.interiorPhotos) {
-      if (item.Photo.isNotEmpty && item.Text.isNotEmpty) {
-        interiorPhotos.add(CarPhotos(photo: item.Photo, text: item.Text));
+      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+        interiorPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
     }
 
     for (var item in publishInfoModel.defectPhotos) {
-      if (item.Photo.isNotEmpty && item.Text.isNotEmpty) {
-        defectPhotos.add(CarPhotos(photo: item.Photo, text: item.Text));
+      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+        defectPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
     }
     // for (var item in carInfoModel!.carInfo.dataPhotos) {
@@ -177,8 +177,8 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     //   }
     // }
     for (var item in publishInfoModel.dataPhotos) {
-      if (item.Photo.isNotEmpty && item.Text.isNotEmpty) {
-        dataPhotos.add(CarPhotos(photo: item.Photo, text: item.Text));
+      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+        dataPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
     }
     // for (int i = 0; i < carInfoModel!.carInfo.dataPhotos.length; i++) {
@@ -1410,7 +1410,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
       itemBuilder: (context, index) {
         return CloudImageNetworkWidget.car(
           borderRadius: BorderRadius.circular(10.w),
-          urls: [bannerList[index].Photo],
+          urls: [bannerList[index].photo],
         );
       },
       //自动翻页

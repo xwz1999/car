@@ -4,6 +4,7 @@ import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/net_work/inner_model/base_list_model.dart';
+import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -61,8 +62,6 @@ class _SaleViewState extends State<SaleView>
           item: _releaseCarStatus.typeStr,
         ),
         Expanded(child:
-
-
         widget.status == 1 &&
             UserTool.userProvider.userInfo.business.roleEM !=
                 Role.manager &&
@@ -124,10 +123,8 @@ class _SaleViewState extends State<SaleView>
                         Get.to(() =>
                             ExaminationDetails(
                               auditState:
-                              ContractStatus
-                                  .getValueAuditId(model.status)
-                                  .typeNum,
-                              modelId: model.id, status: widget.status,
+                              ContractStatus.getValue(model.status).typeNum,
+                              modelId: model.id, status: widget.status, url: model.essFileUrl,
                             ));
                         // print("这是数据");
                       },
@@ -141,7 +138,7 @@ class _SaleViewState extends State<SaleView>
                           model.customerName,
                           model.status != 1
                               ? '/'
-                              : DateUtil.formatDateMs(model.signAt.toInt() *
+                              : DateUtil.formatDateMs(model.createdAt.toInt() *
                               1000,
                               format: 'yyyy-MM-dd'),
                         ),
@@ -268,17 +265,27 @@ class _SaleViewState extends State<SaleView>
   }
 
   getUrl(int status) {
-    switch (ContractStatus
-        .getValueAuditId(status)
-        .typeNum) {
+    switch (ContractStatus.getValue(status).typeNum) {
       case 1:
-        return Assets.images.wait.path;
-      case 2:
         return Assets.images.signed.path;
-      case 3:
+      case 2:
         return Assets.images.sign.path;
+      case 3:
+        return Assets.images.failure.path;
       case 4:
         return Assets.images.failure.path;
+      case 5:
+        return Assets.images.failure.path;
+      case 6:
+        return Assets.images.failure.path;
+      case 11:
+        return Assets.images.wait.path;
+      case 12:
+        return Assets.images.signed.path;
+      case 13:
+        return Assets.images.wait.path;
+      default:
+        return Assets.images.signed.path;
     }
   }
 

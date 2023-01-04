@@ -334,9 +334,9 @@ int index=0;
       case 2:
         return const Color(0xFF027AFF);
       case 3:
-        return const Color(0xFFFF3B02);
+        return const Color(0xFF027AFF);
       default:
-        return const Color(0xFFFE8029);
+        return const Color(0xFFFF3B02);
     }
   }
 

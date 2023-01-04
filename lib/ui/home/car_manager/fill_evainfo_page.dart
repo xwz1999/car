@@ -370,6 +370,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                         consignmentContractModel.value.useCharacter=widget.publishCarInfo.carNatureOfUse;
                         consignmentContractModel.value.licensePlate=widget.publishCarInfo.carName;
                         // consignmentContractModel.li
+
                         Get.to(() => CheckPushPage(
                               consignmentContractModel:
                                   consignmentContractModel,

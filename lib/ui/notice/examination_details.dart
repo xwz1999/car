@@ -1,5 +1,4 @@
-import 'package:cloud_car/ui/home/func/customer_func.dart';
-import 'package:cloud_car/ui/notice/sell_widget.dart';
+import 'package:cloud_car/ui/notice/view_file_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:common_utils/common_utils.dart';
@@ -25,7 +24,7 @@ class ExaminationDetails extends StatefulWidget {
   final int auditState;
   final int modelId;
   final int status;
-
+  final String url;
   ///判断入口
   const ExaminationDetails({
     super.key,
@@ -33,6 +32,7 @@ class ExaminationDetails extends StatefulWidget {
     required this.auditState,
     required this.modelId,
     required this.status,
+    required this.url,
   });
 
   @override
@@ -46,12 +46,13 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
 
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 0),()async{
+    Future.delayed(const Duration(seconds: 0), () async {
       saleInfo = await CarFunc.getSaleInfo(widget.modelId);
-      setState((){});
+      setState(() {});
     });
     super.initState();
   }
+
   @override
   void dispose() {
     rejectController.dispose();
@@ -60,8 +61,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        Scaffold(
+    return Scaffold(
       appBar: AppBar(
         leading: const CloudBackButton(
           isSpecial: true,
@@ -99,7 +99,8 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                         SizedBox(
                           width: 196.w,
                           height: 150.w,
-                          child:  CloudImageNetworkWidget.car(urls: [saleInfo?.baseInfo.mainPhoto ?? '']),
+                          child: CloudImageNetworkWidget.car(
+                              urls: [saleInfo?.baseInfo.mainPhoto ?? '']),
                         ),
                         20.wb,
                         SizedBox(
@@ -113,11 +114,13 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                               26.hb,
                               _getChip(
                                 '过户${saleInfo?.baseInfo.transfer ?? 0}次',
-                                saleInfo?.baseInfo.licensingData!=null?DateUtil.formatDateMs(
-                                      saleInfo!.baseInfo.licensingData.toInt() *
+                                saleInfo?.baseInfo.licensingData != null
+                                    ? DateUtil.formatDateMs(
+                                        saleInfo!.baseInfo.licensingData
+                                                .toInt() *
                                             1000,
-                                        format: 'yyyy年 '):'0年',
-
+                                        format: 'yyyy年 ')
+                                    : '0年',
                                 '${saleInfo?.baseInfo.mileage}万公里',
                               )
                             ],
@@ -196,19 +199,19 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
           _getTitle('备注', saleInfo?.baseInfo.remark ?? ''),
         ])),
         saleInfo?.thirdPartKind == 1
-            ?_gexFramework(
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                '居间方信息',
-                style: TextStyle(
-                    fontSize: 28.sp,
-                    color: const Color(0xFF333333),
-                    fontWeight: FontWeight.w800),
-              ),
-              32.hb,
-              _getTitle('居间方', '无'),
-            ])):
-        _gexFramework(
+            ? _gexFramework(
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(
+                  '居间方信息',
+                  style: TextStyle(
+                      fontSize: 28.sp,
+                      color: const Color(0xFF333333),
+                      fontWeight: FontWeight.w800),
+                ),
+                32.hb,
+                _getTitle('居间方', '无'),
+              ]))
+            : _gexFramework(
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(
                   '居间方信息',
@@ -229,14 +232,39 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                     '${saleInfo?.baseInfo.purchaseServiceFeeRate ?? ''}%'),
                 16.hb,
                 _getTitle('服务费金额', saleInfo?.baseInfo.purchaseServiceFee ?? ''),
-              ]))
-             ,
-      ])
+              ])),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => ViewFilePage(
+              url: widget.url != ''
+                  ? '${API.imageHost}/${widget.url}'
+                  : '',
+              title: '收购合同',
+            ));
+          },
+          child: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(
+                horizontal: 32.w, vertical: 16.w),
+            padding: EdgeInsets.symmetric(
+                horizontal: 228.w, vertical: 16.w),
+            decoration: BoxDecoration(
+              color: const Color(0xFF0593FF),
+              borderRadius: BorderRadius.circular(8.w),
+            ),
+            child: Text(
+              '查看附件',
+              style: TextStyle(
+                  fontSize: 28.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
+            ),
+          ),
+        )
+      ]),
       // SellWidget(
       //   customerDetail: customerDetail, saleId:widget.modelId ,
       // )
-
-      ,
       bottomNavigationBar: saleInfo == null
           ? const SizedBox()
           : Container(
@@ -245,10 +273,9 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                   border:
                       Border.all(width: 1.w, color: const Color(0xFFEEEEEE)),
                   color: Colors.white),
-              height:
-                  ContractStatus.getValueAuditId(widget.auditState).typeNum != 3
-                      ? 160.w
-                      : 200.w, //double.infinity,
+              height: ContractStatus.getValue(widget.auditState).typeNum != 2
+                  ? 160.w
+                  : 200.w, //double.infinity,
               child: getBottomState(),
             ),
     );
@@ -274,7 +301,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
 
   getBottomState() {
     return widget.status == 1
-        ? ContractStatus.getValueAuditId(saleInfo!.status).typeNum == 1
+        ? ContractStatus.getValue(widget.auditState).typeNum == 11
             ? Row(
                 children: [
                   getContact(),
@@ -354,8 +381,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ContractStatus.getValueAuditId(saleInfo!.status).typeNum ==
-                            2
+                    ContractStatus.getValue(widget.auditState).typeNum == 12
                         ? 32.hb
                         : 0.hb,
                     Row(
@@ -363,16 +389,14 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                         getContact(),
                         const Spacer(),
                         Text(
-                          ContractStatus.getValueAuditId(saleInfo!.status)
-                                      .typeNum ==
-                                  2
+                          ContractStatus.getValue(widget.auditState).typeNum ==
+                                  12
                               ? "已同意"
                               : '已驳回',
                           style: TextStyle(
-                              color: ContractStatus.getValueAuditId(
-                                              saleInfo!.status)
+                              color: ContractStatus.getValue(widget.auditState)
                                           .typeNum ==
-                                      2
+                                      12
                                   ? const Color(0xFF027AFF)
                                   : const Color(0xFFFF3B02),
                               fontSize: 28.sp,
@@ -382,8 +406,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                     ),
                     // const Spacer(),
                     8.hb,
-                    ContractStatus.getValueAuditId(saleInfo!.status).typeNum ==
-                            2
+                    ContractStatus.getValue(widget.auditState).typeNum == 12
                         ? const SizedBox()
                         : Flexible(
                             child: Text(
@@ -414,7 +437,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ContractStatus.getValueAuditId(saleInfo!.status).typeNum == 2
+                ContractStatus.getValue(widget.auditState).typeNum == 12
                     ? 32.hb
                     : 0.hb,
                 Row(
@@ -422,7 +445,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                     getContact(),
                     const Spacer(),
                     Text(
-                      getText(saleInfo!.status),
+                      ContractStatus.getValue(widget.auditState).typeStr,
                       style: TextStyle(
                           color: getColor(saleInfo!.status),
                           fontSize: 28.sp,
@@ -432,16 +455,19 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                 ),
                 // const Spacer(),
                 8.hb,
-                ContractStatus.getValueAuditId(saleInfo!.status).typeNum != 4 ||
-                        ContractStatus.getValueAuditId(saleInfo!.status)
-                                .typeNum !=
-                            5
+                ContractStatus.getValue(widget.auditState).typeNum != 3 ||
+                        ContractStatus.getValue(widget.auditState).typeNum !=
+                            5 ||
+                        ContractStatus.getValue(widget.auditState).typeNum !=
+                            4 ||
+                        ContractStatus.getValue(widget.auditState).typeNum !=
+                            6 ||
+                        ContractStatus.getValue(widget.auditState).typeNum != 13
                     ? const SizedBox()
                     : Flexible(
                         child: Text(
-                          ContractStatus.getValueAuditId(saleInfo!.status)
-                                      .typeNum ==
-                                  4
+                          ContractStatus.getValue(widget.auditState).typeNum ==
+                                  13
                               ? '驳回理由:${saleInfo?.dealerAuditInfo.deaerRejectReason}'
                               : '失败理由:${saleInfo?.dealerAuditInfo.deaerRejectReason}',
                           style: TextStyle(
@@ -466,34 +492,34 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
             ),
           );
   }
-
-  getText(int status) {
-    if (widget.status == 1) {
-      switch (ContractStatus.getValueAuditId(status).typeNum) {
-        case 2:
-          return '已通过';
-        case 4:
-          return '已驳回';
-        default:
-          return "";
-      }
-    } else {
-      switch (ContractStatus.getValueAuditId(status).typeNum) {
-        case 1:
-          return '待审批';
-        case 2:
-          return '已通过';
-        case 4:
-          return '已驳回';
-        default:
-          return "";
-      }
-    }
-  }
+  //
+  // getText(int status) {
+  //   if (widget.status == 1) {
+  //     switch (ContractStatus.getValueAuditId(status).typeNum) {
+  //       case 2:
+  //         return '已通过';
+  //       case 4:
+  //         return '已驳回';
+  //       default:
+  //         return "";
+  //     }
+  //   } else {
+  //     switch (ContractStatus.getValueAuditId(status).typeNum) {
+  //       case 1:
+  //         return '待审批';
+  //       case 2:
+  //         return '已通过';
+  //       case 4:
+  //         return '已驳回';
+  //       default:
+  //         return "";
+  //     }
+  //   }
+  // }
 
   getColor(int status) {
     if (widget.status == 1) {
-      switch (ContractStatus.getValueAuditId(status).typeNum) {
+      switch (ContractStatus.getValue(widget.auditState).typeNum) {
         case 2:
           return const Color(0xFF027AFF);
         case 4:
@@ -502,7 +528,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
           return const Color(0xFF027AFF);
       }
     } else {
-      switch (ContractStatus.getValueAuditId(status).typeNum) {
+      switch (ContractStatus.getValue(widget.auditState).typeNum) {
         case 1:
           return const Color(0xFFFE8029);
         case 2:

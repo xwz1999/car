@@ -195,8 +195,6 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
                       widget.consignmentContractModel.value.idBack==null) {
                     CloudToast.show('请先完善车主信息');
                   } else {
-
-
                     Get.to(() => ContractPurchase(
                           consignmentContractModel:
                               widget.consignmentContractModel,

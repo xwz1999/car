@@ -214,14 +214,14 @@ Map<String, dynamic> _$PhotosToJson(Photos instance) => <String, dynamic>{
     };
 
 ImagePhotos _$ImagePhotosFromJson(Map<String, dynamic> json) => ImagePhotos(
-      Photo: json['Photo'] as String,
-      Text: json['Text'] as String,
+      photo: json['photo'] as String,
+      text: json['text'] as String,
     );
 
 Map<String, dynamic> _$ImagePhotosToJson(ImagePhotos instance) =>
     <String, dynamic>{
-      'Photo': instance.Photo,
-      'Text': instance.Text,
+      'photo': instance.photo,
+      'text': instance.text,
     };
 
 CertificateInfo _$CertificateInfoFromJson(Map<String, dynamic> json) =>

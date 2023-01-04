@@ -27,16 +27,19 @@ class PushCarManagePhotoPage extends StatefulWidget {
   final int initIndex;
   final bool imgCanTap;
   final bool isSelf;
+  final bool consignmentPhoto;
 
-  const PushCarManagePhotoPage(
-      {super.key,
-      required this.tabs,
-      required this.model,
-      this.initIndex = 0,
-      this.imgCanTap = true,
-      // required this.reportPhotoModel,
-      this.newPublishCarInfo,
-      this.isSelf = false});
+  const PushCarManagePhotoPage({
+    super.key,
+    required this.tabs,
+    required this.model,
+    this.initIndex = 0,
+    this.imgCanTap = true,
+    // required this.reportPhotoModel,
+    this.newPublishCarInfo,
+    this.isSelf = false,
+    this.consignmentPhoto = false,
+  });
 
   @override
   _PushCarManagePhotoPageState createState() => _PushCarManagePhotoPageState();
@@ -65,38 +68,61 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         length: widget.tabs.length,
         vsync: this,
         initialIndex: widget.initIndex);
-
-    if (widget.imgCanTap) {
+    if (widget.consignmentPhoto) {
       _reportPhotos = [
-        PushImgModel(name: '漆面数据', isMust: true),
-        PushImgModel(name: '行驶证照片', isMust: true),
-        PushImgModel(name: '检测报告', isMust: true),
-        PushImgModel(name: '登记证书', isMust: true),
-        PushImgModel(name: '交强险', isMust: false),
-        PushImgModel(name: '商业险', isMust: false),
-        ///添加新数据
-        PushImgModel(name: '维保记录', isMust: false),
+        PushImgModel(
+          name: '行驶证',
+        ),
+        PushImgModel(name: '维修记录'),
+        PushImgModel(
+          name: '表显里程',
+        ),
+        PushImgModel(
+          name: '登记证书',
+        ),
+        PushImgModel(
+          name: '购置税发票',
+        ),
+        PushImgModel(
+          name: '年检凭证',
+        ),
+        // CarPhotos(
+        //   text: '维保记录',
+        // ),
       ];
     } else {
-      if (!widget.isSelf) {
+      if (widget.imgCanTap) {
         _reportPhotos = [
-          PushImgModel(name: '漆面数据', isMust: false),
-          PushImgModel(name: '检测报告', isMust: false),
-        ];
-      } else {
-        _reportPhotos = [
-          PushImgModel(name: '漆面数据', isMust: false),
-          PushImgModel(name: '行驶证照片', isMust: false),
-          PushImgModel(name: '检测报告', isMust: false),
-          PushImgModel(name: '登记证书', isMust: false),
+          PushImgModel(name: '漆面数据', isMust: true),
+          PushImgModel(name: '行驶证照片', isMust: true),
+          PushImgModel(name: '检测报告', isMust: true),
+          PushImgModel(name: '登记证书', isMust: true),
           PushImgModel(name: '交强险', isMust: false),
           PushImgModel(name: '商业险', isMust: false),
-          // ///添加新数据
-          // PushImgModel(name: '维保记录', isMust: false),
+
+          ///添加新数据
+          PushImgModel(name: '维保记录', isMust: false),
         ];
+      } else {
+        if (!widget.isSelf) {
+          _reportPhotos = [
+            PushImgModel(name: '漆面数据', isMust: false),
+            PushImgModel(name: '检测报告', isMust: false),
+          ];
+        } else {
+          _reportPhotos = [
+            PushImgModel(name: '漆面数据', isMust: false),
+            PushImgModel(name: '行驶证照片', isMust: false),
+            PushImgModel(name: '检测报告', isMust: false),
+            PushImgModel(name: '登记证书', isMust: false),
+            PushImgModel(name: '交强险', isMust: false),
+            PushImgModel(name: '商业险', isMust: false),
+            // ///添加新数据
+            // PushImgModel(name: '维保记录', isMust: false),
+          ];
+        }
       }
     }
-
     // for (int i = 0; i < widget.reportPhotoModel.paints!.length; i++) {
     //   for (int j = 0; j < _reportPhotos.length; j++) {
     //     if (_reportPhotos[j].name == widget.reportPhotoModel.paints![i].text) {
@@ -278,15 +304,22 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
           automaticIndicatorColorAdjustment: false,
           indicatorColor: Colors.transparent,
           tabs: widget.tabs.map((e) => Tab(text: e)).toList()),
-      body: TabBarView(controller: _tabController, children: [
-        _getView1(0, _carPhotos),
-        _getView1(1, _interiorPhotos),
-        _getView1(2, _defectPhotos),
-        // _getView1(3, _reportPhotos),
-        _getView(4, _reportPhotos)
-        // _getView(3, _reportPhotos),
-        // _getView1(4, _repairPhotos)
-      ]),
+      body: widget.consignmentPhoto
+          ? TabBarView(controller: _tabController, children: [
+              _getView1(0, _carPhotos),
+              _getView(1, _reportPhotos),
+              // _getView(3, _reportPhotos),
+              // _getView1(4, _repairPhotos)
+            ])
+          : TabBarView(controller: _tabController, children: [
+              _getView1(0, _carPhotos),
+              _getView1(1, _interiorPhotos),
+              _getView1(2, _defectPhotos),
+              // _getView1(3, _reportPhotos),
+              _getView(4, _reportPhotos)
+              // _getView(3, _reportPhotos),
+              // _getView1(4, _repairPhotos)
+            ]),
       bottomNavi: widget.imgCanTap
           ? Container(
               margin: EdgeInsets.only(bottom: 40.w),
@@ -409,7 +442,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         child: Column(
           children: [
             /// model.url == null || model.url == '' ||
-           model.url == null || model.url == ''
+            model.url == null || model.url == ''
                 ? Container(
                     width: 210.w,
                     height: 158.w,

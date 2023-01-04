@@ -20,6 +20,8 @@ class ChooseWidget<T> extends StatefulWidget {
 }
 
 class _ChooseWidgetState extends State<ChooseWidget> {
+  late  String text='';
+
   @override
   Widget build(BuildContext context) {
     return widget.carState
@@ -38,7 +40,10 @@ class _ChooseWidgetState extends State<ChooseWidget> {
                   (e, index) => SizedBox(
                       // height: 88.w,
                       child: GestureDetector(
-                    onTap: () => widget.callBack(index),
+                    onTap: () {
+                      widget.callBack(index);
+                      text = e;
+                    },
                     child: Container(
                         color: Colors.white,
                         alignment: Alignment.center,

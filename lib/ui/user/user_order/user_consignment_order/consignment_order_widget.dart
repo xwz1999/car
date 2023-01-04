@@ -205,7 +205,7 @@ class _ConsignmentOrderWidgetState extends State<ConsignmentOrderWidget> {
                                 DateUtil.formatDateMs(
                                     model.licensingDate.toInt() * 1000,
                                     format: 'yyyy年MM月'),
-                                '${model.mileage}万公里'),
+                                '${num.parse(model.mileage)/10000}万公里'),
                           )
                         ],
                       ),

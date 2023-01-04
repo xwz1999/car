@@ -409,23 +409,23 @@ class Photos extends Equatable {
 
 @JsonSerializable()
 class ImagePhotos extends Equatable {
-  final String Photo;
-  final String Text;
+  final String photo;
+  final String text;
 
   factory ImagePhotos.fromJson(Map<String, dynamic> json) =>
       _$ImagePhotosFromJson(json);
 
   @override
   List<Object?> get props => [
-        Photo,
-        Text,
+        photo,
+        text,
       ];
 
   Map<String, dynamic> toJson() => _$ImagePhotosToJson(this);
 
   const ImagePhotos({
-    required this.Photo,
-    required this.Text,
+    required this.photo,
+    required this.text,
   });
 }
 

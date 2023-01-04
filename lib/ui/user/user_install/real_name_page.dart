@@ -4,6 +4,7 @@ import 'package:bot_toast/bot_toast.dart';
 
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../model/user/real_name_model.dart';
 import '../../../utils/net_work/api_client.dart';
+
 // import 'package:aliyun_face_plugin/aliyun_face_plugin.dart';
 import '../../../utils/toast/cloud_toast.dart';
 import '../../../widget/button/cloud_back_button.dart';
@@ -31,6 +33,7 @@ class RealNamePage extends StatefulWidget {
 class _RealNamePageState extends State<RealNamePage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController idController = TextEditingController();
+
   // final _aliyunFacePlugin = AliyunFacePlugin();
   String _infos = 'Unknown';
   List<dynamic>? data;
@@ -88,6 +91,19 @@ class _RealNamePageState extends State<RealNamePage> {
             CloudBottomButton(
                 text: '提交',
                 onTap: () async {
+                  // await LaunchApp.openApp(
+                  //     androidPackageName: 'com.eg.android.AlipayGphone',
+                  //     iosUrlScheme: 'pulsesecure://',
+                  //     // appStoreLink: 'itms-apps://itunes.apple.com/us/app/pulse-secure/id945832041',
+                  //     openStore: true,
+                  //     appStoreLink:
+                  // const MethodChannel _channel =
+                  //     MethodChannel('flutterChannel');
+                  // Get.to(() => _channel.invokeMethod("jumpToAliMini", {
+                  //       "path":
+                  //           '{code: 0, msg: 操作成功, data: {certifyId: 6c40dd580c345f2d10892846223a071e, '
+                  //               'url: https://openapi.alipay.com/gateway.do?app_id=2021003124660277&biz_content=%7B%22certify_id%22%3A%226c40dd580c345f2d10892846223a071e%22%7D&charset=utf-8&format=JSON&method=alipay.user.certify.open.certify&sign=ROrR4z18uRT2OvuulZ2AL4YW5NgtQQHDv6FTyraNPhOPoIqup7nCB3hPn56IWKZvCXtv76LnrAdQS38Qls7qXRpskseF9bdglTIk%2Fl3Rr%2B8y3n%2BdEI1kaALBuwC%2BzMNiIbDEurExgDkVIOYE8IbBPBjz1aPLXJXySdAwNianhK76yIzqdF1wilakHCNwyWPNdb3a11pUijZyIIQbeA2zZaACsf8STEyKf7FHUDaQSCx2WNrb%2BMsHlPUTJMp0mpQwOFryhoBN7hSF16zWxHeZsXuR%2B%2FUTLYgGSQxil46O9%2B1lIJ0rv%2FozBcl0DNAAREZ9k6cZuDuRZRvF9%2B3Rq%2FllhA%3D%3D&sign_type=RSA2&timestamp=2022-12-22+10%3A11%3A26&version=1.0}}'
+                  //     }));
                   if (_getSure) {
                     var res = await User.getAil(
                       nameController.text,
@@ -96,46 +112,51 @@ class _RealNamePageState extends State<RealNamePage> {
                       urls2,
                     );
                     if (res != null) {
-                      launchUrl(Uri.parse(res.url),mode: LaunchMode.externalNonBrowserApplication,);
-                      // launchUrl(Uri.parse(res.url));
-                    }
-                    //res!.certifyId
-                    // startVerify();
-                    // if(res!=null){
-                    //   var re = await PayUtil().callAliPay(res!.url);
-                    //   if (re) {
-                    //     CloudToast.show('成功');
-                    //     // _paySuccess();
-                    //   } else {
-                    //     BotToast.closeAllLoading();
-                    //   }
-                    //   // launchUrl(Uri.parse(res.url));
-                    // }
 
-                    // apiClient.request(API.user.ail.certifyAil,data: {
-                    //   'name':nameController.text,
-                    //   'idCard':idController.text,
-                    //   'idCardFront':urls,
-                    //   'idCardBack':urls2,
-                    // });
-                    // if (res.code != 0) {
-                    //   CloudToast.show(res.msg);
-                    // } else {
-                    //   // launchUrl();
-                    //   // var model=await apiClient.request(API.user.ail.ailResult,);
-                    //   // CloudToast.show(model.msg);
-                    //   return true;
-                    // }
+                      launchUrl(
+                        Uri.parse(res.url,),
+                        mode: LaunchMode.externalNonBrowserApplication,
+                      );
+                  //     // launchUrl(Uri.parse(res.url));
+                  //   }
+                  //   //res!.certifyId
+                  //   // startVerify();
+                  //   // if(res!=null){
+                  //   //   var re = await PayUtil().callAliPay(res!.url);
+                  //   //   if (re) {
+                  //   //     CloudToast.show('成功');
+                  //   //     // _paySuccess();
+                  //   //   } else {
+                  //   //     BotToast.closeAllLoading();
+                  //   //   }
+                  //   //   // launchUrl(Uri.parse(res.url));
+                  //   // }
+                  //
+                  //   // apiClient.request(API.user.ail.certifyAil,data: {
+                  //   //   'name':nameController.text,
+                  //   //   'idCard':idController.text,
+                  //   //   'idCardFront':urls,
+                  //   //   'idCardBack':urls2,
+                  //   // });
+                  //   // if (res.code != 0) {
+                  //   //   CloudToast.show(res.msg);
+                  //   // } else {
+                  //   //   // launchUrl();
+                  //   //   // var model=await apiClient.request(API.user.ail.ailResult,);
+                  //   //   // CloudToast.show(model.msg);
+                  //   //   return true;
+                  //   // }
                   } else {
                     BotToast.showText(text: '请同意实名认证协议');
                   }
                   //Get.to(() => const NoWithddrawalPage());
-                }),
+                }}),
             36.hb,
             getBottom()
           ],
         ));
   }
+
   //
   // Future<void> getMetaInfos() async {
   //   String metainfos;

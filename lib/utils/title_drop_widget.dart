@@ -73,7 +73,6 @@ class TitleScreenControl {
       rotateState = rotateState.map((e) => false).toList();
     }
   }
-
   //显示
   void screenShow() {
     _controller.forward();

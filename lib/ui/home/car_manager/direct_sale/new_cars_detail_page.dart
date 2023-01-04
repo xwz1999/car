@@ -110,39 +110,39 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
     _chooseModels.add(widget.carListModel);
 
-    if (widget.carListModel.isSelf == 1) {
-      dataPhotos = [
-        CarPhotos(
-          text: '漆面数据',
-        ),
-        CarPhotos(text: '行驶证照片'),
-        CarPhotos(
-          text: '检测报告',
-        ),
-        CarPhotos(
-          text: '登记证书',
-        ),
-        CarPhotos(
-          text: '交强险',
-        ),
-        CarPhotos(
-          text: '商业险',
-        ),
-        // CarPhotos(
-        //   text: '维保记录',
-        // ),
-      ];
-    } else {
-      dataPhotos = [
-        CarPhotos(
-          text: '漆面数据',
-        ),
-        CarPhotos(
-          text: '检测报告',
-        ),
-      ];
+      if (widget.carListModel.isSelf == 1) {
+        dataPhotos = [
+          CarPhotos(
+            text: '漆面数据',
+          ),
+          CarPhotos(text: '行驶证照片'),
+          CarPhotos(
+            text: '检测报告',
+          ),
+          CarPhotos(
+            text: '登记证书',
+          ),
+          CarPhotos(
+            text: '交强险',
+          ),
+          CarPhotos(
+            text: '商业险',
+          ),
+          // CarPhotos(
+          //   text: '维保记录',
+          // ),
+        ];
+      } else {
+        dataPhotos = [
+          CarPhotos(
+            text: '漆面数据',
+          ),
+          CarPhotos(
+            text: '检测报告',
+          ),
+        ];
+      }
     }
-  }
 
   _refresh() async {
     carInfoModel = await CarFunc.getNewCarInfo(widget.carListModel.id);

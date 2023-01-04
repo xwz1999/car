@@ -98,13 +98,17 @@ class _ConsignmentViewState extends State<ConsignmentView>
               //   child: 10.hb,
               // ),
 
-
               SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                 var model = widget.consignmentList[index];
                 return GestureDetector(
                   onTap: () async {
-                    Get.to(()=> ViewFilePage(title:'', url: model.essFileUrl!=''?'${API.imageHost}/${model.essFileUrl}':'',));
+                    Get.to(() => ViewFilePage(
+                          title: '',
+                          url: model.essFileUrl != ''
+                              ? '${API.imageHost}/${model.essFileUrl}'
+                              : '',
+                        ));
                     // core.download(url, options);
                     // var docPath=await getApplicationDocumentsDirectory();
                     // String _localPath='${docPath.path}${Platform.pathSeparator}download';
@@ -239,17 +243,27 @@ class _ConsignmentViewState extends State<ConsignmentView>
   }
 
   getUrl(int status) {
-    switch (ContractStatus.getValueAuditId(status).typeNum) {
+    switch (ContractStatus.getValue(status).typeNum) {
       case 1:
-        return Assets.images.wait.path;
-      case 2:
         return Assets.images.signed.path;
-      case 3:
+      case 2:
         return Assets.images.sign.path;
+      case 3:
+        return Assets.images.failure.path;
       case 4:
         return Assets.images.failure.path;
       case 5:
         return Assets.images.failure.path;
+      case 6:
+        return Assets.images.failure.path;
+      case 11:
+        return Assets.images.wait.path;
+      case 12:
+        return Assets.images.signed.path;
+      case 13:
+        return Assets.images.wait.path;
+      default:
+        return Assets.images.signed.path;
     }
   }
 

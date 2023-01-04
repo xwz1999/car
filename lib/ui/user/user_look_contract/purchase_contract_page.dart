@@ -150,10 +150,10 @@ class _PurchaseContractPageState extends State<PurchaseContractPage>
                                 '收车合同（${model.contractSn}）',
                                 model.modelName,
                                 model.customerName,
-                                model.status != 1
+                                model.createdAt<0
                                     ? '/'
                                     : DateUtil.formatDateMs(
-                                        model.signAt.toInt() * 1000,
+                                        model.createdAt.toInt() * 1000,
                                         format: 'yyyy-MM-dd'),
                               ),
                             ),
@@ -266,17 +266,27 @@ class _PurchaseContractPageState extends State<PurchaseContractPage>
   }
 
   getUrl(int status) {
-    switch (ContractStatus.getValueAuditId(status).typeNum) {
+    switch (ContractStatus.getValue(status).typeNum) {
       case 1:
-        return Assets.images.wait.path;
-      case 2:
         return Assets.images.signed.path;
-      case 3:
+      case 2:
         return Assets.images.sign.path;
+      case 3:
+        return Assets.images.failure.path;
       case 4:
         return Assets.images.failure.path;
-      case 0:
+      case 5:
+        return Assets.images.failure.path;
+      case 6:
+        return Assets.images.failure.path;
+      case 11:
         return Assets.images.wait.path;
+      case 12:
+        return Assets.images.signed.path;
+      case 13:
+        return Assets.images.wait.path;
+      default:
+        return Assets.images.signed.path;
     }
   }
 

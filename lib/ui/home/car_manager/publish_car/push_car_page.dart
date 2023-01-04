@@ -248,11 +248,12 @@ class _PushCarPageState extends State<PushCarPage> {
                                 var res=await SortFunc.getVinCheck(_viNumController.text);
                                 if(res?.isLegal==0){
                                   CloudToast.show(res!.message);
-                                  return ;
+                                  return;
                                 }
                                 if (!canTap) {
                                   return;
                                 }
+
                                 Get.to(() => FillEvainfoPage(
                                       publishCarInfo: _publishCarInfo,
                                     ));
@@ -300,6 +301,9 @@ class _PushCarPageState extends State<PushCarPage> {
       controller: _carNumController,
       topIcon: false,
       paddingStart: 0.5,
+        callback:(text){
+          _publishCarInfo.carNum =text;
+        }
     );
     // var version = _textarea(
     //     '发动机号',
