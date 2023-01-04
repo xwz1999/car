@@ -47,38 +47,45 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
-  late final List<KingCoin> _kingCoinList = [];
+   final _kingCoinList = <KingCoin>[
+    KingCoin(name: '车辆管理', url: Assets.icons.carManager.path),
+    KingCoin(name: '客户管理', url: Assets.icons.customerManager.path),
+    KingCoin(name: '车辆寄卖', url: Assets.icons.carConsignment.path),
+    KingCoin(name: '车辆发布', url: Assets.icons.carPush.path),
+    KingCoin(name: '车险报价', url: Assets.icons.carMortgage.path),
+    KingCoin(name: '车辆收购', url: Assets.icons.carCquisition.path),
+    KingCoin(name: '维保查询', url: Assets.icons.carMaintain.path),
+    KingCoin(name: '收车合作', url: Assets.icons.carRecovery.path)
+  ];
 
   late final EasyRefreshController _refreshController = EasyRefreshController();
-
   //网络图片转u8list
   ScreenshotController screenshotController = ScreenshotController();
-
   //海报列表 默认显示前10个
   List<PosterListModel> _posterList = [];
 
   //快速分享列表
   List<CarListModel> _shareCarList = [];
 
-  @override
-  void initState() {
-    super.initState();
-    _kingCoinList
-        .add(KingCoin(name: '车辆管理', url: Assets.icons.carManager.path));
-    _kingCoinList
-        .add(KingCoin(name: '客户管理', url: Assets.icons.customerManager.path));
-    _kingCoinList
-        .add(KingCoin(name: '车辆寄卖', url: Assets.icons.carConsignment.path));
-    _kingCoinList.add(KingCoin(name: '车辆发布', url: Assets.icons.carPush.path));
-    _kingCoinList
-        .add(KingCoin(name: '车险报价', url: Assets.icons.carMortgage.path));
-    _kingCoinList
-        .add(KingCoin(name: '车辆收购', url: Assets.icons.carCquisition.path));
-    _kingCoinList
-        .add(KingCoin(name: '维保查询', url: Assets.icons.carMaintain.path));
-    _kingCoinList
-        .add(KingCoin(name: '收车合作', url: Assets.icons.carRecovery.path));
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // _kingCoinList
+  //   //     .add(KingCoin(name: '车辆管理', url: Assets.icons.carManager.path));
+  //   // _kingCoinList
+  //   //     .add(KingCoin(name: '客户管理', url: Assets.icons.customerManager.path));
+  //   // _kingCoinList
+  //   //     .add(KingCoin(name: '车辆寄卖', url: Assets.icons.carConsignment.path));
+  //   // _kingCoinList.add(KingCoin(name: '车辆发布', url: Assets.icons.carPush.path));
+  //   // _kingCoinList
+  //   //     .add(KingCoin(name: '车险报价', url: Assets.icons.carMortgage.path));
+  //   // _kingCoinList
+  //   //     .add(KingCoin(name: '车辆收购', url: Assets.icons.carCquisition.path));
+  //   // _kingCoinList
+  //   //     .add(KingCoin(name: '维保查询', url: Assets.icons.carMaintain.path));
+  //   // _kingCoinList
+  //   //     .add(KingCoin(name: '收车合作', url: Assets.icons.carRecovery.path));
+  // }
 
   @override
   void dispose() {

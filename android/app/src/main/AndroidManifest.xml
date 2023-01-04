@@ -1,8 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.cloud.car.cloud_car">
-    <queries>
-        <package android:name="net.pulsesecure.pulsesecure" />
-    </queries>
     <application
             android:label="云云问车"
             android:name="${applicationName}"
@@ -29,8 +26,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-                <category android:name="android.intent.category.HOME"/>
-                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
