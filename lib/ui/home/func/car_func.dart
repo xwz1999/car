@@ -35,6 +35,7 @@ import '../../../model/acquisition_info_model.dart';
 import '../../../model/car/dealer_list_model.dart';
 import '../../../model/car/economic_release_model.dart';
 import '../../../model/contract/consignment_model.dart';
+import '../../../model/price_info_model.dart';
 import '../../../model/publish_info_model.dart';
 import '../../../model/sale_info_model.dart';
 
@@ -116,8 +117,8 @@ class CarFunc {
 
   ///获取评估列表
   static Future<List<CarEvaluationModel>> getCarEvaluationList(
-      int page, int size,
-      {String? keyWords}) async {
+  {int page=1, int size=10,
+      String? keyWords,}) async {
     var data = {
       'page': page,
       'size': size,
@@ -132,6 +133,17 @@ class CarFunc {
       return baseList.nullSafetyList
           .map((e) => CarEvaluationModel.fromJson(e))
           .toList();
+    }
+  }
+
+  ///评估记录详情 
+  static Future<PriceInfoModel?> getPriceInfo(int priceId)async{
+    BaseModel res=await apiClient.request(API.car.priceInfo,data: {'priceId':priceId});
+    if(res.code==0){
+      return PriceInfoModel.fromJson(res.data);
+    }else{
+      CloudToast.show(res.msg);
+      return null;
     }
   }
 

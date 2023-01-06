@@ -272,7 +272,7 @@ class _AddStoresPageState extends State<AddStoresPage> {
             paddingStart: 0,
             titleColor: const Color(0xFF999999),
             titleSize: 28.sp,
-            controller:bankAccountController,
+            controller:bankController,
             title: '开户行',
             tips: '请输入开户行',
             inputFormatters: <TextInputFormatter>[

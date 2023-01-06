@@ -677,7 +677,10 @@ class _HomePageState extends State<HomePage>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.w),
         ),
-        child: CloudImageNetworkWidget.car(
+        child:
+
+
+        CloudImageNetworkWidget.car(
           memCacheHeight: 1000,
           memCacheWidth: 1000,
           urls: [model.path],

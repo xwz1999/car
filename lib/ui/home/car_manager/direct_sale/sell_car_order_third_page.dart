@@ -267,7 +267,7 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                     isSpecial: true,
                     topIcon: false),
                 getContentItem(
-                  '卖方服务费',
+                  '买方服务费',
                   widget.carSaleContract.thirdPartInfo.kind==1?"0":widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate,///(num.parse( widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate)*0.01).toString(),
                   endText: '%',
                   isSpecial: true,

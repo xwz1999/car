@@ -7,7 +7,6 @@ import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-
 class ChooseCarNextPage extends StatefulWidget {
   final VoidCallback callback;
   final String name;
@@ -108,12 +107,19 @@ class _ChooseCarNextPageState extends State<ChooseCarNextPage> {
         ...model.series.mapIndexed((e, index) {
           return GestureDetector(
             onTap: () async {
-              widget.pickCar.value.series=model;
+              // widget.pickCar.value.series =
+              //     // SortSeriesModel(id: model.id, name: model.name, series: [e]);
+              // model;
+              widget.pickCar.value.series.id=e.seriesId;
+              widget.pickCar.value.series.name=e.name;
+              widget.pickCar.value.series.series=model.series;
               if (widget.pickCar.value.returnType == 2) {
                 Get.back();
+                print(e.seriesId);
                 widget.callback();
                 return;
               }
+
               Get.to(() => ChooseCarLastPage(
                     callback: widget.callback,
                     id: e.seriesId,

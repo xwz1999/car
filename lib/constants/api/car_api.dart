@@ -42,6 +42,9 @@ class _Car {
   ///估价列表
   String get getCarEvaluationList => '/car/price/lists';
 
+  ///评估详情
+  String get priceInfo=>'/car/price/info';
+
   ///车商列表///暂时用这个
   String get dealerList => '/dealer/select';
 

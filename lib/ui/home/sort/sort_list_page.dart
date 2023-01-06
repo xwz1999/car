@@ -389,6 +389,7 @@ class _SortListPageState extends State<SortListPage> {
   _confirmBtn() {
     return GestureDetector(
       onTap:(){
+
         if(editMinPriceController.text.isNotEmpty){
           widget.pickCar.value.editMinPrice = int.parse(editMinPriceController.text);
         }
@@ -430,6 +431,7 @@ class _SortListPageState extends State<SortListPage> {
     return GestureDetector(
       onTap: () {
          widget.pickCar.value = SearchParamModel.init(returnType: 2);
+         widget.onConfirm();
         setState(() {});
       },
       child: Container(

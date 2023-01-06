@@ -56,6 +56,15 @@ class _SplashPageState extends State<SplashPage> {
         await HiveStore.appBox?.put('agreement', true);
       }
     }
+    //使用前进行判断是否已经初始化
+    Future.delayed(const Duration(seconds: 0),()async
+    {
+      var isInit = await FilePreview.tbsHasInit();
+      if (!isInit) {
+        await FilePreview.initTBS();
+        return;
+      }
+    });
 
     PowerLogger.start(context, debug: AppENV.instance.env != ENVConfig.release);
     //PowerLogger.start(context, debug: true);

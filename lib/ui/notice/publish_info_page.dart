@@ -30,8 +30,11 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../model/publish_info_model.dart';
 import '../../../../utils/text_utils.dart';
 import '../../constants/api/api.dart';
+import '../../model/order/individual_model.dart';
 import '../home/car_manager/publish_car/new_push_car_page.dart';
 import '../home/car_manager/publish_car/publish_finish_page.dart';
+import '../home/car_manager/publish_car/push_car_manage_photo_page.dart';
+import '../user/interface/order_func.dart';
 import '../user/user_order/status.dart';
 
 class PublishInfoPage extends StatefulWidget {
@@ -44,6 +47,7 @@ class PublishInfoPage extends StatefulWidget {
     super.key,
     required this.index,
     required this.carId,
+
     // required this.isSelf,
   });
 
@@ -54,7 +58,7 @@ class PublishInfoPage extends StatefulWidget {
 class _PublishInfoPageState extends State<PublishInfoPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
+  IndividualModel? individualModel;
   final List<CarListModel> _chooseModels = [];
 
   ///滚动监听设置
@@ -64,7 +68,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
   bool headerWhite = false;
   List tabs = [];
 
-  // NewCarInfo? carInfoModel;
+  NewCarInfo? carInfoModel;
   int collect = 0;
   List<CarPhotos> carPhotos = [];
   List<CarPhotos> interiorPhotos = [];
@@ -77,7 +81,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
   //
   // List<CarPhotos> _reportPhotos = [];
 
-  List<ImagePhotos> bannerList = [];
+  List<CarPhotos> bannerList = [];
 
   late PushPhotoModel pushPhotoModel;
 
@@ -112,22 +116,22 @@ class _PublishInfoPageState extends State<PublishInfoPage>
 
     // _chooseModels.add(widget.carListModel);
     dataPhotos = [
-      CarPhotos(
-        text: '漆面数据',
-      ),
-      CarPhotos(text: '行驶证照片'),
-      CarPhotos(
-        text: '检测报告',
-      ),
-      CarPhotos(
-        text: '登记证书',
-      ),
-      CarPhotos(
-        text: '交强险',
-      ),
-      CarPhotos(
-        text: '商业险',
-      ),
+      // CarPhotos(
+      //   text: '漆面数据',
+      // ),
+      // CarPhotos(text: '行驶证照片'),
+      // CarPhotos(
+      //   text: '检测报告',
+      // ),
+      // CarPhotos(
+      //   text: '登记证书',
+      // ),
+      // CarPhotos(
+      //   text: '交强险',
+      // ),
+      // CarPhotos(
+      //   text: '商业险',
+      // ),
       // CarPhotos(
       //   text: '维保记录',
       // ),
@@ -148,26 +152,27 @@ class _PublishInfoPageState extends State<PublishInfoPage>
 
   _refresh() async {
     // carInfoModel = await CarFunc.getNewCarInfo();
+    // individualModel = await OrderFunc.getConsignmentInfo(widget.carId);
     publishInfoModel = await CarFunc.getPublishInfo(widget.carId);
     // print(carInfoModel!.carInfo);
     // collect = carInfoModel?.carInfo.collect ?? 0;
     for (var item in publishInfoModel.carPhotos) {
-      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+      if (item.photo!.isNotEmpty && item.text!.isNotEmpty ) {
         carPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
-      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+      if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         bannerList.add(item);
       }
     }
 
     for (var item in publishInfoModel.interiorPhotos) {
-      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+      if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         interiorPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
     }
 
     for (var item in publishInfoModel.defectPhotos) {
-      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+      if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         defectPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
     }
@@ -177,10 +182,13 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     //   }
     // }
     for (var item in publishInfoModel.dataPhotos) {
-      if (item.photo.isNotEmpty && item.text.isNotEmpty) {
+      if (item.photo!.isNotEmpty && item.text!.isNotEmpty ) {
+        //print(item.text);
         dataPhotos.add(CarPhotos(photo: item.photo, text: item.text));
+
       }
     }
+
     // for (int i = 0; i < carInfoModel!.carInfo.dataPhotos.length; i++) {
     //   for (int j = 0; j < dataPhotos.length; j++) {
     //     if (dataPhotos[j].text ==
@@ -398,7 +406,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                   ];
                 },
                 body: Padding(
-                  padding: EdgeInsets.only(bottom: 120.w),
+                  padding: EdgeInsets.only(bottom: 0.w),
                   child: TabBarView(
                     controller: _tabController,
                     children: [
@@ -453,7 +461,8 @@ class _PublishInfoPageState extends State<PublishInfoPage>
               ),
             ),
             bottomNavi: Audit.getValueAuditId(publishInfoModel.status)
-                            .typeNum != 3 &&
+                            .typeNum !=
+                        3 &&
                     Audit.getValueAuditId(publishInfoModel.status).typeNum != 0
                 ? Container(
                     padding:
@@ -584,6 +593,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     //   case 1:
     return widget.index == 2
         ? Audit.getValueAuditId(publishInfoModel.status).typeNum == 1
+
             ///1待审核 2已审核
             ? Row(
                 children: [
@@ -786,10 +796,10 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                             const Color(0xFF027AFF),
                             0,
                             Colors.white,
-                            Colors.white,
-                            () {
-                              Get.to(()=>const NewPushCarPage( ));
-                            }),
+                            Colors.white, () {
+                          Get.to(() =>
+                              NewPushCarPage(publishInfoModel: publishInfoModel));
+                        }),
                       )
                     : const SizedBox()
                 // : Row(
@@ -818,6 +828,8 @@ class _PublishInfoPageState extends State<PublishInfoPage>
         return '已同意';
       case 4:
         return '已驳回';
+      default:
+        return '';
     }
   }
 
@@ -829,6 +841,8 @@ class _PublishInfoPageState extends State<PublishInfoPage>
         return const Color(0xFF027AFF);
       case 4:
         return const Color(0xFFFF3B02);
+      default:
+        return const Color(0xFF027AFF);
     }
   }
 
@@ -932,17 +946,18 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     }
     return GestureDetector(
       onTap: () async {
-        // await Get.to(
-        //   PushCarManagePhotoPage(
-        //     isSelf: widget.carListModel.isSelf == 1,
-        //     tabs: _titles,
-        //     model: pushPhotoModel,
-        //     initIndex: index,
-        //     imgCanTap: false,
-        //     // reportPhotoModel: reportPhotoModel,
-        //     newPublishCarInfo: null,
-        //   ),
-        // );
+        // print(pushPhotoModel.dataPhotos!.length);
+        await Get.to(
+          PushCarManagePhotoPage(
+            isSelf: true,///widget.carListModel.isSelf == 1,
+            tabs: _titles,
+            model: pushPhotoModel,
+            initIndex: index,
+            imgCanTap: false,
+            // reportPhotoModel: reportPhotoModel,
+            newPublishCarInfo: null,
+          ),
+        );
         setState(() {});
       },
       child: Material(
@@ -1410,7 +1425,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
       itemBuilder: (context, index) {
         return CloudImageNetworkWidget.car(
           borderRadius: BorderRadius.circular(10.w),
-          urls: [bannerList[index].photo],
+          urls: [bannerList[index].photo!],
         );
       },
       //自动翻页

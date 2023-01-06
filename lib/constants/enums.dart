@@ -80,7 +80,8 @@ enum CarType{
 
   static CarType getValue(int value) =>
       CarType.values.firstWhere((element) => element.typeNum == value);
-
+  static CarType getValues(String value) =>
+      CarType.values.firstWhere((element) => element.typeStr == value);
   const CarType(this.typeNum, this.typeStr);
 }
 
@@ -108,6 +109,8 @@ enum CarNatureOfUse{
   other(4, '租赁非营运');
   static CarNatureOfUse getValue(int value) =>
       CarNatureOfUse.values.firstWhere((element) => element.typeNum == value);
+  static CarNatureOfUse getValues(String value) =>
+      CarNatureOfUse.values.firstWhere((element) => element.typeStr == value);
   final int typeNum;
   final String typeStr;
   const CarNatureOfUse(this.typeNum, this.typeStr);

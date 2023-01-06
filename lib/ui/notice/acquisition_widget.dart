@@ -111,7 +111,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
     );
 
     reportPhotoModel = ReportPhotoModel(paints: dataPhotos);
-   // print(pushPhotoModel);
+    // print(pushPhotoModel);
     if (mounted) {
       setState(() {});
     }
@@ -302,18 +302,18 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                 GestureDetector(
                   onTap: () {
                     Get.to(() => ViewFilePage(
-                      url: widget.url != ''
-                          ? '${API.imageHost}/${widget.url}'
-                          : '',
-                      title: '收购合同',
-                    ));
+                          url: widget.url != ''
+                              ? '${API.imageHost}/${widget.url}'
+                              : '',
+                          title: '收购合同',
+                        ));
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(
-                        horizontal: 32.w, vertical: 16.w),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 228.w, vertical: 16.w),
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 228.w, vertical: 16.w),
                     decoration: BoxDecoration(
                       color: const Color(0xFF0593FF),
                       borderRadius: BorderRadius.circular(8.w),
@@ -366,9 +366,10 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                   border:
                       Border.all(width: 1.w, color: const Color(0xFFEEEEEE)),
                   color: Colors.white),
-              height: ContractStatus.getValue(acquisitionInfo!.status).typeNum!=2
-                  ? 160.w
-                  : 200.w, //double.infinity,
+              height:
+                  ContractStatus.getValue(acquisitionInfo!.status).typeNum != 2
+                      ? 160.w
+                      : 200.w, //double.infinity,
               child: getBottomState(),
             ),
           );
@@ -457,8 +458,14 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
-                            12
+                    ContractStatus.getValue(acquisitionInfo!.status).typeNum !=
+                                3 ||
+                            ContractStatus.getValue(acquisitionInfo!.status)
+                                    .typeNum !=
+                                6 ||
+                            ContractStatus.getValue(acquisitionInfo!.status)
+                                    .typeNum !=
+                                13
                         ? 32.hb
                         : 0.hb,
                     Row(
@@ -466,12 +473,16 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                         getContact(),
                         const Spacer(),
                         Text(
-                          ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
-                                  12
-                              ? "已同意"
-                              : '已驳回',
+                          ContractStatus.getValue(acquisitionInfo!.status)
+                              .typeStr,
+                          // ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
+                          //         12
+                          //     ? "已同意"
+                          //     : '已驳回',
                           style: TextStyle(
-                              color: ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
+                              color: ContractStatus.getValue(
+                                              acquisitionInfo!.status)
+                                          .typeNum ==
                                       12
                                   ? const Color(0xFF027AFF)
                                   : const Color(0xFFFF3B02),
@@ -483,9 +494,14 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                     // const Spacer(),
                     8.hb,
                     ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
-                            12
-                        ? const SizedBox()
-                        : Flexible(
+                                3 ||
+                            ContractStatus.getValue(acquisitionInfo!.status)
+                                    .typeNum ==
+                                6 ||
+                            ContractStatus.getValue(acquisitionInfo!.status)
+                                    .typeNum ==
+                                13
+                        ? Flexible(
                             child: Text(
                               '驳回理由:${acquisitionInfo!.dealerAuditInfo.dealerRejectReason}',
                               style: TextStyle(
@@ -493,7 +509,8 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                                   color: const Color(0xFF333333),
                                   fontWeight: FontWeight.w600),
                             ),
-                          ),
+                          )
+                        : const SizedBox(),
                     // : Row(
                     //     children: [
                     //       Text(
@@ -514,8 +531,14 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
-                        12
+                ContractStatus.getValue(acquisitionInfo!.status).typeNum !=
+                    3 ||
+                    ContractStatus.getValue(acquisitionInfo!.status)
+                        .typeNum !=
+                        6 ||
+                    ContractStatus.getValue(acquisitionInfo!.status)
+                        .typeNum !=
+                        13
                     ? 32.hb
                     : 0.hb,
                 Row(
@@ -534,26 +557,23 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                 // const Spacer(),
                 8.hb,
                 ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
-                            3 ||
-                    ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
-                            4 ||
-                    ContractStatus.getValue(acquisitionInfo!.status).typeNum == 5
-                 || ContractStatus.getValue(acquisitionInfo!.status).typeNum == 6||
-                    ContractStatus.getValue(acquisitionInfo!.status).typeNum == 13
-
-                    ? const SizedBox()
-                    : Flexible(
+                    3 ||
+                    ContractStatus.getValue(acquisitionInfo!.status)
+                        .typeNum ==
+                        6 ||
+                    ContractStatus.getValue(acquisitionInfo!.status)
+                        .typeNum ==
+                        13
+                    ? Flexible(
                         child: Text(
-                          ContractStatus.getValue(acquisitionInfo!.status).typeNum ==
-                                  13
-                              ? '驳回理由:${acquisitionInfo!.dealerAuditInfo.dealerRejectReason}'
-                              : '失败理由:${acquisitionInfo!.dealerAuditInfo.dealerRejectReason}',
+                          '${getFailure(acquisitionInfo!.status)}:${acquisitionInfo!.dealerAuditInfo.dealerRejectReason}',
                           style: TextStyle(
                               fontSize: 28.sp,
                               color: const Color(0xFF333333),
                               fontWeight: FontWeight.w600),
                         ),
-                      ),
+                      )
+                    : const SizedBox()
                 // : Row(
                 //     children: [
                 //       Text(
@@ -601,7 +621,16 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
       child: child,
     );
   }
-
+  getFailure(int status){
+    switch(status){
+      case 3:
+        return '拒签理由';
+      case 6:
+        return '失败理由';
+      case 13:
+        return '驳回理由';
+    }
+  }
   final List<String> _titles = ['车辆照片', '报告数据'];
 
   Widget _buildChild(
@@ -635,6 +664,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
           PushCarManagePhotoPage(
             isSelf: true,
             consignmentPhoto: true,
+
             ///widget.carListModel.isSelf == 1,
             tabs: _titles,
             model: pushPhotoModel,
@@ -748,7 +778,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
         case 5:
           return const Color(0xFFFF3B02);
         default:
-          return  const Color(0xFFFE8029);
+          return const Color(0xFFFE8029);
       }
     } else {
       switch (ContractStatus.getValue(acquisitionInfo!.status).typeNum) {
@@ -763,7 +793,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
         case 5:
           return const Color(0xFFFF3B02);
         default:
-          return  const Color(0xFFFE8029);
+          return const Color(0xFFFE8029);
       }
     }
   }

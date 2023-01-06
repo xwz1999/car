@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../model/publish_info_model.dart';
 import '../../../../model/sort/sort_brand_model.dart';
 import '../../../../model/sort/sort_car_model_model.dart';
 import '../../../../model/sort/sort_series_model.dart';
@@ -38,8 +39,10 @@ import 'choose_shop_page.dart';
 
 class NewPushCarPage extends StatefulWidget {
   final IndividualModel? individualModel;
+  final PublishInfoModel? publishInfoModel;
 
-  const NewPushCarPage({super.key, this.individualModel});
+  const NewPushCarPage(
+      {super.key, this.individualModel, this.publishInfoModel});
 
   @override
   State<NewPushCarPage> createState() => _NewPushCarPageState();
@@ -194,6 +197,128 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
             widget.individualModel!.contract.commercialInsurancePrice;
       }
     }
+
+    if (widget.publishInfoModel != null) {
+      // 车辆来源
+      _publishCarInfo.value.carSource = widget.publishInfoModel?.source ?? 1;
+      // 品牌车型
+      _publishCarInfo.value.carName = widget.publishInfoModel?.modelName ?? '';
+      _publishCarInfo.value.carModelId = widget.publishInfoModel?.modelId ?? 0;
+      // 所属门店
+      _publishCarInfo.value.carShop =
+          widget.publishInfoModel?.dealerInfo.name ?? '';
+      _publishCarInfo.value.carShopId =
+          widget.publishInfoModel?.dealerInfo.id ?? 0;
+      // 车辆类型
+      _publishCarInfo.value.carType =
+          CarType.getValues(widget.publishInfoModel?.type ?? '').typeNum;
+      // _publishCarInfo.value.carTypeEM.typeStr=widget.publishInfoModel?.type ?? '';
+      // 车架号
+      _viNumController.text = widget.publishInfoModel?.vin ?? '';
+      //发动机号
+      _engineController.text = widget.publishInfoModel?.engineNo ?? '';
+      // 首次上牌
+      _publishCarInfo.value.licensingDate = DateTime.fromMillisecondsSinceEpoch(
+          (widget.publishInfoModel!.licensingDate).toInt() * 1000);
+      //车身颜色
+      _publishCarInfo.value.carColor = widget.publishInfoModel?.color ?? '';
+      //内饰颜色
+      _publishCarInfo.value.carDecorativeColor =
+          widget.publishInfoModel?.interiorColor ?? '';
+      //所在地
+      _publishCarInfo.value.locationCity =
+          widget.publishInfoModel?.location ?? '';
+      _publishCarInfo.value.locationCityId =
+          widget.publishInfoModel!.locationCityId;
+      //上牌地
+      _publishCarInfo.value.attribution =
+          widget.publishInfoModel?.attribution ?? '';
+      _publishCarInfo.value.attributionId =
+          widget.publishInfoModel!.attributionCityId;
+      //使用性质
+      _publishCarInfo.value.natureOfUse =
+          CarNatureOfUse.getValues(widget.publishInfoModel!.useCharacter)
+              .typeNum;
+      //表显里程
+      _mileController.text = widget.publishInfoModel?.mileage ?? '';
+      //车牌号
+      _carNumController.text =
+          widget.publishInfoModel?.temporaryLicensePlate ?? '';
+      //车位编号
+      _carParkingNumController.text = widget.publishInfoModel?.parkingNo ?? '';
+      //库存状态
+      _publishCarInfo.value.carStockStatus =
+          widget.publishInfoModel!.stockStatus;
+      //新车指导价
+      _publishCarInfo.value.newCarPrice = widget.publishInfoModel?.price ?? '';
+      //置购税
+      _purchaseTaxController.text =
+          (num.parse(widget.publishInfoModel!.purchaseTax) / 10000).toString();
+      //加装费用
+      _retrofittingFeeController.text =
+          widget.publishInfoModel?.installationCost ?? '';
+      //车况描述
+      _publishCarInfo.value.carDescription =
+          widget.publishInfoModel?.condition ?? '';
+      //内部价格
+      _wholesalePriceController.text =
+          widget.publishInfoModel?.priceInfo.interiorPrice ?? '';
+      // _publishCarInfo.value.wholesalePrice =
+      //     widget.publishInfoModel?.priceInfo.interiorPrice ?? '';
+      //外部价格
+      _salePriceController.text =
+          widget.publishInfoModel?.priceInfo.exteriorPrice ?? '';
+      // _publishCarInfo.value.salePrice =
+      //     widget.publishInfoModel?.priceInfo.exteriorPrice ?? '';
+      //采购信息
+      if (widget.publishInfoModel!.purchaseInfo.date > 0) {
+        _purchase.text = widget.publishInfoModel?.purchaseInfo.liaison ?? '';
+        _purchasePrice.text = widget.publishInfoModel?.purchaseInfo.price ?? '';
+        _publishCarInfo.value.purchaseDate =
+            DateTime.fromMillisecondsSinceEpoch(
+                (widget.publishInfoModel!.purchaseInfo.date).toInt() * 1000);
+      }
+      //过户次数
+      _transferNumController.text =
+          widget.publishInfoModel?.certificateInfo.transfer == 0
+              ? ''
+              : (widget.publishInfoModel?.certificateInfo.transfer).toString();
+      //钥匙数量
+      _keyCountController.text =
+          widget.publishInfoModel?.certificateInfo.keyCount == 0
+              ? ''
+              : (widget.publishInfoModel?.certificateInfo.keyCount).toString();
+      //强交险
+      _publishCarInfo.value.haveCompulsoryInsurance =
+          widget.publishInfoModel!.certificateInfo.compulsoryInsurance;
+      if (widget.publishInfoModel!.certificateInfo.compulsoryInsurance != 0) {
+        _publishCarInfo.value.compulsoryInsuranceDate =
+            DateTime.fromMillisecondsSinceEpoch((widget.publishInfoModel!
+                        .certificateInfo.compulsoryInsuranceDate)
+                    .toInt() *
+                1000);
+      }
+      //商业险
+      _publishCarInfo.value.haveCommercialInsurance =
+          widget.publishInfoModel!.certificateInfo.compulsoryInsurance;
+      if (widget.publishInfoModel!.certificateInfo.compulsoryInsurance != 0) {
+        _publishCarInfo.value.commercialInsuranceDate =
+            DateTime.fromMillisecondsSinceEpoch((widget.publishInfoModel!
+                        .certificateInfo.compulsoryInsuranceDate)
+                    .toInt() *
+                1000);
+        _commercialInsurancePriceController.text =
+            widget.publishInfoModel!.certificateInfo.commercialInsurancePrice;
+      }
+      //备注
+      _publishCarInfo.value.remark = widget.publishInfoModel!.remark;
+      // 照片图片
+      carPhotoModel.value = PushPhotoModel(
+          carPhotos: widget.publishInfoModel!.carPhotos,
+          interiorPhotos: widget.publishInfoModel!.interiorPhotos,
+          defectPhotos: widget.publishInfoModel!.defectPhotos,
+          dataPhotos: widget.publishInfoModel!.dataPhotos);
+    }
   }
 
   @override
@@ -294,14 +419,19 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                                     carInfoModel.vinModel!.first.modelId;
                                 _publishCarInfo.value.carColor =
                                     carInfoModel.vinModel!.first.color;
-                                _publishCarInfo.value.carTemporaryNum=carInfoModel.vehicle.lsnum;
+                                _publishCarInfo.value.carTemporaryNum =
+                                    carInfoModel.vehicle.lsnum;
                               }
                               _newCarPriceController.text =
-                                  carInfoModel.vinModel!.first.modelPrice!=0
-                                  ? (carInfoModel.vinModel!.first.modelPrice).toString()
-                                  :'无' ;
+                                  carInfoModel.vinModel!.first.modelPrice != 0
+                                      ? (carInfoModel
+                                              .vinModel!.first.modelPrice)
+                                          .toString()
+                                      : '无';
                               _viNumController.text = carInfoModel.vehicle.vin;
-                              _publishCarInfo.value.licensingDate =///carInfoModel.vehicle.regdate as DateTime?;
+                              _publishCarInfo.value.licensingDate =
+
+                                  ///carInfoModel.vehicle.regdate as DateTime?;
                                   DateUtil.getDateTime(
                                       carInfoModel.vehicle.regdate);
                               _carNumController.text =
@@ -333,6 +463,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                                         '缺陷照片',
                                         '车辆数据'
                                       ],
+
                                       model: carPhotoModel.value,
                                       initIndex: 0,
                                       // reportPhotoModel: widget.reportPhotoModel,
@@ -380,11 +511,11 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       controller: _viNumController,
     );
     var carNum = EditItemWidget(
-        title: '车牌号',
-        tips: '请输入',
-        controller: _carNumController,
-        topIcon: true,
-        callback: (String content) {
+      title: '车牌号',
+      tips: '请输入',
+      controller: _carNumController,
+      topIcon: true,
+      callback: (String content) {
         _publishCarInfo.value.carTemporaryNum = content;
       },
     );
@@ -584,7 +715,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                               top: Radius.circular(16.w))),
                       builder: (context) {
                         return CloudListPickerWidget(
-                          initIndex:  _publishCarInfo.value.carSource?? 1,
+                            initIndex: _publishCarInfo.value.carSource ?? 1,
                             title: '车辆来源',
                             items: carSourceList,
                             onConfirm: (str, index) {
@@ -598,24 +729,22 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                   _publishCarInfo.value.carSourceEM.typeStr,
                   '请选择',
                 ),
-
-
                 _function(
-                        '所属门店',
-                        () async {
-                          ///需要新接口
-                          Get.to(() => ChooseShopPage(
-                                callback: (StoreModel model) {
-                                  _publishCarInfo.value.carShop = model.name;
-                                  _publishCarInfo.value.carShopId = model.id;
-                                  setState(() {});
-                                },
-                              ));
-                          setState(() {});
-                        },
-                        _publishCarInfo.value.carShop,
-                        '请选择',
-                      ),
+                  '所属门店',
+                  () async {
+                    ///需要新接口
+                    Get.to(() => ChooseShopPage(
+                          callback: (StoreModel model) {
+                            _publishCarInfo.value.carShop = model.name;
+                            _publishCarInfo.value.carShopId = model.id;
+                            setState(() {});
+                          },
+                        ));
+                    setState(() {});
+                  },
+                  _publishCarInfo.value.carShop,
+                  '请选择',
+                ),
                 _function(
                   '车辆类型',
                   () async {
@@ -626,7 +755,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                               top: Radius.circular(16.w))),
                       builder: (context) {
                         return CloudListPickerWidget(
-                          initIndex:  _publishCarInfo.value.carType ?? 1,
+                            initIndex: _publishCarInfo.value.carType ?? 1,
                             title: '车辆类型',
                             items: carTypeList,
                             onConfirm: (str, index) {
@@ -1115,7 +1244,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                   //     DateTime(1960), DateTime(DateTime.now().year + 100));
                   // var firstDate =
                   //     await CarDatePicker.monthPicker(DateTime.now(), add: 100);
-                  var firstDate=await CarDatePicker.pick(DateTime.now());
+                  var firstDate = await CarDatePicker.pick(DateTime.now());
                   _publishCarInfo.value.compulsoryInsuranceDate = firstDate;
                   FocusManager.instance.primaryFocus?.unfocus();
                   setState(() {});
@@ -1139,7 +1268,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
                   // var firstDate =
                   //     await CarDatePicker.monthPicker(DateTime.now(), add: 100);
 
-                  var firstDate=await CarDatePicker.pick(DateTime.now());
+                  var firstDate = await CarDatePicker.pick(DateTime.now());
                   _publishCarInfo.value.commercialInsuranceDate = firstDate;
                   FocusManager.instance.primaryFocus?.unfocus();
                   setState(() {});
@@ -1301,7 +1430,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
       BotToast.showText(text: '请输入行驶里程');
       return false;
     }
-    if(_publishCarInfo.value.carTemporaryNum==''){
+    if (_publishCarInfo.value.carTemporaryNum == '') {
       BotToast.showText(text: '请输入车牌号');
       return false;
     }

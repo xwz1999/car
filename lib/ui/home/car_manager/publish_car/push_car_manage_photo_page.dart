@@ -57,6 +57,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
   ///维保记录
   List<PushImgModel> maintenance = [];
+  List<PushImgModel> certificate = [];
 
 // List<dynamic> _reportPhotos = [];
 //   List<dynamic> _reportPhotos = [];
@@ -93,10 +94,10 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
     } else {
       if (widget.imgCanTap) {
         _reportPhotos = [
-          PushImgModel(name: '漆面数据', isMust: true),
+          // PushImgModel(name: '漆面数据', isMust: true),
           PushImgModel(name: '行驶证照片', isMust: true),
           PushImgModel(name: '检测报告', isMust: true),
-          PushImgModel(name: '登记证书', isMust: true),
+          // PushImgModel(name: '登记证书', isMust: true),
           PushImgModel(name: '交强险', isMust: false),
           PushImgModel(name: '商业险', isMust: false),
 
@@ -106,15 +107,15 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
       } else {
         if (!widget.isSelf) {
           _reportPhotos = [
-            PushImgModel(name: '漆面数据', isMust: false),
+            // PushImgModel(name: '漆面数据', isMust: false),
             PushImgModel(name: '检测报告', isMust: false),
           ];
         } else {
           _reportPhotos = [
-            PushImgModel(name: '漆面数据', isMust: false),
+            // PushImgModel(name: '漆面数据', isMust: false),
             PushImgModel(name: '行驶证照片', isMust: false),
             PushImgModel(name: '检测报告', isMust: false),
-            PushImgModel(name: '登记证书', isMust: false),
+            // PushImgModel(name: '登记证书', isMust: false),
             PushImgModel(name: '交强险', isMust: false),
             PushImgModel(name: '商业险', isMust: false),
             // ///添加新数据
@@ -134,9 +135,19 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
     // }
 
     for (int i = 0; i < widget.model.dataPhotos!.length; i++) {
-      if (widget.model.dataPhotos![i].text == '维保记录') {
-        _reportPhotos.add(
-            PushImgModel(name: '维保记录', url: widget.model.dataPhotos![i].photo));
+      // print('${widget.model.dataPhotos![i].text}$i');
+      print('${widget.model.dataPhotos!.length}');
+      if (widget.model.dataPhotos![i].text == '登记证书' || widget.model.dataPhotos![i].text == '维保记录') {
+
+        if (widget.model.dataPhotos![i].text == '维保记录') {
+          _reportPhotos.add(
+              PushImgModel(
+                  name: '维保记录', url: widget.model.dataPhotos![i].photo));
+        }else{
+          // print('登记证书$i');
+          _reportPhotos.insert(2,
+              PushImgModel(name: '登记证书', url: widget.model.dataPhotos![i].photo));
+        }
       } else {
         // print( widget.model.dataPhotos![i].text==null);
         for (int j = 0; j < _reportPhotos.length; j++) {
@@ -202,10 +213,10 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
     //   return false;
     // }
     for (var item in _reportPhotos) {
-      if (item.name == '漆面数据' && item.url == null) {
-        CloudToast.show('请先上传漆面数据');
-        return false;
-      }
+      // if (item.name == '漆面数据' && item.url == null) {
+      //   CloudToast.show('请先上传漆面数据');
+      //   return false;
+      // }
       if (item.name == '行驶证照片' && item.url == null) {
         CloudToast.show('请先上传行驶证照片');
         return false;
@@ -239,7 +250,6 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
     widget.model.dataPhotos!.clear();
     // widget.model.repairPhotos!.clear();
     // widget.reportPhotoModel.paints!.clear();
-
     for (var i = 0; i < _reportPhotos.length; i++) {
       if (_reportPhotos[i].url.runtimeType != String &&
           _reportPhotos[i].url.runtimeType != Null) {
@@ -389,7 +399,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
     return GestureDetector(
       onTap: () async {
-        if (model.name != '维保记录') {
+        if (model.name != '维保记录' && model.name != '登记证书') {
           if (widget.imgCanTap) {
             var value = await CloudImagePicker.pickSingleImage(title: '选择图片');
             _reportPhotos[index].url = value;
@@ -423,12 +433,22 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
           } else {
             var value =
                 await CloudImagePicker.pickMultiAndSingleImage(title: '选择图片');
-            _reportPhotos[6].url = value.first;
-            for (int i = 1; i < value.length; i++) {
-              _reportPhotos.add(PushImgModel(name: '维保记录', url: value[i]));
-            }
-            for (var item in value) {
-              maintenance.add(PushImgModel(name: '维保记录', url: item));
+            if (model.name == '维保记录') {
+              _reportPhotos.last.url = value.first;
+              for (int i = 1; i < value.length; i++) {
+                _reportPhotos.add(PushImgModel(name: '维保记录', url: value[i]));
+              }
+              // for (var item in value) {
+              //   maintenance.add(PushImgModel(name: '维保记录', url: item));
+              // }
+            } else {
+              _reportPhotos[2].url = value.first;
+              for (int i = 1; i < value.length; i++) {
+                _reportPhotos.insert(3,PushImgModel(name: '登记证书', url: value[i]));
+              }
+              // for (var item in value) {
+              //   certificate.add(PushImgModel(name: '登记证书', url: item));
+              // }
             }
 
             setState(() {});

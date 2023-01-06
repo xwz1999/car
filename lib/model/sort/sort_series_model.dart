@@ -5,30 +5,26 @@ part 'sort_series_model.g.dart';
 
 @JsonSerializable()
 class SortSeriesModel extends Equatable {
-  final int id;
-  final String name;
-  final List<Series> series;
+    int id;
+    String name;
+    List<Series> series;
+
 
   factory SortSeriesModel.fromJson(Map<String, dynamic> json) =>
       _$SortSeriesModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SortSeriesModelToJson(this);
 
-  static SortSeriesModel get init =>
-      const SortSeriesModel(id: 0, name: '', series: []);
+  static SortSeriesModel get init =>    SortSeriesModel(
+      id: 0, name: '', series: [], );
 
-  @override
-  List<Object?> get props => [
-        id,
-        name,
-        series,
-      ];
-
-  const SortSeriesModel({
+   SortSeriesModel({
     required this.id,
     required this.name,
     required this.series,
   });
+  @override
+  List<Object?> get props => [id,name,series];
 }
 
 @JsonSerializable()

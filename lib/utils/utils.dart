@@ -50,7 +50,7 @@ class Utils {
     return ListTile(
       title: Text(model.name),
       onTap: () {
-        print("${model.name}数据${model.id??0}");
+        // print("${model.name}数据${model.id??0}");
         callBack(model.name,model.id??0);
       },
     );

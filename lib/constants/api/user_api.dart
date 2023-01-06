@@ -35,6 +35,8 @@ class _Wallet {
   ///评估记录
 
   String get assessHistory => '/user/wallet/assess/history';
+
+
 }
 
 ///实名认证

@@ -8,11 +8,16 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../providers/user_provider.dart';
+import '../../../utils/user_tool.dart';
+import '../../../widget/alert.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/picker/car_list_picker.dart';
 import '../../../widget/sort_widget.dart';
+import '../../user/user_assessment/user_assessment_page.dart';
 import '../car_valuation/car_valuation_page.dart';
 import 'direct_sale/edit_item_widget.dart';
 
@@ -37,7 +42,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
 
   ///寄卖合同model
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel =
-      ValueNotifier(ConsignmentContractModel(masterInfo: MasterInfo()));
+  ValueNotifier(ConsignmentContractModel(masterInfo: MasterInfo()));
 
   // String? _transfer = ''; //过户次数
   // String? _paint = ''; //油漆面
@@ -182,7 +187,8 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
               children: [
                 Container(
                   padding: EdgeInsets.all(30.w),
-                  child: widget.publishCarInfo.carName!.text
+                  child: widget.publishCarInfo.carName!
+                      .text
                       .size(32.sp)
                       .bold
                       .color(Colors.black)
@@ -201,8 +207,9 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                         padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
 
                         decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
-                                ,  color: Colors.transparent,
+                          border: Border(bottom: BorderSide(
+                              color: const Color(0xFFF6F6F6), width: 2.w))
+                          , color: Colors.transparent,
                         ),
                         child: Row(
                           children: [
@@ -228,8 +235,9 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                         padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
 
                         decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
-                          ,  color: Colors.transparent,
+                          border: Border(bottom: BorderSide(
+                              color: const Color(0xFFF6F6F6), width: 2.w))
+                          , color: Colors.transparent,
                         ),
                         child: Row(
                           children: [
@@ -254,12 +262,13 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                       ),
                       Container(
                         padding: EdgeInsets.only(
-                          top: 15.h,bottom: 15.h
+                            top: 15.h, bottom: 15.h
                         ),
 
                         decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: const Color(0xFFF6F6F6),width: 2.w))
-                          ,  color: Colors.transparent,
+                          border: Border(bottom: BorderSide(
+                              color: const Color(0xFFF6F6F6), width: 2.w))
+                          , color: Colors.transparent,
                         ),
                         child: Row(
                           children: [
@@ -305,8 +314,8 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                         _hasPartsOnTap,
                         _carInfo.hasParts != null
                             ? _carInfo.hasParts == 1
-                                ? replaceList[_carInfo.hasParts!].name
-                                : replaceList[_carInfo.hasParts!].name
+                            ? replaceList[_carInfo.hasParts!].name
+                            : replaceList[_carInfo.hasParts!].name
                             : '',
                         '请选择',
                       ),
@@ -315,8 +324,8 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                         _situationOnTap,
                         _carInfo.hasSituation != null
                             ? _carInfo.hasSituation == 1
-                                ? fixList[_carInfo.hasSituation!].name
-                                : fixType[_carInfo.engine]
+                            ? fixList[_carInfo.hasSituation!].name
+                            : fixType[_carInfo.engine]
                             : '',
                         '请选择',
                       ),
@@ -325,8 +334,8 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                         _accidentOnTap,
                         _carInfo.hasAccident != null
                             ? _carInfo.hasAccident == 1
-                                ? accidentList[_carInfo.hasAccident!].name
-                                : accidentDetailType[_carInfo.accidents!.first]
+                            ? accidentList[_carInfo.hasAccident!].name
+                            : accidentDetailType[_carInfo.accidents!.first]
                             : '',
                         '请选择',
                       ),
@@ -357,26 +366,64 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
                   child: ElevatedButton(
                     onPressed: () async {
                       var cancel = CloudToast.loading;
-                      EstimatePriceModel? estimatePriceModel;
-                      estimatePriceModel =
-                          await CarFunc.getEstimatePrice(_carInfo);
-                      if (estimatePriceModel != null) {
-                        consignmentContractModel.value.publishCarInfo =
-                            widget.publishCarInfo;
-                        consignmentContractModel.value.evaluationPrice =
-                            estimatePriceModel.price;
-                        consignmentContractModel.value.priceId =
-                            estimatePriceModel.id as int?;
-                        consignmentContractModel.value.useCharacter=widget.publishCarInfo.carNatureOfUse;
-                        consignmentContractModel.value.licensePlate=widget.publishCarInfo.carName;
-                        // consignmentContractModel.li
+                      if (UserTool.userProvider.userInfo.data.assessCount <=
+                          0) {
+                        Alert.show(
+                            context,
+                            NormalContentDialog(
+                              type: NormalTextDialogType.delete,
+                              title: '驳回理由',
+                              content: const Text('评估次数不足是否去充值'),
+                              items: const ['取消'],
+                              deleteItem: '确定',
+                              //监听器
+                              listener: (index) {
+                                // Get.back();
+                                Alert.dismiss(context);
+                              },
+                              deleteListener: () async {
+                                Get.to(() =>
+                                const UserAssessmentPage(
+                                  assessmentState: 1,
+                                  carConsignment: true,
+                                ));
+                                // Navigator.of(context)
+                                //     .push(
+                                //   MaterialPageRoute(
+                                //       builder: (_) => const UserAssessmentPage(
+                                //         assessmentState: 1,
+                                //         carConsignment: true,
+                                //       )),
+                                // )
+                                //     .then((val) => Provider.of<UserProvider>(Get.context!, listen: true));
 
-                        Get.to(() => CheckPushPage(
-                              consignmentContractModel:
-                                  consignmentContractModel,
+                              },
                             ));
+                      } else {
+                        EstimatePriceModel? estimatePriceModel;
+                        estimatePriceModel =
+                        await CarFunc.getEstimatePrice(_carInfo);
+                        if (estimatePriceModel != null) {
+                          consignmentContractModel.value.publishCarInfo =
+                              widget.publishCarInfo;
+                          consignmentContractModel.value.evaluationPrice =
+                              estimatePriceModel.price;
+                          consignmentContractModel.value.priceId =
+                          estimatePriceModel.id as int?;
+                          consignmentContractModel.value.useCharacter =
+                              widget.publishCarInfo.carNatureOfUse;
+                          consignmentContractModel.value.licensePlate =
+                              widget.publishCarInfo.carName;
+                          // consignmentContractModel.li
+
+                          Get.to(() =>
+                              CheckPushPage(
+                                consignmentContractModel:
+                                consignmentContractModel,
+                              ));
+                        }
+                        cancel();
                       }
-                      cancel();
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -400,7 +447,7 @@ class _FillEvainfoPageState extends State<FillEvainfoPage> {
         color: Colors.transparent,
         child: EditItemWidget(
 
-          titleColor:const Color(0xFF999999),
+          titleColor: const Color(0xFF999999),
           title: title,
           titleWidth: titleWidth,
           tips: msg,

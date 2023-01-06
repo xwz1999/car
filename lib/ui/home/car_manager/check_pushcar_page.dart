@@ -7,8 +7,10 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../widget/alert.dart';
 import '../../../widget/button/cloud_back_button.dart';
 import '../../../widget/publish_car_info_widget.dart';
+import '../../user/user_assessment/user_assessment_page.dart';
 
 class CheckPushPage extends StatefulWidget {
   final ValueNotifier<ConsignmentContractModel> consignmentContractModel;
@@ -142,21 +144,59 @@ class _CheckPushPageState extends State<CheckPushPage> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            if (UserTool.userProvider.userInfo.business.businessId ==
-                                1) {
-                              ///车商发布车辆
-                              Get.to(() => CarPicturePage(
-                                    consignmentContractModel:
-                                        widget.consignmentContractModel.value,
-                                    isPersonal: false,
+                            if (UserTool.userProvider.userInfo.data.assessContractCount <=
+                                0) {
+                              Alert.show(
+                                  context,
+                                  NormalContentDialog(
+                                    type: NormalTextDialogType.delete,
+                                    title: '驳回理由',
+                                    content: const Text('合同次数不足是否去充值'),
+                                    items: const ['取消'],
+                                    deleteItem: '确定',
+                                    //监听器
+                                    listener: (index) {
+                                      // Get.back();
+                                      Alert.dismiss(context);
+                                    },
+                                    deleteListener: () async {
+                                      Get.to(() =>
+                                      const UserAssessmentPage(
+                                        assessmentState: 2,
+                                        carConsignment: true,
+                                      ));
+                                      // Navigator.of(context)
+                                      //     .push(
+                                      //   MaterialPageRoute(
+                                      //       builder: (_) => const UserAssessmentPage(
+                                      //         assessmentState: 1,
+                                      //         carConsignment: true,
+                                      //       )),
+                                      // )
+                                      //     .then((val) => Provider.of<UserProvider>(Get.context!, listen: true));
+
+                                    },
                                   ));
-                            } else {
-                              ///个人发布车辆先填合同  合同确认后再进行发布操作
-                              Get.to(() => ContractBeginPage(
-                                    consignmentContractModel:
-                                        widget.consignmentContractModel,
-                                  ));
+                            }else{
+
+                              if (UserTool.userProvider.userInfo.business.businessId ==
+                                  1) {
+                                ///车商发布车辆
+                                Get.to(() => CarPicturePage(
+                                  consignmentContractModel:
+                                  widget.consignmentContractModel.value,
+                                  isPersonal: false,
+                                ));
+                              } else {
+                                ///个人发布车辆先填合同  合同确认后再进行发布操作
+                                Get.to(() => ContractBeginPage(
+                                  consignmentContractModel:
+                                  widget.consignmentContractModel,
+                                ));
+                              }
+
                             }
+
                           },
                           style: ButtonStyle(
                             backgroundColor:

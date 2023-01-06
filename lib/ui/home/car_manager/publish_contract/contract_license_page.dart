@@ -273,7 +273,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
         // ),
         EditItemWidget(
           titleColor: const Color(0xFF999999),
-          topIcon: false,
+          topIcon: true,
           title: '钥匙数量',
           endText: '把',
           keyboardType: TextInputType.number,

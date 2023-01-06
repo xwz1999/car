@@ -20,9 +20,15 @@ class AssessmentPayPage extends StatefulWidget {
   final int count;
   final String title;
   final int state;
+  final bool? carConsignment;
 
   const AssessmentPayPage(
-      {super.key, required this.price, required this.count, required this.title,required this.state});
+      {super.key,
+      required this.price,
+      required this.count,
+      required this.title,
+      required this.state,
+      this.carConsignment = false});
 
   @override
   _AssessmentPayPageState createState() => _AssessmentPayPageState();
@@ -41,7 +47,8 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
   @override
   void initState() {
     PayUtil().wxPayAddListener(
-        paySuccess: _paySuccess,
+        paySuccess:
+            widget.carConsignment ?? false ? _wxPaySuccess : _paySuccess,
         payError: (event) {
           BotToast.closeAllLoading();
         });
@@ -63,7 +70,8 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
         leading: const CloudBackButton(
           isSpecial: true,
         ),
-        title: Text(widget.title, style: TextStyle(fontSize: 36.sp,color: const Color(0xFF111111))),
+        title: Text(widget.title,
+            style: TextStyle(fontSize: 36.sp, color: const Color(0xFF111111))),
       ),
       extendBody: true,
       body: Container(
@@ -128,10 +136,12 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
           CloudToast.loading;
           switch (_selectIndex) {
             case 0:
-              await _wxPayFunc(widget.state);
+              await _wxPayFunc(widget.state,
+                  carConsignment: widget.carConsignment);
               break;
             case 1:
-              await _aliPayFunc(widget.state);
+              await _aliPayFunc(widget.state,
+                  carConsignment: widget.carConsignment);
           }
         },
         child: Material(
@@ -187,7 +197,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
     );
   }
 
-  Future _wxPayFunc(int kind) async {
+  Future _wxPayFunc(int kind, {bool? carConsignment}) async {
     var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
       'kind': kind,
       'count': widget.count,
@@ -203,7 +213,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
     }
   }
 
-  Future _aliPayFunc(int kind) async {
+  Future _aliPayFunc(int kind, {bool? carConsignment}) async {
     var base = await apiClient.request(API.user.wallet.assessRecharge, data: {
       'kind': kind,
       'count': widget.count,
@@ -212,7 +222,7 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
     if (base.code == 0) {
       var re = await PayUtil().callAliPay(base.data['content']);
       if (re) {
-        _paySuccess();
+        _paySuccess(carConsignment: carConsignment);
       } else {
         BotToast.closeAllLoading();
       }
@@ -221,7 +231,35 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
     }
   }
 
-  void _paySuccess() async {
+  void _paySuccess({bool? carConsignment}) async {
+    Get.off(
+      () => SuccessFailurePage(
+        conditions: true,
+        headline: widget.title,
+        body: Text(
+          '付款成功',
+          style: Theme.of(context).textTheme.subtitle1,
+        ),
+        bottom: CloudBottomButton(
+          onTap: carConsignment ?? false
+              ? () async {
+                  await UserTool.userProvider.updateUserInfo();
+                  Get.back();
+                  Get.back();
+                  Get.back();
+                }
+              : () async {
+                  await UserTool.userProvider.updateUserInfo();
+                  // carConsignment?Get.back():;
+                  Get.offAll(const TabNavigator());
+                },
+          text: '返回首页',
+        ),
+      ),
+    );
+  }
+
+  void _wxPaySuccess() async {
     Get.off(
       () => SuccessFailurePage(
         conditions: true,
@@ -233,7 +271,9 @@ class _AssessmentPayPageState extends State<AssessmentPayPage> {
         bottom: CloudBottomButton(
           onTap: () async {
             await UserTool.userProvider.updateUserInfo();
-            Get.offAll(const TabNavigator());
+            Get.back();
+            Get.back();
+            Get.back();
           },
           text: '返回首页',
         ),

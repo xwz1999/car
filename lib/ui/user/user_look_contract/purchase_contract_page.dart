@@ -284,7 +284,7 @@ class _PurchaseContractPageState extends State<PurchaseContractPage>
       case 12:
         return Assets.images.signed.path;
       case 13:
-        return Assets.images.wait.path;
+        return Assets.images.failure.path;
       default:
         return Assets.images.signed.path;
     }

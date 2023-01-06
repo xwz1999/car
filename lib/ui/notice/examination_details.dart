@@ -25,6 +25,7 @@ class ExaminationDetails extends StatefulWidget {
   final int modelId;
   final int status;
   final String url;
+
   ///判断入口
   const ExaminationDetails({
     super.key,
@@ -236,18 +237,14 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
         GestureDetector(
           onTap: () {
             Get.to(() => ViewFilePage(
-              url: widget.url != ''
-                  ? '${API.imageHost}/${widget.url}'
-                  : '',
-              title: '收购合同',
-            ));
+                  url: widget.url != '' ? '${API.imageHost}/${widget.url}' : '',
+                  title: '收购合同',
+                ));
           },
           child: Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(
-                horizontal: 32.w, vertical: 16.w),
-            padding: EdgeInsets.symmetric(
-                horizontal: 228.w, vertical: 16.w),
+            margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+            padding: EdgeInsets.symmetric(horizontal: 228.w, vertical: 16.w),
             decoration: BoxDecoration(
               color: const Color(0xFF0593FF),
               borderRadius: BorderRadius.circular(8.w),
@@ -301,87 +298,165 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
 
   getBottomState() {
     return widget.status == 1
-        ? ContractStatus.getValue(widget.auditState).typeNum == 11
-            ? Row(
-                children: [
-                  getContact(),
-                  28.wb,
-                  Expanded(
-                      child: Row(
+            ? ContractStatus.getValue(widget.auditState).typeNum == 11
+                ? Row(
                     children: [
-                      getBox('驳回', Colors.white, 2, const Color(0xFF027AFF),
-                          const Color(0xFF027AFF), () {
-                        Alert.show(
-                            context,
-                            NormalContentDialog(
-                              type: NormalTextDialogType.delete,
-                              title: '驳回理由',
-                              content: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(4.w)),
-                                child: TextField(
-                                  controller: rejectController,
-                                  maxLines: null,
-                                  minLines: 1,
-                                  decoration: const InputDecoration(
-                                    hintText: '请输入',
-                                    border: InputBorder.none,
+                      getContact(),
+                      28.wb,
+                      Expanded(
+                          child: Row(
+                        children: [
+                          getBox('驳回', Colors.white, 2, const Color(0xFF027AFF),
+                              const Color(0xFF027AFF), () {
+                            Alert.show(
+                                context,
+                                NormalContentDialog(
+                                  type: NormalTextDialogType.delete,
+                                  title: '驳回理由',
+                                  content: Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16.w),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        borderRadius:
+                                            BorderRadius.circular(4.w)),
+                                    child: TextField(
+                                      controller: rejectController,
+                                      maxLines: null,
+                                      minLines: 1,
+                                      decoration: const InputDecoration(
+                                        hintText: '请输入',
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
                                   ),
+                                  items: const ['取消'],
+                                  deleteItem: '确定',
+                                  //监听器
+                                  listener: (index) {
+                                    Get.back();
+                                    Alert.dismiss(context);
+                                  },
+                                  deleteListener: () async {
+                                    var res = await apiClient.request(
+                                        API.contract.saleReject,
+                                        data: {
+                                          'contractId': saleInfo!.id,
+                                          'reason': rejectController.text
+                                        });
+                                    if (res.code == 0) {
+                                      CloudToast.show('驳回成功');
+                                      Get.back();
+                                    } else {
+                                      CloudToast.show(res.msg);
+                                    }
+                                    Alert.dismiss(context);
+                                  },
+                                ));
+                          }),
+                          16.wb,
+                          getBox('通过', const Color(0xFF027AFF), 0, Colors.white,
+                              Colors.white, () async {
+                            var res = await apiClient
+                                .request(API.contract.saleAdopt, data: {
+                              'contractId': saleInfo!.id,
+                            });
+                            if (res.code == 0) {
+                              Get.to(() => const PublishFinishPage(
+                                    title: '成功',
+                                    // ReminderApprovalType.getValue(widget.state)
+                                    //     .typeStr,
+                                    remindText: '已同意',
+                                  ));
+                            } else {
+                              CloudToast.show(res.msg);
+                            }
+                          }),
+                        ],
+                      )),
+                    ],
+                  )
+                : Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ContractStatus.getValue(widget.auditState).typeNum ==
+                                    3 ||
+                                ContractStatus.getValue(widget.auditState)
+                                        .typeNum ==
+                                    6 ||
+                                ContractStatus.getValue(widget.auditState)
+                                        .typeNum ==
+                                    13
+                            ? 32.hb
+                            : 0.hb,
+                        Row(
+                          children: [
+                            getContact(),
+                            const Spacer(),
+                            Text(
+                              ContractStatus.getValue(widget.auditState)
+                                  .typeStr,
+                              // ContractStatus.getValue(widget.auditState).typeNum ==
+                              //         12
+                              //     ? "已同意"
+                              //     : '已驳回',
+                              style: TextStyle(
+                                  color: getColor(widget.auditState),
+                                  fontSize: 28.sp,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                        // const Spacer(),
+                        8.hb,
+                        ContractStatus.getValue(widget.auditState).typeNum !=
+                                    3 ||
+                                ContractStatus.getValue(widget.auditState)
+                                        .typeNum !=
+                                    6 ||
+                                ContractStatus.getValue(widget.auditState)
+                                        .typeNum !=
+                                    13
+                            ? const SizedBox()
+                            : Flexible(
+                                child: Text(
+                                  '${getFailure(widget.auditState)}:${saleInfo?.dealerAuditInfo.deaerRejectReason}',
+                                  style: TextStyle(
+                                      fontSize: 28.sp,
+                                      color: const Color(0xFF333333),
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ),
-                              items: const ['取消'],
-                              deleteItem: '确定',
-                              //监听器
-                              listener: (index) {
-                                Get.back();
-                                Alert.dismiss(context);
-                              },
-                              deleteListener: () async {
-                                var res = await apiClient
-                                    .request(API.contract.saleReject, data: {
-                                  'contractId': saleInfo!.id,
-                                  'reason': rejectController.text
-                                });
-                                if (res.code == 0) {
-                                  CloudToast.show('驳回成功');
-                                  Get.back();
-                                } else {
-                                  CloudToast.show(res.msg);
-                                }
-                                Alert.dismiss(context);
-                              },
-                            ));
-                      }),
-                      16.wb,
-                      getBox('通过', const Color(0xFF027AFF), 0, Colors.white,
-                          Colors.white, () async {
-                        var res = await apiClient
-                            .request(API.contract.saleAdopt, data: {
-                          'contractId': saleInfo!.id,
-                        });
-                        if (res.code == 0) {
-                          Get.to(() => const PublishFinishPage(
-                                title: '成功',
-                                // ReminderApprovalType.getValue(widget.state)
-                                //     .typeStr,
-                                remindText: '已同意',
-                              ));
-                        } else {
-                          CloudToast.show(res.msg);
-                        }
-                      }),
-                    ],
-                  )),
-                ],
-              )
+                        // : Row(
+                        //     children: [
+                        //       Text(
+                        //         '驳回理由:',
+                        //         style: TextStyle(
+                        //             fontSize: 28.sp,
+                        //             color: const Color(0xFF333333),
+                        //             fontWeight: FontWeight.w600),
+                        //       ),
+                        //
+                        //     ],
+                        //   )
+                      ],
+                    ),
+                  )
             : Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ContractStatus.getValue(widget.auditState).typeNum == 12
+                    ContractStatus.getValue(widget.auditState).typeNum == 3 ||
+                            ContractStatus.getValue(widget.auditState)
+                                    .typeNum ==
+                                6 ||
+                            ContractStatus.getValue(widget.auditState)
+                                    .typeNum ==
+                                13
                         ? 32.hb
                         : 0.hb,
                     Row(
@@ -389,16 +464,13 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                         getContact(),
                         const Spacer(),
                         Text(
-                          ContractStatus.getValue(widget.auditState).typeNum ==
-                                  12
-                              ? "已同意"
-                              : '已驳回',
+                          ContractStatus.getValue(widget.auditState).typeStr,
+                          // ContractStatus.getValue(widget.auditState).typeNum ==
+                          //         12
+                          //     ? "已同意"
+                          //     : '已驳回',
                           style: TextStyle(
-                              color: ContractStatus.getValue(widget.auditState)
-                                          .typeNum ==
-                                      12
-                                  ? const Color(0xFF027AFF)
-                                  : const Color(0xFFFF3B02),
+                              color: getColor(widget.auditState),
                               fontSize: 28.sp,
                               fontWeight: FontWeight.w600),
                         ),
@@ -406,11 +478,17 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                     ),
                     // const Spacer(),
                     8.hb,
-                    ContractStatus.getValue(widget.auditState).typeNum == 12
+                    ContractStatus.getValue(widget.auditState).typeNum != 3 ||
+                            ContractStatus.getValue(widget.auditState)
+                                    .typeNum !=
+                                6 ||
+                            ContractStatus.getValue(widget.auditState)
+                                    .typeNum !=
+                                13
                         ? const SizedBox()
                         : Flexible(
                             child: Text(
-                              '驳回理由:${saleInfo?.dealerAuditInfo.deaerRejectReason}',
+                              '${getFailure(widget.auditState)}:${saleInfo?.dealerAuditInfo.deaerRejectReason}',
                               style: TextStyle(
                                   fontSize: 28.sp,
                                   color: const Color(0xFF333333),
@@ -432,66 +510,21 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                   ],
                 ),
               )
-        : Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ContractStatus.getValue(widget.auditState).typeNum == 12
-                    ? 32.hb
-                    : 0.hb,
-                Row(
-                  children: [
-                    getContact(),
-                    const Spacer(),
-                    Text(
-                      ContractStatus.getValue(widget.auditState).typeStr,
-                      style: TextStyle(
-                          color: getColor(saleInfo!.status),
-                          fontSize: 28.sp,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-                // const Spacer(),
-                8.hb,
-                ContractStatus.getValue(widget.auditState).typeNum != 3 ||
-                        ContractStatus.getValue(widget.auditState).typeNum !=
-                            5 ||
-                        ContractStatus.getValue(widget.auditState).typeNum !=
-                            4 ||
-                        ContractStatus.getValue(widget.auditState).typeNum !=
-                            6 ||
-                        ContractStatus.getValue(widget.auditState).typeNum != 13
-                    ? const SizedBox()
-                    : Flexible(
-                        child: Text(
-                          ContractStatus.getValue(widget.auditState).typeNum ==
-                                  13
-                              ? '驳回理由:${saleInfo?.dealerAuditInfo.deaerRejectReason}'
-                              : '失败理由:${saleInfo?.dealerAuditInfo.deaerRejectReason}',
-                          style: TextStyle(
-                              fontSize: 28.sp,
-                              color: const Color(0xFF333333),
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                // : Row(
-                //     children: [
-                //       Text(
-                //         '驳回理由:',
-                //         style: TextStyle(
-                //             fontSize: 28.sp,
-                //             color: const Color(0xFF333333),
-                //             fontWeight: FontWeight.w600),
-                //       ),
-                //
-                //     ],
-                //   )
-              ],
-            ),
-          );
+        // : Row(
+        //     children: [
+        //       Text(
+        //         '驳回理由:',
+        //         style: TextStyle(
+        //             fontSize: 28.sp,
+        //             color: const Color(0xFF333333),
+        //             fontWeight: FontWeight.w600),
+        //       ),
+        //
+        //     ],
+        //   )
+        ;
   }
+
   //
   // getText(int status) {
   //   if (widget.status == 1) {
@@ -538,6 +571,17 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
         default:
           return const Color(0xFFFF3B02);
       }
+    }
+  }
+
+  getFailure(int status) {
+    switch (status) {
+      case 3:
+        return '拒签理由';
+      case 6:
+        return '失败理由';
+      case 13:
+        return '驳回理由';
     }
   }
 

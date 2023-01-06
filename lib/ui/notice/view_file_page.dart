@@ -19,15 +19,6 @@ class ViewFilePage extends StatefulWidget {
 class _ViewFilePageState extends State<ViewFilePage> {
   @override
   void initState() {
-    //使用前进行判断是否已经初始化
-    Future.delayed(const Duration(seconds: 0),()async
-    {
-      var isInit = await FilePreview.tbsHasInit();
-      if (!isInit) {
-        await FilePreview.initTBS();
-        return;
-      }
-    });
 
     super.initState();
   }

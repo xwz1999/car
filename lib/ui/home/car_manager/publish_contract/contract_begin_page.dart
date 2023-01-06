@@ -276,7 +276,8 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
         EditItemWidget(
           titleColor: const Color(0xFF999999),
           title: '身份证号',
-          controller: ownerIdController,
+          // controller: ownerIdController,
+          value: widget.consignmentContractModel.value.masterInfo.idCard ?? ownerIdController.text,
           callback: (String content) {
             widget.consignmentContractModel.value.masterInfo.idCard = content;
           },
@@ -314,8 +315,8 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
         EditItemWidget(
           titleColor: const Color(0xFF999999),
           title: '车主姓名',
-          controller: nameController,
-          //value: widget.consignmentContractModel.value.masterInfo.name ?? "",
+          // controller: nameController,
+          value: widget.consignmentContractModel.value.masterInfo.name ?? nameController.text,
           callback: (String content) {
             widget.consignmentContractModel.value.masterInfo.name = content;
           },
@@ -327,8 +328,8 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
           length: 11,
           titleColor: const Color(0xFF999999),
           title: '手机号码',
-          controller: phoneController,
-          //value: widget.consignmentContractModel.value.masterInfo.phone ?? "",
+          // controller: phoneController,
+          value: widget.consignmentContractModel.value.masterInfo.phone ?? phoneController.text,
           inputFormatters: [
             LengthLimitingTextInputFormatter(11)
           ],
@@ -339,7 +340,8 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
         EditItemWidget(
           titleColor: const Color(0xFF999999),
           title: '银行卡号',
-          controller: bankNumController,
+          // controller: bankNumController,
+          value: widget.consignmentContractModel.value.masterInfo.bankCard ?? bankNumController.text,
           inputFormatters: [
             LengthLimitingTextInputFormatter(19)
           ],
@@ -380,8 +382,8 @@ class _ContractBeginPageState extends State<ContractBeginPage> {
         EditItemWidget(
           titleColor: const Color(0xFF999999),
           title: '开户行',
-          //value: widget.consignmentContractModel.value.masterInfo.bank ?? "",
-          controller: bankController,
+          value: widget.consignmentContractModel.value.masterInfo.bank ?? bankController.text,
+          // controller: bankController,
           callback: (String content) {
             widget.consignmentContractModel.value.masterInfo.bank = content;
           },

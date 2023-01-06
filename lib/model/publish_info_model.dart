@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 
+import '../ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'car/new_car_info.dart';
 
 part 'publish_info_model.g.dart';
@@ -21,6 +22,11 @@ class PublishInfoModel extends Equatable {
   final String downPayment;
   final String sourceName;
   final int source;
+  final int stockStatus;
+  final String stockStatusName;
+  final int locationCityId;
+  final int attributionCityId;
+  final String remark;
 
   // final String storeName;
   final String type;
@@ -37,10 +43,10 @@ class PublishInfoModel extends Equatable {
   final String location;
   final String attribution;
   final String condition;
-  final List<ImagePhotos> carPhotos;
-  final List<ImagePhotos> interiorPhotos;
-  final List<ImagePhotos> defectPhotos;
-  final List<ImagePhotos> dataPhotos;
+  final List<CarPhotos> carPhotos;
+  final List<CarPhotos> interiorPhotos;
+  final List<CarPhotos> defectPhotos;
+  final List<CarPhotos> dataPhotos;
   final BrokerInfo brokerInfo;
   final DealerInfo dealerInfo;
   final ModelInfo modelInfo;
@@ -72,6 +78,11 @@ class PublishInfoModel extends Equatable {
         downPayment: '',
         source: 0,
         sourceName: '',
+        stockStatus: 0,
+        stockStatusName: '',
+        locationCityId: 0,
+        attributionCityId: 0,
+        remark: '',
         // sourceId: 0,
         // storeName: '',
         type: '',
@@ -163,10 +174,13 @@ class PublishInfoModel extends Equatable {
     required this.price,
     required this.lastPrice,
     required this.downPayment,
-    required this.source,
     required this.sourceName,
-    // required this.sourceId,
-    // required this.storeName,
+    required this.source,
+    required this.stockStatus,
+    required this.stockStatusName,
+    required this.locationCityId,
+    required this.attributionCityId,
+    required this.remark,
     required this.type,
     required this.engineNo,
     required this.licensingDate,
@@ -212,10 +226,14 @@ class PublishInfoModel extends Equatable {
         price,
         lastPrice,
         downPayment,
-        source,
         sourceName,
-        // sourceId,
-        // storeName,
+        source,
+        stockStatus,
+        stockStatusName,
+        locationCityId,
+        attributionCityId,
+        remark,
+        String,
         type,
         engineNo,
         licensingDate,

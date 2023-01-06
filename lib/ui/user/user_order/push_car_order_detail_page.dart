@@ -88,7 +88,7 @@ class _PushCarOrderDetailPageState extends State<PushCarOrderDetailPage> {
                         36.hb,
                         _getText(
                           '驳回理由',
-                          '车辆信息填写有误，重新提交',
+                          '',
                         )
                       ],
                     ),
@@ -267,7 +267,6 @@ class _PushCarOrderDetailPageState extends State<PushCarOrderDetailPage> {
   _getWidget() {
     switch (widget.statusNumber) {
       case ConsignmentStatus.cancel:
-        // TODO: Handle this case.
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 32.w),
           padding: EdgeInsets.all(28.w),
@@ -290,7 +289,6 @@ class _PushCarOrderDetailPageState extends State<PushCarOrderDetailPage> {
             ],
           ),
         );
-
       case ConsignmentStatus.unSign:
         return const SizedBox.shrink();
       case ConsignmentStatus.unPublish:
@@ -308,7 +306,7 @@ class _PushCarOrderDetailPageState extends State<PushCarOrderDetailPage> {
               ),
             );
           default:
-            return;
+            return const SizedBox.shrink();
         }
 
       case ConsignmentStatus.theUpper:

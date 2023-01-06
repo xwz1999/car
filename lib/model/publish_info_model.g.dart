@@ -20,8 +20,13 @@ PublishInfoModel _$PublishInfoModelFromJson(Map<String, dynamic> json) =>
       price: json['price'] as String,
       lastPrice: json['lastPrice'] as String,
       downPayment: json['downPayment'] as String,
-      source: json['source'] as int,
       sourceName: json['sourceName'] as String,
+      source: json['source'] as int,
+      stockStatus: json['stockStatus'] as int,
+      stockStatusName: json['stockStatusName'] as String,
+      locationCityId: json['locationCityId'] as int,
+      attributionCityId: json['attributionCityId'] as int,
+      remark: json['remark'] as String,
       type: json['type'] as String,
       engineNo: json['engineNo'] as String,
       licensingDate: json['licensingDate'] as num,
@@ -37,16 +42,16 @@ PublishInfoModel _$PublishInfoModelFromJson(Map<String, dynamic> json) =>
       attribution: json['attribution'] as String,
       condition: json['condition'] as String,
       carPhotos: (json['carPhotos'] as List<dynamic>)
-          .map((e) => ImagePhotos.fromJson(e as Map<String, dynamic>))
+          .map((e) => CarPhotos.fromJson(e as Map<String, dynamic>))
           .toList(),
       interiorPhotos: (json['interiorPhotos'] as List<dynamic>)
-          .map((e) => ImagePhotos.fromJson(e as Map<String, dynamic>))
+          .map((e) => CarPhotos.fromJson(e as Map<String, dynamic>))
           .toList(),
       defectPhotos: (json['defectPhotos'] as List<dynamic>)
-          .map((e) => ImagePhotos.fromJson(e as Map<String, dynamic>))
+          .map((e) => CarPhotos.fromJson(e as Map<String, dynamic>))
           .toList(),
       dataPhotos: (json['dataPhotos'] as List<dynamic>)
-          .map((e) => ImagePhotos.fromJson(e as Map<String, dynamic>))
+          .map((e) => CarPhotos.fromJson(e as Map<String, dynamic>))
           .toList(),
       brokerInfo:
           BrokerInfo.fromJson(json['brokerInfo'] as Map<String, dynamic>),
@@ -83,6 +88,11 @@ Map<String, dynamic> _$PublishInfoModelToJson(PublishInfoModel instance) =>
       'downPayment': instance.downPayment,
       'sourceName': instance.sourceName,
       'source': instance.source,
+      'stockStatus': instance.stockStatus,
+      'stockStatusName': instance.stockStatusName,
+      'locationCityId': instance.locationCityId,
+      'attributionCityId': instance.attributionCityId,
+      'remark': instance.remark,
       'type': instance.type,
       'engineNo': instance.engineNo,
       'licensingDate': instance.licensingDate,

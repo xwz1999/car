@@ -32,6 +32,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../../model/sort/sort_brand_model.dart';
 import '../../model/sort/sort_car_model_model.dart';
 import '../../model/sort/sort_series_model.dart';
+import '../../widget/no_data_widget.dart';
 
 class PreferredPage extends StatefulWidget {
   const PreferredPage({super.key});
@@ -120,7 +121,7 @@ class _PreferredPageState extends State<PreferredPage>
         'maxAge': _pickCar.value.maxCarAge,
         'struct': _pickCar.value.struct,
         'gearType': _pickCar.value.gearType,
-        'fuelType':_pickCar.value.fuelType,
+        'fuelType': _pickCar.value.fuelType,
         'minMileage': _pickCar.value.finalMinMile,
         'maxMileage': _pickCar.value.finalMaxMile,
         'dischargeStandard': _pickCar.value.dischargeStandard,
@@ -261,7 +262,8 @@ class _PreferredPageState extends State<PreferredPage>
                                 color: Colors.grey.shade500,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w300),
-                            prefixIconConstraints: const BoxConstraints(minHeight: 0,minWidth: 0),
+                            prefixIconConstraints:
+                                const BoxConstraints(minHeight: 0, minWidth: 0),
                             prefixIcon: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 12.w),
                               child: const Icon(
@@ -334,12 +336,13 @@ class _PreferredPageState extends State<PreferredPage>
       ),
       //extendBody: true,
       body: Expanded(
-        child: _myCar(EasyRefresh.custom(
+        child: _myCar(EasyRefresh(
             firstRefresh: true,
             header: MaterialHeader(),
             footer: MaterialFooter(),
             controller: _refreshController,
             onRefresh: () async {
+              // print(_pickCar.value.series.series.first.seriesId);
               _page = 1;
               _carList = await CarFunc.getCarList(_page, _size,
                   order: CarMap.carSortString.getKeyFromValue(_pickSort),
@@ -364,16 +367,33 @@ class _PreferredPageState extends State<PreferredPage>
                 _refreshController.finishLoad(noMore: true);
               }
             },
-            slivers: [
-              SliverToBoxAdapter(
-                child: 80.hb,
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  return _carItem(_carList[index]);
-                }, childCount: _carList.length),
-              )
-            ])),
+            child:
+                //[
+                // SliverToBoxAdapter(
+                //   child: 80.hb,
+                // ),
+                _carList.isEmpty
+                    ? const NoDataWidget(
+                        text: '暂无车辆信息',
+                        paddingTop: 400,
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.only(top: 75.w),
+                        itemBuilder: (context, index) {
+                          return _carItem(_carList[index]);
+                        },
+                        itemCount: _carList.length,
+                      )
+
+            // Expanded(child: SliverList(
+            //   delegate:
+            //   SliverChildBuilderDelegate((context, index) {
+            //     return _carItem(_carList[index]);
+            //   }, childCount: _carList.length),
+            // ))
+            //]
+            )),
       ),
     );
   }
@@ -443,15 +463,13 @@ class _PreferredPageState extends State<PreferredPage>
   _carItem(CarListModel model) {
     return GestureDetector(
       onTap: () {
-        if(UserTool.userProvider.userInfo.levelEM ==
-            PermissionLevel.normal){
+        if (UserTool.userProvider.userInfo.levelEM == PermissionLevel.normal) {
           Alert.show(context, const JurisdictionToast());
-        }else{
+        } else {
           Get.to(() => NewCarsDetailPage(
-            carListModel: model,
-          ));
+                carListModel: model,
+              ));
         }
-
       },
       child: Container(
         decoration: BoxDecoration(

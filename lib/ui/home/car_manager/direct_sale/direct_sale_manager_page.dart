@@ -105,7 +105,7 @@ class _DirectSaleManagerPageState extends State<DirectSaleManagerPage> {
           Builder(builder: (context) {
             return
               TitleDropDownWidget ( [_currentType.typeStr], listWidget,
-                height: kToolbarHeight + MediaQuery.of(context).padding.top,
+                height: kToolbarHeight + MediaQuery.of(context).padding.top-15.w,
                 bottomHeight: 30.w,
                 screenControl: screenControl,
                 headFontSize: 36.sp,

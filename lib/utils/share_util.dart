@@ -108,15 +108,15 @@ class ShareUtil {
 
   /// 压缩图片
   static Future<Uint8List> compressImageList(Uint8List data,int num) async {
-    print(num);
-    print(data.length);
+    // print(num);
+    // print(data.length);
     var result = await FlutterImageCompress.compressWithList(
       data,
       minHeight: 400,
       minWidth: 500,
       quality: 95 - num*10,
     );
-    print(result.length);
+    // print(result.length);
 
     if (result.length > 128000&&result.length<=data.length) {
       result = await compressImageList(result, num+1);

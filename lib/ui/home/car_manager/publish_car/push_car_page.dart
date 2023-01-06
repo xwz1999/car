@@ -23,6 +23,7 @@ import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/picker/car_date_picker.dart';
 import '../../../../widget/picker/cloud_list_picker_widget.dart';
 import '../../../../widget/sort_widget.dart';
+import '../../../notice/evaluation_record_page.dart';
 import '../../sort/choose_car_page.dart';
 import '../../sort/search_param_model.dart';
 import '../direct_sale/edit_item_widget.dart';
@@ -45,10 +46,10 @@ class _PushCarPageState extends State<PushCarPage> {
   late CarDistinguishModel? carInfoModel;
   final PublishCarInfo _publishCarInfo = PublishCarInfo();
   final TextEditingController _viNumController = TextEditingController();
-  final TextEditingController _carNumController = TextEditingController();
+  // final TextEditingController _carNumController = TextEditingController();
   final TextEditingController _engineController = TextEditingController();
   final TextEditingController _mileController = TextEditingController();
-  List<int> colorNum=[];
+  List<int> colorNum = [];
   List<ChooseItem> colorList = [
     ChooseItem(name: '蓝色'),
     ChooseItem(name: '紫色'),
@@ -70,7 +71,8 @@ class _PushCarPageState extends State<PushCarPage> {
   // List<ChooseItem> get list =>
   //     CarSource.values.map((e) => ChooseItem(name: e.sourceName)).toList();
   List<String> get carNatureOfUseList =>
-      CarNatureOfUse.values.map((e) =>  e.typeStr).toList();
+      CarNatureOfUse.values.map((e) => e.typeStr).toList();
+
   @override
   void initState() {
     super.initState();
@@ -81,7 +83,7 @@ class _PushCarPageState extends State<PushCarPage> {
   @override
   void dispose() {
     _viNumController.dispose();
-    _carNumController.dispose();
+    // _carNumController.dispose();
     _engineController.dispose();
     _mileController.dispose();
     BotToast.closeAllLoading();
@@ -92,16 +94,30 @@ class _PushCarPageState extends State<PushCarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
-        ),
-        backgroundColor: kForeGroundColor,
-        title: Text('车辆寄卖',
-            style: TextStyle(
-                color: BaseStyle.color111111,
-                fontSize: BaseStyle.fontSize36,
-                fontWeight: FontWeight.bold)),
-      ),
+          leading: const CloudBackButton(
+            isSpecial: true,
+          ),
+          backgroundColor: kForeGroundColor,
+          title: Text('车辆寄卖',
+              style: TextStyle(
+                  color: BaseStyle.color111111,
+                  fontSize: BaseStyle.fontSize36,
+                  fontWeight: FontWeight.bold)),
+          actions: [
+            Padding(padding: EdgeInsets.only(top:40.w,right: 30.w
+
+            ),child:  GestureDetector(
+              onTap: () {
+                Get.to(() => const EvaluationRecordPage());
+              },
+              child: const Text(
+                '估值记录',
+                style:
+                TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
+              ),
+            ),)
+
+          ]),
       backgroundColor: kForeGroundColor,
       extendBody: true,
       body: ListView(
@@ -180,6 +196,7 @@ class _PushCarPageState extends State<PushCarPage> {
                               onTap: () {
                                 Get.to(() => const UserAssessmentPage(
                                       assessmentState: 1,
+                                      carConsignment: true,
                                     ));
                               },
                               child: Container(
@@ -222,9 +239,10 @@ class _PushCarPageState extends State<PushCarPage> {
                         children: [
                           ScanLicenseWidget(onLoadComplete: (carInfoModel) {
                             if (carInfoModel.vinModel != null) {
-
                               _publishCarInfo.carName =
                                   carInfoModel.vinModel!.first.modelName;
+                              _publishCarInfo.carNum =
+                                  carInfoModel.vehicle.lsnum;
                               _publishCarInfo.carModelId =
                                   carInfoModel.vinModel!.first.modelId;
                               _publishCarInfo.carColor =
@@ -234,7 +252,7 @@ class _PushCarPageState extends State<PushCarPage> {
                             _publishCarInfo.licensingDate =
                                 DateUtil.getDateTime(
                                     carInfoModel.vehicle.regdate);
-                            _carNumController.text = carInfoModel.vehicle.lsnum;
+                            // _carNumController.text = carInfoModel.vehicle.lsnum;
                             _engineController.text =
                                 carInfoModel.vehicle.engineno;
                             setState(() {});
@@ -244,9 +262,10 @@ class _PushCarPageState extends State<PushCarPage> {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () async{
-                                var res=await SortFunc.getVinCheck(_viNumController.text);
-                                if(res?.isLegal==0){
+                              onPressed: () async {
+                                var res = await SortFunc.getVinCheck(
+                                    _viNumController.text);
+                                if (res?.isLegal == 0) {
                                   CloudToast.show(res!.message);
                                   return;
                                 }
@@ -291,20 +310,9 @@ class _PushCarPageState extends State<PushCarPage> {
       paddingStart: 0.5,
       // errState: true,
       // errText: ,
-      callback: (text){
+      callback: (text) {},
+    );
 
-      },
-    );
-    var carNum = EditItemWidget(
-      title: '车牌号',
-      tips: '请输入车牌号',
-      controller: _carNumController,
-      topIcon: false,
-      paddingStart: 0.5,
-        callback:(text){
-          _publishCarInfo.carNum =text;
-        }
-    );
     // var version = _textarea(
     //     '发动机号',
     //     '请输入发动机号',
@@ -343,13 +351,11 @@ class _PushCarPageState extends State<PushCarPage> {
       child: Column(
         children: [
           20.heightBox,
-          carNum,
           vinNum,
           _function(
             '品牌车型',
             () async {
               await Get.to(() => ChooseCarPage(
-
                     callback: () {
                       Get.back();
                       _publishCarInfo.carName = _pickCar.value.car.name;
@@ -378,30 +384,7 @@ class _PushCarPageState extends State<PushCarPage> {
             _publishCarInfo.licensingDateStr,
             '选择首次上牌时间',
           ),
-          _function(
-            '使用性质',
-                () async {
-              await showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))),
-                builder: (context) {
-                  return CloudListPickerWidget(
-                      title: '使用性质',
-                      items: carNatureOfUseList,
-                      initIndex:  _publishCarInfo.carNatureOfUse,
-                      onConfirm: (str, index) {
-                        _publishCarInfo.carNatureOfUse = index;
 
-                        Get.back();
-                        setState(() {});
-                      });
-                },
-              );
-            },
-            _publishCarInfo.carNatureOfUseEM.typeStr,
-            '请选择',
-          ),
           // carNum,
           engineNum,
           _function(
@@ -410,20 +393,18 @@ class _PushCarPageState extends State<PushCarPage> {
               await showModalBottomSheet(
                 context: context,
                 shape: RoundedRectangleBorder(
-
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(16.w))),
                 builder: (context) {
                   return CloudGridPickerWidget(
-
                       time: false,
                       title: '车身颜色',
-                      initIndex: colorNum.isEmpty?[]:[colorNum.first],
+                      initIndex: colorNum.isEmpty ? [] : [colorNum.first],
                       items: colorList.map((e) => e.name).toList(),
                       onConfirm: (strList, indexList) {
                         if (strList.isNotEmpty) {
                           _publishCarInfo.carColor = strList.first;
-                          colorNum=indexList;
+                          colorNum = indexList;
                           // Get.back();
                           FocusManager.instance.primaryFocus?.unfocus();
                           setState(() {});
@@ -522,10 +503,10 @@ class _PushCarPageState extends State<PushCarPage> {
   // }
 
   bool get canTap {
-    if (_carNumController.text.trim().isEmpty) {
-      BotToast.showText(text: '请输入车牌号');
-      return false;
-    }
+    // if (_carNumController.text.trim().isEmpty) {
+    //   BotToast.showText(text: '请输入车牌号');
+    //   return false;
+    // }
     if (_viNumController.text.trim().isEmpty) {
       BotToast.showText(text: '请输入车架号');
       return false;
@@ -578,7 +559,6 @@ class _PushCarPageState extends State<PushCarPage> {
       child: Material(
         color: Colors.transparent,
         child: EditItemWidget(
-
           title: title,
           tips: msg,
           value: content ?? '',

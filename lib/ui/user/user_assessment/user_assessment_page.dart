@@ -14,9 +14,9 @@ import 'assessment_pay_page.dart';
 
 class UserAssessmentPage extends StatefulWidget {
   final int assessmentState;
-
+  final bool carConsignment; //寄卖合同充值返回
   ///1:评估 2：合同
-  const UserAssessmentPage({super.key, required this.assessmentState});
+  const UserAssessmentPage({super.key, required this.assessmentState, this.carConsignment=false});
 
   @override
   _UserAssessmentPageState createState() => _UserAssessmentPageState();
@@ -499,6 +499,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
       onTap: () {
         if (_chooseItem != null) {
           Get.to(() => AssessmentPayPage(
+                carConsignment: widget.carConsignment,
                 price: _chooseItem!.pice,
                 count: _chooseItem!.count,
                 title: widget.assessmentState == 2 ? "合同份数充值" : '评估次数充值',
