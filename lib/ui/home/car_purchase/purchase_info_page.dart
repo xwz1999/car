@@ -18,6 +18,7 @@ import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -207,8 +208,17 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const CloudBackButton(
-          isSpecial: true,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 8.w),
+          child: IconButton(
+            onPressed: () {
+             
+            },
+            icon: const Icon(
+              CupertinoIcons.chevron_back,
+              color: Color(0xFF111111),
+            ),
+          ),
         ),
         backgroundColor: Colors.white,
         title: Text('车辆收购',

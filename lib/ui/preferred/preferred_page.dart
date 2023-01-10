@@ -28,10 +28,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:velocity_x/velocity_x.dart';
 
+import '../../model/screening_model.dart';
 import '../../model/sort/sort_brand_model.dart';
 import '../../model/sort/sort_car_model_model.dart';
 import '../../model/sort/sort_series_model.dart';
+import '../../utils/hive_store.dart';
+import '../../utils/toast/cloud_toast.dart';
 import '../../widget/no_data_widget.dart';
 
 class PreferredPage extends StatefulWidget {
@@ -59,6 +63,7 @@ class _PreferredPageState extends State<PreferredPage>
   final int _size = 10;
   String _pickSort = '';
   final TextEditingController _searchController = TextEditingController();
+  List<String> itemList = [];
 
   List<Widget> get listWidget => [
         CarListPage(
@@ -160,6 +165,88 @@ class _PreferredPageState extends State<PreferredPage>
     super.dispose();
   }
 
+  _res() {
+    Future.delayed(const Duration(seconds: 0), () async {
+      if (_params.isNotEmpty) {
+        if (_pickCar.value.brand.name.isNotEmpty &&
+            _pickCar.value.brand.id != 0) {
+          itemList.add(_pickCar.value.brand.name);
+        }
+        if (_pickCar.value.series.name.isNotEmpty &&
+            _pickCar.value.series.id != 0) {
+          itemList.add(_pickCar.value.series.name);
+        }
+        if (_pickCar.value.dischargeStandard.isNotEmpty &&
+            !itemList.contains(_pickCar.value.dischargeStandard)) {
+          itemList.add(_pickCar.value.dischargeStandard);
+        }
+        if (_pickCar.value.fuel.isNotEmpty &&
+            !itemList.contains(_pickCar.value.fuel)) {
+          itemList.add(_pickCar.value.fuel);
+        }
+        if (_pickCar.value.gear.isNotEmpty &&
+            !itemList.contains(_pickCar.value.gear)) {
+          itemList.add(_pickCar.value.gear);
+        }
+        if (_pickCar.value.mile.isNotEmpty &&
+            !itemList.contains(_pickCar.value.mile)) {
+          itemList.add(_pickCar.value.mile);
+        }
+        if (_pickCar.value.carAge.isNotEmpty &&
+            !itemList.contains(_pickCar.value.carAge)) {
+          itemList.add(_pickCar.value.carAge);
+        }
+        if (_pickCar.value.price.isNotEmpty &&
+            !itemList.contains(_pickCar.value.price)) {
+          itemList.add(_pickCar.value.price);
+        }
+        if (_pickCar.value.struct.isNotEmpty &&
+            !itemList.contains(_pickCar.value.struct)) {
+          itemList.add(_pickCar.value.struct);
+        }
+        // HiveStore.carBox?.put(
+        //     'screening',
+        //     ScreeningModel(
+        //         brandId: _pickCar.value.brand.brandId,
+        //         seriesId: _pickCar.value.series.id,
+        //         minPrice: _pickCar.value.editMinPrice ?? 0,
+        //         maxPrice: _pickCar.value.editMaxPrice ?? 0,
+        //         minMileage: _pickCar.value.editMinMile ?? 0,
+        //         maxMileage: _pickCar.value.editMaxMile ?? 0,
+        //         struct: _pickCar.value.struct,
+        //         fuelType: CarMap.fuelType[_pickCar.value.fuel] ?? 0,
+        //         gearType: CarMap.gearType[_pickCar.value.fuel] ?? 0,
+        //         dischargeStandard: _pickCar.value.dischargeStandard,
+        //         brandName: _pickCar.value.brand.name,
+        //         seriesName: _pickCar.value.series.name,
+        //         structName: '',
+        //         fuelName: _pickCar.value.fuel,
+        //         gearName: _pickCar.value.gear));
+      } else {
+        CloudToast.show('数据为空');
+        itemList.clear();
+      }
+      // var res = await HiveStore.carBox?.get('screening') as ScreeningModel?;
+      // if (res != null) {
+      //   if (res.brandName.isNotEmpty) {
+      //     itemList.add(res.brandName);
+      //   } else if (res.dischargeStandard.isNotEmpty) {
+      //     itemList.add(res.dischargeStandard);
+      //   } else if (res.fuelName.isNotEmpty) {
+      //     itemList.add(res.fuelName);
+      //   } else if (res.gearName.isNotEmpty) {
+      //     itemList.add(res.gearName);
+      //   } else if (res.seriesName.isNotEmpty) {
+      //     itemList.add(res.seriesName);
+      //   } else if (res.structName.isNotEmpty) {
+      //     itemList.add(res.structName);
+      //   } else {
+      //     CloudToast.show('数据为空');
+      //   }
+      // }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -177,7 +264,9 @@ class _PreferredPageState extends State<PreferredPage>
             pickCar: _pickCar,
             onConfirm: () {
               Get.back();
+              _res();
               _refreshController.callRefresh();
+              setState(() {});
             },
           )),
       appbar: Column(
@@ -347,6 +436,10 @@ class _PreferredPageState extends State<PreferredPage>
               _carList = await CarFunc.getCarList(_page, _size,
                   order: CarMap.carSortString.getKeyFromValue(_pickSort),
                   searchParams: _params);
+
+              // print(_pickCar.value.brand.name);
+              // print(_pickCar.value.series.name);
+              // print(itemList);
               setState(() {});
             },
             onLoad: () async {
@@ -379,7 +472,8 @@ class _PreferredPageState extends State<PreferredPage>
                       )
                     : ListView.builder(
                         shrinkWrap: true,
-                        padding: EdgeInsets.only(top: 75.w),
+                        padding: EdgeInsets.only(
+                            top: itemList.isEmpty ? 80.w : 150.w),
                         itemBuilder: (context, index) {
                           return _carItem(_carList[index]);
                         },
@@ -447,15 +541,103 @@ class _PreferredPageState extends State<PreferredPage>
   _myCar(Widget child) {
     return Builder(
       builder: (context) {
-        return DropDownWidget(_dropDownHeaderItemStrings, listWidget,
-            height: 80.w,
-            bottomHeight: 400.w,
-            screenControl: screenControl,
-            headFontSize: 28.sp,
-            screen: '筛选', onTap: () {
-          screenControl.screenHide();
-          Scaffold.of(context).openEndDrawer();
-        }, child: child);
+        return DropDownWidget(
+          itemList: itemList,
+          _dropDownHeaderItemStrings,
+          listWidget,
+          height: 80.w,
+          bottomHeight: 400.w,
+          screenControl: screenControl,
+          headFontSize: 28.sp,
+          screening: true,
+          screen: '筛选',
+          onTap: () {
+            screenControl.screenHide();
+            Scaffold.of(context).openEndDrawer();
+          },
+          callBack: (context) {
+            itemList.remove(context);
+            if (context == _pickCar.value.brand.name) {
+              _pickCar.value.brand.id = 0;
+              _pickCar.value.brand.name = '';
+            } else if (context == _pickCar.value.series.name) {
+              _pickCar.value.series.id = 0;
+              _pickCar.value.series.name = '';
+            } else if (context == _pickCar.value.dischargeStandard) {
+              _pickCar.value.dischargeStandard = '';
+            } else if (context == _pickCar.value.fuel) {
+              _pickCar.value.fuel = '';
+            } else if (context == _pickCar.value.gear) {
+              _pickCar.value.gear = '';
+            } else if (context == _pickCar.value.mile) {
+              _pickCar.value.mile = '';
+            } else if (context == _pickCar.value.carAge) {
+              _pickCar.value.carAge = '';
+            } else if (context == _pickCar.value.struct) {
+              _pickCar.value.struct = '';
+            } else if (context == _pickCar.value.price) {
+              _pickCar.value.price = '';
+            }
+            _refreshController.callRefresh();
+            setState(() {});
+          },
+          // onTap2: () async {
+          //   // widget.itemList.remove(item);
+          //   if (itemList.contains(_pickCar.value.brand.name)) {
+          //     itemList.remove(_pickCar.value.brand.name);
+          //     _pickCar.value.brand.id = 0;
+          //   } else if (itemList.contains(_pickCar.value.series.name)) {
+          //     itemList.remove(_pickCar.value.series.name);
+          //     _pickCar.value.series.id = 0;
+          //   } else if (itemList.contains(_pickCar.value.dischargeStandard)) {
+          //     itemList.remove(_pickCar.value.dischargeStandard);
+          //     _pickCar.value.dischargeStandard = '';
+          //   } else if (itemList.contains(_pickCar.value.fuel)) {
+          //     itemList.remove(_pickCar.value.fuel);
+          //     _pickCar.value.fuel = '';
+          //   } else if (itemList.contains(_pickCar.value.gear)) {
+          //     itemList.remove(_pickCar.value.gear);
+          //     _pickCar.value.gear = '';
+          //   } else if (itemList.contains(_pickCar.value.mile)) {
+          //     itemList.remove(_pickCar.value.mile);
+          //     _pickCar.value.mile = '';
+          //   } else if (itemList.contains(_pickCar.value.carAge)) {
+          //     itemList.remove(_pickCar.value.carAge);
+          //     _pickCar.value.carAge = '';
+          //   } else if (itemList
+          //       .contains((_pickCar.value.editMaxMile).toString())) {
+          //     itemList.remove((_pickCar.value.editMaxMile).toString());
+          //     _pickCar.value.editMaxMile = 0;
+          //   } else if (itemList
+          //       .contains((_pickCar.value.editMinMile).toString())) {
+          //     itemList.remove((_pickCar.value.editMinMile).toString());
+          //     _pickCar.value.editMinMile = 0;
+          //   } else if (itemList
+          //       .contains((_pickCar.value.editMaxPrice).toString())) {
+          //     itemList.remove((_pickCar.value.editMaxPrice).toString());
+          //     _pickCar.value.editMaxPrice = 0;
+          //   } else if (itemList
+          //       .contains((_pickCar.value.editMinPrice).toString())) {
+          //     itemList.remove((_pickCar.value.editMinPrice).toString());
+          //     _pickCar.value.editMinPrice = 0;
+          //   } else if (itemList.contains(_pickCar.value.price)) {
+          //     itemList.remove(_pickCar.value.price);
+          //     _pickCar.value.price = '';
+          //   } else if (itemList.contains(_pickCar.value.struct)) {
+          //     itemList.remove(_pickCar.value.struct);
+          //     _pickCar.value.struct = '';
+          //   }
+          //
+          //   _refreshController.callRefresh();
+          //   setState(() {});
+          // },
+          onTap3: () {
+            _pickCar.value = SearchParamModel.init(returnType: 2);
+            itemList.clear();
+            _refreshController.callRefresh();
+          },
+          child: child,
+        );
       },
     );
   }

@@ -3,6 +3,7 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:file_preview/file_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 
 import '../../widget/button/cloud_back_button.dart';
@@ -40,11 +41,15 @@ class _ViewFilePageState extends State<ViewFilePage> {
       ),
       backgroundColor: const Color(0xFFF6F6F6),
       extendBody: true,
-      body: widget.url==''?const SizedBox():
-      FilePreviewWidget(
-        width: 750.w,
-        height: double.infinity,
-        path: widget.url,
-      ),);
+      body: SfPdfViewer.network(
+         widget.url));
+
+
+      // widget.url==''?const SizedBox():
+      // FilePreviewWidget(
+      //   width: 750.w,
+      //   height: double.infinity,
+      //   path: widget.url,
+      // ),);
   }
 }

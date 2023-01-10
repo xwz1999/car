@@ -65,7 +65,7 @@ class _SplashPageState extends State<SplashPage> {
         return;
       }
     });
-
+    // WidgetsFlutterBinding.ensureInitialized();
     PowerLogger.start(context, debug: AppENV.instance.env != ENVConfig.release);
     //PowerLogger.start(context, debug: true);
     ///第三方加载

@@ -5,11 +5,11 @@ part 'sort_brand_model.g.dart';
 
 @JsonSerializable()
 class SortBrandModel extends Equatable {
-  final int id;
-  final int brandId;
-  final String icon;
-  final String name;
-  final String initial;
+   int id;
+   int brandId;
+   String icon;
+   String name;
+   String initial;
 
   factory SortBrandModel.fromJson(Map<String, dynamic> json) =>
       _$SortBrandModelFromJson(json);
@@ -17,7 +17,7 @@ class SortBrandModel extends Equatable {
   Map<String, dynamic> toJson() => _$SortBrandModelToJson(this);
 
   static SortBrandModel get init =>
-      const SortBrandModel(id: 0, icon: '', name: '', initial: '', brandId: 0);
+       SortBrandModel(id: 0, icon: '', name: '', initial: '', brandId: 0);
 
   @override
   List<Object?> get props => [
@@ -28,7 +28,7 @@ class SortBrandModel extends Equatable {
         brandId,
       ];
 
-  const SortBrandModel({
+   SortBrandModel({
     required this.id,
     required this.brandId,
     required this.icon,

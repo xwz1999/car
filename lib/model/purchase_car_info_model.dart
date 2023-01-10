@@ -50,6 +50,8 @@ class PurchaseCarInfoModel extends Equatable {
   ///车身颜色
   String? color;
 
+  ///车型Id
+  int? carModelId;
   PurchaseCarInfoModel({
     this.carName,
     this.viNum,
@@ -61,6 +63,7 @@ class PurchaseCarInfoModel extends Equatable {
     this.compulsoryInsuranceDate,
     this.mileage,
     this.color,
+    this.carModelId,
   });
 
   @override
@@ -74,7 +77,8 @@ class PurchaseCarInfoModel extends Equatable {
         productionDate,
         compulsoryInsuranceDate,
         mileage,
-        color
+        color,
+        carModelId
       ];
 }
 // class PurchaseCarInfoModel extends HiveObject {

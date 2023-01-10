@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'drop_down_head_widget.dart';
 
+typedef Callback = Function(String content);
+
 class DropDownWidget extends StatefulWidget {
   //标题集合
   final List<String> titles;
@@ -35,28 +37,45 @@ class DropDownWidget extends StatefulWidget {
   final ScreenControl screenControl;
 
   final VoidCallback? onTap;
+  final VoidCallback? onTap2;
+  final VoidCallback? onTap3;
 
-  const DropDownWidget(this.titles, this.listWidget,
-      {this.child,
-      this.height = 42,
-      required this.headFontSize,
-      this.iconData,
-      required this.bottomHeight,
-      required this.screenControl,
-      this.screen,
-      super.key,
-      this.onTap});
+  //筛选带记录
+  final bool screening;
+
+  final List<String> itemList;
+  final Callback? callBack;
+
+  const DropDownWidget(
+    this.titles,
+    this.listWidget, {
+    this.child,
+    this.height = 42,
+    required this.headFontSize,
+    this.iconData,
+    required this.bottomHeight,
+    required this.screenControl,
+    this.screening = false,
+    this.screen,
+    super.key,
+    this.onTap,
+    this.onTap2,
+    this.onTap3,
+    this.callBack,
+    this.itemList = const [],
+  });
 
   @override
   _DropDownWidgetState createState() => _DropDownWidgetState();
 }
 
 class ScreenControl {
-  
   late AnimationController animateController;
   late Animation<double> curve;
+
 //按钮旋转状态
   List<bool> rotateState = [];
+
   //自动
   void autoDisplay() {
     if (animateController.isDismissed) {
@@ -78,17 +97,17 @@ class ScreenControl {
     rotateState = rotateState.map((e) => false).toList();
   }
 
-  void disPose(){
+  void disPose() {
     animateController.dispose();
   }
 }
-
 
 class _DropDownWidgetState extends State<DropDownWidget>
     with SingleTickerProviderStateMixin {
   int tabIndex = 0;
   bool showBottom = false;
 
+  // final List<String> itemList=[];
   @override
   void initState() {
     super.initState();
@@ -96,8 +115,11 @@ class _DropDownWidgetState extends State<DropDownWidget>
     //展开隐藏控制器，动画初始化
     widget.screenControl.animateController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200));
-    widget.screenControl.curve = CurvedAnimation(parent: widget.screenControl.animateController, curve: Curves.decelerate);
-    widget.screenControl.curve = Tween(begin: 0.0, end: widget.bottomHeight).animate(widget.screenControl.curve)
+    widget.screenControl.curve = CurvedAnimation(
+        parent: widget.screenControl.animateController,
+        curve: Curves.decelerate);
+    widget.screenControl.curve = Tween(begin: 0.0, end: widget.bottomHeight)
+        .animate(widget.screenControl.curve)
       ..addListener(() {
         setState(() {
           if (widget.screenControl.curve.value > 0) {
@@ -140,14 +162,115 @@ class _DropDownWidgetState extends State<DropDownWidget>
             children: getScreenTitle(),
           ),
         ),
-        getBottomScreen()
+        getBottomScreen(),
+        widget.screening
+            ? widget.itemList.isEmpty
+                ? const SizedBox()
+                : Row(
+                    children: [
+                      Container(
+                        color: Colors.white,
+                        width: 600.w,
+                        height: 75.w,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 8.w),
+                        margin: EdgeInsets.only(top: 80.w),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return _wrap(widget.itemList[index], index);
+                          },
+                          itemCount: widget.itemList.length,
+                        ),
+                      ),
+                      Expanded(
+                          child: GestureDetector(
+                        onTap: () {
+                          widget.onTap3!();
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(top: 80.w),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 32.w, vertical: 16.w),
+                          color: Colors.white,
+                          width: 150.w,
+                          height: 75.w,
+                          child: Text(
+                            '重置',
+                            style: TextStyle(
+                                color: const Color(0xFF999999),
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ))
+                    ],
+                  )
+            : const SizedBox()
       ],
+    );
+  }
+
+  _wrap(String item, int index) {
+    return GestureDetector(
+      onTap: () async {
+        // widget.onTap2!();
+        widget.callBack!.call(item);
+        // ScreeningModel? date;
+        // // widget.itemList.remove(item);
+        // var res = await HiveStore.carBox?.get('screening') as ScreeningModel;
+        // if (res != null) {
+        //   if (widget.itemList.contains(res.brandName)) {
+        //     date!.brandName = '';
+        //     date.brandId = 0;
+        //     widget.itemList.remove(item);
+        //   }
+        //   if (widget.itemList.contains(res.dischargeStandard)) {
+        //     date!.dischargeStandard = '';
+        //     widget.itemList.remove(item);
+        //   }
+        //   if (widget.itemList.contains(res.fuelName)) {
+        //     date!.fuelName = '';
+        //     date.fuelType = 0;
+        //     widget.itemList.remove(item);
+        //   }
+        //   if (widget.itemList.contains(res.gearName)) {
+        //     date!.gearName = '';
+        //     date.gearType = 0;
+        //     widget.itemList.remove(item);
+        //   }
+        //   HiveStore.carBox!.put('screening', date);
+        //   setState(() {});
+        // }
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+        margin: EdgeInsets.symmetric(horizontal: 5.w),
+        decoration: BoxDecoration(
+            color: const Color(0xFFF6F6F6),
+            borderRadius: BorderRadius.circular(8.w)),
+        child: Row(
+          children: [
+            Text(
+              item,
+              style: TextStyle(fontSize: 24.sp, color: const Color(0xFF999999)),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 2.w),
+              child: const Icon(
+                Icons.clear,
+                size: 14,
+                color: Color(0xFF999999),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
   List<Widget> getScreenTitle() {
     List<Widget> widgets = [];
-
     if (widget.titles.isNotEmpty) {
       for (int i = 0; i < widget.titles.length; i++) {
         widgets.add(Expanded(
@@ -208,8 +331,7 @@ class _DropDownWidgetState extends State<DropDownWidget>
                 alignment: Alignment.center,
                 width: double.infinity,
                 height: double.infinity,
-                decoration: const BoxDecoration(
-                    color: Colors.white),
+                decoration: const BoxDecoration(color: Colors.white),
                 padding: EdgeInsets.only(left: 5.r, right: 5.r),
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -236,7 +358,8 @@ class _DropDownWidgetState extends State<DropDownWidget>
   }
 
   bool getRoState(int i) {
-    if (widget.screenControl.rotateState.isEmpty || widget.screenControl.rotateState.length < i + 1) {
+    if (widget.screenControl.rotateState.isEmpty ||
+        widget.screenControl.rotateState.length < i + 1) {
       return false;
     }
     return widget.screenControl.rotateState[i];

@@ -1,6 +1,7 @@
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/hive_store.dart';
 import 'package:cloud_car/widget/cloud_bordered_text_field_widget.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,9 +10,11 @@ import 'package:flutter/services.dart';
 
 import '../../../widget/sort_list_widget.dart';
 
+
 class SortListPage extends StatefulWidget {
   final ValueNotifier<SearchParamModel> pickCar;
   final VoidCallback onConfirm;
+
 
   const SortListPage({
     super.key,
@@ -41,15 +44,11 @@ class _SortListPageState extends State<SortListPage> {
 
   TextEditingController editMaxMileController = TextEditingController();
 
-
-
-
   String get _carName {
     return widget.pickCar.value.series.name.isEmpty
         ? '不限品牌'
-        : '${ widget.pickCar.value.brand.name}-${ widget.pickCar.value.series.name}';
+        : '${widget.pickCar.value.brand.name}-${widget.pickCar.value.series.name}';
   }
-
 
   @override
   void initState() {
@@ -163,7 +162,7 @@ class _SortListPageState extends State<SortListPage> {
                       Get.back();
                       setState(() {});
                     },
-                    pickCar:  widget.pickCar,
+                    pickCar: widget.pickCar,
                   ));
             },
             child: Container(
@@ -203,7 +202,7 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-             widget.pickCar.value.price = item.name;
+            widget.pickCar.value.price = item.name;
 
             setState(() {});
           },
@@ -215,7 +214,9 @@ class _SortListPageState extends State<SortListPage> {
               children: [
                 CloudBorderedTextFieldWidget(
                   controller: editMinPriceController,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9]"))],
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                  ],
                   // callback: (String content) {
                   //    widget.pickCar.value.editMinPrice = int.parse(content);
                   // },
@@ -228,8 +229,10 @@ class _SortListPageState extends State<SortListPage> {
                 ),
                 5.wb,
                 CloudBorderedTextFieldWidget(
-                  controller:editMaxPriceController,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9]"))],
+                  controller: editMaxPriceController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                  ],
                 ),
                 10.wb,
                 Text(
@@ -239,7 +242,7 @@ class _SortListPageState extends State<SortListPage> {
               ],
             ),
           ),
-          pickString:  widget.pickCar.value.price,
+          pickString: widget.pickCar.value.price,
         ),
         16.hb,
         SortListWidget(
@@ -249,7 +252,7 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-             widget.pickCar.value.carAge = item.name;
+            widget.pickCar.value.carAge = item.name;
             setState(() {});
           },
           title: '首次上牌',
@@ -274,7 +277,7 @@ class _SortListPageState extends State<SortListPage> {
           //     ],
           //   ),
           // ),
-          pickString:  widget.pickCar.value.carAge,
+          pickString: widget.pickCar.value.carAge,
         ),
         16.hb,
         SortListWidget(
@@ -284,11 +287,11 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-             widget.pickCar.value.struct = item.name;
+            widget.pickCar.value.struct = item.name;
             setState(() {});
           },
           title: '车身结构',
-          pickString:  widget.pickCar.value.struct,
+          pickString: widget.pickCar.value.struct,
         ),
         16.hb,
         SortListWidget(
@@ -298,11 +301,11 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-             widget.pickCar.value.gear = item.name;
+            widget.pickCar.value.gear = item.name;
             setState(() {});
           },
           title: '变速箱类型',
-          pickString:  widget.pickCar.value.gear,
+          pickString: widget.pickCar.value.gear,
         ),
         16.hb,
         SortListWidget(
@@ -312,7 +315,7 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-             widget.pickCar.value.mile = item.name;
+            widget.pickCar.value.mile = item.name;
             setState(() {});
           },
           title: '表显里程',
@@ -323,7 +326,9 @@ class _SortListPageState extends State<SortListPage> {
               children: [
                 CloudBorderedTextFieldWidget(
                   controller: editMinMileController,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9]"))],
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                  ],
                 ),
                 5.wb,
                 Container(
@@ -334,7 +339,9 @@ class _SortListPageState extends State<SortListPage> {
                 5.wb,
                 CloudBorderedTextFieldWidget(
                   controller: editMaxMileController,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9]"))],
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                  ],
                 ),
                 10.wb,
                 Text(
@@ -344,7 +351,7 @@ class _SortListPageState extends State<SortListPage> {
               ],
             ),
           ),
-          pickString:  widget.pickCar.value.mile,
+          pickString: widget.pickCar.value.mile,
         ),
         16.hb,
         SortListWidget(
@@ -358,7 +365,7 @@ class _SortListPageState extends State<SortListPage> {
             setState(() {});
           },
           title: '能源类型',
-          pickString:  widget.pickCar.value.fuel,
+          pickString: widget.pickCar.value.fuel,
         ),
         16.hb,
         SortListWidget(
@@ -368,11 +375,11 @@ class _SortListPageState extends State<SortListPage> {
           crossAxisSpacing: 24.w,
           crossAxisCount: 4,
           callback: (ChooseItem item) {
-             widget.pickCar.value.dischargeStandard = item.name;
+            widget.pickCar.value.dischargeStandard = item.name;
             setState(() {});
           },
           title: '排放标准',
-          pickString:  widget.pickCar.value.dischargeStandard,
+          pickString: widget.pickCar.value.dischargeStandard,
         ),
         56.hb,
         Row(
@@ -388,22 +395,27 @@ class _SortListPageState extends State<SortListPage> {
 
   _confirmBtn() {
     return GestureDetector(
-      onTap:(){
+      onTap: () async {
 
-        if(editMinPriceController.text.isNotEmpty){
-          widget.pickCar.value.editMinPrice = int.parse(editMinPriceController.text);
-        }
-        if(editMaxPriceController.text.isNotEmpty){
-          widget.pickCar.value.editMaxPrice = int.parse(editMaxPriceController.text);
-        }
-        if(editMinMileController.text.isNotEmpty){
-          widget.pickCar.value.editMinMile = int.parse(editMinMileController.text);
-        }
-        if(editMaxMileController.text.isNotEmpty){
-          widget.pickCar.value.editMaxMile = int.parse(editMaxMileController.text);
-        }
 
+        if (editMinPriceController.text.isNotEmpty) {
+          widget.pickCar.value.editMinPrice =
+              int.parse(editMinPriceController.text);
+        }
+        if (editMaxPriceController.text.isNotEmpty) {
+          widget.pickCar.value.editMaxPrice =
+              int.parse(editMaxPriceController.text);
+        }
+        if (editMinMileController.text.isNotEmpty) {
+          widget.pickCar.value.editMinMile =
+              int.parse(editMinMileController.text);
+        }
+        if (editMaxMileController.text.isNotEmpty) {
+          widget.pickCar.value.editMaxMile =
+              int.parse(editMaxMileController.text);
+        }
         widget.onConfirm();
+
       },
       child: Container(
         width: 300.w,
@@ -430,8 +442,9 @@ class _SortListPageState extends State<SortListPage> {
   _resetBtn() {
     return GestureDetector(
       onTap: () {
-         widget.pickCar.value = SearchParamModel.init(returnType: 2);
-         widget.onConfirm();
+        widget.pickCar.value = SearchParamModel.init(returnType: 2);
+        widget.onConfirm();
+        HiveStore.carBox?.delete('screening');
         setState(() {});
       },
       child: Container(

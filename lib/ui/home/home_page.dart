@@ -47,7 +47,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   List<dynamic>? data;
-   final _kingCoinList = <KingCoin>[
+  final _kingCoinList = <KingCoin>[
     KingCoin(name: '车辆管理', url: Assets.icons.carManager.path),
     KingCoin(name: '客户管理', url: Assets.icons.customerManager.path),
     KingCoin(name: '车辆寄卖', url: Assets.icons.carConsignment.path),
@@ -59,8 +59,10 @@ class _HomePageState extends State<HomePage>
   ];
 
   late final EasyRefreshController _refreshController = EasyRefreshController();
+
   //网络图片转u8list
   ScreenshotController screenshotController = ScreenshotController();
+
   //海报列表 默认显示前10个
   List<PosterListModel> _posterList = [];
 
@@ -557,10 +559,8 @@ class _HomePageState extends State<HomePage>
                   12.hb,
                   Row(
                     children: [
-                      _getTextView(DateUtil.getDateTimeByMs(
-                              model.licensingDate.toInt() * 1000)
-                          .year
-                          .toString()),
+                      _getTextView(
+                          '${DateUtil.getDateTimeByMs(model.licensingDate.toInt() * 1000).year.toString()}年'),
                       12.wb,
                       _getTextView('${model.mileage}万公里'),
                     ],
@@ -677,10 +677,7 @@ class _HomePageState extends State<HomePage>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.w),
         ),
-        child:
-
-
-        CloudImageNetworkWidget.car(
+        child: CloudImageNetworkWidget.car(
           memCacheHeight: 1000,
           memCacheWidth: 1000,
           urls: [model.path],

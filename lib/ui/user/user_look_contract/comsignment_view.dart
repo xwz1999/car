@@ -94,45 +94,47 @@ class _ConsignmentViewState extends State<ConsignmentView>
                   setState(() {});
                 },
                 slivers: [
-              // SliverToBoxAdapter(
-              //   child: 10.hb,
-              // ),
+                  // SliverToBoxAdapter(
+                  //   child: 10.hb,
+                  // ),
 
-              SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                var model = widget.consignmentList[index];
-                return GestureDetector(
-                  onTap: () async {
-                    Get.to(() => ViewFilePage(
-                          title: '',
-                          url: model.essFileUrl != ''
-                              ? '${API.imageHost}/${model.essFileUrl}'
-                              : '',
-                        ));
-                    // core.download(url, options);
-                    // var docPath=await getApplicationDocumentsDirectory();
-                    // String _localPath='${docPath.path}${Platform.pathSeparator}download';
-                    // final savedDir=Directory(_localPath);
-                    // var response=await Dio().download('
-                    // contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF', '');///下载pdf
-                  },
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
-                    child: _getCard(
-                      model.status,
-                      '寄卖合同（${model.contractSn}）',
-                      model.modelName,
-                      model.customerName,
-                      model.status < 2
-                          ? '/'
-                          : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
-                              format: 'yyyy-MM-dd'),
-                    ),
-                  ),
-                );
-              }, childCount: widget.consignmentList.length))
-            ]))
+                  SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        var model = widget.consignmentList[index];
+                        return GestureDetector(
+                          onTap: () async {
+                                Get.to(() => ViewFilePage(
+                                      title: '',
+                                      url: model.essFileUrl != ''
+                                          ? '${API.imageHost}/${model.essFileUrl}'
+                                          : '',
+                                    ));
+                                // core.download(url, options);
+                                // var docPath=await getApplicationDocumentsDirectory();
+                                // String _localPath='${docPath.path}${Platform.pathSeparator}download';
+                                // final savedDir=Directory(_localPath);
+                                // var response=await Dio().download('
+                                // contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF', '');///下载pdf
+                            },
+                          child: Container(
+                            padding:
+                            EdgeInsets.symmetric(
+                                horizontal: 32.w, vertical: 24.w),
+                            child: _getCard(
+                              model.status,
+                              '寄卖合同（${model.contractSn}）',
+                              model.modelName,
+                              model.customerName,
+                              model.status < 2
+                                  ? '/'
+                                  : DateUtil.formatDateMs(model.signAt.toInt() *
+                                  1000,
+                                  format: 'yyyy-MM-dd'),
+                            ),
+                          ),
+                        );
+                      }, childCount: widget.consignmentList.length))
+                ]))
       ],
     );
   }
@@ -161,7 +163,10 @@ class _ConsignmentViewState extends State<ConsignmentView>
                   padding: EdgeInsets.only(left: 0.w),
                   child: Text(
                     title,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .subtitle1,
                   ),
                 ),
                 30.hb,
@@ -183,7 +188,10 @@ class _ConsignmentViewState extends State<ConsignmentView>
                         car,
                         overflow: TextOverflow.clip,
                         maxLines: 2,
-                        style: Theme.of(context).textTheme.subtitle2,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .subtitle2,
                       ),
                     )
                   ],
@@ -203,7 +211,10 @@ class _ConsignmentViewState extends State<ConsignmentView>
                     Text(
                       name,
                       overflow: TextOverflow.clip,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .subtitle2,
                     )
                   ],
                 ),
@@ -222,7 +233,10 @@ class _ConsignmentViewState extends State<ConsignmentView>
                     Text(
                       time,
                       overflow: TextOverflow.clip,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .subtitle2,
                     )
                   ],
                 ),
@@ -243,7 +257,9 @@ class _ConsignmentViewState extends State<ConsignmentView>
   }
 
   getUrl(int status) {
-    switch (ContractStatus.getValue(status).typeNum) {
+    switch (ContractStatus
+        .getValue(status)
+        .typeNum) {
       case 1:
         return Assets.images.signed.path;
       case 2:
