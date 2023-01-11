@@ -116,9 +116,11 @@ class CarFunc {
   }
 
   ///获取评估列表
-  static Future<List<CarEvaluationModel>> getCarEvaluationList(
-  {int page=1, int size=10,
-      String? keyWords,}) async {
+  static Future<List<CarEvaluationModel>> getCarEvaluationList({
+    int page = 1,
+    int size = 10,
+    String? keyWords,
+  }) async {
     var data = {
       'page': page,
       'size': size,
@@ -136,12 +138,13 @@ class CarFunc {
     }
   }
 
-  ///评估记录详情 
-  static Future<PriceInfoModel?> getPriceInfo(int priceId)async{
-    BaseModel res=await apiClient.request(API.car.priceInfo,data: {'priceId':priceId});
-    if(res.code==0){
+  ///评估记录详情
+  static Future<PriceInfoModel?> getPriceInfo(int priceId) async {
+    BaseModel res =
+        await apiClient.request(API.car.priceInfo, data: {'priceId': priceId});
+    if (res.code == 0) {
       return PriceInfoModel.fromJson(res.data);
-    }else{
+    } else {
       CloudToast.show(res.msg);
       return null;
     }
@@ -276,9 +279,9 @@ class CarFunc {
 
   ///出售合同列表
   static Future<List<ConsignmentListModel>> getSaleList(
-      {required int page, int size = 10 ,int status=0}) async {
-    BaseListModel res = await apiClient
-        .requestList(API.contract.soldList, data: {'size': size, 'page': page,'status':status});
+      {required int page, int size = 10, int status = 0}) async {
+    BaseListModel res = await apiClient.requestList(API.contract.soldList,
+        data: {'size': size, 'page': page, 'status': status});
     if (res.code == 0) {
       return res.nullSafetyList
           .map((e) => ConsignmentListModel.fromJson(e))
@@ -290,9 +293,9 @@ class CarFunc {
 
   ///收车合同列表
   static Future<List<ConsignmentListModel>> getPurchaseList(
-      {required int page, int size = 10,int status=0}) async {
+      {required int page, int size = 10, int status = 0}) async {
     BaseListModel res = await apiClient.requestList(API.contract.purchaseList,
-        data: {'size': size, 'page': page,'status':status});
+        data: {'size': size, 'page': page, 'status': status});
     if (res.code == 0) {
       return res.nullSafetyList
           .map((e) => ConsignmentListModel.fromJson(e))
@@ -318,9 +321,9 @@ class CarFunc {
 
   ///车商出售合同列表
   static Future<List<ConsignmentListModel>> getSaleDealer(
-      {required int page, int size = 10,int status=0}) async {
+      {required int page, int size = 10, int status = 0}) async {
     BaseListModel res = await apiClient.requestList(API.contract.dealerSale,
-        data: {'size': size, 'page': page,'status':status});
+        data: {'size': size, 'page': page, 'status': status});
     if (res.code == 0) {
       return res.nullSafetyList
           .map((e) => ConsignmentListModel.fromJson(e))
@@ -332,10 +335,10 @@ class CarFunc {
 
   ///车商收购合同列表
   static Future<List<ConsignmentListModel>> getPurchaseDealerList(
-      {required int page, int size = 10,int status=0}) async {
+      {required int page, int size = 10, int status = 0}) async {
     BaseListModel res = await apiClient.requestList(
         API.contract.carDealerAcquisition,
-        data: {'size': size, 'page': page,'status':status});
+        data: {'size': size, 'page': page, 'status': status});
     if (res.code == 0) {
       return res.nullSafetyList
           .map((e) => ConsignmentListModel.fromJson(e))
@@ -369,10 +372,14 @@ class CarFunc {
     }
   }
 
-  ///发起寄卖合同
-  static Future<bool> adjustPrice(int id, num price) async {
-    BaseModel model = await apiClient
-        .request(API.car.adjustPrice, data: {'carId': id, 'price': price});
+  ///调价
+  static Future<bool> adjustPrice(
+      int id, num interiorPrice, String exteriorPrice) async {
+    BaseModel model = await apiClient.request(API.car.adjustPrice, data: {
+      'carId': id,
+      'interior_price': interiorPrice,
+      'exterior_price': exteriorPrice
+    });
     if (model.code == 0) {
       if (model.msg == '操作成功') {
         return true;
@@ -476,8 +483,11 @@ class CarFunc {
   }
 
   ///发起收购合同
-  static Future<bool> addPurchase(PurchaseCarInfo purchaseCarInfo,
-      PurchaseInfo purchaseInfo, PurchasePhotoModel purchasePhotoModel,String legalName) async {
+  static Future<bool> addPurchase(
+      PurchaseCarInfo purchaseCarInfo,
+      PurchaseInfo purchaseInfo,
+      PurchasePhotoModel purchasePhotoModel,
+      String legalName) async {
     Map<String, dynamic> baseInfo = {
       'channel': purchaseCarInfo.channel,
       "modelId": purchaseCarInfo.carModelId,
@@ -507,7 +517,7 @@ class CarFunc {
       "bankCard": purchaseInfo.bankNum,
       "bank": purchaseInfo.bank,
       "kind": purchaseInfo.kind,
-      'legalName':legalName,
+      'legalName': legalName,
     };
 
     Map<String, dynamic> priceInfo = {
@@ -818,9 +828,9 @@ class CarFunc {
 
   ///经纪人车辆发布列表
   static Future<List<EconomicReleaseModel>> getPubLists(
-      {required int page, int size = 10,int status=0}) async {
-    var res = await apiClient
-        .requestList(API.order.pubLists, data: {'page': page, 'size': size,'status':status});
+      {required int page, int size = 10, int status = 0}) async {
+    var res = await apiClient.requestList(API.order.pubLists,
+        data: {'page': page, 'size': size, 'status': status});
     if (res.code == 0) {
       return res.nullSafetyList
           .map((e) => EconomicReleaseModel.fromJson(e))
@@ -833,9 +843,12 @@ class CarFunc {
 
   ///车商车辆发布列表
   static Future<List<EconomicReleaseModel>> getEconomicPubLists(
-      {required int page, int size = 10,int source =0,int status=0}) async {
+      {required int page,
+      int size = 10,
+      int source = 0,
+      int status = 0}) async {
     var res = await apiClient.requestList(API.order.dealerPubLists,
-        data: {'page': page, 'size': size,'source':source,'status':status});
+        data: {'page': page, 'size': size, 'source': source, 'status': status});
     if (res.code == 0) {
       return res.nullSafetyList
           .map((e) => EconomicReleaseModel.fromJson(e))
@@ -857,6 +870,4 @@ class CarFunc {
       return PublishInfoModel.init;
     }
   }
-
-
 }

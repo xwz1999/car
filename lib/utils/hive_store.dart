@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../model/acquisition_photo_model.dart';
 import '../model/purchase_car_info_model.dart';
+import '../model/purchase_info_model.dart';
 import '../model/screening_model.dart';
 
 class HiveStore {
@@ -18,12 +20,13 @@ class HiveStore {
 
   static Box? get dataBox => _dataBox;
 
-      static Box? _carBox;
+  static Box? _carBox;
+
   static Box? get carBox => _carBox;
 
   static Box? _screening;
-  static Box? get screening=>_screening;
 
+  static Box? get screening => _screening;
 
   static Future init() async {
     if (!kIsWeb) {
@@ -33,11 +36,12 @@ class HiveStore {
       Hive.registerAdapter(AzCityModelAdapter());
       Hive.registerAdapter(PurchaseCarInfoModelAdapter());
       Hive.registerAdapter(ScreeningModelAdapter());
+      Hive.registerAdapter(PurchaseInfoModelAdapter());
+      Hive.registerAdapter(AcquisitionPhotoModelAdapter());
       _appBox = await Hive.openBox('app');
       _userBox = await Hive.openBox('userBox');
       _dataBox = await Hive.openBox('dataBox');
-      _carBox =await Hive.openBox('car');
-
+      _carBox = await Hive.openBox('car');
     }
   }
 }

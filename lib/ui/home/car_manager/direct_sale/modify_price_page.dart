@@ -1,4 +1,3 @@
-
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
@@ -12,8 +11,10 @@ import 'package:flutter/services.dart';
 
 ///调价页面
 class ModifyPricePage extends StatefulWidget {
-  final NewCarInfo model;
-  const ModifyPricePage({super.key, required this.model});
+  // final NewCarInfo model;
+  final int carId;
+
+  const ModifyPricePage({super.key, required this.carId});
 
   @override
   _ModifyPricePageState createState() => _ModifyPricePageState();
@@ -21,21 +22,16 @@ class ModifyPricePage extends StatefulWidget {
 
 class _ModifyPricePageState extends State<ModifyPricePage>
     with SingleTickerProviderStateMixin {
-
-
   final TextEditingController _guideController = TextEditingController();
   final TextEditingController _showController = TextEditingController();
 
   num price = 0;
 
-
   @override
   void initState() {
     super.initState();
     // _guideController.text = (num.parse(widget.model.carInfo.newCarGuidePrice)/10000).toString();
-
-
-    _showController.text = (num.parse(widget.model.carInfo.price)/10000).toString();
+    // _showController.text = (num.parse(widget.model.carInfo.price)/10000).toString();
   }
 
   @override
@@ -65,29 +61,27 @@ class _ModifyPricePageState extends State<ModifyPricePage>
           child: Column(
             children: [
               EditItemWidget(
-                title: '展示价格',
+                title: '外部价格',
                 controller: _guideController,
                 callback: (String content) {
-                  if(content!=''){
-
-                    price = (num.parse(content)*10000);
+                  if (content != '') {
+                    price = (num.parse(content) * 10000);
                   }
-
                 },
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
+                ],
                 endText: '万元',
                 topIcon: false,
               ),
               EditItemWidget(
-                title: '新车指导价',
+                title: '内部价格',
                 controller: _showController,
-                callback: (String content) {
-
-                },
-                textColor:const Color(0xFF999999) ,
+                callback: (String content) {},
+                // textColor: const Color(0xFF999999),
                 endText: '万元',
                 topIcon: false,
-                canChange: false,
+                canChange: true,
               ),
               200.hb,
               GestureDetector(
@@ -113,12 +107,16 @@ class _ModifyPricePageState extends State<ModifyPricePage>
                         listener: (index) {
                           Alert.dismiss(context);
                         },
-                        deleteListener: () async{
+                        deleteListener: () async {
                           Alert.dismiss(context);
 
-                        bool result =  await CarFunc.adjustPrice(widget.model.carInfo.id, price);
+                          bool result = await CarFunc.adjustPrice(
+                              widget.carId,
+                              num.parse(_showController.text) * 10000,
+                              (num.parse(_guideController.text) * 10000)
+                                  .toString());
 
-                          if(result){
+                          if (result) {
                             Get.off(() => SuccessFailurePage(
                                 conditions: true,
                                 headline: '调价',
@@ -133,7 +131,6 @@ class _ModifyPricePageState extends State<ModifyPricePage>
                                   text: '返回汽车详情',
                                 )));
                           }
-
                         },
                       ));
                 },

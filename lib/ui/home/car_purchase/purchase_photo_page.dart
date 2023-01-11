@@ -1,5 +1,3 @@
-
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/model/contract/purchase_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/publish_finish_page.dart';
@@ -14,21 +12,30 @@ import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../model/acquisition_photo_model.dart';
+import '../../../utils/hive_store.dart';
 import '../../../utils/toast/cloud_toast.dart';
 import '../../../widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 import '../car_manager/direct_sale/car_image_page.dart';
+
 ///再带个个人与公司
 class PurchasePhotoPage extends StatefulWidget {
   final PurchaseCarInfo purchaseCarInfo;
   final PurchaseInfo purchaseInfo;
   final PurchasePhotoModel reportPhotoModel;
   final String legalName;
+
   // final PushPhotoModel model;
   const PurchasePhotoPage(
-  {super.key, required this.purchaseCarInfo, required this.purchaseInfo, required this.reportPhotoModel, required this.legalName});
+      {super.key,
+      required this.purchaseCarInfo,
+      required this.purchaseInfo,
+      required this.reportPhotoModel,
+      required this.legalName});
 
   @override
   _PurchasePhotoPageState createState() => _PurchasePhotoPageState();
@@ -39,6 +46,7 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
   // List<dynamic> _reportPhotos = [];
   List<dynamic> _reportPhotos = [];
   List<PushImgModel> _certificatesPhotos = [];
+
   // List<dynamic> _carPhotos = [];
   // String img='';
 
@@ -51,12 +59,14 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
     //   PushImgModel(name: '右面',isMust:true ),
     //   PushImgModel(name: '表显里程',isMust:true ),
     // ];
-
-    _certificatesPhotos=[
-      PushImgModel(name: '行驶证',isMust:true ),
-      PushImgModel(name: '维修记录',isMust: true),
-      PushImgModel(name: '表显里程',isMust:true ),
-      PushImgModel(name: '登记证书',),
+    _res();
+    _certificatesPhotos = [
+      PushImgModel(name: '行驶证', isMust: true),
+      PushImgModel(name: '维修记录', isMust: true),
+      PushImgModel(name: '表显里程', isMust: true),
+      PushImgModel(
+        name: '登记证书',
+      ),
       PushImgModel(name: '购置税发票'),
       PushImgModel(name: '年检凭证'),
       PushImgModel(name: '购车证明'),
@@ -77,19 +87,33 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
     for (var item in widget.reportPhotoModel.carPhotos!) {
       _reportPhotos.add(item.photo);
     }
-    for(int i=0;i<widget.reportPhotoModel.dataPhotos!.length;i++){
-      for(int j=0;j<_certificatesPhotos.length;j++){
-        if(_certificatesPhotos[j].name == widget.reportPhotoModel.dataPhotos![i].text){
-          if(widget.reportPhotoModel.dataPhotos![i].photo!=null){
-            _certificatesPhotos[j].url = widget.reportPhotoModel.dataPhotos![i].photo;
+    for (int i = 0; i < widget.reportPhotoModel.dataPhotos!.length; i++) {
+      for (int j = 0; j < _certificatesPhotos.length; j++) {
+        if (_certificatesPhotos[j].name ==
+            widget.reportPhotoModel.dataPhotos![i].text) {
+          if (widget.reportPhotoModel.dataPhotos![i].photo != null) {
+            _certificatesPhotos[j].url =
+                widget.reportPhotoModel.dataPhotos![i].photo;
           }
-
         }
       }
     }
     super.initState();
   }
+_res()async{
+  AcquisitionPhotoModel res=HiveStore.carBox?.get('acquisitionPhoto');
+   if(res!=null){
+     if(res.carPhotos!=null){
+       widget.reportPhotoModel.carPhotos=res.carPhotos;
+     }
+     if(res.dataPhotos!=null){
+       widget.reportPhotoModel.dataPhotos=res.dataPhotos;
+     }
+   }
+   setState(() {
 
+   });
+}
   Future uploadPhotos() async {
     widget.reportPhotoModel.carPhotos!.clear();
     for (var i = 0; i < _reportPhotos.length; i++) {
@@ -101,94 +125,153 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
       widget.reportPhotoModel.carPhotos!
           .add(CarPhotos(photo: _reportPhotos[i], text: '车辆照片'));
     }
-      // widget.reportPhotoModel.carPhotos!.clear();
-      // for (var i = 0; i < _reportPhotos.length; i++) {
-      //   if (_reportPhotos[i].url.runtimeType != String&&_reportPhotos[i].url.runtimeType != Null) {
-      //     var url = await apiClient.uploadImage(
-      //         _reportPhotos[i].url );
-      //     _reportPhotos[i].url = url;
-      //   }
-      //   widget.reportPhotoModel.carPhotos!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name)  );
-      // }
+    // widget.reportPhotoModel.carPhotos!.clear();
+    // for (var i = 0; i < _reportPhotos.length; i++) {
+    //   if (_reportPhotos[i].url.runtimeType != String&&_reportPhotos[i].url.runtimeType != Null) {
+    //     var url = await apiClient.uploadImage(
+    //         _reportPhotos[i].url );
+    //     _reportPhotos[i].url = url;
+    //   }
+    //   widget.reportPhotoModel.carPhotos!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name)  );
+    // }
 
-      widget.reportPhotoModel.dataPhotos!.clear();
-      for (var i = 0; i < _certificatesPhotos.length; i++) {
-        if (_certificatesPhotos[i].url.runtimeType != String&&_certificatesPhotos[i].url.runtimeType != Null) {
-          var url = await apiClient.uploadImage(
-              _certificatesPhotos[i].url );
-          _certificatesPhotos[i].url = url;
-        }
-        widget.reportPhotoModel.dataPhotos!.add(CarPhotos(photo: _certificatesPhotos[i].url,text: _certificatesPhotos[i].name)  );
+    widget.reportPhotoModel.dataPhotos!.clear();
+    for (var i = 0; i < _certificatesPhotos.length; i++) {
+      if (_certificatesPhotos[i].url.runtimeType != String &&
+          _certificatesPhotos[i].url.runtimeType != Null) {
+        var url = await apiClient.uploadImage(_certificatesPhotos[i].url);
+        _certificatesPhotos[i].url = url;
+      }
+      widget.reportPhotoModel.dataPhotos!.add(CarPhotos(
+          photo: _certificatesPhotos[i].url,
+          text: _certificatesPhotos[i].name));
+    }
+  }
+  _getDate(){
+    widget.reportPhotoModel.carPhotos!.clear();
+    for (var i = 0; i < _reportPhotos.length; i++) {
+      if (_reportPhotos[i].runtimeType != String) {
+        widget.reportPhotoModel.carPhotos!
+            .add(CarPhotos(photo: _reportPhotos[i], text: '车辆照片'));
       }
 
-  }
+    }
+    // widget.reportPhotoModel.carPhotos!.clear();
+    // for (var i = 0; i < _reportPhotos.length; i++) {
+    //   if (_reportPhotos[i].url.runtimeType != String&&_reportPhotos[i].url.runtimeType != Null) {
+    //     var url = await apiClient.uploadImage(
+    //         _reportPhotos[i].url );
+    //     _reportPhotos[i].url = url;
+    //   }
+    //   widget.reportPhotoModel.carPhotos!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name)  );
+    // }
+    widget.reportPhotoModel.dataPhotos!.clear();
+    for (var i = 0; i < _certificatesPhotos.length; i++) {
+      if (_certificatesPhotos[i].url.runtimeType != String &&
+          _certificatesPhotos[i].url.runtimeType != Null) {
+        widget.reportPhotoModel.dataPhotos!.add(CarPhotos(
+            photo: _certificatesPhotos[i].url,
+            text: _certificatesPhotos[i].name));
+      }
 
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return CloudScaffold.normal(
-        barHeight:88.w,
-      title: '车辆照片',
-      body: ListView(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding:  EdgeInsets.all(24.w),
-                child: '车辆照片'.text.size(32.sp).color(const Color(0xFF999999)).make(),
-              ),
-            ],
-          ),
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 10.w),
-            child:
-
-            _getView1(_reportPhotos),
-            //   //isPadding: false,
-            // ),
-            // _getView(_reportPhotos,true),
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding:  EdgeInsets.all(24.w),
-                child: '手续证件'.text.size(32.sp).color(const Color(0xFF999999)).make(),
-              ),
-            ],
-          ),
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 10.w),
-            child: _getView(_certificatesPhotos,false),
-          ),
-
-          20.hb,
-          CloudBottomButton(
-            onTap: () async{
-              CloudToast.loading;
-              if (!canTap) {
-                return;
-              }
-              await uploadPhotos();
-              BotToast.closeAllLoading();
-              ///发起寄买合同
-              // print(widget.purchaseInfo.transactionAmount);
-              // print(widget.purchaseInfo.downPaymentAmount);
-            var result = await  CarFunc.addPurchase(widget.purchaseCarInfo,widget.purchaseInfo,widget.reportPhotoModel,widget.legalName);
-
-              if(result){
-                Get.to(() => const PublishFinishPage(title: '发起合同',));
-              }
+        icon: Padding(
+          padding: EdgeInsets.only(left: 8.w),
+          child: IconButton(
+            onPressed: () {
+              HiveStore.carBox!.delete('acquisitionPhoto');
+              uploadPhotos();
+              AcquisitionPhotoModel acquisitionPhoto = AcquisitionPhotoModel(
+                carPhotos: widget.reportPhotoModel.carPhotos ?? [],
+                dataPhotos: widget.reportPhotoModel.dataPhotos ?? [],
+              );
+              HiveStore.carBox!.put('acquisitionPhoto', acquisitionPhoto);
+              Get.back();
+              setState(() {});
             },
-            text: '发起合同',
+            icon: const Icon(
+              CupertinoIcons.chevron_back,
+              color: Color(0xFF111111),
+            ),
           ),
-          50.hb,
-        ],
-      )
-    );
+        ),
+        barHeight: 88.w,
+        title: '车辆照片',
+        body: ListView(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(24.w),
+                  child: '车辆照片'
+                      .text
+                      .size(32.sp)
+                      .color(const Color(0xFF999999))
+                      .make(),
+                ),
+              ],
+            ),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(vertical: 10.w),
+              child: _getView1(_reportPhotos),
+              //   //isPadding: false,
+              // ),
+              // _getView(_reportPhotos,true),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(24.w),
+                  child: '手续证件'
+                      .text
+                      .size(32.sp)
+                      .color(const Color(0xFF999999))
+                      .make(),
+                ),
+              ],
+            ),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(vertical: 10.w),
+              child: _getView(_certificatesPhotos, false),
+            ),
+            20.hb,
+            CloudBottomButton(
+              onTap: () async {
+                CloudToast.loading;
+                if (!canTap) {
+                  return;
+                }
+                await uploadPhotos();
+                // BotToast.closeAllLoading();
+
+                ///发起寄买合同
+                // print(widget.purchaseInfo.transactionAmount);
+                // print(widget.purchaseInfo.downPaymentAmount);
+                var result = await CarFunc.addPurchase(
+                    widget.purchaseCarInfo,
+                    widget.purchaseInfo,
+                    widget.reportPhotoModel,
+                    widget.legalName);
+
+                if (result) {
+                  Get.to(() => const PublishFinishPage(
+                        title: '发起合同',
+                      ));
+                }
+              },
+              text: '发起合同',
+            ),
+            50.hb,
+          ],
+        ));
   }
 
   bool get canTap {
@@ -196,16 +279,16 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
     //   BotToast.showText(text: "请先上传车辆照片");
     //   return false;
     // }
-    for(var item in widget.reportPhotoModel.dataPhotos!){
-      if(item.text=='行驶证'&&item.photo==null){
+    for (var item in widget.reportPhotoModel.dataPhotos!) {
+      if (item.text == '行驶证' && item.photo == null) {
         BotToast.showText(text: '请先上传行驶证照片');
         return false;
       }
-      if(item.text=='表显里程'&&item.photo==null){
+      if (item.text == '表显里程' && item.photo == null) {
         BotToast.showText(text: '请先上传表显里程');
         return false;
       }
-      if(item.text=='维修记录' && item.photo==null){
+      if (item.text == '维修记录' && item.photo == null) {
         BotToast.showText(text: '请先上传维修记录');
         return false;
       }
@@ -213,33 +296,30 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
     return true;
   }
 
-  Widget _getView(
-      List<PushImgModel> list,
-      bool isCar
-      ) {
+  Widget _getView(List<PushImgModel> list, bool isCar) {
     return GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        padding: EdgeInsets.only(left: 32.w,right: 32.w,top: 24.w),
+        padding: EdgeInsets.only(left: 32.w, right: 32.w, top: 24.w),
         itemCount: list.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          //横轴元素个数
+            //横轴元素个数
             crossAxisCount: 3,
             //纵轴间距
             mainAxisSpacing: 10,
             //横轴间距
             crossAxisSpacing: 15,
             //子组件宽高长度比例
-            childAspectRatio: 100/100),
+            childAspectRatio: 100 / 100),
         itemBuilder: (BuildContext context, int iIndex) {
-          return _buildChild(list[iIndex],iIndex,isCar);
+          return _buildChild(list[iIndex], iIndex, isCar);
         });
   }
 
   Widget _getView1(
-      // int index,
-      List<dynamic> list,
-      ) {
+    // int index,
+    List<dynamic> list,
+  ) {
     return Padding(
       padding: EdgeInsets.only(left: 30.w, right: 30.w, top: 20.w),
       child: Column(
@@ -253,23 +333,23 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
           MultiImagePickWidget(
             photos: list,
             onChanged: (files) {
-             _reportPhotos=files;
+              _reportPhotos = files;
               setState(() {});
             },
-            maxCount:  null ,
+            maxCount: null,
           ),
         ],
       ),
     );
   }
-  Widget _buildChild(PushImgModel model,int index,bool isCar) {
+
+  Widget _buildChild(PushImgModel model, int index, bool isCar) {
     return GestureDetector(
       onTap: () async {
-        var value =
-        await CloudImagePicker.pickSingleImage(title: '选择图片');
-        if(isCar){
+        var value = await CloudImagePicker.pickSingleImage(title: '选择图片');
+        if (isCar) {
           _reportPhotos[index].url = value;
-        }else{
+        } else {
           _certificatesPhotos[index].url = value;
         }
 
@@ -279,65 +359,65 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
         color: Colors.transparent,
         child: Column(
           children: [
-            model.url==null||model.url==''
+            model.url == null || model.url == ''
                 ? Container(
-              width: 210.w,
-              height: 158.w,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(Assets.images.addcar.path) ,
-                ),
-              ),
-            )
-                : Stack(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              children: [
-                Container(
-                  // width: 210.w,
-                  // height: 158.w,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    width: 210.w,
+                    height: 158.w,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.w),
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage(Assets.images.addcar.path),
+                      ),
                     ),
-                    child: image(model.url)
-                ),
-              ],
-            ),
+                  )
+                : Stack(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    children: [
+                      Container(
+                          // width: 210.w,
+                          // height: 158.w,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.w),
+                          ),
+                          child: image(model.url)),
+                    ],
+                  ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   margin: EdgeInsets.only(top: 5.w),
-                  child:   model.isMust!=null&&model.isMust!?
-                  '* '.text.size(28.sp).color(Colors.red).make().paddingOnly(top: 5):const SizedBox(),
+                  child: model.isMust != null && model.isMust!
+                      ? '* '
+                          .text
+                          .size(28.sp)
+                          .color(Colors.red)
+                          .make()
+                          .paddingOnly(top: 5)
+                      : const SizedBox(),
                 ),
-
-                ( model.name??'').text.size(28.sp).black.make(),
+                (model.name ?? '').text.size(28.sp).black.make(),
               ],
             )
-
           ],
         ),
       ),
     );
   }
 
-
-
   Widget image(dynamic file) {
     return file.runtimeType == String
         ? CloudImageNetworkWidget(
-      width:  210.w,
-      height: 158.w,
-      urls: [file],
-    )
+            width: 210.w,
+            height: 158.w,
+            urls: [file],
+          )
         : Image.file(
-      file,
-      fit: BoxFit.fill,
-      width:  210.w,
-      height:  158.w,
-    );
+            file,
+            fit: BoxFit.fill,
+            width: 210.w,
+            height: 158.w,
+          );
   }
-
 }

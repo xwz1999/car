@@ -75,8 +75,9 @@ class _EditItemWidgetState extends State<EditItemWidget> {
   late TextEditingController _editingController;
   late double paddingTop = 0;
 
-  // final FocusNode _focusNode = FocusNode();
-  final String _focusNodeText = '';
+  final FocusNode _focusNode = FocusNode();
+
+  // final String _focusNodeText = '';
   late String judgeText = '';
 
   @override
@@ -163,7 +164,7 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                 ? Padding(
                     padding: EdgeInsets.only(top: 20.w),
                     child: TextField(
-                      // focusNode: _focusNode,
+                      focusNode: _focusNode,
                       enabled: widget.canChange,
                       inputFormatters: widget.inputFormatters,
                       keyboardType: widget.keyboardType,
@@ -189,11 +190,13 @@ class _EditItemWidgetState extends State<EditItemWidget> {
                       maxLines: null,
                       controller: _editingController,
                       decoration: InputDecoration(
-                        errorText: judgeText.isEmpty
+                        errorText: _focusNode.hasFocus
                             ? ''
-                            : judgeText.length != widget.length
-                                ? widget.errText
-                                : '',
+                            : judgeText.isEmpty
+                                ? ''
+                                : judgeText.length != widget.length
+                                    ? widget.errText
+                                    : '',
                         //contentPadding: EdgeInsets.only(top: 15.w,bottom: 15.w),
                         filled: true,
                         isCollapsed: true,

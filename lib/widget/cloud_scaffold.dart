@@ -23,6 +23,7 @@ class CloudScaffold extends StatelessWidget {
   final Widget? endDrawer;
   final double? barHeight;
   final FloatingActionButtonLocation? fbLocation;
+  final Widget? icon;
 
   const CloudScaffold({
     super.key,
@@ -34,7 +35,7 @@ class CloudScaffold extends StatelessWidget {
     this.systemStyle = SystemStyle.initial,
     this.extendBody = false,
     this.path,
-    this.endDrawer, this.barHeight, this.fbLocation,
+    this.endDrawer, this.barHeight, this.fbLocation, this.icon,
   })  : normal = false,
         title = '',
         actions = const [],
@@ -50,7 +51,7 @@ class CloudScaffold extends StatelessWidget {
     this.extendBody = false,
     this.appbar,
     this.path,
-    this.endDrawer, this.barHeight, this.fbLocation,
+    this.endDrawer, this.barHeight, this.fbLocation, this.icon,
   })  : bodyColor = Colors.white,
         normal = false,
         title = '',
@@ -72,7 +73,7 @@ class CloudScaffold extends StatelessWidget {
       this.appBarBackColor = Colors.white,
       this.appBarBottom,
       this.actions = const [],
-      this.endDrawer, this.barHeight, this.fbLocation})
+      this.endDrawer, this.barHeight, this.fbLocation, this.icon,})
       : normal = true,
         assert(title != null || appbar != null);
 
@@ -125,7 +126,7 @@ class CloudScaffold extends StatelessWidget {
                         bottom: appBarBottom,
                         backgroundColor:
                             extendBody ? Colors.transparent : appBarBackColor,
-                        leading: const CloudBackButton(),
+                        leading:icon ?? const CloudBackButton(),
                         title: Text(
                           title!,
                           style: TextStyle(

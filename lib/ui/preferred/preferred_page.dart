@@ -64,7 +64,7 @@ class _PreferredPageState extends State<PreferredPage>
   String _pickSort = '';
   final TextEditingController _searchController = TextEditingController();
   List<String> itemList = [];
-
+  Map itemMap={1:'1',2:'',3:''};
   List<Widget> get listWidget => [
         CarListPage(
           pickCar: _pickCar,
@@ -497,6 +497,7 @@ class _PreferredPageState extends State<PreferredPage>
       onTap: () {
         switch (title) {
           case '全部车源':
+
             Get.to(() => AllCar(
                   title: title,
                 ));
@@ -581,56 +582,6 @@ class _PreferredPageState extends State<PreferredPage>
             _refreshController.callRefresh();
             setState(() {});
           },
-          // onTap2: () async {
-          //   // widget.itemList.remove(item);
-          //   if (itemList.contains(_pickCar.value.brand.name)) {
-          //     itemList.remove(_pickCar.value.brand.name);
-          //     _pickCar.value.brand.id = 0;
-          //   } else if (itemList.contains(_pickCar.value.series.name)) {
-          //     itemList.remove(_pickCar.value.series.name);
-          //     _pickCar.value.series.id = 0;
-          //   } else if (itemList.contains(_pickCar.value.dischargeStandard)) {
-          //     itemList.remove(_pickCar.value.dischargeStandard);
-          //     _pickCar.value.dischargeStandard = '';
-          //   } else if (itemList.contains(_pickCar.value.fuel)) {
-          //     itemList.remove(_pickCar.value.fuel);
-          //     _pickCar.value.fuel = '';
-          //   } else if (itemList.contains(_pickCar.value.gear)) {
-          //     itemList.remove(_pickCar.value.gear);
-          //     _pickCar.value.gear = '';
-          //   } else if (itemList.contains(_pickCar.value.mile)) {
-          //     itemList.remove(_pickCar.value.mile);
-          //     _pickCar.value.mile = '';
-          //   } else if (itemList.contains(_pickCar.value.carAge)) {
-          //     itemList.remove(_pickCar.value.carAge);
-          //     _pickCar.value.carAge = '';
-          //   } else if (itemList
-          //       .contains((_pickCar.value.editMaxMile).toString())) {
-          //     itemList.remove((_pickCar.value.editMaxMile).toString());
-          //     _pickCar.value.editMaxMile = 0;
-          //   } else if (itemList
-          //       .contains((_pickCar.value.editMinMile).toString())) {
-          //     itemList.remove((_pickCar.value.editMinMile).toString());
-          //     _pickCar.value.editMinMile = 0;
-          //   } else if (itemList
-          //       .contains((_pickCar.value.editMaxPrice).toString())) {
-          //     itemList.remove((_pickCar.value.editMaxPrice).toString());
-          //     _pickCar.value.editMaxPrice = 0;
-          //   } else if (itemList
-          //       .contains((_pickCar.value.editMinPrice).toString())) {
-          //     itemList.remove((_pickCar.value.editMinPrice).toString());
-          //     _pickCar.value.editMinPrice = 0;
-          //   } else if (itemList.contains(_pickCar.value.price)) {
-          //     itemList.remove(_pickCar.value.price);
-          //     _pickCar.value.price = '';
-          //   } else if (itemList.contains(_pickCar.value.struct)) {
-          //     itemList.remove(_pickCar.value.struct);
-          //     _pickCar.value.struct = '';
-          //   }
-          //
-          //   _refreshController.callRefresh();
-          //   setState(() {});
-          // },
           onTap3: () {
             _pickCar.value = SearchParamModel.init(returnType: 2);
             itemList.clear();

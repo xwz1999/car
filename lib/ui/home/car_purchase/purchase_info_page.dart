@@ -9,6 +9,7 @@ import 'package:cloud_car/ui/home/car_purchase/purchase_photo_page.dart';
 import 'package:cloud_car/ui/home/car_purchase/purchase_push_car_page.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
+import 'package:cloud_car/utils/hive_store.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
@@ -25,6 +26,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../model/purchase_info_model.dart';
 import '../../../utils/share_util.dart';
 import '../../../widget/button/colud_check_radio.dart';
 
@@ -33,10 +35,11 @@ class PurchaseInfoPage extends StatefulWidget {
   final PurchaseInfo purchaseInfo;
   final PurchasePhotoModel reportPhotoModel;
 
-  const PurchaseInfoPage({super.key,
-    required this.purchaseCarInfo,
-    required this.purchaseInfo,
-    required this.reportPhotoModel});
+  const PurchaseInfoPage(
+      {super.key,
+      required this.purchaseCarInfo,
+      required this.purchaseInfo,
+      required this.reportPhotoModel});
 
   @override
   _PurchaseInfoPageState createState() => _PurchaseInfoPageState();
@@ -44,7 +47,7 @@ class PurchaseInfoPage extends StatefulWidget {
 
 class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   final TextEditingController ownerNameController = TextEditingController();
-  final TextEditingController legalPersonController=TextEditingController();
+  final TextEditingController legalPersonController = TextEditingController();
   final TextEditingController ownerIdController = TextEditingController();
   final TextEditingController institutionsController = TextEditingController();
   final TextEditingController phoneNumController = TextEditingController();
@@ -54,12 +57,12 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   // final TextEditingController signingAddressController = TextEditingController();
 
   final TextEditingController transactionAmountController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController depositAmountController = TextEditingController();
   final TextEditingController downPaymentAmountController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController balanceAmountBackupController =
-  TextEditingController();
+      TextEditingController();
 
   // final TextEditingController deliveryPlaceController = TextEditingController();
   // final TextEditingController transferTaxController = TextEditingController();
@@ -68,58 +71,44 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   final TextEditingController remarkController = TextEditingController();
 
   final TextEditingController downPaymentNumController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController balanceAmountBackupNumController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController designationController = TextEditingController();
   late int state = 0;
 
   bool get canTap {
-    if (ownerIdController.text
-        .trim()
-        .isEmpty) {
+    if (ownerIdController.text.trim().isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-    if (ownerNameController.text
-        .trim()
-        .isEmpty) {
+    if (ownerNameController.text.trim().isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-    if (phoneNumController.text
-        .trim()
-        .isEmpty) {
+    if (phoneNumController.text.trim().isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-    if (bankNumController.text
-        .trim()
-        .isEmpty) {
+    if (bankNumController.text.trim().isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-    if (bankController.text
-        .trim()
-        .isEmpty) {
+    if (bankController.text.trim().isEmpty) {
       BotToast.showText(text: '请先完善车主信息');
       return false;
     }
-    if(_selectIndex2.first!=0){
-      if(legalPersonController.text.trim().isEmpty){
+    if (_selectIndex2.first != 0) {
+      if (legalPersonController.text.trim().isEmpty) {
         BotToast.showText(text: '请先完善法人信息');
         return false;
       }
     }
-    if (transactionAmountController.text
-        .trim()
-        .isEmpty) {
+    if (transactionAmountController.text.trim().isEmpty) {
       BotToast.showText(text: '请先输入成交金额');
       return false;
     }
-    if (depositAmountController.text
-        .trim()
-        .isEmpty) {
+    if (depositAmountController.text.trim().isEmpty) {
       BotToast.showText(text: '请先输入定金金额');
       return false;
     }
@@ -131,9 +120,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     //   BotToast.showText(text: '请先输入首付金额');
     //   return false;
     // }
-    if (balanceAmountBackupController.text
-        .trim()
-        .isEmpty) {
+    if (balanceAmountBackupController.text.trim().isEmpty) {
       BotToast.showText(text: '请先输入尾款金额');
       return false;
     }
@@ -172,7 +159,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
     return true;
   }
 
-  final List<int> _selectIndex2 = [0];
+  final List<int> _selectIndex2 = [];
   final List<String> _models1 = ['个人', '公司'];
   final List<int> _selectIndex3 = [];
   final List<String> _models2 = ['公司', '门店'];
@@ -205,6 +192,71 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   }
 
   @override
+  void initState() {
+    _reg();
+    super.initState();
+  }
+
+  _reg() async {
+    PurchaseInfoModel res = await HiveStore.carBox?.get('acquisitionSecond');
+    if (res != null) {
+      if (res.ownerName != null) {
+        ownerNameController.text = res.ownerName!;
+      }
+      if (res.ownerId != null) {
+        ownerIdController.text = res.ownerId!;
+      }
+      if (res.phoneNum != null) {
+        phoneNumController.text = res.phoneNum!;
+      }
+      if (res.bankNum != null) {
+        bankNumController.text = res.bankNum!;
+      }
+      if (res.bank != null) {
+        bankController.text = res.bank!;
+      }
+      if (res.transactionAmount != null) {
+        transactionAmountController.text = res.transactionAmount!;
+      }
+      if (res.downPaymentAmount != null) {
+        depositAmountController.text = res.downPaymentAmount!;
+      }
+      if (res.downPaymentNum != null) {
+        downPaymentNumController.text = res.downPaymentNum!;
+      }
+      if (res.balanceAmountBackup != null) {
+        balanceAmountBackupController.text = res.balanceAmountBackup!;
+      }
+      if (res.balanceAmountBackupNum != null) {
+        balanceAmountBackupNumController.text = res.balanceAmountBackupNum!;
+      }
+      if (res.kind != null) {
+        state = res.kind! - 1;
+        _selectIndex2.clear();
+        _selectIndex2.add(state);
+      }
+      if (res.legalPerson != null) {
+        legalPersonController.text = res.legalPerson!;
+      }
+      if(res.deliveryDate!=null){
+        widget.purchaseInfo.deliveryDate=res.deliveryDate;
+      }
+      if(res.remark!=null){
+        widget.purchaseInfo.remark=res.remark!;
+        remarkController.text=res.remark!;
+      }
+      if(res.channel!=null){
+        widget.purchaseCarInfo.channel=res.channel!;
+        _selectIndex3.clear();
+        _selectIndex3.add(res.channel!-1);
+        designationController.text =
+            UserTool.userProvider.userInfo.business.storeName;
+      }
+    }
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -212,7 +264,40 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           padding: EdgeInsets.only(left: 8.w),
           child: IconButton(
             onPressed: () {
-             
+              HiveStore.carBox!.delete('acquisitionSecond');
+              PurchaseInfoModel purchaseInfo = PurchaseInfoModel(
+                  ownerName: ownerNameController.text,
+                  ownerId:ownerIdController.text,
+                  phoneNum: phoneNumController.text,
+                  bankNum:bankNumController.text,
+                  bank: bankController.text,
+                  kind:  state + 1,
+                  signingAddress: widget.purchaseInfo.signingAddress ?? '',
+                  transactionAmount:
+                      transactionAmountController.text,
+                  downPaymentAmount:
+                      depositAmountController.text,
+                  downPaymentNum:
+                      downPaymentNumController.text,
+                  balanceAmountBackup:
+
+                          balanceAmountBackupController.text,
+                  balanceAmountBackupNum:
+
+                          balanceAmountBackupNumController.text,
+                  deliveryDate:
+                      widget.purchaseInfo.deliveryDate ?? DateTime.now(),
+                  deliveryPlace: widget.purchaseInfo.deliveryPlace ?? '',
+                  formalities: widget.purchaseInfo.formalities ?? '',
+                  remark: widget.purchaseInfo.remark ?? '',
+                  legalPerson: legalPersonController.text,
+                  channel: widget.purchaseCarInfo.channel,
+              );
+              HiveStore.carBox!.put('acquisitionSecond', purchaseInfo);
+              Get.back();
+              setState(() {
+
+              });
             },
             icon: const Icon(
               CupertinoIcons.chevron_back,
@@ -234,7 +319,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           Padding(
             padding: EdgeInsets.all(32.w),
             child:
-            '车主信息'.text.size(36.sp).color(const Color(0xFF999999)).make(),
+                '车主信息'.text.size(36.sp).color(const Color(0xFF999999)).make(),
           ),
           Container(
               padding: EdgeInsets.only(left: 32.w, right: 12.w),
@@ -246,7 +331,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           Padding(
             padding: EdgeInsets.all(32.w),
             child:
-            '车款与交验车'.text.size(36.sp).color(const Color(0xFF999999)).make(),
+                '车款与交验车'.text.size(36.sp).color(const Color(0xFF999999)).make(),
           ),
           Container(
               padding: EdgeInsets.only(left: 32.w, right: 12.w),
@@ -258,7 +343,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           Padding(
             padding: EdgeInsets.all(32.w),
             child:
-            '收购方选择'.text.size(36.sp).color(const Color(0xFF999999)).make(),
+                '收购方选择'.text.size(36.sp).color(const Color(0xFF999999)).make(),
           ),
           Container(
               padding: EdgeInsets.only(left: 32.w, right: 32.w),
@@ -270,7 +355,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           Padding(
             padding: EdgeInsets.all(32.w),
             child:
-            '车况描述'.text.size(36.sp).color(const Color(0xFF999999)).make(),
+                '车况描述'.text.size(36.sp).color(const Color(0xFF999999)).make(),
           ),
           Container(
               padding: EdgeInsets.only(left: 32.w, right: 32.w),
@@ -282,7 +367,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () async{
+              onPressed: () async {
                 // try{
                 //   var res =await Dio().get('contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF');
                 //   print(res);
@@ -292,18 +377,18 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
 
                 // ShareUtil.saveNetImageToGallery(
                 //     'contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF');
-               // var res= await Dio().download("contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF", '');
-               // print(res.data.stream);
+                // var res= await Dio().download("contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF", '');
+                // print(res.data.stream);
+
                 FocusManager.instance.primaryFocus?.unfocus();
                 if (!canTap) {
                   return;
                 }
-                Get.to(() =>
-                    PurchasePhotoPage(
-                        purchaseInfo: widget.purchaseInfo,
-                        purchaseCarInfo: widget.purchaseCarInfo,
-                        reportPhotoModel: widget.reportPhotoModel, legalName: legalPersonController.text,
-
+                Get.to(() => PurchasePhotoPage(
+                      purchaseInfo: widget.purchaseInfo,
+                      purchaseCarInfo: widget.purchaseCarInfo,
+                      reportPhotoModel: widget.reportPhotoModel,
+                      legalName: legalPersonController.text,
                     ));
               },
               style: ButtonStyle(
@@ -531,7 +616,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         balanceAmount,
         _function(
           '交付时间',
-              () async {
+          () async {
             var firstDate = await CarDatePicker.pick(
               DateTime.now(),
             );
@@ -588,7 +673,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       topIcon: false,
       paddingStart: 0.w,
     );
-    var  legalPerson= EditItemWidget(
+    var legalPerson = EditItemWidget(
       title: '法人信息',
       tips: '请输入',
       controller: legalPersonController,
@@ -658,7 +743,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
             var cancel = CloudToast.loading;
             String urls = await apiClient.uploadImage(file);
             BankCardInfoModel? bankCardInfoModel =
-            await CarFunc.bankCardOCR(urls);
+                await CarFunc.bankCardOCR(urls);
             if (bankCardInfoModel != null) {
               widget.purchaseInfo.bankNum = bankCardInfoModel.bankCardNo;
               bankNumController.text = bankCardInfoModel.bankCardNo;
@@ -721,7 +806,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
         ),
 
         ownerName,
-        state==0?const SizedBox():legalPerson,
+        state == 0 ? const SizedBox() : legalPerson,
         state == 0 ? ownerId : institutionId,
         phoneNum,
         bankNum,
@@ -752,7 +837,7 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
             decoration: BoxDecoration(
                 border: Border(
                     bottom:
-                    BorderSide(color: const Color(0xFFF6F6F6), width: 2.w)),
+                        BorderSide(color: const Color(0xFFF6F6F6), width: 2.w)),
                 color: Colors.transparent),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -773,8 +858,9 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
                     // await Dio().get(
                     //     'contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF');
                     //
-                    widget.purchaseCarInfo.channel=choice+1;
-                    designationController.text=UserTool.userProvider.userInfo.business.storeName;
+                    widget.purchaseCarInfo.channel = choice + 1;
+                    designationController.text =
+                        UserTool.userProvider.userInfo.business.storeName;
                     // state = choice;
                   }, _models2, _selectIndex3),
                 ),
@@ -783,13 +869,15 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           ),
         ),
         // const Divider(color: Colors.grey,),
-        _selectIndex3.isEmpty ? const SizedBox() : EditItemWidget(
-          title: '名称',
-          tips: '请输入',
-          controller: designationController,
-          topIcon: false,
-          paddingStart: 0.w,
-        )
+        _selectIndex3.isEmpty
+            ? const SizedBox()
+            : EditItemWidget(
+                title: '名称',
+                tips: '请输入',
+                controller: designationController,
+                topIcon: false,
+                paddingStart: 0.w,
+              )
       ],
     );
   }
@@ -800,43 +888,39 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       shrinkWrap: true,
       children: [
         ...models
-            .mapIndexed((currentValue, index) =>
-            GestureDetector(
-              onTap: () {
-                if (choices.contains(index)) {
-                  choices.remove(index);
-                } else {
-                  choices.clear();
-                  choices.add(index);
-                }
+            .mapIndexed((currentValue, index) => GestureDetector(
+                  onTap: () {
+                    if (choices.contains(index)) {
+                      choices.remove(index);
+                    } else {
+                      choices.clear();
+                      choices.add(index);
+                    }
 
-                setState(() {});
-                callBack(choices.first);
+                    setState(() {});
+                    callBack(choices.first);
 
-                // _easyRefreshController.callRefresh();
-                print(state);
-              },
-              child: Container(
-                width: 160.w,
-                color: Colors.white,
-                child: Row(
-                  children: [
-                    BeeCheckRadio(
-                      value: index,
-                      groupValue: choices,
+                    // _easyRefreshController.callRefresh();
+                    print(state);
+                  },
+                  child: Container(
+                    width: 160.w,
+                    color: Colors.white,
+                    child: Row(
+                      children: [
+                        BeeCheckRadio(
+                          value: index,
+                          groupValue: choices,
+                        ),
+                        16.wb,
+                        Text(
+                          currentValue,
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                      ],
                     ),
-                    16.wb,
-                    Text(
-                      currentValue,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .subtitle2,
-                    ),
-                  ],
-                ),
-              ),
-            ))
+                  ),
+                ))
             .toList(),
       ],
     );
@@ -916,41 +1000,41 @@ class PurchaseInfo {
 
   String? remark;
 
-  static PurchaseInfo get empty =>
-      PurchaseInfo(
-          ownerName: '',
-          ownerId: '',
-          phoneNum: '',
-          bankNum: '',
-          kind: null,
-          // signingDate:null,
-          signingAddress: '',
-          transactionAmount: '',
-          //depositAmount:'',
-          downPaymentAmount: '',
-          balanceAmountBackup: '',
-          deliveryDate: null,
-          deliveryPlace: '',
-          // transferTax:'',
-          // handlingFee:'',
-          // serviceCharge:'',
-          remark: '');
+  static PurchaseInfo get empty => PurchaseInfo(
+      ownerName: '',
+      ownerId: '',
+      phoneNum: '',
+      bankNum: '',
+      kind: null,
+      // signingDate:null,
+      signingAddress: '',
+      transactionAmount: '',
+      //depositAmount:'',
+      downPaymentAmount: '',
+      balanceAmountBackup: '',
+      deliveryDate: null,
+      deliveryPlace: '',
+      // transferTax:'',
+      // handlingFee:'',
+      // serviceCharge:'',
+      remark: '');
 
-  PurchaseInfo({this.kind,
-    this.ownerName,
-    this.ownerId,
-    this.phoneNum,
-    this.bankNum,
-    // this.signingDate,
-    this.signingAddress,
-    this.transactionAmount,
+  PurchaseInfo(
+      {this.kind,
+      this.ownerName,
+      this.ownerId,
+      this.phoneNum,
+      this.bankNum,
+      // this.signingDate,
+      this.signingAddress,
+      this.transactionAmount,
 //    this.depositAmount,
-    this.downPaymentAmount,
-    this.balanceAmountBackup,
-    this.deliveryDate,
-    this.deliveryPlace,
-    // this.transferTax,
-    // this.handlingFee,
-    // this.serviceCharge,
-    this.remark});
+      this.downPaymentAmount,
+      this.balanceAmountBackup,
+      this.deliveryDate,
+      this.deliveryPlace,
+      // this.transferTax,
+      // this.handlingFee,
+      // this.serviceCharge,
+      this.remark});
 }

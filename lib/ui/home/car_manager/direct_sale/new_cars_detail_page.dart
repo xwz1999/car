@@ -36,6 +36,7 @@ import '../../share/edit_item_widget.dart';
 import '../publish_car/publish_finish_page.dart';
 import 'detailed_price_page.dart';
 import 'edit_car_page.dart';
+import 'modify_price_page.dart';
 
 class NewCarsDetailPage extends StatefulWidget {
 
@@ -972,7 +973,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       ],
                     ),
                   ),
-                  50.wb,
+                  32.wb,
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -1130,19 +1131,32 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
           })),
           Expanded(
               child: _getBottom(Assets.icons.transmission.path, '调价', () {
-            if (carInfoModel != null) {
-              if (carInfoModel!.carInfo.brokerInfo.brokerPhone != '') {
-                getPhone(carInfoModel!.carInfo.brokerInfo.brokerPhone);
-              }
-            } else {
-              CloudToast.show('没有找到联系方式！');
-            }
+            // if (carInfoModel != null) {
+            //   if (carInfoModel!.carInfo.brokerInfo.brokerPhone != '') {
+            //     getPhone(carInfoModel!.carInfo.brokerInfo.brokerPhone);
+            //   }
+            // } else {
+            //   CloudToast.show('没有找到联系方式！');
+            // }
             // if (widget.carListModel.isSelf == 1) {
-            //   Get.to(() => const ModifyPricePage());
+            //   if(carInfoModel!=null){
+            //     Get.to(() =>  ModifyPricePage(model: carInfoModel!,));
+            //   }
+            //
             // }
-            // if(carInfoModel!.IsSelfBusiness==1&&carInfoModel!.isSelfStore==1){
-            //   Get.to(() => ModifyPricePage(model: carInfoModel!,));
-            // }
+                //            if(  &&carInfoModel!.isSelfStore==1){
+                print(UserTool.userProvider.userInfo.business.roleId);
+            if( (UserTool.userProvider.userInfo.business.roleId==1 || UserTool.userProvider.userInfo.business.roleId==11) &&carInfoModel!.isSelfStore==1){
+              Get.to(() => ModifyPricePage(carId: carInfoModel!.carInfo.id,));
+            }else{
+              if (carInfoModel != null) {
+                if (carInfoModel!.carInfo.brokerInfo.brokerPhone != '') {
+                  getPhone(carInfoModel!.carInfo.brokerInfo.brokerPhone);
+                }
+              } else {
+                CloudToast.show('没有找到联系方式！');
+              }
+            }
           })),
           Expanded(
               child: _getBottom(Assets.icons.upload.path, '出售', () {

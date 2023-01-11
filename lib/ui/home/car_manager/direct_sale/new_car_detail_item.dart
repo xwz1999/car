@@ -37,7 +37,8 @@ class NewCarDetailItem extends StatelessWidget {
           _purchasingInformation(),
           16.hb,
           _certificateMaterials(),
-          200.hb,
+          16.hb,
+          // 200.hb,
           // carInfoModel.carInfo.source=='个人直卖'?
           // getItem5('车主信息'):const SizedBox(),
         ],
