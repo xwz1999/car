@@ -1,6 +1,5 @@
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import '../../../../constants/enums.dart';
 import '../../../../model/car/new_car_info.dart';
@@ -245,7 +244,8 @@ class _EditCarDetailItemState extends State<EditCarDetailItem> {
         // ),
         EditItemWidget(
           title: '表显里程',
-          value: "${widget.carListModel.carInfo.mileage}万公里",
+          value: widget.carListModel.carInfo.mileage,
+          endText:'万公里',
           canChange: true,
           titleColor: const Color(0xFF999999),
           textColor: const Color(0xFF333333),
@@ -306,8 +306,10 @@ class _EditCarDetailItemState extends State<EditCarDetailItem> {
         //     callback: (String content) {}),
         EditItemWidget(
           title: '加装费用',
-          value: '${widget.carListModel.carInfo.installationCost}元',
+          value: widget.carListModel.carInfo.installationCost,
+          endText:'元',
           canChange: true,
+          titleColor: const Color(0xFF999999),
           textColor: const Color(0xFF333333),
           callback: (String content) {},
           topIcon: false,
@@ -328,6 +330,7 @@ class _EditCarDetailItemState extends State<EditCarDetailItem> {
             title: '车辆所在地',
             value: widget.carListModel.carInfo.location,
             canChange: false,
+            titleColor: const Color(0xFF999999),
             textColor: const Color(0xFF333333),
             callback: (String content) {},
             topIcon: false,

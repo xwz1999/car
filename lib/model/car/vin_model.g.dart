@@ -10,8 +10,8 @@ VinModel _$VinModelFromJson(Map<String, dynamic> json) => VinModel(
       isLegal: json['isLegal'] as int,
       message: json['message'] as String,
     );
-
-Map<String, dynamic> _$VinModelToJson(VinModel instance) => <String, dynamic>{
-      'isLegal': instance.isLegal,
-      'message': instance.message,
-    };
+//
+// Map<String, dynamic> _$VinModelToJson(VinModel instance) => <String, dynamic>{
+//       'isLegal': instance.isLegal,
+//       'message': instance.message,
+//     };

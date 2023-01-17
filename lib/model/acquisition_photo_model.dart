@@ -8,6 +8,7 @@ part 'acquisition_photo_model.g.dart';
 
 @JsonSerializable()
 @HiveType(typeId: 5)
+
 class AcquisitionPhotoModel extends Equatable{
   @HiveField(0)
   List<CarPhotos>? carPhotos;

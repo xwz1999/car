@@ -245,16 +245,16 @@ CertificateInfo _$CertificateInfoFromJson(Map<String, dynamic> json) =>
       commercialInsurancePrice: json['commercialInsurancePrice'] as String,
     );
 
-Map<String, dynamic> _$CertificateInfoToJson(CertificateInfo instance) =>
-    <String, dynamic>{
-      'transfer': instance.transfer,
-      'keyCount': instance.keyCount,
-      'compulsoryInsurance': instance.compulsoryInsurance,
-      'compulsoryInsuranceDate': instance.compulsoryInsuranceDate,
-      'commercialInsurance': instance.commercialInsurance,
-      'commercialInsuranceDate': instance.commercialInsuranceDate,
-      'commercialInsurancePrice': instance.commercialInsurancePrice,
-    };
+// Map<String, dynamic> _$CertificateInfoToJson(CertificateInfo instance) =>
+//     <String, dynamic>{
+//       'transfer': instance.transfer,
+//       'keyCount': instance.keyCount,
+//       'compulsoryInsurance': instance.compulsoryInsurance,
+//       'compulsoryInsuranceDate': instance.compulsoryInsuranceDate,
+//       'commercialInsurance': instance.commercialInsurance,
+//       'commercialInsuranceDate': instance.commercialInsuranceDate,
+//       'commercialInsurancePrice': instance.commercialInsurancePrice,
+//     };
 
 PurchaseInfos _$PurchaseInfosFromJson(Map<String, dynamic> json) =>
     PurchaseInfos(
@@ -263,9 +263,9 @@ PurchaseInfos _$PurchaseInfosFromJson(Map<String, dynamic> json) =>
       liaison: json['liaison'] as String,
     );
 
-Map<String, dynamic> _$PurchaseInfosToJson(PurchaseInfos instance) =>
-    <String, dynamic>{
-      'price': instance.price,
-      'date': instance.date,
-      'liaison': instance.liaison,
-    };
+// Map<String, dynamic> _$PurchaseInfosToJson(PurchaseInfos instance) =>
+//     <String, dynamic>{
+//       'price': instance.price,
+//       'date': instance.date,
+//       'liaison': instance.liaison,
+//     };

@@ -13,21 +13,15 @@ import 'package:cloud_car/utils/hive_store.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/picker/car_date_picker.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:common_utils/common_utils.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
-
 import '../../../model/purchase_info_model.dart';
-import '../../../utils/share_util.dart';
 import '../../../widget/button/colud_check_radio.dart';
 
 class PurchaseInfoPage extends StatefulWidget {

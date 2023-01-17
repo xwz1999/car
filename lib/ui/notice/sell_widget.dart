@@ -13,8 +13,7 @@ class SellWidget extends StatefulWidget {
   // final SaleInfoModel? saleInfo;
   final int saleId;
 final  CustomerDetailModel? customerDetail;
-  const SellWidget({Key? key, required this.saleId,required this.customerDetail})
-      : super(key: key);
+  const SellWidget({super.key, required this.saleId,required this.customerDetail});
 
   @override
   _SellWidgetState createState() => _SellWidgetState();
@@ -32,7 +31,7 @@ class _SellWidgetState extends State<SellWidget> {
     carInfo=await CarFunc.getNewCarInfo(saleInfo!.baseInfo.carId);
 
     });
-    print('执行成');
+    // print('执行成');
     super.initState();
   }
 

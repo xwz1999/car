@@ -88,7 +88,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
                         color: Colors.white,
                         border: Border(
                           bottom:
-                              BorderSide(color: Color(0xFFDDDDDD), width: 2.w),
+                              BorderSide(color: const Color(0xFFDDDDDD), width: 2.w),
                         ),
                         //borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.w)),
                       ),
@@ -180,7 +180,7 @@ class _EmployeeDetailsPageState extends State<EmployeeDetailsPage> {
         decoration: BoxDecoration(
             color: Colors.white,
             border:
-                Border(top: BorderSide(color: Color(0xFFDDDDDD), width: 2.w))),
+                Border(top: BorderSide(color: const Color(0xFFDDDDDD), width: 2.w))),
         height: 100.w,
         child: Row(
           children: [

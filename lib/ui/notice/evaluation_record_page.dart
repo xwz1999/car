@@ -1,6 +1,5 @@
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -13,7 +12,7 @@ import '../home/car_manager/publish_car/push_car_page.dart';
 import '../home/car_manager/publish_contract/contract_begin_page.dart';
 
 class EvaluationRecordPage extends StatefulWidget {
-  const EvaluationRecordPage({Key? key}) : super(key: key);
+  const EvaluationRecordPage({super.key});
 
   @override
   _EvaluationRecordPageState createState() => _EvaluationRecordPageState();

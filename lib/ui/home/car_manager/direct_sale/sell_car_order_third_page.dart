@@ -318,9 +318,9 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
               children: [
                 getContentItem(
                   '交付时间',
-                  "",
+                  widget.carSaleContract.priceInfo.deliverDate,
                 ),
-                getContentItem('交付地点', '', isSpecial: true, topIcon: false),
+                getContentItem('交付地点',widget.carSaleContract.priceInfo.deliverAddress, isSpecial: true, topIcon: false),
                 30.hb,
               ],
             ),
@@ -342,15 +342,15 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getContentItem('过户税费', "",
-                    endText: '元', isSpecial: true, topIcon: false),
+                getContentItem('过户税费', widget.carSaleContract.priceInfo.transferFee,
+                    endText: '元', isSpecial: true, topIcon: true),
                 getContentItem(
-                    '承担方', '',
+                    '承担方', widget.carSaleContract.priceInfo.transferFeeHolder==1?'甲方':'乙方',
                 ),
-                getContentItem('过户税费', "",
+                getContentItem('代办手续费', widget.carSaleContract.priceInfo.agentFee,
                     endText: '元', isSpecial: true, topIcon: false),
                 getContentItem(
-                  '承担方', '',
+                  '承担方', widget.carSaleContract.priceInfo.agentFeeHolder==1?'甲方':'乙方',
                 ),
                 30.hb,
               ],
@@ -411,6 +411,7 @@ class _SellCarOrderThirdPageState extends State<SellCarOrderThirdPage> {
                             Alert.dismiss(context);
                           },
                           deleteListener: () async {
+                            CloudToast.loading;
                             Alert.dismiss(context);
                             await CarFunc.addSale(CarSaleContractModel(
                                     carId: widget.carSaleContract.carId,

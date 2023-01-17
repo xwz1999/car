@@ -43,7 +43,7 @@ class _CityListItemPageState extends State<CityListItemPage> {
           return GestureDetector(
             onTap: (){
               widget.cityCallback(widget.cityList[index]);
-              print(widget.cityList[index].id);
+              //print(widget.cityList[index].id);
               Get.back();
               // print(widget.cityList[index].id);
               // print(widget.cityList[index].name);

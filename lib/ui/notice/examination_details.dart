@@ -350,7 +350,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                                         } else {
                                           CloudToast.show(res.msg);
                                         }
-                                        Alert.dismiss(context);
+                                        // Alert.dismiss(context);
                                       },
                                     ));
                               }),
@@ -399,7 +399,7 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                                     } else {
                                       CloudToast.show(res.msg);
                                     }
-                                    Alert.dismiss(context);
+                                    // Alert.dismiss(context);
                                   },
                                 ));
                           }),

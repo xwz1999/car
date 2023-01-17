@@ -1,11 +1,10 @@
-import 'package:cloud_car/model/car/new_car_info.dart';
+
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
-import 'package:cloud_car/ui/user/success_failure_page.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/alert.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
-import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -5,12 +5,9 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
-import 'package:velocity_x/velocity_x.dart';
 
-import '../../../model/region/az_city_model.dart';
-import '../../../model/region/city_model.dart';
 import '../az_region_model.dart';
-import 'car_three_city_list_page.dart';
+
 import 'citylist_item_page.dart';
 
 ///适配新数据
@@ -99,61 +96,61 @@ class _CityListPageState extends State<CityListPage> {
     setState(() {});
   }
 
-  Widget _buildHeader() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32.w),
-      child: Column(
-        children: [
-          GridView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemCount: hotCityList.length,
-              //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  //横轴元素个数
-                  crossAxisCount: 4,
-                  //纵轴间距
-                  mainAxisSpacing: 6,
-                  //横轴间距
-                  crossAxisSpacing: 10,
-                  //子组件宽高长度比例
-                  childAspectRatio: 152 / 56),
-              itemBuilder: (BuildContext context, int index) {
-                //Widget Function(BuildContext context, int index)
-                return _getCityView(hotCityList[index], isLocation: index == 0);
-              }),
-        ],
-      ),
-    );
-  }
+  // Widget _buildHeader() {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(horizontal: 32.w),
+  //     child: Column(
+  //       children: [
+  //         GridView.builder(
+  //             shrinkWrap: true,
+  //             padding: EdgeInsets.zero,
+  //             itemCount: hotCityList.length,
+  //             //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+  //             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //                 //横轴元素个数
+  //                 crossAxisCount: 4,
+  //                 //纵轴间距
+  //                 mainAxisSpacing: 6,
+  //                 //横轴间距
+  //                 crossAxisSpacing: 10,
+  //                 //子组件宽高长度比例
+  //                 childAspectRatio: 152 / 56),
+  //             itemBuilder: (BuildContext context, int index) {
+  //               //Widget Function(BuildContext context, int index)
+  //               return _getCityView(hotCityList[index], isLocation: index == 0);
+  //             }),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  _getCityView(AzRegionModel model, {bool isLocation = false}) {
-    return GestureDetector(
-      onTap: () {
-        
-        // widget.cityCallback(model.model!);
-        // widget.cityCallback(model[1]);
-      },
-      child: Container(
-        width: 56.w,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4.w),
-          border: Border.all(color: const Color(0xFFEEEEEE), width: 1.w),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              model.name,
-              style: Theme.of(context).textTheme.subtitle2,
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  // _getCityView(AzRegionModel model, {bool isLocation = false}) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //
+  //       // widget.cityCallback(model.model!);
+  //       // widget.cityCallback(model[1]);
+  //     },
+  //     child: Container(
+  //       width: 56.w,
+  //       alignment: Alignment.center,
+  //       decoration: BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.circular(4.w),
+  //         border: Border.all(color: const Color(0xFFEEEEEE), width: 1.w),
+  //       ),
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           Text(
+  //             model.name,
+  //             style: Theme.of(context).textTheme.subtitle2,
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

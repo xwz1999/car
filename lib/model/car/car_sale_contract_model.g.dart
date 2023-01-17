@@ -22,19 +22,19 @@ CarSaleContractModel _$CarSaleContractModelFromJson(
       customerChannel: json['customerChannel'] as int?,
     );
 
-Map<String, dynamic> _$CarSaleContractModelToJson(
-        CarSaleContractModel instance) =>
-    <String, dynamic>{
-      'carId': instance.carId,
-      'payType': instance.payType,
-      'transferType': instance.transferType,
-      'priceInfo': instance.priceInfo,
-      'customerId': instance.customerId,
-      'customerChannel': instance.customerChannel,
-      'masterInfo': instance.masterInfo,
-      'thirdPartInfo': instance.thirdPartInfo,
-      'remark': instance.remark,
-    };
+// Map<String, dynamic> _$CarSaleContractModelToJson(
+//         CarSaleContractModel instance) =>
+//     <String, dynamic>{
+//       'carId': instance.carId,
+//       'payType': instance.payType,
+//       'transferType': instance.transferType,
+//       'priceInfo': instance.priceInfo,
+//       'customerId': instance.customerId,
+//       'customerChannel': instance.customerChannel,
+//       'masterInfo': instance.masterInfo,
+//       'thirdPartInfo': instance.thirdPartInfo,
+//       'remark': instance.remark,
+//     };
 
 PriceInfo _$PriceInfoFromJson(Map<String, dynamic> json) => PriceInfo(
       dealPrice: json['dealPrice'] as String,
@@ -47,18 +47,18 @@ PriceInfo _$PriceInfoFromJson(Map<String, dynamic> json) => PriceInfo(
       agentFee: json['agentFee'] as String,
       agentFeeHolder: json['agentFeeHolder'] as int,
     );
-
-Map<String, dynamic> _$PriceInfoToJson(PriceInfo instance) => <String, dynamic>{
-      'dealPrice': instance.dealPrice,
-      'deposit': instance.deposit,
-      'downPayment': instance.downPayment,
-      'deliverDate': instance.deliverDate,
-      'deliverAddress': instance.deliverAddress,
-      'transferFee': instance.transferFee,
-      'transferFeeHolder': instance.transferFeeHolder,
-      'agentFee': instance.agentFee,
-      'agentFeeHolder': instance.agentFeeHolder,
-    };
+//
+// Map<String, dynamic> _$PriceInfoToJson(PriceInfo instance) => <String, dynamic>{
+//       'dealPrice': instance.dealPrice,
+//       'deposit': instance.deposit,
+//       'downPayment': instance.downPayment,
+//       'deliverDate': instance.deliverDate,
+//       'deliverAddress': instance.deliverAddress,
+//       'transferFee': instance.transferFee,
+//       'transferFeeHolder': instance.transferFeeHolder,
+//       'agentFee': instance.agentFee,
+//       'agentFeeHolder': instance.agentFeeHolder,
+//     };
 
 MasterInfo _$MasterInfoFromJson(Map<String, dynamic> json) => MasterInfo(
       name: json['name'] as String,
@@ -70,16 +70,16 @@ MasterInfo _$MasterInfoFromJson(Map<String, dynamic> json) => MasterInfo(
       bankAccount: json['bankAccount'] as String,
     );
 
-Map<String, dynamic> _$MasterInfoToJson(MasterInfo instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'phone': instance.phone,
-      'idCard': instance.idCard,
-      'address': instance.address,
-      'bank': instance.bank,
-      'bankCard': instance.bankCard,
-      'bankAccount': instance.bankAccount,
-    };
+// Map<String, dynamic> _$MasterInfoToJson(MasterInfo instance) =>
+//     <String, dynamic>{
+//       'name': instance.name,
+//       'phone': instance.phone,
+//       'idCard': instance.idCard,
+//       'address': instance.address,
+//       'bank': instance.bank,
+//       'bankCard': instance.bankCard,
+//       'bankAccount': instance.bankAccount,
+//     };
 
 ThirdPartInfo _$ThirdPartInfoFromJson(Map<String, dynamic> json) =>
     ThirdPartInfo(
@@ -89,10 +89,10 @@ ThirdPartInfo _$ThirdPartInfoFromJson(Map<String, dynamic> json) =>
       purchaseServiceFeeRate: json['purchaseServiceFeeRate'] as String,
     );
 
-Map<String, dynamic> _$ThirdPartInfoToJson(ThirdPartInfo instance) =>
-    <String, dynamic>{
-      'kind': instance.kind,
-      'storeId': instance.storeId,
-      'saleServiceFeeRate': instance.saleServiceFeeRate,
-      'purchaseServiceFeeRate': instance.purchaseServiceFeeRate,
-    };
+// Map<String, dynamic> _$ThirdPartInfoToJson(ThirdPartInfo instance) =>
+//     <String, dynamic>{
+//       'kind': instance.kind,
+//       'storeId': instance.storeId,
+//       'saleServiceFeeRate': instance.saleServiceFeeRate,
+//       'purchaseServiceFeeRate': instance.purchaseServiceFeeRate,
+//     };

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/constants/environment/environment.dart';

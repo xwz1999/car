@@ -1,18 +1,13 @@
 import 'package:cloud_car/constants/api/api.dart';
-import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
-import 'package:file_preview/file_preview.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:screenshot/screenshot.dart';
 
 import '../../../constants/enums.dart';
 import '../../../model/contract/consignment_model.dart';
-import '../../../utils/toast/cloud_toast.dart';
-import '../../../widget/alert.dart';
 import '../../../widget/choose_widget.dart';
 import '../../notice/view_file_page.dart';
 
@@ -36,7 +31,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
     with AutomaticKeepAliveClientMixin {
   int _page = 1;
   final int _size = 10;
-  final ScreenshotController _screenshotController = ScreenshotController();
+  // final ScreenshotController _screenshotController = ScreenshotController();
   TextEditingController rejectController = TextEditingController();
   late ContractStatus _releaseCarStatus;
 

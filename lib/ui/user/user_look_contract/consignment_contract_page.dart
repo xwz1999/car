@@ -2,16 +2,14 @@ import 'package:cloud_car/model/contract/consignment_list_model.dart';
 import 'package:cloud_car/ui/user/user_look_contract/comsignment_view.dart';
 import 'package:cloud_car/ui/user/user_look_contract/purchase_contract_page.dart';
 import 'package:cloud_car/ui/user/user_look_contract/sale_view.dart';
-import 'package:cloud_car/widget/search_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-import '../../../constants/enums.dart';
+
 import '../../../model/contract/consignment_model.dart';
 import '../../../utils/headers.dart';
 import '../../../utils/title_drop_widget.dart';
 import '../../../widget/button/cloud_back_button.dart';
-import '../../../widget/choose_widget.dart';
 import '../../../widget/screen_widget.dart';
 import '../../../widget/sort_widget.dart';
 
@@ -294,13 +292,13 @@ class _ConsignmentContractPageState extends State<ConsignmentContractPage>
   //   ));
   // }
 
-  _tab(int int, String string) {
-    return Text(
-      string,
-      style: TextStyle(
-          fontSize: BaseStyle.fontSize28, color: BaseStyle.color111111),
-    );
-  }
+  // _tab(int int, String string) {
+  //   return Text(
+  //     string,
+  //     style: TextStyle(
+  //         fontSize: BaseStyle.fontSize28, color: BaseStyle.color111111),
+  //   );
+  // }
 
   // _getCard(bool int, String title, String car, String name, String time) {
   //   return Card(

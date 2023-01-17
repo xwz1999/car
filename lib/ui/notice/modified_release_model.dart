@@ -125,7 +125,7 @@ class _ModifiedReleaseModelState extends State<ModifiedReleaseModel> {
               SizedBox(
                 width: 196.w,
                 height: 150.w,
-                child: CloudImageNetworkWidget.car(urls: []),
+                child: const CloudImageNetworkWidget.car(urls: []),
               ),
               20.wb,
               SizedBox(

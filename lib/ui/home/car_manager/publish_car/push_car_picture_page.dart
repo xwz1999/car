@@ -1,4 +1,4 @@
-import 'package:cloud_car/model/contract/report_photo_model.dart';
+
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_widget.dart';
@@ -26,7 +26,7 @@ class PushCarPicturePage extends StatefulWidget {
 
 class _PushCarPicturePageState extends State<PushCarPicturePage> {
   // final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片','报告数据','维保数据'];
-  final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片', '车辆数据'];
+  // final List<String> _titles = ['车辆照片', '内饰照片', '缺陷照片', '车辆数据'];
 
   @override
   void initState() {

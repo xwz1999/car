@@ -133,9 +133,9 @@ PurchaseInfoS _$PurchaseInfoSFromJson(Map<String, dynamic> json) =>
       liaison: json['liaison'] as String,
     );
 
-Map<String, dynamic> _$PurchaseInfoSToJson(PurchaseInfoS instance) =>
-    <String, dynamic>{
-      'price': instance.price,
-      'date': instance.date,
-      'liaison': instance.liaison,
-    };
+// Map<String, dynamic> _$PurchaseInfoSToJson(PurchaseInfoS instance) =>
+//     <String, dynamic>{
+//       'price': instance.price,
+//       'date': instance.date,
+//       'liaison': instance.liaison,
+//     };

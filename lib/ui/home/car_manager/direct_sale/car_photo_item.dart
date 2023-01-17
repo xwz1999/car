@@ -18,8 +18,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../model/car/new_car_info.dart';
-import 'edit_car_page.dart';
+
 
 class CarPhotoItem extends StatefulWidget {
   final List<String> tabs;
@@ -120,7 +119,7 @@ class _CarPhotoItemState extends State<CarPhotoItem>
             // PushImgModel(name: '漆面数据', isMust: false),
             PushImgModel(name: '行驶证照片', isMust: false),
             PushImgModel(name: '检测报告', isMust: false),
-            // PushImgModel(name: '登记证书', isMust: false),
+            PushImgModel(name: '登记证书', isMust: false),
             PushImgModel(name: '交强险', isMust: false),
             PushImgModel(name: '商业险', isMust: false),
             // ///添加新数据
@@ -141,7 +140,7 @@ class _CarPhotoItemState extends State<CarPhotoItem>
 
     for (int i = 0; i < widget.model.dataPhotos!.length; i++) {
       // print('${widget.model.dataPhotos![i].text}$i');
-      print('${widget.model.dataPhotos!.length}');
+      // print('${widget.model.dataPhotos!.length}');
       if (widget.model.dataPhotos![i].text == '登记证书' ||
           widget.model.dataPhotos![i].text == '维保记录') {
         if (widget.model.dataPhotos![i].text == '维保记录') {

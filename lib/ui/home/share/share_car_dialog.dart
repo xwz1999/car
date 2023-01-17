@@ -448,9 +448,9 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          print( widget.model.first.modelName);
-                          print( widget.model.first.mainPhoto);
-                          print( widget.model.first.id);
+                          // print( widget.model.first.modelName);
+                          // print( widget.model.first.mainPhoto);
+                          // print( widget.model.first.id);
                           ShareUtil.shareMiniProgram(
                             title: widget.model.first.modelName,
                             imgUrl: widget.model.first.mainPhoto,

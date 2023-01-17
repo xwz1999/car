@@ -31,7 +31,6 @@ import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 import 'car_manager/car_manager_page.dart';
-import 'car_manager/direct_sale/detailed_price_page.dart';
 import 'car_manager/maintain_query/maintain_query_page.dart';
 import 'car_manager/publish_car/push_car_page.dart';
 import 'func/car_func.dart';

@@ -1,20 +1,20 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/constants/enums.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
-import 'package:cloud_car/model/car/car_info_model.dart';
+
 import 'package:cloud_car/model/contract/purchase_photo_model.dart';
 import 'package:cloud_car/model/sort/sort_brand_model.dart';
 import 'package:cloud_car/model/sort/sort_car_model_model.dart';
 import 'package:cloud_car/model/sort/sort_series_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart';
-import 'package:cloud_car/ui/home/car_purchase/purchase_choose_page.dart';
+
 import 'package:cloud_car/ui/home/car_purchase/purchase_info_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_car_page.dart';
 import 'package:cloud_car/ui/home/sort/search_param_model.dart';
 import 'package:cloud_car/ui/home/sort/sort_func.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/hive_store.dart';
-import 'package:cloud_car/widget/button/cloud_back_button.dart';
+
 import 'package:cloud_car/widget/picker/car_date_picker.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:cloud_car/widget/scan_license_widget.dart';
@@ -22,8 +22,7 @@ import 'package:cloud_car/widget/sort_widget.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'package:velocity_x/velocity_x.dart';
 
@@ -101,40 +100,38 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
 
   _res() async {
     PurchaseCarInfoModel res = await HiveStore.carBox?.get("acquisition");
-    if(res!=null){
-      if (res.viNum != null) {
-        _viNumController.text = res.viNum!;
-      }
-      if (res.carName != null) {
-        _publishCarInfo.value.carName = res.carName;
-        _publishCarInfo.value.carModelId=res.carModelId;
-      }
+    if (res.viNum != null) {
+      _viNumController.text = res.viNum!;
+    }
+    if (res.carName != null) {
+      _publishCarInfo.value.carName = res.carName;
+      _publishCarInfo.value.carModelId=res.carModelId;
+    }
 
-      if (res.licensePlate != null) {
-        _licensePlateController.text = res.licensePlate!;
-      }
-      if (res.licensingDate != null) {
-        _publishCarInfo.value.licensingDate = res.licensingDate;
-      }
-      if (res.carNatureOfUse != null) {
-        _publishCarInfo.value.carNatureOfUse = res.carNatureOfUse;
-      }
-      if (res.engineNum != null) {
-        _engineController.text = res.engineNum!;
-      }
-      if (res.productionDate != null) {
-        _publishCarInfo.value.productionDate = res.productionDate;
-      }
-      if (res.compulsoryInsuranceDate != null) {
-        _publishCarInfo.value.compulsoryInsuranceDate =
-            res.compulsoryInsuranceDate;
-      }
-      if (res.mileage != null) {
-        _mileController.text = res.mileage!;
-      }
-      if (res.color != null) {
-        _publishCarInfo.value.color = res.color;
-      }
+    if (res.licensePlate != null) {
+      _licensePlateController.text = res.licensePlate!;
+    }
+    if (res.licensingDate != null) {
+      _publishCarInfo.value.licensingDate = res.licensingDate;
+    }
+    if (res.carNatureOfUse != null) {
+      _publishCarInfo.value.carNatureOfUse = res.carNatureOfUse;
+    }
+    if (res.engineNum != null) {
+      _engineController.text = res.engineNum!;
+    }
+    if (res.productionDate != null) {
+      _publishCarInfo.value.productionDate = res.productionDate;
+    }
+    if (res.compulsoryInsuranceDate != null) {
+      _publishCarInfo.value.compulsoryInsuranceDate =
+          res.compulsoryInsuranceDate;
+    }
+    if (res.mileage != null) {
+      _mileController.text = res.mileage!;
+    }
+    if (res.color != null) {
+      _publishCarInfo.value.color = res.color;
     }
     setState(() {});
   }

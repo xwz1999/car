@@ -21,8 +21,7 @@ class CarIntermediaryAgentPage extends StatefulWidget {
   final CarSaleContractModel carSaleContract;
 
   const CarIntermediaryAgentPage(
-      {Key? key, required this.contractModel, required this.carSaleContract})
-      : super(key: key);
+      {super.key, required this.contractModel, required this.carSaleContract});
 
   @override
   _CarIntermediaryAgentPageState createState() =>
@@ -296,10 +295,12 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
             var firstTime = await CarDatePicker.pick(
               DateTime.now(),
             );
+            widget.carSaleContract.priceInfo.deliverDate=DateUtil.formatDate(
+                firstTime,format: 'yyyy-MM-dd') ;
             // _publishCarInfo.value.productionDate = firstDate;
             FocusManager.instance.primaryFocus?.unfocus();
             setState(() {});
-          }, '', '请输入交付时间',
+          }, widget.carSaleContract.priceInfo.deliverDate, '请输入交付时间',
               placeDelivery),
         ),
         Container(
@@ -310,14 +311,18 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                   bottom:
                       BorderSide(color: const Color(0xFFF6F6F6), width: 2.w))),
           child: EditItemWidget(
+
             topIcon: true,
             title: '交付地点',
             paddingStart: 0.w,
             tips: '请输入交付地点',
             controller: deliveryTime,
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
-            ],
+            // inputFormatters: [
+            //   FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
+            // ],
+            callback: (text){
+              widget.carSaleContract.priceInfo.deliverAddress=text;
+            },
           ),
         ),
         20.hb,
@@ -347,6 +352,9 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
             ],
+            callback: (text){
+              widget.carSaleContract.priceInfo.transferFee=text;
+            },
           ),
         ),
         Container(
@@ -382,7 +390,11 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                 SizedBox(
                   height: 50.w,
                   child: getChooseList(
-                      (String choice, int index) {}, _models2, _selectIndex2),
+                      (String choice, int index) {
+                        widget.carSaleContract.priceInfo.transferFeeHolder=index;
+                     // print( widget.carSaleContract.priceInfo.transferFeeHolder);
+
+                      }, _models2, _selectIndex2),
                 ),
               ],
             )),
@@ -403,6 +415,9 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
             ],
+            callback: (text){
+              widget.carSaleContract.priceInfo.agentFee=text;
+            },
           ),
         ),
         Container(
@@ -438,7 +453,10 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                 SizedBox(
                   height: 50.w,
                   child: getChooseList(
-                      (String choice, int index) {}, _models2, _selectIndex3),
+                      (String choice, int index) {
+                        widget.carSaleContract.priceInfo.agentFeeHolder=index;
+                        // print( widget.carSaleContract.priceInfo.agentFeeHolder);
+                      }, _models2, _selectIndex3),
                 ),
               ],
             )),
@@ -512,6 +530,30 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
       }
       if (widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate == '') {
         CloudToast.show('请填写买方服务费');
+        return false;
+      }
+      if(widget.carSaleContract.priceInfo.deliverDate==''){
+        CloudToast.show('请填写交付时间');
+        return false;
+      }
+      if(widget.carSaleContract.priceInfo.deliverAddress==''){
+        CloudToast.show('请填写交付地点');
+        return false;
+      }
+      if(widget.carSaleContract.priceInfo.transferFee==''){
+        CloudToast.show('请填写过户税费');
+        return false;
+      }
+      if(widget.carSaleContract.priceInfo.transferFeeHolder!=1 ||widget.carSaleContract.priceInfo.transferFeeHolder!=2){
+        CloudToast.show('请填写过户承担方');
+        return false;
+      }
+      if(widget.carSaleContract.priceInfo.agentFee==''){
+        CloudToast.show('请填写代办税费');
+        return false;
+      }
+      if(widget.carSaleContract.priceInfo.agentFeeHolder!=1 || widget.carSaleContract.priceInfo.agentFeeHolder!=2){
+        CloudToast.show('请填写代办承担方');
         return false;
       }
     }

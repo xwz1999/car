@@ -5,10 +5,8 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../../constants/enums.dart';
 import '../../utils/title_drop_widget.dart';
 import '../../widget/button/cloud_back_button.dart';
-import '../../widget/choose_widget.dart';
-import '../../widget/custom_drawer.dart';
+
 import '../../widget/screen_widget.dart';
-import '../../widget/search_bar_widget.dart';
 import '../../widget/sort_widget.dart';
 import '../home/car_manager/car_enum.dart';
 import '../user/user_order/status.dart';
@@ -337,13 +335,13 @@ class _ExaminationPageState extends State<ExaminationPage>
     }
   }
 
-  _tab(int int, String string) {
-    return Text(
-      string,
-      style: TextStyle(
-          fontSize: BaseStyle.fontSize28, color: BaseStyle.color111111),
-    );
-  }
+  // _tab(int int, String string) {
+  //   return Text(
+  //     string,
+  //     style: TextStyle(
+  //         fontSize: BaseStyle.fontSize28, color: BaseStyle.color111111),
+  //   );
+  // }
 
 //驳回 通过
 //   _isPass(int state) {

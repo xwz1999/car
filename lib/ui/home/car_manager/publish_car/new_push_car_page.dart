@@ -6,11 +6,8 @@ import 'package:cloud_car/model/order/individual_model.dart';
 import 'package:cloud_car/model/region/china_region_model.dart';
 import 'package:cloud_car/model/user/store_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_manage_photo_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/push_car_picture_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
-import 'package:cloud_car/ui/home/car_valuation/car_valuation_page.dart';
 import 'package:cloud_car/ui/home/sort/choose_city_page.dart';
-import 'package:cloud_car/utils/custom_floating_action_button_location.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
@@ -26,15 +23,12 @@ import '../../../../model/publish_info_model.dart';
 import '../../../../model/sort/sort_brand_model.dart';
 import '../../../../model/sort/sort_car_model_model.dart';
 import '../../../../model/sort/sort_series_model.dart';
-import '../../../../model/user/staff_all_model.dart';
-import '../../../../model/user/storeall_model.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/picker/car_date_picker.dart';
 import '../../../../widget/sort_widget.dart';
 import '../../sort/choose_car_page.dart';
 import '../../sort/search_param_model.dart';
 import '../direct_sale/edit_item_widget.dart';
-import 'choose_purchaser_page.dart';
 import 'choose_shop_page.dart';
 
 class NewPushCarPage extends StatefulWidget {

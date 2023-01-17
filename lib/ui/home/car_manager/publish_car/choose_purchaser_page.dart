@@ -1,5 +1,4 @@
-import 'package:cloud_car/constants/enums.dart';
-import 'package:cloud_car/model/user/staff_all_model.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/cloud_search_head_widget.dart';
@@ -11,9 +10,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../model/user/storeall_model.dart';
 import '../../../../widget/cloud_expansion_tile.dart';
 import '../../../../widget/cloud_status_tag.dart';
-import '../../../../widget/cloud_tag.dart';
 import '../../../user/interface/business_func.dart';
-import '../../../user/user_management/employee_details_page.dart';
 
 typedef PurchaserCallback = Function(StoreallModel model,String name);
 
@@ -31,7 +28,7 @@ List<StoreallModel> employees = [];
 class _ChoosePurchaserPageState extends State<ChoosePurchaserPage> {
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
   StoreallModel storeallModel = StoreallModel.empty();
-  Map _params = {};
+  final Map _params = {};
 
   @override
   void initState() {

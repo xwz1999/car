@@ -1,5 +1,4 @@
 import 'package:cloud_car/constants/enums.dart';
-import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/model/contract/report_photo_model.dart';
 
@@ -59,7 +58,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   IndividualModel? individualModel;
-  final List<CarListModel> _chooseModels = [];
+  // final List<CarListModel> _chooseModels = [];
   ///滚动监听设置
   late ScrollController _scrollController;
   ///头部背景布局 true滚动一定的高度 false 滚动高度为0
@@ -329,7 +328,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                             centerTitle: false,
                             title: headerWhite
                                 ? Text(
-                                    publishInfoModel.modelName ?? '',
+                                    publishInfoModel.modelName ,
                                     style: TextStyle(
                                       color: const Color(0xFF333333),
                                       fontWeight: FontWeight.w700,
@@ -519,7 +518,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                 fbLocation: CustomFloatingActionButtonLocation(
                     FloatingActionButtonLocation.endDocked, 2.w, -130.w),
               )
-        : pushPhotoModel == PublishInfoModel.init
+        : publishInfoModel == PublishInfoModel.init
             ? const CloudScaffold()
             : CloudScaffold(
                 path: Assets.images.noticeBg.path,
@@ -542,7 +541,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                             centerTitle: false,
                             title: headerWhite
                                 ? Text(
-                                    publishInfoModel.modelName ?? '',
+                                    publishInfoModel.modelName ,
                                     style: TextStyle(
                                       color: const Color(0xFF333333),
                                       fontWeight: FontWeight.w700,
@@ -995,7 +994,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                         ? const SizedBox()
                         : Flexible(
                             child: Text(
-                              '驳回理由:${widget.isUpdate == 2 ? '无' : publishInfoModel.dealerRejectReason}',
+                              '驳回理由:${widget.isUpdate == 2 ? '无' : publishInfoModel.rejectReason}',
                               style: TextStyle(
                                   fontSize: 28.sp,
                                   color: const Color(0xFF333333),
@@ -1078,7 +1077,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                         ? const SizedBox()
                         : Flexible(
                             child: Text(
-                              '驳回理由:${publishInfoModel.dealerRejectReason}',
+                              '驳回理由:${publishInfoModel.rejectReason}',
                               style: TextStyle(
                                   fontSize: 28.sp,
                                   color: const Color(0xFF333333),
@@ -1172,7 +1171,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                                               editInfo.certificateInfo,
                                           contractMasterInfo:
                                               editInfo.contractMasterInfo,
-                                          dataPhotos: [],//editInfo.dataPhotos,
+                                          dataPhotos: const [],//editInfo.dataPhotos,
                                         ),
                                         isSelf: 1,
                                         isSelfStore: 1,
@@ -1485,7 +1484,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
               16.wb,
               _textview(widget.isUpdate == 2
                   ? editInfo.modelInfo.fuelTypeName
-                  : publishInfoModel.modelInfo.fuelTypeName ?? ""),
+                  : publishInfoModel.modelInfo.fuelTypeName),
             ],
           ),
         ),

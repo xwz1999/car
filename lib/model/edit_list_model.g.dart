@@ -24,20 +24,20 @@ EditListModel _$EditListModelFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] as num,
     );
 
-Map<String, dynamic> _$EditListModelToJson(EditListModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'carId': instance.carId,
-      'mainPhoto': instance.mainPhoto,
-      'modelName': instance.modelName,
-      'mileage': instance.mileage,
-      'licensingDate': instance.licensingDate,
-      'brokerId': instance.brokerId,
-      'brokerName': instance.brokerName,
-      'dealerId': instance.dealerId,
-      'dealerName': instance.dealerName,
-      'auditStatus': instance.auditStatus,
-      'auditStatusName': instance.auditStatusName,
-      'dealerAuditAt': instance.dealerAuditAt,
-      'createdAt': instance.createdAt,
-    };
+// Map<String, dynamic> _$EditListModelToJson(EditListModel instance) =>
+//     <String, dynamic>{
+//       'id': instance.id,
+//       'carId': instance.carId,
+//       'mainPhoto': instance.mainPhoto,
+//       'modelName': instance.modelName,
+//       'mileage': instance.mileage,
+//       'licensingDate': instance.licensingDate,
+//       'brokerId': instance.brokerId,
+//       'brokerName': instance.brokerName,
+//       'dealerId': instance.dealerId,
+//       'dealerName': instance.dealerName,
+//       'auditStatus': instance.auditStatus,
+//       'auditStatusName': instance.auditStatusName,
+//       'dealerAuditAt': instance.dealerAuditAt,
+//       'createdAt': instance.createdAt,
+//     };

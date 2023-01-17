@@ -14,7 +14,6 @@ import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../model/car/new_car_info.dart';
 
 class PushReportPhotoPage extends StatefulWidget {
   final NewPublishCarInfo newPublishCarInfo;

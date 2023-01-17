@@ -1,9 +1,8 @@
-import 'package:common_utils/common_utils.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
-import '../constants/enums.dart';
-import '../ui/home/car_manager/publish_car/push_photo_model.dart';
+
 
 part 'purchase_car_info_model.g.dart';
 

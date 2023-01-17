@@ -8,7 +8,7 @@ import 'package:cloud_car/widget/putup_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -303,7 +303,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                                           ],
                                         ),
                                         40.hb,
-                                        Container(
+                                        SizedBox(
                                           width: 722.w,
                                           height: 600.w,
                                           child: Padding(
@@ -544,7 +544,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                                 });
                               });
                         }
-                        print(item);
+                        // print(item);
                         setState(() {});
                       },
                       pickItem: _chooseItem,

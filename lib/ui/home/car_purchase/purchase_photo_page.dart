@@ -20,7 +20,7 @@ import '../../../model/acquisition_photo_model.dart';
 import '../../../utils/hive_store.dart';
 import '../../../utils/toast/cloud_toast.dart';
 import '../../../widget/picker/image_pick_widget/multi_image_pick_widget.dart';
-import '../car_manager/direct_sale/car_image_page.dart';
+
 
 ///再带个个人与公司
 class PurchasePhotoPage extends StatefulWidget {
@@ -102,13 +102,11 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
   }
 _res()async{
   AcquisitionPhotoModel res=HiveStore.carBox?.get('acquisitionPhoto');
-   if(res!=null){
-     if(res.carPhotos!=null){
-       widget.reportPhotoModel.carPhotos=res.carPhotos;
-     }
-     if(res.dataPhotos!=null){
-       widget.reportPhotoModel.dataPhotos=res.dataPhotos;
-     }
+   if(res.carPhotos!=null){
+     widget.reportPhotoModel.carPhotos=res.carPhotos;
+   }
+   if(res.dataPhotos!=null){
+     widget.reportPhotoModel.dataPhotos=res.dataPhotos;
    }
    setState(() {
 
@@ -147,35 +145,35 @@ _res()async{
           text: _certificatesPhotos[i].name));
     }
   }
-  _getDate(){
-    widget.reportPhotoModel.carPhotos!.clear();
-    for (var i = 0; i < _reportPhotos.length; i++) {
-      if (_reportPhotos[i].runtimeType != String) {
-        widget.reportPhotoModel.carPhotos!
-            .add(CarPhotos(photo: _reportPhotos[i], text: '车辆照片'));
-      }
-
-    }
-    // widget.reportPhotoModel.carPhotos!.clear();
-    // for (var i = 0; i < _reportPhotos.length; i++) {
-    //   if (_reportPhotos[i].url.runtimeType != String&&_reportPhotos[i].url.runtimeType != Null) {
-    //     var url = await apiClient.uploadImage(
-    //         _reportPhotos[i].url );
-    //     _reportPhotos[i].url = url;
-    //   }
-    //   widget.reportPhotoModel.carPhotos!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name)  );
-    // }
-    widget.reportPhotoModel.dataPhotos!.clear();
-    for (var i = 0; i < _certificatesPhotos.length; i++) {
-      if (_certificatesPhotos[i].url.runtimeType != String &&
-          _certificatesPhotos[i].url.runtimeType != Null) {
-        widget.reportPhotoModel.dataPhotos!.add(CarPhotos(
-            photo: _certificatesPhotos[i].url,
-            text: _certificatesPhotos[i].name));
-      }
-
-    }
-  }
+  // _getDate(){
+  //   widget.reportPhotoModel.carPhotos!.clear();
+  //   for (var i = 0; i < _reportPhotos.length; i++) {
+  //     if (_reportPhotos[i].runtimeType != String) {
+  //       widget.reportPhotoModel.carPhotos!
+  //           .add(CarPhotos(photo: _reportPhotos[i], text: '车辆照片'));
+  //     }
+  //
+  //   }
+  //   // widget.reportPhotoModel.carPhotos!.clear();
+  //   // for (var i = 0; i < _reportPhotos.length; i++) {
+  //   //   if (_reportPhotos[i].url.runtimeType != String&&_reportPhotos[i].url.runtimeType != Null) {
+  //   //     var url = await apiClient.uploadImage(
+  //   //         _reportPhotos[i].url );
+  //   //     _reportPhotos[i].url = url;
+  //   //   }
+  //   //   widget.reportPhotoModel.carPhotos!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name)  );
+  //   // }
+  //   widget.reportPhotoModel.dataPhotos!.clear();
+  //   for (var i = 0; i < _certificatesPhotos.length; i++) {
+  //     if (_certificatesPhotos[i].url.runtimeType != String &&
+  //         _certificatesPhotos[i].url.runtimeType != Null) {
+  //       widget.reportPhotoModel.dataPhotos!.add(CarPhotos(
+  //           photo: _certificatesPhotos[i].url,
+  //           text: _certificatesPhotos[i].name));
+  //     }
+  //
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     return CloudScaffold.normal(

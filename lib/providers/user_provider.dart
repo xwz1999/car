@@ -5,10 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/api/api.dart';
-import '../model/contract/purchase_photo_model.dart';
 import '../model/user/user_info_model.dart';
-import '../ui/home/car_purchase/purchase_info_page.dart';
-import '../ui/home/car_purchase/purchase_push_car_page.dart';
 import '../utils/hive_store.dart';
 import '../utils/toast/cloud_toast.dart';
 

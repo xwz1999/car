@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:cloud_car/constants/const_data.dart';
 import 'package:cloud_car/constants/environment/environment.dart';
@@ -133,8 +132,8 @@ class ShareUtil {
       return null;
     }
     if (data.length > 128000) {
-      print('图片原大小：');
-      print(data.length);
+      // print('图片原大小：');
+      // print(data.length);
       data = await compressImageList(data,num);
     }
     return data;

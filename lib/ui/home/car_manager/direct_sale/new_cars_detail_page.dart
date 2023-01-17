@@ -1,6 +1,5 @@
 import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/constants/enums.dart';
-import 'package:cloud_car/extensions/string_extension.dart';
 import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/model/contract/report_photo_model.dart';
@@ -31,10 +30,6 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../model/publish_info_model.dart';
 import '../../../../utils/text_utils.dart';
-import '../../../user/user_order/status.dart';
-import '../../share/edit_item_widget.dart';
-import '../publish_car/publish_finish_page.dart';
-import 'detailed_price_page.dart';
 import 'edit_car_page.dart';
 import 'modify_price_page.dart';
 
@@ -890,7 +885,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
         GestureDetector(
           onTap: () {
             downState = !downState;
-            print(downState);
+            // print(downState);
             setState(() {});
           },
           child: Container(
@@ -1146,7 +1141,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             //
             // }
             //            if(  &&carInfoModel!.isSelfStore==1){
-            print(UserTool.userProvider.userInfo.business.roleId);
+            // print(UserTool.userProvider.userInfo.business.roleId);
             if ((UserTool.userProvider.userInfo.business.roleId == 1 ||
                     UserTool.userProvider.userInfo.business.roleId == 11) &&
                 carInfoModel!.isSelfStore == 1) {

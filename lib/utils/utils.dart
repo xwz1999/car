@@ -5,8 +5,6 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
-import '../model/region/china_region_model.dart';
-import '../ui/home/sort/citylist_item_page.dart';
 
 class Utils {
   static String getImgPath(String name, {String format = 'png'}) {

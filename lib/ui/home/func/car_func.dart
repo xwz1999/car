@@ -445,6 +445,12 @@ class CarFunc {
       'dealPrice': saleModel.priceInfo.dealPrice,
       'deposit': saleModel.priceInfo.deposit,
       'downPayment': saleModel.priceInfo.downPayment,
+      'deliverDate': saleModel.priceInfo.deliverDate,
+      'deliverAddress':saleModel.priceInfo.deliverAddress,
+      'transferFee':saleModel.priceInfo.transferFee,
+      'transferFeeHolder':saleModel.priceInfo.transferFeeHolder,
+      'agentFee':saleModel.priceInfo.agentFee,
+      'agentFeeHolder':saleModel.priceInfo.agentFeeHolder,
     };
     Map<String, dynamic> masterInfo = {
       'name': saleModel.masterInfo.name,

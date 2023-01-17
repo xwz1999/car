@@ -4,30 +4,30 @@ import 'package:flutter/material.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 
 class DetailedPricePage extends StatelessWidget {
-  const DetailedPricePage({Key? key}) : super(key: key);
+  const DetailedPricePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List priceList = [
-      {
-        'state': '改价',
-        'date': '2022-03-07 20:03:32',
-        'difference': '2000',
-        'price': '3390900',
-      },
-      {
-        'state': '改价',
-        'date': '2022-03-07 20:03:32',
-        'difference': '2000',
-        'price': '3390900',
-      },
-      {
-        'state': '改价',
-        'date': '2022-03-07 20:03:32',
-        'difference': '2000',
-        'price': '3390900',
-      },
-    ];
+    // List priceList = [
+    //   {
+    //     'state': '改价',
+    //     'date': '2022-03-07 20:03:32',
+    //     'difference': '2000',
+    //     'price': '3390900',
+    //   },
+    //   {
+    //     'state': '改价',
+    //     'date': '2022-03-07 20:03:32',
+    //     'difference': '2000',
+    //     'price': '3390900',
+    //   },
+    //   {
+    //     'state': '改价',
+    //     'date': '2022-03-07 20:03:32',
+    //     'difference': '2000',
+    //     'price': '3390900',
+    //   },
+    // ];
     return Scaffold(
         appBar: AppBar(
           leading: const CloudBackButton(

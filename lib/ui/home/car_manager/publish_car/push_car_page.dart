@@ -1,12 +1,10 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cloud_car/constants/api/api.dart';
 import 'package:cloud_car/model/car/car_distinguish_model.dart';
-import 'package:cloud_car/ui/home/car_manager/car_enum.dart';
 import 'package:cloud_car/ui/home/sort/car_three_city_list_page.dart';
 import 'package:cloud_car/ui/home/sort/sort_func.dart';
 import 'package:cloud_car/ui/user/user_assessment/user_assessment_page.dart';
 import 'package:cloud_car/utils/headers.dart';
-import 'package:cloud_car/utils/net_work/api_client.dart';
+
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
@@ -21,7 +19,6 @@ import '../../../../model/sort/sort_car_model_model.dart';
 import '../../../../model/sort/sort_series_model.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/picker/car_date_picker.dart';
-import '../../../../widget/picker/cloud_list_picker_widget.dart';
 import '../../../../widget/sort_widget.dart';
 import '../../../notice/evaluation_record_page.dart';
 import '../../sort/choose_car_page.dart';

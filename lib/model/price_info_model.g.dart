@@ -28,24 +28,24 @@ PriceInfoModel _$PriceInfoModelFromJson(Map<String, dynamic> json) =>
       maintain: json['maintain'] as int,
     );
 
-Map<String, dynamic> _$PriceInfoModelToJson(PriceInfoModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'vin': instance.vin,
-      'engineNo': instance.engineNo,
-      'source': instance.source,
-      'mileage': instance.mileage,
-      'modelId': instance.modelId,
-      'modelName': instance.modelName,
-      'cityId': instance.cityId,
-      'cityName': instance.cityName,
-      'color': instance.color,
-      'licensingDate': instance.licensingDate,
-      'transfer': instance.transfer,
-      'paint': instance.paint,
-      'plate': instance.plate,
-      'parts': instance.parts,
-      'engine': instance.engine,
-      'accidents': instance.accidents,
-      'maintain': instance.maintain,
-    };
+// Map<String, dynamic> _$PriceInfoModelToJson(PriceInfoModel instance) =>
+//     <String, dynamic>{
+//       'id': instance.id,
+//       'vin': instance.vin,
+//       'engineNo': instance.engineNo,
+//       'source': instance.source,
+//       'mileage': instance.mileage,
+//       'modelId': instance.modelId,
+//       'modelName': instance.modelName,
+//       'cityId': instance.cityId,
+//       'cityName': instance.cityName,
+//       'color': instance.color,
+//       'licensingDate': instance.licensingDate,
+//       'transfer': instance.transfer,
+//       'paint': instance.paint,
+//       'plate': instance.plate,
+//       'parts': instance.parts,
+//       'engine': instance.engine,
+//       'accidents': instance.accidents,
+//       'maintain': instance.maintain,
+//     };

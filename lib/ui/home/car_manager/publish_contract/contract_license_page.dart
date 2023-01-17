@@ -70,7 +70,7 @@ class _ContractLicencePageState extends State<ContractLicencePage> {
               color: Colors.white,
               padding: EdgeInsets.only(left: 34.w,),
               child:  EditItemWidget(
-                textColor: Color(0xFF999999),
+                textColor: const Color(0xFF999999),
                 title: '服务费比列',
                 keyboardType: TextInputType.number,
                 value: '5%',

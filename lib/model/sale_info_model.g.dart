@@ -134,14 +134,14 @@ SourceDealerInfo _$SourceDealerInfoFromJson(Map<String, dynamic> json) =>
       ownerBrokerTel: json['ownerBrokerTel'] as String,
     );
 
-Map<String, dynamic> _$SourceDealerInfoToJson(SourceDealerInfo instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'ownerBrokerId': instance.ownerBrokerId,
-      'ownerBrokerName': instance.ownerBrokerName,
-      'ownerBrokerTel': instance.ownerBrokerTel,
-    };
+// Map<String, dynamic> _$SourceDealerInfoToJson(SourceDealerInfo instance) =>
+//     <String, dynamic>{
+//       'id': instance.id,
+//       'name': instance.name,
+//       'ownerBrokerId': instance.ownerBrokerId,
+//       'ownerBrokerName': instance.ownerBrokerName,
+//       'ownerBrokerTel': instance.ownerBrokerTel,
+//     };
 
 DealerAuditInfo _$DealerAuditInfoFromJson(Map<String, dynamic> json) =>
     DealerAuditInfo(

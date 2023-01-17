@@ -608,8 +608,7 @@ class NewCarDetailItem extends StatelessWidget {
                       carInfoModel.carInfo.temporaryLicensePlate)),
               getContentItem(
                   '车位编号',
-                  TextUtils.carInfoIsEmpty(carInfoModel.carInfo.parkingNo) ??
-                      ''),
+                  TextUtils.carInfoIsEmpty(carInfoModel.carInfo.parkingNo) ),
               getContentItem('库存状态', '在厅'),
 
               getContentItem('使用性质', carInfoModel.carInfo.useCharacter),

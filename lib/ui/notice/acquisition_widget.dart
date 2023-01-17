@@ -8,9 +8,8 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../constants/api/api.dart';
 import '../../constants/enums.dart';
 import '../../model/acquisition_info_model.dart';
-import '../../model/car/new_car_info.dart';
+
 import '../../model/contract/report_photo_model.dart';
-import '../../model/publish_info_model.dart';
 import '../../utils/net_work/api_client.dart';
 import '../../utils/toast/cloud_toast.dart';
 import '../../utils/user_tool.dart';
@@ -30,11 +29,10 @@ class AcquisitionWidget extends StatefulWidget {
   final String url;
 
   const AcquisitionWidget(
-      {Key? key,
+      {super.key,
       required this.modelId,
       required this.status,
-      required this.url})
-      : super(key: key);
+      required this.url});
 
   @override
   _AcquisitionWidgetState createState() => _AcquisitionWidgetState();
@@ -428,7 +426,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                                     } else {
                                       CloudToast.show(res.msg);
                                     }
-                                    Alert.dismiss(context);
+                                    // Alert.dismiss(context);
                                   },
                                 ));
                           }),
@@ -475,7 +473,7 @@ class _AcquisitionWidgetState extends State<AcquisitionWidget> {
                                 } else {
                                   CloudToast.show(res.msg);
                                 }
-                                Alert.dismiss(context);
+                                // Alert.dismiss(context);
                               },
                             ));
                       }),

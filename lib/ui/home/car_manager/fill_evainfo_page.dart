@@ -8,10 +8,9 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/widget/picker/cloud_grid_picker_widget.dart';
 import 'package:cloud_car/widget/picker/cloud_list_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../providers/user_provider.dart';
+
 import '../../../utils/user_tool.dart';
 import '../../../widget/alert.dart';
 import '../../../widget/button/cloud_back_button.dart';

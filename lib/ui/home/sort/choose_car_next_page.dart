@@ -115,7 +115,7 @@ class _ChooseCarNextPageState extends State<ChooseCarNextPage> {
               widget.pickCar.value.series.series=model.series;
               if (widget.pickCar.value.returnType == 2) {
                 Get.back();
-                print(e.seriesId);
+                // print(e.seriesId);
                 widget.callback();
                 return;
               }

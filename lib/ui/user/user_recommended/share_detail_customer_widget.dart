@@ -178,56 +178,56 @@ class _ShareDetailCustomerWidgetState extends State<ShareDetailCustomerWidget>
 //   }
 
 //
-  _getBody() {
-    return SizedBox(
-      //padding: EdgeInsets.only(left: 24.w),
-      width: 604.w,
-      height: 870.w,
-
-      child: Stack(
-        children: [
-          Align(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadiusDirectional.circular(16.w)),
-              clipBehavior: Clip.antiAlias, //阴影
-              child: Image.asset(
-                Assets.images.shareDetailsBg.path,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          // SizedBox(
-          //   child:
-          // Image.asset(
-          //     Assets.images.shareDetailsBg.path,
-          //     fit: BoxFit.fill,
-          //   ),
-          // ),
-          Positioned(
-              left: 46.w,
-              top: 146.w,
-              child: Text(
-                '即刻成为',
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: kForeGroundColor,
-                    fontSize: 56.sp,
-                    fontFamily: 'YouSheBiaoTiHei'),
-              )),
-          Positioned(
-              top: 226.w,
-              left: 104.w,
-              child: Text(
-                '云云问车客户',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    ?.copyWith(color: kForeGroundColor, fontSize: 72.sp),
-              ))
-        ],
-      ),
-    );
-  }
+//   _getBody() {
+//     return SizedBox(
+//       //padding: EdgeInsets.only(left: 24.w),
+//       width: 604.w,
+//       height: 870.w,
+//
+//       child: Stack(
+//         children: [
+//           Align(
+//             child: Card(
+//               shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadiusDirectional.circular(16.w)),
+//               clipBehavior: Clip.antiAlias, //阴影
+//               child: Image.asset(
+//                 Assets.images.shareDetailsBg.path,
+//                 fit: BoxFit.fill,
+//               ),
+//             ),
+//           ),
+//           // SizedBox(
+//           //   child:
+//           // Image.asset(
+//           //     Assets.images.shareDetailsBg.path,
+//           //     fit: BoxFit.fill,
+//           //   ),
+//           // ),
+//           Positioned(
+//               left: 46.w,
+//               top: 146.w,
+//               child: Text(
+//                 '即刻成为',
+//                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
+//                     color: kForeGroundColor,
+//                     fontSize: 56.sp,
+//                     fontFamily: 'YouSheBiaoTiHei'),
+//               )),
+//           Positioned(
+//               top: 226.w,
+//               left: 104.w,
+//               child: Text(
+//                 '云云问车客户',
+//                 style: Theme.of(context)
+//                     .textTheme
+//                     .subtitle1
+//                     ?.copyWith(color: kForeGroundColor, fontSize: 72.sp),
+//               ))
+//         ],
+//       ),
+//     );
+//   }
 
 //内容
 //   _getBody1() {

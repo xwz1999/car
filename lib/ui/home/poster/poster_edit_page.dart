@@ -206,49 +206,49 @@ class _PosterEditPageState extends State<PosterEditPage> {
       ),
     );
   }
-
-  Widget _posterWidget() {
-    return Screenshot(
-      controller: _screenshotController,
-      child: Stack(
-        children: [
-          Container(
-              constraints: BoxConstraints(maxHeight: 1100.w),
-              margin: EdgeInsets.symmetric(
-                vertical: 32.w,
-                horizontal: 64.w,
-              ),
-              child: Image.asset(
-                Assets.images.cehsi.path,
-                fit: BoxFit.fill,
-              )
-
-              // CloudImageNetworkWidget(
-              //   width: double.infinity,
-              //   height: double.infinity,
-              //   urls: [widget.model.path],
-              //   ///widget.model.path
-              // ),
-              ),
-          Positioned(
-              top: 50.w,
-              left: 100.w,
-              // top: double.parse(widget.model.axisY),
-              // left: double.parse(widget.model.axisX),
-              child: Container(
-                padding: EdgeInsets.all(4.w),
-                color: Colors.white,
-                child: BarcodeWidget(
-                    // width: double.infinity,
-                    // height: double.infinity,
-                    width: double.parse(widget.model.size),
-                    height: double.parse(widget.model.size),
-                    data:
-                        '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
-                    barcode: Barcode.qrCode()),
-              ))
-        ],
-      ),
-    );
-  }
+  //
+  // Widget _posterWidget() {
+  //   return Screenshot(
+  //     controller: _screenshotController,
+  //     child: Stack(
+  //       children: [
+  //         Container(
+  //             constraints: BoxConstraints(maxHeight: 1100.w),
+  //             margin: EdgeInsets.symmetric(
+  //               vertical: 32.w,
+  //               horizontal: 64.w,
+  //             ),
+  //             child: Image.asset(
+  //               Assets.images.cehsi.path,
+  //               fit: BoxFit.fill,
+  //             )
+  //
+  //             // CloudImageNetworkWidget(
+  //             //   width: double.infinity,
+  //             //   height: double.infinity,
+  //             //   urls: [widget.model.path],
+  //             //   ///widget.model.path
+  //             // ),
+  //             ),
+  //         Positioned(
+  //             top: 50.w,
+  //             left: 100.w,
+  //             // top: double.parse(widget.model.axisY),
+  //             // left: double.parse(widget.model.axisX),
+  //             child: Container(
+  //               padding: EdgeInsets.all(4.w),
+  //               color: Colors.white,
+  //               child: BarcodeWidget(
+  //                   // width: double.infinity,
+  //                   // height: double.infinity,
+  //                   width: double.parse(widget.model.size),
+  //                   height: double.parse(widget.model.size),
+  //                   data:
+  //                       '$posterCodePrefix?inviteCode=${UserTool.userProvider.userInfo.inviteCode}',
+  //                   barcode: Barcode.qrCode()),
+  //             ))
+  //       ],
+  //     ),
+  //   );
+  // }
 }

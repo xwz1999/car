@@ -34,7 +34,7 @@ class _RealNamePageState extends State<RealNamePage> {
   TextEditingController idController = TextEditingController();
 
   // final _aliyunFacePlugin = AliyunFacePlugin();
-  String _infos = 'Unknown';
+  // final String _infos = 'Unknown';
   List<dynamic>? data;
   bool _getSure = false;
   final picker = ImagePicker();
@@ -252,7 +252,7 @@ class _RealNamePageState extends State<RealNamePage> {
                         setState(() {});
                         var cancel = CloudToast.loading;
                         urls = await apiClient.uploadImage(_file!);
-                        print(urls);
+                        // print(urls);
                         // var carInfoModel = await CarFunc.carDistinguish(urls);
                         // if (carInfoModel != null) {
                         //   // widget.onLoadComplete(carInfoModel);
@@ -308,7 +308,7 @@ class _RealNamePageState extends State<RealNamePage> {
                         setState(() {});
                         var cancel = CloudToast.loading;
                         urls2 = await apiClient.uploadImage(_file2!);
-                        print(urls2);
+                        // print(urls2);
                         // var carInfoModel = await CarFunc.carDistinguish(urls);
                         // if (carInfoModel != null) {
                         //   // widget.onLoadComplete(carInfoModel);

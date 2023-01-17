@@ -1,7 +1,6 @@
 
 
 import 'package:cloud_car/utils/headers.dart';
-import 'package:file_preview/file_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -11,7 +10,7 @@ import '../../widget/button/cloud_back_button.dart';
 class ViewFilePage extends StatefulWidget {
   final String title;
   final String url;
-  const ViewFilePage({Key? key,required this.title, required this.url}) : super(key: key);
+  const ViewFilePage({super.key,required this.title, required this.url});
 
   @override
   _ViewFilePageState createState() => _ViewFilePageState();

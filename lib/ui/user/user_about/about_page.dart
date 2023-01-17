@@ -1,10 +1,8 @@
 import 'package:cloud_car/ui/splash/agreement_page.dart';
 import 'package:cloud_car/ui/splash/privacy_page.dart';
-import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/headers.dart';
-import '../../../widget/alert.dart';
 import '../../../widget/button/cloud_back_button.dart';
 
 class AboutPage extends StatefulWidget {

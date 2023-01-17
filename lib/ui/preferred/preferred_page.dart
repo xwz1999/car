@@ -28,13 +28,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:velocity_x/velocity_x.dart';
 
-import '../../model/screening_model.dart';
 import '../../model/sort/sort_brand_model.dart';
 import '../../model/sort/sort_car_model_model.dart';
 import '../../model/sort/sort_series_model.dart';
-import '../../utils/hive_store.dart';
+
 import '../../utils/toast/cloud_toast.dart';
 import '../../widget/no_data_widget.dart';
 

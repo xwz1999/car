@@ -78,7 +78,7 @@ class _FashionablePageState extends State<FashionablePage> {
             'page': _page,
             'limit': _limit,
           });
-          print("这是数据${baseList.data}");
+          // print("这是数据${baseList.data}");
           if (baseList.code == 0) {
             _models = baseList.nullSafetyList
                 .map((e) => SplitAccountListModel.fromJson(e))

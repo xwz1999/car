@@ -11,7 +11,7 @@ class CarDayTimePickBody extends StatefulWidget {
   final int addYear;///需要选择今年以后的日期使用该属性
   final int addMoth;
   final int addDay;
-  const CarDayTimePickBody({Key? key,required this.initTime,this.addYear=0,this.addDay=0,this.addMoth=0,this.chooseLate=true}) : super(key: key);
+  const CarDayTimePickBody({super.key,required this.initTime,this.addYear=0,this.addDay=0,this.addMoth=0,this.chooseLate=true});
 
   @override
   _CarDayTimePickBodyState createState() => _CarDayTimePickBodyState();

@@ -16,7 +16,7 @@ class SortSeriesModel extends Equatable {
   Map<String, dynamic> toJson() => _$SortSeriesModelToJson(this);
 
   static SortSeriesModel get init =>    SortSeriesModel(
-      id: 0, name: '', series: [], );
+      id: 0, name: '', series: const [], );
 
    SortSeriesModel({
     required this.id,

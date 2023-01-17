@@ -5,8 +5,8 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:gzx_dropdown_menu/gzx_dropdown_menu.dart';
-import 'package:velocity_x/velocity_x.dart';
+
+
 
 import '../manager_container_item.dart';
 import 'direct_sale/direct_sale_manager_page.dart';
@@ -38,9 +38,9 @@ class _CarManagerPageState extends State<CarManagerPage> {
     '公司车辆',
   ];
   String? selectedValue;
-  final GlobalKey _stackKey = GlobalKey();
-  final GZXDropdownMenuController _dropdownMenuController =
-      GZXDropdownMenuController();
+  // final GlobalKey _stackKey = GlobalKey();
+  // final GZXDropdownMenuController _dropdownMenuController =
+  //     GZXDropdownMenuController();
 
   @override
   void initState() {
@@ -426,7 +426,7 @@ class _CarManagerPageState extends State<CarManagerPage> {
         Padding(
           padding: const EdgeInsets.only(left: 12),
           child: screening
-              ? Container(
+              ? SizedBox(
                   width: 200.w,
                   height: 100.w,
                   child: DropdownButtonHideUnderline(

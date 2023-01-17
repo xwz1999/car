@@ -1,12 +1,12 @@
-import 'package:cloud_car/gen/assets.gen.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 
 import 'login/login_page.dart';
 
 class BootPage extends StatefulWidget {
-  const BootPage({Key? key}) : super(key: key);
+  const BootPage({super.key});
 
   @override
   _BootPageState createState() => _BootPageState();
@@ -29,8 +29,8 @@ class _BootPageState extends State<BootPage> {
       onPageChanged: (index) {
         setState(() {
           _pageIndex = index;
-          print(_pageController.page);
-          print(_pageIndex);
+          // print(_pageController.page);
+          // print(_pageIndex);
         });
       },
       children: [

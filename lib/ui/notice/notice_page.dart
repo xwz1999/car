@@ -6,6 +6,7 @@ import 'package:cloud_car/ui/user/user_order/status.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -62,27 +63,27 @@ class _NoticePageState extends State<NoticePage>
               Message(
                   title: '客户付款',
                   msg: '您发起的购车合同，客户已付定金',
-                  date: '01-01 11:11',
+                  date: DateUtil.formatDate(DateTime.now(),format: 'yyyy-MM-dd HH:mm:ss'),
                   type: 1),
               //Message(title:'客户跟踪',msg:'您的绑定客服浏览了车辆信息',date: '01-01 11:11',type: 2 ),
               Message(
                   title: '客户邀约提醒',
                   msg: '您的邀约客户将于24小时后到店',
-                  date: '01-01 11:11',
+                  date: DateUtil.formatDate(DateTime.now(),format: 'yyyy-MM-dd HH:mm:ss'),
                   type: 2),
               Message(
-                  title: '分账确认提示', msg: '分账公告', date: '01-01 11:11', type: 3),
+                  title: '分账确认提示', msg: '分账公告', date: DateUtil.formatDate(DateTime.now(),format: 'yyyy-MM-dd HH:mm:ss'), type: 3),
               Message(
                   title: '合同审批',
                   msg: '你有新的出售合同待审批',
-                  date: '01-01 11:11',
+                  date: DateUtil.formatDate(DateTime.now(),format: 'yyyy-MM-dd HH:mm:ss'),
                   type: 4),
               UserTool.userProvider.userInfo.business.roleEM == Role.manager ||
                   UserTool.userProvider.userInfo.business.roleEM ==
                       Role.carService || UserTool.userProvider.userInfo.business.roleEM == Role.settlers ? Message(
                   title: '车辆审批',
                   msg: '您有车辆发布审批待查看',
-                  date: '01-01 11:11',
+                  date: DateUtil.formatDate(DateTime.now(),format: 'yyyy-MM-dd HH:mm:ss'),
                   type: 5):Message(),
 
               ///Message(title:'系统通知',msg:'1.0.1版本功能升级了，立即查看>>>',date: '01-01 11:11',type: 6 ),

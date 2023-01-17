@@ -1,7 +1,6 @@
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/text_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../model/publish_info_model.dart';
 import '../../model/car/edit_info_model.dart';
@@ -201,65 +200,65 @@ class PublishDetailItem extends StatelessWidget {
     );
   }
 
-  _carConfiguration() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 32.w, horizontal: 24.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.w),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '车辆配置',
-            style: TextStyle(
-                fontSize: 32.sp,
-                fontWeight: FontWeight.bold,
-                color: BaseStyle.color333333),
-          ),
-          24.hb,
-          _content(
-            '排量',
-            publishInfoModel.modelInfo.liter,
-            '变速箱类型',
-            publishInfoModel.modelInfo.gearType,
-          ),
-          16.hb,
-          _content(
-            '燃料类型',
-            publishInfoModel.modelInfo.fuelTypeName,
-            '车身结构',
-            publishInfoModel.modelInfo.driveName,
-          ),
-          16.hb,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 145.w,
-                child: Text(
-                  '座位数',
-                  style: TextStyle(
-                      fontSize: 28.sp,
-                      fontWeight: FontWeight.w400,
-                      color: BaseStyle.color999999),
-                ),
-              ),
-              Text(
-                '${publishInfoModel.modelInfo.seatNumber}座',
-                style: TextStyle(
-                    height: 1.5,
-                    fontSize: 28.sp,
-                    fontWeight: FontWeight.w500,
-                    color: BaseStyle.color333333),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // _carConfiguration() {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(vertical: 32.w, horizontal: 24.w),
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       borderRadius: BorderRadius.circular(16.w),
+  //     ),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           '车辆配置',
+  //           style: TextStyle(
+  //               fontSize: 32.sp,
+  //               fontWeight: FontWeight.bold,
+  //               color: BaseStyle.color333333),
+  //         ),
+  //         24.hb,
+  //         _content(
+  //           '排量',
+  //           publishInfoModel.modelInfo.liter,
+  //           '变速箱类型',
+  //           publishInfoModel.modelInfo.gearType,
+  //         ),
+  //         16.hb,
+  //         _content(
+  //           '燃料类型',
+  //           publishInfoModel.modelInfo.fuelTypeName,
+  //           '车身结构',
+  //           publishInfoModel.modelInfo.driveName,
+  //         ),
+  //         16.hb,
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.start,
+  //           children: [
+  //             SizedBox(
+  //               width: 145.w,
+  //               child: Text(
+  //                 '座位数',
+  //                 style: TextStyle(
+  //                     fontSize: 28.sp,
+  //                     fontWeight: FontWeight.w400,
+  //                     color: BaseStyle.color999999),
+  //               ),
+  //             ),
+  //             Text(
+  //               '${publishInfoModel.modelInfo.seatNumber}座',
+  //               style: TextStyle(
+  //                   height: 1.5,
+  //                   fontSize: 28.sp,
+  //                   fontWeight: FontWeight.w500,
+  //                   color: BaseStyle.color333333),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _purchasingInformation() {
     return Container(
@@ -672,8 +671,7 @@ class PublishDetailItem extends StatelessWidget {
                   '车位编号',
                   TextUtils.carInfoIsEmpty(isUpdate == 2
                           ? editInfo.parkingNo
-                          : publishInfoModel.parkingNo) ??
-                      ''),
+                          : publishInfoModel.parkingNo) ),
               getContentItem('库存状态', '在厅'),
 
               getContentItem(

@@ -11,11 +11,11 @@ EditAddModel _$EditAddModelFromJson(Map<String, dynamic> json) => EditAddModel(
       baseInfo: BaseInfo.fromJson(json['baseInfo'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$EditAddModelToJson(EditAddModel instance) =>
-    <String, dynamic>{
-      'cardId': instance.cardId,
-      'baseInfo': instance.baseInfo,
-    };
+// Map<String, dynamic> _$EditAddModelToJson(EditAddModel instance) =>
+//     <String, dynamic>{
+//       'cardId': instance.cardId,
+//       'baseInfo': instance.baseInfo,
+//     };
 
 BaseInfo _$BaseInfoFromJson(Map<String, dynamic> json) => BaseInfo(
       color: json['color'] as String,
@@ -29,14 +29,14 @@ BaseInfo _$BaseInfoFromJson(Map<String, dynamic> json) => BaseInfo(
       condition: json['condition'] as String,
     );
 
-Map<String, dynamic> _$BaseInfoToJson(BaseInfo instance) => <String, dynamic>{
-      'color': instance.color,
-      'interiorColor': instance.interiorColor,
-      'parkingNo': instance.parkingNo,
-      'stockStatus': instance.stockStatus,
-      'useCharacter': instance.useCharacter,
-      'shamMileage': instance.shamMileage,
-      'installationCost': instance.installationCost,
-      'location': instance.location,
-      'condition': instance.condition,
-    };
+// Map<String, dynamic> _$BaseInfoToJson(BaseInfo instance) => <String, dynamic>{
+//       'color': instance.color,
+//       'interiorColor': instance.interiorColor,
+//       'parkingNo': instance.parkingNo,
+//       'stockStatus': instance.stockStatus,
+//       'useCharacter': instance.useCharacter,
+//       'shamMileage': instance.shamMileage,
+//       'installationCost': instance.installationCost,
+//       'location': instance.location,
+//       'condition': instance.condition,
+//     };

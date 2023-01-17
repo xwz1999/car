@@ -61,6 +61,7 @@ int index=0;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       children: [
         SizedBox(
@@ -98,7 +99,7 @@ int index=0;
                       }
                       index=widget.index;
                       _page = 1;
-                      print(widget.isUpdate);
+                      // print(widget.isUpdate);
                       if(widget.isUpdate==1){
                         if (widget.index == 0) {
                           releaseList = await CarFunc.getPubLists(
@@ -232,79 +233,76 @@ int index=0;
       String carMileage, int carId) {
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.w)),
-        child: Container(
-          // padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
-          child: GestureDetector(
-            onTap: () async {
-              carInfoModel = await CarFunc.getCarList(1, 10);
-              Get.to(() => PublishInfoPage(
-                    index: widget.index,
-                    carId: carId, isUpdate: widget.isUpdate,
-                  ));
-              // Get.to(() => DealerConsignmentSigned(
-              //       status: model.statusEnum,
-              //       price: model.price,
-              //       id: model.id,
-              //
-              //       auditStatus: model.auditStatus,
-              //       //stat: '审核中',
-              //     ));
+        child: GestureDetector(
+          onTap: () async {
+            carInfoModel = await CarFunc.getCarList(1, 10);
+            Get.to(() => PublishInfoPage(
+                  index: widget.index,
+                  carId: carId, isUpdate: widget.isUpdate,
+                ));
+            // Get.to(() => DealerConsignmentSigned(
+            //       status: model.statusEnum,
+            //       price: model.price,
+            //       id: model.id,
+            //
+            //       auditStatus: model.auditStatus,
+            //       //stat: '审核中',
+            //     ));
 
-              //   case 0:
-              //     Get.to(() => const DealerConsignmentRejected());
-              //     break;
-              // }
-            },
-            child: Container(
-                padding: EdgeInsets.only(left: 32.w, top: 24.w),
-                decoration: BoxDecoration(
-                    color: kForeGroundColor,
-                    borderRadius: BorderRadius.circular(16.w)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 0.w),
-                      child: _getText(status),
-                    ),
-                    // 24.hb,
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 196.w,
-                          height: 150.w,
-                          child: CloudImageNetworkWidget.car(
-                            urls: [carUrl],
-                          ),
+            //   case 0:
+            //     Get.to(() => const DealerConsignmentRejected());
+            //     break;
+            // }
+          },
+          child: Container(
+              padding: EdgeInsets.only(left: 32.w, top: 24.w),
+              decoration: BoxDecoration(
+                  color: kForeGroundColor,
+                  borderRadius: BorderRadius.circular(16.w)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 0.w),
+                    child: _getText(status),
+                  ),
+                  // 24.hb,
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 196.w,
+                        height: 150.w,
+                        child: CloudImageNetworkWidget.car(
+                          urls: [carUrl],
                         ),
-                        20.wb,
-                        SizedBox(
-                          width: 400.w,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(carName,
-                                  style: TextStyle(
-                                      fontSize: BaseStyle.fontSize28,
-                                      color: BaseStyle.color111111)),
-                              32.hb,
-                              Padding(
-                                padding: EdgeInsets.only(right: 16.w),
-                                child: getText(
-                                    DateUtil.formatDateMs(
-                                        carTime.toInt() * 1000,
-                                        format: 'yyyy年MM月'),
-                                    '$carMileage万公里'),
-                              )
-                            ],
-                          ),
+                      ),
+                      20.wb,
+                      SizedBox(
+                        width: 400.w,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(carName,
+                                style: TextStyle(
+                                    fontSize: BaseStyle.fontSize28,
+                                    color: BaseStyle.color111111)),
+                            32.hb,
+                            Padding(
+                              padding: EdgeInsets.only(right: 16.w),
+                              child: getText(
+                                  DateUtil.formatDateMs(
+                                      carTime.toInt() * 1000,
+                                      format: 'yyyy年MM月'),
+                                  '$carMileage万公里'),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                    32.hb,
-                  ],
-                )),
-          ),
+                      ),
+                    ],
+                  ),
+                  32.hb,
+                ],
+              )),
         ));
   }
 

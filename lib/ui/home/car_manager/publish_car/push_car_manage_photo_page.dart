@@ -15,11 +15,11 @@ import 'package:cloud_car/widget/cloud_image_preview_list.dart';
 import 'package:cloud_car/widget/cloud_scaffold.dart';
 import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:cloud_car/widget/picker/image_pick_widget/multi_image_pick_widget.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../model/car/new_car_info.dart';
+
 
 class PushCarManagePhotoPage extends StatefulWidget {
   final List<String> tabs;
@@ -102,7 +102,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
           // PushImgModel(name: '漆面数据', isMust: true),
           PushImgModel(name: '行驶证照片', isMust: true),
           PushImgModel(name: '检测报告', isMust: true),
-          // PushImgModel(name: '登记证书', isMust: true),
+          PushImgModel(name: '登记证书', isMust: true),
           PushImgModel(name: '交强险', isMust: false),
           PushImgModel(name: '商业险', isMust: false),
 
@@ -120,7 +120,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
             // PushImgModel(name: '漆面数据', isMust: false),
             PushImgModel(name: '行驶证照片', isMust: false),
             PushImgModel(name: '检测报告', isMust: false),
-            // PushImgModel(name: '登记证书', isMust: false),
+            PushImgModel(name: '登记证书', isMust: false),
             PushImgModel(name: '交强险', isMust: false),
             PushImgModel(name: '商业险', isMust: false),
             // ///添加新数据
@@ -141,7 +141,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
 
     for (int i = 0; i < widget.model.dataPhotos!.length; i++) {
       // print('${widget.model.dataPhotos![i].text}$i');
-      print('${widget.model.dataPhotos!.length}');
+      // print('${widget.model.dataPhotos!.length}');
       if (widget.model.dataPhotos![i].text == '登记证书' ||
           widget.model.dataPhotos![i].text == '维保记录') {
         if (widget.model.dataPhotos![i].text == '维保记录') {
