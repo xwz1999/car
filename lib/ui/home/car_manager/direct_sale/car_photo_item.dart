@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/new_push_car_page.dart';
-import 'package:cloud_car/ui/home/car_manager/publish_car/publish_finish_page.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_report_photo_page.dart';
-import 'package:cloud_car/ui/home/func/car_func.dart';
+
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/net_work/api_client.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
@@ -20,8 +19,9 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../model/car/new_car_info.dart';
+import 'edit_car_page.dart';
 
-class PushCarManagePhotoPage extends StatefulWidget {
+class CarPhotoItem extends StatefulWidget {
   final List<String> tabs;
   final PushPhotoModel model;
 
@@ -33,7 +33,7 @@ class PushCarManagePhotoPage extends StatefulWidget {
   final bool isSelf;
   final bool consignmentPhoto;
 
-  const PushCarManagePhotoPage({
+  const CarPhotoItem({
     super.key,
     required this.tabs,
     required this.model,
@@ -47,10 +47,10 @@ class PushCarManagePhotoPage extends StatefulWidget {
   });
 
   @override
-  _PushCarManagePhotoPageState createState() => _PushCarManagePhotoPageState();
+  _CarPhotoItemState createState() => _CarPhotoItemState();
 }
 
-class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
+class _CarPhotoItemState extends State<CarPhotoItem>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController _tabController;
 
@@ -263,7 +263,7 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
         _reportPhotos[i].url = url;
       }
       widget.model.dataPhotos!.add(
-          CarPhotos(photo: _reportPhotos[i].url, text: _reportPhotos[i].name!));
+          CarPhotos(photo: _reportPhotos[i].url, text: _reportPhotos[i].name));
     }
 
     for (var i = 0; i < _defectPhotos.length; i++) {
@@ -311,6 +311,25 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
   Widget build(BuildContext context) {
     super.build(context);
     return CloudScaffold.normal(
+      icon: Padding(
+        padding: EdgeInsets.only(left: 8.w),
+        child: IconButton(
+          onPressed: () async {
+            CloudToast.loading;
+            if (!canTap) {
+              BotToast.closeAllLoading();
+              return;
+            }
+            await uploadPhotos();
+            BotToast.closeAllLoading();
+            setState(() {});
+          },
+          icon: const Icon(
+            CupertinoIcons.chevron_back,
+            color: Color(0xFF111111),
+          ),
+        ),
+      ),
       title: '车辆图片管理',
       appBarBottom: TabBar(
           isScrollable: true,
@@ -336,35 +355,32 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
               // _getView(3, _reportPhotos),
               // _getView1(4, _repairPhotos)
             ]),
-      bottomNavi: widget.imgCanTap
-          ? widget.imgCanTaps
-              ? Container(
-                  margin: EdgeInsets.only(bottom: 40.w),
-                  height: 90.w,
-                  width: double.infinity,
-                  child: CloudBottomButton(
-                    onTap: () async {
-                      CloudToast.loading;
-                      if (!canTap) {
-                        BotToast.closeAllLoading();
-                        return;
-                      }
-                      await uploadPhotos();
-                      BotToast.closeAllLoading();
-                      // var result = await  CarFunc.newPushCar(reportPhotoModel: widget.reportPhotoModel,
-                      //     pushPhotoModel: widget.model, newPublishCarInfo: widget.newPublishCarInfo!);
-                      var result = await CarFunc.newPushCar(
-                          pushPhotoModel: widget.model,
-                          newPublishCarInfo: widget.newPublishCarInfo!);
-                      if (result) {
-                        Get.to(() => const PublishFinishPage());
-                      }
-                    },
-                    text: '下一步',
-                  ),
-                )
-              : const SizedBox()
-          : const SizedBox(),
+      bottomNavi: Container(
+        margin: EdgeInsets.only(bottom: 40.w),
+        height: 90.w,
+        width: double.infinity,
+        child: CloudBottomButton(
+          onTap: () async {
+            CloudToast.loading;
+            if (!canTap) {
+              BotToast.closeAllLoading();
+              return;
+            }
+            await uploadPhotos();
+            BotToast.closeAllLoading();
+            Get.back();
+            // var result = await  CarFunc.newPushCar(reportPhotoModel: widget.reportPhotoModel,
+            //     pushPhotoModel: widget.model, newPublishCarInfo: widget.newPublishCarInfo!);
+            // var result = await CarFunc.newPushCar(
+            //     pushPhotoModel: widget.model,
+            //     newPublishCarInfo: widget.newPublishCarInfo!);
+            // if (result) {
+            //   Get.to(() => const PublishFinishPage());
+            // }
+          },
+          text: '下一步',
+        ),
+      ),
     );
   }
 
@@ -387,12 +403,12 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
             //子组件宽高长度比例
             childAspectRatio: 100 / 105),
         itemBuilder: (BuildContext context, int iIndex) {
-          return _buildChild(list[iIndex], iIndex, index, list);
+          return _buildChild(list[iIndex], iIndex, index, list,list[iIndex].name!);
         });
   }
 
   Widget _buildChild(
-      PushImgModel model, int index, int type, List<PushImgModel> list) {
+      PushImgModel model, int index, int type, List<PushImgModel> list,String name) {
     List<File> fileLists = [];
     List<String> stringLists = [];
     for (var item in list) {
@@ -466,47 +482,46 @@ class _PushCarManagePhotoPageState extends State<PushCarManagePhotoPage>
           // maintenance.add(value);
         }
       },
-      // onLongPress: () async {
-      //     await Get.bottomSheet(CupertinoActionSheet(
-      //       actions: [
-      //         CupertinoActionSheetAction(
-      //           onPressed: () async {
-      //             // var value =
-      //             // await CloudImagePicker.pickMultiAndSingleImage(title: '选择图片');
-      //             var value =
-      //             await CloudImagePicker.pickMultiImage(title: '选择图片');
-      //             _reportPhotos.removeAt(index);
-      //             _reportPhotos.insert(index, PushImgModel(name: '登记证书', url: value.first));
-      //             Get.back();
-      //             setState(() {});
-      //
-      //           },
-      //           child: Text(
-      //             '替换',
-      //             style: TextStyle(
-      //                 color: Colors.black,
-      //                 fontWeight: FontWeight.bold,
-      //                 fontSize: 28.sp),
-      //           ),
-      //         ),
-      //         CupertinoActionSheetAction(
-      //           onPressed: () {
-      //             _reportPhotos.removeAt(index);
-      //             Get.back();
-      //             setState(() {});
-      //           },
-      //           child: Text(
-      //             '删除',
-      //             style: TextStyle(
-      //                 color: Colors.red,
-      //                 fontWeight: FontWeight.bold,
-      //                 fontSize: 28.sp),
-      //           ),
-      //         )
-      //       ],
-      //     ));
-      //
-      // },
+      onLongPress: () async {
+        await Get.bottomSheet(CupertinoActionSheet(
+          actions: [
+            CupertinoActionSheetAction(
+              onPressed: () async {
+                // var value =
+                // await CloudImagePicker.pickMultiAndSingleImage(title: '选择图片');
+                var value =
+                    await CloudImagePicker.pickMultiAndSingleImage(title: '选择图片');
+                _reportPhotos.removeAt(index);
+                _reportPhotos.insert(
+                    index, PushImgModel(name: name, url: value.first));
+                Get.back();
+                setState(() {});
+              },
+              child: Text(
+                '替换',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28.sp),
+              ),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () {
+                _reportPhotos.removeAt(index);
+                Get.back();
+                setState(() {});
+              },
+              child: Text(
+                '删除',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28.sp),
+              ),
+            )
+          ],
+        ));
+      },
       child: Material(
         color: Colors.transparent,
         child: Column(

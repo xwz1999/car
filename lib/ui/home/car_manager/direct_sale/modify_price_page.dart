@@ -9,6 +9,8 @@ import 'package:cloud_car/widget/button/cloud_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../utils/toast/cloud_toast.dart';
+
 ///调价页面
 class ModifyPricePage extends StatefulWidget {
   // final NewCarInfo model;
@@ -117,19 +119,21 @@ class _ModifyPricePageState extends State<ModifyPricePage>
                                   .toString());
 
                           if (result) {
-                            Get.off(() => SuccessFailurePage(
-                                conditions: true,
-                                headline: '调价',
-                                body: Text(
-                                  '提交成功，等待平台审核',
-                                  style: Theme.of(context).textTheme.subtitle1,
-                                ),
-                                bottom: CloudBottomButton(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  text: '返回汽车详情',
-                                )));
+                            CloudToast.show('调价成功');
+                            Get.back();
+                            // Get.off(() => SuccessFailurePage(
+                            //     conditions: true,
+                            //     headline: '调价',
+                            //     body: Text(
+                            //       '提交成功，等待平台审核',
+                            //       style: Theme.of(context).textTheme.subtitle1,
+                            //     ),
+                            //     bottom: CloudBottomButton(
+                            //       onTap: () {
+                            //         Get.back();
+                            //       },
+                            //       text: '返回汽车详情',
+                            //     )));
                           }
                         },
                       ));

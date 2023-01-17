@@ -77,21 +77,25 @@ class _ReservationPageState extends State<ReservationPage> {
               height: 120.w,
               color: Colors.white,
               child: ProgressBar(
-                length: _consignmentInfo.customerChannel == 2?3:6,
+                length: _consignmentInfo.customerChannel == 2 ? 4 : 7,
                 num: _consignmentInfo.customerChannel == 2
-                    ? QOrderSaleStatus.getStatus(_consignmentInfo.status)
-                        .progressNum2
+                    ? OrderSaleStatus.getStatus(_consignmentInfo.status)
+                        .progressNum
                     : widget.status.progressNum,
                 direction: false,
                 cancel: widget.status.num != 0,
-                HW:  _consignmentInfo.customerChannel == 2?256:96,///96,
+                HW: _consignmentInfo.customerChannel == 2 ? 256 : 96,
+
+                ///96,
                 texts: _consignmentInfo.customerChannel == 2
                     ? [
                         _text('签订'),
-                        _text('预定'),
+                        _text('进行中'),
+                        _text('上传资料'),
                         _text('完成'),
                       ]
                     : [
+                        _text('签订'),
                         _text('预定'),
                         _text('检测'),
                         widget.status.num == 0 ? _text('订单取消') : _text('首付'),
@@ -180,16 +184,17 @@ class _ReservationPageState extends State<ReservationPage> {
               child: _getPay(),
             ),
 
-            ///车辆检测报告
-            Offstage(
-              offstage: widget.status.num == 1 ||
-                  widget.status.num == 3 ||
-                  widget.status.num == 2,
-              // widget.status.num == 10 ||
-              // widget.status.num == 11 ||
-              // widget.status.num == 20,
-              child: _getReport(),
-            ),
+
+                ///车辆检测报告
+                Offstage(
+                    offstage: widget.status.num == 1 ||
+                        widget.status.num == 3 ||
+                        widget.status.num == 2,
+                    // widget.status.num == 10 ||
+                    // widget.status.num == 11 ||
+                    // widget.status.num == 20,
+                    child: _getReport(),
+                  ),
             // widget.status.num == 0
             //     ? _getContainer(
             //         ///订单取消
@@ -209,14 +214,14 @@ class _ReservationPageState extends State<ReservationPage> {
             //       )
             //     : const SizedBox(),
 
-            ///车辆检测报告2
-            Offstage(
-              offstage: !(widget.status.num == 40 ||
-                  widget.status.num == 41 ||
-                  widget.status.num == 31 ||
-                  widget.status.num == 50),
-              child: _getReport2(),
-            ),
+                ///车辆检测报告2
+                Offstage(
+                    offstage: !(widget.status.num == 40 ||
+                        widget.status.num == 41 ||
+                        widget.status.num == 31 ||
+                        widget.status.num == 50),
+                    child: _getReport2(),
+                  ),
           ],
         ),
         // Positioned(
@@ -506,206 +511,210 @@ class _ReservationPageState extends State<ReservationPage> {
 
 //支付是否成功
   _getPayPass() {
-    switch (widget.status) {
-      case OrderSaleStatus.cancel:
-        return const SizedBox.shrink();
-      case OrderSaleStatus.unSign:
-        return Container(
-          width: double.infinity,
-          color: kForeGroundColor,
-          padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
-          margin: EdgeInsets.only(top: 16.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                child: Text(
-                  '等待支付定金',
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-              ),
-              24.wb,
-              Text.rich(TextSpan(children: [
-                TextSpan(
-                    text: '¥',
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize28,
-                        color: const Color(0xFFFF3B02))),
-                TextSpan(
-                    text: _consignmentInfo.contract.deposit,
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize32,
-                        color: const Color(0xFFFF3B02)))
-              ]))
-            ],
-          ),
-        );
 
-      case OrderSaleStatus.sign:
-        return const SizedBox.shrink();
-      case OrderSaleStatus.deposit:
-        return const SizedBox.shrink();
-      case OrderSaleStatus.testReport:
-        return Container(
+      switch (widget.status) {
+        case OrderSaleStatus.cancel:
+          return const SizedBox.shrink();
+        case OrderSaleStatus.unSign:
+          return Container(
             width: double.infinity,
             color: kForeGroundColor,
-            padding: EdgeInsets.only(
-                top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+            padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
             margin: EdgeInsets.only(top: 16.w),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(() => DetectionDataPage(
-                      orderId: widget.orderId,
-                    ));
-              },
-              child: Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: Container(
-                    padding:
-                        EdgeInsets.only(left: 32.w, top: 16.w, bottom: 16.w),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF027AFF),
-                        borderRadius: BorderRadius.circular(8.w)),
-                    child: Text(
-                      '上传报告',
-                      style: TextStyle(
-                          color: kForeGroundColor,
-                          fontSize: BaseStyle.fontSize28),
-                    )),
-              ),
-            ));
-
-      case OrderSaleStatus.uploadTestReport:
-        return const SizedBox.shrink();
-      case OrderSaleStatus.downPaymentAudit:
-        return Container(
-          width: double.infinity,
-          color: kForeGroundColor,
-          padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
-          margin: EdgeInsets.only(top: 16.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                child: Text(
-                  '等待支付首付',
-                  style: Theme.of(context).textTheme.subtitle2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  child: Text(
+                    '等待支付定金',
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
                 ),
-              ),
-              24.wb,
-              Text.rich(TextSpan(children: [
-                TextSpan(
-                    text: '¥',
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize28,
-                        color: const Color(0xFFFF3B02))),
-                TextSpan(
-                    text: _consignmentInfo.contract.downPayment,
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize32,
-                        color: const Color(0xFFFF3B02)))
-              ]))
-            ],
-          ),
-        );
+                24.wb,
+                Text.rich(TextSpan(children: [
+                  TextSpan(
+                      text: '¥',
+                      style: TextStyle(
+                          fontSize: BaseStyle.fontSize28,
+                          color: const Color(0xFFFF3B02))),
+                  TextSpan(
+                      text: _consignmentInfo.contract.deposit,
+                      style: TextStyle(
+                          fontSize: BaseStyle.fontSize32,
+                          color: const Color(0xFFFF3B02)))
+                ]))
+              ],
+            ),
+          );
 
-      case OrderSaleStatus.dowPaymentAdopt:
-        return const SizedBox.shrink();
-      case OrderSaleStatus.transfer:
-        return Container(
+        case OrderSaleStatus.sign:
+          return const SizedBox.shrink();
+        case OrderSaleStatus.deposit:
+          return const SizedBox.shrink();
+        case OrderSaleStatus.testReport:
+          return Container(
+              width: double.infinity,
+              color: kForeGroundColor,
+              padding: EdgeInsets.only(
+                  top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+              margin: EdgeInsets.only(top: 16.w),
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(() => DetectionDataPage(
+                        orderId: widget.orderId,
+                      ));
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(left: 0.w),
+                  child: Container(
+                      padding:
+                          EdgeInsets.only(left: 32.w, top: 16.w, bottom: 16.w),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF027AFF),
+                          borderRadius: BorderRadius.circular(8.w)),
+                      child: Text(
+                        '上传报告',
+                        style: TextStyle(
+                            color: kForeGroundColor,
+                            fontSize: BaseStyle.fontSize28),
+                      )),
+                ),
+              ));
+
+        case OrderSaleStatus.uploadTestReport:
+          return const SizedBox.shrink();
+        case OrderSaleStatus.downPaymentAudit:
+          return Container(
             width: double.infinity,
             color: kForeGroundColor,
-            padding: EdgeInsets.only(
-                top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+            padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
             margin: EdgeInsets.only(top: 16.w),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(() => ChangeNameDataPage(
-                      orderId: widget.orderId,
-                    ));
-              },
-              child: Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: Container(
-                    padding:
-                        EdgeInsets.only(left: 32.w, top: 16.w, bottom: 16.w),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF027AFF),
-                        borderRadius: BorderRadius.circular(8.w)),
-                    child: Text(
-                      '上传资料',
-                      style: TextStyle(
-                          color: kForeGroundColor,
-                          fontSize: BaseStyle.fontSize28),
-                    )),
-              ),
-            ));
-      case OrderSaleStatus.transferFinal:
-        return const SizedBox.shrink();
-      case OrderSaleStatus.balancePaymentAudit:
-        return Container(
-          width: double.infinity,
-          color: kForeGroundColor,
-          padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
-          margin: EdgeInsets.only(top: 16.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                child: Text(
-                  '等待支付尾款',
-                  style: Theme.of(context).textTheme.subtitle2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  child: Text(
+                    '等待支付首付',
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
                 ),
-              ),
-              24.wb,
-              Text.rich(TextSpan(children: [
-                TextSpan(
-                    text: '¥',
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize28,
-                        color: const Color(0xFFFF3B02))),
-                TextSpan(
-                    text: _consignmentInfo.contract.balancePayment,
-                    style: TextStyle(
-                        fontSize: BaseStyle.fontSize32,
-                        color: const Color(0xFFFF3B02)))
-              ]))
-            ],
-          ),
-        );
-      case OrderSaleStatus.balancePaymentAdopt:
-        return Container(
+                24.wb,
+                Text.rich(TextSpan(children: [
+                  TextSpan(
+                      text: '¥',
+                      style: TextStyle(
+                          fontSize: BaseStyle.fontSize28,
+                          color: const Color(0xFFFF3B02))),
+                  TextSpan(
+                      text: _consignmentInfo.contract.downPayment,
+                      style: TextStyle(
+                          fontSize: BaseStyle.fontSize32,
+                          color: const Color(0xFFFF3B02)))
+                ]))
+              ],
+            ),
+          );
+
+        case OrderSaleStatus.dowPaymentAdopt:
+          return const SizedBox.shrink();
+        case OrderSaleStatus.transfer:
+          return Container(
+              width: double.infinity,
+              color: kForeGroundColor,
+              padding: EdgeInsets.only(
+                  top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+              margin: EdgeInsets.only(top: 16.w),
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(() => ChangeNameDataPage(
+                    isCustomer: _consignmentInfo.customerChannel,
+                        orderId: widget.orderId,
+                      ));
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(left: 0.w),
+                  child: Container(
+                      padding:
+                          EdgeInsets.only(left: 32.w, top: 16.w, bottom: 16.w),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF027AFF),
+                          borderRadius: BorderRadius.circular(8.w)),
+                      child: Text(
+                        '上传资料',
+                        style: TextStyle(
+                            color: kForeGroundColor,
+                            fontSize: BaseStyle.fontSize28),
+                      )),
+                ),
+              ));
+        case OrderSaleStatus.transferFinal:
+          return const SizedBox.shrink();
+        case OrderSaleStatus.balancePaymentAudit:
+          return Container(
             width: double.infinity,
             color: kForeGroundColor,
-            padding: EdgeInsets.only(
-                top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+            padding: EdgeInsets.only(right: 32.w, top: 36.w, bottom: 36.w),
             margin: EdgeInsets.only(top: 16.w),
-            child: GestureDetector(
-              onTap: () async {
-                var re = await OrderFunc.getFinal(widget.orderId);
-                if (re) {
-                  Get.back();
-                }
-              },
-              child: Padding(
-                padding: EdgeInsets.only(left: 0.w),
-                child: Container(
-                    padding:
-                        EdgeInsets.only(left: 32.w, top: 16.w, bottom: 16.w),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF027AFF),
-                        borderRadius: BorderRadius.circular(8.w)),
-                    child: Text(
-                      '成交订单',
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  child: Text(
+                    '等待支付尾款',
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                ),
+                24.wb,
+                Text.rich(TextSpan(children: [
+                  TextSpan(
+                      text: '¥',
                       style: TextStyle(
-                          color: kForeGroundColor,
-                          fontSize: BaseStyle.fontSize28),
-                    )),
-              ),
-            ));
-      case OrderSaleStatus.orderFinal:
-        return const SizedBox.shrink();
-    }
+                          fontSize: BaseStyle.fontSize28,
+                          color: const Color(0xFFFF3B02))),
+                  TextSpan(
+                      text: _consignmentInfo.contract.balancePayment,
+                      style: TextStyle(
+                          fontSize: BaseStyle.fontSize32,
+                          color: const Color(0xFFFF3B02)))
+                ]))
+              ],
+            ),
+          );
+        case OrderSaleStatus.balancePaymentAdopt:
+          return Container(
+              width: double.infinity,
+              color: kForeGroundColor,
+              padding: EdgeInsets.only(
+                  top: 36.w, left: 526.w, bottom: 10.w, right: 32.w),
+              margin: EdgeInsets.only(top: 16.w),
+              child: GestureDetector(
+                onTap: () async {
+
+                  var re = await OrderFunc.getFinal(widget.orderId);
+                  if (re) {
+                    Get.back();
+                  }
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(left: 0.w),
+                  child: Container(
+                      padding:
+                          EdgeInsets.only(left: 32.w, top: 16.w, bottom: 16.w),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF027AFF),
+                          borderRadius: BorderRadius.circular(8.w)),
+                      child: Text(
+                        '成交订单',
+                        style: TextStyle(
+                            color: kForeGroundColor,
+                            fontSize: BaseStyle.fontSize28),
+                      )),
+                ),
+              ));
+        case OrderSaleStatus.orderFinal:
+          return const SizedBox.shrink();
+      }
+
   }
 
 //body框架

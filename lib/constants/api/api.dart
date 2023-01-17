@@ -1,6 +1,7 @@
 import '../environment/environment.dart';
 
 part 'car_api.dart';
+
 part 'user_api.dart';
 
 /// * user  用户接口
@@ -82,12 +83,12 @@ class API {
 
   /// 网页
   static _Web web = _Web();
-
 }
 
-class _Web{
+class _Web {
   ///vip服务协议
-  String get vipAgreement => 'https://static.yunyunwenche.com/html/vipagreement.html';
+  String get vipAgreement =>
+      'https://static.yunyunwenche.com/html/vipagreement.html';
 }
 
 class _Task {
@@ -138,28 +139,43 @@ class _Contract {
   String get purchaseList => '/contract/purchase/lists';
 
   ///车商出售合同列表
-  String get dealerSale =>'/contract/sale/dealer/lists';
+  String get dealerSale => '/contract/sale/dealer/lists';
 
   ///车商收购合同列表
-  String get carDealerAcquisition   =>'/contract/purchase/dealer/lists';
+  String get carDealerAcquisition => '/contract/purchase/dealer/lists';
 
   ///出售合同详情
- String get saleInfo =>'/contract/sale/info';
+  String get saleInfo => '/contract/sale/info';
 
- ///收购合同详情
- String get purchaseInfo =>'/contract/purchase/info';
+  ///收购合同详情
+  String get purchaseInfo => '/contract/purchase/info';
 
- ///车商出售合同驳回
- String get saleReject =>'/contract/sale/reject';
+  ///车商出售合同驳回
+  String get saleReject => '/contract/sale/reject';
 
- ///车商出售合同同意
- String get saleAdopt=>'/contract/sale/adopt';
+  ///车商出售合同同意
+  String get saleAdopt => '/contract/sale/adopt';
 
- ///车商收购驳回
-String get purchaseReject =>'/contract/purchase/reject';
+  ///车商收购驳回
+  String get purchaseReject => '/contract/purchase/reject';
 
- ///车商收购同意
-String get purchaseAdopt=>'/contract/purchase/adopt';
+  ///车商收购同意
+  String get purchaseAdopt => '/contract/purchase/adopt';
+
+  ///寄卖合同取消
+  String get consignmentCancel => '/contract/consignment/cancel';
+
+  ///出售合同取消
+  String get saleCancel => '/contract/sale/cancel';
+
+  ///收购合同取消
+  String get purchaseCancel => '/contract/purchase/cancel';
+
+  ///获取最新合同文件
+  String get essFile => '/contract/ess/file';
+
+  ///获取合同签署地址
+  String get essSingUrl => '/contract/ess/signUrl';
 }
 
 class _File {
@@ -218,6 +234,12 @@ class _Order {
   ///过户
   get scaleTransfer => '/order/sale/transfer';
 
+  ///线下客户订单过户
+  get offlineTransfer =>'/order/sale/offline/transfer';
+
+  ///线下客户订单上传尾款支付
+  get offlinePayment=>'/order/sale/offline/payment';
+
   ///完结订单
   get saleFinal => '/order/sale/final';
 
@@ -245,10 +267,8 @@ class _Order {
   ///发布车辆编辑
   get consignmentPublishEdit => '/order/consignment/publish/edit';
 
-
   ///入驻商下寄卖订单
   get businessLists => '/order/consignment/business/lists';
-
 
   ///售车订单详情
   get saleInfo => '/order/sale/info';
@@ -263,13 +283,31 @@ class _Order {
   String get callCarInfo => '/order/call/car/info';
 
   ///发布车辆列表(个人)
- String get  pubLists=> '/car/publish/lists';
+  String get pubLists => '/car/publish/lists';
 
   ///发布车辆列表(车商)
- String get dealerPubLists=>'/car/publish/dealer/lists';
+  String get dealerPubLists => '/car/publish/dealer/lists';
 
- ///发布车辆详情
- String get publishInfo=>'/car/publish/info';
+  ///发布车辆详情
+  String get publishInfo => '/car/publish/info';
+
+  ///申请编辑车辆
+  String get addEdit => '/car/edit/add';
+
+  ///编辑记录
+  String get editList => '/car/edit/lists';
+
+  ///车商审批记录
+  String get editDealerList => '/car/edit/dealer/lists';
+
+  ///编辑详情
+  String get editInfo => '/car/edit/info';
+
+  ///车商编辑审核通过
+  String get editAdopt => '/car/edit/adopt';
+
+  ///车商编辑审核拒绝
+  String get editReject => '/car/edit/reject';
 }
 
 class _Poster {
@@ -294,7 +332,7 @@ class _Region {
 ///门店管理
 class _StoreManagement {
   ///全部门店
-  String get  storeAll => '/business/all';
+  String get storeAll => '/business/all';
 
   ///组织架构
   String get structureAll => '/business/store/all';
@@ -372,9 +410,8 @@ class _Split {
   ///更新常用联系人状态
   String get updateContact => '/split/contact/update';
 
-  // ///利润统计
-  // String get getProfit => 'split/account/profit';
-
+// ///利润统计
+// String get getProfit => 'split/account/profit';
 
 }
 

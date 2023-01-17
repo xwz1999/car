@@ -3,10 +3,13 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart'
 import 'package:cloud_car/utils/headers.dart';
 import 'package:flutter/material.dart';
 
+
+import '../../../../model/car/new_car_info.dart';
 import '../../../../utils/user_tool.dart';
 
 class EditCarSourceItem extends StatefulWidget {
-  const EditCarSourceItem({super.key});
+ final NewCarInfo carListModel;
+  const EditCarSourceItem({super.key,required this.carListModel});
 
   @override
   _EditCarSourceItemState createState() => _EditCarSourceItemState();

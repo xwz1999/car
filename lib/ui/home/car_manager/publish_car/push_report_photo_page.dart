@@ -14,6 +14,8 @@ import 'package:cloud_car/widget/picker/cloud_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../model/car/new_car_info.dart';
+
 class PushReportPhotoPage extends StatefulWidget {
   final NewPublishCarInfo newPublishCarInfo;
   final PushPhotoModel pushPhotoModel;
@@ -65,7 +67,7 @@ class _PushReportPhotoPageState extends State<PushReportPhotoPage>
               _reportPhotos[i].url );
           _reportPhotos[i].url = url;
         }
-        widget.reportPhotoModel.paints!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name)  );
+        widget.reportPhotoModel.paints!.add(CarPhotos(photo: _reportPhotos[i].url,text: _reportPhotos[i].name!)  );
       }
   }
 

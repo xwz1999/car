@@ -97,11 +97,31 @@ enum OrderSaleSearchStatus {
 
   final int typeNum;
   final String typeStr;
-
   static OrderSaleSearchStatus getValue(int value) =>
       OrderSaleSearchStatus.values
           .firstWhere((element) => element.typeNum == value);
-
+  int get progressNum2 {
+    switch(typeNum){
+      case 1:
+        return 0;
+      case 2:
+        return 1;
+      case 3:
+        return 3;
+      case 4:
+        return 4;
+      case 5:
+        return 5;
+      case 6:
+        return 6;
+      case 7:
+        return 7;
+      case 8:
+        return 4;
+      default:
+        return -1;
+    }
+  }
   const OrderSaleSearchStatus(this.typeNum, this.typeStr);
 }
 

@@ -136,7 +136,7 @@ class _ValidationPageState extends State<ValidationPage> {
                                 onTap: () async {
                                   var cancel = CloudToast.loading;
                                   var res =
-                                      await apiClient.request(API.user.logOff);
+                                      await apiClient.request(API.user.logOff,data: {'code':_smsCodeController.text});
                                   if (res.code == 0) {
                                     UserTool.userProvider.cleanToken();
                                     Get.offAll(() => const LoginPage());

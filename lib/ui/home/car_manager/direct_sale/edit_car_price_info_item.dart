@@ -4,8 +4,13 @@ import 'package:cloud_car/widget/button/colud_check_radio.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../model/car/new_car_info.dart';
+
+
+
 class EditCarPriceInfoItem extends StatefulWidget {
-  const EditCarPriceInfoItem({super.key});
+  final NewCarInfo carListModel;
+  const EditCarPriceInfoItem({super.key,required this.carListModel});
 
   @override
   _EditCarPriceInfoItemState createState() => _EditCarPriceInfoItemState();

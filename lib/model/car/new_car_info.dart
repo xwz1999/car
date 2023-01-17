@@ -32,11 +32,15 @@ class NewCarInfo extends Equatable {
 
 @JsonSerializable()
 class CarNewInfo extends Equatable {
-  final int id;
-  final String modelName;
-
+  int id;
+  String modelName;
   ///
   final int modelId;
+
+  final int status;
+  final String statusName;
+  final int theUpper;
+  final String theUpperName;
   final String vin;
   final String carSn;
   final int collect;
@@ -45,25 +49,31 @@ class CarNewInfo extends Equatable {
   final String price;
   final String lastPrice;
   final String downPayment;
-  final String source;
-  final int sourceId;
-  final String storeName;
+  final int source;
+  final String  sourceName;
+  final int dealerId;
+  final String dealerName;
+  // final String storeName;
+  final String dealerSn;
   final String type;
   final String engineNo;
   final int licensingDate;
-  final String color;
-  final String interiorColor;
-  final String temporaryLicensePlate;
-  final String parkingNo;
+  String color;
+  String interiorColor;
+  String temporaryLicensePlate;
+  String parkingNo;
+  int stockStatus;
+  String stockStatusName;
 
   // final int parkingNo;
-  final String useCharacter;
-  final String mileage;
+  String useCharacter;
+  String mileage;
 
   // final String newCarGuidePrice;
   final String purchaseTax;
   final String installationCost;
-  final String location;
+  int locationCityId;
+  String location;
   final String attribution;
   final String condition;
   final List<ImagePhoto> carPhotos;
@@ -88,56 +98,69 @@ class CarNewInfo extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        modelName,
+    id,
+    modelName,
+    ///
+ status,
+   statusName,
+ theUpper,
+ theUpperName,
+    modelId,
+    vin,
+    carSn,
+    collect,
+    browse,
+    transfer,
+    price,
+    lastPrice,
+    downPayment,
+    source,
+    sourceName,
+    dealerId,
+    dealerName,
+    locationCityId,
+    dealerSn,
+    type,
+    engineNo,
+    licensingDate,
+    color,
+    interiorColor,
+    temporaryLicensePlate,
+    parkingNo,
+    stockStatus,
+    stockStatusName,
+    useCharacter,
+    mileage,
+    // newCarGuidePrice,
+    purchaseTax,
+    installationCost,
+    location,
+    attribution,
+    condition,
+    carPhotos,
+    interiorPhotos,
+    defectPhotos,
+    // reportPhotos,
+    // repairPhotos,
+    brokerInfo,
+    modelInfo,
+    priceInfo,
+    certificateInfo,
+    contractMasterInfo,
+  ];
 
-        ///
-        modelId,
-        vin,
-        carSn,
-        collect,
-        browse,
-        transfer,
-        price,
-        lastPrice,
-        downPayment,
-        source,
-        sourceId,
-        type,
-        engineNo,
-        licensingDate,
-        color,
-        interiorColor,
-        temporaryLicensePlate,
-        parkingNo,
-        useCharacter,
-        mileage,
-        // newCarGuidePrice,
-        purchaseTax,
-        installationCost,
-        location,
-        attribution,
-        condition,
-        carPhotos,
-        interiorPhotos,
-        defectPhotos,
-        // reportPhotos,
-        // repairPhotos,
-        brokerInfo,
-        modelInfo,
-        priceInfo,
-        certificateInfo,
-        contractMasterInfo,
-      ];
-
-  const CarNewInfo({
+  CarNewInfo( {
     required this.dataPhotos,
     required this.id,
-
     ///
+    required this.status,
+    required this.statusName,
+    required this.theUpper,
+    required this.theUpperName,
     required this.modelId,
     required this.modelName,
-    required this.storeName,
+    // required this.storeName,
+    required this.dealerSn,
     required this.vin,
     required this.carSn,
     required this.collect,
@@ -147,13 +170,18 @@ class CarNewInfo extends Equatable {
     required this.lastPrice,
     required this.downPayment,
     required this.source,
-    required this.sourceId,
+    required this.sourceName,
+    required this.dealerId,
+    required this.dealerName,
     required this.type,
     required this.engineNo,
+    required this.locationCityId,
     required this.licensingDate,
     required this.color,
     required this.interiorColor,
     required this.temporaryLicensePlate,
+    required this.stockStatus,
+    required this.stockStatusName,
     required this.parkingNo,
     required this.useCharacter,
     required this.mileage,
@@ -186,9 +214,9 @@ class ImagePhoto extends Equatable {
 
   @override
   List<Object?> get props => [
-        photo,
-        text,
-      ];
+    photo,
+    text,
+  ];
 
   Map<String, dynamic> toJson() => _$ImagePhotoToJson(this);
 
@@ -219,11 +247,11 @@ class BrokerInfo extends Equatable {
 
   @override
   List<Object?> get props => [
-        brokerId,
-        brokerNickname,
-        brokerHeadImg,
-        brokerPhone,
-      ];
+    brokerId,
+    brokerNickname,
+    brokerHeadImg,
+    brokerPhone,
+  ];
 }
 
 @JsonSerializable()
@@ -287,31 +315,31 @@ class ModelInfo extends Equatable {
 
   @override
   List<Object?> get props => [
-        year,
-        price,
-        liter,
-        dischargeStandard,
-        fuelTypeName,
-        enginePower,
-        enginePowerKw,
-        isGreen,
-        modelCode,
-        driveName,
-        driveType,
-        modelStatus,
-        gearType,
-        marketDate,
-        minRegYear,
-        maxRegYear,
-        stopMakeYear,
-        intake,
-        seatNumber,
-        bodyType,
-        doorNumber,
-        carStruct,
-        isParallel,
-        priceAllowance,
-      ];
+    year,
+    price,
+    liter,
+    dischargeStandard,
+    fuelTypeName,
+    enginePower,
+    enginePowerKw,
+    isGreen,
+    modelCode,
+    driveName,
+    driveType,
+    modelStatus,
+    gearType,
+    marketDate,
+    minRegYear,
+    maxRegYear,
+    stopMakeYear,
+    intake,
+    seatNumber,
+    bodyType,
+    doorNumber,
+    carStruct,
+    isParallel,
+    priceAllowance,
+  ];
 }
 
 @JsonSerializable()
@@ -331,9 +359,9 @@ class PriceInfo extends Equatable {
 
   @override
   List<Object?> get props => [
-        interiorPrice,
-        exteriorPrice,
-      ];
+    interiorPrice,
+    exteriorPrice,
+  ];
 }
 
 @JsonSerializable()
@@ -363,14 +391,14 @@ class CertificateInfo extends Equatable {
 
   @override
   List<Object?> get props => [
-        transfer,
-        keyCount,
-        compulsoryInsurance,
-        compulsoryInsuranceDate,
-        commercialInsurance,
-        commercialInsuranceDate,
-        commercialInsurancePrice,
-      ];
+    transfer,
+    keyCount,
+    compulsoryInsurance,
+    compulsoryInsuranceDate,
+    commercialInsurance,
+    commercialInsuranceDate,
+    commercialInsurancePrice,
+  ];
 }
 
 @JsonSerializable()
@@ -396,10 +424,10 @@ class ContractMasterInfo extends Equatable {
 
   @override
   List<Object?> get props => [
-        name,
-        idCard,
-        phone,
-        bankCard,
-        bank,
-      ];
+    name,
+    idCard,
+    phone,
+    bankCard,
+    bank,
+  ];
 }

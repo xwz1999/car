@@ -382,7 +382,7 @@ class _SalesOrderWidgetState extends State<SalesOrderWidget> {
                                       break;
                                     case 30:
                                       Get.to(() => ChangeNameDataPage(
-                                            orderId: model.id,
+                                            orderId: model.id, isCustomer:model.customerChannel ,
                                           ));
                                       break;
                                     case 41:

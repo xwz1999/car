@@ -13,7 +13,6 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../constants/enums.dart';
 import '../../../../model/car/car_sale_contract_model.dart';
 
 class SellCarOrderPage extends StatefulWidget {
@@ -63,8 +62,18 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
         phone: '',
       ),
       payType: 0,
-      priceInfo: PriceInfo(downPayment: '', dealPrice: '', deposit: ''),
-      carId: 0, customerChannel: 0);
+      priceInfo: PriceInfo(
+          downPayment: '',
+          dealPrice: '',
+          deposit: '',
+          deliverDate: '',
+          deliverAddress: '',
+          transferFee: '',
+          transferFeeHolder: 0,
+          agentFee: '',
+          agentFeeHolder: 0),
+      carId: 0,
+      customerChannel: 0);
 
   @override
   void initState() {
@@ -350,11 +359,11 @@ class _SellCarOrderPageState extends State<SellCarOrderPage> {
                     carSaleContract.payType == 0 ||
                     carSaleContract.transferType == 0) {
                   CloudToast.show('请完善车辆信息');
-                }else{
+                } else {
                   Get.to(() => SellCarOrderSecondPage(
-                    carSaleContract: carSaleContract,
-                    contractModel: _contractModel,
-                  ));
+                        carSaleContract: carSaleContract,
+                        contractModel: _contractModel,
+                      ));
                 }
               },
               child: Container(

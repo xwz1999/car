@@ -11,6 +11,7 @@ import '../../constants/api/api.dart';
 import '../../constants/enums.dart';
 import '../../model/car/car_list_model.dart';
 import '../../model/car/economic_release_model.dart';
+import '../../model/edit_list_model.dart';
 import '../../widget/choose_widget.dart';
 import '../../widget/cloud_image_network_widget.dart';
 
@@ -19,9 +20,9 @@ import '../home/func/car_func.dart';
 
 class ExaminationListPage extends StatefulWidget {
   final EasyRefreshController refreshController;
-  final int index;
+  final int index;//是否是车商
   final int type;
-
+  final int isUpdate;//1  发布 2 修改
   // final List<EconomicReleaseModel> releaseList;
 
   // final int id;
@@ -29,6 +30,7 @@ class ExaminationListPage extends StatefulWidget {
     super.key,
     required this.index,
     this.type = 0,
+    required this.isUpdate,
     required this.refreshController,
     // required this.releaseList,
     //required this.id
@@ -43,6 +45,7 @@ class _ExaminationListPageState extends State<ExaminationListPage>
   // final ScreenshotController _screenshotController = ScreenshotController();
 
   List<EconomicReleaseModel> releaseList = [];
+  List<EditListModel> releaseList2=[];
   late List<CarListModel> carInfoModel;
   late Audit _releaseCarStatus;
 int index=0;
@@ -95,22 +98,37 @@ int index=0;
                       }
                       index=widget.index;
                       _page = 1;
-                      // print(widget.index);
-                      if (widget.index == 0) {
-                        releaseList = await CarFunc.getPubLists(
-                            page: _page, status: _releaseCarStatus.typeNum);
-                        // var list = await CarFunc.getPubLists(page: _page);
-                        // widget.releaseList.clear();
-                        // widget.releaseList.addAll(list);
-                      } else if (widget.index == 2) {
-                        releaseList = await CarFunc.getEconomicPubLists(
-                            page: _page, status: _releaseCarStatus.typeNum);
-                        // var list = await CarFunc.getEconomicPubLists(page: _page);
-                        // widget.releaseList.clear();
-                        // widget.releaseList.addAll(list);
-                      } else {
-                        releaseList = await CarFunc.getPubLists(page: _page);
+                      print(widget.isUpdate);
+                      if(widget.isUpdate==1){
+                        if (widget.index == 0) {
+                          releaseList = await CarFunc.getPubLists(
+                              page: _page, status: _releaseCarStatus.typeNum);
+                          // var list = await CarFunc.getPubLists(page: _page);
+                          // widget.releaseList.clear();
+                          // widget.releaseList.addAll(list);
+                        } else {
+                          releaseList = await CarFunc.getEconomicPubLists(
+                              page: _page, status: _releaseCarStatus.typeNum);
+                          // var list = await CarFunc.getEconomicPubLists(page: _page);
+                          // widget.releaseList.clear();
+                          // widget.releaseList.addAll(list);
+                        }
+                      }else{
+                        if (widget.index == 0) {
+                          releaseList2 = await CarFunc.getEditList(
+                              page: _page, status: _releaseCarStatus.typeNum);
+                          // var list = await CarFunc.getPubLists(page: _page);
+                          // widget.releaseList.clear();
+                          // widget.releaseList.addAll(list);
+                        } else {
+                          releaseList2 = await CarFunc.getEditDealerList(
+                              page: _page, status: _releaseCarStatus.typeNum);
+                          // var list = await CarFunc.getEconomicPubLists(page: _page);
+                          // widget.releaseList.clear();
+                          // widget.releaseList.addAll(list);
+                        }
                       }
+
                       // widget.releaseList.clear();
                       // widget.releaseList=list;
                       //_onload = false;
@@ -119,25 +137,52 @@ int index=0;
                     onLoad: () async {
                       _page++;
                       BaseListModel baseList;
-                      if (UserTool.userProvider.userInfo.business.roleEM ==
-                              Role.salesTraffic ||
-                          UserTool.userProvider.userInfo.business.roleEM ==
-                              Role.carService) {
-                        baseList = await apiClient.requestList(
-                            API.order.pubLists,
-                            data: {'size': _size, 'page': _page});
-                      } else {
-                        baseList = await apiClient.requestList(
-                            API.order.dealerPubLists,
-                            data: {'size': _size, 'page': _page});
+                      if(widget.isUpdate==1){
+                        if (UserTool.userProvider.userInfo.business.roleEM ==
+                            Role.salesTraffic ||
+                            UserTool.userProvider.userInfo.business.roleEM ==
+                                Role.carService) {
+                          baseList = await apiClient.requestList(
+                              API.order.pubLists,
+                              data: {'size': _size, 'page': _page});
+                        } else {
+                          baseList = await apiClient.requestList(
+                              API.order.dealerPubLists,
+                              data: {'size': _size, 'page': _page});
+                        }
+                      }else{
+                        if (UserTool.userProvider.userInfo.business.roleEM ==
+                            Role.salesTraffic ||
+                            UserTool.userProvider.userInfo.business.roleEM ==
+                                Role.carService) {
+                          baseList = await apiClient.requestList(
+                              API.order.editList,
+                              data: {'size': _size, 'page': _page});
+                        } else {
+                          baseList = await apiClient.requestList(
+                              API.order.editDealerList,
+                              data: {'size': _size, 'page': _page});
+                        }
                       }
-                      if (baseList.nullSafetyTotal > releaseList.length) {
-                        releaseList.addAll(baseList.nullSafetyList
-                            .map((e) => EconomicReleaseModel.fromJson(e))
-                            .toList());
-                      } else {
-                        widget.refreshController.finishLoad(noMore: true);
+
+                      if(widget.isUpdate==1){
+                        if (baseList.nullSafetyTotal > releaseList.length) {
+                          releaseList.addAll(baseList.nullSafetyList
+                              .map((e) => EconomicReleaseModel.fromJson(e))
+                              .toList());
+                        } else {
+                          widget.refreshController.finishLoad(noMore: true);
+                        }
+                      }else{
+                        if (baseList.nullSafetyTotal > releaseList2.length) {
+                          releaseList2.addAll(baseList.nullSafetyList
+                              .map((e) => EditListModel.fromJson(e))
+                              .toList());
+                        } else {
+                          widget.refreshController.finishLoad(noMore: true);
+                        }
                       }
+
                       setState(() {});
                     },
                     slivers: [
@@ -153,7 +198,8 @@ int index=0;
                         SliverList(
                             delegate:
                                 SliverChildBuilderDelegate((context, index) {
-                          var model = releaseList[index];
+                          // var model = releaseList[index];
+                          // var model2=releaseList2[index];
                           return GestureDetector(
                             onTap: () async {
                               // core.download(url, options);
@@ -166,17 +212,17 @@ int index=0;
                               padding: EdgeInsets.symmetric(
                                   horizontal: 32.w, vertical: 4.w),
                               child: _getCard(
-                                  model.status,
-                                  model.mainPhoto,
-                                  model.modelName,
-                                  model.createdAt,
-                                  model.mileage,
-                                  model.id
+                                  widget.isUpdate==1?releaseList[index].status: releaseList2[index].auditStatus,
+                                  widget.isUpdate==1?releaseList[index].mainPhoto:releaseList2[index].mainPhoto,
+                                  widget.isUpdate==1?releaseList[index].modelName:releaseList2[index].modelName,
+                                  widget.isUpdate==1?releaseList[index].createdAt:releaseList2[index].createdAt,
+                                  widget.isUpdate==1?releaseList[index].mileage:releaseList2[index].mileage,
+                                  widget.isUpdate==1?releaseList[index].id: releaseList2[index].id
                                   //model.
-                                  ),
+                                  )
                             ),
                           );
-                        }, childCount: releaseList.length))
+                        }, childCount:widget.isUpdate==1? releaseList.length:releaseList2.length))
                       ]))
       ],
     );
@@ -193,7 +239,7 @@ int index=0;
               carInfoModel = await CarFunc.getCarList(1, 10);
               Get.to(() => PublishInfoPage(
                     index: widget.index,
-                    carId: carId,
+                    carId: carId, isUpdate: widget.isUpdate,
                   ));
               // Get.to(() => DealerConsignmentSigned(
               //       status: model.statusEnum,

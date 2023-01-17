@@ -1,3 +1,5 @@
+import '../../../../model/car/new_car_info.dart';
+
 class PushPhotoModel {
   List<CarPhotos>? carPhotos;
   List<CarPhotos>? interiorPhotos;

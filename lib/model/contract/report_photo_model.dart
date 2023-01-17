@@ -1,5 +1,7 @@
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 
+import '../car/new_car_info.dart';
+
 class ReportPhotoModel {
   List<CarPhotos>? paints;
   ReportPhotoModel({this.paints});

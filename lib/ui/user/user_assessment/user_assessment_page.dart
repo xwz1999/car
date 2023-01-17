@@ -5,18 +5,23 @@ import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:cloud_car/widget/button/cloud_back_button.dart';
 import 'package:cloud_car/widget/putup_widget.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../splash/agreement_page.dart';
+import '../../splash/privacy_page.dart';
 import 'assessment_pay_page.dart';
 
 class UserAssessmentPage extends StatefulWidget {
   final int assessmentState;
   final bool carConsignment; //寄卖合同充值返回
   ///1:评估 2：合同
-  const UserAssessmentPage({super.key, required this.assessmentState, this.carConsignment=false});
+  const UserAssessmentPage(
+      {super.key, required this.assessmentState, this.carConsignment = false});
 
   @override
   _UserAssessmentPageState createState() => _UserAssessmentPageState();
@@ -40,8 +45,10 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
   ];
   final TextEditingController _contractPrice = TextEditingController();
   final TextEditingController _assessmentPrice = TextEditingController();
-  late String  _contract="";
-  late String  _assessment="";
+  late String _contract = "";
+  late String _assessment = "";
+  bool _chooseAgreement = false;
+
   @override
   void initState() {
     super.initState();
@@ -49,7 +56,6 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
 
   @override
   void dispose() {
-
     _assessmentPrice.dispose();
     _contractPrice.dispose();
     super.dispose();
@@ -97,6 +103,8 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
             child: _getNum(),
           ),
           _getPrice(),
+          200.hb,
+
         ],
       ),
       bottomNavigationBar: _confirmBtn(),
@@ -186,6 +194,7 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
             24.hb,
             Container(
               width: double.infinity,
+              height: 300.w,
               decoration: const BoxDecoration(),
               clipBehavior: Clip.antiAlias,
               child: ListView(
@@ -257,14 +266,21 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                                                 child: GestureDetector(
                                                   onTap: () async {
                                                     ///_chooseItem?.pice=widget.assessmentState==2?_contractPrice.text:_assessmentPrice.text;
-                                                    if(widget.assessmentState==2){
-                                                      _chooseItem?.pice=_contractPrice.text;
-                                                      _chooseItem?.count=int.parse(_contract);
+                                                    if (widget
+                                                            .assessmentState ==
+                                                        2) {
+                                                      _chooseItem?.pice =
+                                                          _contractPrice.text;
+                                                      _chooseItem?.count =
+                                                          int.parse(_contract);
                                                       // CloudToast.show(_contract);
                                                       // CloudToast.show(_contractPrice.text);
-                                                    }else{
-                                                      _chooseItem?.count=int.parse(_assessment);
-                                                      _chooseItem?.pice=_assessmentPrice.text;
+                                                    } else {
+                                                      _chooseItem?.count =
+                                                          int.parse(
+                                                              _assessment);
+                                                      _chooseItem?.pice =
+                                                          _assessmentPrice.text;
                                                       // print(_assessment);
                                                       // print(_assessmentPrice.text);
                                                     }
@@ -310,37 +326,99 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                                                       //     ? _contract
                                                       //     : _assessment,
                                                       onChanged: (text) {
-                                                        if(widget.assessmentState ==2){
-                                                          if(text!=""){
-                                                            _contract=text;
-                                                            if(int.parse(text)<=10 ) {
-                                                              _contractPrice.text=(int.parse(text)*5).toString();
-                                                            }else if(10<int.parse(text) && int.parse(text)<=50){
-                                                              _contractPrice.text=(int.parse(text)*3).toString();
-                                                            }else if(50<int.parse(text) && int.parse(text)<=100){
-                                                              _contractPrice.text=(int.parse(text)*2.8).toString();
-                                                            }else{
-                                                              _contractPrice.text=(int.parse(text)*2.5).toString();
+                                                        if (widget
+                                                                .assessmentState ==
+                                                            2) {
+                                                          if (text != "") {
+                                                            _contract = text;
+                                                            if (int.parse(
+                                                                    text) <=
+                                                                10) {
+                                                              _contractPrice
+                                                                      .text =
+                                                                  (int.parse(text) *
+                                                                          5)
+                                                                      .toString();
+                                                            } else if (10 <
+                                                                    int.parse(
+                                                                        text) &&
+                                                                int.parse(
+                                                                        text) <=
+                                                                    50) {
+                                                              _contractPrice
+                                                                      .text =
+                                                                  (int.parse(text) *
+                                                                          3)
+                                                                      .toString();
+                                                            } else if (50 <
+                                                                    int.parse(
+                                                                        text) &&
+                                                                int.parse(
+                                                                        text) <=
+                                                                    100) {
+                                                              _contractPrice
+                                                                      .text =
+                                                                  (int.parse(text) *
+                                                                          2.8)
+                                                                      .toString();
+                                                            } else {
+                                                              _contractPrice
+                                                                      .text =
+                                                                  (int.parse(text) *
+                                                                          2.5)
+                                                                      .toString();
                                                             }
-                                                          }else{
-                                                            _contractPrice.text="";
+                                                          } else {
+                                                            _contractPrice
+                                                                .text = "";
                                                           }
-                                                        }else{
-                                                          if(text!=""){
-                                                            _assessment=text;
-                                                            if(1<=int.parse(text)  && int.parse(text)<50) {
-                                                              _assessmentPrice.text=(int.parse(text)*3).toString();
-                                                            }else if(50<=int.parse(text) && int.parse(text)<100){
-                                                              _assessmentPrice.text=(int.parse(text)*2.5).toString();
-                                                            }else if(100<=int.parse(text) && int.parse(text)<200){
-                                                              _assessmentPrice.text=(int.parse(text)*2).toString();
-                                                            }else{
-                                                              _assessmentPrice.text=(int.parse(text)*1.5).toString();
+                                                        } else {
+                                                          if (text != "") {
+                                                            _assessment = text;
+                                                            if (1 <=
+                                                                    int.parse(
+                                                                        text) &&
+                                                                int.parse(
+                                                                        text) <
+                                                                    50) {
+                                                              _assessmentPrice
+                                                                      .text =
+                                                                  (int.parse(text) *
+                                                                          3)
+                                                                      .toString();
+                                                            } else if (50 <=
+                                                                    int.parse(
+                                                                        text) &&
+                                                                int.parse(
+                                                                        text) <
+                                                                    100) {
+                                                              _assessmentPrice
+                                                                      .text =
+                                                                  (int.parse(text) *
+                                                                          2.5)
+                                                                      .toString();
+                                                            } else if (100 <=
+                                                                    int.parse(
+                                                                        text) &&
+                                                                int.parse(
+                                                                        text) <
+                                                                    200) {
+                                                              _assessmentPrice
+                                                                      .text =
+                                                                  (int.parse(text) *
+                                                                          2)
+                                                                      .toString();
+                                                            } else {
+                                                              _assessmentPrice
+                                                                      .text =
+                                                                  (int.parse(text) *
+                                                                          1.5)
+                                                                      .toString();
                                                             }
-                                                          }else{
-                                                            _assessmentPrice.text="";
+                                                          } else {
+                                                            _assessmentPrice
+                                                                .text = "";
                                                           }
-
                                                         }
                                                       },
                                                       decoration:
@@ -490,6 +568,58 @@ class _UserAssessmentPageState extends State<UserAssessmentPage> {
                 ],
               ),
             ),
+            630.hb,
+            GestureDetector(
+              onTap: () {
+                _chooseAgreement = !_chooseAgreement;
+
+                setState(() {});
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: 50.w,
+                      height: 50.w,
+                      padding: EdgeInsets.only(top: 6.w, right: 5.w),
+                      child: !_chooseAgreement
+                          ? const Icon(CupertinoIcons.circle,
+                          size: 18, color: Color(0xFFdddddd))
+                          : const Icon(CupertinoIcons.checkmark_circle,
+                          size: 18, color: Colors.red)),
+                  RichText(
+                      text: TextSpan(
+                          text: "我已阅读并同意",
+                          style: TextStyle(
+                              color: BaseStyle.colorcccccc, fontSize: 12 * 2.sp),
+                          children: [
+                            TextSpan(
+                                text: '《用户服务协议》',
+                                style: TextStyle(
+                                    color: kPrimaryColor, fontSize: 12 * 2.sp),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Get.to(() => const AgreementPage());
+                                  }),
+                            TextSpan(
+                              text: "和",
+                              style: TextStyle(
+                                  color: BaseStyle.colorcccccc, fontSize: 12 * 2.sp),
+                            ),
+                            TextSpan(
+                                text: '《隐私协议》',
+                                style: TextStyle(
+                                    color: kPrimaryColor, fontSize: 12 * 2.sp),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Get.to(() => const PrivacyPage());
+                                  }),
+                          ])),
+                ],
+              ),
+            ),
+
           ],
         ));
   }

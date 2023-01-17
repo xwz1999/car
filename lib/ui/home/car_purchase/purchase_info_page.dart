@@ -63,11 +63,6 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
       TextEditingController();
   final TextEditingController balanceAmountBackupController =
       TextEditingController();
-
-  // final TextEditingController deliveryPlaceController = TextEditingController();
-  // final TextEditingController transferTaxController = TextEditingController();
-  // final TextEditingController handlingFeeController = TextEditingController();
-  // final TextEditingController serviceChargeController = TextEditingController();
   final TextEditingController remarkController = TextEditingController();
 
   final TextEditingController downPaymentNumController =
@@ -163,6 +158,8 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
   final List<String> _models1 = ['个人', '公司'];
   final List<int> _selectIndex3 = [];
   final List<String> _models2 = ['公司', '门店'];
+  final List<int> _selectIndex4 = [];
+  final List<String> _models3 = ['甲方', '乙方'];
   List<ChooseItem> formalitiesList = [
     ChooseItem(name: '行驶证'),
     ChooseItem(name: '登记证书'),
@@ -199,59 +196,57 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
 
   _reg() async {
     PurchaseInfoModel res = await HiveStore.carBox?.get('acquisitionSecond');
-    if (res != null) {
-      if (res.ownerName != null) {
-        ownerNameController.text = res.ownerName!;
-      }
-      if (res.ownerId != null) {
-        ownerIdController.text = res.ownerId!;
-      }
-      if (res.phoneNum != null) {
-        phoneNumController.text = res.phoneNum!;
-      }
-      if (res.bankNum != null) {
-        bankNumController.text = res.bankNum!;
-      }
-      if (res.bank != null) {
-        bankController.text = res.bank!;
-      }
-      if (res.transactionAmount != null) {
-        transactionAmountController.text = res.transactionAmount!;
-      }
-      if (res.downPaymentAmount != null) {
-        depositAmountController.text = res.downPaymentAmount!;
-      }
-      if (res.downPaymentNum != null) {
-        downPaymentNumController.text = res.downPaymentNum!;
-      }
-      if (res.balanceAmountBackup != null) {
-        balanceAmountBackupController.text = res.balanceAmountBackup!;
-      }
-      if (res.balanceAmountBackupNum != null) {
-        balanceAmountBackupNumController.text = res.balanceAmountBackupNum!;
-      }
-      if (res.kind != null) {
-        state = res.kind! - 1;
-        _selectIndex2.clear();
-        _selectIndex2.add(state);
-      }
-      if (res.legalPerson != null) {
-        legalPersonController.text = res.legalPerson!;
-      }
-      if(res.deliveryDate!=null){
-        widget.purchaseInfo.deliveryDate=res.deliveryDate;
-      }
-      if(res.remark!=null){
-        widget.purchaseInfo.remark=res.remark!;
-        remarkController.text=res.remark!;
-      }
-      if(res.channel!=null){
-        widget.purchaseCarInfo.channel=res.channel!;
-        _selectIndex3.clear();
-        _selectIndex3.add(res.channel!-1);
-        designationController.text =
-            UserTool.userProvider.userInfo.business.storeName;
-      }
+    if (res.ownerName != null) {
+      ownerNameController.text = res.ownerName!;
+    }
+    if (res.ownerId != null) {
+      ownerIdController.text = res.ownerId!;
+    }
+    if (res.phoneNum != null) {
+      phoneNumController.text = res.phoneNum!;
+    }
+    if (res.bankNum != null) {
+      bankNumController.text = res.bankNum!;
+    }
+    if (res.bank != null) {
+      bankController.text = res.bank!;
+    }
+    if (res.transactionAmount != null) {
+      transactionAmountController.text = res.transactionAmount!;
+    }
+    if (res.downPaymentAmount != null) {
+      depositAmountController.text = res.downPaymentAmount!;
+    }
+    if (res.downPaymentNum != null) {
+      downPaymentNumController.text = res.downPaymentNum!;
+    }
+    if (res.balanceAmountBackup != null) {
+      balanceAmountBackupController.text = res.balanceAmountBackup!;
+    }
+    if (res.balanceAmountBackupNum != null) {
+      balanceAmountBackupNumController.text = res.balanceAmountBackupNum!;
+    }
+    if (res.kind != null) {
+      state = res.kind! - 1;
+      _selectIndex2.clear();
+      _selectIndex2.add(state);
+    }
+    if (res.legalPerson != null) {
+      legalPersonController.text = res.legalPerson!;
+    }
+    if(res.deliveryDate!=null){
+      widget.purchaseInfo.deliveryDate=res.deliveryDate;
+    }
+    if(res.remark!=null){
+      widget.purchaseInfo.remark=res.remark!;
+      remarkController.text=res.remark!;
+    }
+    if(res.channel!=null){
+      widget.purchaseCarInfo.channel=res.channel!;
+      _selectIndex3.clear();
+      _selectIndex3.add(res.channel!-1);
+      designationController.text =
+          UserTool.userProvider.userInfo.business.storeName;
     }
     setState(() {});
   }
@@ -280,10 +275,8 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
                   downPaymentNum:
                       downPaymentNumController.text,
                   balanceAmountBackup:
-
                           balanceAmountBackupController.text,
                   balanceAmountBackupNum:
-
                           balanceAmountBackupNumController.text,
                   deliveryDate:
                       widget.purchaseInfo.deliveryDate ?? DateTime.now(),
@@ -629,6 +622,44 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
           widget.purchaseInfo.deliveryDateStr,
           '请选择',
         ),
+        Padding(
+          padding: EdgeInsets.only(top: 40.w),
+          child: Container(
+            padding: EdgeInsets.only(bottom: 30.w),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom:
+                    BorderSide(color: const Color(0xFFF6F6F6), width: 2.w)),
+                color: Colors.transparent),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 380.w,
+                  child: Text(
+                    '过户费及其他费用承担方',
+                    style: TextStyle(
+                      fontSize: 32.sp,
+                      color: const Color(0xFF333333),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50.w,
+                  child: getChooseList((int choice) async {
+                    // await Dio().get(
+                    //     'contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF');
+                    //
+                    // widget.purchaseCarInfo.channel = choice + 1;
+                    // designationController.text =
+                    //     UserTool.userProvider.userInfo.business.storeName;
+                    // state = choice;
+                  }, _models3, _selectIndex4),
+                ),
+              ],
+            ),
+          ),
+        ),
         // _function(
         //   '手续证件',
         //       () async {
@@ -896,12 +927,10 @@ class _PurchaseInfoPageState extends State<PurchaseInfoPage> {
                       choices.clear();
                       choices.add(index);
                     }
-
                     setState(() {});
                     callBack(choices.first);
 
                     // _easyRefreshController.callRefresh();
-                    print(state);
                   },
                   child: Container(
                     width: 160.w,

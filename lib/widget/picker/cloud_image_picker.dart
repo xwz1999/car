@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CloudImagePicker {
+
   static Future<List<File>> pickMultiImage(
       {required String title,
       double maxWidth = 1000,

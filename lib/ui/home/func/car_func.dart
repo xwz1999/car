@@ -34,7 +34,10 @@ import 'package:flustars/flustars.dart';
 import '../../../model/acquisition_info_model.dart';
 import '../../../model/car/dealer_list_model.dart';
 import '../../../model/car/economic_release_model.dart';
+import '../../../model/car/edit_info_model.dart';
 import '../../../model/contract/consignment_model.dart';
+import '../../../model/edit_add_model.dart';
+import '../../../model/edit_list_model.dart';
 import '../../../model/price_info_model.dart';
 import '../../../model/publish_info_model.dart';
 import '../../../model/sale_info_model.dart';
@@ -377,8 +380,8 @@ class CarFunc {
       int id, num interiorPrice, String exteriorPrice) async {
     BaseModel model = await apiClient.request(API.car.adjustPrice, data: {
       'carId': id,
-      'interior_price': interiorPrice,
-      'exterior_price': exteriorPrice
+      'interiorPrice': interiorPrice,
+      'exteriorPrice': exteriorPrice
     });
     if (model.code == 0) {
       if (model.msg == '操作成功') {
@@ -650,7 +653,6 @@ class CarFunc {
       'date': newPublishCarInfo.purchaseDateStr,
       'liaison': newPublishCarInfo.purchasePerson,
     };
-
     Map<String, dynamic> base = {
       "photos": pushPhotoModel.toJson(),
       "baseInfo": baseInfo,
@@ -659,7 +661,6 @@ class CarFunc {
       "certificateInfo": certificateInfo,
       "purchaseInfo": purchaseInfo
     };
-
     BaseModel model = await apiClient.request(API.order.newPushCar, data: base);
     if (model.code == 0) {
       if (model.msg == '操作成功') {
@@ -674,6 +675,82 @@ class CarFunc {
     }
   }
 
+  ///车辆编辑
+  static Future<bool> getEditAdd(
+    EditAddModel editAddModel,
+        List<ImagePhoto> carPhotos,
+  List<ImagePhoto> interiorPhotos,
+  List<ImagePhoto> defectPhotos,
+  // List<CarPhotos>? repairPhotos;
+  List<ImagePhoto> dataPhotos,
+  ) async{
+    Map<String, dynamic> baseInfo = {
+      'color': editAddModel.baseInfo.color,
+      'interiorColor': editAddModel.baseInfo.interiorColor,
+      // 'temporaryLicensePlate': editAddModel.baseInfo.temporaryLicensePlate,
+      'parkingNo': editAddModel.baseInfo.parkingNo,
+      'stockStatus': editAddModel.baseInfo.stockStatus,
+      'useCharacter': editAddModel.baseInfo.useCharacter,
+      'shamMileage': editAddModel.baseInfo.shamMileage,
+      // 'purchaseTax': editAddModel.baseInfo.purchaseTax,
+      'installationCost': editAddModel.baseInfo.installationCost,
+      'location': editAddModel.baseInfo.location,
+      'remark': editAddModel.baseInfo.condition,
+    };
+    Map<String, dynamic> photos = {
+      "carPhotos":carPhotos,
+      "interiorPhotos": interiorPhotos,
+      "defectPhotos": defectPhotos,
+      "dataPhotos": dataPhotos,
+    };
+
+    Map<String, dynamic> base = {
+      "carId": editAddModel.cardId,
+      "baseInfo": baseInfo,
+      // "report":reportPhotoModel.toJson(),
+      "photos": photos
+    };
+    BaseModel model = await apiClient.request(API.order.addEdit, data: base);
+    if (model.code == 0) {
+      if (model.msg == '操作成功') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      //BotToast.showText(text: '发布失败');
+      CloudToast.show(model.msg);
+      return false;
+    }
+  }
+  ///车商车辆编辑列表
+  static Future<List<EditListModel>> getEditDealerList(
+      {required int page, int size = 10, int status = 0}) async {
+    var res = await apiClient.requestList(API.order.editDealerList,
+        data: {'page': page, 'size': size, 'status': status});
+    if (res.code == 0) {
+      return res.nullSafetyList
+          .map((e) => EditListModel.fromJson(e))
+          .toList();
+    } else {
+      CloudToast.show(res.msg);
+      return [];
+    }
+  }
+  ///车辆编辑列表
+  static Future<List<EditListModel>> getEditList(
+      {required int page, int size = 10, int status = 0}) async {
+    var res = await apiClient.requestList(API.order.editList,
+        data: {'page': page, 'size': size, 'status': status});
+    if (res.code == 0) {
+      return res.nullSafetyList
+          .map((e) => EditListModel.fromJson(e))
+          .toList();
+    } else {
+      CloudToast.show(res.msg);
+      return [];
+    }
+  }
   ///车商发布车辆
   static Future<bool> dealerPushCar({
     required BusinessPushModel businessPushModel,
@@ -870,4 +947,16 @@ class CarFunc {
       return PublishInfoModel.init;
     }
   }
+  ///编辑车辆详情
+  static Future<EditInfoModel> getEditInfo(int carBaseId) async {
+    var res = await apiClient
+        .request(API.order.editInfo, data: {'carEditId': carBaseId});
+    if (res.code == 0) {
+      return EditInfoModel.fromJson(res.data);
+    } else {
+      CloudToast.show(res.msg);
+      return PublishInfoModel.init;
+    }
+  }
+
 }

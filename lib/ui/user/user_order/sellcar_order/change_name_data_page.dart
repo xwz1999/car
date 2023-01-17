@@ -11,18 +11,16 @@ import 'package:flutter/material.dart';
 
 class ChangeNameDataPage extends StatefulWidget {
   final int orderId;
+  final int isCustomer;
 
-  const ChangeNameDataPage({super.key, required this.orderId});
+  const ChangeNameDataPage(
+      {super.key, required this.orderId, required this.isCustomer});
 
   @override
   State<ChangeNameDataPage> createState() => _ChangeNameDataPageState();
 }
 
-
-
 class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
-
-
   String certificate = '';
 
   ///登记证书
@@ -35,11 +33,20 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
   String guaranteeSlip = '';
 
   ///保单
+
+  String finalPayment = '';
+
+  ///尾款
+
+  String report = '';
+
+  ///报告
+
   late double price;
+
 // final picker = ImagePicker();
 // ignore: unnecessary_late
   File imagePath = File('');
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +56,7 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
           isSpecial: true,
         ),
         backgroundColor: kForeGroundColor, //头部颜色
-        title: Text('上传过户资料',
+        title: Text('上传资料',
             style: TextStyle(
                 color: BaseStyle.color111111,
                 fontSize: BaseStyle.fontSize36,
@@ -97,7 +104,7 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                         var value = await CloudImagePicker.pickSingleImage(
                             title: '选择图片');
                         if (value != null) {
-                          String urls = await                                                                                                        apiClient.uploadImage(value);
+                          String urls = await apiClient.uploadImage(value);
                           vehicleLicense = urls;
                           // print(urls);
                         }
@@ -177,6 +184,34 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                         //   img == '' ? Assets.images.addcar.path : img,
                         // ),
                       ))),
+              _getText(
+                  '尾款凭证',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          guaranteeSlip = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: guaranteeSlip == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                                urls: [guaranteeSlip],
+                              ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
 
               //48.hb,
               Row(
@@ -221,13 +256,28 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
               144.hb,
               GestureDetector(
                 onTap: () async {
-                  bool res = await OrderFunc.getTransfer(
+                  bool res;
+                  if (widget.isCustomer == 2) {
+                    res = await OrderFunc.getOfflineTransfer(
                       widget.orderId,
                       certificate,
                       vehicleLicense,
                       invoice,
                       guaranteeSlip,
-                      price);
+                      finalPayment,
+                      price.toString(),
+                      report,
+                    );
+                  } else {
+                    res = await OrderFunc.getTransfer(
+                        widget.orderId,
+                        certificate,
+                        vehicleLicense,
+                        invoice,
+                        guaranteeSlip,
+                        price);
+                  }
+
                   // print(
                   //     '登记证书+$certificate+行驶证+$vehicleLicense+发票+$invoice+保单+$guaranteeSlip+金额+$pice');
                   if (res) {

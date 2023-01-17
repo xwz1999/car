@@ -61,7 +61,12 @@ class _ChooseWidgetState extends State<ChooseWidget> {
                 )
               ],
             ))
-        : SizedBox(
+        : Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(8.w),
+              bottomRight: Radius.circular(8.w))),
             width: 750.w,
             height: 100.w,
             child: ListView(

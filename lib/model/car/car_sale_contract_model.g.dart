@@ -40,12 +40,24 @@ PriceInfo _$PriceInfoFromJson(Map<String, dynamic> json) => PriceInfo(
       dealPrice: json['dealPrice'] as String,
       deposit: json['deposit'] as String,
       downPayment: json['downPayment'] as String,
+      deliverDate: json['deliverDate'] as String,
+      deliverAddress: json['deliverAddress'] as String,
+      transferFee: json['transferFee'] as String,
+      transferFeeHolder: json['transferFeeHolder'] as int,
+      agentFee: json['agentFee'] as String,
+      agentFeeHolder: json['agentFeeHolder'] as int,
     );
 
 Map<String, dynamic> _$PriceInfoToJson(PriceInfo instance) => <String, dynamic>{
       'dealPrice': instance.dealPrice,
       'deposit': instance.deposit,
       'downPayment': instance.downPayment,
+      'deliverDate': instance.deliverDate,
+      'deliverAddress': instance.deliverAddress,
+      'transferFee': instance.transferFee,
+      'transferFeeHolder': instance.transferFeeHolder,
+      'agentFee': instance.agentFee,
+      'agentFeeHolder': instance.agentFeeHolder,
     };
 
 MasterInfo _$MasterInfoFromJson(Map<String, dynamic> json) => MasterInfo(

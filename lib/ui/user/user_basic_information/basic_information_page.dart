@@ -429,20 +429,20 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                         ),
                       ),
                     ),
-                    //企业信息
-                    ListTile(
-                      onTap: () {
-                        Get.to(() => const EnterpriseInformationPage());
-                      },
-                      title: Text('企业信息',
-                          style: Theme.of(context).textTheme.bodyText1),
-                      trailing: SizedBox(
-                          width: 40.w,
-                          height: 40.w,
-                          child: const Icon(
-                            Icons.keyboard_arrow_right,
-                          )),
-                    ),
+                    // //企业信息
+                    // ListTile(
+                    //   onTap: () {
+                    //     Get.to(() => const EnterpriseInformationPage());
+                    //   },
+                    //   title: Text('企业信息',
+                    //       style: Theme.of(context).textTheme.bodyText1),
+                    //   trailing: SizedBox(
+                    //       width: 40.w,
+                    //       height: 40.w,
+                    //       child: const Icon(
+                    //         Icons.keyboard_arrow_right,
+                    //       )),
+                    // ),
                     // ListTile(
                     //   onTap: () {
                     //     Get.to(() => const RealNamePage());

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:provider/provider.dart';
 
+import '../../../constants/api/api.dart';
 import 'edit_item_widget.dart';
 
 class ShareCarDialog extends StatefulWidget {
@@ -47,7 +48,7 @@ class _ShareCarDialogState extends State<ShareCarDialog>
     super.initState();
 
     if(!widget.isMore){
-      shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/singleTransfer?id='"${widget.model.first.id}&inviteCode=${UserTool.userProvider.userInfo.inviteCode}";
+      shareUrl = '${API.imageHost}/file/h5/index.html#/singleTransfer?id='"${widget.model.first.id}&inviteCode=${UserTool.userProvider.userInfo.inviteCode}";
       shareTitle = widget.model.first.modelName;
     }else{
       String id = '';

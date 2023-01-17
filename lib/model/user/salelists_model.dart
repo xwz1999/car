@@ -17,11 +17,14 @@ class SalelistsModel extends Equatable {
   final String deposit;
   final String downPayment;
   final String balancePayment;
+  final int customerChannel;
+  final String customerChannelName;
 
   factory SalelistsModel.fromJson(Map<String, dynamic> json) =>
       _$SalelistsModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SalelistsModelToJson(this);
+
   OrderSaleStatus get statusEnum => OrderSaleStatus.getStatus(status);
 
   @override
@@ -36,20 +39,23 @@ class SalelistsModel extends Equatable {
         amount,
         deposit,
         downPayment,
-        balancePayment
+        balancePayment,
+        customerChannel,
+        customerChannelName
       ];
 
-  const SalelistsModel({
-    required this.id,
-    required this.status,
-    required this.createdAt,
-    required this.mainPhoto,
-    required this.modelName,
-    required this.licensingDate,
-    required this.mileage,
-    required this.amount,
-    required this.deposit,
-    required this.downPayment,
-    required this.balancePayment,
-  });
+  const SalelistsModel(
+      {required this.id,
+      required this.status,
+      required this.createdAt,
+      required this.mainPhoto,
+      required this.modelName,
+      required this.licensingDate,
+      required this.mileage,
+      required this.amount,
+      required this.deposit,
+      required this.downPayment,
+      required this.balancePayment,
+      required this.customerChannelName,
+      required this.customerChannel});
 }

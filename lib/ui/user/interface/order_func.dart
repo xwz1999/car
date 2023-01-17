@@ -328,6 +328,36 @@ class OrderFunc {
     }
   }
 
+  ///线下过户
+  static Future<bool> getOfflineTransfer(
+      int orderId,
+      String certificate,
+      String vehicleLicence,
+      String invoice,
+      String guaranteeSlip,
+      String compulsoryInsuranceProof,
+      String commercialInsuranceProof,
+      String report,
+      // num commercialInsurancePrice,
+      ) async {
+    BaseModel res = await apiClient.request(API.order.scaleTransfer, data: {
+      'orderId': orderId,
+      'certificate': certificate,
+      'vehicleLicense': vehicleLicence,
+      'invoice': invoice,
+      'guaranteeSlip': guaranteeSlip,
+      'compulsoryInsuranceProof':compulsoryInsuranceProof,
+      'commercialInsuranceProof':commercialInsuranceProof,
+      'report':report,
+      // 'commercialInsurancePrice': commercialInsurancePrice
+    });
+    if (res.code == 0) {
+      return true;
+    } else {
+      CloudToast.show(res.msg);
+      return false;
+    }
+  }
   ///完结订单
   static Future<bool> getFinal(int orderId) async {
     BaseModel res = await apiClient.request(API.order.saleFinal,

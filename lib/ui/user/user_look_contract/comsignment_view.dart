@@ -11,6 +11,8 @@ import 'package:screenshot/screenshot.dart';
 
 import '../../../constants/enums.dart';
 import '../../../model/contract/consignment_model.dart';
+import '../../../utils/toast/cloud_toast.dart';
+import '../../../widget/alert.dart';
 import '../../../widget/choose_widget.dart';
 import '../../notice/view_file_page.dart';
 
@@ -35,6 +37,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
   int _page = 1;
   final int _size = 10;
   final ScreenshotController _screenshotController = ScreenshotController();
+  TextEditingController rejectController = TextEditingController();
   late ContractStatus _releaseCarStatus;
 
   //bool _onload = true;
@@ -94,52 +97,52 @@ class _ConsignmentViewState extends State<ConsignmentView>
                   setState(() {});
                 },
                 slivers: [
-                  // SliverToBoxAdapter(
-                  //   child: 10.hb,
-                  // ),
+              // SliverToBoxAdapter(
+              //   child: 10.hb,
+              // ),
 
-                  SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        var model = widget.consignmentList[index];
-                        return GestureDetector(
-                          onTap: () async {
-                                Get.to(() => ViewFilePage(
-                                      title: '',
-                                      url: model.essFileUrl != ''
-                                          ? '${API.imageHost}/${model.essFileUrl}'
-                                          : '',
-                                    ));
-                                // core.download(url, options);
-                                // var docPath=await getApplicationDocumentsDirectory();
-                                // String _localPath='${docPath.path}${Platform.pathSeparator}download';
-                                // final savedDir=Directory(_localPath);
-                                // var response=await Dio().download('
-                                // contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF', '');///下载pdf
-                            },
-                          child: Container(
-                            padding:
-                            EdgeInsets.symmetric(
-                                horizontal: 32.w, vertical: 24.w),
-                            child: _getCard(
-                              model.status,
-                              '寄卖合同（${model.contractSn}）',
-                              model.modelName,
-                              model.customerName,
-                              model.status < 2
-                                  ? '/'
-                                  : DateUtil.formatDateMs(model.signAt.toInt() *
-                                  1000,
-                                  format: 'yyyy-MM-dd'),
-                            ),
-                          ),
-                        );
-                      }, childCount: widget.consignmentList.length))
-                ]))
+              SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                var model = widget.consignmentList[index];
+                return GestureDetector(
+                  onTap: () async {
+                    Get.to(() => ViewFilePage(
+                          title: '',
+                          url: model.essFileUrl != ''
+                              ? '${API.imageHost}/${model.essFileUrl}'
+                              : '',
+                        ));
+                    // core.download(url, options);
+                    // var docPath=await getApplicationDocumentsDirectory();
+                    // String _localPath='${docPath.path}${Platform.pathSeparator}download';
+                    // final savedDir=Directory(_localPath);
+                    // var response=await Dio().download('
+                    // contract/20221215/云云问车车辆寄卖服务协议yDRTvUUgyg308s36UyFlheyREaFYxjbJ.PDF', '');///下载pdf
+                  },
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.w),
+                    child: _getCard(
+                      model.id,
+                      model.status,
+                      '寄卖合同（${model.contractSn}）',
+                      model.modelName,
+                      model.customerName,
+                      model.status < 2
+                          ? '/'
+                          : DateUtil.formatDateMs(model.signAt.toInt() * 1000,
+                              format: 'yyyy-MM-dd'),
+                    ),
+                  ),
+                );
+              }, childCount: widget.consignmentList.length))
+            ]))
       ],
     );
   }
 
-  _getCard(int int, String title, String car, String name, String time) {
+  _getCard(
+      int id, int int, String title, String car, String name, String time) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.w)),
       child: Stack(children: [
@@ -163,10 +166,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
                   padding: EdgeInsets.only(left: 0.w),
                   child: Text(
                     title,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .subtitle1,
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
                 30.hb,
@@ -188,10 +188,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
                         car,
                         overflow: TextOverflow.clip,
                         maxLines: 2,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .subtitle2,
+                        style: Theme.of(context).textTheme.subtitle2,
                       ),
                     )
                   ],
@@ -211,10 +208,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
                     Text(
                       name,
                       overflow: TextOverflow.clip,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .subtitle2,
+                      style: Theme.of(context).textTheme.subtitle2,
                     )
                   ],
                 ),
@@ -233,10 +227,7 @@ class _ConsignmentViewState extends State<ConsignmentView>
                     Text(
                       time,
                       overflow: TextOverflow.clip,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .subtitle2,
+                      style: Theme.of(context).textTheme.subtitle2,
                     )
                   ],
                 ),
@@ -251,15 +242,81 @@ class _ConsignmentViewState extends State<ConsignmentView>
               fit: BoxFit.fill,
               width: 134.w,
               height: 134.w,
-            ))
+            )),
+        // Positioned(
+        //     bottom: 32.w,
+        //     right: 80.w,
+        //     child: GestureDetector(
+        //       onTap: () {
+        //         Alert.show(
+        //             context,
+        //             NormalContentDialog(
+        //               type: NormalTextDialogType.delete,
+        //               title: '取消理由',
+        //               content: Container(
+        //                 padding: EdgeInsets.symmetric(horizontal: 16.w),
+        //                 decoration: BoxDecoration(
+        //                     color: Colors.grey.withOpacity(0.2),
+        //                     borderRadius: BorderRadius.circular(4.w)),
+        //                 child: TextField(
+        //                   controller: rejectController,
+        //                   maxLines: null,
+        //                   minLines: 1,
+        //                   decoration: const InputDecoration(
+        //                     hintText: '请输入',
+        //                     border: InputBorder.none,
+        //                   ),
+        //                 ),
+        //               ),
+        //               items: const ['取消'],
+        //               deleteItem: '确定',
+        //               //监听器
+        //               listener: (index) {
+        //                 Get.back();
+        //                 Alert.dismiss(context);
+        //               },
+        //               deleteListener: () async {
+        //                 var res = await apiClient
+        //                     .request(API.contract.saleCancel, data: {
+        //                   'contractId': id,
+        //                   'reason': rejectController.text
+        //                 });
+        //                 if (res.code == 0) {
+        //                   CloudToast.show('取消成功');
+        //                   Get.back();
+        //                 } else {
+        //                   CloudToast.show(res.msg);
+        //                 }
+        //                 Alert.dismiss(context);
+        //               },
+        //             ));
+        //       },
+        //       child: Container(
+        //         width: 150.w,
+        //         height: 72.w,
+        //         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
+        //         alignment: Alignment.center,
+        //         decoration: BoxDecoration(
+        //           borderRadius: BorderRadius.circular(2.w),
+        //           color: bgColor,
+        //           border:
+        //               Border.all(width: 2.w, color: const Color(0xFF027AFF)),
+        //         ),
+        //         child: Text(
+        //           '取消',
+        //           style: TextStyle(
+        //               fontSize: 28.w,
+        //               color: const Color(0xFF027AFF),
+        //               fontWeight: FontWeight.w600),
+        //         ),
+        //       ),
+        //     ))
       ]),
     );
   }
 
   getUrl(int status) {
-    switch (ContractStatus
-        .getValue(status)
-        .typeNum) {
+    switch (ContractStatus.getValue(status).typeNum) {
       case 1:
         return Assets.images.signed.path;
       case 2:

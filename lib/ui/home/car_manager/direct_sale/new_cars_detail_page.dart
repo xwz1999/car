@@ -39,13 +39,11 @@ import 'edit_car_page.dart';
 import 'modify_price_page.dart';
 
 class NewCarsDetailPage extends StatefulWidget {
-
   // final bool isSelf;
   final CarListModel carListModel;
 
   const NewCarsDetailPage({
     super.key,
-
     required this.carListModel,
     // required this.isSelf,
   });
@@ -73,6 +71,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
   List<CarPhotos> defectPhotos = [];
   List<CarPhotos> dataPhotos = [];
   late PublishInfoModel publishInfoModel;
+
   // List<CarPhotos> repairPhotos = [];
   //
   // List<CarPhotos> _reportPhotos = [];
@@ -111,39 +110,39 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
     _chooseModels.add(widget.carListModel);
 
-      if (widget.carListModel.isSelf == 1) {
-        dataPhotos = [
-          CarPhotos(
-            text: '漆面数据',
-          ),
-          CarPhotos(text: '行驶证照片'),
-          CarPhotos(
-            text: '检测报告',
-          ),
-          CarPhotos(
-            text: '登记证书',
-          ),
-          CarPhotos(
-            text: '交强险',
-          ),
-          CarPhotos(
-            text: '商业险',
-          ),
-          // CarPhotos(
-          //   text: '维保记录',
-          // ),
-        ];
-      } else {
-        dataPhotos = [
-          CarPhotos(
-            text: '漆面数据',
-          ),
-          CarPhotos(
-            text: '检测报告',
-          ),
-        ];
-      }
+    if (widget.carListModel.isSelf == 1) {
+      dataPhotos = [
+         CarPhotos(
+          text: '漆面数据',
+        ),
+        CarPhotos(text: '行驶证照片',),
+        CarPhotos(
+          text: '检测报告',
+        ),
+        CarPhotos(
+          text: '登记证书',
+        ),
+        CarPhotos(
+          text: '交强险',
+        ),
+        CarPhotos(
+          text: '商业险',
+        ),
+        // CarPhotos(
+        //   text: '维保记录',
+        // ),
+      ];
+    } else {
+      dataPhotos = [
+         CarPhotos(
+          text: '漆面数据',
+        ),
+         CarPhotos(
+          text: '检测报告',
+        ),
+      ];
     }
+  }
 
   _refresh() async {
     carInfoModel = await CarFunc.getNewCarInfo(widget.carListModel.id);
@@ -275,13 +274,13 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
   @override
   Widget build(BuildContext context) {
-    return CloudScaffold(
-      path: Assets.images.noticeBg.path,
-      extendBody: true,
-      body: Expanded(
-        child: carInfoModel == null
-            ? const SizedBox()
-            : NestedScrollView(
+    return carInfoModel == null
+        ? const CloudScaffold()
+        : CloudScaffold(
+            path: Assets.images.noticeBg.path,
+            extendBody: true,
+            body: Expanded(
+              child: NestedScrollView(
                 controller: _scrollController,
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
@@ -511,9 +510,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                   ),
                 ),
               ),
-      ),
-      bottomNavi: _bottom(),
-      fab:  FloatingActionButton(
+            ),
+            bottomNavi: _bottom(),
+            fab: FloatingActionButton(
               onPressed: () {
                 if (carInfoModel != null) {
                   if (carInfoModel!.carInfo.brokerInfo.brokerPhone != '') {
@@ -539,9 +538,9 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                 ),
               ),
             ),
-      fbLocation: CustomFloatingActionButtonLocation(
-          FloatingActionButtonLocation.endDocked, 2.w, -130.w),
-    );
+            fbLocation: CustomFloatingActionButtonLocation(
+                FloatingActionButtonLocation.endDocked, 2.w, -130.w),
+          );
   }
 
   // Widget _getView(
@@ -1125,9 +1124,11 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       ? Assets.icons.editor.path
                       : Assets.icons.noEditor.path,
                   '编辑', () {
-            // if (widget.carListModel.isSelf == 1) {
-            //   Get.to(() => const EditCarPage());
-            // }
+            if (widget.carListModel.isSelf == 1) {
+              Get.to(() => EditCarPage(
+                    carListModel: carInfoModel!,
+                  ));
+            }
           })),
           Expanded(
               child: _getBottom(Assets.icons.transmission.path, '调价', () {
@@ -1144,11 +1145,15 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             //   }
             //
             // }
-                //            if(  &&carInfoModel!.isSelfStore==1){
-                print(UserTool.userProvider.userInfo.business.roleId);
-            if( (UserTool.userProvider.userInfo.business.roleId==1 || UserTool.userProvider.userInfo.business.roleId==11) &&carInfoModel!.isSelfStore==1){
-              Get.to(() => ModifyPricePage(carId: carInfoModel!.carInfo.id,));
-            }else{
+            //            if(  &&carInfoModel!.isSelfStore==1){
+            print(UserTool.userProvider.userInfo.business.roleId);
+            if ((UserTool.userProvider.userInfo.business.roleId == 1 ||
+                    UserTool.userProvider.userInfo.business.roleId == 11) &&
+                carInfoModel!.isSelfStore == 1) {
+              Get.to(() => ModifyPricePage(
+                    carId: carInfoModel!.carInfo.id,
+                  ));
+            } else {
               if (carInfoModel != null) {
                 if (carInfoModel!.carInfo.brokerInfo.brokerPhone != '') {
                   getPhone(carInfoModel!.carInfo.brokerInfo.brokerPhone);

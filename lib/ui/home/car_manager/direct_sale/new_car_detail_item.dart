@@ -280,9 +280,9 @@ class NewCarDetailItem extends StatelessWidget {
                 ),
               ),
               Text(
-                carInfoModel.carInfo.storeName == ''
+                carInfoModel.carInfo.dealerSn == ''
                     ? '/'
-                    : carInfoModel.carInfo.storeName,
+                    : carInfoModel.carInfo.dealerSn,
                 style: TextStyle(
                     height: 1.5,
                     fontSize: 28.sp,
@@ -592,7 +592,7 @@ class NewCarDetailItem extends StatelessWidget {
                 ],
               ),
               getContentItem('车辆类型', carInfoModel.carInfo.type),
-              getContentItem('车辆来源', carInfoModel.carInfo.source),
+              getContentItem('车辆来源', carInfoModel.carInfo.sourceName),
               getContentItem('品牌车型', carInfoModel.carInfo.modelName),
               getContentItem('车架号', carInfoModel.carInfo.vin),
               getContentItem('发动机号', carInfoModel.carInfo.carSn),

@@ -19,6 +19,8 @@ SalelistsModel _$SalelistsModelFromJson(Map<String, dynamic> json) =>
       deposit: json['deposit'] as String,
       downPayment: json['downPayment'] as String,
       balancePayment: json['balancePayment'] as String,
+      customerChannelName: json['customerChannelName'] as String,
+      customerChannel: json['customerChannel'] as int,
     );
 
 Map<String, dynamic> _$SalelistsModelToJson(SalelistsModel instance) =>
@@ -34,4 +36,6 @@ Map<String, dynamic> _$SalelistsModelToJson(SalelistsModel instance) =>
       'deposit': instance.deposit,
       'downPayment': instance.downPayment,
       'balancePayment': instance.balancePayment,
+      'customerChannel': instance.customerChannel,
+      'customerChannelName': instance.customerChannelName,
     };

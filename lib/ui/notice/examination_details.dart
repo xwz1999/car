@@ -306,6 +306,55 @@ class _ExaminationDetailsState extends State<ExaminationDetails> {
                       Expanded(
                           child: Row(
                         children: [
+                          getBox('取消', Colors.white, 2, const Color(0xFF027AFF),
+                              const Color(0xFF027AFF), () {
+                                Alert.show(
+                                    context,
+                                    NormalContentDialog(
+                                      type: NormalTextDialogType.delete,
+                                      title: '取消理由',
+                                      content: Container(
+                                        padding:
+                                        EdgeInsets.symmetric(horizontal: 16.w),
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey.withOpacity(0.2),
+                                            borderRadius:
+                                            BorderRadius.circular(4.w)),
+                                        child: TextField(
+                                          controller: rejectController,
+                                          maxLines: null,
+                                          minLines: 1,
+                                          decoration: const InputDecoration(
+                                            hintText: '请输入',
+                                            border: InputBorder.none,
+                                          ),
+                                        ),
+                                      ),
+                                      items: const ['取消'],
+                                      deleteItem: '确定',
+                                      //监听器
+                                      listener: (index) {
+                                        Get.back();
+                                        Alert.dismiss(context);
+                                      },
+                                      deleteListener: () async {
+                                        var res = await apiClient.request(
+                                            API.contract.saleCancel,
+                                            data: {
+                                              'contractId': saleInfo!.id,
+                                              'reason': rejectController.text
+                                            });
+                                        if (res.code == 0) {
+                                          CloudToast.show('取消成功');
+                                          Get.back();
+                                        } else {
+                                          CloudToast.show(res.msg);
+                                        }
+                                        Alert.dismiss(context);
+                                      },
+                                    ));
+                              }),
+                          16.wb,
                           getBox('驳回', Colors.white, 2, const Color(0xFF027AFF),
                               const Color(0xFF027AFF), () {
                             Alert.show(
@@ -775,12 +824,12 @@ getBox(String text, Color bgColor, int bWidth, Color bColor, Color tColor,
       ontap();
     },
     child: Container(
-      width: 240.w,
+      width: 150.w,
       height: 72.w,
-      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.w),
+        borderRadius: BorderRadius.circular(2.w),
         color: bgColor,
         border: Border.all(width: bWidth.w, color: bColor),
       ),

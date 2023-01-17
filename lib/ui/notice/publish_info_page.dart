@@ -3,11 +3,9 @@ import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/model/contract/report_photo_model.dart';
 
-import 'package:cloud_car/ui/home/car_manager/direct_sale/new_car_detail_item.dart';
-
 import 'package:cloud_car/ui/home/car_manager/publish_car/push_photo_model.dart';
 import 'package:cloud_car/ui/home/func/car_func.dart';
-import 'package:cloud_car/ui/home/share/share_car_dialog.dart';
+
 import 'package:cloud_car/ui/notice/publish_detail_item.dart';
 import 'package:cloud_car/utils/custom_floating_action_button_location.dart';
 import 'package:cloud_car/utils/headers.dart';
@@ -30,16 +28,18 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../model/publish_info_model.dart';
 import '../../../../utils/text_utils.dart';
 import '../../constants/api/api.dart';
+import '../../model/car/edit_info_model.dart';
 import '../../model/order/individual_model.dart';
+import '../home/car_manager/direct_sale/edit_car_page.dart';
 import '../home/car_manager/publish_car/new_push_car_page.dart';
 import '../home/car_manager/publish_car/publish_finish_page.dart';
 import '../home/car_manager/publish_car/push_car_manage_photo_page.dart';
-import '../user/interface/order_func.dart';
 import '../user/user_order/status.dart';
 
 class PublishInfoPage extends StatefulWidget {
   final int carId;
   final int index;
+  final int isUpdate;
 
   // final bool isSelf;
 
@@ -47,7 +47,7 @@ class PublishInfoPage extends StatefulWidget {
     super.key,
     required this.index,
     required this.carId,
-
+    required this.isUpdate,
     // required this.isSelf,
   });
 
@@ -60,21 +60,23 @@ class _PublishInfoPageState extends State<PublishInfoPage>
   late TabController _tabController;
   IndividualModel? individualModel;
   final List<CarListModel> _chooseModels = [];
-
   ///滚动监听设置
   late ScrollController _scrollController;
-
   ///头部背景布局 true滚动一定的高度 false 滚动高度为0
   bool headerWhite = false;
   List tabs = [];
-
   NewCarInfo? carInfoModel;
   int collect = 0;
   List<CarPhotos> carPhotos = [];
   List<CarPhotos> interiorPhotos = [];
   List<CarPhotos> defectPhotos = [];
   List<CarPhotos> dataPhotos = [];
+  List<ImagePhoto> carPhotos1 = [];
+  List<ImagePhoto> interiorPhotos1 = [];
+  List<ImagePhoto> defectPhotos1 = [];
+  List<ImagePhoto> dataPhotos1 = [];
   late PublishInfoModel publishInfoModel = PublishInfoModel.init;
+  late EditInfoModel editInfo = EditInfoModel.init;
   TextEditingController rejectController = TextEditingController();
 
   // List<CarPhotos> repairPhotos = [];
@@ -153,27 +155,40 @@ class _PublishInfoPageState extends State<PublishInfoPage>
   _refresh() async {
     // carInfoModel = await CarFunc.getNewCarInfo();
     // individualModel = await OrderFunc.getConsignmentInfo(widget.carId);
-    publishInfoModel = await CarFunc.getPublishInfo(widget.carId);
+    if (widget.isUpdate == 1) {
+      publishInfoModel = await CarFunc.getPublishInfo(widget.carId);
+    } else {
+      editInfo = await CarFunc.getEditInfo(widget.carId);
+    }
     // print(carInfoModel!.carInfo);
     // collect = carInfoModel?.carInfo.collect ?? 0;
-    for (var item in publishInfoModel.carPhotos) {
-      if (item.photo!.isNotEmpty && item.text!.isNotEmpty ) {
+    for (var item in widget.isUpdate == 2
+        ? editInfo.carPhotos
+        : publishInfoModel.carPhotos) {
+      if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         carPhotos.add(CarPhotos(photo: item.photo, text: item.text));
+        carPhotos1.add(ImagePhoto(photo: item.photo!, text: item.text!));
       }
       if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         bannerList.add(item);
       }
     }
 
-    for (var item in publishInfoModel.interiorPhotos) {
+    for (var item in widget.isUpdate == 2
+        ? editInfo.interiorPhotos
+        : publishInfoModel.interiorPhotos) {
       if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         interiorPhotos.add(CarPhotos(photo: item.photo, text: item.text));
+        interiorPhotos1.add(ImagePhoto(photo: item.photo!, text: item.text!));
       }
     }
 
-    for (var item in publishInfoModel.defectPhotos) {
+    for (var item in widget.isUpdate == 2
+        ? editInfo.defectPhotos
+        : publishInfoModel.defectPhotos) {
       if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         defectPhotos.add(CarPhotos(photo: item.photo, text: item.text));
+        defectPhotos1.add(ImagePhoto(photo: item.photo!, text: item.text!));
       }
     }
     // for (var item in carInfoModel!.carInfo.dataPhotos) {
@@ -181,13 +196,17 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     //     repairPhotos.add(CarPhotos(photo: item.photo, text: item.text));
     //   }
     // }
-    for (var item in publishInfoModel.dataPhotos) {
-      if (item.photo!.isNotEmpty && item.text!.isNotEmpty ) {
+    for (var item in widget.isUpdate == 2
+        ? editInfo.dataPhotos
+        : publishInfoModel.dataPhotos
+    ) {
+      if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         //print(item.text);
         dataPhotos.add(CarPhotos(photo: item.photo, text: item.text));
-
+        dataPhotos1.add(ImagePhoto(photo: item.photo!, text: item.text!));
       }
     }
+
 
     // for (int i = 0; i < carInfoModel!.carInfo.dataPhotos.length; i++) {
     //   for (int j = 0; j < dataPhotos.length; j++) {
@@ -283,209 +302,436 @@ class _PublishInfoPageState extends State<PublishInfoPage>
         ));
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return publishInfoModel == PublishInfoModel.init
-        ? const CloudScaffold()
-        : CloudScaffold(
-            path: Assets.images.noticeBg.path,
-            extendBody: true,
-            body: Expanded(
-              child: NestedScrollView(
-                controller: _scrollController,
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return [
-                    SliverAppBar(
-                        pinned: true,
-                        stretch: true,
-                        expandedHeight: downState ? 920.w : 1250.w,
-                        elevation: 0,
-                        backgroundColor:
-                            headerWhite ? Colors.white : Colors.transparent,
-                        systemOverlayStyle: SystemUiOverlayStyle.light,
-                        snap: false,
-                        centerTitle: false,
-                        title: headerWhite
-                            ? Text(
-                                publishInfoModel.modelName ?? '',
-                                style: TextStyle(
-                                  color: const Color(0xFF333333),
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 36.sp,
+    return widget.isUpdate == 2
+        ? editInfo == EditInfoModel.init
+            ? const CloudScaffold()
+            : CloudScaffold(
+                path: Assets.images.noticeBg.path,
+                extendBody: true,
+                body: Expanded(
+                  child: NestedScrollView(
+                    controller: _scrollController,
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return [
+                        SliverAppBar(
+                            pinned: true,
+                            stretch: true,
+                            expandedHeight: downState ? 920.w : 1250.w,
+                            elevation: 0,
+                            backgroundColor:
+                                headerWhite ? Colors.white : Colors.transparent,
+                            systemOverlayStyle: SystemUiOverlayStyle.light,
+                            snap: false,
+                            centerTitle: false,
+                            title: headerWhite
+                                ? Text(
+                                    publishInfoModel.modelName ?? '',
+                                    style: TextStyle(
+                                      color: const Color(0xFF333333),
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 36.sp,
+                                    ),
+                                  )
+                                : const Text(''),
+                            leading: const CloudBackButton(),
+                            flexibleSpace: FlexibleSpaceBar(
+                              //centerTitle: true,
+                              background: Container(
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                color: Colors.transparent,
+                                //height: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    135.hb,
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: headerWhite
+                                            ? Colors.white
+                                            : Colors.transparent,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 32.w, vertical: 24.w),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          _title(),
+                                          32.hb,
+                                          _label(),
+                                          18.hb,
+                                          _information(),
+                                          8.hb,
+                                          getDown(),
+                                          // 24.hb,
+                                          _shuffling(),
+                                          32.hb,
+                                          // _informations(),
+                                        ],
+                                      ),
+                                    ),
+                                    // 50.hb,
+                                  ],
                                 ),
-                              )
-                            : const Text(''),
-                        leading: const CloudBackButton(),
-                        flexibleSpace: FlexibleSpaceBar(
-                          //centerTitle: true,
-                          background: Container(
-                            alignment: Alignment.center,
-                            width: double.infinity,
-                            color: Colors.transparent,
-                            //height: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                135.hb,
-                                Container(
+                              ),
+                            ),
+                            bottom: PreferredSize(
+                              preferredSize:
+                                  Size.fromHeight(kToolbarHeight - 10.w),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.w),
+                                child: Container(
+                                  height: kToolbarHeight - 10.w,
+                                  width: double.infinity,
+                                  alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    color: headerWhite
-                                        ? Colors.white
-                                        : Colors.transparent,
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 32.w, vertical: 24.w),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      _title(),
-                                      32.hb,
-                                      _label(),
-                                      18.hb,
-                                      _information(),
-                                      8.hb,
-                                      getDown(),
-                                      // 24.hb,
-                                      _shuffling(),
-                                      32.hb,
-                                      // _informations(),
-                                    ],
-                                  ),
+                                      color: Colors.white,
+                                      border: Border(
+                                          top: BorderSide(
+                                              color: const Color(0xFFF6F6F6),
+                                              width: 2.w))),
+                                  child: TabBar(
+                                      onTap: (index) {
+                                        setState(() {});
+                                      },
+                                      isScrollable: true,
+                                      labelPadding: EdgeInsets.symmetric(
+                                          vertical: 10.w, horizontal: 80.w),
+                                      controller: _tabController,
+                                      indicatorWeight: 3,
+                                      labelColor: kPrimaryColor,
+                                      unselectedLabelColor:
+                                          BaseStyle.color333333,
+                                      unselectedLabelStyle: const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        color: BaseStyle.color333333,
+                                      ),
+                                      indicatorPadding: EdgeInsets.symmetric(
+                                          horizontal: 30.w, vertical: 0.w),
+                                      indicatorSize: TabBarIndicatorSize.tab,
+                                      labelStyle: TextStyle(
+                                        color: Colors.white.withOpacity(0.85),
+                                      ),
+                                      indicator: const BoxDecoration(),
+                                      indicatorColor: kPrimaryColor,
+                                      tabs: [
+                                        _tab(0, tabs[0]),
+                                        _tab(1, tabs[1]),
+                                      ]),
                                 ),
-                                // 50.hb,
-                              ],
-                            ),
+                              ),
+                            )),
+                      ];
+                    },
+                    body: Padding(
+                      padding: EdgeInsets.only(bottom: 0.w),
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          PublishDetailItem(
+                            publishInfoModel: publishInfoModel,
+                            isUpdate: widget.isUpdate,
+                            editInfo: editInfo,
+                            // carInfoModel: carInfoModel!,
                           ),
-                        ),
-                        bottom: PreferredSize(
-                          preferredSize: Size.fromHeight(kToolbarHeight - 10.w),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.w),
-                            child: Container(
-                              height: kToolbarHeight - 10.w,
-                              width: double.infinity,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                      top: BorderSide(
-                                          color: const Color(0xFFF6F6F6),
-                                          width: 2.w))),
-                              child: TabBar(
-                                  onTap: (index) {
-                                    setState(() {});
-                                  },
-                                  isScrollable: true,
-                                  labelPadding: EdgeInsets.symmetric(
-                                      vertical: 10.w, horizontal: 80.w),
-                                  controller: _tabController,
-                                  indicatorWeight: 3,
-                                  labelColor: kPrimaryColor,
-                                  unselectedLabelColor: BaseStyle.color333333,
-                                  unselectedLabelStyle: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    color: BaseStyle.color333333,
-                                  ),
-                                  indicatorPadding: EdgeInsets.symmetric(
-                                      horizontal: 30.w, vertical: 0.w),
-                                  indicatorSize: TabBarIndicatorSize.tab,
-                                  labelStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.85),
-                                  ),
-                                  indicator: const BoxDecoration(),
-                                  indicatorColor: kPrimaryColor,
-                                  tabs: [
-                                    _tab(0, tabs[0]),
-                                    _tab(1, tabs[1]),
-                                  ]),
-                            ),
-                          ),
-                        )),
-                  ];
-                },
-                body: Padding(
-                  padding: EdgeInsets.only(bottom: 0.w),
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      PublishDetailItem(
-                        publishInfoModel: publishInfoModel,
-                        // carInfoModel: carInfoModel!,
-                      ),
-                      ColoredBox(
-                        color: Colors.white,
-                        child: ListView(
-                          padding: EdgeInsets.only(top: 20.w),
-                          children: [
-                            GridView.count(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              crossAxisCount: 3,
+                          ColoredBox(
+                            color: Colors.white,
+                            child: ListView(
+                              padding: EdgeInsets.only(top: 20.w),
                               children: [
-                                _buildChild(
-                                  _titles[0],
-                                  0,
+                                GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  crossAxisCount: 3,
+                                  children: [
+                                    _buildChild(
+                                      _titles[0],
+                                      0,
+                                    ),
+                                    _buildChild(
+                                      _titles[1],
+                                      1,
+                                    ),
+                                    _buildChild(
+                                      _titles[2],
+                                      2,
+                                    ),
+                                    _buildChild(
+                                      _titles[3],
+                                      3,
+                                    ),
+                                    // _buildChild(
+                                    //   _titles[4],
+                                    //   4,
+                                    // ),
+                                  ],
                                 ),
-                                _buildChild(
-                                  _titles[1],
-                                  1,
-                                ),
-                                _buildChild(
-                                  _titles[2],
-                                  2,
-                                ),
-                                _buildChild(
-                                  _titles[3],
-                                  3,
-                                ),
-                                // _buildChild(
-                                //   _titles[4],
-                                //   4,
+                                // Padding(
+                                //   padding:  EdgeInsets.only(left: 20.w,bottom: 20.w),
+                                //   child: Text('报告数据',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.bold),),
                                 // ),
+                                // _getView(_reportPhotos)
                               ],
                             ),
-                            // Padding(
-                            //   padding:  EdgeInsets.only(left: 20.w,bottom: 20.w),
-                            //   child: Text('报告数据',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.bold),),
-                            // ),
-                            // _getView(_reportPhotos)
-                          ],
-                        ),
-                      )
-                    ],
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            bottomNavi: Audit.getValueAuditId(publishInfoModel.status)
-                            .typeNum !=
-                        3 &&
-                    Audit.getValueAuditId(publishInfoModel.status).typeNum != 0
-                ? Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 32.w, vertical: 8.w),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 1.w, color: const Color(0xFFEEEEEE)),
-                        color: Colors.white),
-                    height: Audit.getValueAuditId(publishInfoModel.status)
+                bottomNavi: Audit.getValueAuditId(widget.isUpdate == 2
+                                    ? editInfo.status
+                                    : publishInfoModel.status)
                                 .typeNum !=
-                            4
-                        ? 170.w
-                        : UserTool.userProvider.userInfo.business.roleEM ==
-                                Role.carService
-                            ? 270.w
-                            : 200.w, //double.infinity,
-                    child: getBottomState(),
-                  )
-                : const SizedBox(),
-            fab: null,
-            fbLocation: CustomFloatingActionButtonLocation(
-                FloatingActionButtonLocation.endDocked, 2.w, -130.w),
-          );
+                            3 &&
+                        Audit.getValueAuditId(widget.isUpdate == 2
+                                    ? editInfo.status
+                                    : publishInfoModel.status)
+                                .typeNum !=
+                            0
+                    ? Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 32.w, vertical: 8.w),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1.w, color: const Color(0xFFEEEEEE)),
+                            color: Colors.white),
+                        height: Audit.getValueAuditId(widget.isUpdate == 2
+                                        ? editInfo.status
+                                        : publishInfoModel.status)
+                                    .typeNum !=
+                                4
+                            ? 170.w
+                            : UserTool.userProvider.userInfo.business.roleEM ==
+                                    Role.carService
+                                ? 270.w
+                                : 200.w, //double.infinity,
+                        child: getBottomState(),
+                      )
+                    : const SizedBox(),
+                fab: null,
+                fbLocation: CustomFloatingActionButtonLocation(
+                    FloatingActionButtonLocation.endDocked, 2.w, -130.w),
+              )
+        : pushPhotoModel == PublishInfoModel.init
+            ? const CloudScaffold()
+            : CloudScaffold(
+                path: Assets.images.noticeBg.path,
+                extendBody: true,
+                body: Expanded(
+                  child: NestedScrollView(
+                    controller: _scrollController,
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return [
+                        SliverAppBar(
+                            pinned: true,
+                            stretch: true,
+                            expandedHeight: downState ? 920.w : 1250.w,
+                            elevation: 0,
+                            backgroundColor:
+                                headerWhite ? Colors.white : Colors.transparent,
+                            systemOverlayStyle: SystemUiOverlayStyle.light,
+                            snap: false,
+                            centerTitle: false,
+                            title: headerWhite
+                                ? Text(
+                                    publishInfoModel.modelName ?? '',
+                                    style: TextStyle(
+                                      color: const Color(0xFF333333),
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 36.sp,
+                                    ),
+                                  )
+                                : const Text(''),
+                            leading: const CloudBackButton(),
+                            flexibleSpace: FlexibleSpaceBar(
+                              //centerTitle: true,
+                              background: Container(
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                color: Colors.transparent,
+                                //height: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    135.hb,
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: headerWhite
+                                            ? Colors.white
+                                            : Colors.transparent,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 32.w, vertical: 24.w),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          _title(),
+                                          32.hb,
+                                          _label(),
+                                          18.hb,
+                                          _information(),
+                                          8.hb,
+                                          getDown(),
+                                          // 24.hb,
+                                          _shuffling(),
+                                          32.hb,
+                                          // _informations(),
+                                        ],
+                                      ),
+                                    ),
+                                    // 50.hb,
+                                  ],
+                                ),
+                              ),
+                            ),
+                            bottom: PreferredSize(
+                              preferredSize:
+                                  Size.fromHeight(kToolbarHeight - 10.w),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.w),
+                                child: Container(
+                                  height: kToolbarHeight - 10.w,
+                                  width: double.infinity,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border(
+                                          top: BorderSide(
+                                              color: const Color(0xFFF6F6F6),
+                                              width: 2.w))),
+                                  child: TabBar(
+                                      onTap: (index) {
+                                        setState(() {});
+                                      },
+                                      isScrollable: true,
+                                      labelPadding: EdgeInsets.symmetric(
+                                          vertical: 10.w, horizontal: 80.w),
+                                      controller: _tabController,
+                                      indicatorWeight: 3,
+                                      labelColor: kPrimaryColor,
+                                      unselectedLabelColor:
+                                          BaseStyle.color333333,
+                                      unselectedLabelStyle: const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        color: BaseStyle.color333333,
+                                      ),
+                                      indicatorPadding: EdgeInsets.symmetric(
+                                          horizontal: 30.w, vertical: 0.w),
+                                      indicatorSize: TabBarIndicatorSize.tab,
+                                      labelStyle: TextStyle(
+                                        color: Colors.white.withOpacity(0.85),
+                                      ),
+                                      indicator: const BoxDecoration(),
+                                      indicatorColor: kPrimaryColor,
+                                      tabs: [
+                                        _tab(0, tabs[0]),
+                                        _tab(1, tabs[1]),
+                                      ]),
+                                ),
+                              ),
+                            )),
+                      ];
+                    },
+                    body: Padding(
+                      padding: EdgeInsets.only(bottom: 0.w),
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          PublishDetailItem(
+                            publishInfoModel: publishInfoModel,
+                            isUpdate: widget.isUpdate,
+                            editInfo: editInfo,
+                            // carInfoModel: carInfoModel!,
+                          ),
+                          ColoredBox(
+                            color: Colors.white,
+                            child: ListView(
+                              padding: EdgeInsets.only(top: 20.w),
+                              children: [
+                                GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  crossAxisCount: 3,
+                                  children: [
+                                    _buildChild(
+                                      _titles[0],
+                                      0,
+                                    ),
+                                    _buildChild(
+                                      _titles[1],
+                                      1,
+                                    ),
+                                    _buildChild(
+                                      _titles[2],
+                                      2,
+                                    ),
+                                    _buildChild(
+                                      _titles[3],
+                                      3,
+                                    ),
+                                    // _buildChild(
+                                    //   _titles[4],
+                                    //   4,
+                                    // ),
+                                  ],
+                                ),
+                                // Padding(
+                                //   padding:  EdgeInsets.only(left: 20.w,bottom: 20.w),
+                                //   child: Text('报告数据',style: TextStyle(color: const Color(0xFF333333),fontSize: 28.sp,fontWeight: FontWeight.bold),),
+                                // ),
+                                // _getView(_reportPhotos)
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                bottomNavi: Audit.getValueAuditId(widget.isUpdate == 2
+                                    ? editInfo.status
+                                    : publishInfoModel.status)
+                                .typeNum !=
+                            3 &&
+                        Audit.getValueAuditId(widget.isUpdate == 2
+                                    ? editInfo.status
+                                    : publishInfoModel.status)
+                                .typeNum !=
+                            0
+                    ? Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 32.w, vertical: 8.w),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1.w, color: const Color(0xFFEEEEEE)),
+                            color: Colors.white),
+                        height: Audit.getValueAuditId(widget.isUpdate == 2
+                                        ? editInfo.status
+                                        : publishInfoModel.status)
+                                    .typeNum !=
+                                4
+                            ? 170.w
+                            : UserTool.userProvider.userInfo.business.roleEM ==
+                                    Role.carService
+                                ? 270.w
+                                : 200.w, //double.infinity,
+                        child: getBottomState(),
+                      )
+                    : const SizedBox(),
+                fab: null,
+                fbLocation: CustomFloatingActionButtonLocation(
+                    FloatingActionButtonLocation.endDocked, 2.w, -130.w),
+              );
   }
 
   // Widget _getView(
@@ -592,7 +838,11 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     //   ///出售申请
     //   case 1:
     return widget.index == 2
-        ? Audit.getValueAuditId(publishInfoModel.status).typeNum == 1
+        ? Audit.getValueAuditId(widget.isUpdate == 2
+                        ? editInfo.status
+                        : publishInfoModel.status)
+                    .typeNum ==
+                1
 
             ///1待审核 2已审核
             ? Row(
@@ -632,36 +882,66 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                                 Alert.dismiss(context);
                               },
                               deleteListener: () async {
-                                var res = await apiClient
-                                    .request(API.car.publishReject, data: {
-                                  'carBaseId': widget.carId,
-                                  'reason': rejectController.text
-                                });
-                                if (res.code == 0) {
-                                  CloudToast.show('驳回成功');
-                                  Get.back();
+                                if (widget.isUpdate == 1) {
+                                  var res = await apiClient
+                                      .request(API.car.publishReject, data: {
+                                    'carBaseId': widget.carId,
+                                    'reason': rejectController.text
+                                  });
+                                  if (res.code == 0) {
+                                    CloudToast.show('驳回成功');
+                                    Get.back();
+                                  } else {
+                                    CloudToast.show(res.msg);
+                                  }
                                 } else {
-                                  CloudToast.show(res.msg);
+                                  var res = await apiClient
+                                      .request(API.order.editReject, data: {
+                                    'carEditId': widget.carId,
+                                    'reason': rejectController.text
+                                  });
+                                  if (res.code == 0) {
+                                    CloudToast.show(res.msg);
+                                    Get.back();
+                                  } else {
+                                    CloudToast.show(res.msg);
+                                  }
                                 }
 
-                                Alert.dismiss(context);
+                                // Alert.dismiss(context);
                               },
                             ));
                       }),
                       16.wb,
                       getBox('通过', const Color(0xFF027AFF), 0, Colors.white,
                           Colors.white, () async {
-                        var res = await apiClient.request(API.car.publishAdopt,
-                            data: {'carBaseId': widget.carId});
-                        if (res.code == 0) {
-                          Get.to(() => PublishFinishPage(
-                                title: ReminderApprovalType.getValue(
-                                        publishInfoModel.status)
-                                    .typeStr,
-                                remindText: '已同意',
-                              ));
+                        if (widget.isUpdate == 2) {
+                          var res = await apiClient.request(API.order.editAdopt,
+                              data: {'carEditId': widget.carId});
+                          if (res.code == 0) {
+                            Get.to(() => PublishFinishPage(
+                                  title: ReminderApprovalType.getValue(
+                                          publishInfoModel.status)
+                                      .typeStr,
+                                  remindText: '已同意',
+                                ));
+                          } else {
+                            CloudToast.show(res.msg);
+                          }
                         } else {
-                          CloudToast.show(res.msg);
+                          var res = await apiClient.request(
+                              API.car.publishAdopt,
+                              data: {'carBaseId': widget.carId});
+                          if (res.code == 0) {
+                            Get.to(() => PublishFinishPage(
+                                  title: ReminderApprovalType.getValue(
+                                          publishInfoModel.status)
+                                      .typeStr,
+                                  remindText: '已同意',
+                                ));
+                          } else {
+                            CloudToast.show(res.msg);
+                          }
                         }
                       }),
                     ],
@@ -673,7 +953,11 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Audit.getValueAuditId(publishInfoModel.status).typeNum == 2
+                    Audit.getValueAuditId(widget.isUpdate == 2
+                                    ? editInfo.status
+                                    : publishInfoModel.status)
+                                .typeNum ==
+                            2
                         ? 32.hb
                         : 0.hb,
                     Row(
@@ -681,18 +965,21 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                         getContact(),
                         const Spacer(),
                         Text(
-                          Audit.getValueAuditId(publishInfoModel.status)
+                          Audit.getValueAuditId(widget.isUpdate == 2
+                                          ? editInfo.status
+                                          : publishInfoModel.status)
                                       .typeNum ==
                                   2
                               ? "已同意"
                               : '已驳回',
                           style: TextStyle(
-                              color:
-                                  Audit.getValueAuditId(publishInfoModel.status)
-                                              .typeNum ==
-                                          2
-                                      ? const Color(0xFF027AFF)
-                                      : const Color(0xFFFF3B02),
+                              color: Audit.getValueAuditId(widget.isUpdate == 2
+                                              ? editInfo.status
+                                              : publishInfoModel.status)
+                                          .typeNum ==
+                                      2
+                                  ? const Color(0xFF027AFF)
+                                  : const Color(0xFFFF3B02),
                               fontSize: 28.sp,
                               fontWeight: FontWeight.w600),
                         ),
@@ -700,11 +987,15 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                     ),
                     // const Spacer(),
                     8.hb,
-                    Audit.getValueAuditId(publishInfoModel.status).typeNum == 2
+                    Audit.getValueAuditId(widget.isUpdate == 2
+                                    ? editInfo.status
+                                    : publishInfoModel.status)
+                                .typeNum ==
+                            2
                         ? const SizedBox()
                         : Flexible(
                             child: Text(
-                              '驳回理由:${publishInfoModel.dealerRejectReason}',
+                              '驳回理由:${widget.isUpdate == 2 ? '无' : publishInfoModel.dealerRejectReason}',
                               style: TextStyle(
                                   fontSize: 28.sp,
                                   color: const Color(0xFF333333),
@@ -743,7 +1034,11 @@ class _PublishInfoPageState extends State<PublishInfoPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Audit.getValueAuditId(publishInfoModel.status).typeNum == 2
+                Audit.getValueAuditId(widget.isUpdate == 2
+                                ? editInfo.status
+                                : publishInfoModel.status)
+                            .typeNum ==
+                        2
                     ? 32.hb
                     : 0.hb,
                 Row(
@@ -751,9 +1046,13 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                     getContact(),
                     const Spacer(),
                     Text(
-                      getText(publishInfoModel.status),
+                      getText(widget.isUpdate == 2
+                          ? editInfo.status
+                          : publishInfoModel.status),
                       style: TextStyle(
-                          color: getColor(publishInfoModel.status),
+                          color: getColor(widget.isUpdate == 2
+                              ? editInfo.status
+                              : publishInfoModel.status),
                           fontSize: 28.sp,
                           fontWeight: FontWeight.w600),
                     ),
@@ -761,47 +1060,141 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                 ),
                 // const Spacer(),
                 16.hb,
-                Audit.getValueAuditId(publishInfoModel.status).typeNum != 4
-                    ? const SizedBox()
-                    : Flexible(
-                        child: Text(
-                          '驳回理由:${publishInfoModel.dealerRejectReason}',
-                          style: TextStyle(
-                              fontSize: 28.sp,
-                              color: const Color(0xFF333333),
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                UserTool.userProvider.userInfo.business.roleEM ==
-                            Role.carService &&
-                        Audit.getValueAuditId(publishInfoModel.status)
-                                .typeNum ==
+                widget.isUpdate == 2
+                    ? Audit.getValueAuditId(editInfo.status).typeNum != 4
+                        ? const SizedBox()
+                        : Flexible(
+                            child: Text(
+                              '驳回理由:无',
+                              // '驳回理由:${wu}',
+                              style: TextStyle(
+                                  fontSize: 28.sp,
+                                  color: const Color(0xFF333333),
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          )
+                    : Audit.getValueAuditId(publishInfoModel.status).typeNum !=
                             4
-                    // widget.state == 2 || widget.state == 3
-                    ? const Divider()
-                    : const SizedBox(),
+                        ? const SizedBox()
+                        : Flexible(
+                            child: Text(
+                              '驳回理由:${publishInfoModel.dealerRejectReason}',
+                              style: TextStyle(
+                                  fontSize: 28.sp,
+                                  color: const Color(0xFF333333),
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                widget.isUpdate == 2
+                    ? UserTool.userProvider.userInfo.business.roleEM ==
+                                Role.carService &&
+                            Audit.getValueAuditId(editInfo.status).typeNum == 4
+                        // widget.state == 2 || widget.state == 3
+                        ? const Divider()
+                        : const SizedBox()
+                    : UserTool.userProvider.userInfo.business.roleEM ==
+                                Role.carService &&
+                            Audit.getValueAuditId(publishInfoModel.status)
+                                    .typeNum ==
+                                4
+                        // widget.state == 2 || widget.state == 3
+                        ? const Divider()
+                        : const SizedBox(),
                 1.hb,
                 // widget.state == 2 || widget.state == 3
-                UserTool.userProvider.userInfo.business.roleEM ==
-                            Role.carService &&
-                        Audit.getValueAuditId(publishInfoModel.status)
-                                .typeNum ==
-                            4
-                    ? Padding(
-                        padding: EdgeInsets.only(left: 400.w),
-                        child: getBox(
-                            '重新发布',
+                widget.isUpdate == 2
+                    ? UserTool.userProvider.userInfo.business.roleEM ==
+                                Role.carService &&
+                            Audit.getValueAuditId(editInfo.status).typeNum == 4
+                        ? Padding(
+                            padding: EdgeInsets.only(left: 400.w),
+                            child: getBox('重新编辑', const Color(0xFF027AFF), 0,
+                                Colors.white, Colors.white, () {
 
-                            ///widget.state == 2 ? '重新编辑' : '重新发布',
-                            const Color(0xFF027AFF),
-                            0,
-                            Colors.white,
-                            Colors.white, () {
-                          Get.to(() =>
-                              NewPushCarPage(publishInfoModel: publishInfoModel));
-                        }),
-                      )
-                    : const SizedBox()
+                              Get.to(() => EditCarPage(
+                                    carListModel: NewCarInfo(
+                                        carInfo: CarNewInfo(
+                                          id: editInfo.id,
+                                          modelName: editInfo.modelName,
+
+                                          ///
+                                          status: editInfo.status,
+                                          statusName: editInfo.sourceName,
+                                          theUpper: editInfo.theUpper,
+                                          theUpperName: editInfo.theUpperName,
+                                          modelId: editInfo.modelId,
+                                          vin: editInfo.vin,
+                                          carSn: editInfo.carSn,
+                                          collect: editInfo.collect,
+                                          browse: editInfo.browse,
+                                          transfer: editInfo.transfer,
+                                          price: editInfo.price,
+                                          lastPrice: editInfo.lastPrice,
+                                          downPayment: editInfo.downPayment,
+                                          source: editInfo.source,
+                                          sourceName: editInfo.sourceName,
+                                          dealerId: editInfo.dealerId,
+                                          dealerName: editInfo.dealerName,
+                                          locationCityId:
+                                              editInfo.locationCityId,
+                                          dealerSn: editInfo.dealerSn,
+                                          type: editInfo.type,
+                                          engineNo: editInfo.engineNo,
+                                          licensingDate:
+                                              (editInfo.licensingDate).toInt(),
+                                          color: editInfo.color,
+                                          interiorColor: editInfo.interiorColor,
+                                          temporaryLicensePlate:
+                                              editInfo.temporaryLicensePlate,
+                                          parkingNo: editInfo.parkingNo,
+                                          stockStatus: editInfo.stockStatus,
+                                          stockStatusName:
+                                              editInfo.stockStatusName,
+                                          useCharacter: editInfo.useCharacter,
+                                          mileage: editInfo.mileage,
+                                          // newCarGuidePrice,
+                                          purchaseTax: editInfo.purchaseTax,
+                                          installationCost:
+                                              editInfo.installationCost,
+                                          location: editInfo.location,
+                                          attribution: editInfo.attribution,
+                                          condition: editInfo.condition,
+                                          carPhotos: const [],//editInfo.carPhotos,
+                                          interiorPhotos:const[],
+                                              //editInfo.interiorPhotos,
+                                          defectPhotos:const[],// editInfo.defectPhotos,
+                                          // reportPhotos,
+                                          // repairPhotos,
+                                          brokerInfo: editInfo.brokerInfo,
+                                          modelInfo: editInfo.modelInfo,
+                                          priceInfo: editInfo.priceInfo,
+                                          certificateInfo:
+                                              editInfo.certificateInfo,
+                                          contractMasterInfo:
+                                              editInfo.contractMasterInfo,
+                                          dataPhotos: [],//editInfo.dataPhotos,
+                                        ),
+                                        isSelf: 1,
+                                        isSelfStore: 1,
+                                        isSelfBusiness: 1),
+                                  ));
+                            }),
+                          )
+                        : const SizedBox()
+                    : UserTool.userProvider.userInfo.business.roleEM ==
+                                Role.carService &&
+                            Audit.getValueAuditId(publishInfoModel.status)
+                                    .typeNum ==
+                                4
+                        ? Padding(
+                            padding: EdgeInsets.only(left: 400.w),
+                            child: getBox('重新发布', const Color(0xFF027AFF), 0,
+                                Colors.white, Colors.white, () {
+                              Get.to(() => NewPushCarPage(
+                                  publishInfoModel: publishInfoModel));
+                            }),
+                          )
+                        : const SizedBox()
                 // : Row(
                 //     children: [
                 //       Text(
@@ -849,7 +1242,9 @@ class _PublishInfoPageState extends State<PublishInfoPage>
   getContact() {
     return GestureDetector(
       onTap: () {
-        getPhone(publishInfoModel.brokerInfo.brokerPhone);
+        getPhone(widget.isUpdate == 2
+            ? editInfo.brokerInfo.brokerPhone
+            : publishInfoModel.brokerInfo.brokerPhone);
       },
       child: Row(
         children: [
@@ -949,7 +1344,9 @@ class _PublishInfoPageState extends State<PublishInfoPage>
         // print(pushPhotoModel.dataPhotos!.length);
         await Get.to(
           PushCarManagePhotoPage(
-            isSelf: true,///widget.carListModel.isSelf == 1,
+            isSelf: true,
+
+            ///widget.carListModel.isSelf == 1,
             tabs: _titles,
             model: pushPhotoModel,
             initIndex: index,
@@ -1032,7 +1429,9 @@ class _PublishInfoPageState extends State<PublishInfoPage>
       children: [
         Flexible(
             child: Text(
-          publishInfoModel.modelName ?? '',
+          widget.isUpdate == 2
+              ? editInfo.modelName
+              : publishInfoModel.modelName,
           style: Theme.of(context)
               .textTheme
               .headline6
@@ -1050,27 +1449,43 @@ class _PublishInfoPageState extends State<PublishInfoPage>
           width: double.infinity,
           child: Row(
             children: [
-              _noRelease(Audit.getValueAuditId(publishInfoModel.status)
-                          .typeNum ==
-                      3
-                  ? '在售'
-                  : Audit.getValueAuditId(publishInfoModel.status).typeNum == 2
-                      ? '待审批'
-                      : Audit.getValueAuditId(publishInfoModel.status).typeStr),
-              Audit.getValueAuditId(publishInfoModel.status).typeNum == 3
-                  ? 16.wb
-                  : 0.wb,
-              Audit.getValueAuditId(publishInfoModel.status).typeNum == 3
-                  ? _noRelease('在厅')
-                  : const SizedBox(),
+              widget.isUpdate == 2
+                  ? _noRelease(
+                      Audit.getValueAuditId(editInfo.status).typeNum == 3
+                          ? editInfo.stockStatusName //'在售'
+                          : Audit.getValueAuditId(editInfo.status).typeNum == 2
+                              ? '待审批'
+                              : Audit.getValueAuditId(editInfo.status).typeStr)
+                  : _noRelease(
+                      Audit.getValueAuditId(publishInfoModel.status).typeNum ==
+                              3
+                          ? publishInfoModel.stockStatusName //'在售'
+                          : Audit.getValueAuditId(publishInfoModel.status)
+                                      .typeNum ==
+                                  2
+                              ? '待审批'
+                              : Audit.getValueAuditId(publishInfoModel.status)
+                                  .typeStr),
+              // Audit.getValueAuditId(publishInfoModel.status).typeNum == 3
+              //     ? 16.wb
+              //     : 0.wb,
+              // Audit.getValueAuditId(publishInfoModel.status).typeNum == 3
+              //     ? _noRelease('在厅')
+              //     : const SizedBox(),
               16.wb,
               _textview(DateUtil.formatDateMs(
-                  (publishInfoModel.licensingDate.toInt() ?? 0) * 1000,
+                  (widget.isUpdate == 2
+                          ? editInfo.licensingDate.toInt()
+                          : publishInfoModel.licensingDate.toInt()) *
+                      1000,
                   format: 'yyyy年MM月')),
               16.wb,
-              _textview('${publishInfoModel.mileage}万公里'),
+              _textview(
+                  '${widget.isUpdate == 2 ? editInfo.mileage : publishInfoModel.mileage}万公里'),
               16.wb,
-              _textview(publishInfoModel.modelInfo.fuelTypeName ?? ""),
+              _textview(widget.isUpdate == 2
+                  ? editInfo.modelInfo.fuelTypeName
+                  : publishInfoModel.modelInfo.fuelTypeName ?? ""),
             ],
           ),
         ),
@@ -1088,7 +1503,9 @@ class _PublishInfoPageState extends State<PublishInfoPage>
           children: [
             Text.rich(TextSpan(children: [
               TextSpan(
-                  text: (num.parse(publishInfoModel.priceInfo.exteriorPrice) /
+                  text: (num.parse(widget.isUpdate == 2
+                              ? editInfo.priceInfo.exteriorPrice
+                              : publishInfoModel.priceInfo.exteriorPrice) /
                           10000)
                       .toString(),
                   style: TextStyle(
@@ -1114,9 +1531,13 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                   ),
                 ),
                 Text(
-                  publishInfoModel.price == '0'
-                      ? '无'
-                      : '${publishInfoModel.price}万元',
+                  widget.isUpdate == 2
+                      ? editInfo.price == '0'
+                          ? '无'
+                          : '${editInfo.price}万元'
+                      : publishInfoModel.price == '0'
+                          ? '无'
+                          : '${publishInfoModel.price}万元',
                   style: TextStyle(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w400,
@@ -1132,7 +1553,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
         GestureDetector(
           onTap: () {
             downState = !downState;
-            print(downState);
+            // print(downState);
             setState(() {});
           },
           child: Container(
@@ -1203,8 +1624,9 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                         ),
                         Text(
                           TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
-                              num.parse(
-                                  publishInfoModel.priceInfo.exteriorPrice))),
+                              num.parse(widget.isUpdate == 2
+                                  ? editInfo.priceInfo.exteriorPrice
+                                  : publishInfoModel.priceInfo.exteriorPrice))),
                           style: TextStyle(
                               height: 1.5,
                               fontSize: 28.sp,
@@ -1232,8 +1654,9 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                         10.wb,
                         Text(
                           TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
-                              num.parse(
-                                  publishInfoModel.priceInfo.interiorPrice))),
+                              num.parse(widget.isUpdate == 2
+                                  ? editInfo.priceInfo.interiorPrice
+                                  : publishInfoModel.priceInfo.interiorPrice))),
                           style: TextStyle(
                               height: 1.5,
                               fontSize: 28.sp,
@@ -1388,7 +1811,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
   }
 
 //分页指示器
-  _bulidPagination() {
+  _buildPagination() {
     return SwiperPagination(
         //指示器显示的位置
         alignment: Alignment.bottomCenter, //位置在底部
@@ -1431,7 +1854,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
       //自动翻页
       autoplay: true,
       //分页指示
-      pagination: _bulidPagination(),
+      pagination: _buildPagination(),
       //点击事件
       onTap: (index) {
         //('点击$index');

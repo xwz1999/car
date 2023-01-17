@@ -1,87 +1,130 @@
-
-
 ///出售合同上传model
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 
 part 'car_sale_contract_model.g.dart';
 
-
-
 @JsonSerializable()
-class CarSaleContractModel extends Equatable{
-    int carId;
-   int payType;///支付方式1=全款 2=按揭
-   int transferType; ///过户方式1=本地 2=外迁
-   PriceInfo priceInfo;
-   int? customerId;
-   int? customerChannel;
-   MasterInfo masterInfo;
-   ThirdPartInfo thirdPartInfo;
-   String remark;
-    factory CarSaleContractModel.fromJson(Map<String, dynamic> json) =>_$CarSaleContractModelFromJson(json);
+class CarSaleContractModel extends Equatable {
+  int carId;
+  int payType;
 
+  ///支付方式1=全款 2=按揭
+  int transferType;
 
-   CarSaleContractModel({
+  ///过户方式1=本地 2=外迁
+  PriceInfo priceInfo;
+  int? customerId;
+  int? customerChannel;
+  MasterInfo masterInfo;
+  ThirdPartInfo thirdPartInfo;
+  String remark;
+
+  factory CarSaleContractModel.fromJson(Map<String, dynamic> json) =>
+      _$CarSaleContractModelFromJson(json);
+
+  CarSaleContractModel({
     required this.carId,
-     required this.payType,
+    required this.payType,
     required this.transferType,
     required this.priceInfo,
     required this.customerId,
     required this.masterInfo,
     required this.thirdPartInfo,
     required this.remark,
-     required this.customerChannel,
+    required this.customerChannel,
   });
+
   @override
-  List<Object?> get props => [carId,payType,transferType,priceInfo,customerId,masterInfo,thirdPartInfo,remark,customerChannel];
+  List<Object?> get props => [
+        carId,
+        payType,
+        transferType,
+        priceInfo,
+        customerId,
+        masterInfo,
+        thirdPartInfo,
+        remark,
+        customerChannel
+      ];
 }
 
 @JsonSerializable()
-class PriceInfo{
+class PriceInfo {
   String dealPrice;
   String deposit;
   String downPayment;
-  factory PriceInfo.fromJson(Map<String, dynamic> json) =>_$PriceInfoFromJson(json);
+  String deliverDate;
+  String deliverAddress;
+  String transferFee;
+  int transferFeeHolder;
+  String agentFee;
+  int agentFeeHolder;
+
+  factory PriceInfo.fromJson(Map<String, dynamic> json) =>
+      _$PriceInfoFromJson(json);
 
   PriceInfo({
     required this.dealPrice,
     required this.deposit,
     required this.downPayment,
+    required this.deliverDate,
+    required this.deliverAddress,
+    required this.transferFee,
+    required this.transferFeeHolder,
+    required this.agentFee,
+    required this.agentFeeHolder,
   });
-  List<Object?> get props => [dealPrice,deposit,downPayment];
+
+  List<Object?> get props => [
+        dealPrice,
+        deposit,
+        downPayment,
+        deliverDate,
+        deliverAddress,
+        transferFee,
+        transferFeeHolder,
+        agentFee,
+        agentFeeHolder,
+      ];
 }
 
+@JsonSerializable()
+class MasterInfo {
+  String name;
+  String phone;
+  String idCard;
+  String address;
+  String bank;
+  String bankCard;
+  String bankAccount;
+
+  factory MasterInfo.fromJson(Map<String, dynamic> json) =>
+      _$MasterInfoFromJson(json);
+
+  MasterInfo({
+    required this.name,
+    required this.phone,
+    required this.idCard,
+    required this.address,
+    required this.bank,
+    required this.bankCard,
+    required this.bankAccount,
+  });
+
+  List<Object?> get props =>
+      [name, phone, idCard, address, bank, bankCard, bankAccount];
+}
 
 @JsonSerializable()
-class MasterInfo{
-String name;
-String phone;
-String idCard;
-String address;
-String bank;
-String bankCard;
-String bankAccount;
-factory MasterInfo.fromJson(Map<String, dynamic> json) =>_$MasterInfoFromJson(json);
-MasterInfo({
-  required this.name,
-  required this.phone,
-  required this.idCard,
-  required this.address,
-  required this.bank,
-  required this.bankCard,
-  required this.bankAccount,
-  
-});
-List<Object?> get props => [name,phone,idCard,address,bank,bankCard,bankAccount];
-}
-@JsonSerializable()
-class ThirdPartInfo{
+class ThirdPartInfo {
   int kind;
   int storeId;
   String saleServiceFeeRate;
   String purchaseServiceFeeRate;
-  factory ThirdPartInfo.fromJson(Map<String, dynamic> json) =>_$ThirdPartInfoFromJson(json);
+
+  factory ThirdPartInfo.fromJson(Map<String, dynamic> json) =>
+      _$ThirdPartInfoFromJson(json);
 
   ThirdPartInfo({
     required this.kind,
@@ -90,7 +133,11 @@ class ThirdPartInfo{
     required this.purchaseServiceFeeRate,
   });
 
-List<Object?> get props => [kind,storeId,saleServiceFeeRate,];
+  List<Object?> get props => [
+        kind,
+        storeId,
+        saleServiceFeeRate,
+      ];
 }
 // class CarSaleContractModel{
 //   int? carId;
@@ -131,4 +178,3 @@ List<Object?> get props => [kind,storeId,saleServiceFeeRate,];
 //     required this.dealPrice,
 // })
 // }
-

@@ -7,6 +7,8 @@ import 'package:cloud_car/widget/cloud_image_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../model/car/new_car_info.dart';
+
 class PushCarManagePhotoWidget extends StatefulWidget {
   final PushPhotoModel model;
   // final ReportPhotoModel reportPhotoModel;

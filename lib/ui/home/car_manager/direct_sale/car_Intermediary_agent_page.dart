@@ -2,6 +2,7 @@ import 'package:cloud_car/ui/home/car_manager/direct_sale/edit_item_widget.dart'
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_third_page.dart';
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -11,6 +12,7 @@ import '../../../../model/contract/initiate_contract_model.dart';
 import '../../../../model/user/store_model.dart';
 import '../../../../widget/button/cloud_back_button.dart';
 import '../../../../widget/button/colud_check_radio.dart';
+import '../../../../widget/picker/car_date_picker.dart';
 import '../publish_car/choose_shop_page.dart';
 
 // typedef TextCallback = Function(String content);
@@ -29,14 +31,22 @@ class CarIntermediaryAgentPage extends StatefulWidget {
 
 class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
   final List _models1 = ['无', '云云问车', '其他'];
-    List<int> _selectIndex1 = [];
+  final List<int> _selectIndex1 = [];
+  final List _models2 = ['甲方', '乙方'];
+  final List<int> _selectIndex2 = [];
+  final List<int> _selectIndex3 = [];
   late String jjf = "无";
-   String store = "";
+  String store = "";
   final TextEditingController transactionAmountController =
       TextEditingController();
-  final TextEditingController storesName=TextEditingController();
+  final TextEditingController storesName = TextEditingController();
   final TextEditingController sellerServiceFee = TextEditingController();
   final TextEditingController buyerServiceCharge = TextEditingController();
+  final TextEditingController deliveryTime = TextEditingController();
+  final TextEditingController transferOwnership = TextEditingController();
+  final TextEditingController agent = TextEditingController();
+  final TextEditingController placeDelivery = TextEditingController();
+
 
   @override
   void initState() {
@@ -47,9 +57,11 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
     // print(widget.carSaleContract.thirdPartInfo.kind);
     // _selectIndex1==[]? _selectIndex1=[]: _selectIndex1.setAll(0,[ widget.carSaleContract.thirdPartInfo.kind ?? 0]);
     ///_selectIndex1.add(widget.carSaleContract.thirdPartInfo.kind);
-    sellerServiceFee.text= widget.carSaleContract.thirdPartInfo.saleServiceFeeRate;
-    buyerServiceCharge.text=widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate;
-    storesName.text=store;
+    sellerServiceFee.text =
+        widget.carSaleContract.thirdPartInfo.saleServiceFeeRate;
+    buyerServiceCharge.text =
+        widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate;
+    storesName.text = store;
     super.initState();
   }
 
@@ -58,6 +70,9 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
     transactionAmountController.dispose();
     sellerServiceFee.dispose();
     buyerServiceCharge.dispose();
+    deliveryTime.dispose();
+    transferOwnership.dispose();
+    agent.dispose();
     super.dispose();
   }
 
@@ -95,7 +110,7 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
       ),
       backgroundColor: bodyColor,
       extendBody: true,
-      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      body: ListView( children: [
         Padding(
           padding: EdgeInsets.only(left: 24.w, top: 12.w),
           child: Text(
@@ -158,28 +173,21 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                     border: Border(
                         bottom: BorderSide(
                             color: const Color(0xFFF6F6F6), width: 2.w))),
-                child: _function(
-                  '选择门店',
-
-                  () async {
-                    ///需要新接口
-                    Get.to(() => ChooseShopPage(
-                          title: "所属门店",
-                          callback: (StoreModel model) {
-                            store = model.name;
-                            storesName.text=model.name;
-                            // widget.carSaleContract.thirdPartInfo.s
-                            widget.carSaleContract.thirdPartInfo.storeId =
-                                model.id;
-                            setState(() {});
-                          },
-                        ));
-                    setState(() {});
-                  },
-                  store,
-                  '请选择',
-                  storesName
-                ),
+                child: _function('选择门店', () async {
+                  ///需要新接口
+                  Get.to(() => ChooseShopPage(
+                        title: "所属门店",
+                        callback: (StoreModel model) {
+                          store = model.name;
+                          storesName.text = model.name;
+                          // widget.carSaleContract.thirdPartInfo.s
+                          widget.carSaleContract.thirdPartInfo.storeId =
+                              model.id;
+                          setState(() {});
+                        },
+                      ));
+                  setState(() {});
+                }, store, '请选择', storesName),
               )
             : const SizedBox(),
         jjf == "无"
@@ -267,6 +275,173 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                   },
                 ),
               ),
+        20.hb,
+        Padding(
+          padding: EdgeInsets.only(left: 24.w, top: 12.w),
+          child: Text(
+            '交付信息',
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                color: BaseStyle.color111111, fontWeight: FontWeight.bold),
+          ),
+        ),
+        20.hb,
+        Container(
+          padding: EdgeInsets.only(left: 32.w),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                  bottom:
+                      BorderSide(color: const Color(0xFFF6F6F6), width: 2.w))),
+          child: _function('交付时间', () async {
+            var firstTime = await CarDatePicker.pick(
+              DateTime.now(),
+            );
+            // _publishCarInfo.value.productionDate = firstDate;
+            FocusManager.instance.primaryFocus?.unfocus();
+            setState(() {});
+          }, '', '请输入交付时间',
+              placeDelivery),
+        ),
+        Container(
+          padding: EdgeInsets.only(left: 32.w),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                  bottom:
+                      BorderSide(color: const Color(0xFFF6F6F6), width: 2.w))),
+          child: EditItemWidget(
+            topIcon: true,
+            title: '交付地点',
+            paddingStart: 0.w,
+            tips: '请输入交付地点',
+            controller: deliveryTime,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
+            ],
+          ),
+        ),
+        20.hb,
+        Padding(
+          padding: EdgeInsets.only(left: 24.w, top: 12.w),
+          child: Text(
+            '其他费用信息',
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                color: BaseStyle.color111111, fontWeight: FontWeight.bold),
+          ),
+        ),
+        20.hb,
+        Container(
+          padding: EdgeInsets.only(left: 32.w),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                  bottom:
+                      BorderSide(color: const Color(0xFFF6F6F6), width: 1.w))),
+          child: EditItemWidget(
+            topIcon: true,
+            title: '过户税费',
+            paddingStart: 0.w,
+            tips: '请输入',
+            endText: '元',
+            controller: transferOwnership,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
+            ],
+          ),
+        ),
+        Container(
+            padding: EdgeInsets.only(top: 30.w, bottom: 30.w),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                    bottom: BorderSide(
+                        color: const Color(0xFFF6F6F6), width: 2.w))),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 10.w, left: 32.w),
+                  child: Text(
+                    '*  ',
+                    style: TextStyle(
+                      fontSize: 28.sp,
+                      color: const Color(0xFFE62222),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 150.w,
+                  child: Text(
+                    '承担方',
+                    style: TextStyle(
+                      fontSize: 32.sp,
+                      color: BaseStyle.color333333,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50.w,
+                  child: getChooseList(
+                      (String choice, int index) {}, _models2, _selectIndex2),
+                ),
+              ],
+            )),
+        Container(
+          padding: EdgeInsets.only(left: 32.w),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                  bottom:
+                      BorderSide(color: const Color(0xFFF6F6F6), width: 2.w))),
+          child: EditItemWidget(
+            topIcon: true,
+            title: '代办手续费',
+            paddingStart: 0.w,
+            tips: '请输入',
+            endText: '元',
+            controller: agent,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
+            ],
+          ),
+        ),
+        Container(
+            padding: EdgeInsets.only(top: 30.w, bottom: 30.w),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                    bottom: BorderSide(
+                        color: const Color(0xFFF6F6F6), width: 2.w))),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 10.w, left: 32.w),
+                  child: Text(
+                    '*  ',
+                    style: TextStyle(
+                      fontSize: 28.sp,
+                      color: const Color(0xFFE62222),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 150.w,
+                  child: Text(
+                    '承担方',
+                    style: TextStyle(
+                      fontSize: 32.sp,
+                      color: BaseStyle.color333333,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50.w,
+                  child: getChooseList(
+                      (String choice, int index) {}, _models2, _selectIndex3),
+                ),
+              ],
+            )),
       ]),
       bottomNavigationBar: Container(
         width: double.infinity,
@@ -278,14 +453,14 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
               widget.carSaleContract.thirdPartInfo.saleServiceFeeRate = "0";
               widget.carSaleContract.thirdPartInfo.purchaseServiceFeeRate = "0";
             }
-            if(!canTap){
+            if (!canTap) {
               // print(widget.carSaleContract.thirdPartInfo.kind);
-              return ;
+              return;
             }
             Get.to(() => SellCarOrderThirdPage(
-              contractModel: widget.contractModel,
-              carSaleContract: widget.carSaleContract,
-            ));
+                  contractModel: widget.contractModel,
+                  carSaleContract: widget.carSaleContract,
+                ));
           },
           child: Container(
             width: double.infinity,
@@ -310,18 +485,10 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
         ),
       ),
     );
-    //   EditItemWidget(
-    //   title: '客户来源',
-    //   topIcon: false,
-    //   value: widget.contractModel.value.origin ?? '',
-    //   callback: (String content) {
-    //     widget.contractModel.value.origin = content;
-    //   },
-    // ),
   }
 
   bool get canTap {
-    if(widget.carSaleContract.thirdPartInfo.kind == 0){
+    if (widget.carSaleContract.thirdPartInfo.kind == 0) {
       CloudToast.show('请选择居间方信息');
       return false;
     }
@@ -377,7 +544,8 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                       children: [
                         BeeCheckRadio(
                           // according: !(widget.carSaleContract.thirdPartInfo.kind !=0),
-                          value:index,////widget.carSaleContract.thirdPartInfo.kind !=0?  widget.carSaleContract.thirdPartInfo.kind:index,/// widget.carSaleContract.thirdPartInfo.kind !=0?  widget.carSaleContract.thirdPartInfo.kind:index,
+                          value: index,
+                          ////widget.carSaleContract.thirdPartInfo.kind !=0?  widget.carSaleContract.thirdPartInfo.kind:index,/// widget.carSaleContract.thirdPartInfo.kind !=0?  widget.carSaleContract.thirdPartInfo.kind:index,
                           groupValue: choices,
                         ),
                         16.wb,
@@ -397,37 +565,8 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
     );
   }
 
-  // _priceInfo(){
-  //   var transactionAmount = EditItemWidget(
-  //     topIcon: false,
-  //     title: '成交价',
-  //     paddingStart: 0.w,
-  //     tips: '请输入',
-  //     controller: transactionAmountController,
-  //     endText: '元',
-  //     inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.]"))],
-  //     callback: (text){
-  //
-  //
-  //     },
-  //   );
-  //   return Column(
-  //     children: [
-  //       transactionAmount,
-  //       _function(
-  //         '选择门店',
-  //             () async {
-  //
-  //           setState(() {});
-  //         },
-  //        "111111111",
-  //         '请选择',
-  //       ),
-  //
-  //     ],
-  //   );
-  // }
-  _function(String title, VoidCallback onTap, String? content, String msg,TextEditingController? controller,
+  _function(String title, VoidCallback onTap, String? content, String msg,
+      TextEditingController? controller,
       {bool topIcon = true}) {
     return GestureDetector(
       onTap: onTap,

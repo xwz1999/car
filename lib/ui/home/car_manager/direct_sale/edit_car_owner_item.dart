@@ -4,8 +4,13 @@ import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../model/car/new_car_info.dart';
+
+
+
 class EditCarOwnerItem extends StatefulWidget {
-  const EditCarOwnerItem({super.key});
+  final NewCarInfo carListModel;
+  const EditCarOwnerItem({super.key,required this.carListModel});
 
   @override
   _EditCarOwnerItemState createState() => _EditCarOwnerItemState();

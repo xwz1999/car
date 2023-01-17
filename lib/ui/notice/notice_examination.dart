@@ -38,287 +38,285 @@ class _ExaminationPageState extends State<ExaminationPage>
           ? ExaminationType.all
           : ReminderApprovalType.all;
   Release _currentType = Release.record;
-            TitleScreenControl screenControl = TitleScreenControl();
-        List<ChooseItem> _sortList = [];
+  TitleScreenControl screenControl = TitleScreenControl();
+  List<ChooseItem> _sortList = [];
 
-        @override
-        void initState() {
-          _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
-          _sortList = Release.values.map((e) => ChooseItem(name: e.typeStr)).toList();
-          super.initState();
-        }
+  @override
+  void initState() {
+    _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
+    _sortList = Release.values.map((e) => ChooseItem(name: e.typeStr)).toList();
+    super.initState();
+  }
 
-        List<Widget> get listWidget => [
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(16.w)),
-                color: kForeGroundColor),
-            clipBehavior: Clip.antiAlias,
-            child: ScreenWidget(
-              pickString: _currentType.typeStr,
-              childAspectRatio: 200 / 56,
-              callback: (String item, int value) {
-                screenControl.screenHide();
-                _currentType = Release.values[value];
-                // switch (_currentType) {
-                //   case Release.record:
-                //     _examinationRefreshController.callRefresh();
-                //     break;
-                //   case Release.modify:
-                //     asRefreshController.callRefresh();
-                //     break;
-                //   case Release.mine:
-                //     pRefreshController.callRefresh();
-                //     break;
-                // }
-                // _examinationRefreshController.callRefresh();
-                if (mounted) {
-                  setState(() {});
-                }
-              },
-              mainAxisSpacing: 10.w,
-              crossAxisSpacing: 24.w,
-              crossAxisCount: 3,
-              haveButton: true,
-              itemList: _sortList,
-            ),
+  List<Widget> get listWidget => [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16.w)),
+              color: kForeGroundColor),
+          clipBehavior: Clip.antiAlias,
+          child: ScreenWidget(
+            pickString: _currentType.typeStr,
+            childAspectRatio: 200 / 56,
+            callback: (String item, int value) {
+              screenControl.screenHide();
+              _currentType = Release.values[value];
+              // switch (_currentType) {
+              //   case Release.record:
+              //     _examinationRefreshController.callRefresh();
+              //     break;
+              //   case Release.modify:
+              //     asRefreshController.callRefresh();
+              //     break;
+              //   case Release.mine:
+              //     pRefreshController.callRefresh();
+              //     break;
+              // }
+              // _examinationRefreshController.callRefresh();
+              if (mounted) {
+                setState(() {});
+              }
+            },
+            mainAxisSpacing: 10.w,
+            crossAxisSpacing: 24.w,
+            crossAxisCount: 3,
+            haveButton: true,
+            itemList: _sortList,
           ),
-        ];
+        ),
+      ];
 
-        @override
-        void dispose() {
-          _examinationRefreshController.dispose();
-          _refreshController.dispose();
-          // asRefreshController.dispose();
-          // pRefreshController.dispose();
-          super.dispose();
-        }
+  @override
+  void dispose() {
+    _examinationRefreshController.dispose();
+    _refreshController.dispose();
+    // asRefreshController.dispose();
+    // pRefreshController.dispose();
+    super.dispose();
+  }
 
-        @override
-        Widget build(BuildContext context) {
-          super.build(context);
-          return
-            Scaffold(
-              // appBar: AppBar(
-              // )
-              // AppBar(
-              //   toolbarHeight: 88.w,
-              //   backgroundColor: kForeGroundColor,
-              //   leading: const CloudBackButton(
-              //     isSpecial: true,
-              //   ),
-              //   title: PreferredSize(
-              //       preferredSize: Size.fromHeight(1.w),
-              //       child: SizedBox(
-              //         child:
-              // TabBar(
-              //             // indicator:
-              //             //     BoxDecoration(borderRadius: BorderRadius.circular(4.w)),
-              //             indicatorColor: const Color(0xFF027AFF),
-              //             indicatorPadding: EdgeInsets.only(top: 16.w),
-              //             //indicatorWeight: 3,
-              //             indicatorSize: TabBarIndicatorSize.label,
-              //             isScrollable: true,
-              //             controller: _tabController,
-              //             tabs: [_tab(0, '寄卖合同'), _tab(1, '售车合同')]),
-              //       )),
-              //   actions: [
-              //     GestureDetector(
-              //       onTap: () {
-              //         Get.to(() => const SearchPage());
-              //       },
-              //       child: Image.asset(Assets.icons.mainSearch.path,
-              //           height: 48.w, width: 48.w),
-              //     ),
-              //   ],
-              // ),
-              backgroundColor: bodyColor,
-              //extendBody: true,
-              extendBodyBehindAppBar: true,
-              body: Builder(builder: (context) {
-                return
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return Scaffold(
+      // appBar: AppBar(
+      // )
+      // AppBar(
+      //   toolbarHeight: 88.w,
+      //   backgroundColor: kForeGroundColor,
+      //   leading: const CloudBackButton(
+      //     isSpecial: true,
+      //   ),
+      //   title: PreferredSize(
+      //       preferredSize: Size.fromHeight(1.w),
+      //       child: SizedBox(
+      //         child:
+      // TabBar(
+      //             // indicator:
+      //             //     BoxDecoration(borderRadius: BorderRadius.circular(4.w)),
+      //             indicatorColor: const Color(0xFF027AFF),
+      //             indicatorPadding: EdgeInsets.only(top: 16.w),
+      //             //indicatorWeight: 3,
+      //             indicatorSize: TabBarIndicatorSize.label,
+      //             isScrollable: true,
+      //             controller: _tabController,
+      //             tabs: [_tab(0, '寄卖合同'), _tab(1, '售车合同')]),
+      //       )),
+      //   actions: [
+      //     GestureDetector(
+      //       onTap: () {
+      //         Get.to(() => const SearchPage());
+      //       },
+      //       child: Image.asset(Assets.icons.mainSearch.path,
+      //           height: 48.w, width: 48.w),
+      //     ),
+      //   ],
+      // ),
+      backgroundColor: bodyColor,
+      //extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: Builder(builder: (context) {
+        return TitleDropDownWidget([_currentType.typeStr], listWidget,
+            height: kToolbarHeight + MediaQuery.of(context).padding.top - 15.w,
+            bottomHeight: 30.w,
+            screenControl: screenControl,
+            headFontSize: 36.sp,
+            isSearch: true,
+            callback: (text) {
+              // _examinationRefreshController.callRefresh();
+              // switch (text) {
+              //   case '发布车辆':
+              //     _examinationRefreshController.callRefresh();
+              //     break;
+              //   case '修改记录':
+              //     _examinationRefreshController.callRefresh();
+              //     break;
+              //   case '我的审批':
+              //     _examinationRefreshController.callRefresh();
+              //     break;
+              // }
+              if (mounted) {
+                setState(() {});
+              }
+            },
+            leftWidget: const CloudBackButton(
+              isSpecial: true,
+            ),
+            // screen: '筛选',
+            onTap: () {
+              screenControl.screenHide();
+              Scaffold.of(context).openEndDrawer();
+            },
+            child: _getCurrentPage());
+      }),
+      // endDrawer: CustomDrawer(
+      //     widthPercent: 0.86,
+      //     backgroundColor: Colors.white,
+      //     callback: (bool isOpened) {},
+      //     child: const SizedBox())
 
-                  TitleDropDownWidget([_currentType.typeStr], listWidget,
-                      height: kToolbarHeight + MediaQuery.of(context).padding.top-15.w,
-                      bottomHeight: 30.w,
-                      screenControl: screenControl,
-                      headFontSize: 36.sp,
-                      isSearch: true,
-                      callback: (text) {
-                        // _examinationRefreshController.callRefresh();
-                        // switch (text) {
-                        //   case '发布车辆':
-                        //     _examinationRefreshController.callRefresh();
-                        //     break;
-                        //   case '修改记录':
-                        //     _examinationRefreshController.callRefresh();
-                        //     break;
-                        //   case '我的审批':
-                        //     _examinationRefreshController.callRefresh();
-                        //     break;
-                        // }
-                        if (mounted) {
-                          setState(() {});
-                        }
-                      },
-                      leftWidget: const CloudBackButton(
-                        isSpecial: true,
-                      ),
-                      // screen: '筛选',
-                      onTap: () {
-                        screenControl.screenHide();
-                        Scaffold.of(context).openEndDrawer();
-                      },
-                      child: _getCurrentPage());
-              }),
-              // endDrawer: CustomDrawer(
-              //     widthPercent: 0.86,
-              //     backgroundColor: Colors.white,
-              //     callback: (bool isOpened) {},
-              //     child: const SizedBox())
+      // ChooseWidget(
+      //     carState: true,
+      //     callBack: (index) {
+      //       _releaseCarStatus = Audit.values[index];
+      //       _examinationRefreshController.callRefresh();
+      //       setState(() {});
+      //     },
+      //     items: Audit.values.map((e) => e.typeStr).toList(),
+      //     item: _releaseCarStatus.typeStr,
+      //   ),
+    );
 
-              // ChooseWidget(
-              //     carState: true,
-              //     callBack: (index) {
-              //       _releaseCarStatus = Audit.values[index];
-              //       _examinationRefreshController.callRefresh();
-              //       setState(() {});
-              //     },
-              //     items: Audit.values.map((e) => e.typeStr).toList(),
-              //     item: _releaseCarStatus.typeStr,
-              //   ),
-            );
+    // Column(
+    //   children: [
+    //
+    //     // ChooseWidget(
+    //     //   carState: true,
+    //     //   callBack: (index) {
+    //     //     _releaseCarStatus = Audit.values[index];
+    //     //     _examinationRefreshController.callRefresh();
+    //     //     setState(() {});
+    //     //   },
+    //     //   items: Audit.values.map((e) => e.typeStr).toList(),
+    //     //   item: _releaseCarStatus.typeStr,
+    //     // ),
+    //     // Expanded(
+    //     //     child: TabBarView(
+    //     //       controller: _tabController,
+    //     //       children: [
+    //     //
+    //     //       ,
+    //     //       ,
+    //     //       ],
+    //     //     ))
+    //   ],
+    // ));
 
-          // Column(
-          //   children: [
-          //
-          //     // ChooseWidget(
-          //     //   carState: true,
-          //     //   callBack: (index) {
-          //     //     _releaseCarStatus = Audit.values[index];
-          //     //     _examinationRefreshController.callRefresh();
-          //     //     setState(() {});
-          //     //   },
-          //     //   items: Audit.values.map((e) => e.typeStr).toList(),
-          //     //   item: _releaseCarStatus.typeStr,
-          //     // ),
-          //     // Expanded(
-          //     //     child: TabBarView(
-          //     //       controller: _tabController,
-          //     //       children: [
-          //     //
-          //     //       ,
-          //     //       ,
-          //     //       ],
-          //     //     ))
-          //   ],
-          // ));
+    //   Scaffold(
+    //   appBar: AppBar(
+    //     leading: const CloudBackButton(
+    //       isSpecial: true,
+    //     ),
+    //     backgroundColor: kForeGroundColor,
+    //     title: Text('审批提醒', style: Theme.of(context).textTheme.headline6),
+    //     //leading:  Container(width: 10.w, child: const CloudBackButton()),
+    //   ),
+    //   extendBody: true,
+    //   backgroundColor: kForeGroundColor,
+    //   body:
+    //
+    //
+    //   GridView.count(
+    //     shrinkWrap: true,
+    //     padding: EdgeInsets.only(left: 32.w, right: 32.w),
+    //     physics: const NeverScrollableScrollPhysics(),
+    //     crossAxisCount: 3,
+    //     mainAxisSpacing: 24.w,
+    //     //横轴间距
+    //     crossAxisSpacing: 40.w,
+    //     childAspectRatio: 200 / 176,
+    //     children: [
+    //       ManagerContainerItem(
+    //         text: '出售申请',
+    //         num: '0',
+    //         onTap: () {
+    //         },
+    //       ),
+    //       ManagerContainerItem(
+    //         onTap: () {},
+    //         text: '修改申请',
+    //         num: '0',
+    //       ),
+    //       ManagerContainerItem(
+    //         onTap: () {},
+    //         text: '发布审核',
+    //         num: '0',
+    //       ),
+    //       ManagerContainerItem(
+    //         onTap: () {},
+    //         text: '收购审核',
+    //         num: '0',
+    //       ),
+    //     ],
+    //   ),
+    //   // Column(
+    //   //   children: [
+    //   //     SizedBox(
+    //   //       height: kToolbarHeight + 50.w,
+    //   //     ),
+    //   //     SizedBox(
+    //   //       height: 88.w,
+    //   //       child: CarWidget(
+    //   //           items: _getList(),
+    //   //           callBack: (index) {
+    //   //             examinationState =
+    //   //                 UserTool.userProvider.userInfo.business.roleEM ==
+    //   //                         Role.salesTraffic
+    //   //                     ? ExaminationType.values[index]
+    //   //                     : ReminderApprovalType.values[index];
+    //   //             _refreshController.callRefresh();
+    //   //           }),
+    //   //     ),
+    //   //     Expanded(
+    //   //         child: EasyRefresh(
+    //   //             header: ClassicalHeader(
+    //   //                 infoText: '下拉刷新',
+    //   //                 refreshedText: '刷新完成',
+    //   //                 refreshText: '刷新中....',
+    //   //                 refreshReadyText: '下拉刷新',
+    //   //                 // refreshFailedText: '11111',
+    //   //                 refreshingText: '刷新中....'),
+    //   //             firstRefresh: true,
+    //   //             controller: _refreshController,
+    //   //             onRefresh: () async {},
+    //   //             child: ListView.builder(
+    //   //               itemBuilder: (context, index) {
+    //   //                 return _release(auditList[index]);
+    //   //               },
+    //   //               itemCount: auditList.length,
+    //   //             )))
+    //   //   ],
+    //   // )
+    // );
+  }
 
-          //   Scaffold(
-          //   appBar: AppBar(
-          //     leading: const CloudBackButton(
-          //       isSpecial: true,
-          //     ),
-          //     backgroundColor: kForeGroundColor,
-          //     title: Text('审批提醒', style: Theme.of(context).textTheme.headline6),
-          //     //leading:  Container(width: 10.w, child: const CloudBackButton()),
-          //   ),
-          //   extendBody: true,
-          //   backgroundColor: kForeGroundColor,
-          //   body:
-          //
-          //
-          //   GridView.count(
-          //     shrinkWrap: true,
-          //     padding: EdgeInsets.only(left: 32.w, right: 32.w),
-          //     physics: const NeverScrollableScrollPhysics(),
-          //     crossAxisCount: 3,
-          //     mainAxisSpacing: 24.w,
-          //     //横轴间距
-          //     crossAxisSpacing: 40.w,
-          //     childAspectRatio: 200 / 176,
-          //     children: [
-          //       ManagerContainerItem(
-          //         text: '出售申请',
-          //         num: '0',
-          //         onTap: () {
-          //         },
-          //       ),
-          //       ManagerContainerItem(
-          //         onTap: () {},
-          //         text: '修改申请',
-          //         num: '0',
-          //       ),
-          //       ManagerContainerItem(
-          //         onTap: () {},
-          //         text: '发布审核',
-          //         num: '0',
-          //       ),
-          //       ManagerContainerItem(
-          //         onTap: () {},
-          //         text: '收购审核',
-          //         num: '0',
-          //       ),
-          //     ],
-          //   ),
-          //   // Column(
-          //   //   children: [
-          //   //     SizedBox(
-          //   //       height: kToolbarHeight + 50.w,
-          //   //     ),
-          //   //     SizedBox(
-          //   //       height: 88.w,
-          //   //       child: CarWidget(
-          //   //           items: _getList(),
-          //   //           callBack: (index) {
-          //   //             examinationState =
-          //   //                 UserTool.userProvider.userInfo.business.roleEM ==
-          //   //                         Role.salesTraffic
-          //   //                     ? ExaminationType.values[index]
-          //   //                     : ReminderApprovalType.values[index];
-          //   //             _refreshController.callRefresh();
-          //   //           }),
-          //   //     ),
-          //   //     Expanded(
-          //   //         child: EasyRefresh(
-          //   //             header: ClassicalHeader(
-          //   //                 infoText: '下拉刷新',
-          //   //                 refreshedText: '刷新完成',
-          //   //                 refreshText: '刷新中....',
-          //   //                 refreshReadyText: '下拉刷新',
-          //   //                 // refreshFailedText: '11111',
-          //   //                 refreshingText: '刷新中....'),
-          //   //             firstRefresh: true,
-          //   //             controller: _refreshController,
-          //   //             onRefresh: () async {},
-          //   //             child: ListView.builder(
-          //   //               itemBuilder: (context, index) {
-          //   //                 return _release(auditList[index]);
-          //   //               },
-          //   //               itemCount: auditList.length,
-          //   //             )))
-          //   //   ],
-          //   // )
-          // );
-        }
+  _getCurrentPage() {
+    switch (_currentType) {
+      case Release.record:
+        return ExaminationListPage(
+          type: 0,
+          index: 0,
 
-        _getCurrentPage() {
-          switch (_currentType) {
-            case Release.record:
-              return ExaminationListPage(
-                type: 0,
-                index: 0,
           // releaseList: releaseList,
-          refreshController: _examinationRefreshController,
+          refreshController: _examinationRefreshController, isUpdate: 1,
         );
 
       case Release.modify:
         return ExaminationListPage(
           type: 0,
-          index: 1,
+          index: 0,
           // releaseList: releaseList,
-          refreshController: _examinationRefreshController,
+          refreshController: _examinationRefreshController, isUpdate: 2,
         );
 
       case Release.mine:
@@ -326,15 +324,15 @@ class _ExaminationPageState extends State<ExaminationPage>
           type: 0,
           index: 2,
           // releaseList: releaseList,
-          refreshController:
-          _examinationRefreshController, //_examinationRefreshController,
+          refreshController: _examinationRefreshController,
+          isUpdate: 1, //_examinationRefreshController,
         );
       case Release.modifyExamine:
         return ExaminationListPage(
           type: 0,
-          index: 1,
+          index:2,
           // releaseList: releaseList,
-          refreshController: _examinationRefreshController,
+          refreshController: _examinationRefreshController, isUpdate: 2,
         );
     }
   }
