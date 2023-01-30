@@ -72,7 +72,8 @@ class SearchParamModel {
       editMinMile == null ? 0 : editMinMile!;
 
   int? get finalMaxMile =>
-      editMaxMile == null ? mile.maxMile : editMaxMile!;
+      // mile.maxMile
+  editMaxMile == null ?mile.maxMile: editMaxMile!;
 
   ///排放标准
   String dischargeStandard;

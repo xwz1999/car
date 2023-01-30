@@ -595,7 +595,7 @@ class NewCarDetailItem extends StatelessWidget {
               getContentItem('车辆来源', carInfoModel.carInfo.sourceName),
               getContentItem('品牌车型', carInfoModel.carInfo.modelName),
               getContentItem('车架号', carInfoModel.carInfo.vin),
-              getContentItem('发动机号', carInfoModel.carInfo.carSn),
+              getContentItem('发动机号', carInfoModel.carInfo.engineNo),
               getContentItem('首次上牌',
                   TextUtils.getTimeByIntYM(carInfoModel.carInfo.licensingDate)),
 

@@ -451,6 +451,7 @@ class _NewPushCarPageState extends State<NewPushCarPage> {
 
                                   Get.to(
                                     PushCarManagePhotoPage(
+                                      isRelease: true,
                                       tabs: const [
                                         '车辆照片',
                                         '内饰照片',

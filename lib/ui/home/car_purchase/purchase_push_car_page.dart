@@ -23,7 +23,6 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../model/purchase_car_info_model.dart';
@@ -94,7 +93,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
 
   @override
   void initState() {
-    _res();
+    HiveStore.carBox?.get("acquisition") != null ? _res() : () {};
     super.initState();
   }
 
@@ -105,7 +104,7 @@ class _PurchasePushCarPageState extends State<PurchasePushCarPage> {
     }
     if (res.carName != null) {
       _publishCarInfo.value.carName = res.carName;
-      _publishCarInfo.value.carModelId=res.carModelId;
+      _publishCarInfo.value.carModelId = res.carModelId;
     }
 
     if (res.licensePlate != null) {

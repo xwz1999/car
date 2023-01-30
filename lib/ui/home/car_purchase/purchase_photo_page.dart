@@ -21,7 +21,6 @@ import '../../../utils/hive_store.dart';
 import '../../../utils/toast/cloud_toast.dart';
 import '../../../widget/picker/image_pick_widget/multi_image_pick_widget.dart';
 
-
 ///再带个个人与公司
 class PurchasePhotoPage extends StatefulWidget {
   final PurchaseCarInfo purchaseCarInfo;
@@ -48,7 +47,7 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
   List<PushImgModel> _certificatesPhotos = [];
 
   // List<dynamic> _carPhotos = [];
-  // String img='';
+  String img = '';
 
   @override
   void initState() {
@@ -59,7 +58,7 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
     //   PushImgModel(name: '右面',isMust:true ),
     //   PushImgModel(name: '表显里程',isMust:true ),
     // ];
-    _res();
+    // HiveStore.carBox?.get('acquisitionPhoto') != null ? _res() : (){};
     _certificatesPhotos = [
       PushImgModel(name: '行驶证', isMust: true),
       PushImgModel(name: '维修记录', isMust: true),
@@ -98,20 +97,23 @@ class _PurchasePhotoPageState extends State<PurchasePhotoPage>
         }
       }
     }
+    setState(() {
+
+    });
     super.initState();
   }
-_res()async{
-  AcquisitionPhotoModel res=HiveStore.carBox?.get('acquisitionPhoto');
-   if(res.carPhotos!=null){
-     widget.reportPhotoModel.carPhotos=res.carPhotos;
-   }
-   if(res.dataPhotos!=null){
-     widget.reportPhotoModel.dataPhotos=res.dataPhotos;
-   }
-   setState(() {
 
-   });
-}
+  // _res() async {
+  //   AcquisitionPhotoModel res = HiveStore.carBox?.get('acquisitionPhoto');
+  //   if (res.carPhotos != null) {
+  //     widget.reportPhotoModel.carPhotos = res.carPhotos;
+  //   }
+  //   if (res.dataPhotos != null) {
+  //     widget.reportPhotoModel.dataPhotos = res.dataPhotos;
+  //   }
+  //   setState(() {});
+  // }
+
   Future uploadPhotos() async {
     widget.reportPhotoModel.carPhotos!.clear();
     for (var i = 0; i < _reportPhotos.length; i++) {
@@ -145,6 +147,7 @@ _res()async{
           text: _certificatesPhotos[i].name));
     }
   }
+
   // _getDate(){
   //   widget.reportPhotoModel.carPhotos!.clear();
   //   for (var i = 0; i < _reportPhotos.length; i++) {
@@ -181,15 +184,15 @@ _res()async{
           padding: EdgeInsets.only(left: 8.w),
           child: IconButton(
             onPressed: () {
-              HiveStore.carBox!.delete('acquisitionPhoto');
-              uploadPhotos();
-              AcquisitionPhotoModel acquisitionPhoto = AcquisitionPhotoModel(
-                carPhotos: widget.reportPhotoModel.carPhotos ?? [],
-                dataPhotos: widget.reportPhotoModel.dataPhotos ?? [],
-              );
-              HiveStore.carBox!.put('acquisitionPhoto', acquisitionPhoto);
+              // HiveStore.carBox!.delete('acquisitionPhoto');
+              // uploadPhotos();
+              // AcquisitionPhotoModel acquisitionPhoto = AcquisitionPhotoModel(
+              //   carPhotos: widget.reportPhotoModel.carPhotos ?? [],
+              //   dataPhotos: widget.reportPhotoModel.dataPhotos ?? [],
+              // );
+              // HiveStore.carBox!.put('acquisitionPhoto', acquisitionPhoto);
               Get.back();
-              setState(() {});
+              // setState(() {});
             },
             icon: const Icon(
               CupertinoIcons.chevron_back,
@@ -245,10 +248,12 @@ _res()async{
               onTap: () async {
                 CloudToast.loading;
                 if (!canTap) {
+                  BotToast.closeAllLoading();
                   return;
                 }
+
                 await uploadPhotos();
-                // BotToast.closeAllLoading();
+                BotToast.closeAllLoading();
 
                 ///发起寄买合同
                 // print(widget.purchaseInfo.transactionAmount);
@@ -273,20 +278,20 @@ _res()async{
   }
 
   bool get canTap {
-    // if(img.isEmpty){
-    //   BotToast.showText(text: "请先上传车辆照片");
-    //   return false;
-    // }
-    for (var item in widget.reportPhotoModel.dataPhotos!) {
-      if (item.text == '行驶证' && item.photo == null) {
+    if (_reportPhotos.isEmpty) {
+      BotToast.showText(text: "请先上传车辆照片");
+      return false;
+    }
+    for (var item in _certificatesPhotos) {
+      if (item.name == '行驶证' && item.url == null) {
         BotToast.showText(text: '请先上传行驶证照片');
         return false;
       }
-      if (item.text == '表显里程' && item.photo == null) {
+      if (item.name == '表显里程' && item.url == null) {
         BotToast.showText(text: '请先上传表显里程');
         return false;
       }
-      if (item.text == '维修记录' && item.photo == null) {
+      if (item.name == '维修记录' && item.url == null) {
         BotToast.showText(text: '请先上传维修记录');
         return false;
       }
@@ -345,10 +350,13 @@ _res()async{
     return GestureDetector(
       onTap: () async {
         var value = await CloudImagePicker.pickSingleImage(title: '选择图片');
+        print(value);
         if (isCar) {
           _reportPhotos[index].url = value;
+          setState(() {});
         } else {
           _certificatesPhotos[index].url = value;
+          setState(() {});
         }
 
         setState(() {});

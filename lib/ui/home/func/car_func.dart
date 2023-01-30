@@ -32,6 +32,7 @@ import 'package:cloud_car/utils/user_tool.dart';
 import 'package:flustars/flustars.dart';
 
 import '../../../model/acquisition_info_model.dart';
+import '../../../model/car/car_price_history_model.dart';
 import '../../../model/car/dealer_list_model.dart';
 import '../../../model/car/economic_release_model.dart';
 import '../../../model/car/edit_info_model.dart';
@@ -395,6 +396,20 @@ class CarFunc {
     }
   }
 
+  ///调价记录
+  static Future<List<CarPriceHistoryModel>> getPriceHistory(int carId) async {
+    BaseModel res = await apiClient
+        .request(API.car.carPriceHistory, data: {'carId': carId});
+    if (res.code == 0) {
+      return (res.data as List)
+          .map((e) => CarPriceHistoryModel.fromJson(e))
+          .toList();
+    } else {
+      CloudToast.show(res.msg);
+      return [];
+    }
+  }
+
   ///发起寄卖合同
   static Future<bool> addConsignment(
       ConsignmentContractModel contractModel) async {
@@ -446,11 +461,11 @@ class CarFunc {
       'deposit': saleModel.priceInfo.deposit,
       'downPayment': saleModel.priceInfo.downPayment,
       'deliverDate': saleModel.priceInfo.deliverDate,
-      'deliverAddress':saleModel.priceInfo.deliverAddress,
-      'transferFee':saleModel.priceInfo.transferFee,
-      'transferFeeHolder':saleModel.priceInfo.transferFeeHolder,
-      'agentFee':saleModel.priceInfo.agentFee,
-      'agentFeeHolder':saleModel.priceInfo.agentFeeHolder,
+      'deliverAddress': saleModel.priceInfo.deliverAddress,
+      'transferFee': saleModel.priceInfo.transferFee,
+      'transferFeeHolder': saleModel.priceInfo.transferFeeHolder,
+      'agentFee': saleModel.priceInfo.agentFee,
+      'agentFeeHolder': saleModel.priceInfo.agentFeeHolder,
     };
     Map<String, dynamic> masterInfo = {
       'name': saleModel.masterInfo.name,
@@ -684,12 +699,12 @@ class CarFunc {
   ///车辆编辑
   static Future<bool> getEditAdd(
     EditAddModel editAddModel,
-        List<ImagePhoto> carPhotos,
-  List<ImagePhoto> interiorPhotos,
-  List<ImagePhoto> defectPhotos,
-  // List<CarPhotos>? repairPhotos;
-  List<ImagePhoto> dataPhotos,
-  ) async{
+    List<ImagePhoto> carPhotos,
+    List<ImagePhoto> interiorPhotos,
+    List<ImagePhoto> defectPhotos,
+    // List<CarPhotos>? repairPhotos;
+    List<ImagePhoto> dataPhotos,
+  ) async {
     Map<String, dynamic> baseInfo = {
       'color': editAddModel.baseInfo.color,
       'interiorColor': editAddModel.baseInfo.interiorColor,
@@ -704,7 +719,7 @@ class CarFunc {
       'remark': editAddModel.baseInfo.condition,
     };
     Map<String, dynamic> photos = {
-      "carPhotos":carPhotos,
+      "carPhotos": carPhotos,
       "interiorPhotos": interiorPhotos,
       "defectPhotos": defectPhotos,
       "dataPhotos": dataPhotos,
@@ -729,34 +744,33 @@ class CarFunc {
       return false;
     }
   }
+
   ///车商车辆编辑列表
   static Future<List<EditListModel>> getEditDealerList(
       {required int page, int size = 10, int status = 0}) async {
     var res = await apiClient.requestList(API.order.editDealerList,
         data: {'page': page, 'size': size, 'status': status});
     if (res.code == 0) {
-      return res.nullSafetyList
-          .map((e) => EditListModel.fromJson(e))
-          .toList();
+      return res.nullSafetyList.map((e) => EditListModel.fromJson(e)).toList();
     } else {
       CloudToast.show(res.msg);
       return [];
     }
   }
+
   ///车辆编辑列表
   static Future<List<EditListModel>> getEditList(
       {required int page, int size = 10, int status = 0}) async {
     var res = await apiClient.requestList(API.order.editList,
         data: {'page': page, 'size': size, 'status': status});
     if (res.code == 0) {
-      return res.nullSafetyList
-          .map((e) => EditListModel.fromJson(e))
-          .toList();
+      return res.nullSafetyList.map((e) => EditListModel.fromJson(e)).toList();
     } else {
       CloudToast.show(res.msg);
       return [];
     }
   }
+
   ///车商发布车辆
   static Future<bool> dealerPushCar({
     required BusinessPushModel businessPushModel,
@@ -953,6 +967,7 @@ class CarFunc {
       return PublishInfoModel.init;
     }
   }
+
   ///编辑车辆详情
   static Future<EditInfoModel> getEditInfo(int carBaseId) async {
     var res = await apiClient
@@ -964,5 +979,4 @@ class CarFunc {
       return PublishInfoModel.init;
     }
   }
-
 }

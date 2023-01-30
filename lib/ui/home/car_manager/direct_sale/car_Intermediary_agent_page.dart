@@ -46,7 +46,6 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
   final TextEditingController agent = TextEditingController();
   final TextEditingController placeDelivery = TextEditingController();
 
-
   @override
   void initState() {
     // widget.carSaleContract.thirdPartInfo.kind!=0?_selectIndex1.add(widget.carSaleContract.thirdPartInfo.kind):_selectIndex1=[];
@@ -109,7 +108,7 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
       ),
       backgroundColor: bodyColor,
       extendBody: true,
-      body: ListView( children: [
+      body: ListView(children: [
         Padding(
           padding: EdgeInsets.only(left: 24.w, top: 12.w),
           child: Text(
@@ -295,8 +294,8 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
             var firstTime = await CarDatePicker.pick(
               DateTime.now(),
             );
-            widget.carSaleContract.priceInfo.deliverDate=DateUtil.formatDate(
-                firstTime,format: 'yyyy-MM-dd') ;
+            widget.carSaleContract.priceInfo.deliverDate =
+                DateUtil.formatDate(firstTime, format: 'yyyy-MM-dd');
             // _publishCarInfo.value.productionDate = firstDate;
             FocusManager.instance.primaryFocus?.unfocus();
             setState(() {});
@@ -311,7 +310,6 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                   bottom:
                       BorderSide(color: const Color(0xFFF6F6F6), width: 2.w))),
           child: EditItemWidget(
-
             topIcon: true,
             title: '交付地点',
             paddingStart: 0.w,
@@ -320,8 +318,8 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
             // inputFormatters: [
             //   FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
             // ],
-            callback: (text){
-              widget.carSaleContract.priceInfo.deliverAddress=text;
+            callback: (text) {
+              widget.carSaleContract.priceInfo.deliverAddress = text;
             },
           ),
         ),
@@ -352,8 +350,8 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
             ],
-            callback: (text){
-              widget.carSaleContract.priceInfo.transferFee=text;
+            callback: (text) {
+              widget.carSaleContract.priceInfo.transferFee = text;
             },
           ),
         ),
@@ -389,12 +387,10 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                 ),
                 SizedBox(
                   height: 50.w,
-                  child: getChooseList(
-                      (String choice, int index) {
-                        widget.carSaleContract.priceInfo.transferFeeHolder=index;
-                     // print( widget.carSaleContract.priceInfo.transferFeeHolder);
-
-                      }, _models2, _selectIndex2),
+                  child: getChooseList((String choice, int index) {
+                    widget.carSaleContract.priceInfo.transferFeeHolder = index;
+                    // print( widget.carSaleContract.priceInfo.transferFeeHolder);
+                  }, _models2, _selectIndex2),
                 ),
               ],
             )),
@@ -415,8 +411,8 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
             ],
-            callback: (text){
-              widget.carSaleContract.priceInfo.agentFee=text;
+            callback: (text) {
+              widget.carSaleContract.priceInfo.agentFee = text;
             },
           ),
         ),
@@ -452,11 +448,10 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
                 ),
                 SizedBox(
                   height: 50.w,
-                  child: getChooseList(
-                      (String choice, int index) {
-                        widget.carSaleContract.priceInfo.agentFeeHolder=index;
-                        // print( widget.carSaleContract.priceInfo.agentFeeHolder);
-                      }, _models2, _selectIndex3),
+                  child: getChooseList((String choice, int index) {
+                    widget.carSaleContract.priceInfo.agentFeeHolder = index;
+                    // print( widget.carSaleContract.priceInfo.agentFeeHolder);
+                  }, _models2, _selectIndex3),
                 ),
               ],
             )),
@@ -532,27 +527,28 @@ class _CarIntermediaryAgentPageState extends State<CarIntermediaryAgentPage> {
         CloudToast.show('请填写买方服务费');
         return false;
       }
-      if(widget.carSaleContract.priceInfo.deliverDate==''){
+      if (widget.carSaleContract.priceInfo.deliverDate == '') {
         CloudToast.show('请填写交付时间');
         return false;
       }
-      if(widget.carSaleContract.priceInfo.deliverAddress==''){
+      if (widget.carSaleContract.priceInfo.deliverAddress == '') {
         CloudToast.show('请填写交付地点');
         return false;
       }
-      if(widget.carSaleContract.priceInfo.transferFee==''){
+      if (widget.carSaleContract.priceInfo.transferFee == '') {
         CloudToast.show('请填写过户税费');
         return false;
       }
-      if(widget.carSaleContract.priceInfo.transferFeeHolder!=1 ||widget.carSaleContract.priceInfo.transferFeeHolder!=2){
+      if (widget.carSaleContract.priceInfo.transferFeeHolder ==0) {
         CloudToast.show('请填写过户承担方');
+
         return false;
       }
-      if(widget.carSaleContract.priceInfo.agentFee==''){
+      if (widget.carSaleContract.priceInfo.agentFee == '') {
         CloudToast.show('请填写代办税费');
         return false;
       }
-      if(widget.carSaleContract.priceInfo.agentFeeHolder!=1 || widget.carSaleContract.priceInfo.agentFeeHolder!=2){
+      if (widget.carSaleContract.priceInfo.agentFeeHolder == 0) {
         CloudToast.show('请填写代办承担方');
         return false;
       }

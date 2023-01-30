@@ -96,7 +96,7 @@ class PublishDetailItem extends StatelessWidget {
           ),
           32.hb,
           isUpdate == 2
-              ? editInfo.vin == ''
+              ? editInfo.carInfo.vin == ''
                   ? const SizedBox()
                   : Row(
                       children: [
@@ -109,7 +109,7 @@ class PublishDetailItem extends StatelessWidget {
                         ),
                         10.wb,
                         Text(
-                          editInfo.vin,
+                          editInfo.carInfo.vin,
                           style: TextStyle(
                               height: 1.5,
                               fontSize: 28.sp,
@@ -462,7 +462,7 @@ class PublishDetailItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${isUpdate == 2 ? editInfo.mileage : publishInfoModel.mileage}万公里',
+                    '${isUpdate == 2 ? editInfo.carInfo.mileage : publishInfoModel.mileage}万公里',
                     style: TextStyle(
                         color: BaseStyle.color333333,
                         fontWeight: FontWeight.bold,
@@ -505,7 +505,7 @@ class PublishDetailItem extends StatelessWidget {
                     children: [
                       Text(
                         TextUtils.getTimeByIntYM(isUpdate == 2
-                            ? (editInfo.licensingDate).toInt()
+                            ? (editInfo.carInfo.licensingDate).toInt()
                             : (publishInfoModel.licensingDate).toInt()),
                         style: TextStyle(
                             color: BaseStyle.color333333,
@@ -550,7 +550,7 @@ class PublishDetailItem extends StatelessWidget {
                   Padding(padding: EdgeInsets.symmetric(horizontal: 68.w)),
                   Text(
                     isUpdate == 2
-                        ? editInfo.modelInfo.dischargeStandard
+                        ? editInfo.carInfo.modelInfo.dischargeStandard
                         : publishInfoModel.modelInfo.dischargeStandard,
                     style: TextStyle(
                         color: BaseStyle.color333333,
@@ -631,83 +631,83 @@ class PublishDetailItem extends StatelessWidget {
                 ],
               ),
               getContentItem('车辆类型',
-                  isUpdate == 2 ? editInfo.type : publishInfoModel.type),
+                  isUpdate == 2 ? editInfo.carInfo.type : publishInfoModel.type),
               getContentItem(
                   '车辆来源',
                   isUpdate == 2
-                      ? editInfo.sourceName
+                      ? editInfo.carInfo.sourceName
                       : publishInfoModel.sourceName),
               getContentItem(
                   '品牌车型',
                   isUpdate == 2
-                      ? editInfo.modelName
+                      ? editInfo.carInfo.modelName
                       : publishInfoModel.modelName),
               getContentItem(
-                  '车架号', isUpdate == 2 ? editInfo.vin : publishInfoModel.vin),
+                  '车架号', isUpdate == 2 ? editInfo.carInfo.vin : publishInfoModel.vin),
               getContentItem(
                   '发动机号',
                   isUpdate == 2
-                      ? editInfo.engineNo
+                      ? editInfo.carInfo.engineNo
                       : publishInfoModel.engineNo),
               getContentItem(
                   '首次上牌',
                   TextUtils.getTimeByIntYM(isUpdate == 2
-                      ? (editInfo.licensingDate).toInt()
+                      ? (editInfo.carInfo.licensingDate).toInt()
                       : (publishInfoModel.licensingDate).toInt())),
 
               getContentItem('车身颜色',
-                  isUpdate == 2 ? editInfo.color : publishInfoModel.color),
+                  isUpdate == 2 ? editInfo.carInfo.color : publishInfoModel.color),
               getContentItem(
                   '内饰颜色',
                   TextUtils.carInfoIsEmpty(isUpdate == 2
-                      ? editInfo.interiorColor
+                      ? editInfo.carInfo.interiorColor
                       : publishInfoModel.interiorColor)),
               getContentItem(
                   '临时车牌',
                   TextUtils.carInfoIsEmpty(isUpdate == 2
-                      ? editInfo.temporaryLicensePlate
+                      ? editInfo.carInfo.temporaryLicensePlate
                       : publishInfoModel.temporaryLicensePlate)),
               getContentItem(
                   '车位编号',
                   TextUtils.carInfoIsEmpty(isUpdate == 2
-                          ? editInfo.parkingNo
+                          ? editInfo.carInfo.parkingNo
                           : publishInfoModel.parkingNo) ),
               getContentItem('库存状态', '在厅'),
 
               getContentItem(
                   '使用性质',
                   isUpdate == 2
-                      ? editInfo.useCharacter
+                      ? editInfo.carInfo.useCharacter
                       : publishInfoModel.useCharacter),
               getContentItem('表显里程',
-                  '${isUpdate == 2 ? editInfo.mileage : publishInfoModel.mileage}万公里'),
+                  '${isUpdate == 2 ? editInfo.carInfo.mileage : publishInfoModel.mileage}万公里'),
 
               getContentItem(
                   '出厂日期',
                   isUpdate == 2
-                      ? editInfo.modelInfo.marketDate
+                      ? editInfo.carInfo.modelInfo.marketDate
                       : publishInfoModel.modelInfo.marketDate),
               // getContentItem('新车指导价', TextUtils.carInfoIsEmpty( TextUtils.getPriceStr(num.parse(carInfoModel.carInfo.newCarGuidePrice)) )),
               getContentItem(
                   '购置税',
                   TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(
                       isUpdate == 2
-                          ? editInfo.purchaseTax
+                          ? editInfo.carInfo.purchaseTax
                           : publishInfoModel.purchaseTax)))),
               getContentItem(
                   '加装费用',
                   TextUtils.carInfoIsEmpty(
-                      '${isUpdate == 2 ? editInfo.installationCost : publishInfoModel.installationCost}元')),
+                      '${isUpdate == 2 ? editInfo.carInfo.installationCost : publishInfoModel.installationCost}元')),
               getContentItem(
                   '车辆所在地',
                   TextUtils.carInfoIsEmpty(isUpdate == 2
-                      ? editInfo.location
+                      ? editInfo.carInfo.location
                       : publishInfoModel.location)),
 
               getContentItem(
                   '环保等级',
                   isUpdate == 2
-                      ? editInfo.modelInfo.dischargeStandard
+                      ? editInfo.carInfo.modelInfo.dischargeStandard
                       : publishInfoModel.modelInfo.dischargeStandard),
               50.hb,
             ],
@@ -729,31 +729,31 @@ class PublishDetailItem extends StatelessWidget {
               color: BaseStyle.color333333),
         ),
         getContentItem('排量',
-            '${isUpdate == 2 ? editInfo.modelInfo.liter : publishInfoModel.modelInfo.liter}L'),
+            '${isUpdate == 2 ? editInfo.carInfo.modelInfo.liter : publishInfoModel.modelInfo.liter}L'),
         getContentItem(
             '变速箱类型',
             isUpdate == 2
-                ? editInfo.modelInfo.gearType
+                ? editInfo.carInfo.modelInfo.gearType
                 : publishInfoModel.modelInfo.gearType),
         getContentItem(
             '燃料形式',
             isUpdate == 2
-                ? editInfo.modelInfo.fuelTypeName
+                ? editInfo.carInfo.modelInfo.fuelTypeName
                 : publishInfoModel.modelInfo.fuelTypeName),
         getContentItem(
             '车身结构',
             isUpdate == 2
-                ? editInfo.modelInfo.carStruct
+                ? editInfo.carInfo.modelInfo.carStruct
                 : publishInfoModel.modelInfo.carStruct),
         getContentItem(
             '座位数',
             isUpdate == 2
-                ? editInfo.modelInfo.seatNumber
+                ? editInfo.carInfo.modelInfo.seatNumber
                 : publishInfoModel.modelInfo.seatNumber),
         getContentItem(
             '排放标准',
             isUpdate == 2
-                ? editInfo.modelInfo.dischargeStandard
+                ? editInfo.carInfo.modelInfo.dischargeStandard
                 : publishInfoModel.modelInfo.dischargeStandard),
       ],
     );
@@ -774,13 +774,13 @@ class PublishDetailItem extends StatelessWidget {
             '批发价格',
             TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(
                 isUpdate == 2
-                    ? editInfo.priceInfo.interiorPrice
+                    ? editInfo.carInfo.priceInfo.interiorPrice
                     : publishInfoModel.priceInfo.interiorPrice)))),
         getContentItem(
             '销售价格',
             TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(num.parse(
                 isUpdate == 2
-                    ? editInfo.priceInfo.exteriorPrice
+                    ? editInfo.carInfo.priceInfo.exteriorPrice
                     : publishInfoModel.priceInfo.exteriorPrice)))),
         getContentItem('系统估价', '/'),
       ],
@@ -803,7 +803,7 @@ class PublishDetailItem extends StatelessWidget {
         getContentItem('采购日期', '/'),
         getContentItem('采购人', '/'),
         getContentItem('门店',
-            isUpdate == 2 ? editInfo.dealerSn : publishInfoModel.sourceName),
+            isUpdate == 2 ? editInfo.carInfo.dealerSn : publishInfoModel.sourceName),
       ],
     );
   }
@@ -822,27 +822,27 @@ class PublishDetailItem extends StatelessWidget {
         getContentItem(
             '车主姓名',
             TextUtils.carInfoIsEmpty(isUpdate == 2
-                ? editInfo.contractMasterInfo.name
+                ? editInfo.carInfo.contractMasterInfo.name
                 : publishInfoModel.contractMasterInfo.name)),
         getContentItem(
             '手机号码',
             TextUtils.carInfoIsEmpty(isUpdate == 2
-                ? editInfo.contractMasterInfo.phone
+                ? editInfo.carInfo.contractMasterInfo.phone
                 : publishInfoModel.contractMasterInfo.phone)),
         getContentItem(
             '银行卡号',
             TextUtils.carInfoIsEmpty(isUpdate == 2
-                ? editInfo.contractMasterInfo.bankCard
+                ? editInfo.carInfo.contractMasterInfo.bankCard
                 : publishInfoModel.contractMasterInfo.bankCard)),
         getContentItem(
             '开户行',
             TextUtils.carInfoIsEmpty(isUpdate == 2
-                ? editInfo.contractMasterInfo.bank
+                ? editInfo.carInfo.contractMasterInfo.bank
                 : publishInfoModel.contractMasterInfo.bank)),
         getContentItem(
             '身份证号',
             TextUtils.carInfoIsEmpty(isUpdate == 2
-                ? editInfo.contractMasterInfo.idCard
+                ? editInfo.carInfo.contractMasterInfo.idCard
                 : publishInfoModel.contractMasterInfo.idCard)),
       ],
     );
@@ -860,13 +860,13 @@ class PublishDetailItem extends StatelessWidget {
               color: BaseStyle.color333333),
         ),
         getContentItem('过户次数',
-            '${isUpdate == 2 ? editInfo.certificateInfo.transfer : publishInfoModel.certificateInfo.transfer}次'),
+            '${isUpdate == 2 ? editInfo.carInfo.certificateInfo.transfer : publishInfoModel.certificateInfo.transfer}次'),
         getContentItem('钥匙数量',
-            '${isUpdate == 2 ? editInfo.certificateInfo.keyCount : publishInfoModel.certificateInfo.keyCount}把'),
+            '${isUpdate == 2 ? editInfo.carInfo.certificateInfo.keyCount : publishInfoModel.certificateInfo.keyCount}把'),
         getContentItem(
             '交强险',
             isUpdate == 2
-                ? editInfo.certificateInfo.commercialInsurance == 1
+                ? editInfo.carInfo.certificateInfo.commercialInsurance == 1
                     ? '有'
                     : '无'
                 : publishInfoModel.certificateInfo.commercialInsurance == 1
@@ -875,13 +875,13 @@ class PublishDetailItem extends StatelessWidget {
         getContentItem(
             '交强险到期',
             TextUtils.getTimeByInt(isUpdate == 2
-                ? (editInfo.certificateInfo.commercialInsurance).toInt()
+                ? (editInfo.carInfo.certificateInfo.commercialInsurance).toInt()
                 : (publishInfoModel.certificateInfo.compulsoryInsuranceDate)
                     .toInt())),
         getContentItem(
             '商业险',
             isUpdate == 2
-                ? editInfo.certificateInfo.compulsoryInsurance == 1
+                ? editInfo.carInfo.certificateInfo.compulsoryInsurance == 1
                     ? '有'
                     : '无'
                 : publishInfoModel.certificateInfo.compulsoryInsurance == 1
@@ -890,7 +890,7 @@ class PublishDetailItem extends StatelessWidget {
         getContentItem(
             '商业险到期',
             TextUtils.getTimeByInt(
-                isUpdate==2? (editInfo.certificateInfo.commercialInsuranceDate).toInt():(publishInfoModel.certificateInfo.commercialInsuranceDate)
+                isUpdate==2? (editInfo.carInfo.certificateInfo.commercialInsuranceDate).toInt():(publishInfoModel.certificateInfo.commercialInsuranceDate)
                     .toInt()))
       ],
     );

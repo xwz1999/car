@@ -73,9 +73,7 @@ class _ChooseWidgetState extends State<ChooseWidget> {
               scrollDirection: Axis.horizontal,
               children: [
                 ...widget.items.mapIndexed(
-                  (e, index) => SizedBox(
-                      // height: 88.w,
-                      child: GestureDetector(
+                  (e, index) =>  GestureDetector(
                     onTap: () => widget.callBack(index),
                     child: Container(
                         color: Colors.white,
@@ -91,7 +89,7 @@ class _ChooseWidgetState extends State<ChooseWidget> {
                                   : BaseStyle.color333333),
                         )),
                   )),
-                )
+
               ],
             ),
           );

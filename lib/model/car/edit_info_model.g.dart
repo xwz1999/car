@@ -8,6 +8,39 @@ part of 'edit_info_model.dart';
 
 EditInfoModel _$EditInfoModelFromJson(Map<String, dynamic> json) =>
     EditInfoModel(
+      rejectReason: json['rejectReason'] as String,
+      carInfo: CarInfos.fromJson(json['carInfo'] as Map<String, dynamic>),
+      auditStatus: json['auditStatus'] as int,
+      auditStatusName: json['auditStatusName'] as String,
+      dealerAuditAt: json['dealerAuditAt'] as num,
+      createdAt: json['createdAt'] as num,
+    );
+
+Map<String, dynamic> _$EditInfoModelToJson(EditInfoModel instance) =>
+    <String, dynamic>{
+      'carInfo': instance.carInfo,
+      'auditStatus': instance.auditStatus,
+      'auditStatusName': instance.auditStatusName,
+      'dealerAuditAt': instance.dealerAuditAt,
+      'createdAt': instance.createdAt,
+      'rejectReason': instance.rejectReason,
+    };
+
+PurchaseInfoS _$PurchaseInfoSFromJson(Map<String, dynamic> json) =>
+    PurchaseInfoS(
+      price: json['price'] as String,
+      date: json['date'] as num,
+      liaison: json['liaison'] as String,
+    );
+
+Map<String, dynamic> _$PurchaseInfoSToJson(PurchaseInfoS instance) =>
+    <String, dynamic>{
+      'price': instance.price,
+      'date': instance.date,
+      'liaison': instance.liaison,
+    };
+
+CarInfos _$CarInfosFromJson(Map<String, dynamic> json) => CarInfos(
       id: json['id'] as int,
       modelId: json['modelId'] as int,
       modelName: json['modelName'] as String,
@@ -32,8 +65,6 @@ EditInfoModel _$EditInfoModelFromJson(Map<String, dynamic> json) =>
       locationCityId: json['locationCityId'] as int,
       attributionCityId: json['attributionCityId'] as int,
       remark: json['remark'] as String,
-      stockStatus: json['stockStatus'] as int,
-      stockStatusName: json['stockStatusName'] as String,
       type: json['type'] as String,
       engineNo: json['engineNo'] as String,
       licensingDate: json['licensingDate'] as num,
@@ -70,10 +101,11 @@ EditInfoModel _$EditInfoModelFromJson(Map<String, dynamic> json) =>
           json['certificateInfo'] as Map<String, dynamic>),
       contractMasterInfo: ContractMasterInfo.fromJson(
           json['contractMasterInfo'] as Map<String, dynamic>),
+      stockStatus: json['stockStatus'] as int,
+      stockStatusName: json['stockStatusName'] as String,
     );
 
-Map<String, dynamic> _$EditInfoModelToJson(EditInfoModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CarInfosToJson(CarInfos instance) => <String, dynamic>{
       'id': instance.id,
       'modelId': instance.modelId,
       'modelName': instance.modelName,
@@ -125,17 +157,3 @@ Map<String, dynamic> _$EditInfoModelToJson(EditInfoModel instance) =>
       'stockStatus': instance.stockStatus,
       'stockStatusName': instance.stockStatusName,
     };
-
-PurchaseInfoS _$PurchaseInfoSFromJson(Map<String, dynamic> json) =>
-    PurchaseInfoS(
-      price: json['price'] as String,
-      date: json['date'] as num,
-      liaison: json['liaison'] as String,
-    );
-
-// Map<String, dynamic> _$PurchaseInfoSToJson(PurchaseInfoS instance) =>
-//     <String, dynamic>{
-//       'price': instance.price,
-//       'date': instance.date,
-//       'liaison': instance.liaison,
-//     };

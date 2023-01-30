@@ -221,7 +221,6 @@ enum TransferType{
   release(3,'已发布'),
   reject(4,'已驳回');
 
-
   final String typeStr;
   final int typeNum;
   static Audit getValue(int value)=> Audit.values.firstWhere((element) => element.typeNum==value);
@@ -243,6 +242,19 @@ enum TransferType{
     }
   const Audit(this.typeNum,this.typeStr);
   }
+///编辑审核状态
+enum EditStatus{
+  all(0,'全部'),
+  wait(1,'待审批'),
+  pass(2,'已通过'),
+  reject(3,'已驳回');
+  final String typeStr;
+  final int typeNum;
+  static EditStatus getValue(int value)=> EditStatus.values.firstWhere((element) => element.typeNum==value);
+  const EditStatus(this.typeNum,this.typeStr);
+}
+
+
 
 ///出售合同状态
 ///

@@ -210,6 +210,7 @@ class _EditCarPageState extends State<EditCarPage>
                               bottom: CloudBottomButton(
                                 onTap: () {
                                   Get.back();
+                                  Get.back();
                                 },
                                 text: '返回汽车详情',
                               )));

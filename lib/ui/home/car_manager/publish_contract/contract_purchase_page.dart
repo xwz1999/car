@@ -4,6 +4,7 @@ import 'package:cloud_car/ui/home/car_manager/publish_contract/contract_license_
 import 'package:cloud_car/utils/headers.dart';
 import 'package:cloud_car/utils/toast/cloud_toast.dart';
 import 'package:cloud_car/utils/user_tool.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -34,7 +35,7 @@ class _ContractPurchaseState extends State<ContractPurchase> {
         (double.parse(widget.consignmentContractModel.value.evaluationPrice!) *
                 1.05 /
                 10000)
-            .toString();
+            .toStringAsFixed(2);
 
     widget.consignmentContractModel.value.sellPrice =
         (double.parse(widget.consignmentContractModel.value.evaluationPrice!) *
@@ -228,8 +229,10 @@ class _ContractPurchaseState extends State<ContractPurchase> {
                     .make(),
               ),
               Expanded(
-                child: (widget.consignmentContractModel.value.publishCarInfo!
-                            .mileage ??
+                child: ((num.parse(widget.consignmentContractModel.value
+                                    .publishCarInfo!.mileage!) /
+                                10000)
+                            .toString() ??
                         '')
                     .text
                     .size(28.sp)

@@ -237,6 +237,7 @@ int index=0;
           onTap: () async {
             carInfoModel = await CarFunc.getCarList(1, 10);
             Get.to(() => PublishInfoPage(
+
                   index: widget.index,
                   carId: carId, isUpdate: widget.isUpdate,
                 ));
@@ -362,6 +363,7 @@ int index=0;
 
   _getText(int status) {
     return Text(
+      widget.isUpdate==2?EditStatus.getValue(status).typeStr:
       Audit.getValueAuditId(status).typeStr,
       style: TextStyle(
         fontSize: 28.sp,
@@ -372,16 +374,28 @@ int index=0;
   }
 
   Color getColor(int status) {
-    switch (status) {
-      case 1:
-        return const Color(0xFFFE8029);
-      case 2:
-        return const Color(0xFF027AFF);
-      case 3:
-        return const Color(0xFF027AFF);
-      default:
-        return const Color(0xFFFF3B02);
+    if(widget.isUpdate==1){
+      switch (status) {
+        case 1:
+          return const Color(0xFFFE8029);
+        case 2:
+          return const Color(0xFF027AFF);
+        case 3:
+          return const Color(0xFF027AFF);
+        default:
+          return const Color(0xFFFF3B02);
+      }
+    }else{
+      switch (status) {
+        case 1:
+          return const Color(0xFFFE8029);
+        case 2:
+          return const Color(0xFF027AFF);
+        default:
+          return const Color(0xFFFF3B02);
+      }
     }
+
   }
 
   @override

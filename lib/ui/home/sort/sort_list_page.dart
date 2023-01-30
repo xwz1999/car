@@ -97,7 +97,7 @@ class _SortListPageState extends State<SortListPage> {
     _mileage = [
       ChooseItem(name: '1万公里内'),
       ChooseItem(name: '3万公里内'),
-      ChooseItem(name: '5公里内'),
+      ChooseItem(name: '5万公里内'),
       ChooseItem(name: '8万公里内'),
     ];
     _fuel = [

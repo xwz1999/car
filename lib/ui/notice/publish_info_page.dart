@@ -58,9 +58,11 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   IndividualModel? individualModel;
+
   // final List<CarListModel> _chooseModels = [];
   ///滚动监听设置
   late ScrollController _scrollController;
+
   ///头部背景布局 true滚动一定的高度 false 滚动高度为0
   bool headerWhite = false;
   List tabs = [];
@@ -162,7 +164,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     // print(carInfoModel!.carInfo);
     // collect = carInfoModel?.carInfo.collect ?? 0;
     for (var item in widget.isUpdate == 2
-        ? editInfo.carPhotos
+        ? editInfo.carInfo.carPhotos
         : publishInfoModel.carPhotos) {
       if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         carPhotos.add(CarPhotos(photo: item.photo, text: item.text));
@@ -174,7 +176,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     }
 
     for (var item in widget.isUpdate == 2
-        ? editInfo.interiorPhotos
+        ? editInfo.carInfo.interiorPhotos
         : publishInfoModel.interiorPhotos) {
       if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         interiorPhotos.add(CarPhotos(photo: item.photo, text: item.text));
@@ -183,7 +185,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     }
 
     for (var item in widget.isUpdate == 2
-        ? editInfo.defectPhotos
+        ? editInfo.carInfo.defectPhotos
         : publishInfoModel.defectPhotos) {
       if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         defectPhotos.add(CarPhotos(photo: item.photo, text: item.text));
@@ -196,16 +198,14 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     //   }
     // }
     for (var item in widget.isUpdate == 2
-        ? editInfo.dataPhotos
-        : publishInfoModel.dataPhotos
-    ) {
+        ? editInfo.carInfo.dataPhotos
+        : publishInfoModel.dataPhotos) {
       if (item.photo!.isNotEmpty && item.text!.isNotEmpty) {
         //print(item.text);
         dataPhotos.add(CarPhotos(photo: item.photo, text: item.text));
         dataPhotos1.add(ImagePhoto(photo: item.photo!, text: item.text!));
       }
     }
-
 
     // for (int i = 0; i < carInfoModel!.carInfo.dataPhotos.length; i++) {
     //   for (int j = 0; j < dataPhotos.length; j++) {
@@ -301,7 +301,6 @@ class _PublishInfoPageState extends State<PublishInfoPage>
         ));
   }
 
-
   @override
   Widget build(BuildContext context) {
     return widget.isUpdate == 2
@@ -328,7 +327,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                             centerTitle: false,
                             title: headerWhite
                                 ? Text(
-                                    publishInfoModel.modelName ,
+                                    publishInfoModel.modelName,
                                     style: TextStyle(
                                       color: const Color(0xFF333333),
                                       fontWeight: FontWeight.w700,
@@ -484,36 +483,29 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                     ),
                   ),
                 ),
-                bottomNavi: Audit.getValueAuditId(widget.isUpdate == 2
-                                    ? editInfo.status
-                                    : publishInfoModel.status)
-                                .typeNum !=
-                            3 &&
-                        Audit.getValueAuditId(widget.isUpdate == 2
-                                    ? editInfo.status
-                                    : publishInfoModel.status)
-                                .typeNum !=
-                            0
-                    ? Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 32.w, vertical: 8.w),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1.w, color: const Color(0xFFEEEEEE)),
-                            color: Colors.white),
-                        height: Audit.getValueAuditId(widget.isUpdate == 2
-                                        ? editInfo.status
-                                        : publishInfoModel.status)
-                                    .typeNum !=
-                                4
-                            ? 170.w
-                            : UserTool.userProvider.userInfo.business.roleEM ==
-                                    Role.carService
-                                ? 270.w
-                                : 200.w, //double.infinity,
-                        child: getBottomState(),
-                      )
-                    : const SizedBox(),
+                bottomNavi:
+                    EditStatus.getValue(editInfo.carInfo.status).typeNum != 2
+                        ? Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 32.w, vertical: 8.w),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1.w, color: const Color(0xFFEEEEEE)),
+                                color: Colors.white),
+                            height: Audit.getValueAuditId(widget.isUpdate == 2
+                                            ? editInfo.carInfo.status
+                                            : publishInfoModel.status)
+                                        .typeNum !=
+                                    4
+                                ? 170.w
+                                : UserTool.userProvider.userInfo.business
+                                            .roleEM ==
+                                        Role.carService
+                                    ? 270.w
+                                    : 200.w, //double.infinity,
+                            child: getBottomState(),
+                          )
+                        : const SizedBox(),
                 fab: null,
                 fbLocation: CustomFloatingActionButtonLocation(
                     FloatingActionButtonLocation.endDocked, 2.w, -130.w),
@@ -541,7 +533,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                             centerTitle: false,
                             title: headerWhite
                                 ? Text(
-                                    publishInfoModel.modelName ,
+                                    publishInfoModel.modelName,
                                     style: TextStyle(
                                       color: const Color(0xFF333333),
                                       fontWeight: FontWeight.w700,
@@ -698,12 +690,12 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                   ),
                 ),
                 bottomNavi: Audit.getValueAuditId(widget.isUpdate == 2
-                                    ? editInfo.status
+                                    ? editInfo.carInfo.status
                                     : publishInfoModel.status)
                                 .typeNum !=
                             3 &&
                         Audit.getValueAuditId(widget.isUpdate == 2
-                                    ? editInfo.status
+                                    ? editInfo.carInfo.status
                                     : publishInfoModel.status)
                                 .typeNum !=
                             0
@@ -715,7 +707,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                                 width: 1.w, color: const Color(0xFFEEEEEE)),
                             color: Colors.white),
                         height: Audit.getValueAuditId(widget.isUpdate == 2
-                                        ? editInfo.status
+                                        ? editInfo.carInfo.status
                                         : publishInfoModel.status)
                                     .typeNum !=
                                 4
@@ -830,6 +822,21 @@ class _PublishInfoPageState extends State<PublishInfoPage>
   //     ),
   //   );
   // }
+  getStatus() {
+    if (widget.isUpdate == 1) {
+      if (Audit.getValueAuditId(publishInfoModel.status).typeNum == 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (EditStatus.getValue(editInfo.auditStatus).typeNum == 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 
   getBottomState() {
     // switch (widget.state) {
@@ -837,11 +844,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     //   ///出售申请
     //   case 1:
     return widget.index == 2
-        ? Audit.getValueAuditId(widget.isUpdate == 2
-                        ? editInfo.status
-                        : publishInfoModel.status)
-                    .typeNum ==
-                1
+        ? getStatus()
 
             ///1待审核 2已审核
             ? Row(
@@ -952,33 +955,44 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Audit.getValueAuditId(widget.isUpdate == 2
-                                    ? editInfo.status
-                                    : publishInfoModel.status)
-                                .typeNum ==
-                            2
-                        ? 32.hb
-                        : 0.hb,
+                    widget.isUpdate == 2
+                        ? EditStatus.getValue(editInfo.auditStatus).typeNum != 3
+                            ? 32.hb
+                            : 0.hb
+                        : Audit.getValueAuditId(publishInfoModel.status)
+                                    .typeNum ==
+                                2
+                            ? 32.hb
+                            : 0.hb,
                     Row(
                       children: [
                         getContact(),
                         const Spacer(),
                         Text(
-                          Audit.getValueAuditId(widget.isUpdate == 2
-                                          ? editInfo.status
-                                          : publishInfoModel.status)
-                                      .typeNum ==
-                                  2
-                              ? "已同意"
-                              : '已驳回',
-                          style: TextStyle(
-                              color: Audit.getValueAuditId(widget.isUpdate == 2
-                                              ? editInfo.status
-                                              : publishInfoModel.status)
+                          widget.isUpdate == 2
+                              ? EditStatus.getValue(editInfo.auditStatus)
                                           .typeNum ==
                                       2
-                                  ? const Color(0xFF027AFF)
-                                  : const Color(0xFFFF3B02),
+                                  ? "已同意"
+                                  : '已驳回'
+                              : Audit.getValueAuditId(publishInfoModel.status)
+                                          .typeNum ==
+                                      2
+                                  ? "已同意"
+                                  : '已驳回',
+                          style: TextStyle(
+                              color: widget.isUpdate == 2
+                                  ? EditStatus.getValue(editInfo.auditStatus)
+                                              .typeNum ==
+                                          2
+                                      ? const Color(0xFF027AFF)
+                                      : const Color(0xFFFF3B02)
+                                  : Audit.getValueAuditId(
+                                                  publishInfoModel.status)
+                                              .typeNum ==
+                                          2
+                                      ? const Color(0xFF027AFF)
+                                      : const Color(0xFFFF3B02),
                               fontSize: 28.sp,
                               fontWeight: FontWeight.w600),
                         ),
@@ -986,21 +1000,33 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                     ),
                     // const Spacer(),
                     8.hb,
-                    Audit.getValueAuditId(widget.isUpdate == 2
-                                    ? editInfo.status
-                                    : publishInfoModel.status)
-                                .typeNum ==
-                            2
-                        ? const SizedBox()
-                        : Flexible(
-                            child: Text(
-                              '驳回理由:${widget.isUpdate == 2 ? '无' : publishInfoModel.rejectReason}',
-                              style: TextStyle(
-                                  fontSize: 28.sp,
-                                  color: const Color(0xFF333333),
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
+                    widget.isUpdate == 2
+                        ? EditStatus.getValue(editInfo.auditStatus).typeNum == 2
+                            ? const SizedBox()
+                            : Flexible(
+                                child: Text(
+                                  '驳回理由:${editInfo.rejectReason}',
+                                  style: TextStyle(
+                                      fontSize: 28.sp,
+                                      color: const Color(0xFF333333),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              )
+                        : Audit.getValueAuditId(widget.isUpdate == 2
+                                        ? editInfo.carInfo.status
+                                        : publishInfoModel.status)
+                                    .typeNum ==
+                                2
+                            ? const SizedBox()
+                            : Flexible(
+                                child: Text(
+                                  '驳回理由:${publishInfoModel.rejectReason}',
+                                  style: TextStyle(
+                                      fontSize: 28.sp,
+                                      color: const Color(0xFF333333),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
                     // widget.state == 2 || widget.state == 3
                     //     ? const Divider()
                     //     : const SizedBox(),
@@ -1033,25 +1059,23 @@ class _PublishInfoPageState extends State<PublishInfoPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Audit.getValueAuditId(widget.isUpdate == 2
-                                ? editInfo.status
-                                : publishInfoModel.status)
-                            .typeNum ==
-                        2
-                    ? 32.hb
-                    : 0.hb,
+                widget.isUpdate == 2
+                    ? EditStatus.getValue(editInfo.auditStatus).typeNum == 3
+                        ? 32.hb
+                        : 0.hb
+                    : Audit.getValueAuditId(publishInfoModel.status).typeNum ==
+                            2
+                        ? 32.hb
+                        : 0.hb,
+
                 Row(
                   children: [
                     getContact(),
                     const Spacer(),
                     Text(
-                      getText(widget.isUpdate == 2
-                          ? editInfo.status
-                          : publishInfoModel.status),
+                      getText(),
                       style: TextStyle(
-                          color: getColor(widget.isUpdate == 2
-                              ? editInfo.status
-                              : publishInfoModel.status),
+                          color: getColor(),
                           fontSize: 28.sp,
                           fontWeight: FontWeight.w600),
                     ),
@@ -1060,11 +1084,12 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                 // const Spacer(),
                 16.hb,
                 widget.isUpdate == 2
-                    ? Audit.getValueAuditId(editInfo.status).typeNum != 4
+                    ? Audit.getValueAuditId(editInfo.carInfo.status).typeNum !=
+                            3
                         ? const SizedBox()
                         : Flexible(
                             child: Text(
-                              '驳回理由:无',
+                              '驳回理由:${editInfo.rejectReason}',
                               // '驳回理由:${wu}',
                               style: TextStyle(
                                   fontSize: 28.sp,
@@ -1087,7 +1112,9 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                 widget.isUpdate == 2
                     ? UserTool.userProvider.userInfo.business.roleEM ==
                                 Role.carService &&
-                            Audit.getValueAuditId(editInfo.status).typeNum == 4
+                            Audit.getValueAuditId(editInfo.carInfo.status)
+                                    .typeNum ==
+                                4
                         // widget.state == 2 || widget.state == 3
                         ? const Divider()
                         : const SizedBox()
@@ -1104,74 +1131,89 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                 widget.isUpdate == 2
                     ? UserTool.userProvider.userInfo.business.roleEM ==
                                 Role.carService &&
-                            Audit.getValueAuditId(editInfo.status).typeNum == 4
+                            Audit.getValueAuditId(editInfo.carInfo.status)
+                                    .typeNum ==
+                                4
                         ? Padding(
                             padding: EdgeInsets.only(left: 400.w),
                             child: getBox('重新编辑', const Color(0xFF027AFF), 0,
                                 Colors.white, Colors.white, () {
-
                               Get.to(() => EditCarPage(
                                     carListModel: NewCarInfo(
                                         carInfo: CarNewInfo(
-                                          id: editInfo.id,
-                                          modelName: editInfo.modelName,
+                                          id: editInfo.carInfo.id,
+                                          modelName: editInfo.carInfo.modelName,
 
                                           ///
-                                          status: editInfo.status,
-                                          statusName: editInfo.sourceName,
-                                          theUpper: editInfo.theUpper,
-                                          theUpperName: editInfo.theUpperName,
-                                          modelId: editInfo.modelId,
-                                          vin: editInfo.vin,
-                                          carSn: editInfo.carSn,
-                                          collect: editInfo.collect,
-                                          browse: editInfo.browse,
-                                          transfer: editInfo.transfer,
-                                          price: editInfo.price,
-                                          lastPrice: editInfo.lastPrice,
-                                          downPayment: editInfo.downPayment,
-                                          source: editInfo.source,
-                                          sourceName: editInfo.sourceName,
-                                          dealerId: editInfo.dealerId,
-                                          dealerName: editInfo.dealerName,
+                                          status: editInfo.carInfo.status,
+                                          statusName:
+                                              editInfo.carInfo.sourceName,
+                                          theUpper: editInfo.carInfo.theUpper,
+                                          theUpperName:
+                                              editInfo.carInfo.theUpperName,
+                                          modelId: editInfo.carInfo.modelId,
+                                          vin: editInfo.carInfo.vin,
+                                          carSn: editInfo.carInfo.carSn,
+                                          collect: editInfo.carInfo.collect,
+                                          browse: editInfo.carInfo.browse,
+                                          transfer: editInfo.carInfo.transfer,
+                                          price: editInfo.carInfo.price,
+                                          lastPrice: editInfo.carInfo.lastPrice,
+                                          downPayment:
+                                              editInfo.carInfo.downPayment,
+                                          source: editInfo.carInfo.source,
+                                          sourceName:
+                                              editInfo.carInfo.sourceName,
+                                          dealerId: editInfo.carInfo.dealerId,
+                                          dealerName:
+                                              editInfo.carInfo.dealerName,
                                           locationCityId:
-                                              editInfo.locationCityId,
-                                          dealerSn: editInfo.dealerSn,
-                                          type: editInfo.type,
-                                          engineNo: editInfo.engineNo,
+                                              editInfo.carInfo.locationCityId,
+                                          dealerSn: editInfo.carInfo.dealerSn,
+                                          type: editInfo.carInfo.type,
+                                          engineNo: editInfo.carInfo.engineNo,
                                           licensingDate:
-                                              (editInfo.licensingDate).toInt(),
-                                          color: editInfo.color,
-                                          interiorColor: editInfo.interiorColor,
-                                          temporaryLicensePlate:
-                                              editInfo.temporaryLicensePlate,
-                                          parkingNo: editInfo.parkingNo,
-                                          stockStatus: editInfo.stockStatus,
+                                              (editInfo.carInfo.licensingDate)
+                                                  .toInt(),
+                                          color: editInfo.carInfo.color,
+                                          interiorColor:
+                                              editInfo.carInfo.interiorColor,
+                                          temporaryLicensePlate: editInfo
+                                              .carInfo.temporaryLicensePlate,
+                                          parkingNo: editInfo.carInfo.parkingNo,
+                                          stockStatus:
+                                              editInfo.carInfo.stockStatus,
                                           stockStatusName:
-                                              editInfo.stockStatusName,
-                                          useCharacter: editInfo.useCharacter,
-                                          mileage: editInfo.mileage,
+                                              editInfo.carInfo.stockStatusName,
+                                          useCharacter:
+                                              editInfo.carInfo.useCharacter,
+                                          mileage: editInfo.carInfo.mileage,
                                           // newCarGuidePrice,
-                                          purchaseTax: editInfo.purchaseTax,
+                                          purchaseTax:
+                                              editInfo.carInfo.purchaseTax,
                                           installationCost:
-                                              editInfo.installationCost,
-                                          location: editInfo.location,
-                                          attribution: editInfo.attribution,
-                                          condition: editInfo.condition,
-                                          carPhotos: const [],//editInfo.carPhotos,
-                                          interiorPhotos:const[],
-                                              //editInfo.interiorPhotos,
-                                          defectPhotos:const[],// editInfo.defectPhotos,
+                                              editInfo.carInfo.installationCost,
+                                          location: editInfo.carInfo.location,
+                                          attribution:
+                                              editInfo.carInfo.attribution,
+                                          condition: editInfo.carInfo.condition,
+                                          carPhotos: const [],
+                                          //editInfo.carPhotos,
+                                          interiorPhotos: const [],
+                                          //editInfo.interiorPhotos,
+                                          defectPhotos: const [],
+                                          // editInfo.defectPhotos,
                                           // reportPhotos,
                                           // repairPhotos,
-                                          brokerInfo: editInfo.brokerInfo,
-                                          modelInfo: editInfo.modelInfo,
-                                          priceInfo: editInfo.priceInfo,
+                                          brokerInfo:
+                                              editInfo.carInfo.brokerInfo,
+                                          modelInfo: editInfo.carInfo.modelInfo,
+                                          priceInfo: editInfo.carInfo.priceInfo,
                                           certificateInfo:
-                                              editInfo.certificateInfo,
-                                          contractMasterInfo:
-                                              editInfo.contractMasterInfo,
-                                          dataPhotos: const [],//editInfo.dataPhotos,
+                                              editInfo.carInfo.certificateInfo,
+                                          contractMasterInfo: editInfo
+                                              .carInfo.contractMasterInfo,
+                                          dataPhotos: const [], //editInfo.dataPhotos,
                                         ),
                                         isSelf: 1,
                                         isSelfStore: 1,
@@ -1212,29 +1254,55 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     // }
   }
 
-  getText(int status) {
-    switch (Audit.getValueAuditId(status).typeNum) {
-      case 1:
-        return '待审批';
-      case 2:
-        return '已同意';
-      case 4:
-        return '已驳回';
-      default:
-        return '';
+  getText() {
+    if (widget.isUpdate == 1) {
+      switch (Audit.getValueAuditId(publishInfoModel.status).typeNum) {
+        case 1:
+          return '待审批';
+        case 2:
+          return '已同意';
+        case 4:
+          return '已驳回';
+        default:
+          return '';
+      }
+    } else {
+      switch (EditStatus.getValue(editInfo.auditStatus).typeNum) {
+        case 1:
+          return '待审批';
+        case 2:
+          return '已同意';
+        case 3:
+          return '已驳回';
+        default:
+          return '';
+      }
     }
   }
 
-  getColor(int status) {
-    switch (Audit.getValueAuditId(status).typeNum) {
-      case 1:
-        return const Color(0xFFFF6F42);
-      case 2:
-        return const Color(0xFF027AFF);
-      case 4:
-        return const Color(0xFFFF3B02);
-      default:
-        return const Color(0xFF027AFF);
+  getColor() {
+    if (widget.isUpdate == 1) {
+      switch (Audit.getValueAuditId(publishInfoModel.status).typeNum) {
+        case 1:
+          return const Color(0xFFFF6F42);
+        case 2:
+          return const Color(0xFF027AFF);
+        case 4:
+          return const Color(0xFFFF3B02);
+        default:
+          return const Color(0xFF027AFF);
+      }
+    } else {
+      switch (EditStatus.getValue(editInfo.auditStatus).typeNum) {
+        case 1:
+          return const Color(0xFFFF6F42);
+        case 2:
+          return const Color(0xFF027AFF);
+        case 3:
+          return const Color(0xFFFF3B02);
+        default:
+          return const Color(0xFF027AFF);
+      }
     }
   }
 
@@ -1242,7 +1310,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
     return GestureDetector(
       onTap: () {
         getPhone(widget.isUpdate == 2
-            ? editInfo.brokerInfo.brokerPhone
+            ? editInfo.carInfo.brokerInfo.brokerPhone
             : publishInfoModel.brokerInfo.brokerPhone);
       },
       child: Row(
@@ -1344,7 +1412,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
         await Get.to(
           PushCarManagePhotoPage(
             isSelf: true,
-
+            // isImg: true,
             ///widget.carListModel.isSelf == 1,
             tabs: _titles,
             model: pushPhotoModel,
@@ -1429,7 +1497,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
         Flexible(
             child: Text(
           widget.isUpdate == 2
-              ? editInfo.modelName
+              ? editInfo.carInfo.modelName
               : publishInfoModel.modelName,
           style: Theme.of(context)
               .textTheme
@@ -1449,12 +1517,16 @@ class _PublishInfoPageState extends State<PublishInfoPage>
           child: Row(
             children: [
               widget.isUpdate == 2
-                  ? _noRelease(
-                      Audit.getValueAuditId(editInfo.status).typeNum == 3
-                          ? editInfo.stockStatusName //'在售'
-                          : Audit.getValueAuditId(editInfo.status).typeNum == 2
-                              ? '待审批'
-                              : Audit.getValueAuditId(editInfo.status).typeStr)
+                  ? _noRelease(EditStatus.getValue(editInfo.auditStatus)
+                              .typeNum ==
+                          2
+                      ? editInfo.carInfo.stockStatusName //'在售'
+                      : EditStatus.getValue(editInfo.auditStatus)
+                                  .typeNum ==
+                              1
+                          ? '待审批'
+                          : EditStatus.getValue(editInfo.auditStatus)
+                              .typeStr)
                   : _noRelease(
                       Audit.getValueAuditId(publishInfoModel.status).typeNum ==
                               3
@@ -1474,16 +1546,16 @@ class _PublishInfoPageState extends State<PublishInfoPage>
               16.wb,
               _textview(DateUtil.formatDateMs(
                   (widget.isUpdate == 2
-                          ? editInfo.licensingDate.toInt()
+                          ? editInfo.carInfo.licensingDate.toInt()
                           : publishInfoModel.licensingDate.toInt()) *
                       1000,
                   format: 'yyyy年MM月')),
               16.wb,
               _textview(
-                  '${widget.isUpdate == 2 ? editInfo.mileage : publishInfoModel.mileage}万公里'),
+                  '${widget.isUpdate == 2 ? editInfo.carInfo.mileage : publishInfoModel.mileage}万公里'),
               16.wb,
               _textview(widget.isUpdate == 2
-                  ? editInfo.modelInfo.fuelTypeName
+                  ? editInfo.carInfo.modelInfo.fuelTypeName
                   : publishInfoModel.modelInfo.fuelTypeName),
             ],
           ),
@@ -1503,7 +1575,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
             Text.rich(TextSpan(children: [
               TextSpan(
                   text: (num.parse(widget.isUpdate == 2
-                              ? editInfo.priceInfo.exteriorPrice
+                              ? editInfo.carInfo.priceInfo.exteriorPrice
                               : publishInfoModel.priceInfo.exteriorPrice) /
                           10000)
                       .toString(),
@@ -1531,9 +1603,9 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                 ),
                 Text(
                   widget.isUpdate == 2
-                      ? editInfo.price == '0'
+                      ? editInfo.carInfo.price == '0'
                           ? '无'
-                          : '${editInfo.price}万元'
+                          : '${editInfo.carInfo.price}万元'
                       : publishInfoModel.price == '0'
                           ? '无'
                           : '${publishInfoModel.price}万元',
@@ -1624,7 +1696,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                         Text(
                           TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
                               num.parse(widget.isUpdate == 2
-                                  ? editInfo.priceInfo.exteriorPrice
+                                  ? editInfo.carInfo.priceInfo.exteriorPrice
                                   : publishInfoModel.priceInfo.exteriorPrice))),
                           style: TextStyle(
                               height: 1.5,
@@ -1654,7 +1726,7 @@ class _PublishInfoPageState extends State<PublishInfoPage>
                         Text(
                           TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
                               num.parse(widget.isUpdate == 2
-                                  ? editInfo.priceInfo.interiorPrice
+                                  ? editInfo.carInfo.priceInfo.interiorPrice
                                   : publishInfoModel.priceInfo.interiorPrice))),
                           style: TextStyle(
                               height: 1.5,

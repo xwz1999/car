@@ -8,6 +8,160 @@ part 'edit_info_model.g.dart';
 
 @JsonSerializable()
 class EditInfoModel extends Equatable {
+  final CarInfos carInfo;
+  final int auditStatus;
+  final String auditStatusName;
+  final num dealerAuditAt;
+  final num createdAt;
+  final String rejectReason;
+
+  factory EditInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$EditInfoModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EditInfoModelToJson(this);
+
+  static get init => const EditInfoModel(
+        carInfo: CarInfos(
+          id: 0,
+          modelId: 0,
+          modelName: "",
+          status: 0,
+          statusName: '',
+          theUpper: 0,
+          theUpperName: '',
+          vin: '',
+          carSn: '',
+          collect: 0,
+          isCollect: 0,
+          browse: 0,
+          transfer: 0,
+          price: '',
+          lastPrice: '',
+          downPayment: '',
+          sourceName: '',
+          source: 0,
+          dealerId: 0,
+          dealerName: '',
+          dealerSn: '',
+          locationCityId: 0,
+          attributionCityId: 0,
+          remark: '',
+          stockStatus: 0,
+          stockStatusName: '',
+          type: '',
+          engineNo: '',
+          licensingDate: 0,
+          color: '',
+          interiorColor: '',
+          location: '',
+          attribution: '',
+          condition: '',
+          carPhotos: [],
+          interiorPhotos: [],
+          temporaryLicensePlate: '',
+          parkingNo: '',
+          useCharacter: '',
+          mileage: '',
+          purchaseTax: '',
+          installationCost: '',
+          defectPhotos: [],
+          dataPhotos: [],
+          brokerInfo: BrokerInfo(
+              brokerId: 0,
+              brokerNickname: '',
+              brokerHeadImg: '',
+              brokerPhone: ''),
+          modelInfo: ModelInfo(
+            year: 0,
+            price: "",
+            liter: '',
+            dischargeStandard: '',
+            fuelTypeName: '',
+            enginePower: 0,
+            enginePowerKw: 0,
+            isGreen: 0,
+            modelCode: '',
+            driveName: '',
+            driveType: '',
+            modelStatus: '',
+            gearType: '',
+            marketDate: '',
+            minRegYear: '',
+            maxRegYear: '',
+            stopMakeYear: '',
+            intake: '',
+            seatNumber: '',
+            bodyType: '',
+            doorNumber: 0,
+            carStruct: '',
+            isParallel: 0,
+            priceAllowance: '',
+          ),
+          priceInfo: PriceInfo(interiorPrice: '', exteriorPrice: ''),
+          purchaseInfo: PurchaseInfoS(price: '', date: 0, liaison: ''),
+          certificateInfo: CertificateInfo(
+              transfer: 0,
+              keyCount: 0,
+              compulsoryInsurance: 0,
+              compulsoryInsuranceDate: 0,
+              commercialInsurance: 0,
+              commercialInsuranceDate: 0,
+              commercialInsurancePrice: ''),
+          contractMasterInfo: ContractMasterInfo(
+              name: '', idCard: '', phone: '', bankCard: '', bank: ''),
+        ),
+        auditStatus: 0,
+        auditStatusName: '',
+        dealerAuditAt: 0,
+        createdAt: 0,
+      rejectReason:'',
+      );
+
+  @override
+  List<Object?> get props => [
+    rejectReason,
+        carInfo,
+        auditStatus,
+        auditStatusName,
+        dealerAuditAt,
+        createdAt,
+      ];
+
+  const EditInfoModel({
+    required this.rejectReason,
+    required this.carInfo,
+    required this.auditStatus,
+    required this.auditStatusName,
+    required this.dealerAuditAt,
+    required this.createdAt,
+  });
+}
+
+@JsonSerializable()
+class PurchaseInfoS extends Equatable {
+  final String price;
+  final num date;
+  final String liaison;
+
+  factory PurchaseInfoS.fromJson(Map<String, dynamic> json) =>
+      _$PurchaseInfoSFromJson(json);
+
+  const PurchaseInfoS({
+    required this.price,
+    required this.date,
+    required this.liaison,
+  });
+
+  @override
+  List<Object?> get props => [
+        price,
+        date,
+        liaison,
+      ];
+}
+
+@JsonSerializable()
+class CarInfos extends Equatable {
   final int id;
   final int modelId;
   final String modelName;
@@ -46,7 +200,6 @@ class EditInfoModel extends Equatable {
   final String location;
   final String attribution;
   final String condition;
-
   final List<CarPhotos> carPhotos;
   final List<CarPhotos> interiorPhotos;
   final List<CarPhotos> defectPhotos;
@@ -70,102 +223,12 @@ class EditInfoModel extends Equatable {
   // final String rejectReason;
   // final num createdAt;
 
-  factory EditInfoModel.fromJson(Map<String, dynamic> json) =>
-      _$EditInfoModelFromJson(json);
+  factory CarInfos.fromJson(Map<String, dynamic> json) =>
+      _$CarInfosFromJson(json);
 
-  Map<String, dynamic> toJson() => _$EditInfoModelToJson(this);
+  Map<String, dynamic> toJson() => _$CarInfosToJson(this);
 
-  static get init => const EditInfoModel(
-        id: 0,
-        modelId: 0,
-        modelName: "",
-        status: 0,
-        statusName: '',
-        theUpper: 0,
-        theUpperName: '',
-        vin: '',
-        carSn: '',
-        collect: 0,
-        isCollect: 0,
-        browse: 0,
-        transfer: 0,
-        price: '',
-        lastPrice: '',
-        downPayment: '',
-        sourceName: '',
-        source: 0,
-        dealerId: 0,
-        dealerName: '',
-        dealerSn: '',
-        locationCityId: 0,
-        attributionCityId: 0,
-        remark: '',
-        stockStatus: 0,
-        stockStatusName: '',
-        type: '',
-        engineNo: '',
-        licensingDate: 0,
-        color: '',
-        interiorColor: '',
-        location: '',
-        attribution: '',
-        condition: '',
-        carPhotos: [],
-        interiorPhotos: [],
-        temporaryLicensePlate: '',
-        parkingNo: '',
-        useCharacter: '',
-        mileage: '',
-        purchaseTax: '',
-        installationCost: '',
-        defectPhotos: [],
-        dataPhotos: [],
-        brokerInfo: BrokerInfo(
-            brokerId: 0,
-            brokerNickname: '',
-            brokerHeadImg: '',
-            brokerPhone: ''),
-        modelInfo: ModelInfo(
-          year: 0,
-          price: "",
-          liter: '',
-          dischargeStandard: '',
-          fuelTypeName: '',
-          enginePower: 0,
-          enginePowerKw: 0,
-          isGreen: 0,
-          modelCode: '',
-          driveName: '',
-          driveType: '',
-          modelStatus: '',
-          gearType: '',
-          marketDate: '',
-          minRegYear: '',
-          maxRegYear: '',
-          stopMakeYear: '',
-          intake: '',
-          seatNumber: '',
-          bodyType: '',
-          doorNumber: 0,
-          carStruct: '',
-          isParallel: 0,
-          priceAllowance: '',
-        ),
-        priceInfo: PriceInfo(interiorPrice: '', exteriorPrice: ''),
-        purchaseInfo: PurchaseInfoS(price: '', date: 0, liaison: ''),
-        certificateInfo: CertificateInfo(
-            transfer: 0,
-            keyCount: 0,
-            compulsoryInsurance: 0,
-            compulsoryInsuranceDate: 0,
-            commercialInsurance: 0,
-            commercialInsuranceDate: 0,
-            commercialInsurancePrice: ''),
-        contractMasterInfo: ContractMasterInfo(
-            name: '', idCard: '', phone: '', bankCard: '', bank: ''),
-      );
-
-  const EditInfoModel({
+  const CarInfos({
     required this.id,
     required this.modelId,
     required this.modelName,
@@ -190,8 +253,6 @@ class EditInfoModel extends Equatable {
     required this.locationCityId,
     required this.attributionCityId,
     required this.remark,
-    required this.stockStatus,
-    required this.stockStatusName,
     required this.type,
     required this.engineNo,
     required this.licensingDate,
@@ -216,6 +277,8 @@ class EditInfoModel extends Equatable {
     required this.purchaseInfo,
     required this.certificateInfo,
     required this.contractMasterInfo,
+    required this.stockStatus,
+    required this.stockStatusName,
   });
 
   @override
@@ -270,28 +333,5 @@ class EditInfoModel extends Equatable {
         purchaseInfo,
         certificateInfo,
         contractMasterInfo,
-      ];
-}
-
-@JsonSerializable()
-class PurchaseInfoS extends Equatable {
-  final String price;
-  final num date;
-  final String liaison;
-
-  factory PurchaseInfoS.fromJson(Map<String, dynamic> json) =>
-      _$PurchaseInfoSFromJson(json);
-
-  const PurchaseInfoS({
-    required this.price,
-    required this.date,
-    required this.liaison,
-  });
-
-  @override
-  List<Object?> get props => [
-        price,
-        date,
-        liaison,
       ];
 }

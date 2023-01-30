@@ -16,9 +16,9 @@ import '../../../model/order/callcarlist_model.dart';
 
 class OrderFunc {
   ///独立合伙人付款
-  static Future<bool> partnerPay(int orderId,int payType) async {
-    BaseModel res =
-        await apiClient.request(API.user.sign.partnerPay, data: {'orderId': orderId,'payType':payType});
+  static Future<bool> partnerPay(int orderId, int payType) async {
+    BaseModel res = await apiClient.request(API.user.sign.partnerPay,
+        data: {'orderId': orderId, 'payType': payType});
     if (res.code == 0) {
       return true;
     } else {
@@ -29,8 +29,8 @@ class OrderFunc {
 
   ///创建独立合伙人定档
   static Future<int> createOrder(int kind) async {
-    BaseModel res =
-    await apiClient.request(API.user.sign.createUserOrder, data: {'kind': kind});
+    BaseModel res = await apiClient
+        .request(API.user.sign.createUserOrder, data: {'kind': kind});
     if (res.code == 0) {
       return res.data['orderId'];
     } else {
@@ -38,7 +38,6 @@ class OrderFunc {
       return 0;
     }
   }
-
 
   ///个人寄卖详情
   static Future<IndividualModel?> getConsignmentInfo(int orderId) async {
@@ -78,11 +77,10 @@ class OrderFunc {
     }
   }
 
-
   ///寄卖订单列表
   static Future<List<ListsModel>> getPushCarLists({Map? data}) async {
     BaseListModel baseList =
-    await apiClient.requestList(API.order.businessLists, data: data);
+        await apiClient.requestList(API.order.businessLists, data: data);
     if (baseList.code != 0) {
       CloudToast.show(baseList.msg);
       return [];
@@ -310,7 +308,8 @@ class OrderFunc {
     String vehicleLicence,
     String invoice,
     String guaranteeSlip,
-    num commercialInsurancePrice,
+    String commercialInsuranceProof,
+    String compulsoryInsuranceProof,
   ) async {
     BaseModel res = await apiClient.request(API.order.scaleTransfer, data: {
       'orderId': orderId,
@@ -318,7 +317,8 @@ class OrderFunc {
       'vehicleLicense': vehicleLicence,
       'invoice': invoice,
       'guaranteeSlip': guaranteeSlip,
-      'commercialInsurancePrice': commercialInsurancePrice
+      'commercialInsuranceProof': commercialInsuranceProof,
+      'compulsoryInsuranceProof': compulsoryInsuranceProof
     });
     if (res.code == 0) {
       return true;
@@ -330,25 +330,25 @@ class OrderFunc {
 
   ///线下过户
   static Future<bool> getOfflineTransfer(
-      int orderId,
-      String certificate,
-      String vehicleLicence,
-      String invoice,
-      String guaranteeSlip,
-      String compulsoryInsuranceProof,
-      String commercialInsuranceProof,
-      String report,
-      // num commercialInsurancePrice,
-      ) async {
+    int orderId,
+    String certificate,
+    String vehicleLicence,
+    String invoice,
+    String guaranteeSlip,
+    String compulsoryInsuranceProof,
+    String commercialInsuranceProof,
+    String report,
+    // num commercialInsurancePrice,
+  ) async {
     BaseModel res = await apiClient.request(API.order.scaleTransfer, data: {
       'orderId': orderId,
       'certificate': certificate,
       'vehicleLicense': vehicleLicence,
       'invoice': invoice,
       'guaranteeSlip': guaranteeSlip,
-      'compulsoryInsuranceProof':compulsoryInsuranceProof,
-      'commercialInsuranceProof':commercialInsuranceProof,
-      'report':report,
+      'compulsoryInsuranceProof': compulsoryInsuranceProof,
+      'commercialInsuranceProof': commercialInsuranceProof,
+      'report': report,
       // 'commercialInsurancePrice': commercialInsurancePrice
     });
     if (res.code == 0) {
@@ -358,6 +358,7 @@ class OrderFunc {
       return false;
     }
   }
+
   ///完结订单
   static Future<bool> getFinal(int orderId) async {
     BaseModel res = await apiClient.request(API.order.saleFinal,
@@ -387,10 +388,9 @@ class OrderFunc {
   }
 
   ///叫车订单列表
-  static Future<List<CallcarlistModel>> getCallCar(
-      {Map? data}) async {
-    BaseListModel res = await apiClient
-        .requestList(API.order.callCar, data: data);
+  static Future<List<CallcarlistModel>> getCallCar({Map? data}) async {
+    BaseListModel res =
+        await apiClient.requestList(API.order.callCar, data: data);
 
     if (res.code != 0) {
       CloudToast.show(res.msg);

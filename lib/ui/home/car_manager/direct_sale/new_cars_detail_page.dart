@@ -4,6 +4,7 @@ import 'package:cloud_car/model/car/car_list_model.dart';
 import 'package:cloud_car/model/car/new_car_info.dart';
 import 'package:cloud_car/model/contract/report_photo_model.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/call_order_page.dart';
+import 'package:cloud_car/ui/home/car_manager/direct_sale/detailed_price_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/new_car_detail_item.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/off_car_page.dart';
 import 'package:cloud_car/ui/home/car_manager/direct_sale/sell_car_order_page.dart';
@@ -28,6 +29,7 @@ import 'package:flutter_swiper_tv/flutter_swiper.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../model/car/car_price_history_model.dart';
 import '../../../../model/publish_info_model.dart';
 import '../../../../utils/text_utils.dart';
 import 'edit_car_page.dart';
@@ -66,6 +68,8 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
   List<CarPhotos> defectPhotos = [];
   List<CarPhotos> dataPhotos = [];
   late PublishInfoModel publishInfoModel;
+  var timeDate = DateTime.now();
+  int count = 0;
 
   // List<CarPhotos> repairPhotos = [];
   //
@@ -76,6 +80,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
   late PushPhotoModel pushPhotoModel;
 
   late ReportPhotoModel reportPhotoModel;
+  late List<CarPriceHistoryModel> carPriceList = [];
 
   //下拉显示
   bool downState = true;
@@ -107,32 +112,32 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
     if (widget.carListModel.isSelf == 1) {
       dataPhotos = [
-         CarPhotos(
-          text: '漆面数据',
-        ),
-        CarPhotos(text: '行驶证照片',),
-        CarPhotos(
-          text: '检测报告',
-        ),
-        CarPhotos(
-          text: '登记证书',
-        ),
-        CarPhotos(
-          text: '交强险',
-        ),
-        CarPhotos(
-          text: '商业险',
-        ),
+        // CarPhotos(
+        //   text: '漆面数据',
+        // ),
+        // CarPhotos(text: '行驶证照片'),
+        // CarPhotos(
+        //   text: '检测报告',
+        // ),
+        // // CarPhotos(
+        // //   text: '登记证书',
+        // // ),
+        // CarPhotos(
+        //   text: '交强险',
+        // ),
+        // CarPhotos(
+        //   text: '商业险',
+        // ),
         // CarPhotos(
         //   text: '维保记录',
         // ),
       ];
     } else {
       dataPhotos = [
-         CarPhotos(
+        CarPhotos(
           text: '漆面数据',
         ),
-         CarPhotos(
+        CarPhotos(
           text: '检测报告',
         ),
       ];
@@ -141,6 +146,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
 
   _refresh() async {
     carInfoModel = await CarFunc.getNewCarInfo(widget.carListModel.id);
+    carPriceList = await CarFunc.getPriceHistory(widget.carListModel.id);
     // print(carInfoModel!.carInfo);
     collect = carInfoModel?.carInfo.collect ?? 0;
     for (var item in carInfoModel!.carInfo.carPhotos) {
@@ -169,6 +175,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     //   }
     // }
     for (var item in carInfoModel!.carInfo.dataPhotos) {
+      print(item.text);
       if (item.photo.isNotEmpty && item.text.isNotEmpty) {
         dataPhotos.add(CarPhotos(photo: item.photo, text: item.text));
       }
@@ -208,6 +215,16 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
     );
 
     reportPhotoModel = ReportPhotoModel(paints: dataPhotos);
+
+    for (int i = 0; i < carPriceList.length; i++) {
+      if (timeDate
+              .difference(DateTime.fromMillisecondsSinceEpoch(
+                  (carPriceList.first.createdAt * 1000).toInt()))
+              .inDays <=
+          30) {
+        count++;
+      }
+    }
 
     if (mounted) {
       setState(() {});
@@ -984,7 +1001,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                         ),
                         10.wb,
                         Text(
-                          TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
+                            carInfoModel!.isSelfStore!=1? '*********':TextUtils.carInfoIsEmpty(TextUtils.getPriceStr(
                               num.parse(carInfoModel!
                                   .carInfo.priceInfo.interiorPrice))),
                           style: TextStyle(
@@ -1001,7 +1018,19 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
             ),
             GestureDetector(
               onTap: () {
-                // Get.to(()=>const DetailedPricePage());
+                if (carPriceList == []) {
+                  CloudToast.show('当前暂无调价记录');
+                } else {
+                  Get.to(() => DetailedPricePage(
+                      carPriceList: carPriceList,
+                      shelfTime: DateUtil.formatDateMs(
+                          carInfoModel!.carInfo.licensingDate.toInt() * 1000,
+                          format: 'yyyy年MM月dd日'),
+                      exteriorPrice: TextUtils.carInfoIsEmpty(
+                        TextUtils.getPriceStr(num.parse(
+                            carInfoModel!.carInfo.priceInfo.exteriorPrice)),
+                      )));
+                }
               },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 0.w, vertical: 16.w),
@@ -1048,7 +1077,7 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                         ),
                         16.wb,
                         Text(
-                          '近一个月调价2次',
+                          carPriceList == [] ? '近期无调价' : '近一个月调价$count次',
                           style: TextStyle(
                               color: const Color(0xFF333333), fontSize: 24.sp),
                         ),
@@ -1065,21 +1094,26 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                         color: const Color(0xFF027AFF),
                       )),
                     ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 26.w,
-                          height: 26.w,
-                          child: Image.asset(Assets.icons.pricing.path),
-                        ),
-                        16.wb,
-                        Text(
-                          '2022年12月20日降价3000元',
-                          style: TextStyle(
-                              color: const Color(0xFF333333), fontSize: 24.sp),
-                        ),
-                      ],
-                    )
+                    carPriceList == []
+                        ? const SizedBox()
+                        : Row(
+                            children: [
+                              SizedBox(
+                                width: 26.w,
+                                height: 26.w,
+                                child: Image.asset(Assets.icons.pricing.path),
+                              ),
+                              16.wb,
+                              Text(
+                                carPriceList == []
+                                    ? '近期无调价'
+                                    : '${DateUtil.formatDateMs((carPriceList.first.createdAt).toInt() * 1000, format: 'yyyy年MM月dd日')}${carPriceList.first.description}',
+                                style: TextStyle(
+                                    color: const Color(0xFF333333),
+                                    fontSize: 24.sp),
+                              ),
+                            ],
+                          )
                   ],
                 ),
               ),
@@ -1119,7 +1153,13 @@ class _NewCarsDetailPageState extends State<NewCarsDetailPage>
                       ? Assets.icons.editor.path
                       : Assets.icons.noEditor.path,
                   '编辑', () {
-            if (widget.carListModel.isSelf == 1) {
+            if (carInfoModel!.isSelfStore == 1 ||
+                UserTool.userProvider.userInfo.business.roleEM ==
+                    Role.carService ||
+                UserTool.userProvider.userInfo.business.roleEM ==
+                    Role.settlers ||
+                UserTool.userProvider.userInfo.business.roleEM ==
+                    Role.manager) {
               Get.to(() => EditCarPage(
                     carListModel: carInfoModel!,
                   ));

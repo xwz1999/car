@@ -52,7 +52,7 @@ class _SellCarOrderSecondPageState extends State<SellCarOrderSecondPage> {
 
   CustomerListModel? customerListModel;
 
-  final List _models1 = ['微信小程序', '其他'];
+  final List _models1 = ['微信小程序',];///'其他'
   late int sourceCustomers = 0;
   final List<int> _selectIndex1 = [];
 
@@ -335,7 +335,9 @@ bool phone=false;
                           widget.carSaleContract.masterInfo.idCard =
                               idCardModel.number;
                           cardNoController.text = idCardModel.number;
+                          widget.carSaleContract.masterInfo.name=idCardModel.name;
                           nameController.text = idCardModel.name;
+
                         }
                         cancel();
                         setState(() {});

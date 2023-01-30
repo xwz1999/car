@@ -125,8 +125,8 @@ class _PreferredPageState extends State<PreferredPage>
         'struct': _pickCar.value.struct,
         'gearType': _pickCar.value.gearType,
         'fuelType': _pickCar.value.fuelType,
-        'minMileage': _pickCar.value.finalMinMile,
-        'maxMileage': _pickCar.value.finalMaxMile,
+        'minMileage': _pickCar.value.finalMinMile ,
+        'maxMileage': _pickCar.value.finalMaxMile ?? _pickCar.value.mile,
         'dischargeStandard': _pickCar.value.dischargeStandard,
         'keyword': _searchController.text,
       };
@@ -385,6 +385,7 @@ class _PreferredPageState extends State<PreferredPage>
                 12.wb,
                 GestureDetector(
                   onTap: () {
+                    // print(_params.)
                     Get.to(() => const CarCollection());
                   },
                   child: SizedBox(

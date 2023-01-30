@@ -38,52 +38,52 @@ class _EvaluationRecordPageState extends State<EvaluationRecordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: const CloudBackButton(
-            isSpecial: true,
-          ),
-          backgroundColor: kForeGroundColor,
-          title: Text('评估记录',
-              style: TextStyle(
-                  color: BaseStyle.color111111,
-                  fontSize: BaseStyle.fontSize36,
-                  fontWeight: FontWeight.bold)),
+      appBar: AppBar(
+        leading: const CloudBackButton(
+          isSpecial: true,
         ),
-        backgroundColor: const Color(0xFFF6F6F6),
-        extendBody: true,
-        body: EasyRefresh(
-          firstRefresh: true,
-          header: MaterialHeader(),
-          footer: MaterialFooter(),
-          controller: _easyRefreshController,
-          onRefresh: () async {
-            _page = 1;
-            lists =
-            await CarFunc.getCarEvaluationList(page: _page, size: _size);
-            _onLoad = false;
-            setState(() {});
+        backgroundColor: kForeGroundColor,
+        title: Text('评估记录',
+            style: TextStyle(
+                color: BaseStyle.color111111,
+                fontSize: BaseStyle.fontSize36,
+                fontWeight: FontWeight.bold)),
+      ),
+      backgroundColor: const Color(0xFFF6F6F6),
+      extendBody: true,
+      body: EasyRefresh(
+        firstRefresh: true,
+        header: MaterialHeader(),
+        footer: MaterialFooter(),
+        controller: _easyRefreshController,
+        onRefresh: () async {
+          _page = 1;
+          lists = await CarFunc.getCarEvaluationList(page: _page, size: _size);
+          _onLoad = false;
+          setState(() {});
+        },
+        onLoad: () async {
+          _page++;
+          await CarFunc.getCarEvaluationList(
+            page: _page,
+            size: _size,
+          ).then((value) {
+            if (value.isEmpty) {
+              _easyRefreshController.finishLoad(noMore: true);
+            } else {
+              lists.addAll(value);
+              setState(() {});
+            }
+          });
+        },
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return getBox(lists[index]);
           },
-          onLoad: () async {
-            _page++;
-            await CarFunc.getCarEvaluationList(
-              page: _page,
-              size: _size,
-            ).then((value) {
-              if (value.isEmpty) {
-                _easyRefreshController.finishLoad(noMore: true);
-              } else {
-                lists.addAll(value);
-                setState(() {});
-              }
-            });
-          },
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              return getBox(lists[index]);
-            },
-            itemCount: lists.length,
-          ),
-        ),);
+          itemCount: lists.length,
+        ),
+      ),
+    );
   }
 
   getBox(CarEvaluationModel model) {
@@ -124,7 +124,7 @@ class _EvaluationRecordPageState extends State<EvaluationRecordPage> {
                             DateUtil.formatDateMs(
                                 model.licensingDate.toInt() * 1000,
                                 format: 'yyyy年MM月'),
-                            '${num.parse(model.mileage)/10000}万公里'),
+                            '${num.parse(model.mileage) / 10000}万公里'),
                       )
                     ],
                   ),
@@ -160,13 +160,12 @@ class _EvaluationRecordPageState extends State<EvaluationRecordPage> {
                         viNum: res.vin,
                         carModelId: res.modelId,
                         carName: res.modelName,
-                              locationCity:res.cityName,
+                        locationCity: res.cityName,
                         licensingDate: DateTime.fromMillisecondsSinceEpoch(
-                            (res.licensingDate).toInt()),
+                            (res.licensingDate * 1000).toInt()),
                         engineNum: res.engineNo,
                         carColor: res.color,
                         mileage: res.mileage,
-
                       );
                       // print(res.vin);
                       // consignmentContractModel.value.publishCarInfo!.viNum =res.vin;
@@ -197,9 +196,11 @@ class _EvaluationRecordPageState extends State<EvaluationRecordPage> {
                       //估算价格
                       consignmentContractModel.value.evaluationPrice =
                           model.price;
-                      consignmentContractModel.value.priceId =model.id;
+                      consignmentContractModel.value.priceId = model.id;
 
-                      Get.to(()=> ContractBeginPage(consignmentContractModel:consignmentContractModel ,));
+                      Get.to(() => ContractBeginPage(
+                            consignmentContractModel: consignmentContractModel,
+                          ));
                     }
                     // Get.to(()=> ContractBeginPage(consignmentContractModel:ConsignmentContractModel() ,));
                   },

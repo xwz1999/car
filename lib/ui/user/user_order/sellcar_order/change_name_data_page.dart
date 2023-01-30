@@ -36,6 +36,11 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
 
   String finalPayment = '';
 
+  ///交强险
+
+  String compulsoryInsuranceProof='';
+  ///商业险
+  String commercialInsuranceProof='';
   ///尾款
 
   String report = '';
@@ -185,6 +190,62 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                         // ),
                       ))),
               _getText(
+                  '商业险',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          commercialInsuranceProof = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: guaranteeSlip == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                          urls: [guaranteeSlip],
+                        ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
+              _getText(
+                  '交强险',
+                  GestureDetector(
+                      onTap: () async {
+                        var value = await CloudImagePicker.pickSingleImage(
+                            title: '选择图片');
+                        if (value != null) {
+                          String urls = await apiClient.uploadImage(value);
+                          compulsoryInsuranceProof = urls;
+                          // print(urls);
+                        }
+                        //print(img);
+                        // guaranteeSlip = value!.path;
+                        // print(imagePath);
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        width: 200.w,
+                        height: 150.w,
+                        child: guaranteeSlip == ''
+                            ? Image.asset(Assets.images.addcar.path)
+                            : CloudImageNetworkWidget.car(
+                          urls: [guaranteeSlip],
+                        ),
+                        // Image.asset(
+                        //   img == '' ? Assets.images.addcar.path : img,
+                        // ),
+                      ))),
+              widget.isCustomer == 2? _getText(
                   '尾款凭证',
                   GestureDetector(
                       onTap: () async {
@@ -211,48 +272,48 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                         // Image.asset(
                         //   img == '' ? Assets.images.addcar.path : img,
                         // ),
-                      ))),
+                      ))):const SizedBox(),
 
               //48.hb,
-              Row(
-                children: [
-                  SizedBox(
-                    width: 150.w,
-                    child: Text(
-                      '商业险金额',
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ),
-                  SizedBox(
-                      width: 300.w,
-                      height: 35.w,
-                      child: TextField(
-                          onChanged: (text) {
-                            price = double.parse(text);
-                          },
-                          decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.only(bottom: 23.w), //文字与边框的距离
-                            border: InputBorder.none, //去掉下划线
-                            hintText: '请输入金额',
-                            hintStyle: TextStyle(
-                              fontSize: BaseStyle.fontSize28,
-                              color: BaseStyle.colorcccccc,
-
-                              // onChanged: ,
-                            ),
-                          ))),
-                  Padding(
-                    padding: EdgeInsets.only(top: 5.w, left: 191.w),
-                    child: Text(
-                      '元',
-                      style: TextStyle(
-                          color: BaseStyle.color333333,
-                          fontSize: BaseStyle.fontSize28),
-                    ),
-                  )
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     SizedBox(
+              //       width: 150.w,
+              //       child: Text(
+              //         '商业险金额',
+              //         style: Theme.of(context).textTheme.subtitle2,
+              //       ),
+              //     ),
+              //     SizedBox(
+              //         width: 300.w,
+              //         height: 35.w,
+              //         child: TextField(
+              //             onChanged: (text) {
+              //               price = double.parse(text);
+              //             },
+              //             decoration: InputDecoration(
+              //               contentPadding:
+              //                   EdgeInsets.only(bottom: 23.w), //文字与边框的距离
+              //               border: InputBorder.none, //去掉下划线
+              //               hintText: '请输入金额',
+              //               hintStyle: TextStyle(
+              //                 fontSize: BaseStyle.fontSize28,
+              //                 color: BaseStyle.colorcccccc,
+              //
+              //                 // onChanged: ,
+              //               ),
+              //             ))),
+              //     Padding(
+              //       padding: EdgeInsets.only(top: 5.w, left: 191.w),
+              //       child: Text(
+              //         '元',
+              //         style: TextStyle(
+              //             color: BaseStyle.color333333,
+              //             fontSize: BaseStyle.fontSize28),
+              //       ),
+              //     )
+              //   ],
+              // ),
               144.hb,
               GestureDetector(
                 onTap: () async {
@@ -264,8 +325,8 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                       vehicleLicense,
                       invoice,
                       guaranteeSlip,
-                      finalPayment,
-                      price.toString(),
+                      compulsoryInsuranceProof,
+                      commercialInsuranceProof,
                       report,
                     );
                   } else {
@@ -275,7 +336,9 @@ class _ChangeNameDataPageState extends State<ChangeNameDataPage> {
                         vehicleLicense,
                         invoice,
                         guaranteeSlip,
-                        price);
+                        commercialInsuranceProof,
+                        compulsoryInsuranceProof
+                    );
                   }
 
                   // print(

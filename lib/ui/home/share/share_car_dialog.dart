@@ -42,25 +42,31 @@ class _ShareCarDialogState extends State<ShareCarDialog>
 
   @override
   void initState() {
-    final userProvider = Provider.of<UserProvider>(context,listen: false);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
 
     super.initState();
 
-    if(!widget.isMore){
-      shareUrl = '${API.imageHost}/file/h5/index.html#/singleTransfer?id='"${widget.model.first.id}&inviteCode=${UserTool.userProvider.userInfo.inviteCode}";
+    if (!widget.isMore) {
+      shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/quickTransfer?id=${widget.model.first.id}&inviteCode=${UserTool.userProvider.userInfo.inviteCode}';
+      // '${API.imageHost}/file/h5/index.html#/singleTransfer?id='
+          // "${widget.model.first.id}&inviteCode=${UserTool.userProvider.userInfo.inviteCode}";
       shareTitle = widget.model.first.modelName;
-    }else{
+    } else {
       String id = '';
-      for(int i=0;i<widget.model.length;i++){
-       if(i==0){
-         id+= "${widget.model[i].id}";
-       }else{
-         id+= "+${widget.model[i].id}";
-       }
+      for (int i = 0; i < widget.model.length; i++) {
+        if (i == 0) {
+          id += "${widget.model[i].id}";
+        } else {
+          id += "+${widget.model[i].id}";
+        }
       }
-      shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/quickTransfer?id=$id&inviteCode=${UserTool.userProvider.userInfo.inviteCode}';
-      shareTitle = '${userProvider.userInfo.nickname}分享了${widget.model.length}辆车';
+
+      shareUrl =
+          '${API.imageHost}/file/h5/index.html#/quickTransfer?id=$id&inviteCode=${UserTool.userProvider.userInfo.inviteCode}';
+      // shareUrl = 'https://static.oa00.com/wenche/file/h5/index.html#/quickTransfer?id=$id&inviteCode=${UserTool.userProvider.userInfo.inviteCode}';
+      shareTitle =
+          '${userProvider.userInfo.nickname}分享了${widget.model.length}辆车';
     }
   }
 
@@ -138,13 +144,13 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
-
                           ShareUtil.shareMiniProgram(
                             title:
                                 '${UserTool.userProvider.userInfo.nickname}分享了${widget.model.length}辆好车',
                             imgUrl: widget.model.first.mainPhoto,
                             carIds: widget.model.map((e) => e.id).toList(),
                           );
+
                         },
                         child: Column(
                           children: [
@@ -167,10 +173,9 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
-
                           ShareUtil.shareWebPage(
                             shareUrl,
-                            title:  shareTitle,
+                            title: shareTitle,
                             scene: fluwx.WeChatScene.TIMELINE,
                             image: widget.model.first.mainPhoto,
                           );
@@ -486,11 +491,11 @@ class _ShareCarDialogState extends State<ShareCarDialog>
                           Get.back();
                           ShareUtil.shareWebPage(
                             shareUrl,
-                            title:  shareTitle,
+                            title: shareTitle,
                             scene: fluwx.WeChatScene.TIMELINE,
                             image: widget.model.first.mainPhoto,
                           );
-
+                          // print(shareUrl);
                         },
                         child: Column(
                           children: [
